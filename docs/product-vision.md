@@ -1,23 +1,42 @@
 # Product Vision
 
-Moon & Table is a private almanac for two people building shared rituals around home, timing, relationship, and seasonal meaning.
+Moon & Table is a private almanac for a household building shared rituals around home, timing, relationship, and seasonal meaning.
 
 It combines several streams:
 
 * astronomy: moon phases, lunar cycles, solstices, equinoxes, visible sky events
-* astrology: signs, planets, aspects, retrogrades, personal chart themes
-* numerology: day, month, year, and personal-date patterns
+* astrology: signs, planets, aspects, retrogrades, private profile themes
+* numerology: day, month, year, and private-date patterns
 * kitchen magic: food, herbs, tea, salt, honey, bread, simmer pots, shared meals
 * candle magic: color, intention, focus, beauty, atmosphere
 * plant magic: watering, pruning, repotting, propagation, tending, growth/release
-* personal context: relationship dates, birthdays, parenting schedule, school/work demands, capacity
-* feedback: what felt meaningful, what felt cheesy, what should be repeated
+* private context: important dates, birthdays, household schedule rules, work/school demands, capacity
+* feedback: what felt meaningful, what felt off, what should be repeated
+
+## Privacy boundary
+
+The repository must not contain real names, birth data, relationship details, schedules, natal placements, private source documents, or personal profile notes.
+
+The repository may contain generic schemas, templates, placeholder profiles, and example data.
+
+Real personalization belongs only in private runtime storage, local gitignored files, or a private database.
+
+Use generic placeholder language in source control, such as:
+
+* `person_a`
+* `person_b`
+* `household`
+* `private_profile`
+* `capacity_constraints`
+* `schedule_constraints`
+
+Do not commit actual names, birth data, natal placements, schedules, or private source text.
 
 ## What the app is
 
 Moon & Table is a weekly ritual guide and private ritual notebook.
 
-It helps Tim and Jessica notice symbolic timing, choose one realistic ritual window, and do something small that supports their relationship and home life.
+It helps a private household notice symbolic timing, choose one realistic ritual window, and do something small that supports relationship and home life.
 
 ## What the app is not
 
@@ -31,6 +50,7 @@ Moon & Table is not:
 * a replacement for human interpretation
 * a source of medical, financial, legal, or safety advice
 * a system that tells users what they “must” do
+* a repository for private personal details
 
 ## Core user experience
 
@@ -40,9 +60,9 @@ Example:
 
 > Theme: Clear one small thing. Feed one living thing.
 > Best window: Saturday evening, 15 minutes.
-> Do: Tend one plant together. Remove dead leaves or water it. Each name one thing you are done feeding and one thing you want to nourish.
-> Prompt: What part of our life together needs less intensity and more tending?
-> Optional: Light a candle while you do it.
+> Do: Tend one plant. Remove dead leaves or water it. Name one thing to stop feeding and one thing to nourish.
+> Prompt: What part of this household needs less intensity and more tending?
+> Optional: Light a candle while doing it.
 
 Expanded detail can explain the symbolic reasoning, but the default experience should be calm and minimal.
 
@@ -66,7 +86,7 @@ The app should treat source material in stages:
 
 Only approved symbolic cards should be used in generated briefs.
 
-The goal is not to collect as much mystical content as possible. The goal is to build a small, high-quality symbolic library that can produce calm, practical, personalized recommendations for Tim and Jessica.
+The goal is not to collect as much mystical content as possible. The goal is to build a small, high-quality symbolic library that can produce calm, practical, personalized recommendations without storing private details in the repository.
 
 ## Knowledge layers
 
@@ -80,7 +100,7 @@ These are computed or sourced facts:
 * new moons and full moons
 * solstices and equinoxes
 * numerology dates
-* personal anniversaries
+* private anniversaries or important dates stored outside the repository
 * eventually planetary ingresses, retrogrades, and aspects
 
 Timing facts should be deterministic and testable. They should not include interpretation by themselves.
@@ -98,8 +118,7 @@ Examples:
 * salt
 * kitchen clearing
 * plant tending
-* Jessica Virgo Moon
-* Jessica Pisces Sun
+* private profile theme placeholder
 
 Each card should include themes, appropriate uses, ritual styles, avoid-saying guardrails, safety notes, source references, and approval status.
 
@@ -111,7 +130,7 @@ The synthesis layer combines:
 
 * timing facts
 * approved symbolic cards
-* Tim and Jessica’s personal context
+* private profile context loaded from non-repository storage
 * schedule constraints
 * capacity mode
 * feedback from prior rituals
@@ -132,10 +151,11 @@ Before a source becomes useful product knowledge, it should be reviewed for:
 * cultural context
 * copyright or usage concerns
 * risk of deterministic or fear-based interpretation
+* privacy risk
 
 The app should store transformed summaries and source notes, not large copied passages from copyrighted materials.
 
-Private uploaded materials, such as Jessica’s astrology documents, may be used to extract private profile themes and personalization notes. They should not be copied into the app as large text passages or treated as public source material.
+Private uploaded materials may be used outside the repository to extract private profile themes and personalization notes. They should not be committed, copied into source-controlled docs, or treated as public source material.
 
 ## Traceability
 
@@ -143,11 +163,13 @@ Generated briefs should be able to answer:
 
 * What timing facts mattered?
 * Which symbolic cards were used?
-* What personal context shaped the recommendation?
+* What private profile context shaped the recommendation?
 * What schedule or capacity constraint affected the ritual window?
 * Why was this recommendation chosen?
 
 This does not need to be shown as a technical audit log. But the user-facing “why this” should be grounded and explainable.
+
+Traceability must not expose private names, birth data, schedules, or personal profile notes in repository examples.
 
 ## Guardrails
 
@@ -161,6 +183,7 @@ Moon & Table should avoid:
 * rituals that require buying many supplies
 * rituals that create too much setup, cleanup, or emotional labor
 * recommendations that ignore schedule or capacity
+* committing private personal data to the repository
 
 The app should use invitation language.
 
@@ -170,7 +193,7 @@ Not:
 
 Better:
 
-> This is a good symbolic moment for letting one small thing go, if you have capacity.
+> This is a good symbolic moment for letting one small thing go, if there is capacity.
 
 ## Early product nucleus
 
@@ -182,24 +205,22 @@ The first milestone is:
 
 That milestone proves the core product before building a large app surface.
 
-
 ## Schedule-aware planning
 
 Schedule awareness is a core requirement.
 
-The app should not simply recommend a ritual on the exact date of an astrological event. It should recommend the nearest realistic window based on:
+The app should not simply recommend a ritual on the exact date of an astrological event. It should recommend the nearest realistic window based on private schedule constraints, such as:
 
-* Tim’s parenting schedule
-* Jessica’s school/work demands
+* recurring unavailable nights
+* school/work demands
 * preferred ritual nights
-* unavailable nights
 * low-capacity weeks
 * max ritual duration
 * calendar integration later
 
 Example:
 
-> Full moon is Tuesday, but Tuesday is kid night and Jessica has class. Recommend Thursday evening instead, and keep the ritual under 10 minutes.
+> Full moon is Tuesday, but Tuesday is unavailable and the week is low-capacity. Recommend Thursday evening instead, and keep the ritual under 10 minutes.
 
 ## Capacity modes
 
@@ -217,9 +238,9 @@ Capacity should shape the output before astrology does.
 
 Moon & Table is working if:
 
-* Jessica does not feel assigned more tasks
-* Tim and Jessica actually do some of the rituals
-* the suggestions feel personal without being invasive
+* users do not feel assigned more tasks
+* users actually do some of the rituals
+* suggestions feel personal without exposing private data in the repository
 * the “why this” explanation is clear and grounded
 * saved feedback improves future suggestions
 * the app feels like a shared private practice, not a content feed
