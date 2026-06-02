@@ -4,7 +4,24 @@ Moon & Table should be built around a curation-first product model.
 
 The app is not primarily a horoscope generator, ritual content feed, or generic calendar app. It is a curated symbolic knowledge system with a calendar interface.
 
-The core product risk is not whether the app can display a weekly brief. The core risk is whether reviewed symbolic sources can be turned into approved, traceable cards that produce one useful, low-overwhelm recommendation for Tim and Jessica.
+The core product risk is not whether the app can display a weekly brief. The core risk is whether reviewed symbolic sources can be turned into approved, traceable cards that produce one useful, low-overwhelm recommendation for a private household.
+
+## Privacy boundary
+
+The repository must not contain real names, birth data, relationship details, schedules, natal placements, private source documents, or personal profile notes.
+
+The repository may contain generic schemas, templates, placeholder profiles, and example data.
+
+Real personalization belongs only in private runtime storage, local gitignored files, or a private database.
+
+Use generic placeholder language in source control, such as:
+
+* `person_a`
+* `person_b`
+* `household`
+* `private_profile`
+* `capacity_constraints`
+* `schedule_constraints`
 
 Relevant docs:
 
@@ -29,7 +46,7 @@ Test:
 * under 5 minutes for low-capacity weeks
 * a short “why this” explanation
 
-Capture feedback:
+Capture generic feedback categories:
 
 * meaningful
 * too cheesy
@@ -43,7 +60,7 @@ Capture feedback:
 * bad timing
 * good timing
 
-Success means the manual brief format feels useful, personal, and doable in real life.
+Success means the manual brief format feels useful, private, and doable in real life.
 
 ## Phase 1 — Curation pipeline foundation
 
@@ -60,6 +77,7 @@ Deliverables:
 * approval statuses
 * safety and quality guardrails
 * first source review targets
+* privacy guardrails
 * traceability expectations for generated briefs
 
 The curation pipeline should follow this lifecycle:
@@ -72,7 +90,7 @@ The curation pipeline should follow this lifecycle:
 6. Use in brief synthesis
 7. Feedback from actual practice
 
-Success means we know how a source becomes approved product knowledge.
+Success means we know how a source becomes approved product knowledge without committing private data.
 
 Non-goals:
 
@@ -80,21 +98,22 @@ Non-goals:
 * no automatic source ingestion without review
 * no AI-generated symbolic meanings without approved cards
 * no complex admin workbench yet
+* no private profile details in the repository
 
 ## Phase 2 — Seed symbolic library
 
 Create a small reviewed symbolic library that is sufficient to generate early weekly briefs.
 
-Start small. The goal is not coverage. The goal is quality, traceability, and usefulness.
+Start small. The goal is not coverage. The goal is quality, traceability, usefulness, and privacy-safe structure.
 
 Initial source review targets:
 
-* Jessica’s uploaded astrology materials
+* private astrology/profile materials handled outside the repository
 * a small moon phase reference set
 * a small numerology reference set
 * a small home magic starter set
 
-Initial cards:
+Initial generic cards:
 
 * new moon
 * waxing moon
@@ -112,11 +131,7 @@ Initial cards:
 * rosemary
 * honey
 * lemon
-* Jessica Pisces Sun
-* Jessica Virgo Moon
-* Jessica Leo Rising
-* Jessica Venus in Aries
-* Jessica Mars in Capricorn
+* private profile theme placeholder
 
 Each card should include:
 
@@ -134,7 +149,9 @@ Each card should include:
 * confidence
 * approval status
 
-Success means approved cards can be used to generate a grounded, low-overwhelm brief with a clear “why this” explanation.
+Do not include actual names, natal placements, birth data, relationship details, or schedules in seed cards.
+
+Success means approved generic cards can be used with private runtime context to generate a grounded, low-overwhelm brief with a clear “why this” explanation.
 
 ## Phase 3 — Brief prototype from curated cards
 
@@ -146,8 +163,8 @@ Inputs:
 
 * mock timing facts
 * approved symbolic cards
-* Jessica personalization themes
-* Tim/Jessica relationship context
+* generic private profile placeholders
+* generic household context placeholders
 * capacity mode
 * manual schedule assumptions
 
@@ -164,7 +181,7 @@ The brief should be able to answer:
 
 * What timing facts mattered?
 * Which symbolic cards were used?
-* What personal context shaped the recommendation?
+* What private profile keys shaped the recommendation?
 * What schedule or capacity constraint affected the recommendation?
 * Why this ritual instead of another?
 
@@ -196,7 +213,7 @@ The app should feel:
 * usable on iPhone Chrome and desktop
 * intentionally not overloaded
 
-Success means Tim and Jessica can use the app as a weekly ritual surface, even if much of the data is still mock or manually curated.
+Success means a private household can use the app as a weekly ritual surface, even if much of the data is still mock or manually curated.
 
 ## Phase 5 — Capacity modes and manual schedule rules
 
@@ -216,8 +233,8 @@ Manual schedule rules:
 
 * unavailable nights
 * preferred windows
-* Tim’s parenting schedule
-* Jessica’s school/work constraints
+* recurring household constraints
+* work or school constraints
 * max ritual duration
 * default low-capacity mode
 
@@ -225,9 +242,9 @@ The app should not automatically recommend a ritual on the exact date of an astr
 
 Example:
 
-> Full moon is Tuesday, but Tuesday is kid night and Jessica has class. Recommend Thursday evening instead, and keep the ritual under 10 minutes.
+> Full moon is Tuesday, but Tuesday is unavailable and the household is low-capacity. Recommend Thursday evening instead, and keep the ritual under 10 minutes.
 
-Success means the app protects Jessica from overwhelm and treats real-life capacity as a first-class constraint.
+Success means the app protects users from overwhelm and treats real-life capacity as a first-class constraint.
 
 ## Phase 6 — Computed timing engine
 
@@ -238,9 +255,9 @@ Start with:
 * moon phase
 * new moons and full moons
 * solstice and equinox
-* lunar cycles from personal dates
+* lunar cycles from private dates stored outside the repository
 * universal numerology days
-* personal numerology dates
+* private numerology dates stored outside the repository
 
 Later:
 
@@ -248,43 +265,32 @@ Later:
 * planetary ingresses
 * retrogrades
 * aspects
-* personal transits
+* private transits generated from private profile data outside the repository
 
 Timing facts should be deterministic and testable. They should be kept separate from interpretation.
 
 Success means the app can compute or source timing facts without relying on AI to invent dates or events.
 
-## Phase 7 — Personal profiles
+## Phase 7 — Private profiles
 
-Add private profiles for Tim and Jessica.
+Add private profiles without committing private data to the repository.
 
 Profile fields may include:
 
 * birth date/time/place
-* natal placements
+* chart placements
 * preferred ritual styles
 * disliked ritual styles
 * capacity defaults
 * max ritual duration
 * preferred nights
-* important personal dates
+* important private dates
 * schedule constraints
 * notes from actual ritual feedback
 
-Initial Jessica themes:
+Repository code should use schemas, placeholders, and examples only. Real profile data belongs in private runtime storage, local gitignored files, or a private database.
 
-* Pisces Sun
-* Virgo Moon
-* Leo Rising
-* Mercury in Aquarius
-* Venus in Aries
-* Mars in Capricorn
-* Jupiter in Aries
-* Saturn in Capricorn
-
-These should be used as interpretive themes, not rigid labels.
-
-Success means the app can personalize without overclaiming or making deterministic statements.
+Success means the app can personalize without overclaiming, making deterministic statements, or exposing private data in source control.
 
 ## Phase 8 — Ritual notebook and feedback loop
 
@@ -306,7 +312,7 @@ Track:
 
 Practice feedback should eventually become one of the strongest personalization sources.
 
-Success means the app learns from what Tim and Jessica actually do, not just from generic symbolic sources.
+Success means the app learns from actual use, not just from generic symbolic sources.
 
 ## Phase 9 — Curation workbench
 
@@ -326,10 +332,11 @@ Workbench features:
 * source trace maintenance
 * safety notes
 * avoid_saying guardrails
+* privacy review
 
 This is not a web scraper. It is a tool for disciplined human-reviewed curation.
 
-Success means Tim can add and refine source-derived knowledge without editing raw files by hand.
+Success means source-derived knowledge can be added and refined without editing raw files by hand or committing private source text.
 
 ## Phase 10 — Calendar integration
 
@@ -344,8 +351,8 @@ Calendar integration should:
 
 * detect realistic windows
 * avoid busy nights
-* account for Tim’s parenting schedule
-* account for Jessica’s school/work demands
+* account for private recurring schedule constraints
+* account for work or school demands
 * move ritual suggestions near symbolic events, not necessarily on the exact date
 
 Success means the app recommends rituals that fit actual life, not just symbolic timing.
@@ -364,3 +371,4 @@ Do not build these early:
 * automatic source ingestion without human review
 * AI-generated meanings without curated grounding
 * complex curation UI before the pipeline is validated
+* committing private profile data or private source material
