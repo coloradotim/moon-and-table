@@ -10,20 +10,39 @@ Moon & Table is best understood as:
 
 The calendar matters, but the quality of the symbolic knowledge matters more.
 
+## Privacy boundary
+
+The repository must not contain real names, birth data, relationship details, schedules, natal placements, private source documents, or personal profile notes.
+
+The repository may contain generic schemas, templates, placeholder profiles, and example data.
+
+Real personalization belongs only in private runtime storage, local gitignored files, or a private database.
+
+Use generic placeholder language in source control, such as:
+
+* `person_a`
+* `person_b`
+* `household`
+* `private_profile`
+* `capacity_constraints`
+* `schedule_constraints`
+
+Do not commit actual names, birth data, natal placements, schedules, or private source text.
+
 ## Core principle
 
 Moon & Table should not free-associate from the internet.
 
 Generated briefs should come from:
 
-1. **Reliable timing facts**
+1. **Reliable timing facts**  
    Computed or sourced dates and events, such as moon phases, lunations, solstices, equinoxes, numerology dates, and eventually astrological transits.
 
-2. **Reviewed symbolic knowledge**
+2. **Reviewed symbolic knowledge**  
    Human-approved symbolic cards extracted from sources and transformed into concise, structured meanings.
 
-3. **Personal synthesis**
-   A weekly or monthly recommendation that combines timing facts, symbolic cards, Tim and Jessica’s personal context, schedule constraints, capacity, and prior feedback.
+3. **Private synthesis**  
+   A weekly or monthly recommendation that combines timing facts, symbolic cards, private profile context, schedule constraints, capacity, and prior feedback.
 
 The AI layer, if used, should synthesize from approved material. It should not invent the underlying symbolic system.
 
@@ -43,8 +62,8 @@ Sources may include:
 * plant or herbal magic sources
 * seasonal almanacs
 * astronomy or ephemeris references
-* personal uploaded astrology materials
-* Tim/Jessica personal notes
+* private uploaded astrology materials
+* private household notes
 * ritual feedback from actual use
 
 At this stage, the source is only a candidate. It should not automatically become active product knowledge.
@@ -56,7 +75,7 @@ Before extracting knowledge, the source should be reviewed and classified.
 Review questions:
 
 * What domain does this source cover?
-* Is it factual, interpretive, practical, personal, or inspirational?
+* Is it factual, interpretive, practical, private, or inspirational?
 * Is it general-purpose or tied to a specific tradition?
 * Is it credible enough for the product’s tone?
 * Is it useful for Moon & Table’s domestic, practical, low-overwhelm style?
@@ -64,7 +83,8 @@ Review questions:
 * Does it suggest unsafe actions, especially with herbs, oils, ingestion, smoke, fire, pets, or pregnancy?
 * Does it involve culturally specific practices that require more care or context?
 * Are there copyright or usage concerns?
-* Should we use it directly, use it carefully as inspiration, or avoid it?
+* Are there privacy concerns?
+* Should it be used directly, used carefully as inspiration, avoided, or deferred?
 
 A source can be useful without being treated as authoritative. Many symbolic sources should be treated as interpretive or inspirational, not factual.
 
@@ -73,6 +93,8 @@ A source can be useful without being treated as authoritative. Many symbolic sou
 Extract small, transformed knowledge units.
 
 Do not store large copied passages from copyrighted material.
+
+Do not store private profile details in the repository.
 
 The goal is not to preserve the source’s prose. The goal is to extract reusable symbolic meaning in our own words.
 
@@ -85,11 +107,9 @@ Examples:
 * rosemary → memory, protection, clarity, practical kitchen use
 * salt → grounding, cleansing, preservation
 * honey → sweetness, gentleness, attraction
-* Virgo Moon → emotional security through practical care, order, usefulness, tending
-* Pisces Sun → imagination, compassion, emotional sensitivity, spiritual reflection
-* Leo Rising → warmth, beauty, visible devotion, candlelight, celebration
+* private profile theme → practical care, beauty, grounding, direct affection, or another private theme stored outside the repository
 
-For personal or copyrighted sources, preserve location notes and source references, but keep extracted meaning brief and transformed.
+For private or copyrighted sources, preserve only generic location notes and transformed source references in the repository. Keep actual private details outside source control.
 
 ### 4. Normalization
 
@@ -139,7 +159,7 @@ A generated brief should be able to explain:
 
 * which timing facts mattered
 * which symbolic cards were used
-* which personal context shaped the recommendation
+* which private profile themes shaped the recommendation
 * which schedule or capacity constraints changed the recommendation
 * why this ritual was chosen instead of other possible rituals
 
@@ -147,7 +167,7 @@ The “why this” explanation should be short and user-facing, not an internal 
 
 Example:
 
-> The waning moon supports clearing and release. Jessica’s Virgo Moon favors practical tending over abstract processing. Because this is a low-capacity week, the recommendation stays under five minutes.
+> The waning moon supports clearing and release. The private profile favors practical tending over abstract processing. Because this is a low-capacity week, the recommendation stays under five minutes.
 
 ### 7. Feedback loop
 
@@ -204,23 +224,23 @@ Examples:
 
 These sources require review. They should not be treated as factual certainty.
 
-### Personal sources
+### Private sources
 
 These provide private personalization.
 
 Examples:
 
-* Jessica’s uploaded astrology materials
-* Tim’s future chart data
+* private uploaded astrology materials
+* private chart data
 * birthdays
-* first date
+* important household dates
 * relationship milestones
-* parenting schedule
-* Jessica’s school/work demands
+* recurring schedule constraints
+* work or school demands
 * stated preferences
 * capacity constraints
 
-Personal sources may be highly important even when they are not broadly generalizable.
+Private sources may be highly important even when they are not broadly generalizable. They must not be committed to the repository.
 
 ### Practice feedback
 
@@ -259,6 +279,7 @@ Suggested fields:
 * `url_or_reference`
 * `usage_notes`
 * `copyright_notes`
+* `privacy_notes`
 * `review_status`
 * `review_notes`
 * `decision`
@@ -278,10 +299,13 @@ Suggested fields:
 * `domain`
 * `tags`
 * `risk_notes`
+* `privacy_notes`
 * `created_at`
 * `updated_at`
 
 For copyrighted sources, prefer location notes and paraphrased notes over copied excerpts.
+
+For private sources, avoid committing actual private details.
 
 ### SymbolicCard
 
@@ -320,7 +344,7 @@ Suggested categories:
 * `plant_magic`
 * `seasonal`
 * `relationship`
-* `personal_profile`
+* `private_profile_theme`
 
 Suggested ritual styles:
 
@@ -380,12 +404,14 @@ Suggested fields:
 * `brief_id`
 * `timing_fact_ids`
 * `symbolic_card_ids`
-* `personal_context_keys`
+* `private_profile_keys`
 * `schedule_constraints_used`
 * `capacity_mode`
 * `why_this_summary`
 
 This supports user trust and debugging.
+
+Repository examples should use generic private profile keys, not actual private information.
 
 ## Knowledge extraction rules
 
@@ -394,15 +420,16 @@ Use these rules when turning sources into cards:
 * Extract meanings into small cards, not long documents.
 * Store summaries in our own words.
 * Preserve source references and location notes.
-* Keep general symbolism separate from personal interpretation.
+* Keep general symbolism separate from private interpretation.
 * Include `avoid_saying` guardrails on every card.
 * Include safety notes where relevant.
-* Distinguish common correspondences from experimental or personal ones.
+* Distinguish common correspondences from experimental or private ones.
 * Do not conflate astronomy facts with astrology interpretations.
 * Do not allow a source to produce active recommendations until reviewed.
 * Do not make deterministic claims such as “this transit will cause X.”
 * Avoid content that creates fear, obligation, or emotional pressure.
 * Prefer practical home-based rituals over elaborate rituals requiring many supplies.
+* Do not commit names, birth data, natal placements, schedules, or private source text.
 
 ## Safety and quality guardrails
 
@@ -417,8 +444,9 @@ The curation model should explicitly prevent:
 * rituals that create too much setup or cleanup
 * rituals that create too much emotional labor
 * culturally specific practices used without context or care
-* overwhelming Jessica with multiple suggested tasks
+* overwhelming users with multiple suggested tasks
 * turning symbolic timing into obligation
+* exposing private personal data in repository docs, issues, examples, or seed files
 
 The app should use invitation language.
 
@@ -428,7 +456,7 @@ Not:
 
 Better:
 
-> This is a good symbolic moment for letting one small thing go, if you have capacity.
+> This is a good symbolic moment for letting one small thing go, if there is capacity.
 
 ## First source review targets
 
@@ -436,26 +464,27 @@ The first review pass should be intentionally small.
 
 Recommended first source set:
 
-### 1. Jessica’s uploaded astrology materials
+### 1. Private astrology materials
 
-Use for private personalization.
+Use for private personalization only.
 
-Extract:
+Extract outside the repository:
 
-* natal placements
+* chart placements
 * high-level themes
 * personalization notes
 * ritual style affinities
 
-Do not copy large passages into the app.
+Do not copy passages or private details into the repository.
 
-Initial cards may include:
+Repository-facing cards may include only generic placeholder patterns such as:
 
-* Jessica Pisces Sun
-* Jessica Virgo Moon
-* Jessica Leo Rising
-* Jessica Venus in Aries
-* Jessica Mars in Capricorn
+* private profile theme: practical care
+* private profile theme: emotional reflection
+* private profile theme: beauty or warmth
+* private profile theme: structured action
+
+Actual private meanings belong outside source control.
 
 ### 2. Moon phase reference set
 
@@ -478,7 +507,7 @@ Build initial cards for:
 * 6
 * 9
 
-These cover beginnings, partnership, structure, home/care, and completion.
+These are enough for a light symbolic layer.
 
 ### 4. Home magic starter set
 
@@ -507,8 +536,8 @@ These are practical, accessible, and aligned with Moon & Table’s domestic styl
   "good_for": ["tidying", "finishing", "letting go", "reviewing", "gentle closure"],
   "ritual_styles": ["cleaning", "plant", "kitchen", "candle", "journal"],
   "ritual_ideas": [
-    "Clear one small surface and name what you are ready to stop carrying.",
-    "Prune dead leaves from a plant and name what you are done feeding.",
+    "Clear one small surface and name what is ready to be set down.",
+    "Prune dead leaves from a plant and name what is no longer being fed.",
     "Light a candle while putting away or discarding one stale thing."
   ],
   "avoid_saying": [
@@ -531,17 +560,17 @@ Example input:
 
 * Timing: waning moon
 * Numerology: 6 day
-* Personal context: Jessica Virgo Moon
+* Private profile: practical tending theme
 * Capacity: low
-* Schedule: Tuesday unavailable, Thursday realistic
-* Approved cards: waning moon, numerology 6, plant tending, Jessica Virgo Moon
+* Schedule: Thursday is realistic
+* Approved cards: waning moon, numerology 6, plant tending, private profile theme
 
 Possible output:
 
-> Theme: Clear one small thing. Feed one living thing.
-> Best window: Thursday evening, 5–10 minutes.
-> Ritual: Tend one plant together. Remove dead leaves or water it. Each person names one thing they are done feeding and one thing they want to nourish.
-> Why this: The waning moon supports clearing and release. The numerology theme emphasizes home and care. Jessica’s Virgo Moon favors practical tending over abstract processing. Because this is a low-capacity week, the ritual stays short.
+> Theme: Clear one small thing. Feed one living thing.  
+> Best window: Thursday evening, 5–10 minutes.  
+> Ritual: Tend one plant. Remove dead leaves or water it. Name one thing to stop feeding and one thing to nourish.  
+> Why this: The waning moon supports clearing and release. The numerology theme emphasizes home and care. The private profile favors practical tending over abstract processing. Because this is a low-capacity week, the ritual stays short.
 
 ## Early success criteria
 
@@ -553,8 +582,8 @@ The curation pipeline is working if:
 * approved cards can produce a grounded weekly brief
 * the brief includes a clear “why this”
 * recommendations remain small and practical
-* Jessica is not overwhelmed by too many options
-* Tim can edit, reject, or refine source-derived material
+* users are not overwhelmed by too many options
+* private source-derived material can be edited, rejected, or refined without entering source control
 * feedback from real practice improves future suggestions
 
 ## What not to build yet
@@ -569,5 +598,6 @@ Do not start with:
 * a complex admin workbench before the workflow is clear
 * AI-generated symbolic meanings without approved cards
 * broad source collection before the first small library works
+* committing private profile data or private source material
 
 Start small. Curate carefully. Use the smallest useful source set to produce one good weekly recommendation.
