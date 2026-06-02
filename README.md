@@ -2,7 +2,7 @@
 
 Moon & Table is a private ritual calendar for meaningful timing, simple home magic, and shared life at home.
 
-It blends astronomy, astrology, numerology, kitchen magic, candle magic, plant magic, personal context, and real-life schedule constraints to suggest simple rituals and reflection prompts for Tim and Jessica.
+It blends astronomy, astrology, numerology, kitchen magic, candle magic, plant magic, private profile context, and real-life schedule constraints to suggest simple rituals and reflection prompts for a private household.
 
 The goal is not prediction or mystical certainty. The goal is to surface meaningful timing, offer gentle interpretation, and suggest small, doable rituals that fit real life.
 
@@ -10,9 +10,17 @@ The goal is not prediction or mystical certainty. The goal is to surface meaning
 
 Moon & Table answers:
 
-> What is symbolically meaningful this week, why might it matter to us, and what is one simple thing we could do with it?
+> What is symbolically meaningful this week, why might it matter, and what is one simple thing we could do with it?
 
 The app should strongly prefer one useful recommendation over a long list of possibilities.
+
+## Privacy boundary
+
+The repository must not contain real names, birth data, relationship details, schedules, natal placements, private source documents, or personal profile notes.
+
+The repository may contain generic schemas, templates, placeholder profiles, and example data.
+
+Real personalization belongs only in private runtime storage, local gitignored files, or a private database.
 
 ## Product principles
 
@@ -39,17 +47,17 @@ The first useful version should generate a weekly brief with:
 
 Default ritual time should be under 20 minutes.
 
-## Initial personalization notes
+## Private personalization notes
 
-Jessica’s uploaded astrology materials suggest the following initial personalization themes:
+Private personalization is supported by the product but must not be committed to the repository.
 
-* Pisces Sun: imaginative, emotional, intuitive, spiritual, compassionate
-* Virgo Moon: practical care, routines, order, tending, plants, grounding
-* Leo Rising: warmth, beauty, candlelight, visible devotion, celebration
-* Mercury in Aquarius: independent thought, unusual ideas, clear perspective
-* Venus in Aries: direct affection, initiation, playfulness, aliveness
-* Mars in Capricorn: structured action, long-term goals, practical effort
-* Jupiter in Aries: courage, initiative, growth through action
-* Saturn in Capricorn: discipline, structure, maturity, responsibility
+Use generic placeholder language in source control, such as:
 
-These should be used as interpretive themes, not rigid labels.
+* `person_a`
+* `person_b`
+* `household`
+* `private_profile`
+* `capacity_constraints`
+* `schedule_constraints`
+
+Do not commit actual names, birth data, natal placements, schedules, or private source text.
