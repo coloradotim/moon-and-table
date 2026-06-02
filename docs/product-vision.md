@@ -46,20 +46,142 @@ Example:
 
 Expanded detail can explain the symbolic reasoning, but the default experience should be calm and minimal.
 
-## Source and curation philosophy
+## Curation-first product model
 
-The app should use three layers:
+Moon & Table is not primarily a horoscope generator, ritual content feed, or generic calendar app.
 
-1. Computed facts
-   Moon phases, dates, numerology, astronomical events, and eventually astrological transits.
+It is a curated symbolic knowledge system with a calendar interface.
 
-2. Curated symbolic library
-   Short, edited, source-aware entries for moon phases, signs, planets, numerology, herbs, candle colors, kitchen magic, plant magic, and seasonal themes.
+The product depends on disciplined source handling. Symbolic recommendations should come from reviewed, traceable, human-approved knowledge cards, not from open-ended AI generation or casual web scraping.
 
-3. Personal synthesis
-   The app combines current timing, curated meanings, personal profiles, schedule constraints, and feedback to create one useful recommendation.
+The app should treat source material in stages:
 
-The AI should operate mostly in layer 3. It should retrieve and synthesize from curated material, not invent meanings from scratch.
+1. Source candidate
+2. Source review
+3. Knowledge extraction
+4. Card normalization
+5. Human approval
+6. Use in brief synthesis
+7. Feedback from actual practice
+
+Only approved symbolic cards should be used in generated briefs.
+
+The goal is not to collect as much mystical content as possible. The goal is to build a small, high-quality symbolic library that can produce calm, practical, personalized recommendations for Tim and Jessica.
+
+## Knowledge layers
+
+Moon & Table should separate three layers of knowledge.
+
+### 1. Reliable timing facts
+
+These are computed or sourced facts:
+
+* moon phases
+* new moons and full moons
+* solstices and equinoxes
+* numerology dates
+* personal anniversaries
+* eventually planetary ingresses, retrogrades, and aspects
+
+Timing facts should be deterministic and testable. They should not include interpretation by themselves.
+
+### 2. Reviewed symbolic knowledge
+
+These are human-approved symbolic cards.
+
+Examples:
+
+* waning moon
+* full moon
+* numerology 6
+* rosemary
+* salt
+* kitchen clearing
+* plant tending
+* Jessica Virgo Moon
+* Jessica Pisces Sun
+
+Each card should include themes, appropriate uses, ritual styles, avoid-saying guardrails, safety notes, source references, and approval status.
+
+### 3. Personal synthesis
+
+This is where Moon & Table creates a useful recommendation.
+
+The synthesis layer combines:
+
+* timing facts
+* approved symbolic cards
+* Tim and Jessica’s personal context
+* schedule constraints
+* capacity mode
+* feedback from prior rituals
+
+The synthesis layer should produce one calm, realistic recommendation, not a pile of possible tasks.
+
+## Source discipline
+
+Moon & Table should not scrape sources casually or ingest large bodies of content without review.
+
+Before a source becomes useful product knowledge, it should be reviewed for:
+
+* domain
+* usefulness
+* tone
+* reliability
+* safety concerns
+* cultural context
+* copyright or usage concerns
+* risk of deterministic or fear-based interpretation
+
+The app should store transformed summaries and source notes, not large copied passages from copyrighted materials.
+
+Private uploaded materials, such as Jessica’s astrology documents, may be used to extract private profile themes and personalization notes. They should not be copied into the app as large text passages or treated as public source material.
+
+## Traceability
+
+Generated briefs should be able to answer:
+
+* What timing facts mattered?
+* Which symbolic cards were used?
+* What personal context shaped the recommendation?
+* What schedule or capacity constraint affected the ritual window?
+* Why was this recommendation chosen?
+
+This does not need to be shown as a technical audit log. But the user-facing “why this” should be grounded and explainable.
+
+## Guardrails
+
+Moon & Table should avoid:
+
+* deterministic claims
+* fear-based astrology
+* overwhelming task lists
+* unsafe herb, oil, smoke, fire, or ingestion suggestions
+* culturally specific practices used without context or care
+* rituals that require buying many supplies
+* rituals that create too much setup, cleanup, or emotional labor
+* recommendations that ignore schedule or capacity
+
+The app should use invitation language.
+
+Not:
+
+> You must release this now.
+
+Better:
+
+> This is a good symbolic moment for letting one small thing go, if you have capacity.
+
+## Early product nucleus
+
+The first meaningful product milestone is not a full calendar.
+
+The first milestone is:
+
+> Moon & Table can take a small reviewed source set, produce approved symbolic cards, and use those cards to generate one grounded, low-overwhelm weekly brief with a clear “why this” trace.
+
+That milestone proves the core product before building a large app surface.
+
 
 ## Schedule-aware planning
 
