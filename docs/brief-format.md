@@ -4,6 +4,21 @@ Moon & Table should default to a small, usable weekly brief.
 
 The app should not present a long list of rituals or assignments. One useful recommendation is better than many options.
 
+## Privacy boundary
+
+Brief examples in the repository must not contain real names, birth data, natal placements, schedules, relationship details, or private profile notes.
+
+Use generic language such as:
+
+* `private profile`
+* `household`
+* `schedule constraints`
+* `capacity mode`
+* `person_a`
+* `person_b`
+
+Real personalization belongs only in private runtime storage, local gitignored files, or a private database.
+
 ## Default weekly brief
 
 Each week should include:
@@ -24,6 +39,7 @@ Each week should include:
 - Avoid assigning multiple rituals across multiple days unless explicitly requested.
 - Use invitation language, not obligation language.
 - Schedule and capacity constraints should override symbolic timing.
+- Repository examples must remain generic and non-identifying.
 
 ## Example
 
@@ -34,13 +50,13 @@ Best window:
 Saturday evening, 15 minutes.
 
 Recommended ritual:
-Tend one plant together. Remove dead leaves or water it. Each person names one thing they are done feeding and one thing they want to nourish.
+Tend one plant. Remove dead leaves or water it. Name one thing to stop feeding and one thing to nourish.
 
 Prompt:
-What part of our life together needs less intensity and more tending?
+What part of this household needs less intensity and more tending?
 
 Optional:
-Light a candle while you do it.
+Light a candle while doing it.
 
 Why this:
-The waning moon supports clearing and release. Jessica’s Virgo Moon favors practical tending over abstract processing. The schedule suggests this should stay short and home-based.
+The waning moon supports clearing and release. The private profile prefers practical tending over abstract processing. The schedule and capacity constraints suggest this should stay short and home-based.
