@@ -4,6 +4,8 @@ Moon & Table uses source review packets to decide what can become curated produc
 
 These packets cover source review only. They do not create symbolic card data, approve final meanings, scrape sources, or preserve private or copyrighted source text.
 
+These packets authorize candidate card creation but do not approve final cards. Final approval happens when symbolic cards are created, reviewed, and marked approved.
+
 Repository-safe extraction should stay generic, transformed, practical, and privacy-safe. Private personalization belongs only in private runtime storage, local gitignored files, or a private database.
 
 ## 1. Private Astrology/Profile Materials
