@@ -2,22 +2,28 @@
 
 Use this prompt to manually generate a Moon & Table brief in ChatGPT for today, tomorrow, this week, or next week.
 
+## Privacy boundary
+
+Do not put real names, birth data, chart placements, schedules, source documents, or profile notes in the repository.
+
+This prompt is generic. Real profile details should be supplied outside source control.
+
 ## Standard prompt
 
-Generate a Moon & Table brief for `[today / tomorrow / this week / next week]` for Tim and Jessica.
+Generate a Moon & Table brief for `[today / tomorrow / this week / next week]` for a private household.
 
 Use the Moon & Table approach:
 
-* Blend astronomy, astrology, numerology, kitchen magic, candle magic, plant magic, relationship/home themes, and our personal context.
+* Blend astronomy, astrology, numerology, kitchen magic, candle magic, plant magic, home themes, and private context.
 * Keep it grounded, practical, and non-deterministic.
-* Do not give us a long list of things to do.
+* Do not give a long list of things to do.
 * Recommend one primary ritual or action only.
 * Include at most one optional add-on.
-* Default to low-to-normal capacity unless I say otherwise.
-* Keep the ritual under 20 minutes; under 5 minutes if it seems like a low-capacity period.
-* Use our schedule constraints when known, including Tim’s parenting schedule and Jessica’s likely school/work demands.
+* Default to low-to-normal capacity unless told otherwise.
+* Keep the ritual under 20 minutes; under 5 minutes for low-capacity periods.
+* Use private schedule constraints when provided.
 * If the symbolic timing is on a bad schedule day, suggest a nearby realistic window instead.
-* Explain briefly why this recommendation fits the timing and us.
+* Explain briefly why this recommendation fits the timing, profile, schedule, and capacity.
 * Make it feel like support, not homework.
 
 Format the brief like this:
@@ -43,19 +49,19 @@ Format the brief like this:
 
 ## Why this
 
-[Short explanation using astronomy, astrology, numerology, and personal context]
+[Short explanation using timing, approved symbolic cards, schedule, capacity, and private context when provided]
 
-## Relationship prompt
+## Reflection prompt
 
-[One question for us to talk about]
+[One question for the household to consider]
 ```
 
 ## Low-capacity version
 
-Add this to the end of the prompt when life is full, Jessica is overloaded, or the week already has too much in it:
+Add this to the end of the prompt when life is full or the week already has too much in it:
 
 ```text
-Capacity is low. Give us the smallest meaningful version. Prefer one action under 5 minutes. Do not suggest journaling, a multi-step ritual, or anything that requires shopping, setup, cleanup, or emotional heavy lifting.
+Capacity is low. Give the smallest meaningful version. Prefer one action under 5 minutes. Do not suggest journaling, a multi-step ritual, or anything that requires shopping, setup, or cleanup.
 ```
 
 ## Spacious version
@@ -63,7 +69,7 @@ Capacity is low. Give us the smallest meaningful version. Prefer one action unde
 Add this when there is room for something fuller:
 
 ```text
-Capacity is normal-to-spacious. You may suggest one ritual up to 20 minutes and one optional add-on, but still do not give us a list of multiple things to do.
+Capacity is normal-to-spacious. You may suggest one ritual up to 20 minutes and one optional add-on, but still do not give a list of multiple things to do.
 ```
 
 ## Schedule-aware version
@@ -71,20 +77,20 @@ Capacity is normal-to-spacious. You may suggest one ritual up to 20 minutes and 
 Add this when schedule matters:
 
 ```text
-Use schedule-awareness. Do not automatically recommend the exact date of the astrological or lunar event. Recommend the nearest realistic window based on Tim’s parenting schedule, Jessica’s school/work demands, and our stated capacity.
+Use schedule-awareness. Do not automatically recommend the exact date of the astrological or lunar event. Recommend the nearest realistic window based on private schedule constraints and stated capacity.
 ```
 
 ## Product behavior this prompt is testing
 
-This manual prompt is part of the product discovery process. It helps test the core Moon & Table experience before building full automation.
+This manual prompt is part of product discovery. It helps test the core Moon & Table experience before building full automation.
 
 A good brief should feel:
 
 * calm
-* personal
+* personal without exposing private data
 * small
 * grounded
-* emotionally useful
+* useful
 * doable in real life
 
 A bad brief feels:
