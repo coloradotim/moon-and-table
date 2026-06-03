@@ -17,6 +17,25 @@ export const SOURCE_REVIEW_STATUSES = [
 
 export type SourceReviewStatus = (typeof SOURCE_REVIEW_STATUSES)[number];
 
+export const SOURCE_NOTE_LOCATION_PRECISIONS = [
+  "source_area",
+  "source_family",
+  "synthesis_only",
+] as const;
+
+export type SourceNoteLocationPrecision =
+  (typeof SOURCE_NOTE_LOCATION_PRECISIONS)[number];
+
+export const SOURCE_NOTE_REVIEW_BASES = [
+  "computed_fact_documentation",
+  "direct_source_review",
+  "source_family_synthesis",
+  "safety_reference_synthesis",
+] as const;
+
+export type SourceNoteReviewBasis =
+  (typeof SOURCE_NOTE_REVIEW_BASES)[number];
+
 export const SOURCE_TYPES = [
   "book",
   "article",
@@ -52,6 +71,11 @@ export type SourceNote = {
   id: string;
   sourceId: string;
   locationNote: string;
+  sourceLocationLabel?: string;
+  reviewedSourceArea?: string;
+  reviewBasis?: SourceNoteReviewBasis;
+  reviewedAtIso?: string;
+  locationPrecision?: SourceNoteLocationPrecision;
   paraphrasedNote: string;
   category: string;
   tags: string[];
@@ -76,6 +100,7 @@ const FORBIDDEN_PRIVATE_TERMS = [
   "relationship details",
   "private source text",
 ];
+const STARTER_SOURCE_REVIEWED_AT_ISO = "2026-06-03T00:00:00.000Z";
 
 export const starterSourceReviews: SourceReview[] = [
   {
@@ -817,6 +842,110 @@ function makeSeasonalSourceNote(seed: SourceNoteSeed): SourceNote {
   };
 }
 
+function getSourceAreaForNote(note: SourceNote): Pick<
+  SourceNote,
+  "sourceLocationLabel" | "reviewedSourceArea" | "reviewBasis" | "locationPrecision"
+> {
+  if (note.sourceId === "source.astronomy_engine") {
+    return {
+      sourceLocationLabel: "Astronomy Engine documentation and timing implementation notes",
+      reviewedSourceArea: "computed timing facts and calendar marker separation",
+      reviewBasis: "computed_fact_documentation",
+      locationPrecision: "source_area",
+    };
+  }
+
+  if (
+    [
+      "source.cdc_cleaning_safety",
+      "source.epa_household_air",
+      "source.nfpa_fire_safety",
+      "source.fda_food_safety",
+      "source.poison_control",
+      "source.aspca_plant_safety",
+      "source.safety_reference_families",
+    ].includes(note.sourceId)
+  ) {
+    return {
+      sourceLocationLabel: "Public household safety reference family",
+      reviewedSourceArea: "ordinary food, fire, smoke, pets, plants, and household risk guardrails",
+      reviewBasis: "safety_reference_synthesis",
+      locationPrecision:
+        note.sourceId === "source.safety_reference_families"
+          ? "synthesis_only"
+          : "source_family",
+    };
+  }
+
+  if (note.category.includes("astrology")) {
+    return {
+      sourceLocationLabel: "Reviewed astrology interpretation source batch",
+      reviewedSourceArea: "symbolic bodies, signs, aspects, motion, ethics, and plain-language timing prompts",
+      reviewBasis: "source_family_synthesis",
+      locationPrecision: "source_family",
+    };
+  }
+
+  if (note.category.includes("numerology")) {
+    return {
+      sourceLocationLabel: "Reviewed numerology 1-9 source batch",
+      reviewedSourceArea: "universal date number calculation, 1-9 symbolic themes, and anti-certainty guardrails",
+      reviewBasis: "source_family_synthesis",
+      locationPrecision: "source_family",
+    };
+  }
+
+  if (note.category.includes("moon")) {
+    return {
+      sourceLocationLabel: "Reviewed four-phase lunar source batch",
+      reviewedSourceArea: "new, waxing, full, and waning moon reflection and domestic action themes",
+      reviewBasis: "source_family_synthesis",
+      locationPrecision: "source_family",
+    };
+  }
+
+  if (note.category.includes("seasonal") || note.category === "almanac_context") {
+    return {
+      sourceLocationLabel: "Reviewed seasonal and almanac source batch",
+      reviewedSourceArea: "solstice, equinox, seasonal home practice, and almanac-context guardrails",
+      reviewBasis: "source_family_synthesis",
+      locationPrecision: "source_family",
+    };
+  }
+
+  if (
+    [
+      "home_tending",
+      "home_magic",
+      "kitchen_magic",
+      "kitchen_plant_magic",
+      "plant_magic",
+    ].includes(note.category)
+  ) {
+    return {
+      sourceLocationLabel: "Reviewed home, kitchen, plant, and light source batch",
+      reviewedSourceArea: "domestic tending, normal household use, plant observation, and low-overwhelm ritual patterns",
+      reviewBasis: "source_family_synthesis",
+      locationPrecision: "source_family",
+    };
+  }
+
+  return {
+    sourceLocationLabel: "Synthesis-level source note",
+    reviewedSourceArea: "source synthesis only; needs more precise source location in a later curation pass",
+    reviewBasis: "source_family_synthesis",
+    locationPrecision: "synthesis_only",
+  };
+}
+
+function addSourceNoteLocationMetadata(note: SourceNote): SourceNote {
+  return {
+    ...getSourceAreaForNote(note),
+    reviewedAtIso: STARTER_SOURCE_REVIEWED_AT_ISO,
+    ...note,
+  };
+}
+
 const seasonalSourceNotes: SourceNote[] = [
   makeSeasonalSourceNote({
     id: "note.seasonal_facts_as_markers",
@@ -1359,7 +1488,7 @@ const numerologyNumberNotes: SourceNote[] = [
   },
 ];
 
-export const starterSourceNotes: SourceNote[] = [
+const starterSourceNoteSeeds: SourceNote[] = [
   {
     id: "note.computed_facts_are_not_meanings",
     sourceId: "source.astronomy_engine",
@@ -1804,6 +1933,9 @@ export const starterSourceNotes: SourceNote[] = [
   },
 ];
 
+export const starterSourceNotes: SourceNote[] =
+  starterSourceNoteSeeds.map(addSourceNoteLocationMetadata);
+
 function hasRequiredString(value: string): boolean {
   return value.trim().length > 0;
 }
@@ -1863,6 +1995,35 @@ export function validateSourceNote(
 
   if (!hasRequiredString(note.locationNote)) {
     errors.push(`${note.id}: location note is required`);
+  }
+
+  if (!hasRequiredString(note.sourceLocationLabel ?? "")) {
+    errors.push(`${note.id}: source location label is required`);
+  }
+
+  if (!hasRequiredString(note.reviewedSourceArea ?? "")) {
+    errors.push(`${note.id}: reviewed source area is required`);
+  }
+
+  if (
+    !note.reviewBasis ||
+    !SOURCE_NOTE_REVIEW_BASES.includes(note.reviewBasis)
+  ) {
+    errors.push(`${note.id}: review basis is not supported`);
+  }
+
+  if (
+    !note.locationPrecision ||
+    !SOURCE_NOTE_LOCATION_PRECISIONS.includes(note.locationPrecision)
+  ) {
+    errors.push(`${note.id}: location precision is not supported`);
+  }
+
+  if (
+    !note.reviewedAtIso ||
+    Number.isNaN(Date.parse(note.reviewedAtIso))
+  ) {
+    errors.push(`${note.id}: reviewedAtIso must be an ISO date string`);
   }
 
   if (!hasRequiredString(note.paraphrasedNote)) {

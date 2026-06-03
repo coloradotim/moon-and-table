@@ -295,6 +295,11 @@ Suggested fields:
 * `id`
 * `source_id`
 * `location_note`
+* `source_location_label`
+* `reviewed_source_area`
+* `review_basis`
+* `reviewed_at`
+* `location_precision`
 * `paraphrased_note`
 * `domain`
 * `tags`
@@ -306,6 +311,8 @@ Suggested fields:
 For copyrighted sources, prefer location notes and paraphrased notes over copied excerpts.
 
 For private sources, avoid committing actual private details.
+
+`location_precision` should make the trace honest. Use `source_area` or `source_family` when the note is tied to a reviewed section or source family. Use `synthesis_only` when the note is still based only on internal synthesis and needs a later precision pass.
 
 ### SymbolicCard
 

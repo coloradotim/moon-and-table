@@ -56,9 +56,11 @@ Manual Firestore console entry is not the normal workflow.
 | Object | Responsibility |
 | --- | --- |
 | `SourceReview` | Tracks source label, type, domain, review status, use decision, risks, extraction guidance, and trace metadata. |
-| `SourceNote` | Stores a short transformed note derived from reviewed source context. It must be paraphrased, traceable, and non-verbatim. |
+| `SourceNote` | Stores a short transformed note derived from reviewed source context. It must be paraphrased, traceable, and non-verbatim. Source notes also carry structured location metadata such as source area, review basis, review date, and precision. |
 
 Source notes are not automatically approved content. They are curation inputs that can support symbolic cards or ritual patterns after review.
+
+`locationPrecision` distinguishes notes tied to a reviewed source area from notes that are still synthesis-only. Synthesis-only notes are allowed as guardrails, but future curation should prefer more precise source areas where possible.
 
 Source-controlled content must not include:
 
