@@ -400,6 +400,307 @@ export const starterSourceReviews: SourceReview[] = [
   },
 ];
 
+type SourceNoteSeed = Omit<SourceNote, "locationNote" | "category" | "copyrightNotes" | "verbatimAllowed"> & {
+  category?: string;
+  locationNote?: string;
+};
+
+function makeAstrologySourceNote(seed: SourceNoteSeed): SourceNote {
+  return {
+    ...seed,
+    locationNote:
+      seed.locationNote ??
+      "docs/source-research-synthesis.md Batch 8 astrology accent layer",
+    category: seed.category ?? "astrology_interpretation",
+    copyrightNotes: [
+      "short transformed note only; no copied delineation or horoscope text",
+    ],
+    verbatimAllowed: false,
+  };
+}
+
+const strengthenedAstrologySourceNotes: SourceNote[] = [
+  makeAstrologySourceNote({
+    id: "note.astrology_body_sun_focus_visibility",
+    sourceId: "source.steven_forrest",
+    paraphrasedNote:
+      "Use the Sun for focus, visibility, vitality, and the central household theme that wants steady attention.",
+    tags: ["astrology", "sun", "focus"],
+    riskNotes: ["avoid life-purpose certainty or identity claims"],
+    safetyNotes: ["keep solar language modest and practical"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_body_moon_care_rhythm",
+    sourceId: "source.kevin_burk",
+    paraphrasedNote:
+      "Use the Moon for care rhythms, felt needs, habit, memory, and pacing a ritual so it fits the home.",
+    tags: ["astrology", "moon", "care"],
+    riskNotes: ["avoid claiming the Moon causes moods or behavior"],
+    safetyNotes: ["keep emotional prompts optional"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_body_mercury_words_sorting",
+    sourceId: "source.kevin_burk",
+    paraphrasedNote:
+      "Use Mercury for naming, sorting, messages, lists, small decisions, and careful household communication.",
+    tags: ["astrology", "mercury", "communication"],
+    riskNotes: ["avoid predicting confusion or forcing conversation"],
+    safetyNotes: ["conversation prompts require consent"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_body_venus_warmth_worth",
+    sourceId: "source.april_elliott_kent",
+    paraphrasedNote:
+      "Use Venus for warmth, beauty, affection, sweetness, appreciation, and what feels worth tending.",
+    tags: ["astrology", "venus", "warmth"],
+    riskNotes: ["avoid attraction claims or relationship-control language"],
+    safetyNotes: ["avoid scent, food, or flame when not a fit"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_body_mars_bounded_action",
+    sourceId: "source.steven_forrest",
+    paraphrasedNote:
+      "Use Mars for directness, courage, movement, friction, and one bounded action that does not become escalation.",
+    tags: ["astrology", "mars", "action"],
+    riskNotes: ["avoid conflict, anger, or danger predictions"],
+    safetyNotes: ["keep Mars rituals contained and non-confrontational"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_body_jupiter_perspective_support",
+    sourceId: "source.kevin_burk",
+    paraphrasedNote:
+      "Use Jupiter for wider perspective, generosity, learning, encouragement, and making room without overexpanding.",
+    tags: ["astrology", "jupiter", "perspective"],
+    riskNotes: ["avoid luck, abundance, or guaranteed growth claims"],
+    safetyNotes: ["do not suggest spending or larger commitments by default"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_body_saturn_limits_structure",
+    sourceId: "source.kevin_burk",
+    paraphrasedNote:
+      "Use Saturn for limits, structure, responsibility, steadiness, boundaries, and durable support.",
+    tags: ["astrology", "saturn", "structure"],
+    riskNotes: ["avoid punishment, hardship, or moralizing productivity"],
+    safetyNotes: ["structure should protect rest and capacity"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_sign_aries_direct_start",
+    sourceId: "source.kevin_burk",
+    paraphrasedNote:
+      "Use Aries as a direct starting style: courage, heat, initiative, and one clear action with a stopping point.",
+    tags: ["astrology", "aries", "sign"],
+    riskNotes: ["avoid urgency, aggression, or personality labels"],
+    safetyNotes: ["keep action bounded"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_sign_taurus_steady_care",
+    sourceId: "source.kevin_burk",
+    paraphrasedNote:
+      "Use Taurus as a steady care style: comfort, consistency, sensory grounding, and practical maintenance.",
+    tags: ["astrology", "taurus", "sign"],
+    riskNotes: ["avoid stubbornness or indulgence stereotypes"],
+    safetyNotes: ["check scent, food, and touch fit before suggesting them"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_sign_gemini_light_sorting",
+    sourceId: "source.kevin_burk",
+    paraphrasedNote:
+      "Use Gemini as a light sorting style: curiosity, naming, exchange, and making one small tangle clearer.",
+    tags: ["astrology", "gemini", "sign"],
+    riskNotes: ["avoid scattered or inconsistent personality labels"],
+    safetyNotes: ["keep communication light and optional"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_sign_cancer_home_containment",
+    sourceId: "source.april_elliott_kent",
+    paraphrasedNote:
+      "Use Cancer for care, containment, memory, kitchen or home focus, and a gentler household pace.",
+    tags: ["astrology", "cancer", "sign"],
+    riskNotes: ["avoid emotional pressure or family assumptions"],
+    safetyNotes: ["care rituals should not require disclosure"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_sign_leo_visible_warmth",
+    sourceId: "source.april_elliott_kent",
+    paraphrasedNote:
+      "Use Leo for visible warmth, appreciation, playfulness, heartfelt expression, and making care easier to feel.",
+    tags: ["astrology", "leo", "sign"],
+    riskNotes: ["avoid drama or attention stereotypes"],
+    safetyNotes: ["celebration should stay optional"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_sign_virgo_useful_tending",
+    sourceId: "source.kevin_burk",
+    paraphrasedNote:
+      "Use Virgo for useful tending, practical order, repair, enoughness, and noticing what is needed without perfection.",
+    tags: ["astrology", "virgo", "sign"],
+    riskNotes: ["avoid criticism, cleaning pressure, or perfectionism"],
+    safetyNotes: ["capacity should limit any repair impulse"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_sign_libra_shared_balance",
+    sourceId: "source.april_elliott_kent",
+    paraphrasedNote:
+      "Use Libra for balance, beauty, shared space, fairness, and small adjustments that make relating easier.",
+    tags: ["astrology", "libra", "sign"],
+    riskNotes: ["avoid fixed relationship-fit claims or forced relationship talk"],
+    safetyNotes: ["shared prompts need consent"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_sign_scorpio_private_release",
+    sourceId: "source.steven_forrest",
+    paraphrasedNote:
+      "Use Scorpio for privacy, discernment, depth, release, and choosing what no longer deserves attention.",
+    tags: ["astrology", "scorpio", "sign"],
+    riskNotes: ["avoid crisis, secrecy, or exposure language"],
+    safetyNotes: ["depth should stay optional"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_sign_sagittarius_wider_view",
+    sourceId: "source.kevin_burk",
+    paraphrasedNote:
+      "Use Sagittarius for a wider view, learning, humor, meaning, and one encouraging perspective shift.",
+    tags: ["astrology", "sagittarius", "sign"],
+    riskNotes: ["avoid forced positivity or escape from practical needs"],
+    safetyNotes: ["expansion should stay realistic"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_sign_capricorn_bounded_effort",
+    sourceId: "source.kevin_burk",
+    paraphrasedNote:
+      "Use Capricorn for bounded effort, structure, realistic commitment, durable action, and protecting time.",
+    tags: ["astrology", "capricorn", "sign"],
+    riskNotes: ["avoid overwork or moralized discipline"],
+    safetyNotes: ["limits should support care"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_sign_aquarius_system_experiment",
+    sourceId: "source.kevin_burk",
+    paraphrasedNote:
+      "Use Aquarius for pattern-seeing, systems, friendship, fresh distance, and small reversible experiments.",
+    tags: ["astrology", "aquarius", "sign"],
+    riskNotes: ["avoid detachment or oddness stereotypes"],
+    safetyNotes: ["experiments should be low-risk"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_sign_pisces_soft_release",
+    sourceId: "source.april_elliott_kent",
+    paraphrasedNote:
+      "Use Pisces for compassion, imagination, rest, porousness, and gentle release without emotional flooding.",
+    tags: ["astrology", "pisces", "sign"],
+    riskNotes: ["avoid sacrifice, confusion, or overwhelm framing"],
+    safetyNotes: ["keep prompts simple"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_aspect_conjunction_joined_focus",
+    sourceId: "source.steven_forrest",
+    paraphrasedNote:
+      "Use conjunctions as joined focus or emphasis, not automatic intensity or a demand for action.",
+    tags: ["astrology", "conjunction", "aspect"],
+    riskNotes: ["avoid urgent or fated emphasis"],
+    safetyNotes: ["one focus is enough"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_aspect_opposition_balance_contrast",
+    sourceId: "source.steven_forrest",
+    paraphrasedNote:
+      "Use oppositions as contrast, mirroring, and balance, not conflict by default.",
+    tags: ["astrology", "opposition", "aspect"],
+    riskNotes: ["avoid relationship-crisis language"],
+    safetyNotes: ["do not force shared processing"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_aspect_square_useful_adjustment",
+    sourceId: "source.steven_forrest",
+    paraphrasedNote:
+      "Use squares as useful friction or adjustment points, not crisis, conflict, or failure.",
+    tags: ["astrology", "square", "aspect"],
+    riskNotes: ["avoid difficulty predictions"],
+    safetyNotes: ["keep the adjustment small"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_aspect_trine_available_support",
+    sourceId: "source.steven_forrest",
+    paraphrasedNote:
+      "Use trines as available support or ease, not a promised outcome or proof that effort is unnecessary.",
+    tags: ["astrology", "trine", "aspect"],
+    riskNotes: ["avoid guaranteed ease or luck claims"],
+    safetyNotes: ["real constraints still matter"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_aspect_sextile_small_opening",
+    sourceId: "source.kevin_burk",
+    paraphrasedNote:
+      "Use sextiles as a cooperative small opening or opportunity that still needs a conscious choice.",
+    tags: ["astrology", "sextile", "aspect"],
+    riskNotes: ["avoid obligation or success claims"],
+    safetyNotes: ["keep opportunities optional"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_combo_mercury_cancer_careful_words",
+    sourceId: "source.april_elliott_kent",
+    paraphrasedNote:
+      "Mercury plus Cancer can support naming one household need gently, with careful words and no heavy talk.",
+    tags: ["astrology", "mercury", "cancer", "combination"],
+    riskNotes: ["avoid making family or feeling conversations mandatory"],
+    safetyNotes: ["keep communication small and consent-based"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_combo_mercury_virgo_practical_detail",
+    sourceId: "source.kevin_burk",
+    paraphrasedNote:
+      "Mercury plus Virgo can support sorting one practical detail and naming the next useful step without perfectionism.",
+    tags: ["astrology", "mercury", "virgo", "combination"],
+    riskNotes: ["avoid criticism, over-editing, or cleaning pressure"],
+    safetyNotes: ["stop at one useful detail"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_combo_venus_leo_visible_warmth",
+    sourceId: "source.april_elliott_kent",
+    paraphrasedNote:
+      "Venus plus Leo can support visible warmth, appreciation, beauty, affection, and making care easier to feel.",
+    tags: ["astrology", "venus", "leo", "combination"],
+    riskNotes: ["avoid performance, attraction, or relationship-control claims"],
+    safetyNotes: ["keep warmth optional and practical"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_combo_mars_capricorn_bounded_action",
+    sourceId: "source.kevin_burk",
+    paraphrasedNote:
+      "Mars plus Capricorn can support one bounded practical action, disciplined effort, and stopping before overwork.",
+    tags: ["astrology", "mars", "capricorn", "combination"],
+    riskNotes: ["avoid grind, pressure, or conflict language"],
+    safetyNotes: ["capacity limits the action"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_combo_moon_virgo_useful_tending",
+    sourceId: "source.kevin_burk",
+    paraphrasedNote:
+      "Moon plus Virgo can support small useful tending, repairing one detail, and noticing need without chasing perfection.",
+    tags: ["astrology", "moon", "virgo", "combination"],
+    riskNotes: ["avoid emotional cleaning pressure or self-criticism"],
+    safetyNotes: ["keep tending gentle and finite"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_combo_moon_cancer_home_rhythm",
+    sourceId: "source.april_elliott_kent",
+    paraphrasedNote:
+      "Moon plus Cancer can support care, containment, kitchen or home rhythm, and gentler pacing without emotional pressure.",
+    tags: ["astrology", "moon", "cancer", "combination"],
+    riskNotes: ["avoid implying someone must process feelings"],
+    safetyNotes: ["care should be concrete and low-pressure"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_combo_sun_cancer_household_attention",
+    sourceId: "source.april_elliott_kent",
+    paraphrasedNote:
+      "Sun plus Cancer can support home focus, belonging, nourishment, and putting household care at the center briefly.",
+    tags: ["astrology", "sun", "cancer", "combination"],
+    riskNotes: ["avoid identity or family-duty claims"],
+    safetyNotes: ["household attention should stay modest"],
+  }),
+];
+
 export const starterSourceNotes: SourceNote[] = [
   {
     id: "note.computed_facts_are_not_meanings",
@@ -579,7 +880,7 @@ export const starterSourceNotes: SourceNote[] = [
     category: "astrology_interpretation",
     tags: ["astrology", "zodiac", "tone"],
     riskNotes: [
-      "avoid personality certainty and compatibility language",
+      "avoid personality certainty and fixed relationship-fit language",
     ],
     safetyNotes: [
       "do not expose private chart material or personal labels in brief copy",
@@ -627,6 +928,7 @@ export const starterSourceNotes: SourceNote[] = [
     ],
     verbatimAllowed: false,
   },
+  ...strengthenedAstrologySourceNotes,
   {
     id: "note.astrology_ethics_no_personal_certainty",
     sourceId: "source.astrology_ethics_sources",

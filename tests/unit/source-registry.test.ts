@@ -169,6 +169,67 @@ describe("source registry", () => {
     }
   });
 
+  it("includes strengthened astrology notes for planets signs aspects and combinations", () => {
+    const requiredNoteIds = [
+      "note.astrology_body_sun_focus_visibility",
+      "note.astrology_body_moon_care_rhythm",
+      "note.astrology_body_mercury_words_sorting",
+      "note.astrology_body_venus_warmth_worth",
+      "note.astrology_body_mars_bounded_action",
+      "note.astrology_body_jupiter_perspective_support",
+      "note.astrology_body_saturn_limits_structure",
+      "note.astrology_sign_aries_direct_start",
+      "note.astrology_sign_taurus_steady_care",
+      "note.astrology_sign_gemini_light_sorting",
+      "note.astrology_sign_cancer_home_containment",
+      "note.astrology_sign_leo_visible_warmth",
+      "note.astrology_sign_virgo_useful_tending",
+      "note.astrology_sign_libra_shared_balance",
+      "note.astrology_sign_scorpio_private_release",
+      "note.astrology_sign_sagittarius_wider_view",
+      "note.astrology_sign_capricorn_bounded_effort",
+      "note.astrology_sign_aquarius_system_experiment",
+      "note.astrology_sign_pisces_soft_release",
+      "note.astrology_aspect_conjunction_joined_focus",
+      "note.astrology_aspect_opposition_balance_contrast",
+      "note.astrology_aspect_square_useful_adjustment",
+      "note.astrology_aspect_trine_available_support",
+      "note.astrology_aspect_sextile_small_opening",
+      "note.astrology_combo_mercury_cancer_careful_words",
+      "note.astrology_combo_mercury_virgo_practical_detail",
+      "note.astrology_combo_venus_leo_visible_warmth",
+      "note.astrology_combo_mars_capricorn_bounded_action",
+      "note.astrology_combo_moon_virgo_useful_tending",
+      "note.astrology_combo_moon_cancer_home_rhythm",
+      "note.astrology_combo_sun_cancer_household_attention",
+    ];
+    const notes = starterSourceNotes.filter((note) =>
+      requiredNoteIds.includes(note.id),
+    );
+    const serializedNotes = JSON.stringify(notes).toLowerCase();
+
+    expect(notes.map((note) => note.id).sort()).toEqual(
+      [...requiredNoteIds].sort(),
+    );
+
+    for (const note of notes) {
+      expect(validateSourceNote(note)).toEqual({ valid: true, errors: [] });
+      expect(note.verbatimAllowed).toBe(false);
+      expect(note.paraphrasedNote.length).toBeLessThanOrEqual(280);
+      expect(note.paraphrasedNote).toMatch(
+        /Use|support|signal|can|Mercury|Venus|Mars|Moon|Sun/,
+      );
+    }
+
+    expect(serializedNotes).not.toContain("will happen");
+    expect(serializedNotes).not.toContain("will create conflict");
+    expect(serializedNotes).not.toContain("you are");
+    expect(serializedNotes).not.toContain("natal");
+    expect(serializedNotes).not.toContain("synastry");
+    expect(serializedNotes).not.toContain("compatibility");
+    expect(serializedNotes).not.toContain("private source text");
+  });
+
   it("rejects notes without a known source id or location note", () => {
     const note: SourceNote = {
       ...starterSourceNotes[0],

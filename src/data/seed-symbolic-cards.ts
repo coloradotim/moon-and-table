@@ -87,11 +87,70 @@ const MOTION_SOURCE_REFERENCES = [
   "note.astrology_retrograde_slow_review",
 ];
 
+const signNoteSuffixes = {
+  aries: "direct_start",
+  taurus: "steady_care",
+  gemini: "light_sorting",
+  cancer: "home_containment",
+  leo: "visible_warmth",
+  virgo: "useful_tending",
+  libra: "shared_balance",
+  scorpio: "private_release",
+  sagittarius: "wider_view",
+  capricorn: "bounded_effort",
+  aquarius: "system_experiment",
+  pisces: "soft_release",
+} as const;
+
+function getAstrologySpecificSourceReferences(key: string): string[] {
+  if (key.startsWith("astrology_body_")) {
+    const body = key.replace("astrology_body_", "");
+    const noteByBody: Record<string, string> = {
+      sun: "note.astrology_body_sun_focus_visibility",
+      moon: "note.astrology_body_moon_care_rhythm",
+      mercury: "note.astrology_body_mercury_words_sorting",
+      venus: "note.astrology_body_venus_warmth_worth",
+      mars: "note.astrology_body_mars_bounded_action",
+      jupiter: "note.astrology_body_jupiter_perspective_support",
+      saturn: "note.astrology_body_saturn_limits_structure",
+    };
+
+    return noteByBody[body] ? [noteByBody[body]] : [];
+  }
+
+  if (key.startsWith("astrology_sign_")) {
+    const sign = key.replace("astrology_sign_", "");
+    const noteSuffix = signNoteSuffixes[sign as keyof typeof signNoteSuffixes];
+
+    return noteSuffix ? [`note.astrology_sign_${sign}_${noteSuffix}`] : [];
+  }
+
+  if (key.startsWith("astrology_aspect_")) {
+    const aspect = key.replace("astrology_aspect_", "");
+    const noteByAspect: Record<string, string> = {
+      conjunction: "note.astrology_aspect_conjunction_joined_focus",
+      opposition: "note.astrology_aspect_opposition_balance_contrast",
+      square: "note.astrology_aspect_square_useful_adjustment",
+      trine: "note.astrology_aspect_trine_available_support",
+      sextile: "note.astrology_aspect_sextile_small_opening",
+    };
+
+    return noteByAspect[aspect] ? [noteByAspect[aspect]] : [];
+  }
+
+  return [];
+}
+
 function makeAstrologyCard(seed: AstrologyCardSeed): SymbolicCard {
   return {
     ...seed,
     id: `card_${seed.key}`,
-    source_references: seed.source_references ?? ASTROLOGY_SOURCE_REFERENCES,
+    source_references: [
+      ...new Set([
+        ...(seed.source_references ?? ASTROLOGY_SOURCE_REFERENCES),
+        ...getAstrologySpecificSourceReferences(seed.key),
+      ]),
+    ],
     confidence: "common",
     approval_status: "approved",
   };

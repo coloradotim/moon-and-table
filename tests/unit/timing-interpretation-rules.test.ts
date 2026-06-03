@@ -82,6 +82,79 @@ describe("timing interpretation rules", () => {
     }
   });
 
+  it("uses specific source-backed summaries for approved astrology combinations", () => {
+    const facts = getTimingFactsForDate("2026-06-03T12:00:00.000Z");
+    const signals = getTimingSignalsForFacts(facts);
+    const mercuryCancer = signals.find(
+      (signal) => signal.ruleId === "timing_rule.planet_sign.mercury.cancer",
+    );
+
+    expect(mercuryCancer).toMatchObject({
+      signalLabel: "Mercury in Cancer — careful words for home",
+      signalSummary:
+        "A signal for naming one household need gently, with careful words and without turning it into a heavy talk.",
+      symbolicCardKeys: ["astrology_body_mercury", "astrology_sign_cancer"],
+    });
+    expect(mercuryCancer?.sourceReferences).toEqual(
+      expect.arrayContaining([
+        "note.astrology_body_mercury_words_sorting",
+        "note.astrology_sign_cancer_home_containment",
+        "note.astrology_combo_mercury_cancer_careful_words",
+      ]),
+    );
+  });
+
+  it("keeps approved astrology rule summaries practical and non-deterministic", () => {
+    const rules = getEligibleTimingInterpretationRules().filter((rule) =>
+      [
+        "moon_sign",
+        "sun_sign",
+        "planet_sign",
+        "planet_retrograde",
+        "planetary_aspect",
+      ].includes(rule.timingFactType),
+    );
+    const requiredRuleIds = [
+      "timing_rule.moon_sign.virgo",
+      "timing_rule.moon_sign.cancer",
+      "timing_rule.sun_sign.cancer",
+      "timing_rule.planet_sign.mercury.cancer",
+      "timing_rule.planet_sign.mercury.virgo",
+      "timing_rule.planet_sign.venus.leo",
+      "timing_rule.planet_sign.mars.capricorn",
+      "timing_rule.planetary_aspect.square",
+      "timing_rule.planetary_aspect.trine",
+      "timing_rule.planetary_aspect.sextile",
+    ];
+    const serializedRules = JSON.stringify(rules).toLowerCase();
+
+    expect(rules.map((rule) => rule.id)).toEqual(
+      expect.arrayContaining(requiredRuleIds),
+    );
+
+    for (const rule of rules) {
+      expect(rule.signalLabel).not.toMatch(/^[a-z_]+\.[a-z_]+/);
+      expect(rule.signalSummary.length).toBeGreaterThan(50);
+      expect(rule.sourceReferences.some((reference) => reference.startsWith("note."))).toBe(true);
+      expect(rule.sourceReferences).toEqual(
+        expect.arrayContaining([
+          "source.steven_forrest",
+          "source.kevin_burk",
+          "source.astrology_ethics_sources",
+          "source.barnum_forer_guardrail",
+        ]),
+      );
+    }
+
+    expect(serializedRules).not.toContain("will happen");
+    expect(serializedRules).not.toContain("will create conflict");
+    expect(serializedRules).not.toContain("your chart");
+    expect(serializedRules).not.toContain("you are");
+    expect(serializedRules).not.toContain("synastry");
+    expect(serializedRules).not.toContain("compatibility");
+    expect(serializedRules).not.toContain("natal");
+  });
+
   it("keeps draft outer-planet placeholders ineligible", () => {
     const eligibleRules = getEligibleTimingInterpretationRules();
     const draftRules = starterTimingInterpretationRules.filter(

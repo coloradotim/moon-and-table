@@ -189,38 +189,182 @@ const ASPECTS: Array<{
   label: string;
   styleHint: string;
   summary: string;
+  sourceNote: string;
 }> = [
   {
     aspect: "conjunction",
     label: "Conjunction",
     styleHint: "single-action ritual",
-    summary: "A blending aspect can support one simple combined focus.",
+    summary: "A conjunction can support one joined focus without treating emphasis as urgency.",
+    sourceNote: "note.astrology_aspect_conjunction_joined_focus",
   },
   {
     aspect: "opposition",
     label: "Opposition",
     styleHint: "reflection",
-    summary: "A polarity aspect can support balancing two visible needs without forcing a conflict story.",
+    summary: "An opposition can support noticing contrast, balance, or mirroring without assuming conflict.",
+    sourceNote: "note.astrology_aspect_opposition_balance_contrast",
   },
   {
     aspect: "square",
     label: "Square",
     styleHint: "home_tending",
-    summary: "A friction aspect can support one practical adjustment without predicting difficulty.",
+    summary: "A square can point to one useful adjustment, not a crisis or a prediction of difficulty.",
+    sourceNote: "note.astrology_aspect_square_useful_adjustment",
   },
   {
     aspect: "trine",
     label: "Trine",
     styleHint: "gratitude",
-    summary: "A supportive aspect can point toward using what is already working.",
+    summary: "A trine can point toward available support or ease without promising an outcome.",
+    sourceNote: "note.astrology_aspect_trine_available_support",
   },
   {
     aspect: "sextile",
     label: "Sextile",
     styleHint: "simple planning",
-    summary: "An opportunity aspect can support one modest opening that still stays optional.",
+    summary: "A sextile can suggest a small cooperative opening that still needs a conscious choice.",
+    sourceNote: "note.astrology_aspect_sextile_small_opening",
   },
 ];
+
+const BODY_NOTE_BY_KEY: Record<string, string> = {
+  sun: "note.astrology_body_sun_focus_visibility",
+  moon: "note.astrology_body_moon_care_rhythm",
+  mercury: "note.astrology_body_mercury_words_sorting",
+  venus: "note.astrology_body_venus_warmth_worth",
+  mars: "note.astrology_body_mars_bounded_action",
+  jupiter: "note.astrology_body_jupiter_perspective_support",
+  saturn: "note.astrology_body_saturn_limits_structure",
+};
+
+const SIGN_DETAILS: Record<
+  ZodiacSign,
+  { note: string; phrase: string; avoid: string }
+> = {
+  aries: {
+    note: "note.astrology_sign_aries_direct_start",
+    phrase: "direct initiative and one bounded start",
+    avoid: "avoid urgency or confrontation",
+  },
+  taurus: {
+    note: "note.astrology_sign_taurus_steady_care",
+    phrase: "steady care, comfort, and practical maintenance",
+    avoid: "avoid treating comfort as avoidance",
+  },
+  gemini: {
+    note: "note.astrology_sign_gemini_light_sorting",
+    phrase: "light sorting, naming, and small exchange",
+    avoid: "avoid forcing a conversation",
+  },
+  cancer: {
+    note: "note.astrology_sign_cancer_home_containment",
+    phrase: "care, containment, memory, and home rhythm",
+    avoid: "avoid emotional pressure",
+  },
+  leo: {
+    note: "note.astrology_sign_leo_visible_warmth",
+    phrase: "visible warmth, appreciation, and heartfelt expression",
+    avoid: "avoid forced celebration",
+  },
+  virgo: {
+    note: "note.astrology_sign_virgo_useful_tending",
+    phrase: "useful tending, repair, and enoughness",
+    avoid: "avoid perfectionism",
+  },
+  libra: {
+    note: "note.astrology_sign_libra_shared_balance",
+    phrase: "balance, beauty, fairness, and shared-space adjustment",
+    avoid: "avoid fixed relationship-fit claims",
+  },
+  scorpio: {
+    note: "note.astrology_sign_scorpio_private_release",
+    phrase: "privacy, discernment, release, and honest boundaries",
+    avoid: "avoid crisis language",
+  },
+  sagittarius: {
+    note: "note.astrology_sign_sagittarius_wider_view",
+    phrase: "a wider view, learning, and encouragement",
+    avoid: "avoid forced positivity",
+  },
+  capricorn: {
+    note: "note.astrology_sign_capricorn_bounded_effort",
+    phrase: "bounded effort, structure, and realistic commitment",
+    avoid: "avoid overwork",
+  },
+  aquarius: {
+    note: "note.astrology_sign_aquarius_system_experiment",
+    phrase: "pattern-seeing, systems, and small reversible experiments",
+    avoid: "avoid disruption for its own sake",
+  },
+  pisces: {
+    note: "note.astrology_sign_pisces_soft_release",
+    phrase: "compassion, rest, imagination, and gentle release",
+    avoid: "avoid emotional flooding",
+  },
+};
+
+const COMBINATION_DETAILS: Partial<
+  Record<
+    `${"sun" | "moon" | PlanetName}.${ZodiacSign}`,
+    {
+      label: string;
+      summary: string;
+      ritualStyleHints: string[];
+      sourceNote: string;
+    }
+  >
+> = {
+  "mercury.cancer": {
+    label: "Mercury in Cancer — careful words for home",
+    summary:
+      "A signal for naming one household need gently, with careful words and without turning it into a heavy talk.",
+    ritualStyleHints: ["simple planning", "conversation", "home_tending"],
+    sourceNote: "note.astrology_combo_mercury_cancer_careful_words",
+  },
+  "mercury.virgo": {
+    label: "Mercury in Virgo — sort one useful detail",
+    summary:
+      "A signal for sorting one practical detail, naming the next useful step, and stopping before perfectionism.",
+    ritualStyleHints: ["simple planning", "surface_reset", "home_tending"],
+    sourceNote: "note.astrology_combo_mercury_virgo_practical_detail",
+  },
+  "venus.leo": {
+    label: "Venus in Leo — visible warmth",
+    summary:
+      "A signal for appreciation, beauty, playfulness, or making care easier to feel.",
+    ritualStyleHints: ["gratitude", "atmosphere", "candle_or_light"],
+    sourceNote: "note.astrology_combo_venus_leo_visible_warmth",
+  },
+  "mars.capricorn": {
+    label: "Mars in Capricorn — bounded practical action",
+    summary:
+      "A signal for one disciplined household action that stays bounded and stops before overwork.",
+    ritualStyleHints: ["single-action ritual", "home_tending", "simple planning"],
+    sourceNote: "note.astrology_combo_mars_capricorn_bounded_action",
+  },
+  "moon.virgo": {
+    label: "Moon in Virgo — useful tending",
+    summary:
+      "A signal for small repairs, practical care, and noticing what is needed without chasing perfection.",
+    ritualStyleHints: ["home_tending", "surface_reset", "plant_tending"],
+    sourceNote: "note.astrology_combo_moon_virgo_useful_tending",
+  },
+  "moon.cancer": {
+    label: "Moon in Cancer — home rhythm",
+    summary:
+      "A signal for care, containment, kitchen or home rhythm, and gentler pacing without emotional pressure.",
+    ritualStyleHints: ["home_tending", "kitchen", "reflection"],
+    sourceNote: "note.astrology_combo_moon_cancer_home_rhythm",
+  },
+  "sun.cancer": {
+    label: "Sun in Cancer — household attention",
+    summary:
+      "A signal for home focus, belonging, nourishment, and putting household care at the center briefly.",
+    ritualStyleHints: ["home_tending", "kitchen", "reflection"],
+    sourceNote: "note.astrology_combo_sun_cancer_household_attention",
+  },
+};
 
 const ASTROLOGY_RULE_SOURCE_REFERENCES = [
   "source.steven_forrest",
@@ -234,72 +378,103 @@ const ASTROLOGY_RULE_SOURCE_REFERENCES = [
 ];
 
 const MOON_SIGN_RULES: TimingInterpretationRule[] = ZODIAC_SIGNS.map(
-  ({ sign, label, styleHint }): TimingInterpretationRule => ({
-    id: `timing_rule.moon_sign.${sign}`,
-    timingFactType: "moon_sign",
-    condition: { sign },
-    signalLabel: `Moon in ${label}`,
-    signalSummary: `A ${label} Moon can color the timing with a ${styleHint.replaceAll("_", " ")} style, while staying symbolic and optional.`,
-    symbolicCardKeys: ["astrology_body_moon", `astrology_sign_${sign}`],
-    ritualStyleHints: ["home_tending", "reflection", styleHint],
-    weight: 62,
-    strength: "supporting",
-    avoidIf: ["unsupported_zodiac_interpretation", "personal_identity_claims"],
-    sourceReferences: [
-      ...ASTROLOGY_RULE_SOURCE_REFERENCES,
-      "note.astrology_planets_as_functions",
-      "note.astrology_signs_as_styles",
-    ],
-    approvalStatus: "approved",
-  }),
+  ({ sign, label, styleHint }): TimingInterpretationRule => {
+    const combination = COMBINATION_DETAILS[`moon.${sign}`];
+    const signDetails = SIGN_DETAILS[sign];
+
+    return {
+      id: `timing_rule.moon_sign.${sign}`,
+      timingFactType: "moon_sign",
+      condition: { sign },
+      signalLabel: combination?.label ?? `Moon in ${label} — ${signDetails.phrase.split(",")[0]}`,
+      signalSummary:
+        combination?.summary ??
+        `A signal for ${signDetails.phrase}, paced as care rather than personality description; ${signDetails.avoid}.`,
+      symbolicCardKeys: ["astrology_body_moon", `astrology_sign_${sign}`],
+      ritualStyleHints: combination?.ritualStyleHints ?? ["home_tending", "reflection", styleHint],
+      weight: combination ? 68 : 62,
+      strength: "supporting",
+      avoidIf: ["unsupported_zodiac_interpretation", "personal_identity_claims"],
+      sourceReferences: [
+        ...ASTROLOGY_RULE_SOURCE_REFERENCES,
+        "note.astrology_planets_as_functions",
+        "note.astrology_signs_as_styles",
+        BODY_NOTE_BY_KEY.moon,
+        signDetails.note,
+        ...(combination ? [combination.sourceNote] : []),
+      ],
+      approvalStatus: "approved",
+    };
+  },
 );
 
 const SUN_SIGN_RULES: TimingInterpretationRule[] = ZODIAC_SIGNS.map(
-  ({ sign, label, styleHint }): TimingInterpretationRule => ({
-    id: `timing_rule.sun_sign.${sign}`,
-    timingFactType: "sun_sign",
-    condition: { sign },
-    signalLabel: `Sun in ${label}`,
-    signalSummary: `The Sun's current sign can add a ${label} seasonal texture without becoming the main recommendation driver.`,
-    symbolicCardKeys: ["astrology_body_sun", `astrology_sign_${sign}`],
-    ritualStyleHints: ["reflection", "simple planning", styleHint],
-    weight: 54,
-    strength: "supporting",
-    avoidIf: ["unsupported_zodiac_interpretation", "identity_certainty"],
-    sourceReferences: [
-      ...ASTROLOGY_RULE_SOURCE_REFERENCES,
-      "note.astrology_planets_as_functions",
-      "note.astrology_signs_as_styles",
-    ],
-    approvalStatus: "approved",
-  }),
+  ({ sign, label, styleHint }): TimingInterpretationRule => {
+    const combination = COMBINATION_DETAILS[`sun.${sign}`];
+    const signDetails = SIGN_DETAILS[sign];
+
+    return {
+      id: `timing_rule.sun_sign.${sign}`,
+      timingFactType: "sun_sign",
+      condition: { sign },
+      signalLabel: combination?.label ?? `Sun in ${label} — ${signDetails.phrase.split(",")[0]}`,
+      signalSummary:
+        combination?.summary ??
+        `A signal for bringing ${signDetails.phrase} into the week's main focus without making an identity claim.`,
+      symbolicCardKeys: ["astrology_body_sun", `astrology_sign_${sign}`],
+      ritualStyleHints: combination?.ritualStyleHints ?? ["reflection", "simple planning", styleHint],
+      weight: combination ? 60 : 54,
+      strength: "supporting",
+      avoidIf: ["unsupported_zodiac_interpretation", "identity_certainty"],
+      sourceReferences: [
+        ...ASTROLOGY_RULE_SOURCE_REFERENCES,
+        "note.astrology_planets_as_functions",
+        "note.astrology_signs_as_styles",
+        BODY_NOTE_BY_KEY.sun,
+        signDetails.note,
+        ...(combination ? [combination.sourceNote] : []),
+      ],
+      approvalStatus: "approved",
+    };
+  },
 );
 
 const PLANET_SIGN_RULES: TimingInterpretationRule[] = CORE_PLANETS.flatMap(
   ({ planet, label: planetLabel, styleHint }) =>
     ZODIAC_SIGNS.map(
-      ({ sign, label: signLabel }): TimingInterpretationRule => ({
-        id: `timing_rule.planet_sign.${planet}.${sign}`,
-        timingFactType: "planet_sign",
-        condition: { planet, sign },
-        signalLabel: `${planetLabel} in ${signLabel}`,
-        signalSummary: `${planetLabel} can add a ${signLabel} symbolic accent to ritual choice without predicting events or describing anyone personally.`,
-        symbolicCardKeys: [`astrology_body_${planet}`, `astrology_sign_${sign}`],
-        ritualStyleHints: ["reflection", styleHint],
-        weight: 66,
-        strength: "supporting",
-        avoidIf: [
-          "unsupported_planetary_interpretation",
-          "prediction_claims",
-          "personal_identity_claims",
-        ],
-        sourceReferences: [
-          ...ASTROLOGY_RULE_SOURCE_REFERENCES,
-          "note.astrology_planets_as_functions",
-          "note.astrology_signs_as_styles",
-        ],
-        approvalStatus: "approved",
-      }),
+      ({ sign, label: signLabel }): TimingInterpretationRule => {
+        const combination = COMBINATION_DETAILS[`${planet}.${sign}`];
+        const signDetails = SIGN_DETAILS[sign];
+
+        return {
+          id: `timing_rule.planet_sign.${planet}.${sign}`,
+          timingFactType: "planet_sign",
+          condition: { planet, sign },
+          signalLabel:
+            combination?.label ?? `${planetLabel} in ${signLabel} — ${signDetails.phrase.split(",")[0]}`,
+          signalSummary:
+            combination?.summary ??
+            `${planetLabel} can bring ${signDetails.phrase} into ritual choice without predicting events or describing anyone personally.`,
+          symbolicCardKeys: [`astrology_body_${planet}`, `astrology_sign_${sign}`],
+          ritualStyleHints: combination?.ritualStyleHints ?? ["reflection", styleHint],
+          weight: combination ? 72 : 66,
+          strength: "supporting",
+          avoidIf: [
+            "unsupported_planetary_interpretation",
+            "prediction_claims",
+            "personal_identity_claims",
+          ],
+          sourceReferences: [
+            ...ASTROLOGY_RULE_SOURCE_REFERENCES,
+            "note.astrology_planets_as_functions",
+            "note.astrology_signs_as_styles",
+            BODY_NOTE_BY_KEY[planet],
+            signDetails.note,
+            ...(combination ? [combination.sourceNote] : []),
+          ],
+          approvalStatus: "approved",
+        };
+      },
     ),
 );
 
@@ -323,13 +498,14 @@ const PLANET_RETROGRADE_RULES: TimingInterpretationRule[] = CORE_PLANETS.map(
       ...ASTROLOGY_RULE_SOURCE_REFERENCES,
       "note.astrology_planets_as_functions",
       "note.astrology_retrograde_slow_review",
+      BODY_NOTE_BY_KEY[planet],
     ],
     approvalStatus: "approved",
   }),
 );
 
 const PLANETARY_ASPECT_RULES: TimingInterpretationRule[] = ASPECTS.map(
-  ({ aspect, label, styleHint, summary }): TimingInterpretationRule => ({
+  ({ aspect, label, styleHint, summary, sourceNote }): TimingInterpretationRule => ({
     id: `timing_rule.planetary_aspect.${aspect}`,
     timingFactType: "planetary_aspect",
     condition: { aspect },
@@ -347,6 +523,7 @@ const PLANETARY_ASPECT_RULES: TimingInterpretationRule[] = ASPECTS.map(
     sourceReferences: [
       ...ASTROLOGY_RULE_SOURCE_REFERENCES,
       "note.astrology_aspects_as_relationships",
+      sourceNote,
     ],
     approvalStatus: "approved",
   }),
