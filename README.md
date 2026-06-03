@@ -69,3 +69,5 @@ See `docs/development-workflow.md` for local test commands, CI behavior, Playwri
 See `docs/firebase-setup.md` for the placeholder-only Firebase project setup path for hosted auth and private storage.
 
 See `docs/deployment.md` for Vercel deployment, Firebase Auth authorized-domain setup, hosted env vars, and private-data verification.
+
+See `docs/architecture.md` and `docs/data-model.md` for the current app architecture, deployment model, private-data boundary, and data/content model.
