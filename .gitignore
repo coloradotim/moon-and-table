@@ -1,5 +1,7 @@
 node_modules/
+.dev/
 coverage/
+dist/
 playwright-report/
 test-results/
 .env.local

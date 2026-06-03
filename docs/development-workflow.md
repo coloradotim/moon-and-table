@@ -19,12 +19,18 @@ npm run check
 Run individual checks:
 
 ```bash
+npm run dev
+npm run server:start
+npm run server:stop
+npm run server:restart
+npm run server:status
+npm run build
 npm run typecheck
 npm run test
 npm run test:e2e
 ```
 
-`npm run test:e2e` currently runs a Playwright scaffold test. The app-shell smoke test that verifies the page loads and shows `Moon & Table` is deferred until the app shell exists.
+`npm run dev` starts the local app shell in the foreground. Use the `server:*` commands to manage the Vite dev server in the background. `npm run test:e2e` starts the app through Playwright and verifies the initial `Moon & Table` brief page.
 
 There is no lint command yet because the repo does not have an app framework or linter configuration. Add linting when the app scaffold makes the project conventions clear.
 
@@ -36,10 +42,12 @@ The CI workflow runs:
 
 - dependency installation with `npm ci`
 - TypeScript typecheck
+- Vite build
 - Vitest unit tests
+- Playwright Chromium browser installation
 - Playwright tests
 
-Unit tests currently cover the privacy-safe seed symbolic cards. Generator-specific tests are deferred until the issue #3 generator is merged into `main`.
+Unit tests cover the privacy-safe seed symbolic cards and the deterministic mock weekly brief generator.
 
 ## Auto-Merge Readiness
 
