@@ -13,13 +13,14 @@
     "server:open": "scripts/dev.sh open",
     "seed:private": "tsx scripts/seed-private-household.ts",
     "diagnose:content": "tsx scripts/content-reachability.ts",
+    "lint:content": "tsx scripts/content-lint.ts",
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "check": "npm run typecheck && npm run build && npm run test && npm run test:e2e"
+    "check": "npm run lint:content && npm run typecheck && npm run build && npm run test && npm run test:e2e"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
