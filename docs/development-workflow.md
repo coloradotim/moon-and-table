@@ -26,6 +26,7 @@ npm run server:restart
 npm run server:status
 npm run seed:private
 npm run diagnose:content
+npm run lint:content
 npm run build
 npm run typecheck
 npm run test
@@ -53,6 +54,8 @@ The seed script does not require every household member to have logged in alread
 After seeded private data loads, the signed-in app shows the weekly brief by default. Use `Menu` > `Profile settings` to open one tuning card per seeded household profile and edit that profile's existing Firestore profile, capacity, and schedule documents. It is not an import flow, setup wizard, account manager, or seed editor.
 
 Use `npm run diagnose:content` to generate a local content reachability report. The report samples privacy-safe weekly briefs across representative dates, capacity modes, audiences, profile themes, and preferences, then shows which approved timing rules, symbolic cards, ritual patterns, source reviews, and source notes are selected or left untouched. It is a curation diagnostic only and does not expose raw trace in the app UI.
+
+Use `npm run lint:content` to scan source-controlled docs, data, scripts, and tests for private-data markers, non-placeholder emails, deterministic claims, copied-looking long quotes, and blocked safety language. The lint allows explicit guardrail wording such as “do not include birth data” and fake `example.com` emails. It is included in `npm run check`.
 
 For hosted deployment setup, see `docs/deployment.md`.
 
