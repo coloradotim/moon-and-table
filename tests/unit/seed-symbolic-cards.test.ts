@@ -19,6 +19,7 @@ const expectedSeedKeys = [
   "rosemary",
   "honey",
   "lemon",
+  "tea",
   "private_profile_practical_care_theme",
   "private_profile_beauty_warmth_theme",
   "private_profile_structured_action_theme",
@@ -38,6 +39,49 @@ describe("seedSymbolicCards", () => {
       expect(card.safety_notes.length).toBeGreaterThan(0);
       expect(card.source_references.length).toBeGreaterThan(0);
     }
+  });
+
+  it("adds safety-reviewed kitchen plant and light starter cards", () => {
+    const starterKeys = [
+      "tea",
+      "lemon",
+      "salt",
+      "rosemary",
+      "plant_tending",
+      "candle",
+      "kitchen_clearing",
+    ];
+    const starterCards = seedSymbolicCards.filter((card) =>
+      starterKeys.includes(card.key),
+    );
+
+    expect(starterCards.map((card) => card.key).sort()).toEqual(
+      [...starterKeys].sort(),
+    );
+
+    for (const card of starterCards) {
+      const serializedCard = JSON.stringify(card).toLowerCase();
+      const userFacingCardText = `${card.summary} ${card.ritual_ideas.join(" ")}`.toLowerCase();
+
+      expect(card.safety_notes.length).toBeGreaterThan(0);
+      expect(card.safety_flags).toBeDefined();
+      expect(card.source_references).toContain("source.safety_reference_families");
+      expect(serializedCard).not.toContain("essential oil ingestion");
+      expect(serializedCard).not.toContain("smoke cleanse");
+      expect(serializedCard).not.toContain("medical claim");
+      expect(userFacingCardText).not.toContain("guaranteed result");
+    }
+
+    expect(
+      starterCards.find((card) => card.key === "candle")?.safety_flags?.fire,
+    ).toBe("led_default");
+    expect(
+      starterCards.find((card) => card.key === "tea")?.safety_flags?.ingestion,
+    ).toBe("normal_food_use_only");
+    expect(
+      starterCards.find((card) => card.key === "rosemary")?.safety_flags
+        ?.essentialOils,
+    ).toBe("avoid");
   });
 
   it("keeps the lunar phase system to four approved source-traceable cards", () => {

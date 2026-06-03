@@ -1,3 +1,5 @@
+import { withSafetyOverrides, type RitualSafetyFlags } from "../lib/ritual-safety";
+
 export type SymbolicCardConfidence =
   | "core"
   | "common"
@@ -33,6 +35,7 @@ export type SymbolicCard = {
   ritual_ideas: string[];
   avoid_saying: string[];
   safety_notes: string[];
+  safety_flags?: RitualSafetyFlags;
   source_references: string[];
   confidence: SymbolicCardConfidence;
   approval_status: SymbolicCardApprovalStatus;
@@ -308,7 +311,14 @@ export const seedSymbolicCards: SymbolicCard[] = [
       "Never leave a flame unattended.",
       "Use a stable heat-safe surface and keep flame away from fabric, pets, and children.",
     ],
-    source_references: ["docs/source-review-packets.md#4-home-magic-starter-set"],
+    safety_flags: withSafetyOverrides({
+      fire: "led_default",
+      cleanupBurden: "tiny",
+    }),
+    source_references: [
+      "source.safety_reference_families",
+      "docs/source-review-packets.md#4-home-magic-starter-set",
+    ],
     confidence: "common",
     approval_status: "approved",
   },
@@ -334,7 +344,14 @@ export const seedSymbolicCards: SymbolicCard[] = [
       "Use ordinary cleaning safety and ventilation.",
       "Avoid mixing cleaning products.",
     ],
-    source_references: ["docs/source-review-packets.md#4-home-magic-starter-set"],
+    safety_flags: withSafetyOverrides({
+      cleanupBurden: "low",
+    }),
+    source_references: [
+      "source.laurel_woodward",
+      "source.safety_reference_families",
+      "docs/source-review-packets.md#4-home-magic-starter-set",
+    ],
     confidence: "common",
     approval_status: "approved",
   },
@@ -360,7 +377,17 @@ export const seedSymbolicCards: SymbolicCard[] = [
       "Account for plant toxicity, pets, children, and allergies in private storage.",
       "Avoid overwatering or handling irritating plants without care.",
     ],
-    source_references: ["docs/source-review-packets.md#4-home-magic-starter-set"],
+    safety_flags: withSafetyOverrides({
+      pets: "review_required",
+      children: "supervision",
+      allergies: ["review plant allergies and sensitivities before recommending specific plant contact"],
+      cleanupBurden: "tiny",
+    }),
+    source_references: [
+      "source.arin_murphy_hiscock",
+      "source.safety_reference_families",
+      "docs/source-review-packets.md#4-home-magic-starter-set",
+    ],
     confidence: "common",
     approval_status: "approved",
   },
@@ -386,7 +413,16 @@ export const seedSymbolicCards: SymbolicCard[] = [
       "Do not recommend ingestion.",
       "Keep salt away from surfaces, pets, plants, or materials it may damage.",
     ],
-    source_references: ["docs/source-review-packets.md#4-home-magic-starter-set"],
+    safety_flags: withSafetyOverrides({
+      ingestion: "avoid",
+      pets: "keep_away",
+      cleanupBurden: "tiny",
+    }),
+    source_references: [
+      "source.laurel_woodward",
+      "source.safety_reference_families",
+      "docs/source-review-packets.md#4-home-magic-starter-set",
+    ],
     confidence: "common",
     approval_status: "approved",
   },
@@ -412,7 +448,21 @@ export const seedSymbolicCards: SymbolicCard[] = [
       "Do not recommend ingestion, essential oils, or smoke by default.",
       "Account for allergies, pregnancy, pets, and sensitivities in private storage.",
     ],
-    source_references: ["docs/source-review-packets.md#4-home-magic-starter-set"],
+    safety_flags: withSafetyOverrides({
+      ingestion: "avoid",
+      essentialOils: "avoid",
+      smoke: "avoid",
+      pets: "review_required",
+      pregnancy: "review_required",
+      allergies: ["review herb allergies and sensitivities before recommending contact"],
+      cleanupBurden: "tiny",
+    }),
+    source_references: [
+      "source.laurel_woodward",
+      "source.rachel_patterson_moon",
+      "source.safety_reference_families",
+      "docs/source-review-packets.md#4-home-magic-starter-set",
+    ],
     confidence: "common",
     approval_status: "approved",
   },
@@ -438,7 +488,16 @@ export const seedSymbolicCards: SymbolicCard[] = [
       "Do not recommend ingestion.",
       "Account for allergies, dietary needs, and infant safety outside the repository if food is ever used.",
     ],
-    source_references: ["docs/source-review-packets.md#4-home-magic-starter-set"],
+    safety_flags: withSafetyOverrides({
+      ingestion: "avoid",
+      allergies: ["review food allergies and infant safety before suggesting use as food"],
+      cleanupBurden: "tiny",
+    }),
+    source_references: [
+      "source.laurel_woodward",
+      "source.safety_reference_families",
+      "docs/source-review-packets.md#4-home-magic-starter-set",
+    ],
     confidence: "common",
     approval_status: "approved",
   },
@@ -464,7 +523,53 @@ export const seedSymbolicCards: SymbolicCard[] = [
       "Lemon can irritate skin and damage some surfaces.",
       "Do not recommend ingestion, topical use, or essential oils by default.",
     ],
-    source_references: ["docs/source-review-packets.md#4-home-magic-starter-set"],
+    safety_flags: withSafetyOverrides({
+      ingestion: "avoid",
+      essentialOils: "avoid",
+      allergies: ["review citrus allergies and surface sensitivity before contact"],
+      cleanupBurden: "tiny",
+    }),
+    source_references: [
+      "source.laurel_woodward",
+      "source.safety_reference_families",
+      "docs/source-review-packets.md#4-home-magic-starter-set",
+    ],
+    confidence: "common",
+    approval_status: "approved",
+  },
+  {
+    id: "card_kitchen_magic_tea",
+    key: "tea",
+    title: "Tea",
+    category: "kitchen_magic",
+    summary: "A familiar warm-drink symbol for pause, care, warmth, and ordinary settling.",
+    themes: ["warmth", "pause", "care", "settling"],
+    good_for: ["quiet kitchen ritual", "soft transition", "low-overwhelm care"],
+    ritual_styles: ["kitchen", "tea", "warm"],
+    ritual_ideas: [
+      "Use a normal drink already safe for the household as a cue to pause.",
+      "Let the cup mark one small transition without adding extra steps.",
+    ],
+    avoid_saying: [
+      "Do not make health claims about tea or herbs.",
+      "Do not require special ingredients.",
+      "Do not treat food or drink as safe without allergy and household context.",
+    ],
+    safety_notes: [
+      "Normal food use only; use drinks already known to fit the household.",
+      "Do not recommend medicinal herbs, supplements, essential oils, or unfamiliar ingredients.",
+    ],
+    safety_flags: withSafetyOverrides({
+      ingestion: "normal_food_use_only",
+      allergies: ["use only foods or drinks already known to fit the household"],
+      cleanupBurden: "low",
+    }),
+    source_references: [
+      "source.laurel_woodward",
+      "source.rachel_patterson_moon",
+      "source.safety_reference_families",
+      "docs/source-review-packets.md#4-home-magic-starter-set",
+    ],
     confidence: "common",
     approval_status: "approved",
   },
