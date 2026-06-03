@@ -149,6 +149,8 @@ Older bootstrap values such as `candle`, `home_care`, `kitchen_clearing`, `shopp
 
 **Deferred:** Swiss Ephemeris until houses, natal charts, and personal transit precision justify licensing/deployment complexity.
 
+**Implementation note:** The MVP timing decision and initial `TimingFact` / `SkyEvent` model plan live in `docs/timing-engine-decision.md`.
+
 **Create:**
 
 - timing-engine decision doc
