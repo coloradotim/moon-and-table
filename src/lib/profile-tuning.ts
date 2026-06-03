@@ -4,6 +4,12 @@ import type {
   PrivateAudience,
   PrivateProfileAssumption,
 } from "./private-data-schema";
+import {
+  getGroupedProfilePreferenceOptions,
+  normalizeProfilePreferenceValues,
+} from "./profile-preference-taxonomy";
+
+export { normalizeProfilePreferenceValues } from "./profile-preference-taxonomy";
 
 export const PROFILE_TUNING_AUDIENCES = [
   "person_a",
@@ -17,23 +23,6 @@ export const PROFILE_TUNING_ASTROLOGY_VISIBILITY = [
   "balanced",
   "explicit",
 ] as const satisfies AstrologyVisibility[];
-
-export const PROFILE_TUNING_RITUAL_STYLE_OPTIONS = [
-  { value: "plant", label: "Plant" },
-  { value: "plant_tending", label: "Plant tending" },
-  { value: "kitchen", label: "Kitchen" },
-  { value: "kitchen_clearing", label: "Kitchen clearing" },
-  { value: "candle", label: "Candle" },
-  { value: "home_care", label: "Home care" },
-  { value: "conversation", label: "Conversation" },
-  { value: "shopping", label: "Shopping" },
-  { value: "shopping_required", label: "Shopping required" },
-  { value: "heavy_cleanup", label: "Heavy cleanup" },
-  { value: "long_journaling", label: "Long journaling" },
-  { value: "large_task_list", label: "Large task list" },
-  { value: "elaborate_ceremony", label: "Elaborate ceremony" },
-  { value: "vague_mush", label: "Vague mush" },
-] as const;
 
 export type ProfileTuningSettings = {
   defaultAudience: PrivateAudience;
@@ -99,22 +88,10 @@ export function joinStyleList(values: string[]): string {
   return values.join(", ");
 }
 
-function formatUnknownStyle(value: string): string {
-  return value
-    .split("_")
-    .map((part) => `${part.slice(0, 1).toUpperCase()}${part.slice(1)}`)
-    .join(" ");
-}
-
 export function getRitualStyleOptions(selectedValues: string[]) {
-  const knownValues = new Set<string>(
-    PROFILE_TUNING_RITUAL_STYLE_OPTIONS.map((option) => option.value),
+  return getGroupedProfilePreferenceOptions(selectedValues).flatMap(
+    (group) => group.options,
   );
-  const selectedUnknownOptions = selectedValues
-    .filter((value) => !knownValues.has(value))
-    .map((value) => ({ value, label: formatUnknownStyle(value) }));
-
-  return [...PROFILE_TUNING_RITUAL_STYLE_OPTIONS, ...selectedUnknownOptions];
 }
 
 export function buildProfileTuningUpdate(
@@ -125,8 +102,12 @@ export function buildProfileTuningUpdate(
   return {
     profile: {
       defaultAudience: input.defaultAudience,
-      preferredRitualStyles: input.preferredRitualStyles,
-      avoidedRitualStyles: input.avoidedRitualStyles,
+      preferredRitualStyles: normalizeProfilePreferenceValues(
+        input.preferredRitualStyles,
+      ),
+      avoidedRitualStyles: normalizeProfilePreferenceValues(
+        input.avoidedRitualStyles,
+      ),
       astrologyVisibility: input.astrologyVisibility,
       assumptions: currentSettings.assumptions.map((assumption) => {
         const nextValue = input.assumptionValues[assumption.key];

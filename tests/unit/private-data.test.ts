@@ -240,6 +240,30 @@ describe("private Firestore data resolution", () => {
     ]);
   });
 
+  it("normalizes bootstrap preference values when resolving private profile data", () => {
+    const privateBriefData = resolvePrivateBriefData({
+      profile: {
+        preferredRitualStyles: ["candle", "home_care", "kitchen_clearing"],
+        avoidedRitualStyles: ["shopping", "elaborate_ceremony", "vague_mush"],
+      },
+      capacitySettings: {
+        defaultCapacityMode: "low",
+        maxRitualDurationMinutes: 5,
+      },
+    });
+
+    expect(privateBriefData.tuning?.preferredRitualStyles).toEqual([
+      "candle_or_light",
+      "home_tending",
+      "surface_reset",
+    ]);
+    expect(privateBriefData.tuning?.avoidedRitualStyles).toEqual([
+      "shopping_required",
+      "elaborate_setup",
+      "avoid_vague_mush",
+    ]);
+  });
+
   it("keeps examples free of private real data", () => {
     const serialized = JSON.stringify(
       resolvePrivateBriefData({

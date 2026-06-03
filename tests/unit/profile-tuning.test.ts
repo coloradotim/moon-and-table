@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   buildProfileTuningUpdate,
   getRitualStyleOptions,
+  normalizeProfilePreferenceValues,
   splitStyleList,
   type ProfileTuningSettings,
 } from "../../src/lib/profile-tuning";
@@ -54,10 +55,32 @@ describe("profile tuning helpers", () => {
   it("provides labeled ritual style picklist options", () => {
     expect(getRitualStyleOptions(["home_care", "custom_style"])).toEqual(
       expect.arrayContaining([
-        { value: "home_care", label: "Home care" },
+        { value: "home_tending", label: "Home tending" },
         { value: "custom_style", label: "Custom Style" },
       ]),
     );
+  });
+
+  it("maps bootstrap preference values to canonical taxonomy values", () => {
+    expect(
+      normalizeProfilePreferenceValues([
+        "candle",
+        "home_care",
+        "kitchen_clearing",
+        "shopping",
+        "elaborate_ceremony",
+        "vague_mush",
+        "unknown_saved_value",
+      ]),
+    ).toEqual([
+      "candle_or_light",
+      "home_tending",
+      "surface_reset",
+      "shopping_required",
+      "elaborate_setup",
+      "avoid_vague_mush",
+      "unknown_saved_value",
+    ]);
   });
 
   it("builds Firestore updates while preserving assumption metadata intentionally", () => {
@@ -68,7 +91,7 @@ describe("profile tuning helpers", () => {
         defaultCapacityMode: "steady",
         maxRitualDurationMinutes: 20,
         preferredRitualStyles: ["plant_tending", "candle"],
-        avoidedRitualStyles: ["shopping_required"],
+        avoidedRitualStyles: ["shopping", "vague_mush"],
         astrologyVisibility: "subtle",
         assumptionValues: {
           "assumption.low_overwhelm": false,
@@ -80,8 +103,8 @@ describe("profile tuning helpers", () => {
 
     expect(update.profile).toMatchObject({
       defaultAudience: "together",
-      preferredRitualStyles: ["plant_tending", "candle"],
-      avoidedRitualStyles: ["shopping_required"],
+      preferredRitualStyles: ["plant_tending", "candle_or_light"],
+      avoidedRitualStyles: ["shopping_required", "avoid_vague_mush"],
       astrologyVisibility: "subtle",
       updatedAtIso: "2026-02-01T00:00:00.000Z",
     });

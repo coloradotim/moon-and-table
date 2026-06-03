@@ -129,6 +129,18 @@ Moon & Table should remain a small, disciplined synthesis engine:
 - No large pattern library yet.
 - No elaborate spell scripts.
 
+## Profile Preference Taxonomy
+
+Private profile tuning uses a canonical preference taxonomy in `src/lib/profile-preference-taxonomy.ts`. Keep these preference groups separate:
+
+- ritual styles: what kind of practice it is
+- action patterns: what the user actually does
+- burden / avoid flags: what makes a suggestion unsuitable
+- tone preferences: how the app should sound
+- audience: who a recommendation is for
+
+Older bootstrap values such as `candle`, `home_care`, `kitchen_clearing`, `shopping`, `elaborate_ceremony`, and `vague_mush` are mapped to canonical values when private profile data is loaded or saved. Unknown saved values should remain visible as other saved values instead of being silently dropped.
+
 ## Batch 4 — Computed timing foundation decision
 
 **Purpose:** Document and then implement deterministic timing facts separately from interpretation.
