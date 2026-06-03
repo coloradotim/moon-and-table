@@ -17,14 +17,42 @@ service cloud.firestore {
         && resource.data.email == request.auth.token.email;
     }
 
+    function isHouseholdMember(householdId) {
+      return signedIn()
+        && householdId != null
+        && exists(/databases/$(database)/documents/households/$(householdId))
+        && (
+          request.auth.uid in get(/databases/$(database)/documents/households/$(householdId)).data.memberUserIds ||
+          (
+            request.auth.token.email != null &&
+            request.auth.token.email in get(/databases/$(database)/documents/households/$(householdId)).data.memberEmails
+          )
+        );
+    }
+
     function ownsPrivateDocument(documentId) {
-      return ownsUserScopedDocument(documentId) || ownsEmailScopedDocument();
+      return ownsUserScopedDocument(documentId)
+        || ownsEmailScopedDocument()
+        || isHouseholdMember(resource.data.householdId);
     }
 
     function keepsOwnUserScopedDocument() {
       return signedIn()
         && resource.data.userId == request.auth.uid
         && request.resource.data.userId == request.auth.uid;
+    }
+
+    function keepsOwnPrivateDocument(documentId) {
+      return ownsPrivateDocument(documentId)
+        && request.resource.data.householdId == resource.data.householdId
+        && (
+          resource.data.userId == null ||
+          request.resource.data.userId == resource.data.userId
+        )
+        && (
+          resource.data.email == null ||
+          request.resource.data.email == resource.data.email
+        );
     }
 
     function createsOwnUserScopedDocument() {
@@ -43,25 +71,26 @@ service cloud.firestore {
     }
 
     match /profileEmailLinks/{linkId} {
-      allow read: if ownsEmailScopedDocument();
+      allow read: if ownsEmailScopedDocument()
+        || isHouseholdMember(resource.data.householdId);
       allow create, update, delete: if false;
     }
 
     match /profiles/{profileId} {
       allow read, delete: if ownsPrivateDocument(profileId);
-      allow update: if keepsOwnUserScopedDocument();
+      allow update: if keepsOwnPrivateDocument(profileId);
       allow create: if createsOwnUserScopedDocument();
     }
 
     match /scheduleConstraints/{constraintId} {
       allow read, delete: if ownsPrivateDocument(constraintId);
-      allow update: if keepsOwnUserScopedDocument();
+      allow update: if keepsOwnPrivateDocument(constraintId);
       allow create: if createsOwnUserScopedDocument();
     }
 
     match /capacitySettings/{settingId} {
       allow read, delete: if ownsPrivateDocument(settingId);
-      allow update: if keepsOwnUserScopedDocument();
+      allow update: if keepsOwnPrivateDocument(settingId);
       allow create: if createsOwnUserScopedDocument();
     }
 

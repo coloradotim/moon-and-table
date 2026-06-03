@@ -124,6 +124,7 @@ The seed file supports:
 - `household.astrologyVisibility`
 - `household.scheduleConstraints`
 - `profiles[].personKey`
+- `profiles[].displayLabel`
 - `profiles[].email`
 - `profiles[].profileThemeKeys`
 - `profiles[].assumptions`
@@ -171,6 +172,23 @@ The seed script is idempotent. It uses stable document ids and Firestore merge w
 
 After seeding, sign into the app normally with Google Auth. The app reads existing Firestore documents and should show `Using private settings from Firestore.`
 
+## Tune Seeded Private Settings
+
+After the app loads seeded private Firestore data, a small profile tuning section appears below the weekly brief. It shows one tuning card per seeded household profile, using private display labels from Firestore when available. Each card edits that profile's existing profile, capacity, and schedule settings, such as:
+
+- default capacity mode
+- max ritual time
+- preferred ritual styles
+- avoided ritual styles
+- astrology visibility
+- editable boolean preference assumptions
+
+This tuning section is for revising existing private data after backend/local seeding. It is not an initial import path, setup wizard, account manager, or seed JSON editor.
+
+When an editable assumption is changed, the app stores it as user-confirmed with high confidence while preserving non-editable and non-boolean assumption metadata.
+
+The profile cards and audience dropdown use private display labels from Firestore. Source-controlled examples use placeholders such as `Person A`; real names belong only in the local seed file and Firestore.
+
 ## Starter Firestore Collections
 
 Use these collection names as the first planning vocabulary:
@@ -217,9 +235,18 @@ Example seeded `profiles/{uid}` shape:
   "id": "placeholder-user-id",
   "householdId": "placeholder-household-id",
   "userId": "placeholder-user-id",
+  "displayLabel": "Person A",
+  "audienceLabels": {
+    "person_a": "Person A",
+    "person_b": "Person B",
+    "together": "Together",
+    "either": "Either"
+  },
+  "defaultAudience": "either",
   "profileThemeKeys": ["private_profile.practical_tending"],
   "preferredRitualStyles": ["tiny_home_ritual"],
   "avoidedRitualStyles": ["large_task_list"],
+  "astrologyVisibility": "balanced",
   "assumptions": [
     {
       "key": "assumption.low_overwhelm",
@@ -300,12 +327,12 @@ Keep these out of the repository:
 
 ## Current Non-Goals
 
-This setup guide includes the first Google sign-in UI, a local backend seed script for private Firestore documents, and app reads for existing user-scoped documents. It does not implement a Firestore editor or app writes.
+This setup guide includes the first Google sign-in UI, a local backend seed script for private Firestore documents, app reads for existing user-scoped documents, and a small profile tuning surface for existing seeded settings. It does not implement import/setup UI or broad account management.
 
 Do not add:
 
-- app Firestore writes
-- profile editor UI
+- seed import UI
+- full profile or account management UI
 - import or setup UI
 - calendar integration
 - Supabase

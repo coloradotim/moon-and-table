@@ -21,6 +21,7 @@
   "profiles": [
     {
       "personKey": "person_a",
+      "displayLabel": "Person A",
       "email": "person_a@example.com",
       "profileThemeKeys": ["private_profile.practical_tending"],
       "assumptions": [
@@ -44,6 +45,7 @@
     },
     {
       "personKey": "person_b",
+      "displayLabel": "Person B",
       "email": "person_b@example.com",
       "profileThemeKeys": ["private_profile.beauty_warmth"],
       "defaultCapacityMode": "steady",

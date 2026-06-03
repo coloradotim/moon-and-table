@@ -16,6 +16,7 @@ export type PrivateHouseholdSeedSchedule = {
 
 export type PrivateHouseholdSeedProfile = {
   personKey: string;
+  displayLabel?: string;
   email: string;
   profileThemeKeys: PrivateProfileThemeKey[];
   assumptions: PrivateProfileAssumption[];
@@ -538,6 +539,11 @@ export function parsePrivateHouseholdSeed(input: unknown): PrivateHouseholdSeed 
       return [
         {
           personKey: getString(profile, `${path}.personKey`, errors),
+          displayLabel:
+            typeof profile.displayLabel === "string" &&
+            profile.displayLabel.trim().length > 0
+              ? profile.displayLabel.trim()
+              : undefined,
           email: getEmail(profile, `${path}.email`, errors),
           profileThemeKeys: parseProfileThemeKeys(
             profile.profileThemeKeys,

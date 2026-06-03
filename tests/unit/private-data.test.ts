@@ -142,9 +142,102 @@ describe("private Firestore data resolution", () => {
     expect(
       shouldLoadPrivateData({
         status: "signed_in",
-        user: { uid: "placeholder-user-id", email: "person_a@example.com" },
+        user: {
+          uid: "placeholder-user-id",
+          email: "person_a@example.com",
+          displayName: "Person A",
+        },
       }),
     ).toBe(true);
+  });
+
+  it("uses private or signed-in display labels for audience options", () => {
+    const privateBriefData = resolvePrivateBriefData(
+      {
+        profile: {
+          personKey: "person_a",
+          audienceLabels: {
+            person_a: "Alex",
+            person_b: "Blair",
+          },
+          profileThemeKeys: ["private_profile.practical_tending"],
+        },
+        capacitySettings: {
+          defaultCapacityMode: "low",
+          maxRitualDurationMinutes: 5,
+        },
+      },
+      {
+        profileId: "profile_morgan",
+        capacitySettingsId: "profile_morgan",
+        scheduleConstraintsId: "profile_morgan",
+      },
+      { currentUserDisplayName: "Morgan Example" },
+    );
+
+    expect(privateBriefData.tuning?.audienceLabels).toEqual({
+      person_a: "Morgan",
+      person_b: "Blair",
+      together: "Together",
+      either: "Either",
+    });
+    expect(privateBriefData.tuningProfiles[0]?.label).toBe("Morgan");
+  });
+
+  it("keeps profile tuning records separated by private profile id", () => {
+    const privateBriefData = resolvePrivateBriefData(
+      {
+        profile: {
+          displayLabel: "Alex",
+          defaultAudience: "person_a",
+        },
+        capacitySettings: {
+          defaultCapacityMode: "low",
+          maxRitualDurationMinutes: 5,
+        },
+      },
+      {
+        profileId: "profile_alex",
+        capacitySettingsId: "profile_alex",
+        scheduleConstraintsId: "profile_alex",
+      },
+      {},
+      [
+        {
+          id: "profile_blair",
+          label: "Blair",
+          settings: {
+            defaultAudience: "person_b",
+            audienceLabels: {
+              person_a: "Alex",
+              person_b: "Blair",
+              together: "Together",
+              either: "Either",
+            },
+            defaultCapacityMode: "steady",
+            maxRitualDurationMinutes: 20,
+            preferredRitualStyles: ["candle"],
+            avoidedRitualStyles: ["shopping_required"],
+            astrologyVisibility: "subtle",
+            assumptions: [],
+          },
+          documentRefs: {
+            profileId: "profile_blair",
+            capacitySettingsId: "profile_blair",
+            scheduleConstraintsId: "profile_blair",
+          },
+        },
+      ],
+    );
+
+    expect(privateBriefData.tuningProfiles.map((profile) => profile.id)).toEqual([
+      "profile_alex",
+      "profile_blair",
+    ]);
+    expect(privateBriefData.tuningProfiles.map((profile) => profile.label)).toEqual([
+      "Alex",
+      "Blair",
+    ]);
   });
 
   it("keeps examples free of private real data", () => {

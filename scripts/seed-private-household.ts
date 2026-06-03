@@ -119,6 +119,12 @@ async function seedPrivateHousehold(seedPath: string): Promise<void> {
   const db = getFirestore();
   const resolvedProfiles = await resolveProfiles(seed.household.id, seed.profiles);
   const nowIso = new Date().toISOString();
+  const audienceLabels = Object.fromEntries(
+    seed.profiles.map((profile) => [
+      profile.personKey,
+      profile.displayLabel ?? profile.personKey.replace("_", " "),
+    ]),
+  );
   const memberUserIds = resolvedProfiles.flatMap((resolvedProfile) =>
     resolvedProfile.uid ? [resolvedProfile.uid] : [],
   );
@@ -165,6 +171,8 @@ async function seedPrivateHousehold(seedPath: string): Promise<void> {
       {
         id: profileId,
         personKey: profile.personKey,
+        displayLabel: profile.displayLabel ?? profile.personKey.replace("_", " "),
+        audienceLabels,
         householdId: seed.household.id,
         userId: uid ?? null,
         email: profile.email,

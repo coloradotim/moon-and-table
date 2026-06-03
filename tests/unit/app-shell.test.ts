@@ -4,6 +4,7 @@ import {
   renderAppShell,
   renderLoadingShell,
   renderPrivateDataLoadingShell,
+  renderProfileTuningSection,
   renderSignedInShell,
   renderSignedOutShell,
   renderUnauthorizedShell,
@@ -46,6 +47,86 @@ describe("app shell rendering", () => {
     expect(html).toContain("Clear one small thing. Feed one living thing.");
     expect(html).toContain("Thursday evening, 0-5 minutes.");
     expect(html).toContain("Using starter settings until private settings are created.");
+    expect(html).toContain("Private settings will appear here");
+  });
+
+  it("renders editable profile tuning for loaded private data", () => {
+    const privateBriefData = resolvePrivateBriefData(
+      {
+        profile: {
+          displayLabel: "Alex",
+          defaultAudience: "person_a",
+          audienceLabels: {
+            person_a: "Alex",
+            person_b: "Blair",
+            together: "Together",
+            either: "Either",
+          },
+          preferredRitualStyles: ["plant_tending", "candle"],
+          avoidedRitualStyles: ["shopping_required"],
+          astrologyVisibility: "subtle",
+          assumptions: [
+            {
+              key: "assumption.low_overwhelm",
+              label: "Suggestions usually work better when they stay small",
+              value: true,
+              source: "starter_assumption",
+              confidence: "low",
+              editable: true,
+              updatedAtIso: "2026-01-01T00:00:00.000Z",
+            },
+          ],
+        },
+        capacitySettings: {
+          defaultCapacityMode: "steady",
+          maxRitualDurationMinutes: 20,
+        },
+      },
+      {
+        profileId: "profile_alex",
+        capacitySettingsId: "profile_alex",
+        scheduleConstraintsId: "profile_alex",
+      },
+    );
+    const alexProfile = privateBriefData.tuningProfiles[0];
+
+    if (!alexProfile) {
+      throw new Error("Expected test profile tuning data");
+    }
+
+    privateBriefData.tuningProfiles.push({
+      ...alexProfile,
+      id: "profile_blair",
+      label: "Blair",
+      documentRefs: {
+        profileId: "profile_blair",
+        capacitySettingsId: "profile_blair",
+        scheduleConstraintsId: "profile_blair",
+      },
+    });
+
+    const html = renderProfileTuningSection(privateBriefData);
+
+    expect(html).toContain("Tune profiles");
+    expect(html).toContain("Adjust each household profile separately.");
+    expect(html).toContain("Default capacity");
+    expect(html).toContain("Max ritual time");
+    expect(html).toContain("Make astrology");
+    expect(html).toContain("Alex");
+    expect(html).toContain("Blair");
+    expect(html).toContain('data-profile-tuning-id="profile_alex"');
+    expect(html).toContain('data-profile-tuning-id="profile_blair"');
+    expect(html).not.toContain("Use this profile when brief is for");
+    expect(html).not.toContain('name="defaultAudience"');
+    expect(html).not.toContain(">person_a<");
+    expect(html).toContain("Plant tending");
+    expect(html).toContain("Candle");
+    expect(html).toContain("Shopping required");
+    expect(html).toContain('name="preferredRitualStyles"');
+    expect(html).not.toContain('name="preferredRitualStyles"\n            type="text"');
+    expect(html).toContain("Save Alex");
+    expect(html).toContain("Save Blair");
+    expect(html).not.toContain("starter assumption");
   });
 
   it("renders private data loading while signed-in Firestore data loads", () => {
@@ -77,7 +158,11 @@ describe("app shell rendering", () => {
     expect(
       renderAppShell({
         status: "signed_in",
-        user: { uid: "placeholder-user-id", email: "person_a@example.com" },
+        user: {
+          uid: "placeholder-user-id",
+          email: "person_a@example.com",
+          displayName: "Person A",
+        },
       }),
     ).toContain("Loading private settings for this household.");
   });

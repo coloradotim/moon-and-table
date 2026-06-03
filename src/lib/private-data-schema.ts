@@ -28,6 +28,10 @@ export type PrivateProfileAssumption = {
   updatedAtIso: string;
 };
 
+export type PrivateAudience = "person_a" | "person_b" | "together" | "either";
+
+export type AstrologyVisibility = "subtle" | "balanced" | "explicit";
+
 export type PrivateAstrologyProfile = {
   source: "user_provided_chart" | "astro_material" | "manual_entry";
   confidence: "low" | "medium" | "high";
@@ -61,9 +65,16 @@ export type PrivateProfileDocument = {
   householdId: string;
   userId?: string | null;
   email?: string;
+  personKey?: PrivateAudience;
+  displayLabel?: string;
+  audienceLabels?: Partial<Record<PrivateAudience, string>>;
   profileThemeKeys: PrivateProfileThemeKey[];
   preferredRitualStyles: string[];
   avoidedRitualStyles: string[];
+  defaultAudience?: PrivateAudience;
+  enabledAudiences?: PrivateAudience[];
+  tonePreferences?: string[];
+  astrologyVisibility?: AstrologyVisibility;
   assumptions: PrivateProfileAssumption[];
   astrologyProfile?: PrivateAstrologyProfile;
   updatedAtIso: string;

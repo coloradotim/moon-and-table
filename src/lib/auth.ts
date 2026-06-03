@@ -11,6 +11,7 @@ import type { FirebaseServices } from "./firebase";
 export type AuthenticatedUser = {
   uid: string;
   email: string | null;
+  displayName: string | null;
 };
 
 export type AppAuthState =
@@ -38,7 +39,7 @@ export function isEmailAllowed(
 }
 
 export function toAuthenticatedUser(user: User): AuthenticatedUser {
-  return { uid: user.uid, email: user.email };
+  return { uid: user.uid, email: user.email, displayName: user.displayName };
 }
 
 export function subscribeToAuthState(
