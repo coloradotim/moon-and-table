@@ -85,6 +85,8 @@ SymbolicCards describe meaning. RitualPatterns describe practice. The generator 
 
 Safety flags can block a pattern even when it matches timing, private profile context, or preferences.
 
+Lifecycle examples may exist as separate fixture data for curation training and tests. They must stay out of active seed arrays and generated briefs unless their status is changed through review.
+
 ## Timing Data
 
 | Object | Responsibility |

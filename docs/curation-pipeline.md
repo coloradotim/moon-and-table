@@ -151,6 +151,8 @@ Only `approved` cards should be used in generated Moon & Table briefs.
 
 This is a key quality control point. The product should never treat scraped, pasted, or AI-summarized content as ready for use without review.
 
+The repository may include small lifecycle examples for curator training and tests. These examples should live outside active seed arrays, carry explicit review reasons, and remain ineligible for generated briefs. Use them to show why a candidate, needs-revision, rejected, retired, or draft item is not the same as approved product knowledge.
+
 ### 6. Use in brief synthesis
 
 Approved cards become retrievable material for briefs.
