@@ -49,7 +49,7 @@ describe("app shell rendering", () => {
     expect(html).toContain("Thursday evening, 0-5 minutes.");
     expect(html).toContain("Using starter settings until private settings are created.");
     expect(html).toContain("Private settings will appear here");
-    expect(html).toContain("close_the_evening");
+    expect(html).toContain("astronomy_engine");
   });
 
   it("renders editable profile tuning for loaded private data", () => {

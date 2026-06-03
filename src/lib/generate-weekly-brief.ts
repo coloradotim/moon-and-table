@@ -8,6 +8,10 @@ import {
 } from "../data/seed-symbolic-cards";
 import type { PrivateAudience } from "./private-data-schema";
 import {
+  getLunarTimingFact,
+  type LunarTimingFact,
+} from "./lunar-timing";
+import {
   getProfilePreferenceGroup,
   normalizeProfilePreferenceValues,
 } from "./profile-preference-taxonomy";
@@ -45,6 +49,20 @@ export type ManualScheduleConstraints = {
 
 export type WeeklyBriefTrace = {
   timingFacts: TimingFactKey[];
+  timingFactDetails: Array<
+    Pick<
+      LunarTimingFact,
+      | "key"
+      | "label"
+      | "dateStart"
+      | "dateEnd"
+      | "timezone"
+      | "phaseAngleDegrees"
+      | "computedBy"
+      | "confidence"
+      | "relatedSymbolicKeys"
+    >
+  >;
   symbolicCards: string[];
   ritualPatterns: string[];
   sourceReviewIds: string[];
@@ -76,6 +94,7 @@ export type GenerateWeeklyBriefInput = {
   currentDate?: Date | string;
   dateRange?: string;
   timingFacts?: TimingFactKey[];
+  timingFactDetails?: LunarTimingFact[];
   privateProfileKeys?: PrivateProfilePlaceholderKey[];
   capacityMode?: CapacityMode;
   scheduleConstraints?: Partial<ManualScheduleConstraints>;
@@ -88,6 +107,7 @@ type ResolvedGenerateWeeklyBriefInput = {
   currentDate: Date;
   dateRange: string;
   timingFacts: TimingFactKey[];
+  timingFactDetails: LunarTimingFact[];
   privateProfileKeys: PrivateProfilePlaceholderKey[];
   capacityMode: CapacityMode;
   scheduleConstraints: ManualScheduleConstraints;
@@ -202,26 +222,6 @@ function getWeekDateRange(date: Date): string {
   });
 
   return `${formatter.format(start)}-${formatter.format(end)}`;
-}
-
-// Placeholder lunar adapter for the first vertical slice. It keeps timing factual
-// and swappable while a later issue wires in Astronomy Engine.
-function getPlaceholderMoonTimingFact(date: Date): Exclude<TimingFactKey, "numerology.6"> {
-  const bucket = Math.floor((date.getDate() - 1) / 7);
-
-  if (bucket === 0) {
-    return "moon.new";
-  }
-
-  if (bucket === 1) {
-    return "moon.waxing";
-  }
-
-  if (bucket === 2) {
-    return "moon.full";
-  }
-
-  return "moon.waning";
 }
 
 function getApprovedCardByKey(key: string): SymbolicCard {
@@ -585,7 +585,11 @@ function getOptionalAddOn(
   return "No add-on needed.";
 }
 
-function getTimingReason(card: SymbolicCard): string {
+function getTimingReason(card: SymbolicCard, timingFact?: LunarTimingFact): string {
+  if (timingFact) {
+    return `The lunar timing points toward a ${timingFact.label.toLowerCase()} theme, with ${card.themes[0]} and ${card.themes[1]} as the useful symbolic themes.`;
+  }
+
   return `${card.title} is the selected timing card for this week, with ${card.themes[0]} and ${card.themes[1]} as the useful themes.`;
 }
 
@@ -660,7 +664,7 @@ function getWhyThis(
       ? `Safety and avoid filters skipped ${excludedPatternKeys.length} pattern option.`
       : "";
 
-  return `${getTimingReason(timingCard)} ${pattern.title} fits as the selected approved ritual pattern. ${getPreferenceReason(preferenceMatches, input.avoidedRitualStyles)} ${safetyReason} ${profileReason} ${getScheduleReason(input.scheduleConstraints)} ${getCapacityReason(input.capacityMode, durationMinutes)}`.replace(/\s+/g, " ").trim();
+  return `${getTimingReason(timingCard, input.timingFactDetails[0])} ${pattern.title} fits as the selected approved ritual pattern. ${getPreferenceReason(preferenceMatches, input.avoidedRitualStyles)} ${safetyReason} ${profileReason} ${getScheduleReason(input.scheduleConstraints)} ${getCapacityReason(input.capacityMode, durationMinutes)}`.replace(/\s+/g, " ").trim();
 }
 
 function getTheme(timingCard: SymbolicCard, pattern: RitualPattern): string {
@@ -714,13 +718,21 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
   );
   const capacityMode =
     input.capacityMode ?? scheduleConstraints.defaultCapacityMode;
+  const lunarTimingFact = getLunarTimingFact(currentDate);
+  const timingFactDetails =
+    input.timingFactDetails ??
+    (input.timingFacts === undefined ? [lunarTimingFact] : []);
   const timingFacts =
-    input.timingFacts ?? [getPlaceholderMoonTimingFact(currentDate)];
+    input.timingFacts ??
+    (timingFactDetails.length > 0
+      ? timingFactDetails.map((fact) => fact.key)
+      : [lunarTimingFact.key]);
 
   return {
     currentDate,
     dateRange: input.dateRange ?? getWeekDateRange(currentDate),
     timingFacts,
+    timingFactDetails,
     privateProfileKeys:
       input.privateProfileKeys ?? DEFAULT_PRIVATE_PROFILE_KEYS,
     capacityMode,
@@ -787,6 +799,17 @@ export function generateWeeklyBrief(
     sourceSummary: getSourceSummary(timingCard, pattern, safetyNotes),
     trace: {
       timingFacts: resolvedInput.timingFacts,
+      timingFactDetails: resolvedInput.timingFactDetails.map((fact) => ({
+        key: fact.key,
+        label: fact.label,
+        dateStart: fact.dateStart,
+        dateEnd: fact.dateEnd,
+        timezone: fact.timezone,
+        phaseAngleDegrees: fact.phaseAngleDegrees,
+        computedBy: fact.computedBy,
+        confidence: fact.confidence,
+        relatedSymbolicKeys: fact.relatedSymbolicKeys,
+      })),
       symbolicCards: selectedCards.map(
         (card) => TRACE_KEY_BY_CARD_KEY[card.key] ?? card.key,
       ),

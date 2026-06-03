@@ -285,6 +285,9 @@ export function renderSignedInShell(privateBriefData: PrivateBriefData): string 
       : "Using private settings from Firestore.";
   const traceSummary = [
     brief.trace.timingFacts.join(" + "),
+    brief.trace.timingFactDetails
+      .map((fact) => `${fact.label} (${fact.computedBy})`)
+      .join(" · "),
     brief.trace.symbolicCards.join(" · "),
     brief.trace.ritualPatterns.join(" · "),
     brief.trace.sourceReviewIds.slice(0, 3).join(" · "),
