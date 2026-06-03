@@ -3,6 +3,7 @@ import type {
   AstrologyVisibility,
   PrivateAudience,
   PrivateProfileAssumption,
+  PrivateProfileThemeKey,
 } from "./private-data-schema";
 import {
   getGroupedProfilePreferenceOptions,
@@ -25,12 +26,16 @@ export const PROFILE_TUNING_ASTROLOGY_VISIBILITY = [
 ] as const satisfies AstrologyVisibility[];
 
 export type ProfileTuningSettings = {
+  personKey?: PrivateAudience;
   defaultAudience: PrivateAudience;
   audienceLabels: Record<PrivateAudience, string>;
   defaultCapacityMode: CapacityMode;
   maxRitualDurationMinutes: number;
   preferredRitualStyles: string[];
   avoidedRitualStyles: string[];
+  profileThemeKeys?: PrivateProfileThemeKey[];
+  astrologyProfileThemeKeys?: PrivateProfileThemeKey[];
+  tonePreferences?: string[];
   astrologyVisibility: AstrologyVisibility;
   assumptions: PrivateProfileAssumption[];
 };

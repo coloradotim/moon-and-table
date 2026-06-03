@@ -299,7 +299,7 @@ describe("generateWeeklyBrief", () => {
 
     expect(explanationText).toContain("Capacity");
     expect(explanationText).toContain("Schedule");
-    expect(explanationText).toContain("saved settings");
+    expect(explanationText).toContain("saved profile theme");
     expect(explanationText).toContain("Saturday morning");
     expect(explanationText).not.toContain("your chart says");
     expect(explanationText).not.toContain("will cause");
@@ -388,6 +388,154 @@ describe("generateWeeklyBrief", () => {
     );
     expect(brief.sourceSummary).not.toContain("private_profile");
     expect(JSON.stringify(brief.explanation)).not.toContain("private_profile");
+  });
+
+  it("uses person A profile themes when the brief is for person A", () => {
+    const brief = generateWeeklyBrief({
+      capacityMode: "low",
+      audience: "person_a",
+      profileInputs: [
+        {
+          audience: "person_a",
+          profileThemeKeys: ["private_profile.practical_tending"],
+        },
+        {
+          audience: "person_b",
+          profileThemeKeys: ["private_profile.beauty_warmth"],
+        },
+      ],
+    });
+
+    expect(brief.trace.profileSignalKeys).toEqual([
+      "profile_theme.person_a.private_profile.practical_tending",
+    ]);
+    expect(brief.whyThis).toContain("practical home-tending magic");
+    expect(brief.whyThis).not.toContain("warmth, beauty, and affection");
+  });
+
+  it("uses person B profile themes when the brief is for person B", () => {
+    const brief = generateWeeklyBrief({
+      capacityMode: "low",
+      audience: "person_b",
+      profileInputs: [
+        {
+          audience: "person_a",
+          profileThemeKeys: ["private_profile.practical_tending"],
+        },
+        {
+          audience: "person_b",
+          profileThemeKeys: ["private_profile.beauty_warmth"],
+          astrologyProfileThemeKeys: ["private_profile.beauty_warmth"],
+        },
+      ],
+    });
+
+    expect(brief.trace.ritualPatterns).toEqual(["candle_light_focus"]);
+    expect(brief.trace.profileSignalKeys).toEqual([
+      "profile_theme.person_b.private_profile.beauty_warmth",
+      "natal_theme.person_b.private_profile.beauty_warmth",
+    ]);
+    expect(brief.whyThis).toContain("warmth, beauty, and affection");
+    expect(brief.whyThis).not.toContain("chart");
+  });
+
+  it("blends both profiles safely for together recommendations", () => {
+    const brief = generateWeeklyBrief({
+      capacityMode: "low",
+      audience: "together",
+      profileInputs: [
+        {
+          audience: "person_a",
+          profileThemeKeys: ["private_profile.practical_tending"],
+        },
+        {
+          audience: "person_b",
+          profileThemeKeys: ["private_profile.beauty_warmth"],
+          astrologyProfileThemeKeys: ["private_profile.beauty_warmth"],
+        },
+      ],
+    });
+
+    expect(brief.trace.profileSignalKeys).toEqual([
+      "profile_theme.person_a.private_profile.practical_tending",
+      "profile_theme.person_b.private_profile.beauty_warmth",
+      "natal_theme.person_b.private_profile.beauty_warmth",
+    ]);
+    expect(brief.whyThis).toContain(
+      "balances practical home-tending magic with warmth, beauty, and affection",
+    );
+    expect(brief.trace.ritualPatterns).toHaveLength(1);
+  });
+
+  it("keeps either recommendations from conflicting with either profile avoid flags", () => {
+    const brief = generateWeeklyBrief({
+      capacityMode: "low",
+      audience: "either",
+      profileInputs: [
+        {
+          audience: "person_a",
+          profileThemeKeys: ["private_profile.practical_tending"],
+          avoidedRitualStyles: ["live_flame"],
+        },
+        {
+          audience: "person_b",
+          profileThemeKeys: ["private_profile.beauty_warmth"],
+          astrologyProfileThemeKeys: ["private_profile.beauty_warmth"],
+        },
+      ],
+    });
+
+    expect(brief.trace.ritualPatterns).not.toEqual(["candle_light_focus"]);
+    expect(brief.trace.safety.excludedPatternKeys).toContain("candle_light_focus");
+    expect(brief.whyThis).toContain("without conflicting with household avoid flags");
+  });
+
+  it("lets profile themes influence scoring when multiple patterns are eligible", () => {
+    const withoutBeautyTheme = generateWeeklyBrief({
+      capacityMode: "low",
+      audience: "person_b",
+      profileInputs: [
+        {
+          audience: "person_b",
+          profileThemeKeys: ["private_profile.practical_tending"],
+        },
+      ],
+    });
+    const withBeautyTheme = generateWeeklyBrief({
+      capacityMode: "low",
+      audience: "person_b",
+      profileInputs: [
+        {
+          audience: "person_b",
+          profileThemeKeys: ["private_profile.beauty_warmth"],
+          astrologyProfileThemeKeys: ["private_profile.beauty_warmth"],
+        },
+      ],
+    });
+
+    expect(withBeautyTheme.trace.ritualPatterns).toEqual(["candle_light_focus"]);
+    expect(withBeautyTheme.trace.ritualPatterns).not.toEqual(
+      withoutBeautyTheme.trace.ritualPatterns,
+    );
+  });
+
+  it("lets safety and explicit avoid flags override profile theme fit", () => {
+    const brief = generateWeeklyBrief({
+      capacityMode: "low",
+      audience: "person_b",
+      profileInputs: [
+        {
+          audience: "person_b",
+          profileThemeKeys: ["private_profile.beauty_warmth"],
+          astrologyProfileThemeKeys: ["private_profile.beauty_warmth"],
+          avoidedRitualStyles: ["live_flame"],
+        },
+      ],
+    });
+
+    expect(brief.trace.ritualPatterns).not.toEqual(["candle_light_focus"]);
+    expect(brief.trace.safety.excludedPatternKeys).toContain("candle_light_focus");
+    expect(brief.whyThis).toContain("A few options were set aside");
   });
 
   it("keeps generated output non-identifying", () => {

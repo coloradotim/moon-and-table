@@ -20,6 +20,12 @@ import {
   getProfilePreferenceLabel,
   normalizeProfilePreferenceValues,
 } from "./profile-preference-taxonomy";
+import {
+  getProfileSignalInputsForAudience,
+  mapPrivateProfileThemesToSignals,
+  type PrivateProfileSignal,
+  type PrivateProfileSignalInput,
+} from "./private-profile-signals";
 import { validateRitualSafety, type RitualSafetyFlags } from "./ritual-safety";
 import {
   getTimingFactsForDate,
@@ -107,6 +113,7 @@ export type WeeklyBriefTrace = {
   sourceReviewIds: string[];
   sourceNoteIds: string[];
   privateProfileKeys: PrivateProfilePlaceholderKey[];
+  profileSignalKeys: string[];
   profilePreferenceKeys: string[];
   capacityMode: CapacityMode;
   audience: PrivateAudience;
@@ -185,6 +192,7 @@ export type GenerateWeeklyBriefInput = {
   scheduleConstraints?: Partial<ManualScheduleConstraints>;
   preferredRitualStyles?: string[];
   avoidedRitualStyles?: string[];
+  profileInputs?: PrivateProfileSignalInput[];
   audience?: PrivateAudience;
   excludedRitualPatternKeys?: string[];
 };
@@ -200,6 +208,9 @@ type ResolvedGenerateWeeklyBriefInput = {
   scheduleConstraints: ManualScheduleConstraints;
   preferredRitualStyles: string[];
   avoidedRitualStyles: string[];
+  profileInputs: PrivateProfileSignalInput[];
+  selectedProfileInputs: PrivateProfileSignalInput[];
+  profileSignals: PrivateProfileSignal[];
   audience: PrivateAudience;
   excludedRitualPatternKeys: string[];
 };
@@ -208,6 +219,7 @@ type PatternCandidate = {
   pattern: RitualPattern;
   score: number;
   preferenceMatches: string[];
+  profileSignalMatches: PrivateProfileSignal[];
 };
 
 const DEFAULT_SCHEDULE_CONSTRAINTS: ManualScheduleConstraints = {
@@ -455,12 +467,54 @@ function normalizeStyleList(values: string[] | undefined): string[] {
   return normalizeProfilePreferenceValues(values ?? []);
 }
 
+function uniqueValues<T extends string>(values: T[]): T[] {
+  return [...new Set(values.filter(Boolean))];
+}
+
+function getProfileThemeKeysFromInputs(
+  profileInputs: PrivateProfileSignalInput[],
+): PrivateProfilePlaceholderKey[] {
+  return uniqueValues(
+    profileInputs.flatMap((profile) => [
+      ...profile.profileThemeKeys,
+      ...(profile.astrologyProfileThemeKeys ?? []),
+    ]),
+  );
+}
+
+function getProfilePreferredStyles(
+  profileInputs: PrivateProfileSignalInput[],
+): string[] {
+  return normalizeStyleList(
+    profileInputs.flatMap((profile) => profile.preferredRitualStyles ?? []),
+  );
+}
+
+function getProfileAvoidedStyles(
+  profileInputs: PrivateProfileSignalInput[],
+): string[] {
+  return normalizeStyleList(
+    profileInputs.flatMap((profile) => profile.avoidedRitualStyles ?? []),
+  );
+}
+
 function getCardStyleMatches(cards: SymbolicCard[], pattern: RitualPattern): string[] {
   const cardStyles = new Set(
     cards.flatMap((card) => normalizeStyleList(card.ritual_styles)),
   );
 
   return pattern.ritualStyles.filter((style) => cardStyles.has(style));
+}
+
+function getProfileSignalMatches(
+  profileSignals: PrivateProfileSignal[],
+  pattern: RitualPattern,
+): PrivateProfileSignal[] {
+  return profileSignals.filter((signal) =>
+    signal.ritualStyleHints.some(
+      (hint) => hint === pattern.key || pattern.ritualStyles.includes(hint),
+    ),
+  );
 }
 
 function getCleanupAvoidanceMatches(
@@ -593,26 +647,27 @@ function getEligiblePatternCandidates(
         signal.ritualStyleHints.includes(style),
       ),
     );
+    const profileSignalMatches = getProfileSignalMatches(
+      input.profileSignals,
+      pattern,
+    );
+    const profileSignalBoost = profileSignalMatches.reduce(
+      (total, signal) => total + signal.weight,
+      0,
+    );
     const defaultPatternBoost =
       pattern.key === DEFAULT_PATTERN_BY_CAPACITY[input.capacityMode] ? 1 : 0;
-    const practicalProfileBoost =
-      input.privateProfileKeys.includes("private_profile.practical_tending") &&
-      pattern.ritualStyles.some((style) =>
-        ["home_tending", "plant", "plant_tending", "kitchen"].includes(style),
-      )
-        ? 1
-        : 0;
     const highCapacityBoost =
       input.capacityMode === "high" && pattern.defaultDurationMinutes >= 10 ? 1 : 0;
     const score =
       preferenceMatches.length * 3 +
       cardStyleMatches.length * 2 +
       timingSignalStyleMatches.length * 2 +
+      profileSignalBoost +
       defaultPatternBoost +
-      practicalProfileBoost +
       highCapacityBoost;
 
-    return [{ pattern, score, preferenceMatches }];
+    return [{ pattern, score, preferenceMatches, profileSignalMatches }];
   });
 
   return {
@@ -629,6 +684,7 @@ function selectPattern(
 ): {
   pattern: RitualPattern;
   preferenceMatches: string[];
+  profileSignalMatches: PrivateProfileSignal[];
   excludedPatternKeys: string[];
   safetyNotes: string[];
 } {
@@ -642,6 +698,7 @@ function selectPattern(
     return {
       pattern: sortedCandidates[0].pattern,
       preferenceMatches: sortedCandidates[0].preferenceMatches,
+      profileSignalMatches: sortedCandidates[0].profileSignalMatches,
       excludedPatternKeys,
       safetyNotes,
     };
@@ -658,6 +715,7 @@ function selectPattern(
   return {
     pattern: fallbackPattern,
     preferenceMatches: [],
+    profileSignalMatches: [],
     excludedPatternKeys,
     safetyNotes: [
       ...safetyNotes,
@@ -806,6 +864,8 @@ function getScheduleSignal(
 function getProfileSignal(
   privateProfileCard: SymbolicCard | undefined,
   preferenceMatches: string[],
+  profileSignalMatches: PrivateProfileSignal[],
+  audience: PrivateAudience,
 ): BriefSignal | undefined {
   if (preferenceMatches.length > 0) {
     const label = preferenceMatches
@@ -817,6 +877,19 @@ function getProfileSignal(
       label: `Saved preference — ${label}`,
       type: "profile",
       summary: "This fits a saved preference that shaped the ritual choice.",
+      strength: "supporting",
+    };
+  }
+
+  if (profileSignalMatches.length > 0) {
+    const labels = getProfileThemeLabels(profileSignalMatches, audience);
+
+    return {
+      label: audience === "together"
+        ? "Saved profile themes — shared fit"
+        : `Saved profile theme — ${labels[0]}`,
+      type: "profile",
+      summary: getProfileThemeReason(profileSignalMatches, audience),
       strength: "supporting",
     };
   }
@@ -838,6 +911,7 @@ function getBriefSignals(
   input: ResolvedGenerateWeeklyBriefInput,
   privateProfileCard: SymbolicCard | undefined,
   preferenceMatches: string[],
+  profileSignalMatches: PrivateProfileSignal[],
   selectedTimingSignals: TimingSignal[],
 ): BriefSignal[] {
   const durationMinutes = getEffectiveDurationMinutes(
@@ -852,7 +926,12 @@ function getBriefSignals(
   }));
   const capacitySignal = getCapacitySignal(input.capacityMode, durationMinutes);
   const scheduleSignal = getScheduleSignal(input.scheduleConstraints);
-  const profileSignal = getProfileSignal(privateProfileCard, preferenceMatches);
+  const profileSignal = getProfileSignal(
+    privateProfileCard,
+    preferenceMatches,
+    profileSignalMatches,
+    input.audience,
+  );
 
   return [
     ...timingSignals,
@@ -923,10 +1002,49 @@ function getPreferenceReason(
   return "Your household settings help keep the suggestion practical and private.";
 }
 
+function getProfileThemeLabels(
+  profileSignalMatches: PrivateProfileSignal[],
+  audience: PrivateAudience,
+): string[] {
+  const labels = profileSignalMatches.map((signal) => signal.label);
+  const uniqueLabels = labels.filter(
+    (label, index) => labels.indexOf(label) === index,
+  );
+
+  if (audience === "together" && uniqueLabels.length > 1) {
+    return uniqueLabels.slice(0, 2);
+  }
+
+  return uniqueLabels.slice(0, 1);
+}
+
+function getProfileThemeReason(
+  profileSignalMatches: PrivateProfileSignal[],
+  audience: PrivateAudience,
+): string {
+  const labels = getProfileThemeLabels(profileSignalMatches, audience);
+
+  if (labels.length === 0) {
+    return "Saved profile themes helped shape the fit without exposing private chart details.";
+  }
+
+  if (audience === "together" && labels.length > 1) {
+    return `For a together recommendation, this balances ${labels[0]} with ${labels[1]}.`;
+  }
+
+  if (audience === "either") {
+    return `This fits at least one saved profile theme around ${labels[0]} without conflicting with household avoid flags.`;
+  }
+
+  return `This also fits the saved profile theme for ${labels[0]}.`;
+}
+
 function getFitReason(
   privateProfileCard: SymbolicCard | undefined,
   preferenceMatches: string[],
   avoidedRitualStyles: string[],
+  profileSignalMatches: PrivateProfileSignal[],
+  audience: PrivateAudience,
 ): string {
   if (preferenceMatches.length > 0) {
     const labels = preferenceMatches
@@ -934,6 +1052,10 @@ function getFitReason(
       .map((preference) => getProfilePreferenceLabel(preference).toLowerCase());
 
     return `Your saved preferences lean toward ${labels.join(" and ")}.`;
+  }
+
+  if (profileSignalMatches.length > 0) {
+    return getProfileThemeReason(profileSignalMatches, audience);
   }
 
   if (privateProfileCard) {
@@ -961,6 +1083,7 @@ function getWhyThis(
   privateProfileCard: SymbolicCard | undefined,
   input: ResolvedGenerateWeeklyBriefInput,
   preferenceMatches: string[],
+  profileSignalMatches: PrivateProfileSignal[],
   excludedPatternKeys: string[],
 ): string {
   const durationMinutes = getEffectiveDurationMinutes(
@@ -974,7 +1097,7 @@ function getWhyThis(
   const capacityReason = getCapacityReason(input.capacityMode, durationMinutes);
   const scheduleReason = getScheduleReason(input.scheduleConstraints);
 
-  return `${getTimingReason(timingCard, input.timingFactDetails[0])} ${pattern.title} was chosen as one small approved home practice for that theme. ${getFitReason(privateProfileCard, preferenceMatches, input.avoidedRitualStyles)} ${scheduleReason} ${capacityReason} ${safetyReason}`.replace(/\s+/g, " ").trim();
+  return `${getTimingReason(timingCard, input.timingFactDetails[0])} ${pattern.title} was chosen as one small approved home practice for that theme. ${getFitReason(privateProfileCard, preferenceMatches, input.avoidedRitualStyles, profileSignalMatches, input.audience)} ${scheduleReason} ${capacityReason} ${safetyReason}`.replace(/\s+/g, " ").trim();
 }
 
 function getReasoning(
@@ -1000,6 +1123,7 @@ function getReasoning(
 function getFilterNotes(
   input: ResolvedGenerateWeeklyBriefInput,
   preferenceMatches: string[],
+  profileSignalMatches: PrivateProfileSignal[],
   excludedPatternKeys: string[],
   safetyNotes: string[],
 ): BriefFilterNote[] {
@@ -1022,6 +1146,13 @@ function getFilterNotes(
     notes.push({
       label: "Preferences",
       summary: getPreferenceReason(preferenceMatches, input.avoidedRitualStyles),
+    });
+  }
+
+  if (profileSignalMatches.length > 0) {
+    notes.push({
+      label: "Profile themes",
+      summary: getProfileThemeReason(profileSignalMatches, input.audience),
     });
   }
 
@@ -1353,6 +1484,7 @@ function getExplanation(
   privateProfileCard: SymbolicCard | undefined,
   input: ResolvedGenerateWeeklyBriefInput,
   preferenceMatches: string[],
+  profileSignalMatches: PrivateProfileSignal[],
   excludedPatternKeys: string[],
   safetyNotes: string[],
   whyThis: string,
@@ -1363,12 +1495,14 @@ function getExplanation(
       input,
       privateProfileCard,
       preferenceMatches,
+      profileSignalMatches,
       selectedTimingSignals,
     ),
     reasoning: getReasoning(whyThis, pattern, input),
     filtersApplied: getFilterNotes(
       input,
       preferenceMatches,
+      profileSignalMatches,
       excludedPatternKeys,
       safetyNotes,
     ),
@@ -1402,6 +1536,7 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
   );
   const capacityMode =
     input.capacityMode ?? scheduleConstraints.defaultCapacityMode;
+  const audience = input.audience ?? "either";
   const lunarTimingFact = getLunarTimingFact(currentDate);
   const timingFactDetails =
     input.timingFactDetails ??
@@ -1413,6 +1548,39 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
       : [lunarTimingFact.key]);
   const computedTimingFacts =
     input.computedTimingFacts ?? getTimingFactsForDate(currentDate);
+  const fallbackPrivateProfileKeys =
+    input.privateProfileKeys ?? DEFAULT_PRIVATE_PROFILE_KEYS;
+  const profileInputs =
+    input.profileInputs && input.profileInputs.length > 0
+      ? input.profileInputs
+      : [
+          {
+            audience,
+            profileThemeKeys: fallbackPrivateProfileKeys,
+            preferredRitualStyles: input.preferredRitualStyles,
+            avoidedRitualStyles: input.avoidedRitualStyles,
+          },
+        ];
+  const selectedProfileInputs = getProfileSignalInputsForAudience(
+    profileInputs,
+    audience,
+  );
+  const privateProfileKeys = uniqueValues([
+    ...fallbackPrivateProfileKeys,
+    ...getProfileThemeKeysFromInputs(selectedProfileInputs),
+  ]);
+  const profileSignals = mapPrivateProfileThemesToSignals(
+    profileInputs,
+    audience,
+  );
+  const preferredRitualStyles = uniqueValues([
+    ...normalizeStyleList(input.preferredRitualStyles),
+    ...getProfilePreferredStyles(selectedProfileInputs),
+  ]);
+  const avoidedRitualStyles = uniqueValues([
+    ...normalizeStyleList(input.avoidedRitualStyles),
+    ...getProfileAvoidedStyles(selectedProfileInputs),
+  ]);
 
   return {
     currentDate,
@@ -1420,13 +1588,15 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
     timingFacts,
     timingFactDetails,
     computedTimingFacts,
-    privateProfileKeys:
-      input.privateProfileKeys ?? DEFAULT_PRIVATE_PROFILE_KEYS,
+    privateProfileKeys,
     capacityMode,
     scheduleConstraints,
-    preferredRitualStyles: normalizeStyleList(input.preferredRitualStyles),
-    avoidedRitualStyles: normalizeStyleList(input.avoidedRitualStyles),
-    audience: input.audience ?? "either",
+    preferredRitualStyles,
+    avoidedRitualStyles,
+    profileInputs,
+    selectedProfileInputs,
+    profileSignals,
+    audience,
     excludedRitualPatternKeys: input.excludedRitualPatternKeys ?? [],
   };
 }
@@ -1469,6 +1639,7 @@ export function generateWeeklyBrief(
   const {
     pattern,
     preferenceMatches,
+    profileSignalMatches,
     excludedPatternKeys,
     safetyNotes,
   } = selectPattern(resolvedInput, selectedCards, selectedTimingSignals);
@@ -1487,6 +1658,7 @@ export function generateWeeklyBrief(
     privateProfileCard,
     resolvedInput,
     preferenceMatches,
+    profileSignalMatches,
     excludedPatternKeys,
   );
 
@@ -1518,6 +1690,7 @@ export function generateWeeklyBrief(
       privateProfileCard,
       resolvedInput,
       preferenceMatches,
+      profileSignalMatches,
       excludedPatternKeys,
       safetyNotes,
       whyThis,
@@ -1562,6 +1735,7 @@ export function generateWeeklyBrief(
       sourceReviewIds,
       sourceNoteIds,
       privateProfileKeys: resolvedInput.privateProfileKeys,
+      profileSignalKeys: profileSignalMatches.map((signal) => signal.key),
       profilePreferenceKeys: [
         ...resolvedInput.preferredRitualStyles,
         ...resolvedInput.avoidedRitualStyles,
