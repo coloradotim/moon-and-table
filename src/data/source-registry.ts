@@ -165,18 +165,20 @@ export const starterSourceReviews: SourceReview[] = [
   },
   {
     id: "source.sarah_faith_gottesdiener",
-    title: "Sarah Faith Gottesdiener lunar work",
+    title: "Sarah Faith Gottesdiener — lunar reflection source",
     authorOrPublisher: "Sarah Faith Gottesdiener",
     category: "moon_phase_symbolism",
     sourceType: "book",
     useDecision: "use",
     reviewStatus: "reviewed",
     bestFor: [
-      "lunar reflection patterns",
-      "low-overwhelm moon phase prompts",
+      "four-phase lunar reflection patterns",
+      "low-overwhelm moon phase prompts and questions",
+      "quiet intention, attention, release, and integration framing",
     ],
     concerns: [
       "do not imitate voice or copy reflective prompts",
+      "do not let reflective material become emotional pressure",
     ],
     copyrightNotes: [
       "manual review only; transform observations into original source notes",
@@ -188,13 +190,13 @@ export const starterSourceReviews: SourceReview[] = [
       "keep lunar framing personal and invitational",
     ],
     extractionNotes: [
-      "use to cross-check four-phase moon cards",
+      "use to cross-check four-phase moon cards with short transformed notes only",
     ],
     confidence: "medium",
   },
   {
     id: "source.rachel_patterson_moon",
-    title: "Rachel Patterson moon and kitchen source family",
+    title: "Rachel Patterson — lunar/domestic magic source",
     authorOrPublisher: "Rachel Patterson",
     category: "moon_phase_symbolism",
     sourceType: "book",
@@ -203,6 +205,7 @@ export const starterSourceReviews: SourceReview[] = [
     bestFor: [
       "practical lunar and domestic correspondences",
       "cross-checking simple moon phase action patterns",
+      "connecting moon timing to ordinary home practices",
     ],
     concerns: [
       "filter spell-timing and correspondence material through Moon & Table safety and tone rules",
@@ -217,7 +220,7 @@ export const starterSourceReviews: SourceReview[] = [
       "use broad lunar/home practice context without presenting it as universal fact",
     ],
     extractionNotes: [
-      "extract short transformed lunar action themes only",
+      "extract short transformed lunar action themes only; do not import spell scripts",
     ],
     confidence: "medium",
   },
@@ -342,6 +345,82 @@ export const starterSourceNotes: SourceNote[] = [
     ],
     copyrightNotes: [
       "short transformed note only; no source prompt text",
+    ],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.new_moon_quiet_reset",
+    sourceId: "source.sarah_faith_gottesdiener",
+    locationNote: "docs/source-research-synthesis.md Batch 5 four lunar phase card batch",
+    paraphrasedNote:
+      "Treat new moon timing as a quiet reset for one modest intention, not as pressure to reinvent the household.",
+    category: "moon_phase_symbolism",
+    tags: ["moon", "new_moon", "intention", "reset"],
+    riskNotes: [
+      "avoid manifestation guarantees and urgent fresh-start language",
+    ],
+    safetyNotes: [
+      "keep prompts optional and emotionally light",
+    ],
+    copyrightNotes: [
+      "short transformed note only; no copied prompt or ritual language",
+    ],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.waxing_moon_steady_support",
+    sourceId: "source.rachel_patterson_moon",
+    locationNote: "docs/source-research-synthesis.md Batch 5 four lunar phase card batch",
+    paraphrasedNote:
+      "Use waxing moon timing for steady tending and support of what already exists, not productivity pressure.",
+    category: "moon_phase_symbolism",
+    tags: ["moon", "waxing_moon", "tending", "support"],
+    riskNotes: [
+      "avoid implying that growth must be constant",
+    ],
+    safetyNotes: [
+      "plant, kitchen, and candle actions still need ordinary household safety",
+    ],
+    copyrightNotes: [
+      "short transformed note only; no copied spell or correspondence text",
+    ],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.full_moon_visibility_without_fear",
+    sourceId: "source.sarah_faith_gottesdiener",
+    locationNote: "docs/source-research-synthesis.md Batch 5 four lunar phase card batch",
+    paraphrasedNote:
+      "Frame full moon visibility as noticing clarity, completion, or gratitude without fear, exposure, or intensity claims.",
+    category: "moon_phase_symbolism",
+    tags: ["moon", "full_moon", "visibility", "gratitude"],
+    riskNotes: [
+      "avoid fear-based full moon language and deterministic emotion claims",
+    ],
+    safetyNotes: [
+      "keep reflection optional; offer fire-free options when the household feels busy",
+    ],
+    copyrightNotes: [
+      "short transformed note only; no copied reflective prompt language",
+    ],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.waning_moon_clear_and_rest",
+    sourceId: "source.rachel_patterson_moon",
+    locationNote: "docs/source-research-synthesis.md Batch 5 four lunar phase card batch",
+    paraphrasedNote:
+      "Use waning moon timing for small clearing, integration, and rest without making release feel mandatory.",
+    category: "moon_phase_symbolism",
+    tags: ["moon", "waning_moon", "clearing", "rest"],
+    riskNotes: [
+      "avoid emotional pressure, smoke defaults, and large cleanup framing",
+    ],
+    safetyNotes: [
+      "clearing actions should stay physically light and low-scent by default",
+    ],
+    copyrightNotes: [
+      "short transformed note only; no copied spell or ritual instructions",
     ],
     verbatimAllowed: false,
   },

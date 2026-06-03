@@ -88,6 +88,13 @@ describe("seedSymbolicCards", () => {
     const lunarCards = seedSymbolicCards.filter(
       (card) => card.category === "moon_phase",
     );
+    const forbiddenEightPhaseKeys = [
+      "crescent_moon",
+      "first_quarter_moon",
+      "gibbous_moon",
+      "last_quarter_moon",
+      "balsamic_moon",
+    ];
 
     expect(lunarCards.map((card) => card.key).sort()).toEqual([
       "full_moon",
@@ -95,9 +102,20 @@ describe("seedSymbolicCards", () => {
       "waning_moon",
       "waxing_moon",
     ]);
+    expect(seedSymbolicCards.map((card) => card.key)).not.toEqual(
+      expect.arrayContaining(forbiddenEightPhaseKeys),
+    );
 
     for (const card of lunarCards) {
       expect(card.approval_status).toBe("approved");
+      expect(card.confidence).toBe("core");
+      expect(card.themes.length).toBeGreaterThanOrEqual(3);
+      expect(card.themes.length).toBeLessThanOrEqual(5);
+      expect(card.good_for.length).toBeGreaterThanOrEqual(3);
+      expect(card.ritual_styles.length).toBeGreaterThan(0);
+      expect(card.ritual_ideas.length).toBeGreaterThan(0);
+      expect(card.avoid_saying.length).toBeGreaterThan(0);
+      expect(card.safety_notes.length).toBeGreaterThan(0);
       expect(card.source_references).toEqual(
         expect.arrayContaining([
           "source.sarah_faith_gottesdiener",
@@ -113,6 +131,39 @@ describe("seedSymbolicCards", () => {
         "must",
       );
     }
+
+    expect(
+      lunarCards.find((card) => card.key === "new_moon")?.source_references,
+    ).toContain("note.new_moon_quiet_reset");
+    expect(
+      lunarCards.find((card) => card.key === "waxing_moon")?.source_references,
+    ).toContain("note.waxing_moon_steady_support");
+    expect(
+      lunarCards.find((card) => card.key === "full_moon")?.source_references,
+    ).toContain("note.full_moon_visibility_without_fear");
+    expect(
+      lunarCards.find((card) => card.key === "waning_moon")?.source_references,
+    ).toContain("note.waning_moon_clear_and_rest");
+  });
+
+  it("keeps strengthened lunar cards invitational and safety-aware", () => {
+    const lunarCards = seedSymbolicCards.filter(
+      (card) => card.category === "moon_phase",
+    );
+    const serializedLunarCards = JSON.stringify(lunarCards).toLowerCase();
+    const userFacingLunarText = lunarCards
+      .map((card) => `${card.summary} ${card.ritual_ideas.join(" ")}`)
+      .join(" ")
+      .toLowerCase();
+
+    expect(userFacingLunarText).not.toContain("manifestation guarantee");
+    expect(userFacingLunarText).not.toContain("guaranteed outcome");
+    expect(userFacingLunarText).not.toContain("causes conflict");
+    expect(userFacingLunarText).not.toContain("urgent");
+    expect(userFacingLunarText).not.toContain("copy");
+    expect(serializedLunarCards).not.toContain("private source text");
+    expect(serializedLunarCards).not.toContain("birth");
+    expect(serializedLunarCards).not.toContain("natal");
   });
 
   it("keeps private profile cards generic placeholders", () => {
