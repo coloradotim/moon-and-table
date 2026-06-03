@@ -28,6 +28,7 @@ import {
   type ProfileTuningProfile,
   type ProfileTuningSettings,
 } from "./profile-tuning";
+import { normalizeProfilePreferenceValues } from "./profile-preference-taxonomy";
 
 export type FirestorePrivateDocuments = {
   profile?: Partial<PrivateProfileDocument> | null;
@@ -358,10 +359,12 @@ export function resolvePrivateBriefData(
           preferredRitualStyles: isStringArray(
             documents.profile?.preferredRitualStyles,
           )
-            ? documents.profile.preferredRitualStyles
+            ? normalizeProfilePreferenceValues(
+                documents.profile.preferredRitualStyles,
+              )
             : [],
           avoidedRitualStyles: isStringArray(documents.profile?.avoidedRitualStyles)
-            ? documents.profile.avoidedRitualStyles
+            ? normalizeProfilePreferenceValues(documents.profile.avoidedRitualStyles)
             : [],
           astrologyVisibility: isAstrologyVisibility(
             documents.profile?.astrologyVisibility,

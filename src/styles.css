@@ -268,6 +268,19 @@ fieldset {
   gap: 10px;
 }
 
+.preference-group {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.preference-group-label {
+  margin: 0;
+  color: #52635a;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
 .choice-pill {
   display: inline-flex;
   min-height: 38px;

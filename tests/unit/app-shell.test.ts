@@ -62,8 +62,8 @@ describe("app shell rendering", () => {
             together: "Together",
             either: "Either",
           },
-          preferredRitualStyles: ["plant_tending", "candle"],
-          avoidedRitualStyles: ["shopping_required"],
+          preferredRitualStyles: ["plant_tending", "candle", "custom_saved_value"],
+          avoidedRitualStyles: ["shopping", "vague_mush"],
           astrologyVisibility: "subtle",
           assumptions: [
             {
@@ -119,9 +119,16 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("Use this profile when brief is for");
     expect(html).not.toContain('name="defaultAudience"');
     expect(html).not.toContain(">person_a<");
+    expect(html).toContain("Ritual styles");
+    expect(html).toContain("Action patterns");
+    expect(html).toContain("Burden / avoid flags");
+    expect(html).toContain("Tone preferences");
+    expect(html).toContain("Other saved values");
     expect(html).toContain("Plant tending");
-    expect(html).toContain("Candle");
+    expect(html).toContain("Candle or light");
+    expect(html).toContain("Custom Saved Value");
     expect(html).toContain("Shopping required");
+    expect(html).toContain("Avoid vague mush");
     expect(html).toContain('name="preferredRitualStyles"');
     expect(html).not.toContain('name="preferredRitualStyles"\n            type="text"');
     expect(html).toContain("Save Alex");

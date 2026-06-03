@@ -1,8 +1,8 @@
 import { generateWeeklyBrief } from "../lib/generate-weekly-brief";
 import type { AppAuthState } from "../lib/auth";
 import type { PrivateBriefData } from "../lib/private-data";
+import { getGroupedProfilePreferenceOptions } from "../lib/profile-preference-taxonomy";
 import {
-  getRitualStyleOptions,
   PROFILE_TUNING_ASTROLOGY_VISIBILITY,
   type ProfileTuningProfile,
   type ProfileTuningSettings,
@@ -41,19 +41,33 @@ function renderStyleOptions(
 ): string {
   const selectedValueSet = new Set(selectedValues);
 
-  return getRitualStyleOptions(selectedValues)
-    .map((option) => {
-      const checkedAttribute = selectedValueSet.has(option.value) ? " checked" : "";
+  return getGroupedProfilePreferenceOptions(selectedValues)
+    .filter((group) => group.group !== "audience")
+    .map((group) => {
+      const options = group.options
+        .map((option) => {
+          const checkedAttribute = selectedValueSet.has(option.value) ? " checked" : "";
+
+          return `
+            <label class="choice-pill">
+              <input
+                type="checkbox"
+                name="${name}"
+                value="${escapeHtml(option.value)}"${checkedAttribute}
+              />
+              <span>${escapeHtml(option.label)}</span>
+            </label>
+          `;
+        })
+        .join("");
 
       return `
-        <label class="choice-pill">
-          <input
-            type="checkbox"
-            name="${name}"
-            value="${escapeHtml(option.value)}"${checkedAttribute}
-          />
-          <span>${escapeHtml(option.label)}</span>
-        </label>
+        <div class="preference-group">
+          <p class="preference-group-label">${escapeHtml(group.label)}</p>
+          <div class="choice-list">
+            ${options}
+          </div>
+        </div>
       `;
     })
     .join("");
@@ -135,16 +149,12 @@ function renderTuningProfileForm(
 
         <fieldset>
           <legend>Prefer</legend>
-          <div class="choice-list">
-            ${renderStyleOptions("preferredRitualStyles", settings.preferredRitualStyles)}
-          </div>
+          ${renderStyleOptions("preferredRitualStyles", settings.preferredRitualStyles)}
         </fieldset>
 
         <fieldset>
           <legend>Avoid</legend>
-          <div class="choice-list">
-            ${renderStyleOptions("avoidedRitualStyles", settings.avoidedRitualStyles)}
-          </div>
+          ${renderStyleOptions("avoidedRitualStyles", settings.avoidedRitualStyles)}
         </fieldset>
 
         <fieldset>
