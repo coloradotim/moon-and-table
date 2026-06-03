@@ -35,7 +35,7 @@ npm run test:e2e
 
 For manual Google Auth and Firestore testing, add real Firebase web app config values and `VITE_AUTH_ALLOWED_EMAILS` to `.env.local`, enable Google Auth in Firebase, seed private Firestore data locally if desired, then run `npm run server:restart` and open `http://localhost:5173`. The signed-out page should show `Sign in with Google`; after signing in with an allowed account, the app loads UID-linked or pending email-linked Firestore documents and renders the protected weekly brief.
 
-Missing Firestore documents are safe. With no `profiles/{uid}`, `capacitySettings/{uid}`, or `scheduleConstraints/{uid}` documents, the brief should render with `Using starter settings until private settings are created.`
+Missing Firestore documents are safe. With no `profiles/{uid}`, `capacitySettings/{uid}`, or `scheduleConstraints/{uid}` documents, the brief should render with `Using starter settings until your private settings are ready.`
 
 Optional private-data verification uses the local seed script:
 
@@ -45,11 +45,13 @@ Optional private-data verification uses the local seed script:
 4. Authenticate the seed script with `GOOGLE_APPLICATION_CREDENTIALS` or `FIREBASE_SERVICE_ACCOUNT_PATH` pointing to a gitignored local service account file.
 5. Run `npm run seed:private`.
 6. Refresh the app.
-7. Confirm the brief shows `Using private settings from Firestore.` and that capacity, profile theme, or schedule changes affect the brief trace.
+7. Confirm the brief shows `Using your household settings.` and that capacity, profile theme, or schedule changes affect the brief.
 
 The seed script does not require every household member to have logged in already. If an account does not exist yet in Firebase Auth, the seed writes pending documents by email; when that person later signs in with the same Google Auth email, the app can read the seeded profile through the email link.
 
-After seeded private data loads, the signed-in app shows a small profile tuning section below the weekly brief. It renders one tuning card per seeded household profile and edits that profile's existing Firestore profile, capacity, and schedule documents. It is not an import flow, setup wizard, account manager, or seed editor.
+After seeded private data loads, the signed-in app shows the weekly brief by default. Use `Menu` > `Profile settings` to open one tuning card per seeded household profile and edit that profile's existing Firestore profile, capacity, and schedule documents. It is not an import flow, setup wizard, account manager, or seed editor.
+
+For hosted deployment setup, see `docs/deployment.md`.
 
 Keep optional Firestore test values generic. Do not use real names, birth data, natal placements, relationship details, private source text, or schedules tied to a real person in source-controlled examples, tests, or screenshots.
 

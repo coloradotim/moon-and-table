@@ -67,3 +67,5 @@ Do not commit actual names, birth data, natal placements, schedules, or private 
 See `docs/development-workflow.md` for local test commands, CI behavior, Playwright status, auto-merge readiness, and privacy-safe testing expectations.
 
 See `docs/firebase-setup.md` for the placeholder-only Firebase project setup path for hosted auth and private storage.
+
+See `docs/deployment.md` for Vercel deployment, Firebase Auth authorized-domain setup, hosted env vars, and private-data verification.
