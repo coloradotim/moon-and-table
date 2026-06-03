@@ -91,6 +91,7 @@ export type WeeklyBriefTrace = {
       | "timingFactId"
       | "timingFactType"
       | "signalLabel"
+      | "symbolicCardKeys"
       | "strength"
     >
   >;
@@ -2120,6 +2121,7 @@ export function generateWeeklyBrief(
         timingFactId: signal.timingFactId,
         timingFactType: signal.timingFactType,
         signalLabel: signal.signalLabel,
+        symbolicCardKeys: signal.symbolicCardKeys,
         strength: signal.strength,
       })),
       timingFactDetails: resolvedInput.timingFactDetails.map((fact) => ({

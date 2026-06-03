@@ -12,6 +12,7 @@
     "server:logs": "scripts/dev.sh logs",
     "server:open": "scripts/dev.sh open",
     "seed:private": "tsx scripts/seed-private-household.ts",
+    "diagnose:content": "tsx scripts/content-reachability.ts",
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
