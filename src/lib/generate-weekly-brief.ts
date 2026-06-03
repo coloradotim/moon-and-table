@@ -799,6 +799,26 @@ function getProfileSignal(
   profileSignalMatches: PrivateProfileSignal[],
   audience: PrivateAudience,
 ): BriefSignal | undefined {
+  if (profileSignalMatches.length > 0) {
+    const natalSignals = profileSignalMatches.filter(
+      (signal) => signal.source === "natal_theme",
+    );
+    const profileLabels = getProfileLabels(natalSignals.length > 0
+      ? natalSignals
+      : profileSignalMatches);
+
+    return {
+      label: natalSignals.length > 0
+        ? `Natal chart themes — ${profileLabels.join(" and ")}`
+        : audience === "together"
+          ? "Saved profile themes — shared fit"
+          : `Saved profile theme — ${getProfileThemeLabels(profileSignalMatches, audience)[0]}`,
+      type: "profile",
+      summary: getProfileThemeReason(profileSignalMatches, audience),
+      strength: "supporting",
+    };
+  }
+
   if (preferenceMatches.length > 0) {
     const label = preferenceMatches
       .slice(0, 2)
@@ -809,19 +829,6 @@ function getProfileSignal(
       label: `Saved preference — ${label}`,
       type: "profile",
       summary: "This fits a saved preference that shaped the ritual choice.",
-      strength: "supporting",
-    };
-  }
-
-  if (profileSignalMatches.length > 0) {
-    const labels = getProfileThemeLabels(profileSignalMatches, audience);
-
-    return {
-      label: audience === "together"
-        ? "Saved profile themes — shared fit"
-        : `Saved profile theme — ${labels[0]}`,
-      type: "profile",
-      summary: getProfileThemeReason(profileSignalMatches, audience),
       strength: "supporting",
     };
   }
@@ -932,14 +939,58 @@ function getProfileThemeLabels(
   return uniqueLabels.slice(0, 1);
 }
 
+function getProfileLabels(
+  profileSignalMatches: PrivateProfileSignal[],
+): string[] {
+  const labels = profileSignalMatches.map((signal) => {
+    if (signal.profileLabel) {
+      return signal.profileLabel;
+    }
+
+    if (signal.audience === "person_a") {
+      return "Person A";
+    }
+
+    if (signal.audience === "person_b") {
+      return "Person B";
+    }
+
+    return "Household";
+  });
+
+  return labels.filter((label, index) => labels.indexOf(label) === index).slice(0, 2);
+}
+
 function getProfileThemeReason(
   profileSignalMatches: PrivateProfileSignal[],
   audience: PrivateAudience,
 ): string {
   const labels = getProfileThemeLabels(profileSignalMatches, audience);
+  const natalSignals = profileSignalMatches.filter(
+    (signal) => signal.source === "natal_theme",
+  );
 
   if (labels.length === 0) {
     return "Saved profile themes helped shape the fit without exposing private chart details.";
+  }
+
+  if (natalSignals.length > 0) {
+    const people = getProfileLabels(natalSignals);
+    const themeText = labels.join(" and ");
+
+    if (audience === "together" && labels.length > 1) {
+      return `For a together recommendation, saved profile and natal-chart themes for ${people.join(" and ")} balance ${labels[0]} with ${labels[1]}.`;
+    }
+
+    if (audience === "either") {
+      return `Saved profile and natal-chart themes for ${people.join(" and ")} fit at least one profile around ${labels[0]} without conflicting with household avoid flags.`;
+    }
+
+    if (people.length > 1) {
+      return `Saved natal-chart themes for ${people.join(" and ")} point toward ${themeText}; the brief uses that as private fit context, not a prediction.`;
+    }
+
+    return `Saved natal-chart themes for ${people[0]} point toward ${themeText}; the brief uses that as private fit context, not a prediction.`;
   }
 
   if (audience === "together" && labels.length > 1) {
@@ -964,8 +1015,13 @@ function getFitReason(
     const labels = preferenceMatches
       .slice(0, 2)
       .map((preference) => getProfilePreferenceLabel(preference).toLowerCase());
+    const preferenceReason = `Your saved preferences lean toward ${labels.join(" and ")}.`;
 
-    return `Your saved preferences lean toward ${labels.join(" and ")}.`;
+    if (profileSignalMatches.length > 0) {
+      return `${preferenceReason} ${getProfileThemeReason(profileSignalMatches, audience)}`;
+    }
+
+    return preferenceReason;
   }
 
   if (profileSignalMatches.length > 0) {
