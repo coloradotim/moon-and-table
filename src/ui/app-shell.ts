@@ -53,6 +53,24 @@ export function renderSignedOutShell(configReady: boolean): string {
   `;
 }
 
+export function renderUnauthorizedShell(): string {
+  return `
+    <section class="shell shell--centered" aria-labelledby="app-title">
+      <header class="masthead">
+        <p class="eyebrow">Private weekly ritual brief</p>
+        <h1 id="app-title">Moon &amp; Table</h1>
+      </header>
+
+      <article class="brief auth-panel" aria-label="Private access limited">
+        <p class="label">Private access</p>
+        <h2>This account is not invited yet.</h2>
+        <p>Moon &amp; Table is limited to the private household allowlist.</p>
+        <button class="primary-action" type="button" data-auth-action="sign-in">Sign in with Google</button>
+      </article>
+    </section>
+  `;
+}
+
 export function renderSignedInShell(): string {
   const brief = getFallbackBrief();
 
@@ -129,6 +147,10 @@ export function renderAppShell(state: AppAuthState): string {
 
   if (state.status === "signed_out") {
     return renderSignedOutShell(state.configReady);
+  }
+
+  if (state.status === "unauthorized") {
+    return renderUnauthorizedShell();
   }
 
   return renderSignedInShell();

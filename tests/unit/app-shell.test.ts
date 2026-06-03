@@ -5,6 +5,7 @@ import {
   renderLoadingShell,
   renderSignedInShell,
   renderSignedOutShell,
+  renderUnauthorizedShell,
 } from "../../src/ui/app-shell";
 
 describe("app shell rendering", () => {
@@ -44,6 +45,14 @@ describe("app shell rendering", () => {
     expect(html).toContain("Thursday evening, 0-5 minutes.");
   });
 
+  it("renders unauthorized accounts without showing the brief", () => {
+    const html = renderUnauthorizedShell();
+
+    expect(html).toContain("This account is not invited yet.");
+    expect(html).toContain("Sign in with Google");
+    expect(html).not.toContain("data-testid=\"recommended-ritual\"");
+  });
+
   it("routes auth states to the correct shell", () => {
     expect(renderAppShell({ status: "loading" })).toContain(
       "Checking sign-in state.",
@@ -52,9 +61,12 @@ describe("app shell rendering", () => {
       renderAppShell({ status: "signed_out", configReady: true }),
     ).toContain("Sign in with Google");
     expect(
+      renderAppShell({ status: "unauthorized", configReady: true }),
+    ).toContain("not invited");
+    expect(
       renderAppShell({
         status: "signed_in",
-        user: { uid: "placeholder-user-id" },
+        user: { uid: "placeholder-user-id", email: "person_a@example.com" },
       }),
     ).toContain("Sign out");
   });

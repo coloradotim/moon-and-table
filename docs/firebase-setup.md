@@ -69,11 +69,14 @@ VITE_FIREBASE_PROJECT_ID=placeholder-project-id
 VITE_FIREBASE_STORAGE_BUCKET=placeholder-project-id.firebasestorage.app
 VITE_FIREBASE_MESSAGING_SENDER_ID=000000000000
 VITE_FIREBASE_APP_ID=1:000000000000:web:placeholderappid
+VITE_AUTH_ALLOWED_EMAILS=person_a@example.com,person_b@example.com
 ```
 
 `.env.local` is gitignored and is where real local config values belong. `.env.example` stays source-controlled and must contain placeholders only.
 
 Firebase web app config is not the same as a server admin secret, but Moon & Table should still avoid committing real project values while the private-data shape is being established.
+
+`VITE_AUTH_ALLOWED_EMAILS` is a comma-separated local allowlist for Google Auth. Put real allowed account emails in `.env.local` only. Do not commit real email addresses to `.env.example`, docs, tests, or source code.
 
 ## Test Google Auth Locally
 
@@ -92,6 +95,8 @@ Expected behavior:
 3. Signed in: the existing weekly brief appears, along with a small `Signed in` indicator and `Sign out`.
 4. Click `Sign out`.
 5. The page returns to the signed-out private access state.
+
+If the signed-in Google account is not listed in `VITE_AUTH_ALLOWED_EMAILS`, the app signs it back out and shows that the account is not invited yet.
 
 This auth step does not read private profile data from Firestore yet. After sign-in, the brief still uses the current privacy-safe fallback/generated data.
 
