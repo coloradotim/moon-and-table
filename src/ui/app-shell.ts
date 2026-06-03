@@ -13,13 +13,13 @@ import {
 } from "../lib/profile-tuning";
 
 const feedbackLabels: Record<BriefFeedbackType, string> = {
-  good: "good",
-  too_much: "too much",
-  too_generic: "too generic",
-  more_like_this: "more like this",
-  not_this_style: "not this style",
-  skipped: "skipped",
-  try_again: "try again",
+  good: "Save this",
+  too_much: "Simpler, please",
+  too_generic: "Tone is off",
+  more_like_this: "More like this",
+  not_this_style: "Not this style",
+  skipped: "I skipped it",
+  try_again: "Try something else",
 };
 const capacityModes = ["pause", "low", "steady", "high"];
 
@@ -29,6 +29,7 @@ export type SignedInShellOptions = {
   tryAgainStatus?: string;
   selectedFeedbackType?: BriefFeedbackType;
   savingFeedbackType?: BriefFeedbackType;
+  showDebugTrace?: boolean;
 };
 
 function escapeHtml(value: string): string {
@@ -151,8 +152,8 @@ function renderTuningProfileForm(
   return `
     <details class="profile-tuning-card"${openAttribute}>
       <summary>
-        <span>${escapeHtml(profile.label)}</span>
-        <span class="muted">Private profile settings</span>
+            <span>${escapeHtml(profile.label)}</span>
+        <span class="muted">Open to edit settings</span>
       </summary>
 
       <form
@@ -169,7 +170,7 @@ function renderTuningProfileForm(
           </label>
 
           <label>
-            <span>Max ritual time</span>
+            <span>Max ritual time (minutes)</span>
             <input
               name="maxRitualDurationMinutes"
               type="number"
@@ -181,7 +182,7 @@ function renderTuningProfileForm(
           </label>
 
           <label>
-            <span>Make astrology</span>
+            <span>Astrology detail</span>
             <select name="astrologyVisibility">
               ${renderSelectOptions(PROFILE_TUNING_ASTROLOGY_VISIBILITY, settings.astrologyVisibility)}
             </select>
@@ -206,8 +207,8 @@ function renderTuningProfileForm(
         </fieldset>
 
         <div class="tuning-actions">
-          <button class="primary-action" type="submit">Save ${escapeHtml(profile.label)}</button>
-          <p class="muted" data-profile-tuning-status="true">Edits update this private Firestore profile only.</p>
+          <button class="primary-action" type="submit">${escapeHtml(`Save ${profile.label}'s settings`)}</button>
+          <p class="muted" data-profile-tuning-status="true">Saved to this private profile.</p>
         </div>
       </form>
     </details>
@@ -223,10 +224,10 @@ export function renderProfileTuningSection(
     return `
       <section class="tuning-panel" aria-label="Profile tuning">
         <div>
-          <p class="label">Tune profiles</p>
-          <h2>Make the suggestions fit better</h2>
-        </div>
-        <p class="muted">Private settings will appear here after seeded profile data is available.</p>
+        <p class="label">Tune profiles</p>
+        <h2>Make the suggestions fit better</h2>
+      </div>
+        <p class="muted">Private settings will appear here after household settings are available.</p>
       </section>
     `;
   }
@@ -236,7 +237,7 @@ export function renderProfileTuningSection(
       <div>
         <p class="label">Tune profiles</p>
         <h2>Make the suggestions fit better</h2>
-        <p class="muted">Adjust each household profile separately.</p>
+        <p class="muted">Fine-tune each household profile separately.</p>
       </div>
       <div class="profile-tuning-list">
         ${profiles.map((profile, index) => renderTuningProfileForm(profile, index === 0)).join("")}
@@ -325,8 +326,8 @@ export function renderSignedInShell(
   const brief = options.brief ?? generateWeeklyBrief(privateBriefData.input);
   const privateDataNote =
     privateBriefData.status === "using_starter_settings"
-      ? "Using starter settings until private settings are created."
-      : "Using private settings from Firestore.";
+      ? "Using starter settings until your private settings are ready."
+      : "Using your household settings.";
   const traceSummary = [
     brief.trace.timingFacts.join(" + "),
     brief.trace.timingFactDetails
@@ -339,6 +340,14 @@ export function renderSignedInShell(
   ]
     .filter(Boolean)
     .join(" · ");
+  const debugTrace = options.showDebugTrace
+    ? `
+        <details class="trace" aria-label="Developer trace">
+          <summary>Developer trace</summary>
+          <p>${escapeHtml(traceSummary)}</p>
+        </details>
+      `
+    : "";
 
   return `
     <section class="shell" aria-labelledby="app-title">
@@ -374,7 +383,7 @@ export function renderSignedInShell(
           </div>
 
           <div class="detail" data-testid="recommended-ritual">
-            <p class="label">Recommended ritual</p>
+            <p class="label">This week's ritual</p>
             <p>${escapeHtml(brief.recommendedRitual)}</p>
           </div>
 
@@ -382,23 +391,6 @@ export function renderSignedInShell(
             <p class="label">Optional add-on</p>
             <p>${escapeHtml(brief.optionalAddOn)}</p>
           </div>
-        </section>
-
-        <section class="brief__section">
-          <p class="label">Why this</p>
-          <h2>Why this</h2>
-          <p>${escapeHtml(brief.whyThis)}</p>
-          <p class="muted">${escapeHtml(brief.sourceSummary)}</p>
-        </section>
-
-        <section class="brief__section">
-          <p class="label">Reflection prompt</p>
-          <p class="prompt">${escapeHtml(brief.reflectionPrompt)}</p>
-        </section>
-
-        <section class="trace" aria-label="Trace summary">
-          <p class="label">Trace</p>
-          <p>${escapeHtml(traceSummary)}</p>
         </section>
 
         <section class="feedback" aria-label="Brief feedback">
@@ -412,9 +404,22 @@ export function renderSignedInShell(
             data-feedback-type="try_again"
             data-try-again-action="true"
             aria-pressed="${options.selectedFeedbackType === "try_again" || options.savingFeedbackType === "try_again" ? "true" : "false"}"${options.savingFeedbackType ? " disabled" : ""}
-          >${escapeHtml(options.savingFeedbackType === "try_again" ? "Saving try again" : "Give me something else")}</button>
-          <p class="muted feedback__status" data-feedback-status="true">${escapeHtml(options.tryAgainStatus ?? options.feedbackStatus ?? "Feedback saves to private Firestore.")}</p>
+          >${escapeHtml(options.savingFeedbackType === "try_again" ? "Saving try again" : feedbackLabels.try_again)}</button>
+          <p class="muted feedback__status" data-feedback-status="true">${escapeHtml(options.tryAgainStatus ?? options.feedbackStatus ?? "Feedback saves to your private profile.")}</p>
         </section>
+
+        <details class="why-this" aria-label="Why this">
+          <summary>Why this?</summary>
+          <p>${escapeHtml(brief.whyThis)}</p>
+          <p class="muted">${escapeHtml(brief.sourceSummary)}</p>
+        </details>
+
+        <section class="brief__section">
+          <p class="label">Reflection prompt</p>
+          <p class="prompt">${escapeHtml(brief.reflectionPrompt)}</p>
+        </section>
+
+        ${debugTrace}
       </article>
 
       ${renderProfileTuningSection(privateBriefData)}

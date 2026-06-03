@@ -47,9 +47,8 @@ describe("app shell rendering", () => {
     expect(html).toContain("Sources:");
     expect(html).toContain("Why this");
     expect(html).toContain("Thursday evening, 0-5 minutes.");
-    expect(html).toContain("Using starter settings until private settings are created.");
+    expect(html).toContain("Using starter settings until your private settings are ready.");
     expect(html).toContain("Private settings will appear here");
-    expect(html).toContain("astronomy_engine");
     expect(html).toContain("How was this?");
     expect(html).toContain('data-feedback-type="good"');
     expect(html).toContain('data-feedback-type="too_much"');
@@ -58,8 +57,25 @@ describe("app shell rendering", () => {
     expect(html).toContain('data-feedback-type="not_this_style"');
     expect(html).toContain('data-feedback-type="skipped"');
     expect(html).toContain('data-feedback-type="try_again"');
-    expect(html).toContain("Give me something else");
-    expect(html).toContain("Feedback saves to private Firestore.");
+    expect(html).toContain("Try something else");
+    expect(html).toContain("Feedback saves to your private profile.");
+    expect(html).toContain('<details class="why-this"');
+    expect(html).not.toContain('<details class="why-this" open');
+    expect(html).not.toContain("Firestore");
+    expect(html).not.toContain("Developer trace");
+    expect(html).not.toContain("private_profile.");
+    expect(html).not.toContain("docs/source-");
+    expect(html).not.toContain("astronomy_engine");
+  });
+
+  it("renders developer trace only when debug trace is requested", () => {
+    const html = renderSignedInShell(resolvePrivateBriefData({}), {
+      showDebugTrace: true,
+    });
+
+    expect(html).toContain("Developer trace");
+    expect(html).toContain("astronomy_engine");
+    expect(html).toContain("private_profile.");
   });
 
   it("renders feedback status after save or try-again", () => {
@@ -72,7 +88,7 @@ describe("app shell rendering", () => {
     expect(html).toContain("Saved. Here is another approved option.");
     expect(html).toContain('aria-pressed="true"');
     expect(html).toContain("feedback-button--selected");
-    expect(html).not.toContain("Feedback saves to private Firestore.");
+    expect(html).not.toContain("Feedback saves to your private profile.");
   });
 
   it("renders a saving state for clicked feedback buttons", () => {
@@ -146,10 +162,10 @@ describe("app shell rendering", () => {
     const html = renderProfileTuningSection(privateBriefData);
 
     expect(html).toContain("Tune profiles");
-    expect(html).toContain("Adjust each household profile separately.");
+    expect(html).toContain("Fine-tune each household profile separately.");
     expect(html).toContain("Default capacity");
-    expect(html).toContain("Max ritual time");
-    expect(html).toContain("Make astrology");
+    expect(html).toContain("Max ritual time (minutes)");
+    expect(html).toContain("Astrology detail");
     expect(html).toContain("Alex");
     expect(html).toContain("Blair");
     expect(html).toContain('data-profile-tuning-id="profile_alex"');
@@ -169,9 +185,12 @@ describe("app shell rendering", () => {
     expect(html).toContain("Avoid vague mush");
     expect(html).toContain('name="preferredRitualStyles"');
     expect(html).not.toContain('name="preferredRitualStyles"\n            type="text"');
-    expect(html).toContain("Save Alex");
-    expect(html).toContain("Save Blair");
+    expect(html).toContain("Save Alex&#39;s settings");
+    expect(html).toContain("Save Blair&#39;s settings");
+    expect(html).toContain("Saved to this private profile.");
+    expect(html).toContain("Open to edit settings");
     expect(html).not.toContain("starter assumption");
+    expect(html).not.toContain("Firestore");
   });
 
   it("renders private data loading while signed-in Firestore data loads", () => {

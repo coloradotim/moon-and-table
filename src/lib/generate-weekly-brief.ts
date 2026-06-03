@@ -13,6 +13,7 @@ import {
 } from "./lunar-timing";
 import {
   getProfilePreferenceGroup,
+  getProfilePreferenceLabel,
   normalizeProfilePreferenceValues,
 } from "./profile-preference-taxonomy";
 import { validateRitualSafety, type RitualSafetyFlags } from "./ritual-safety";
@@ -596,10 +597,10 @@ function getOptionalAddOn(
 
 function getTimingReason(card: SymbolicCard, timingFact?: LunarTimingFact): string {
   if (timingFact) {
-    return `The lunar timing points toward a ${timingFact.label.toLowerCase()} theme, with ${card.themes[0]} and ${card.themes[1]} as the useful symbolic themes.`;
+    return `The lunar timing points toward ${timingFact.label.toLowerCase()} themes of ${card.themes[0]} and ${card.themes[1]}.`;
   }
 
-  return `${card.title} is the selected timing card for this week, with ${card.themes[0]} and ${card.themes[1]} as the useful themes.`;
+  return `${card.title} brings in themes of ${card.themes[0]} and ${card.themes[1]}.`;
 }
 
 function getCapacityReason(
@@ -608,13 +609,13 @@ function getCapacityReason(
 ): string {
   switch (capacityMode) {
     case "pause":
-      return "Capacity is pause, so there is no required ritual.";
+      return "This is a pause week, so there is no required ritual.";
     case "low":
-      return "Capacity is low, so the action stays within 0-5 minutes with no shopping or elaborate setup.";
+      return "This stays small because household capacity is low right now.";
     case "steady":
-      return `Capacity is steady, so the ritual stays practical and within ${Math.min(10, durationMinutes)}-${durationMinutes} minutes.`;
+      return `This fits a steady week by staying practical and within ${Math.min(10, durationMinutes)}-${durationMinutes} minutes.`;
     case "high":
-      return `Capacity is high, so the ritual can be more active while staying within ${Math.min(20, durationMinutes)}-${durationMinutes} minutes.`;
+      return `This can be a little more active while staying within ${Math.min(20, durationMinutes)}-${durationMinutes} minutes.`;
   }
 }
 
@@ -628,10 +629,10 @@ function getScheduleReason(
     scheduleConstraints.unavailableDaysOrNights.length > 0 &&
     primaryWindow !== "schedule.symbolic_event_tuesday"
   ) {
-    return `The schedule moves the ritual away from the symbolic event timing to ${windowLabel}.`;
+    return `The best window moves to ${windowLabel} so the timing fits real life.`;
   }
 
-  return `The schedule points to ${windowLabel} as the realistic window.`;
+  return `${windowLabel} looks like the realistic window.`;
 }
 
 function getPreferenceReason(
@@ -639,7 +640,11 @@ function getPreferenceReason(
   avoidedRitualStyles: string[],
 ): string {
   if (preferenceMatches.length > 0) {
-    return `Saved preferences favor ${preferenceMatches.slice(0, 2).join(" and ")}.`;
+    const labels = preferenceMatches
+      .slice(0, 2)
+      .map((preference) => getProfilePreferenceLabel(preference).toLowerCase());
+
+    return `Your saved preferences lean toward ${labels.join(" and ")}.`;
   }
 
   const burdenAvoidances = avoidedRitualStyles.filter(
@@ -647,10 +652,14 @@ function getPreferenceReason(
   );
 
   if (burdenAvoidances.length > 0) {
-    return `Saved avoid flags keep the recommendation away from ${burdenAvoidances.slice(0, 2).join(" and ")}.`;
+    const labels = burdenAvoidances
+      .slice(0, 2)
+      .map((preference) => getProfilePreferenceLabel(preference).toLowerCase());
+
+    return `It avoids ${labels.join(" and ")} because those are marked as a poor fit.`;
   }
 
-  return "Private profile inputs are used as quiet constraints, not public source citations.";
+  return "Your household settings help keep the suggestion practical and private.";
 }
 
 function getWhyThis(
@@ -666,18 +675,42 @@ function getWhyThis(
     input.scheduleConstraints,
   );
   const profileReason = privateProfileCard
-    ? `The private profile theme points toward ${privateProfileCard.themes[0]} without exposing private details.`
-    : "Private profile inputs stay behind the brief as constraints.";
+    ? `Your household settings point toward ${privateProfileCard.themes[0]}.`
+    : "Your household settings stay private while shaping the brief.";
   const safetyReason =
     excludedPatternKeys.length > 0
-      ? `Safety and avoid filters skipped ${excludedPatternKeys.length} pattern option.`
+      ? `A few options were set aside because they did not fit current capacity, safety, or preferences.`
       : "";
 
-  return `${getTimingReason(timingCard, input.timingFactDetails[0])} ${pattern.title} fits as the selected approved ritual pattern. ${getPreferenceReason(preferenceMatches, input.avoidedRitualStyles)} ${safetyReason} ${profileReason} ${getScheduleReason(input.scheduleConstraints)} ${getCapacityReason(input.capacityMode, durationMinutes)}`.replace(/\s+/g, " ").trim();
+  return `${getTimingReason(timingCard, input.timingFactDetails[0])} ${pattern.title} fits as one simple home practice for that theme. ${getPreferenceReason(preferenceMatches, input.avoidedRitualStyles)} ${safetyReason} ${profileReason} ${getScheduleReason(input.scheduleConstraints)} ${getCapacityReason(input.capacityMode, durationMinutes)}`.replace(/\s+/g, " ").trim();
 }
 
 function getTheme(timingCard: SymbolicCard, pattern: RitualPattern): string {
-  return `${timingCard.themes[0]} with ${pattern.summary.toLowerCase()}`;
+  const timingPhraseByKey: Partial<Record<TimingFactKey, string>> = {
+    "moon.new": "A quiet beginning",
+    "moon.waxing": "One small support",
+    "moon.full": "Notice what is clear",
+    "moon.waning": "Clear one small thing",
+  };
+  const patternPhraseByKey: Record<string, string> = {
+    clear_one_surface: "clear one small surface",
+    tend_one_plant: "tend one living thing",
+    candle_light_focus: "pause with candlelight",
+    table_reset: "make the table easier to use",
+    threshold_reset: "soften one threshold",
+    room_reset: "make one room corner easier",
+    close_the_evening: "let the evening close gently",
+    tea_ritual: "make one warm pause",
+    simple_warm_drink: "make one warm care moment",
+    kitchen_reset: "quiet one kitchen corner",
+  };
+  const timingPhrase =
+    timingPhraseByKey[TRACE_KEY_BY_CARD_KEY[timingCard.key] as TimingFactKey] ??
+    "One useful household ritual";
+  const patternPhrase =
+    patternPhraseByKey[pattern.key] ?? pattern.summary.toLowerCase();
+
+  return `${timingPhrase}: ${patternPhrase}.`;
 }
 
 function getReflectionPrompt(timingFact: TimingFactKey): string {

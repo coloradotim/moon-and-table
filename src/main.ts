@@ -46,6 +46,7 @@ let privateDataRequestId = 0;
 let activeSignedInState: Extract<AppAuthState, { status: "signed_in" }> | null = null;
 let activePrivateBriefData: PrivateBriefData | null = null;
 let activeBrief: WeeklyBrief | null = null;
+const showDebugTrace = new URLSearchParams(window.location.search).get("debug") === "true";
 
 function render(state: AppAuthState): void {
   appRoot.innerHTML = renderAppShell(state);
@@ -75,6 +76,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activeBrief = generateWeeklyBrief(privateBriefData.input);
         appRoot.innerHTML = renderSignedInShell(privateBriefData, {
           brief: activeBrief,
+          showDebugTrace,
         });
       }
     })
@@ -85,6 +87,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activeBrief = generateWeeklyBrief(fallbackPrivateBriefData.input);
         appRoot.innerHTML = renderSignedInShell(fallbackPrivateBriefData, {
           brief: activeBrief,
+          showDebugTrace,
         });
       }
     });
@@ -106,6 +109,7 @@ function renderActiveBriefStatus(
     tryAgainStatus,
     selectedFeedbackType,
     savingFeedbackType,
+    showDebugTrace,
   });
 }
 
@@ -243,7 +247,7 @@ async function saveActiveBriefFeedback(
 
 async function handleFeedbackClick(feedbackType: BriefFeedbackType): Promise<void> {
   try {
-    renderActiveBriefStatus(`Saving ${feedbackType.replaceAll("_", " ")}.`, undefined, feedbackType, feedbackType);
+    renderActiveBriefStatus("Saving feedback.", undefined, feedbackType, feedbackType);
     await saveActiveBriefFeedback(feedbackType);
     renderActiveBriefStatus("Saved. Thank you.", undefined, feedbackType);
   } catch (error) {
@@ -286,6 +290,7 @@ async function handleTryAgainClick(): Promise<void> {
       brief: activeBrief,
       tryAgainStatus: "Saved. Here is another approved option.",
       selectedFeedbackType: "try_again",
+      showDebugTrace,
     });
   } catch (error) {
     renderActiveBriefStatus(
