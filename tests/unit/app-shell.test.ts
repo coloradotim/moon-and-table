@@ -41,14 +41,17 @@ describe("app shell rendering", () => {
   it("renders the weekly brief only when signed in", () => {
     const html = renderSignedInShell(resolvePrivateBriefData({}));
 
-    expect(html).toContain("Signed in");
+    expect(html).toContain("Menu");
+    expect(html).toContain("This week");
+    expect(html).toContain("Profile settings");
     expect(html).toContain("Sign out");
+    expect(html).toContain('data-menu-action="this_week"');
+    expect(html).toContain('data-menu-action="profile_settings"');
     expect(html).toContain("data-testid=\"recommended-ritual\"");
     expect(html).toContain("Sources:");
     expect(html).toContain("Why this");
     expect(html).toContain("Thursday evening, 0-5 minutes.");
     expect(html).toContain("Using starter settings until your private settings are ready.");
-    expect(html).toContain("Private settings will appear here");
     expect(html).toContain("How was this?");
     expect(html).toContain('data-feedback-type="good"');
     expect(html).toContain('data-feedback-type="too_much"');
@@ -66,6 +69,27 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("private_profile.");
     expect(html).not.toContain("docs/source-");
     expect(html).not.toContain("astronomy_engine");
+    expect(html).not.toContain("Tune profiles");
+    expect(html).not.toContain("Make the suggestions fit better");
+    expect(html).not.toContain("About this");
+    expect(html).not.toContain("Journal");
+    expect(html).not.toContain("Calendar");
+  });
+
+  it("renders profile tuning only when the profile settings view is selected", () => {
+    const defaultHtml = renderSignedInShell(resolvePrivateBriefData({}));
+    const settingsHtml = renderSignedInShell(resolvePrivateBriefData({}), {
+      activeView: "profile_settings",
+    });
+
+    expect(defaultHtml).toContain("data-testid=\"recommended-ritual\"");
+    expect(defaultHtml).not.toContain("Tune profiles");
+    expect(settingsHtml).toContain("Tune profiles");
+    expect(settingsHtml).toContain("Make the suggestions fit better");
+    expect(settingsHtml).toContain("Private settings will appear here");
+    expect(settingsHtml).not.toContain("data-testid=\"recommended-ritual\"");
+    expect(settingsHtml).toContain('data-menu-action="this_week"');
+    expect(settingsHtml).toContain('aria-pressed="true">Profile settings');
   });
 
   it("renders developer trace only when debug trace is requested", () => {
