@@ -149,13 +149,15 @@ Older bootstrap values such as `candle`, `home_care`, `kitchen_clearing`, `shopp
 
 **Deferred:** Swiss Ephemeris until houses, natal charts, and personal transit precision justify licensing/deployment complexity.
 
-**Implementation note:** The MVP timing decision and initial `TimingFact` / `SkyEvent` model plan live in `docs/timing-engine-decision.md`.
+**Implementation note:** The MVP timing decision and initial `TimingFact` / `SkyEvent` model plan live in `docs/timing-engine-decision.md`. The first broader computed fact API lives in `src/lib/timing-facts.ts`, and the first approved/draft interpretation rule layer lives in `src/lib/timing-interpretation-rules.ts`.
 
 **Create:**
 
 - timing-engine decision doc
-- `SkyEvent`/`TimingFact` model plan
-- test plan for moon phases, lunations, solstice/equinox, zodiac/solar season, aspects/retrogrades later
+- `SkyEvent`/`TimingFact` model
+- computed lunar, solar, seasonal, planetary, aspect, retrograde, and numerology facts
+- approved/draft timing interpretation rules
+- tests for moon phases, lunations, solstice/equinox, zodiac/solar season, aspects, retrogrades, numerology, and rule eligibility
 
 **Acceptance criteria:**
 

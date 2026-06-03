@@ -87,12 +87,16 @@ Safety flags can block a pattern even when it matches timing, private profile co
 
 | Object | Responsibility |
 | --- | --- |
-| `TimingFact` / `LunarTimingFact` | Deterministic timing fact with key, label, date range, timezone, computed values, confidence, and related symbolic keys. |
-| `SkyEvent` | Planned broader timing vocabulary for solstice/equinox, moon events, and later events. |
+| `TimingFact` / `LunarTimingFact` | Deterministic timing fact with type, label, date or event bounds, timezone, computed values, confidence, and related symbolic keys where applicable. |
+| `SkyEvent` | Broader event vocabulary for exact or bounded sky events such as lunations, solstices, equinoxes, and later ingresses or station events. |
+| `TimingInterpretationRule` | Explicit reviewed mapping from a computed fact condition to candidate symbolic cards, ritual style hints, weight, strength, and source references. |
+| `TimingSignal` | Candidate user-facing signal produced by eligible rules; signal selection should limit visible signals to a small meaningful set. |
 
 Timing facts are computed and testable. Interpretation belongs in SymbolicCards, rules, and approved content, not raw timing facts.
 
-Astronomy Engine is the MVP timing direction. Swiss Ephemeris remains deferred until precision needs justify it.
+The broader timing fact API lives in `src/lib/timing-facts.ts` and currently computes lunar phase, lunations, moon sign, sun sign, seasonal markers, planetary signs, retrograde status, major aspects, and universal numerology date facts. The first rule layer lives in `src/lib/timing-interpretation-rules.ts`; approved rules currently cover lunar phase cards and numerology cards, while zodiac and planetary placeholders remain draft-only until reviewed source cards exist.
+
+Astronomy Engine is the MVP timing direction. Swiss Ephemeris remains deferred until precision, houses, natal charts, or personal transit needs justify it.
 
 ## Brief Output
 
