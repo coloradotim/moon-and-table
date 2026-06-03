@@ -55,6 +55,7 @@ export type WeeklyBriefTrace = {
       LunarTimingFact,
       | "key"
       | "label"
+      | "exactIso"
       | "dateStart"
       | "dateEnd"
       | "timezone"
@@ -891,6 +892,7 @@ export function generateWeeklyBrief(
       timingFactDetails: resolvedInput.timingFactDetails.map((fact) => ({
         key: fact.key,
         label: fact.label,
+        exactIso: fact.exactIso,
         dateStart: fact.dateStart,
         dateEnd: fact.dateEnd,
         timezone: fact.timezone,
