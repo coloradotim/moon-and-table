@@ -61,3 +61,7 @@ Use generic placeholder language in source control, such as:
 * `schedule_constraints`
 
 Do not commit actual names, birth data, natal placements, schedules, or private source text.
+
+## Development workflow
+
+See `docs/development-workflow.md` for local test commands, CI behavior, Playwright status, auto-merge readiness, and privacy-safe testing expectations.
