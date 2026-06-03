@@ -25,7 +25,7 @@ describe("private Firestore data resolution", () => {
       "private_profile.practical_tending",
     ]);
     expect(privateBriefData.input.capacityMode).toBe("low");
-    expect(brief.bestWindow).toContain("Thursday evening");
+    expect(brief.bestWindow).toBe("When you have five quiet minutes.");
   });
 
   it("passes loaded private profile keys into the generator", () => {
@@ -57,10 +57,10 @@ describe("private Firestore data resolution", () => {
     const brief = generateWeeklyBrief(privateBriefData.input);
 
     expect(privateBriefData.input.capacityMode).toBe("steady");
-    expect(brief.bestWindow).toContain("about twenty minutes or less");
+    expect(brief.bestWindow).toBe("When you have a little space this week.");
   });
 
-  it("uses loaded schedule constraints to affect best window and trace", () => {
+  it("keeps loaded schedule constraints inert for user-facing timing", () => {
     const privateBriefData = resolvePrivateBriefData({
       scheduleConstraints: {
         unavailableDaysOrNights: ["Tuesday night"],
@@ -75,11 +75,9 @@ describe("private Firestore data resolution", () => {
     });
     const brief = generateWeeklyBrief(privateBriefData.input);
 
-    expect(brief.bestWindow).toContain("Saturday morning");
-    expect(brief.trace.scheduleAssumptions).toEqual([
-      "schedule.symbolic_event_tuesday",
-      "schedule.preferred_window_saturday_morning",
-    ]);
+    expect(brief.bestWindow).toBe("When you have five quiet minutes.");
+    expect(brief.bestWindow).not.toContain("Saturday morning");
+    expect(brief.trace.scheduleAssumptions).toEqual([]);
   });
 
   it("represents starter assumptions with source confidence and editability", () => {

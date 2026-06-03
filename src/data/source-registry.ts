@@ -253,6 +253,65 @@ export const starterSourceReviews: SourceReview[] = [
     confidence: "medium",
   },
   {
+    id: "source.hans_decoz_tom_monte",
+    title: "Hans Decoz / Tom Monte numerology works",
+    authorOrPublisher: "Hans Decoz and Tom Monte",
+    category: "numerology_interpretation",
+    sourceType: "book",
+    useDecision: "use",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "number 1-9 symbolic vocabulary",
+      "universal date calculation framing",
+      "keeping numerology structured instead of improvised",
+    ],
+    concerns: [
+      "do not copy number descriptions or imply destiny, personality certainty, or prediction",
+    ],
+    copyrightNotes: [
+      "manual review only; store short transformed notes rather than passages",
+    ],
+    safetyNotes: [
+      "numerology stays secondary to capacity, safety, and stronger timing/profile signals",
+    ],
+    culturalContextNotes: [
+      "treat as modern symbolic numerology, not factual proof",
+    ],
+    extractionNotes: [
+      "extract reusable number themes, calculation boundaries, and avoid-saying rules",
+    ],
+    confidence: "medium",
+  },
+  {
+    id: "source.david_phillips_numerology",
+    title: "David Phillips numerology reference",
+    authorOrPublisher: "David Phillips",
+    category: "numerology_interpretation",
+    sourceType: "book",
+    useDecision: "use_carefully",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "secondary cross-check for number 1-9 themes",
+      "guarding against one-source overconfidence",
+    ],
+    concerns: [
+      "some frameworks can become personality-heavy; use only broad symbolic cross-checks",
+    ],
+    copyrightNotes: [
+      "manual review only; no copied passages or distinctive number wording",
+    ],
+    safetyNotes: [
+      "avoid personality certainty, compatibility claims, and life-path style inference",
+    ],
+    culturalContextNotes: [
+      "use as one numerology framework among several",
+    ],
+    extractionNotes: [
+      "extract only source-safe parallels and product guardrails",
+    ],
+    confidence: "medium",
+  },
+  {
     id: "source.sarah_faith_gottesdiener",
     title: "Sarah Faith Gottesdiener — lunar reflection source",
     authorOrPublisher: "Sarah Faith Gottesdiener",
@@ -912,6 +971,152 @@ const strengthenedAstrologySourceNotes: SourceNote[] = [
   }),
 ];
 
+const numerologyNumberNotes: SourceNote[] = [
+  {
+    id: "note.numerology_calculation_reduced_universal_dates",
+    sourceId: "source.hans_decoz_tom_monte",
+    locationNote: "docs/source-research-synthesis.md numerology timing synthesis",
+    paraphrasedNote:
+      "For MVP, universal year, month, and day numbers are reduced to 1-9 and used as public date accents, not personal numerology.",
+    category: "numerology_interpretation",
+    tags: ["numerology", "calculation", "universal_date"],
+    riskNotes: ["avoid master-number claims, life path numbers, names, or compatibility"],
+    safetyNotes: ["keep date numerology secondary and non-predictive"],
+    copyrightNotes: ["short transformed note only; no copied calculation prose"],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.numerology_guardrail_accent_only",
+    sourceId: "source.barnum_forer_guardrail",
+    locationNote: "docs/source-research-synthesis.md numerology guardrails",
+    paraphrasedNote:
+      "Numerology copy should stay concrete, modest, and tied to the chosen ritual so it does not sound like a vague personal reading.",
+    category: "interpretive_safety",
+    tags: ["numerology", "guardrail", "accent"],
+    riskNotes: ["avoid destiny, personality certainty, prediction, and compatibility language"],
+    safetyNotes: ["do not let numerology become the sole reason for a recommendation"],
+    copyrightNotes: ["short transformed guardrail only"],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.numerology_1_beginning_focus",
+    sourceId: "source.hans_decoz_tom_monte",
+    locationNote: "docs/source-research-synthesis.md numerology 1-9 source batch",
+    paraphrasedNote:
+      "Use 1 as a light cue for beginning, focus, initiative, and choosing one first step without promising success.",
+    category: "numerology_interpretation",
+    tags: ["numerology", "1", "beginning"],
+    riskNotes: ["avoid individual pressure or guarantee language"],
+    safetyNotes: ["keep action bounded by capacity"],
+    copyrightNotes: ["short transformed note only; no copied number description"],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.numerology_2_cooperation_balance",
+    sourceId: "source.david_phillips_numerology",
+    locationNote: "docs/source-research-synthesis.md numerology 1-9 source batch",
+    paraphrasedNote:
+      "Use 2 as a light cue for cooperation, listening, balance, and gentle pairing without forcing a conversation.",
+    category: "numerology_interpretation",
+    tags: ["numerology", "2", "cooperation"],
+    riskNotes: ["avoid compatibility claims or relationship diagnosis"],
+    safetyNotes: ["shared prompts need consent and low pressure"],
+    copyrightNotes: ["short transformed note only; no copied number description"],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.numerology_3_expression_warmth",
+    sourceId: "source.hans_decoz_tom_monte",
+    locationNote: "docs/source-research-synthesis.md numerology 1-9 source batch",
+    paraphrasedNote:
+      "Use 3 as a light cue for expression, warmth, creative ease, and making a small moment feel more alive.",
+    category: "numerology_interpretation",
+    tags: ["numerology", "3", "expression"],
+    riskNotes: ["avoid forced cheer or performance"],
+    safetyNotes: ["keep expression optional and brief"],
+    copyrightNotes: ["short transformed note only; no copied number description"],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.numerology_4_structure_repair",
+    sourceId: "source.hans_decoz_tom_monte",
+    locationNote: "docs/source-research-synthesis.md numerology 1-9 source batch",
+    paraphrasedNote:
+      "Use 4 as a light cue for structure, steadiness, repair, and making one practical thing easier.",
+    category: "numerology_interpretation",
+    tags: ["numerology", "4", "structure"],
+    riskNotes: ["avoid rigidity or moralizing mess"],
+    safetyNotes: ["do not recommend large cleanup by default"],
+    copyrightNotes: ["short transformed note only; no copied number description"],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.numerology_5_change_freshness",
+    sourceId: "source.david_phillips_numerology",
+    locationNote: "docs/source-research-synthesis.md numerology 1-9 source batch",
+    paraphrasedNote:
+      "Use 5 as a light cue for change, freshness, movement, and a small reversible adjustment.",
+    category: "numerology_interpretation",
+    tags: ["numerology", "5", "change"],
+    riskNotes: ["avoid restless disruption or novelty pressure"],
+    safetyNotes: ["prefer safe, reversible actions"],
+    copyrightNotes: ["short transformed note only; no copied number description"],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.numerology_6_home_care",
+    sourceId: "source.hans_decoz_tom_monte",
+    locationNote: "docs/source-research-synthesis.md numerology 1-9 source batch",
+    paraphrasedNote:
+      "Use 6 as a light cue for home care, harmony, repair, and tending what supports the household without assigning duty.",
+    category: "numerology_interpretation",
+    tags: ["numerology", "6", "home"],
+    riskNotes: ["avoid making care sound like obligation"],
+    safetyNotes: ["food and shared-care practices stay optional"],
+    copyrightNotes: ["short transformed note only; no copied number description"],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.numerology_7_reflection_pause",
+    sourceId: "source.david_phillips_numerology",
+    locationNote: "docs/source-research-synthesis.md numerology 1-9 source batch",
+    paraphrasedNote:
+      "Use 7 as a light cue for reflection, quiet attention, discernment, and pausing before adding more.",
+    category: "numerology_interpretation",
+    tags: ["numerology", "7", "reflection"],
+    riskNotes: ["avoid isolation claims or spiritual superiority"],
+    safetyNotes: ["keep reflection gentle and non-diagnostic"],
+    copyrightNotes: ["short transformed note only; no copied number description"],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.numerology_8_capacity_power",
+    sourceId: "source.hans_decoz_tom_monte",
+    locationNote: "docs/source-research-synthesis.md numerology 1-9 source batch",
+    paraphrasedNote:
+      "Use 8 as a light cue for capacity, stewardship, practical strength, and using effort responsibly.",
+    category: "numerology_interpretation",
+    tags: ["numerology", "8", "capacity"],
+    riskNotes: ["avoid money, success, or power guarantees"],
+    safetyNotes: ["capacity and safety override ambitious framing"],
+    copyrightNotes: ["short transformed note only; no copied number description"],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.numerology_9_completion_release",
+    sourceId: "source.hans_decoz_tom_monte",
+    locationNote: "docs/source-research-synthesis.md numerology 1-9 source batch",
+    paraphrasedNote:
+      "Use 9 as a light cue for completion, release, compassion, and closing one loop gently.",
+    category: "numerology_interpretation",
+    tags: ["numerology", "9", "completion"],
+    riskNotes: ["avoid fate, endings, or emotional pressure"],
+    safetyNotes: ["release prompts should stay gentle"],
+    copyrightNotes: ["short transformed note only; no copied number description"],
+    verbatimAllowed: false,
+  },
+];
+
 export const starterSourceNotes: SourceNote[] = [
   {
     id: "note.computed_facts_are_not_meanings",
@@ -1044,6 +1249,7 @@ export const starterSourceNotes: SourceNote[] = [
     ],
     verbatimAllowed: false,
   },
+  ...numerologyNumberNotes,
   {
     id: "note.astrology_symbolic_not_predictive",
     sourceId: "source.steven_forrest",

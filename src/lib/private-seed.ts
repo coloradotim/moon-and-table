@@ -74,7 +74,7 @@ const ASTROLOGY_VISIBILITY_VALUES: AstrologyVisibility[] = [
 
 const DEFAULT_SEED_SCHEDULE: PrivateHouseholdSeedSchedule = {
   unavailableDaysOrNights: [],
-  preferredRitualWindows: ["schedule.realistic_window_thursday"],
+  preferredRitualWindows: [],
   recurringHouseholdConstraintNotes: [],
   workOrSchoolConstraintNotes: [],
 };

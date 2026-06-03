@@ -166,7 +166,6 @@ Inputs:
 * generic private profile placeholders
 * generic household context placeholders
 * capacity mode
-* manual schedule assumptions
 
 Output:
 
@@ -182,7 +181,8 @@ The brief should be able to answer:
 * What timing facts mattered?
 * Which symbolic cards were used?
 * What private profile keys shaped the recommendation?
-* What schedule or capacity constraint affected the recommendation?
+* What capacity constraint affected the recommendation?
+* Later, when schedule awareness is designed, what real schedule constraint affected the recommendation?
 * Why this ritual instead of another?
 
 Success means the product nucleus works before building a large app surface.
@@ -246,20 +246,14 @@ Capacity modes:
 * `steady`: 10-20 minutes; the default practical ritual size
 * `high`: 20-30 minutes; a more active or decisive ritual, still one primary recommendation
 
-Manual schedule rules:
+Current timing/window copy is capacity-based, not schedule-based:
 
-* unavailable days or nights
-* preferred windows
-* recurring household constraints
-* work or school constraints
-* max ritual duration
-* default capacity mode
+* pause: `No timing needed.`
+* low: `When you have five quiet minutes.`
+* steady: `When you have a little space this week.`
+* high: `When you have room to linger this week.`
 
-The app should not automatically recommend a ritual on the exact date of an astrological event. It should recommend the nearest realistic window.
-
-Example:
-
-> Full moon is Tuesday, but Tuesday is unavailable and the household is low capacity. Recommend Thursday evening instead, and keep the ritual to 0-5 minutes.
+Manual schedule rules and calendar-aware realistic windows are deferred until a later designed feature. Current briefs should not name hard-coded weekdays or fallback windows.
 
 Success means the app protects users from overwhelm and treats real-life capacity as a first-class constraint.
 
@@ -357,7 +351,7 @@ Success means source-derived knowledge can be added and refined without editing 
 
 ## Phase 11 — Calendar integration
 
-Add calendar integration after manual schedule rules work.
+Add calendar integration after schedule awareness is designed.
 
 Possible integrations:
 

@@ -41,16 +41,17 @@ Each week should include:
 - For `high`, allow a more active recommendation up to 30 minutes, but still keep one primary ritual.
 - Avoid assigning multiple rituals across multiple days unless explicitly requested.
 - Use invitation language, not obligation language.
-- Schedule and capacity constraints should override symbolic timing.
+- Capacity constraints should override symbolic timing.
+- Schedule awareness is deferred; current best-window copy is capacity-based, not calendar-based.
 - Repository examples must remain generic and non-identifying.
 
 ## Generator trace
 
-The first real vertical-slice generator lives at `src/lib/generate-weekly-brief.ts`. It uses the current week, computed lunar timing, approved symbolic cards, approved ritual patterns, private capacity/profile constraints, and schedule assumptions to choose one recommendation.
+The first real vertical-slice generator lives at `src/lib/generate-weekly-brief.ts`. It uses the current week, computed timing facts, approved symbolic cards, approved ritual patterns, and private capacity/profile constraints to choose one recommendation.
 
-Its trace should stay short and privacy-safe, listing timing fact keys, approved symbolic card keys, approved ritual pattern keys, source review ids, source note ids when available, generic private profile placeholder keys, profile preference keys, capacity mode, audience, schedule assumption keys, and any safety exclusions or notes that affected selection.
+Its trace should stay short and privacy-safe, listing timing fact keys, approved symbolic card keys, approved ritual pattern keys, source review ids, source note ids when available, generic private profile placeholder keys, profile preference keys, capacity mode, audience, and any safety exclusions or notes that affected selection. The legacy `scheduleAssumptions` trace field remains available for compatibility but should be empty in current generated briefs.
 
-Private profile, capacity, audience, and schedule values are private inputs, not public source citations. Public citation/source summary should come from selected timing cards, symbolic cards, ritual patterns, source reviews, source notes, and safety guardrails.
+Private profile, capacity, and audience values are private inputs, not public source citations. Public citation/source summary should come from selected timing cards, symbolic cards, ritual patterns, source reviews, source notes, and safety guardrails.
 
 Capacity modes are `pause`, `low`, `steady`, and `high`. Superseded labels such as tiny, normal, spacious, celebration, or survival should not be implemented as separate modes.
 
@@ -68,7 +69,7 @@ Theme:
 Clear one small thing. Feed one living thing.
 
 Best window:
-Saturday evening, about twenty minutes or less.
+When you have a little space this week.
 
 Recommended ritual:
 Tend one plant. Remove dead leaves or water it. Name one thing to stop feeding and one thing to nourish.
@@ -80,4 +81,4 @@ Optional:
 Optional: light a candle while doing it.
 
 Why this:
-The waning moon supports clearing and release. The private profile prefers practical tending over abstract processing. The schedule and capacity constraints suggest this should stay short and home-based.
+The waning moon supports clearing and release. The private profile prefers practical tending over abstract processing. Capacity suggests this should stay practical and home-based.

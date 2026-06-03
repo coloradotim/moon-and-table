@@ -8,14 +8,10 @@
     "avoidedRitualStyles": ["large_task_list", "shopping_required"],
     "astrologyVisibility": "placeholder_keys_only",
     "scheduleConstraints": {
-      "unavailableDaysOrNights": ["Generic busy night"],
-      "preferredRitualWindows": ["schedule.realistic_window_thursday"],
-      "recurringHouseholdConstraintNotes": [
-        "Generic household constraint: weeknights need low setup."
-      ],
-      "workOrSchoolConstraintNotes": [
-        "Generic work or school constraint: avoid the busiest night."
-      ]
+      "unavailableDaysOrNights": [],
+      "preferredRitualWindows": [],
+      "recurringHouseholdConstraintNotes": [],
+      "workOrSchoolConstraintNotes": []
     }
   },
   "profiles": [
@@ -51,7 +47,7 @@
       "defaultCapacityMode": "steady",
       "maxRitualDurationMinutes": 20,
       "scheduleConstraints": {
-        "preferredRitualWindows": ["schedule.preferred_window_saturday_morning"]
+        "preferredRitualWindows": []
       },
       "assumptions": [
         {

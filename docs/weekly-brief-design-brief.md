@@ -50,6 +50,8 @@ Render in this order:
 4. `brief.bestWindow`, labeled `Best window`
 5. `brief.optionalAddOn`, only if there is a real optional add-on
 
+`brief.bestWindow` is currently capacity-based, not schedule-aware. It should use generic copy such as `No timing needed.`, `When you have five quiet minutes.`, `When you have a little space this week.`, or `When you have room to linger this week.` until a real schedule feature is designed.
+
 ### Zone B — Reflection And Reasoning
 
 Use two visible sections:

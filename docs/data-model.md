@@ -31,7 +31,7 @@ These objects live in Firestore. Source-controlled examples use placeholders onl
 | `Household` | Groups private members and enables household-level reads through `memberUserIds` and `memberEmails`. |
 | `PrivateProfile` | Stores private profile themes, display labels, preference styles, audience labels, assumptions, and astrology metadata. |
 | `CapacitySettings` | Stores default capacity mode and maximum ritual duration. |
-| `ScheduleConstraints` | Stores unavailable windows, preferred ritual windows, recurring household constraints, work/school constraint notes, max duration, and default capacity. |
+| `ScheduleConstraints` | Legacy/deferred private shape for future schedule awareness. Current generated briefs do not use hard-coded or fallback schedule windows in user-facing output. |
 | `PrivateProfileAssumption` | Stores editable or non-editable profile assumptions with source, confidence, and timestamp metadata. |
 | `PrivateAstrologyProfile` | Stores abstract astrology metadata such as placeholder placement keys and profile theme keys; no real birth data belongs in the repo. |
 
@@ -94,7 +94,7 @@ Safety flags can block a pattern even when it matches timing, private profile co
 
 Timing facts are computed and testable. Interpretation belongs in SymbolicCards, rules, and approved content, not raw timing facts.
 
-The broader timing fact API lives in `src/lib/timing-facts.ts` and currently computes lunar phase, lunations, moon sign, sun sign, seasonal markers, planetary signs, retrograde status, major aspects, and universal numerology date facts. The first rule layer lives in `src/lib/timing-interpretation-rules.ts`; approved rules cover lunar phase cards, numerology cards, MVP astrology cards for Sun through Saturn, all 12 signs, five major aspects, and a conservative retrograde cue. Solar season and outer-planet interpretation remain draft-only until reviewed source cards exist.
+The broader timing fact API lives in `src/lib/timing-facts.ts` and currently computes lunar phase, lunations, moon sign, sun sign, seasonal markers, planetary signs, retrograde status, major aspects, and universal numerology date facts. Universal numerology facts come from `src/lib/numerology-timing.ts`, which computes universal year, month, and day numbers by reducing date sums to 1-9; master numbers are reduced for MVP. The first rule layer lives in `src/lib/timing-interpretation-rules.ts`; approved rules cover lunar phase cards, numerology cards, MVP astrology cards for Sun through Saturn, all 12 signs, five major aspects, and a conservative retrograde cue. Solar season and outer-planet interpretation remain draft-only until reviewed source cards exist.
 
 Astronomy Engine is the MVP timing direction. Swiss Ephemeris remains deferred until precision, houses, natal charts, or personal transit needs justify it.
 
@@ -103,7 +103,7 @@ Astronomy Engine is the MVP timing direction. Swiss Ephemeris remains deferred u
 | Object | Responsibility |
 | --- | --- |
 | `WeeklyBrief` | User-facing generated brief: key, date range, theme, intention, best window, one ritual, optional add-on, reflection prompt, why-this explanation, source summary, and trace. |
-| `WeeklyBriefTrace` | Internal trace keys for timing facts, symbolic cards, ritual patterns, source review ids, source note ids, private profile keys, preferences, capacity, audience, schedule assumptions, and safety notes. |
+| `WeeklyBriefTrace` | Internal trace keys for timing facts, symbolic cards, ritual patterns, source review ids, source note ids, private profile keys, preferences, capacity, audience, and safety notes. The legacy `scheduleAssumptions` field remains for compatibility but is inert in current briefs. |
 | `BriefSignal` | Planned user-facing vocabulary for a fact or private setting that influenced the brief. |
 | `BriefReason` | Planned user-facing explanation unit for why the recommendation fits. |
 | `BriefFilterNote` | Planned user-facing note for why something was set aside. |

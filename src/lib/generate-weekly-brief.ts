@@ -223,14 +223,10 @@ type PatternCandidate = {
 };
 
 const DEFAULT_SCHEDULE_CONSTRAINTS: ManualScheduleConstraints = {
-  unavailableDaysOrNights: ["Tuesday night"],
-  preferredRitualWindows: ["schedule.realistic_window_thursday"],
-  recurringHouseholdConstraintNotes: [
-    "Generic household constraint: weeknights need low setup.",
-  ],
-  workOrSchoolConstraintNotes: [
-    "Generic work or school constraint: avoid the busiest night.",
-  ],
+  unavailableDaysOrNights: [],
+  preferredRitualWindows: [],
+  recurringHouseholdConstraintNotes: [],
+  workOrSchoolConstraintNotes: [],
   maxRitualDurationMinutes: 20,
   defaultCapacityMode: "low",
 };
@@ -401,66 +397,23 @@ function getEffectiveDurationMinutes(
   );
 }
 
-function getPrimaryScheduleAssumption(
-  scheduleConstraints: ManualScheduleConstraints,
-): ScheduleAssumptionKey {
-  return (
-    scheduleConstraints.preferredRitualWindows[0] ??
-    "schedule.realistic_window_thursday"
-  );
-}
-
-function getWindowLabel(scheduleAssumption: ScheduleAssumptionKey): string {
-  switch (scheduleAssumption) {
-    case "schedule.preferred_window_saturday_morning":
-      return "Saturday morning";
-    case "schedule.symbolic_event_tuesday":
-      return "Tuesday evening";
-    case "schedule.realistic_window_thursday":
-      return "Thursday evening";
-  }
-}
-
-function getDurationLabel(capacityMode: CapacityMode, minutes: number): string {
-  if (capacityMode === "pause") {
-    return "no required ritual";
-  }
-
-  if (capacityMode === "low") {
-    return "five minutes or less";
-  }
-
-  if (capacityMode === "steady") {
-    return "about twenty minutes or less";
-  }
-
-  return "about half an hour or less";
-}
-
 function getBestWindow(
   capacityMode: CapacityMode,
-  scheduleConstraints: ManualScheduleConstraints,
 ): string {
-  const scheduleAssumption = getPrimaryScheduleAssumption(scheduleConstraints);
-  const windowLabel = getWindowLabel(scheduleAssumption);
-  const minutes = getEffectiveDurationMinutes(
-    capacityMode,
-    scheduleConstraints,
-  );
+  const labelByCapacity: Record<CapacityMode, string> = {
+    pause: "No timing needed.",
+    low: "When you have five quiet minutes.",
+    steady: "When you have a little space this week.",
+    high: "When you have room to linger this week.",
+  };
 
-  return `${windowLabel}, ${getDurationLabel(capacityMode, minutes)}.`;
+  return labelByCapacity[capacityMode];
 }
 
 function getScheduleAssumptions(
-  scheduleConstraints: ManualScheduleConstraints,
+  _scheduleConstraints: ManualScheduleConstraints,
 ): ScheduleAssumptionKey[] {
-  return [
-    "schedule.symbolic_event_tuesday",
-    getPrimaryScheduleAssumption(scheduleConstraints),
-  ].filter(
-    (scheduleAssumption, index, allScheduleAssumptions) =>
-      allScheduleAssumptions.indexOf(scheduleAssumption) === index,
-  ) as ScheduleAssumptionKey[];
+  return [];
 }
 
 function normalizeStyleList(values: string[] | undefined): string[] {
@@ -840,27 +793,6 @@ function getCapacitySignal(
   };
 }
 
-function getScheduleSignal(
-  scheduleConstraints: ManualScheduleConstraints,
-): BriefSignal {
-  const primaryWindow = getPrimaryScheduleAssumption(scheduleConstraints);
-  const windowLabel = getWindowLabel(primaryWindow);
-  const movedFromSymbolicWindow =
-    scheduleConstraints.unavailableDaysOrNights.length > 0 &&
-    primaryWindow !== "schedule.symbolic_event_tuesday";
-
-  return {
-    label: movedFromSymbolicWindow
-      ? "Schedule — realistic window"
-      : `Schedule — ${windowLabel.toLowerCase()}`,
-    type: "schedule",
-    summary: movedFromSymbolicWindow
-      ? `${windowLabel} is used because the symbolic event window is not the best fit for the household week.`
-      : `${windowLabel} is the selected household window for this suggestion.`,
-    strength: "supporting",
-  };
-}
-
 function getProfileSignal(
   privateProfileCard: SymbolicCard | undefined,
   preferenceMatches: string[],
@@ -925,7 +857,6 @@ function getBriefSignals(
     strength: signal.strength,
   }));
   const capacitySignal = getCapacitySignal(input.capacityMode, durationMinutes);
-  const scheduleSignal = getScheduleSignal(input.scheduleConstraints);
   const profileSignal = getProfileSignal(
     privateProfileCard,
     preferenceMatches,
@@ -936,7 +867,6 @@ function getBriefSignals(
   return [
     ...timingSignals,
     capacitySignal,
-    scheduleSignal,
     profileSignal,
   ]
     .filter((signal): signal is BriefSignal => signal !== undefined)
@@ -957,22 +887,6 @@ function getCapacityReason(
     case "high":
       return "This can be a little more active while staying about half an hour or less.";
   }
-}
-
-function getScheduleReason(
-  scheduleConstraints: ManualScheduleConstraints,
-): string {
-  const primaryWindow = getPrimaryScheduleAssumption(scheduleConstraints);
-  const windowLabel = getWindowLabel(primaryWindow);
-
-  if (
-    scheduleConstraints.unavailableDaysOrNights.length > 0 &&
-    primaryWindow !== "schedule.symbolic_event_tuesday"
-  ) {
-    return `The best window moves to ${windowLabel} so the timing fits real life.`;
-  }
-
-  return `${windowLabel} looks like the realistic window.`;
 }
 
 function getPreferenceReason(
@@ -1095,9 +1009,8 @@ function getWhyThis(
       ? `A few options were set aside because they did not fit current capacity, safety, or preferences.`
       : "";
   const capacityReason = getCapacityReason(input.capacityMode, durationMinutes);
-  const scheduleReason = getScheduleReason(input.scheduleConstraints);
 
-  return `${getTimingReason(timingCard, input.timingFactDetails[0])} ${pattern.title} was chosen as one small approved home practice for that theme. ${getFitReason(privateProfileCard, preferenceMatches, input.avoidedRitualStyles, profileSignalMatches, input.audience)} ${scheduleReason} ${capacityReason} ${safetyReason}`.replace(/\s+/g, " ").trim();
+  return `${getTimingReason(timingCard, input.timingFactDetails[0])} ${pattern.title} was chosen as one small approved home practice for that theme. ${getFitReason(privateProfileCard, preferenceMatches, input.avoidedRitualStyles, profileSignalMatches, input.audience)} ${capacityReason} ${safetyReason}`.replace(/\s+/g, " ").trim();
 }
 
 function getReasoning(
@@ -1135,10 +1048,6 @@ function getFilterNotes(
     {
       label: "Capacity",
       summary: getCapacityReason(input.capacityMode, durationMinutes),
-    },
-    {
-      label: "Schedule",
-      summary: getScheduleReason(input.scheduleConstraints),
     },
   ];
 
@@ -1667,10 +1576,7 @@ export function generateWeeklyBrief(
     dateRange: resolvedInput.dateRange,
     theme: getTheme(timingCard, pattern),
     intention: getIntention(pattern, resolvedInput.capacityMode),
-    bestWindow: getBestWindow(
-      resolvedInput.capacityMode,
-      resolvedInput.scheduleConstraints,
-    ),
+    bestWindow: getBestWindow(resolvedInput.capacityMode),
     recommendedRitual: getRecommendedRitual(
       pattern,
       resolvedInput.capacityMode,

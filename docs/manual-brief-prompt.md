@@ -22,9 +22,9 @@ Use the Moon & Table approach:
 * Use one of the four capacity modes: `pause`, `low`, `steady`, or `high`.
 * Default to `steady` unless capacity is constrained.
 * Use no required ritual for `pause`, five minutes or less for `low`, about twenty minutes or less for `steady`, and about half an hour or less for `high`.
-* Use private schedule constraints when provided.
-* If the symbolic timing is on a bad schedule day, suggest a nearby realistic window instead.
-* Explain briefly why this recommendation fits the timing, profile, schedule, and capacity.
+* Use capacity-based timing/window copy rather than schedule assumptions.
+* Do not name a weekday or realistic window unless a future explicit schedule feature provides one.
+* Explain briefly why this recommendation fits the timing, profile, and capacity.
 * Make it feel like support, not homework.
 
 Format the brief like this:
@@ -50,7 +50,7 @@ Format the brief like this:
 
 ## Why this
 
-[Short explanation using timing, approved symbolic cards, schedule, capacity, and private context when provided]
+[Short explanation using timing, approved symbolic cards, capacity, and private context when provided]
 
 ## Reflection prompt
 
@@ -81,12 +81,12 @@ Add this when there is room for something fuller:
 Capacity is steady or high. You may suggest one practical ritual: about twenty minutes or less for steady, or about half an hour or less for high. Include at most one optional add-on, and still do not give a list of multiple things to do.
 ```
 
-## Schedule-aware version
+## Deferred schedule-aware version
 
-Add this when schedule matters:
+Do not use this for current generated briefs. Reserve it for a future designed schedule feature:
 
 ```text
-Use schedule-awareness. Do not automatically recommend the exact date of the astrological or lunar event. Recommend the nearest realistic window based on private schedule constraints and stated capacity.
+Use schedule-awareness only when explicit schedule data is designed and provided. Do not automatically recommend the exact date of the astrological or lunar event. Recommend a realistic window based on private schedule constraints and stated capacity.
 ```
 
 ## Product behavior this prompt is testing
@@ -109,4 +109,4 @@ A bad brief feels:
 * too generic
 * too mystical without grounding
 * too full of options
-* insensitive to schedule or capacity
+* insensitive to capacity

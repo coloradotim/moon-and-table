@@ -46,6 +46,39 @@ describe("timing interpretation rules", () => {
     );
   });
 
+  it("keeps approved numerology rules source-backed and accent-level for 1-9", () => {
+    const rules = getEligibleTimingInterpretationRules().filter(
+      (rule) => rule.timingFactType === "numerology_date",
+    );
+    const serializedRules = JSON.stringify(rules).toLowerCase();
+
+    expect(rules.map((rule) => rule.id).sort()).toEqual(
+      Array.from({ length: 9 }, (_, index) => `timing_rule.numerology.${index + 1}`).sort(),
+    );
+
+    for (const rule of rules) {
+      expect(rule.strength).toBe("accent");
+      expect(rule.weight).toBeLessThan(40);
+      expect(rule.signalSummary).toMatch(/light|accent/);
+      expect(rule.sourceReferences).toEqual(
+        expect.arrayContaining([
+          "source.hans_decoz_tom_monte",
+          "source.barnum_forer_guardrail",
+          "note.numerology_calculation_reduced_universal_dates",
+          "note.numerology_guardrail_accent_only",
+        ]),
+      );
+      expect(rule.sourceReferences.some((reference) =>
+        /^note\.numerology_\d_/.test(reference),
+      )).toBe(true);
+    }
+
+    expect(serializedRules).not.toContain("guarantees");
+    expect(serializedRules).not.toContain("will happen");
+    expect(serializedRules).not.toContain("you are a");
+    expect(serializedRules).not.toContain("your relationship");
+  });
+
   it("creates approved source-backed astrology signals from computed facts", () => {
     const facts = getTimingFactsForDate("2026-06-21T00:00:00.000Z");
     const signals = getTimingSignalsForFacts(facts);
