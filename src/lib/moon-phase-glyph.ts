@@ -18,14 +18,25 @@ type MoonPhaseGlyphShape = {
 };
 
 const GLYPH_SHAPES: Record<MoonPhaseGlyphState, MoonPhaseGlyphShape> = {
-  new: { label: "New moon", lightCx: -20, darkCx: 9, darkOpacity: 1 },
-  waxing_crescent: { label: "Waxing crescent moon", lightCx: 9, darkCx: 5, darkOpacity: 1 },
-  first_quarter: { label: "First quarter moon", lightCx: 9, darkCx: 0, darkOpacity: 1 },
-  waxing_gibbous: { label: "Waxing gibbous moon", lightCx: 9, darkCx: -4, darkOpacity: 1 },
-  full: { label: "Full moon", lightCx: 9, darkCx: 40, darkOpacity: 0 },
-  waning_gibbous: { label: "Waning gibbous moon", lightCx: 9, darkCx: 14, darkOpacity: 1 },
-  last_quarter: { label: "Last quarter moon", lightCx: 9, darkCx: 18, darkOpacity: 1 },
-  waning_crescent: { label: "Waning crescent moon", lightCx: 9, darkCx: 22, darkOpacity: 1 },
+  new: { label: "New moon", lightCx: -32, darkCx: 12, darkOpacity: 1 },
+  waxing_crescent: { label: "Waxing crescent moon", lightCx: 12, darkCx: 7, darkOpacity: 1 },
+  first_quarter: { label: "First quarter moon", lightCx: 12, darkCx: 0, darkOpacity: 1 },
+  waxing_gibbous: { label: "Waxing gibbous moon", lightCx: 12, darkCx: -5, darkOpacity: 1 },
+  full: { label: "Full moon", lightCx: 12, darkCx: 42, darkOpacity: 0 },
+  waning_gibbous: { label: "Waning gibbous moon", lightCx: 12, darkCx: 17, darkOpacity: 1 },
+  last_quarter: { label: "Last quarter moon", lightCx: 12, darkCx: 24, darkOpacity: 1 },
+  waning_crescent: { label: "Waning crescent moon", lightCx: 12, darkCx: 29, darkOpacity: 1 },
+};
+
+const NEXT_QUARTER_LABELS: Record<MoonPhaseGlyphState, string> = {
+  new: "First quarter moon",
+  waxing_crescent: "First quarter moon",
+  first_quarter: "Full moon",
+  waxing_gibbous: "Full moon",
+  full: "Last quarter moon",
+  waning_gibbous: "Last quarter moon",
+  last_quarter: "New moon",
+  waning_crescent: "New moon",
 };
 
 function normalizePhaseAngle(angleDegrees: number): number {
@@ -68,31 +79,39 @@ export function getMoonPhaseGlyphStateForAngle(
   return "waning_crescent";
 }
 
+export function getMoonPhaseGlyphLabelForAngle(angleDegrees: number): string {
+  return GLYPH_SHAPES[getMoonPhaseGlyphStateForAngle(angleDegrees)].label;
+}
+
+export function getNextQuarterLabelForAngle(angleDegrees: number): string {
+  return NEXT_QUARTER_LABELS[getMoonPhaseGlyphStateForAngle(angleDegrees)];
+}
+
 export function getMoonPhaseGlyphSvgForAngle(angleDegrees: number): string {
   const state = getMoonPhaseGlyphStateForAngle(angleDegrees);
   const shape = GLYPH_SHAPES[state];
   const darkCircle =
     shape.darkOpacity > 0
-      ? `<circle cx="${shape.darkCx}" cy="9" r="7.15" fill="var(--moon-glyph-shadow, #eef1eb)" opacity="${shape.darkOpacity}" />`
+      ? `<circle cx="${shape.darkCx}" cy="12" r="9.6" fill="var(--moon-glyph-shadow, #f5f1e9)" opacity="${shape.darkOpacity}" />`
       : "";
 
   return `
     <svg
       class="moon-glyph moon-glyph--${state}"
       aria-hidden="true"
-      viewBox="0 0 18 18"
-      width="18"
-      height="18"
+      viewBox="0 0 24 24"
+      width="24"
+      height="24"
       focusable="false"
       data-moon-phase-glyph="${state}"
       data-moon-phase-label="${shape.label}"
     >
-      <circle cx="9" cy="9" r="7.25" fill="none" stroke="currentColor" stroke-width="1.4" />
+      <circle cx="12" cy="12" r="10" fill="var(--moon-glyph-shadow, #f5f1e9)" stroke="currentColor" stroke-width="1.65" />
       <clipPath id="moon-glyph-clip-${state}">
-        <circle cx="9" cy="9" r="7.25" />
+        <circle cx="12" cy="12" r="9.25" />
       </clipPath>
       <g clip-path="url(#moon-glyph-clip-${state})">
-        <circle cx="${shape.lightCx}" cy="9" r="7.25" fill="currentColor" />
+        <circle cx="${shape.lightCx}" cy="12" r="9.25" fill="currentColor" />
         ${darkCircle}
       </g>
     </svg>

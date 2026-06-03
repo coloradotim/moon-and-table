@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  getMoonPhaseGlyphLabelForAngle,
   getMoonPhaseGlyphStateForAngle,
   getMoonPhaseGlyphSvg,
   getMoonPhaseGlyphSvgForAngle,
+  getNextQuarterLabelForAngle,
 } from "../../src/lib/moon-phase-glyph";
 
 describe("moon phase glyph", () => {
@@ -23,9 +25,18 @@ describe("moon phase glyph", () => {
 
     expect(svg).toContain('aria-hidden="true"');
     expect(svg).toContain('data-moon-phase-glyph="full"');
+    expect(svg).toContain('width="24"');
+    expect(svg).toContain('height="24"');
     expect(svg).toContain("currentColor");
     expect(svg).not.toContain("<script");
     expect(svg).not.toContain("http");
+  });
+
+  it("returns current phase and next-quarter labels", () => {
+    expect(getMoonPhaseGlyphLabelForAngle(180)).toBe("Full moon");
+    expect(getNextQuarterLabelForAngle(180)).toBe("Last quarter moon");
+    expect(getMoonPhaseGlyphLabelForAngle(45)).toBe("Waxing crescent moon");
+    expect(getNextQuarterLabelForAngle(45)).toBe("First quarter moon");
   });
 
   it("changes SVG state for different phase dates", () => {

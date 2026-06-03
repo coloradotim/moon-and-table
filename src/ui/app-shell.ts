@@ -8,7 +8,11 @@ import {
   BRIEF_FEEDBACK_TYPES,
   type BriefFeedbackType,
 } from "../lib/brief-feedback";
-import { getMoonPhaseGlyphSvgForAngle } from "../lib/moon-phase-glyph";
+import {
+  getMoonPhaseGlyphLabelForAngle,
+  getMoonPhaseGlyphSvgForAngle,
+  getNextQuarterLabelForAngle,
+} from "../lib/moon-phase-glyph";
 import type { PrivateBriefData } from "../lib/private-data";
 import { getGroupedProfilePreferenceOptions } from "../lib/profile-preference-taxonomy";
 import {
@@ -75,8 +79,20 @@ function renderOptionalAddOn(value: string): string {
 
 function renderMoonGlyph(brief: WeeklyBrief): string {
   const phaseAngle = brief.trace.timingFactDetails[0]?.phaseAngleDegrees ?? 0;
+  const currentPhase = getMoonPhaseGlyphLabelForAngle(phaseAngle);
+  const nextQuarter = getNextQuarterLabelForAngle(phaseAngle);
+  const tooltip = `Current phase: ${currentPhase}. Next quarter: ${nextQuarter}.`;
 
-  return getMoonPhaseGlyphSvgForAngle(phaseAngle);
+  return `
+    <span
+      class="moon-phase-indicator"
+      tabindex="0"
+      aria-label="${escapeHtml(tooltip)}"
+    >
+      ${getMoonPhaseGlyphSvgForAngle(phaseAngle)}
+      <span class="moon-phase-tooltip" role="tooltip">${escapeHtml(tooltip)}</span>
+    </span>
+  `;
 }
 
 function renderBriefTheme(theme: string): string {

@@ -73,7 +73,7 @@ button:disabled {
 .masthead__nameplate {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   color: #26312c;
 }
 
@@ -85,6 +85,58 @@ button:disabled {
 .moon-glyph {
   display: block;
   flex: 0 0 auto;
+}
+
+.moon-phase-indicator {
+  position: relative;
+  display: inline-grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  flex: 0 0 auto;
+  color: #26312c;
+  border-radius: 999px;
+  cursor: help;
+}
+
+.moon-phase-indicator:focus-visible {
+  outline: 3px solid rgba(102, 123, 92, 0.34);
+  outline-offset: 2px;
+}
+
+.moon-glyph {
+  width: 26px;
+  height: 26px;
+  filter: drop-shadow(0 1px 0 rgba(255, 253, 247, 0.7));
+}
+
+.moon-phase-tooltip {
+  position: absolute;
+  z-index: 10;
+  bottom: calc(100% + 8px);
+  left: 0;
+  width: max-content;
+  max-width: min(72vw, 310px);
+  padding: 8px 10px;
+  border: 1px solid rgba(200, 190, 173, 0.72);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.98);
+  box-shadow: 0 12px 32px rgba(79, 64, 42, 0.16);
+  color: #2e3a34;
+  font-size: 0.84rem;
+  line-height: 1.35;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(3px);
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease;
+}
+
+.moon-phase-indicator:hover .moon-phase-tooltip,
+.moon-phase-indicator:focus-visible .moon-phase-tooltip {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .eyebrow,

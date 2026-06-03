@@ -69,6 +69,10 @@ describe("app shell rendering", () => {
     expect(html).toContain("Profile settings");
     expect(html).toContain("Sign out");
     expect(html).toContain("moon-glyph");
+    expect(html).toContain("moon-phase-indicator");
+    expect(html).toContain("moon-phase-tooltip");
+    expect(html).toContain("Current phase:");
+    expect(html).toContain("Next quarter:");
     expect(html).toContain('aria-hidden="true"');
     expect(html).toContain("data-moon-phase-glyph=");
     expect(html).toContain('aria-label="Open menu"');
