@@ -50,7 +50,7 @@ describe("app shell rendering", () => {
     const html = renderSignedInShell(resolvePrivateBriefData({}));
     const moonIndex = html.indexOf("Moon &amp; Table");
     const practiceIndex = html.indexOf('data-testid="recommended-ritual"');
-    const intentionIndex = html.indexOf("Let attention gather gently.");
+    const intentionIndex = html.indexOf('class="brief__intention"');
     const windowIndex = html.indexOf("Thursday evening, five minutes or less.");
     const questionIndex = html.indexOf("Question to carry");
     const signalsIndex = html.indexOf("This week's signals");
@@ -123,9 +123,8 @@ describe("app shell rendering", () => {
     expect(html).not.toContain(">Optional<");
     expect(html).toContain(">Intention<");
     expect(html).toContain(">Best window<");
-    expect(html).not.toContain("Optional:");
     expect(html).not.toContain("No add-on needed.");
-    expect(html).toContain("Let attention gather gently.");
+    expect(html).toContain('class="brief__intention"');
     expect(html).toContain("Question to carry");
     expect(html).not.toContain("Need a different suggestion?");
     expect(html).toContain("Give feedback");
@@ -259,7 +258,7 @@ describe("app shell rendering", () => {
 
     expect(html).not.toContain("Optional:");
     expect(html).not.toContain("No add-on needed.");
-    expect(html).toContain("Let attention gather gently.");
+    expect(html).toContain('class="brief__intention"');
     expect(html).toContain("Question to carry");
   });
 

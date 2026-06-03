@@ -29,6 +29,7 @@ import {
   type ProfileTuningSettings,
 } from "./profile-tuning";
 import { normalizeProfilePreferenceValues } from "./profile-preference-taxonomy";
+import type { PrivateProfileSignalInput } from "./private-profile-signals";
 
 export type FirestorePrivateDocuments = {
   profile?: Partial<PrivateProfileDocument> | null;
@@ -359,9 +360,15 @@ export function resolvePrivateBriefData(
   const avoidedRitualStyles = isStringArray(documents.profile?.avoidedRitualStyles)
     ? normalizeProfilePreferenceValues(documents.profile.avoidedRitualStyles)
     : [];
+  const tonePreferences = isStringArray(documents.profile?.tonePreferences)
+    ? normalizeProfilePreferenceValues(documents.profile.tonePreferences)
+    : [];
   const tuning =
     documents.profile || documents.capacitySettings
       ? {
+          personKey: isAudience(documents.profile?.personKey)
+            ? documents.profile.personKey
+            : undefined,
           defaultAudience,
           audienceLabels: resolveAudienceLabels(
             documents.profile?.audienceLabels,
@@ -372,6 +379,9 @@ export function resolvePrivateBriefData(
           maxRitualDurationMinutes,
           preferredRitualStyles,
           avoidedRitualStyles,
+          profileThemeKeys: privateProfileKeys,
+          astrologyProfileThemeKeys: astrologyProfile?.profileThemeKeys ?? [],
+          tonePreferences,
           astrologyVisibility: isAstrologyVisibility(
             documents.profile?.astrologyVisibility,
           )
@@ -393,6 +403,18 @@ export function resolvePrivateBriefData(
       scheduleConstraints,
       preferredRitualStyles,
       avoidedRitualStyles,
+      profileInputs: buildGeneratorProfileInputs(
+        documents,
+        tuningProfiles,
+        {
+          privateProfileKeys,
+          astrologyProfileThemeKeys: astrologyProfile?.profileThemeKeys ?? [],
+          preferredRitualStyles,
+          avoidedRitualStyles,
+          tonePreferences,
+          defaultAudience,
+        },
+      ),
       audience: defaultAudience,
     },
     householdId,
@@ -417,6 +439,51 @@ export function resolvePrivateBriefData(
         : tuningProfiles,
     documentRefs,
   };
+}
+
+function buildGeneratorProfileInputs(
+  documents: FirestorePrivateDocuments,
+  tuningProfiles: ProfileTuningProfile[],
+  current: {
+    privateProfileKeys: PrivateProfileThemeKey[];
+    astrologyProfileThemeKeys: PrivateProfileThemeKey[];
+    preferredRitualStyles: string[];
+    avoidedRitualStyles: string[];
+    tonePreferences: string[];
+    defaultAudience: PrivateAudience;
+  },
+): PrivateProfileSignalInput[] {
+  const currentAudience = isAudience(documents.profile?.personKey)
+    ? documents.profile.personKey
+    : current.defaultAudience;
+  const currentProfileInput: PrivateProfileSignalInput = {
+    audience: currentAudience,
+    label: typeof documents.profile?.displayLabel === "string"
+      ? documents.profile.displayLabel
+      : undefined,
+    profileThemeKeys: current.privateProfileKeys,
+    astrologyProfileThemeKeys: current.astrologyProfileThemeKeys,
+    preferredRitualStyles: current.preferredRitualStyles,
+    avoidedRitualStyles: current.avoidedRitualStyles,
+    tonePreferences: current.tonePreferences,
+  };
+  const householdProfileInputs = tuningProfiles.map((profile) => ({
+    audience: profile.settings.personKey ?? profile.settings.defaultAudience,
+    label: profile.label,
+    profileThemeKeys: profile.settings.profileThemeKeys ?? [],
+    astrologyProfileThemeKeys: profile.settings.astrologyProfileThemeKeys ?? [],
+    preferredRitualStyles: profile.settings.preferredRitualStyles,
+    avoidedRitualStyles: profile.settings.avoidedRitualStyles,
+    tonePreferences: profile.settings.tonePreferences ?? [],
+  }));
+
+  return [
+    currentProfileInput,
+    ...householdProfileInputs,
+  ].filter(
+    (profile, index, profiles) =>
+      profiles.findIndex((candidate) => candidate.audience === profile.audience) === index,
+  );
 }
 
 type LoadedDocument<T> = {

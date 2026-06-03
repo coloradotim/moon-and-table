@@ -221,6 +221,9 @@ describe("private Firestore data resolution", () => {
             maxRitualDurationMinutes: 20,
             preferredRitualStyles: ["candle"],
             avoidedRitualStyles: ["shopping_required"],
+            profileThemeKeys: ["private_profile.beauty_warmth"],
+            astrologyProfileThemeKeys: ["private_profile.structured_action"],
+            tonePreferences: ["warm"],
             astrologyVisibility: "subtle",
             assumptions: [],
           },
@@ -240,6 +243,20 @@ describe("private Firestore data resolution", () => {
     expect(privateBriefData.tuningProfiles.map((profile) => profile.label)).toEqual([
       "Alex",
       "Blair",
+    ]);
+    expect(privateBriefData.input.profileInputs).toEqual([
+      expect.objectContaining({
+        audience: "person_a",
+        profileThemeKeys: ["private_profile.practical_tending"],
+      }),
+      expect.objectContaining({
+        audience: "person_b",
+        profileThemeKeys: ["private_profile.beauty_warmth"],
+        astrologyProfileThemeKeys: ["private_profile.structured_action"],
+        preferredRitualStyles: ["candle"],
+        avoidedRitualStyles: ["shopping_required"],
+        tonePreferences: ["warm"],
+      }),
     ]);
   });
 
