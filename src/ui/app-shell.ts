@@ -1,9 +1,14 @@
-import { generateWeeklyBrief, type WeeklyBrief } from "../lib/generate-weekly-brief";
+import {
+  generateWeeklyBrief,
+  type CapacityMode,
+  type WeeklyBrief,
+} from "../lib/generate-weekly-brief";
 import type { AppAuthState } from "../lib/auth";
 import {
   BRIEF_FEEDBACK_TYPES,
   type BriefFeedbackType,
 } from "../lib/brief-feedback";
+import { getMoonPhaseGlyphSvgForAngle } from "../lib/moon-phase-glyph";
 import type { PrivateBriefData } from "../lib/private-data";
 import { getGroupedProfilePreferenceOptions } from "../lib/profile-preference-taxonomy";
 import {
@@ -21,13 +26,27 @@ const feedbackLabels: Record<BriefFeedbackType, string> = {
   skipped: "I skipped it",
   try_again: "Try something else",
 };
-const capacityModes = ["pause", "low", "steady", "high"];
+const capacityModes: CapacityMode[] = ["pause", "low", "steady", "high"];
+const capacityDisplayLabels: Record<CapacityMode, string> = {
+  pause: "Surviving",
+  low: "Bare minimum",
+  steady: "Steady",
+  high: "Energized",
+};
+const capacityPickerDescriptions: Record<CapacityMode, string> = {
+  pause: "nothing required",
+  low: "five minutes or less",
+  steady: "about twenty minutes",
+  high: "about half an hour",
+};
 
 export type SignedInView = "this_week" | "profile_settings";
 
 export type SignedInShellOptions = {
   activeView?: SignedInView;
   brief?: WeeklyBrief;
+  capacityModeOverride?: CapacityMode | null;
+  capacityPickerOpen?: boolean;
   feedbackStatus?: string;
   tryAgainStatus?: string;
   selectedFeedbackType?: BriefFeedbackType;
@@ -52,6 +71,55 @@ function renderOptionalAddOn(value: string): string {
   const softenedValue = value.charAt(0).toLowerCase() + value.slice(1);
 
   return `<p class="brief__optional">Optional: ${escapeHtml(softenedValue)}</p>`;
+}
+
+function renderMoonGlyph(brief: WeeklyBrief): string {
+  const phaseAngle = brief.trace.timingFactDetails[0]?.phaseAngleDegrees ?? 0;
+
+  return getMoonPhaseGlyphSvgForAngle(phaseAngle);
+}
+
+function renderCapacityControl(
+  capacityMode: CapacityMode,
+  isOpen: boolean,
+): string {
+  const pickerId = "current-capacity-picker";
+  const openClass = isOpen ? " capacity-control--open" : "";
+  const picker = isOpen
+    ? `
+      <div class="capacity-control__popover" id="${pickerId}" role="listbox" aria-label="How much do you have this week?">
+        <p class="capacity-control__title">How much do you have this week?</p>
+        <div class="capacity-control__options">
+          ${capacityModes.map((mode) => {
+            const selected = mode === capacityMode;
+
+            return `
+              <button
+                type="button"
+                role="option"
+                data-capacity-mode="${escapeHtml(mode)}"
+                aria-selected="${selected ? "true" : "false"}"
+              >${escapeHtml(`${capacityDisplayLabels[mode]} — ${capacityPickerDescriptions[mode]}`)}</button>
+            `;
+          }).join("")}
+        </div>
+        <p class="capacity-control__helper">This only changes the current view.</p>
+      </div>
+    `
+    : "";
+
+  return `
+    <section class="capacity-control${openClass}" data-capacity-control="true" aria-label="Current capacity">
+      <button
+        class="capacity-control__toggle"
+        type="button"
+        data-capacity-toggle="true"
+        aria-expanded="${isOpen ? "true" : "false"}"
+        aria-controls="${pickerId}"
+      >Current capacity: <span>${escapeHtml(capacityDisplayLabels[capacityMode])}</span></button>
+      ${picker}
+    </section>
+  `;
 }
 
 function renderSelectOptions(
@@ -380,29 +448,27 @@ export function renderSignedInShell(
     : "";
   const weeklyBrief = `
     <article class="brief" aria-label="Weekly brief">
-      <section class="brief__section brief__invitation">
-        <h2>${escapeHtml(brief.theme)}</h2>
-      </section>
-
-      <section class="brief__composition" aria-label="Weekly practice">
+      <section class="brief__core" aria-label="Weekly practice">
+        <h2 class="brief__theme">${escapeHtml(brief.theme)}</h2>
         <p class="brief__practice" data-testid="recommended-ritual">${escapeHtml(brief.recommendedRitual)}</p>
+        <p class="brief__intention">${escapeHtml(brief.intention)}</p>
         <p class="brief__window">${escapeHtml(brief.bestWindow)}</p>
         ${renderOptionalAddOn(brief.optionalAddOn)}
-        <p class="brief__intention">${escapeHtml(brief.intention)}</p>
       </section>
 
-      <section class="brief__section brief__question">
-        <p class="label">A question to carry</p>
-        <p class="prompt">${escapeHtml(brief.reflectionPrompt)}</p>
+      <section class="brief__depth" aria-label="Go deeper">
+        <details class="brief__question-details" aria-label="A question to carry">
+          <summary>A question to carry</summary>
+          <p class="prompt">${escapeHtml(brief.reflectionPrompt)}</p>
+        </details>
+
+        <details class="why-this" aria-label="Why this fits">
+          <summary>Why this fits</summary>
+          <p>${escapeHtml(brief.whyThis)}</p>
+        </details>
       </section>
 
-      <details class="why-this" aria-label="Why this fits">
-        <summary>Why this fits</summary>
-        <p>${escapeHtml(brief.whyThis)}</p>
-      </details>
-
-      <section class="try-again" aria-label="Need a different suggestion?">
-        <p class="label">Need a different suggestion?</p>
+      <section class="brief__actions" aria-label="Brief actions">
         <button
           class="secondary-action feedback-button${options.selectedFeedbackType === "try_again" || options.savingFeedbackType === "try_again" ? " feedback-button--selected" : ""}"
           type="button"
@@ -411,27 +477,32 @@ export function renderSignedInShell(
           aria-pressed="${options.selectedFeedbackType === "try_again" || options.savingFeedbackType === "try_again" ? "true" : "false"}"${options.savingFeedbackType ? " disabled" : ""}
         >${escapeHtml(options.savingFeedbackType === "try_again" ? "Saving" : feedbackLabels.try_again)}</button>
         ${options.tryAgainStatus ? `<p class="muted feedback__status" data-try-again-status="true">${escapeHtml(options.tryAgainStatus)}</p>` : ""}
-      </section>
 
-      <details class="feedback" aria-label="Feedback">
-        <summary>Share feedback</summary>
-        <div class="feedback__chips">
-          ${BRIEF_FEEDBACK_TYPES.filter((type) => type !== "try_again").map((type) => renderFeedbackButton(type, options)).join("")}
-        </div>
-        ${options.feedbackStatus ? `<p class="muted feedback__status" data-feedback-status="true">${escapeHtml(options.feedbackStatus)}</p>` : ""}
-      </details>
+        <details class="feedback" aria-label="Feedback">
+          <summary>Share feedback</summary>
+          <div class="feedback__chips">
+            ${BRIEF_FEEDBACK_TYPES.filter((type) => type !== "try_again" && type !== "too_much").map((type) => renderFeedbackButton(type, options)).join("")}
+          </div>
+          ${options.feedbackStatus ? `<p class="muted feedback__status" data-feedback-status="true">${escapeHtml(options.feedbackStatus)}</p>` : ""}
+        </details>
+      </section>
 
       ${debugTrace}
     </article>
   `;
   const profileSettings = renderProfileTuningSection(privateBriefData);
+  const capacityMode =
+    options.capacityModeOverride ?? brief.trace.capacityMode;
   const activeContent =
-    activeView === "profile_settings" ? profileSettings : weeklyBrief;
+    activeView === "profile_settings"
+      ? profileSettings
+      : `${renderCapacityControl(capacityMode, options.capacityPickerOpen ?? false)}${weeklyBrief}`;
 
   return `
     <section class="shell" aria-labelledby="app-title">
       <header class="masthead masthead--with-session">
-        <div>
+        <div class="masthead__nameplate">
+          ${renderMoonGlyph(brief)}
           <h1 id="app-title">Moon &amp; Table</h1>
         </div>
 

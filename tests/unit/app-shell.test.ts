@@ -43,16 +43,27 @@ describe("app shell rendering", () => {
     const html = renderSignedInShell(resolvePrivateBriefData({}));
     const moonIndex = html.indexOf("Moon &amp; Table");
     const practiceIndex = html.indexOf('data-testid="recommended-ritual"');
-    const windowIndex = html.indexOf("Thursday evening, five minutes or less.");
     const intentionIndex = html.indexOf("Let attention gather gently.");
+    const windowIndex = html.indexOf("Thursday evening, five minutes or less.");
     const questionIndex = html.indexOf("A question to carry");
     const whyIndex = html.indexOf("Why this fits");
-    const tryAgainIndex = html.indexOf("Need a different suggestion?");
+    const tryAgainIndex = html.indexOf("Try something else");
     const feedbackIndex = html.indexOf("Share feedback");
 
+    expect(html).toContain('class="brief__core"');
+    expect(html).toContain('class="brief__theme"');
+    expect(html).toContain('class="brief__depth"');
+    expect(html).toContain('class="brief__actions"');
+    expect(html).toContain("Current capacity: <span>Bare minimum</span>");
+    expect(html).toContain('data-capacity-toggle="true"');
+    expect(html).toContain('aria-expanded="false"');
+    expect(html).not.toContain("How much do you have this week?");
     expect(html).toContain("This week");
     expect(html).toContain("Profile settings");
     expect(html).toContain("Sign out");
+    expect(html).toContain("moon-glyph");
+    expect(html).toContain('aria-hidden="true"');
+    expect(html).toContain("data-moon-phase-glyph=");
     expect(html).toContain('aria-label="Open menu"');
     expect(html.match(/class="app-menu__line"/g)).toHaveLength(3);
     expect(html).not.toContain(">Menu<");
@@ -72,24 +83,28 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("No add-on needed.");
     expect(html).toContain("Let attention gather gently.");
     expect(html).toContain("A question to carry");
-    expect(html).toContain("Need a different suggestion?");
+    expect(html).not.toContain("Need a different suggestion?");
     expect(html).toContain("Share feedback");
     expect(html).toContain('data-feedback-type="good"');
-    expect(html).toContain('data-feedback-type="too_much"');
+    expect(html).not.toContain('data-feedback-type="too_much"');
+    expect(html).not.toContain("Simpler, please");
     expect(html).toContain('data-feedback-type="too_generic"');
     expect(html).toContain('data-feedback-type="more_like_this"');
     expect(html).toContain('data-feedback-type="not_this_style"');
     expect(html).toContain('data-feedback-type="skipped"');
     expect(html).toContain('data-feedback-type="try_again"');
     expect(html).toContain("Try something else");
+    expect(html).toContain('<details class="brief__question-details" aria-label="A question to carry">');
+    expect(html).not.toContain('<details class="brief__question-details" open');
     expect(html).toContain('<details class="why-this" aria-label="Why this fits">');
     expect(html).not.toContain('<details class="why-this" open');
     expect(html).toContain('<details class="feedback" aria-label="Feedback">');
     expect(html).not.toContain('<details class="feedback" open');
     expect(moonIndex).toBeGreaterThan(-1);
     expect(html.slice(0, moonIndex)).not.toContain("Private weekly ritual brief");
-    expect(practiceIndex).toBeLessThan(windowIndex);
-    expect(windowIndex).toBeLessThan(intentionIndex);
+    expect(practiceIndex).toBeLessThan(intentionIndex);
+    expect(intentionIndex).toBeLessThan(windowIndex);
+    expect(windowIndex).toBeLessThan(questionIndex);
     expect(intentionIndex).toBeLessThan(questionIndex);
     expect(questionIndex).toBeLessThan(whyIndex);
     expect(whyIndex).toBeLessThan(tryAgainIndex);
@@ -117,6 +132,33 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("Calendar");
   });
 
+  it("renders the current-capacity picker when requested", () => {
+    const privateBriefData = resolvePrivateBriefData({});
+    const brief = generateWeeklyBrief({
+      ...privateBriefData.input,
+      capacityMode: "steady",
+    });
+    const html = renderSignedInShell(privateBriefData, {
+      brief,
+      capacityModeOverride: "steady",
+      capacityPickerOpen: true,
+    });
+
+    expect(html).toContain("Current capacity: <span>Steady</span>");
+    expect(html).toContain('aria-expanded="true"');
+    expect(html).toContain("How much do you have this week?");
+    expect(html).toContain("Surviving — nothing required");
+    expect(html).toContain("Bare minimum — five minutes or less");
+    expect(html).toContain("Steady — about twenty minutes");
+    expect(html).toContain("Energized — about half an hour");
+    expect(html).toContain("This only changes the current view.");
+    expect(html).toContain('data-capacity-mode="pause"');
+    expect(html).toContain('data-capacity-mode="low"');
+    expect(html).toContain('data-capacity-mode="steady"');
+    expect(html).toContain('data-capacity-mode="high"');
+    expect(html).toContain('aria-selected="true"');
+  });
+
   it("renders a real optional add-on as a quiet inline line", () => {
     const privateBriefData = resolvePrivateBriefData({});
     const brief = generateWeeklyBrief(privateBriefData.input);
@@ -133,7 +175,7 @@ describe("app shell rendering", () => {
     expect(html).toContain("Optional: light a candle if that feels supportive and safe.");
     expect(html).not.toContain(">Optional<");
     expect(windowIndex).toBeLessThan(optionalIndex);
-    expect(optionalIndex).toBeLessThan(intentionIndex);
+    expect(intentionIndex).toBeLessThan(windowIndex);
   });
 
   it("hides the optional line when no add-on is needed", () => {
@@ -195,8 +237,8 @@ describe("app shell rendering", () => {
   it("renders a saving state for clicked feedback buttons", () => {
     const html = renderSignedInShell(resolvePrivateBriefData({}), {
       feedbackStatus: "Saving.",
-      selectedFeedbackType: "too_much",
-      savingFeedbackType: "too_much",
+      selectedFeedbackType: "too_generic",
+      savingFeedbackType: "too_generic",
     });
 
     expect(html).toContain(">Saving</button>");

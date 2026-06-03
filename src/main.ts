@@ -48,14 +48,59 @@ let activeSignedInState: Extract<AppAuthState, { status: "signed_in" }> | null =
 let activePrivateBriefData: PrivateBriefData | null = null;
 let activeBrief: WeeklyBrief | null = null;
 let activeSignedInView: SignedInView = "this_week";
+let activeCapacityModeOverride: CapacityMode | null = null;
+let activeCapacityPickerOpen = false;
 const showDebugTrace = new URLSearchParams(window.location.search).get("debug") === "true";
 
 function render(state: AppAuthState): void {
   appRoot.innerHTML = renderAppShell(state);
 }
 
+function getActiveBriefInput(
+  excludedRitualPatternKeys?: string[],
+): Parameters<typeof generateWeeklyBrief>[0] {
+  if (!activePrivateBriefData) {
+    return {};
+  }
+
+  return {
+    ...activePrivateBriefData.input,
+    ...(activeCapacityModeOverride
+      ? { capacityMode: activeCapacityModeOverride }
+      : {}),
+    ...(excludedRitualPatternKeys
+      ? { excludedRitualPatternKeys }
+      : {}),
+  };
+}
+
+function renderActiveSignedInShell(options: {
+  feedbackStatus?: string;
+  tryAgainStatus?: string;
+  selectedFeedbackType?: BriefFeedbackType;
+  savingFeedbackType?: BriefFeedbackType;
+} = {}): void {
+  if (!activePrivateBriefData || !activeBrief) {
+    return;
+  }
+
+  appRoot.innerHTML = renderSignedInShell(activePrivateBriefData, {
+    activeView: activeSignedInView,
+    brief: activeBrief,
+    capacityModeOverride: activeCapacityModeOverride,
+    capacityPickerOpen: activeCapacityPickerOpen,
+    feedbackStatus: options.feedbackStatus,
+    tryAgainStatus: options.tryAgainStatus,
+    selectedFeedbackType: options.selectedFeedbackType,
+    savingFeedbackType: options.savingFeedbackType,
+    showDebugTrace,
+  });
+}
+
 function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" }>): void {
   activeSignedInState = state;
+  activeCapacityModeOverride = null;
+  activeCapacityPickerOpen = false;
   privateDataRequestId += 1;
   const requestId = privateDataRequestId;
 
@@ -79,6 +124,8 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
           activePrivateBriefData = null;
           activeBrief = null;
           activeSignedInView = "this_week";
+          activeCapacityModeOverride = null;
+          activeCapacityPickerOpen = false;
           appRoot.innerHTML = renderAppShell({
             status: "unauthorized",
             configReady: true,
@@ -87,12 +134,8 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         }
 
         activePrivateBriefData = privateBriefData;
-        activeBrief = generateWeeklyBrief(privateBriefData.input);
-        appRoot.innerHTML = renderSignedInShell(privateBriefData, {
-          activeView: activeSignedInView,
-          brief: activeBrief,
-          showDebugTrace,
-        });
+        activeBrief = generateWeeklyBrief(getActiveBriefInput());
+        renderActiveSignedInShell();
       }
     })
     .catch(() => {
@@ -101,6 +144,8 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activePrivateBriefData = null;
         activeBrief = null;
         activeSignedInView = "this_week";
+        activeCapacityModeOverride = null;
+        activeCapacityPickerOpen = false;
         appRoot.innerHTML = renderAppShell({
           status: "unauthorized",
           configReady: true,
@@ -119,14 +164,11 @@ function renderActiveBriefStatus(
     return;
   }
 
-  appRoot.innerHTML = renderSignedInShell(activePrivateBriefData, {
-    activeView: activeSignedInView,
-    brief: activeBrief,
+  renderActiveSignedInShell({
     feedbackStatus,
     tryAgainStatus,
     selectedFeedbackType,
     savingFeedbackType,
-    showDebugTrace,
   });
 }
 
@@ -285,10 +327,9 @@ async function handleTryAgainClick(): Promise<void> {
       throw new Error("Load a brief before trying again.");
     }
 
-    const alternateBrief = generateWeeklyBrief({
-      ...activePrivateBriefData.input,
-      excludedRitualPatternKeys: currentBrief.trace.ritualPatterns,
-    });
+    const alternateBrief = generateWeeklyBrief(
+      getActiveBriefInput(currentBrief.trace.ritualPatterns),
+    );
 
     if (
       alternateBrief.trace.ritualPatterns[0] ===
@@ -303,18 +344,30 @@ async function handleTryAgainClick(): Promise<void> {
     }
 
     activeBrief = alternateBrief;
-    appRoot.innerHTML = renderSignedInShell(activePrivateBriefData, {
-      activeView: activeSignedInView,
-      brief: activeBrief,
+    activeCapacityPickerOpen = false;
+    renderActiveSignedInShell({
       tryAgainStatus: "Here is another approved option.",
       selectedFeedbackType: "try_again",
-      showDebugTrace,
     });
   } catch (error) {
     renderActiveBriefStatus(
       error instanceof Error ? error.message : "Could not try again.",
     );
   }
+}
+
+function closeOpenOverlays(): void {
+  activeCapacityPickerOpen = false;
+  document
+    .querySelectorAll("details[data-app-menu='true'][open]")
+    .forEach((menu) => menu.removeAttribute("open"));
+}
+
+function applyCapacityOverride(capacityMode: CapacityMode): void {
+  activeCapacityModeOverride = capacityMode;
+  activeCapacityPickerOpen = false;
+  activeBrief = generateWeeklyBrief(getActiveBriefInput());
+  renderActiveSignedInShell();
 }
 
 render({ status: "loading" });
@@ -339,17 +392,26 @@ appRoot.addEventListener("click", (event) => {
   const action = target.dataset.authAction;
   const menuAction = target.dataset.menuAction;
   const feedbackType = target.dataset.feedbackType;
+  const capacityMode = target.dataset.capacityMode;
+
+  if (target.dataset.capacityToggle === "true") {
+    activeCapacityPickerOpen = !activeCapacityPickerOpen;
+    renderActiveSignedInShell();
+    return;
+  }
+
+  if (capacityMode && isCapacityMode(capacityMode)) {
+    applyCapacityOverride(capacityMode);
+    return;
+  }
 
   if (menuAction === "this_week" || menuAction === "profile_settings") {
     activeSignedInView = menuAction;
+    activeCapacityPickerOpen = false;
     target.closest("details[data-app-menu='true']")?.removeAttribute("open");
 
     if (activePrivateBriefData) {
-      appRoot.innerHTML = renderSignedInShell(activePrivateBriefData, {
-        activeView: activeSignedInView,
-        brief: activeBrief ?? undefined,
-        showDebugTrace,
-      });
+      renderActiveSignedInShell();
     }
 
     return;
@@ -373,7 +435,50 @@ appRoot.addEventListener("click", (event) => {
 
   if (action === "sign-out") {
     target.closest("details[data-app-menu='true']")?.removeAttribute("open");
+    activeCapacityModeOverride = null;
+    activeCapacityPickerOpen = false;
     void signOutOfFirebase(firebaseServices);
+  }
+});
+
+document.addEventListener("click", (event) => {
+  const target = event.target;
+
+  if (!(target instanceof HTMLElement)) {
+    return;
+  }
+
+  const clickedMenu = Boolean(target.closest("details[data-app-menu='true']"));
+  const clickedCapacity = Boolean(target.closest("[data-capacity-control='true']"));
+
+  if (!clickedMenu) {
+    document
+      .querySelectorAll("details[data-app-menu='true'][open]")
+      .forEach((menu) => menu.removeAttribute("open"));
+  }
+
+  if (!clickedCapacity && activeCapacityPickerOpen) {
+    activeCapacityPickerOpen = false;
+    renderActiveSignedInShell();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") {
+    return;
+  }
+
+  const hadOpenMenu = Boolean(
+    document.querySelector("details[data-app-menu='true'][open]"),
+  );
+  const hadOpenCapacityPicker = activeCapacityPickerOpen;
+
+  closeOpenOverlays();
+
+  if (hadOpenCapacityPicker) {
+    renderActiveSignedInShell();
+  } else if (hadOpenMenu) {
+    event.preventDefault();
   }
 });
 
@@ -387,6 +492,8 @@ subscribeToAuthState(firebaseServices, (state) => {
   activePrivateBriefData = null;
   activeBrief = null;
   activeSignedInView = "this_week";
+  activeCapacityModeOverride = null;
+  activeCapacityPickerOpen = false;
   privateDataRequestId += 1;
   render(state);
 });
