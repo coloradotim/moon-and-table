@@ -347,9 +347,18 @@ function renderAppMenu(activeView: SignedInView): string {
   return `
     <details class="app-menu" data-app-menu="true">
       <summary class="app-menu__button" aria-label="Open menu">
-        <span class="app-menu__line" aria-hidden="true"></span>
-        <span class="app-menu__line" aria-hidden="true"></span>
-        <span class="app-menu__line" aria-hidden="true"></span>
+        <svg
+          class="app-menu__icon"
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          width="24"
+          height="24"
+          focusable="false"
+        >
+          <path d="M6 7h12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" />
+          <path d="M6 12h12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" />
+          <path d="M6 17h12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" />
+        </svg>
       </summary>
       <div class="app-menu__panel" role="menu" aria-label="App menu">
         <button type="button" role="menuitem" data-menu-action="this_week" aria-pressed="${thisWeekPressed}">This week</button>

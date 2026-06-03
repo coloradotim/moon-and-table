@@ -733,7 +733,6 @@ fieldset {
 }
 
 .app-menu__button {
-  position: relative;
   display: inline-flex;
   width: 44px;
   min-height: 44px;
@@ -756,6 +755,10 @@ fieldset {
   display: none;
 }
 
+.app-menu__button::marker {
+  content: "";
+}
+
 .app-menu__button:hover {
   background: rgba(102, 123, 92, 0.1);
 }
@@ -769,27 +772,15 @@ fieldset {
   outline-offset: 2px;
 }
 
-.app-menu__line {
-  position: absolute;
-  left: 50%;
-  width: 20px;
-  height: 2px;
-  min-height: 2px;
-  border-radius: 999px;
-  background: currentColor;
-  transform: translateX(-50%);
+.app-menu__icon {
+  display: block;
 }
 
-.app-menu__line:nth-child(1) {
-  top: 15px;
-}
-
-.app-menu__line:nth-child(2) {
-  top: 21px;
-}
-
-.app-menu__line:nth-child(3) {
-  top: 27px;
+.app-menu__icon path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
 }
 
 .app-menu__panel {

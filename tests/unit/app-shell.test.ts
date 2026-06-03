@@ -72,7 +72,9 @@ describe("app shell rendering", () => {
     expect(html).toContain('aria-hidden="true"');
     expect(html).toContain("data-moon-phase-glyph=");
     expect(html).toContain('aria-label="Open menu"');
-    expect(html.match(/class="app-menu__line"/g)).toHaveLength(3);
+    expect(html).toContain('class="app-menu__icon"');
+    expect(html.match(/<path d="M6 /g)).toHaveLength(3);
+    expect(html).not.toContain('class="app-menu__line"');
     expect(html).not.toContain(">Menu<");
     expect(html).not.toContain("ellipsis");
     expect(html).not.toContain("•••");
