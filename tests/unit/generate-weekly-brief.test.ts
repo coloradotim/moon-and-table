@@ -55,6 +55,9 @@ describe("generateWeeklyBrief", () => {
     });
     expect(brief.whyThis.length).toBeGreaterThan(0);
     expect(brief.sourceSummary).toContain("Sources:");
+    expect(brief.theme).toMatch(/^[A-Z].*[.!?]$/);
+    expect(brief.theme).not.toContain(" with offer ");
+    expect(brief.theme).not.toContain("beginning with");
   });
 
   it("limits capacity modes to pause, low, steady, and high", () => {
@@ -107,15 +110,14 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.bestWindow).toContain("no required ritual");
     expect(brief.recommendedRitual).toContain("No required ritual");
-    expect(brief.whyThis).toContain("Capacity is pause");
+    expect(brief.whyThis).toContain("pause week");
   });
 
   it("low produces a 0-5 minute recommendation with no setup burden", () => {
     const brief = generateWeeklyBrief({ capacityMode: "low" });
 
     expect(brief.bestWindow).toContain("0-5 minutes");
-    expect(brief.whyThis).toContain("0-5 minutes");
-    expect(brief.whyThis).toContain("no shopping or elaborate setup");
+    expect(brief.whyThis).toContain("stays small");
   });
 
   it("steady produces a 10-20 minute practical recommendation", () => {
@@ -127,7 +129,7 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.bestWindow).toContain("10-20 minutes");
     expect(brief.trace.ritualPatterns).toEqual(["table_reset"]);
-    expect(brief.whyThis).toContain("Capacity is steady");
+    expect(brief.whyThis).toContain("steady week");
   });
 
   it("high produces an active recommendation without creating a task list", () => {
@@ -156,7 +158,7 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.bestWindow).toContain("Saturday morning");
     expect(brief.bestWindow).not.toContain("Tuesday");
-    expect(brief.whyThis).toContain("moves the ritual away");
+    expect(brief.whyThis).toContain("fits real life");
     expect(brief.trace.scheduleAssumptions).toEqual([
       "schedule.symbolic_event_tuesday",
       "schedule.preferred_window_saturday_morning",
@@ -172,7 +174,9 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.trace.ritualPatterns).not.toEqual(["table_reset"]);
     expect(brief.trace.safety.excludedPatternKeys).toContain("table_reset");
-    expect(brief.whyThis).toContain("Safety and avoid filters skipped");
+    expect(brief.whyThis).toContain("A few options were set aside");
+    expect(brief.whyThis).not.toContain("filter");
+    expect(brief.whyThis).not.toContain("pattern option");
   });
 
   it("includes source and trace data for selected cards and patterns", () => {
@@ -226,7 +230,7 @@ describe("generateWeeklyBrief", () => {
         computedBy: "astronomy_engine",
       }),
     ]);
-    expect(brief.whyThis).toContain("new moon theme");
+    expect(brief.whyThis).toContain("new moon themes");
   });
 
   it("can produce an alternate approved pattern when the current pattern is excluded", () => {

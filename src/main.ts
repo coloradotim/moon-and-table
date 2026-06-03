@@ -31,6 +31,7 @@ import {
   renderAppShell,
   renderPrivateDataLoadingShell,
   renderSignedInShell,
+  type SignedInView,
 } from "./ui/app-shell";
 import "./styles.css";
 
@@ -46,6 +47,8 @@ let privateDataRequestId = 0;
 let activeSignedInState: Extract<AppAuthState, { status: "signed_in" }> | null = null;
 let activePrivateBriefData: PrivateBriefData | null = null;
 let activeBrief: WeeklyBrief | null = null;
+let activeSignedInView: SignedInView = "this_week";
+const showDebugTrace = new URLSearchParams(window.location.search).get("debug") === "true";
 
 function render(state: AppAuthState): void {
   appRoot.innerHTML = renderAppShell(state);
@@ -74,7 +77,9 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activePrivateBriefData = privateBriefData;
         activeBrief = generateWeeklyBrief(privateBriefData.input);
         appRoot.innerHTML = renderSignedInShell(privateBriefData, {
+          activeView: activeSignedInView,
           brief: activeBrief,
+          showDebugTrace,
         });
       }
     })
@@ -84,7 +89,9 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activePrivateBriefData = fallbackPrivateBriefData;
         activeBrief = generateWeeklyBrief(fallbackPrivateBriefData.input);
         appRoot.innerHTML = renderSignedInShell(fallbackPrivateBriefData, {
+          activeView: activeSignedInView,
           brief: activeBrief,
+          showDebugTrace,
         });
       }
     });
@@ -101,11 +108,13 @@ function renderActiveBriefStatus(
   }
 
   appRoot.innerHTML = renderSignedInShell(activePrivateBriefData, {
+    activeView: activeSignedInView,
     brief: activeBrief,
     feedbackStatus,
     tryAgainStatus,
     selectedFeedbackType,
     savingFeedbackType,
+    showDebugTrace,
   });
 }
 
@@ -243,7 +252,7 @@ async function saveActiveBriefFeedback(
 
 async function handleFeedbackClick(feedbackType: BriefFeedbackType): Promise<void> {
   try {
-    renderActiveBriefStatus(`Saving ${feedbackType.replaceAll("_", " ")}.`, undefined, feedbackType, feedbackType);
+    renderActiveBriefStatus("Saving feedback.", undefined, feedbackType, feedbackType);
     await saveActiveBriefFeedback(feedbackType);
     renderActiveBriefStatus("Saved. Thank you.", undefined, feedbackType);
   } catch (error) {
@@ -283,9 +292,11 @@ async function handleTryAgainClick(): Promise<void> {
 
     activeBrief = alternateBrief;
     appRoot.innerHTML = renderSignedInShell(activePrivateBriefData, {
+      activeView: activeSignedInView,
       brief: activeBrief,
       tryAgainStatus: "Saved. Here is another approved option.",
       selectedFeedbackType: "try_again",
+      showDebugTrace,
     });
   } catch (error) {
     renderActiveBriefStatus(
@@ -314,7 +325,23 @@ appRoot.addEventListener("click", (event) => {
   }
 
   const action = target.dataset.authAction;
+  const menuAction = target.dataset.menuAction;
   const feedbackType = target.dataset.feedbackType;
+
+  if (menuAction === "this_week" || menuAction === "profile_settings") {
+    activeSignedInView = menuAction;
+    target.closest("details[data-app-menu='true']")?.removeAttribute("open");
+
+    if (activePrivateBriefData) {
+      appRoot.innerHTML = renderSignedInShell(activePrivateBriefData, {
+        activeView: activeSignedInView,
+        brief: activeBrief ?? undefined,
+        showDebugTrace,
+      });
+    }
+
+    return;
+  }
 
   if (feedbackType && isBriefFeedbackType(feedbackType)) {
     if (target.dataset.tryAgainAction === "true") {
@@ -333,6 +360,7 @@ appRoot.addEventListener("click", (event) => {
   }
 
   if (action === "sign-out") {
+    target.closest("details[data-app-menu='true']")?.removeAttribute("open");
     void signOutOfFirebase(firebaseServices);
   }
 });
@@ -346,6 +374,7 @@ subscribeToAuthState(firebaseServices, (state) => {
   activeSignedInState = null;
   activePrivateBriefData = null;
   activeBrief = null;
+  activeSignedInView = "this_week";
   privateDataRequestId += 1;
   render(state);
 });
