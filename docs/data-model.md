@@ -103,6 +103,7 @@ Astronomy Engine is the MVP timing direction. Swiss Ephemeris remains deferred u
 | Object | Responsibility |
 | --- | --- |
 | `WeeklyBrief` | User-facing generated brief: key, date range, theme, intention, best window, one ritual, optional add-on, reflection prompt, why-this explanation, source summary, and trace. |
+| `RecommendationDecision` | Internal inspectable decision record with normalized inputs, evaluated cards and ritual patterns, selected content, rejection reasons, score breakdowns, source references, and debug summaries. |
 | `WeeklyBriefTrace` | Internal trace keys for timing facts, symbolic cards, ritual patterns, source review ids, source note ids, private profile keys, preferences, capacity, audience, and safety notes. The legacy `scheduleAssumptions` field remains for compatibility but is inert in current briefs. |
 | `BriefSignal` | Planned user-facing vocabulary for a fact or private setting that influenced the brief. |
 | `BriefReason` | Planned user-facing explanation unit for why the recommendation fits. |
@@ -110,6 +111,8 @@ Astronomy Engine is the MVP timing direction. Swiss Ephemeris remains deferred u
 | `BriefSourceSummary` | Human-readable source summary; raw source ids should not render in the default UI. |
 
 User-facing explanations should not show raw trace keys, repo paths, Firestore details, or source ids. Signals should include only things that influenced the recommendation. Sources should display human-readable labels.
+
+`RecommendationDecision` is documented in `docs/recommendation-decision-model.md`. It supports developer inspection and golden tests without exposing the full scoring/debug record in the default UI.
 
 ## Feedback Data
 

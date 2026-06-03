@@ -482,6 +482,63 @@ h2 {
   font-size: var(--text-label);
 }
 
+.decision-debug {
+  display: grid;
+  gap: 16px;
+}
+
+.decision-debug[open] summary {
+  margin-bottom: 14px;
+}
+
+.decision-debug__grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.decision-debug h3 {
+  margin: 0 0 8px;
+  color: #24332b;
+  font-size: var(--text-small);
+}
+
+.decision-debug p,
+.decision-debug li {
+  color: #4d5e55;
+  font-size: var(--text-small);
+  line-height: 1.48;
+}
+
+.decision-debug p {
+  margin: 0 0 6px;
+}
+
+.decision-debug ul,
+.decision-debug ol {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 20px;
+}
+
+.decision-debug li span {
+  display: inline-block;
+  min-width: 34px;
+  color: #24332b;
+  font-weight: 700;
+}
+
+.decision-debug small {
+  display: block;
+  color: #66736a;
+}
+
+.decision-debug__section {
+  padding-top: 12px;
+  border-top: 1px solid rgba(102, 123, 92, 0.22);
+}
+
 .brief__signals {
   display: grid;
   gap: 9px;

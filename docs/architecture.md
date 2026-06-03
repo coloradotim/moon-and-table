@@ -85,6 +85,8 @@ SourceReview
 
 Timing facts are deterministic facts, not interpretations. The broader timing fact API lives in `src/lib/timing-facts.ts`; the first interpretation rule layer lives in `src/lib/timing-interpretation-rules.ts`. The generator currently remains lunar-first while future signal selection can draw from the broader fact list. It combines timing facts, approved cards, approved patterns, private profile placeholders, capacity, schedule constraints, and feedback exclusions to produce one brief.
 
+The generator also returns a structured recommendation decision record with evaluated candidate scores, rejection reasons, selected cards/patterns, and source references. See `docs/recommendation-decision-model.md`. The normal UI stays simple; the developer decision view appears only under `?debug=true`.
+
 ## Deployment Model
 
 Vercel hosts the static web app. Firebase remains external for Auth and Firestore.

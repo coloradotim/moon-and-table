@@ -269,6 +269,86 @@ function renderBriefChoiceDetails(explanation: BriefExplanation): string {
   `;
 }
 
+function renderScoreReasons(
+  reasons: Array<{ code: string; label: string; points: number; detail?: string }>,
+): string {
+  if (reasons.length === 0) {
+    return "<li>No scoring reasons recorded.</li>";
+  }
+
+  return reasons.map((reason) => `
+    <li>
+      <span>${escapeHtml(reason.points > 0 ? `+${reason.points}` : `${reason.points}`)}</span>
+      ${escapeHtml(reason.label)}
+      ${reason.detail ? `<small>${escapeHtml(reason.detail)}</small>` : ""}
+    </li>
+  `).join("");
+}
+
+function renderDeveloperDecision(brief: WeeklyBrief): string {
+  const selectedPattern = brief.decision.candidates.ritualPatterns.find(
+    (candidate) => candidate.key === brief.decision.selected.ritualPatternKey,
+  );
+  const evaluatedPatterns = brief.decision.candidates.ritualPatterns.slice(0, 8);
+  const rejectedPatterns = brief.decision.rejected.ritualPatterns.slice(0, 8);
+
+  return `
+    <details class="trace decision-debug" aria-label="Developer decision record">
+      <summary>Developer decision record</summary>
+      <div class="decision-debug__grid">
+        <section>
+          <h3>Selected</h3>
+          <p><strong>Pattern:</strong> ${escapeHtml(brief.decision.selected.ritualPatternKey)}</p>
+          <p><strong>Cards:</strong> ${escapeHtml(brief.decision.selected.symbolicCardKeys.join(" · "))}</p>
+          <p><strong>Timing signals:</strong> ${escapeHtml(brief.decision.selected.timingSignalLabels.join(" · ") || "none")}</p>
+          <p><strong>Summary:</strong> ${escapeHtml(brief.decision.explanation.scoreSummary)}</p>
+        </section>
+        <section>
+          <h3>Inputs</h3>
+          <p><strong>Capacity:</strong> ${escapeHtml(brief.decision.inputs.capacityMode)} (${escapeHtml(`${brief.decision.inputs.capacityLimitMinutes}`)} min)</p>
+          <p><strong>Audience:</strong> ${escapeHtml(brief.decision.inputs.audience)}</p>
+          <p><strong>Preferred:</strong> ${escapeHtml(brief.decision.inputs.preferredRitualStyles.join(" · ") || "none")}</p>
+          <p><strong>Avoided:</strong> ${escapeHtml(brief.decision.inputs.avoidedRitualStyles.join(" · ") || "none")}</p>
+        </section>
+      </div>
+      ${selectedPattern ? `
+        <section class="decision-debug__section">
+          <h3>Selected score reasons</h3>
+          <ul>${renderScoreReasons(selectedPattern.scoreReasons)}</ul>
+        </section>
+      ` : ""}
+      <section class="decision-debug__section">
+        <h3>Evaluated ritual patterns</h3>
+        <ol>
+          ${evaluatedPatterns.map((candidate) => `
+            <li>
+              <strong>${escapeHtml(candidate.key)}</strong>
+              <span>${escapeHtml(`${candidate.score}`)} points</span>
+              <small>${escapeHtml(candidate.scoreReasons.slice(0, 3).map((reason) => reason.code).join(", "))}</small>
+            </li>
+          `).join("")}
+        </ol>
+      </section>
+      <section class="decision-debug__section">
+        <h3>Rejected ritual patterns</h3>
+        ${rejectedPatterns.length > 0
+          ? `<ol>${rejectedPatterns.map((candidate) => `
+              <li>
+                <strong>${escapeHtml(candidate.key)}</strong>
+                <small>${escapeHtml(candidate.reasons.map((reason) => reason.code).join(", "))}</small>
+              </li>
+            `).join("")}</ol>`
+          : "<p>No rejected ritual patterns recorded.</p>"
+        }
+      </section>
+      <section class="decision-debug__section">
+        <h3>Source references</h3>
+        <p>${escapeHtml(brief.decision.selected.sourceReferences.join(" · "))}</p>
+      </section>
+    </details>
+  `;
+}
+
 function renderMoonGlyph(brief: WeeklyBrief): string {
   const lunarTiming = brief.trace.timingFactDetails[0];
   const phaseAngle = lunarTiming?.phaseAngleDegrees ?? 0;
@@ -695,26 +775,7 @@ export function renderSignedInShell(
   const brief = options.brief ?? generateWeeklyBrief(privateBriefData.input);
   const capacityMode =
     options.capacityModeOverride ?? brief.trace.capacityMode;
-  const traceSummary = [
-    brief.trace.timingFacts.join(" + "),
-    brief.trace.timingFactDetails
-      .map((fact) => `${fact.label} (${fact.computedBy})`)
-      .join(" · "),
-    brief.trace.symbolicCards.join(" · "),
-    brief.trace.ritualPatterns.join(" · "),
-    brief.trace.sourceReviewIds.slice(0, 3).join(" · "),
-    brief.trace.scheduleAssumptions.join(" · "),
-  ]
-    .filter(Boolean)
-    .join(" · ");
-  const debugTrace = options.showDebugTrace
-    ? `
-        <details class="trace" aria-label="Developer trace">
-          <summary>Developer trace</summary>
-          <p>${escapeHtml(traceSummary)}</p>
-        </details>
-      `
-    : "";
+  const debugTrace = options.showDebugTrace ? renderDeveloperDecision(brief) : "";
   const weeklyBrief = `
     <article class="brief" aria-label="Weekly brief">
       <section class="brief__core" aria-label="Weekly practice">
