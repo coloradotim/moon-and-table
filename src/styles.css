@@ -1,0 +1,166 @@
+:root {
+  color: #1d2520;
+  background: #f5f7f6;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-synthesis: none;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    linear-gradient(180deg, rgba(214, 225, 221, 0.72), rgba(245, 247, 246, 0)),
+    #f5f7f6;
+}
+
+button {
+  font: inherit;
+}
+
+.shell {
+  width: min(100%, 920px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.masthead {
+  margin-bottom: 24px;
+}
+
+.eyebrow,
+.label {
+  margin: 0 0 6px;
+  color: #52635a;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0;
+  color: #26312c;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 5rem;
+  font-weight: 500;
+  line-height: 0.95;
+}
+
+h2 {
+  margin-bottom: 0;
+  color: #26312c;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.8rem;
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+.brief {
+  display: grid;
+  gap: 24px;
+  padding: clamp(20px, 4vw, 36px);
+  border: 1px solid #d9dfdc;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 24px 70px rgba(51, 72, 61, 0.12);
+}
+
+.brief__topline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+  color: #617067;
+  font-size: 0.95rem;
+}
+
+.brief__section,
+.detail,
+.trace {
+  max-width: 680px;
+}
+
+.brief__section p:last-child,
+.detail p:last-child,
+.trace p:last-child {
+  margin-bottom: 0;
+}
+
+.brief__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.detail {
+  padding-top: 16px;
+  border-top: 1px solid #d9dfdc;
+}
+
+.prompt {
+  color: #435349;
+  font-size: 1.18rem;
+}
+
+.trace {
+  padding: 14px 16px;
+  border-left: 4px solid #667b5c;
+  background: #eef3f1;
+  color: #4d5e55;
+  font-size: 0.92rem;
+}
+
+.feedback {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.feedback button {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid #c9d1cd;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #2e3a34;
+  cursor: default;
+}
+
+@media (max-width: 720px) {
+  .shell {
+    padding: 24px 14px;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  .brief__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .brief__topline {
+    display: grid;
+  }
+}

@@ -4,16 +4,26 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "vite",
+    "server:start": "scripts/dev.sh start",
+    "server:stop": "scripts/dev.sh stop",
+    "server:restart": "scripts/dev.sh restart",
+    "server:status": "scripts/dev.sh status",
+    "server:logs": "scripts/dev.sh logs",
+    "server:open": "scripts/dev.sh open",
+    "build": "vite build",
+    "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "check": "npm run typecheck && npm run test && npm run test:e2e"
+    "check": "npm run typecheck && npm run build && npm run test && npm run test:e2e"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
     "@types/node": "^25.9.1",
     "typescript": "^6.0.3",
+    "vite": "^8.0.16",
     "vitest": "^4.1.8"
   }
 }
