@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
 
+import {
+  isEmailAllowed,
+  parseAllowedEmails,
+  signInWithGoogle,
+  signOutOfFirebase,
+} from "../../src/lib/auth";
 import { buildFirebaseConfig } from "../../src/lib/firebase";
 
 describe("Firebase config", () => {
@@ -35,5 +41,39 @@ describe("Firebase config", () => {
       messagingSenderId: "123456789012",
       appId: "1:123456789012:web:testappid",
     });
+  });
+});
+
+describe("Firebase auth actions", () => {
+  it("throws a clear error when Google sign-in is requested without config", async () => {
+    await expect(signInWithGoogle(null)).rejects.toThrow(
+      "Firebase is not configured.",
+    );
+  });
+
+  it("allows sign-out without config", async () => {
+    await expect(signOutOfFirebase(null)).resolves.toBeUndefined();
+  });
+});
+
+describe("auth allowlist", () => {
+  it("parses comma-separated allowed emails without committing real users", () => {
+    expect(
+      parseAllowedEmails(" person_a@example.com,PERSON_B@example.com "),
+    ).toEqual(["person_a@example.com", "person_b@example.com"]);
+  });
+
+  it("allows everyone when no allowlist is configured", () => {
+    expect(isEmailAllowed("anyone@example.com", [])).toBe(true);
+  });
+
+  it("limits access to configured emails", () => {
+    const allowedEmails = parseAllowedEmails(
+      "person_a@example.com,person_b@example.com",
+    );
+
+    expect(isEmailAllowed("person_a@example.com", allowedEmails)).toBe(true);
+    expect(isEmailAllowed("other@example.com", allowedEmails)).toBe(false);
+    expect(isEmailAllowed(null, allowedEmails)).toBe(false);
   });
 });
