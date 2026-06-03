@@ -41,7 +41,7 @@ Use generic placeholder language such as:
 - `private_profile.practical_tending`
 - `schedule.realistic_window_thursday`
 
-Real personalization belongs only in private runtime storage, local gitignored files, or a private database.
+Real personalization belongs only in Firebase/Firestore for the hosted app, private runtime storage, or local gitignored development files.
 
 ## Product principles
 
@@ -126,7 +126,11 @@ If no test framework exists yet, do not create a large framework unless the issu
 - Keep seed data human-readable and easy to edit.
 - Add tests when adding generation logic or constraint logic.
 - Avoid introducing external APIs until the relevant issue asks for them.
+- Use Firebase Auth and Firestore as the planned first hosted auth/storage path when an issue asks for backend, auth, or persistence.
+- Do not introduce Supabase unless an issue explicitly asks for it.
+- Keep local gitignored profile loading optional for development; do not treat it as the primary hosted storage plan.
 - Avoid database work until the relevant issue asks for persistence.
+- Keep docs and tests up to date when backend, auth, or storage behavior changes.
 - Keep code, docs, and tests aligned with the privacy boundary.
 
 ## Before committing or opening a PR

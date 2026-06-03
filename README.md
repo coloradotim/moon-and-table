@@ -20,7 +20,7 @@ The repository must not contain real names, birth data, relationship details, sc
 
 The repository may contain generic schemas, templates, placeholder profiles, and example data.
 
-Real personalization belongs only in private runtime storage, local gitignored files, or a private database.
+Real personalization belongs only in Firebase/Firestore for the hosted app, private runtime storage, or local gitignored development files.
 
 ## Product principles
 

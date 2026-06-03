@@ -16,7 +16,7 @@ The repository must not contain real names, birth data, relationship details, sc
 
 The repository may contain generic schemas, templates, placeholder profiles, and example data.
 
-Real personalization belongs only in private runtime storage, local gitignored files, or a private database.
+Real personalization belongs only in Firebase/Firestore for the hosted app, private runtime storage, or local gitignored development files.
 
 Use generic placeholder language in source control, such as:
 
@@ -240,7 +240,7 @@ Examples:
 * stated preferences
 * capacity constraints
 
-Private sources may be highly important even when they are not broadly generalizable. They must not be committed to the repository.
+Private sources may be highly important even when they are not broadly generalizable. They must not be committed to the repository. For the hosted app, private profile, schedule, capacity, saved brief, feedback, and ritual notebook data should live in Firestore behind Firebase Auth.
 
 ### Practice feedback
 
@@ -584,6 +584,7 @@ The curation pipeline is working if:
 * recommendations remain small and practical
 * users are not overwhelmed by too many options
 * private source-derived material can be edited, rejected, or refined without entering source control
+* hosted private data is stored in Firestore behind Firebase Auth rather than in source-controlled files
 * feedback from real practice improves future suggestions
 
 ## What not to build yet

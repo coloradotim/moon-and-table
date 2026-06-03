@@ -17,7 +17,7 @@ Use generic language such as:
 * `person_a`
 * `person_b`
 
-Real personalization belongs only in private runtime storage, local gitignored files, or a private database.
+Real personalization belongs only in Firebase/Firestore for the hosted app, private runtime storage, or local gitignored development files.
 
 ## Default weekly brief
 
