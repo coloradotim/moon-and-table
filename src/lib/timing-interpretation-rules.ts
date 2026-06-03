@@ -59,13 +59,19 @@ const APPROVED_CARD_KEYS = new Set(
     .map((card) => card.key),
 );
 
+const ENRICHED_CARD_SIGNAL_SUMMARY_BY_KEY = new Map(
+  seedSymbolicCards
+    .filter((card) => card.approval_status === "approved" && card.signalSummary)
+    .map((card) => [card.key, card.signalSummary as string]),
+);
+
 const LUNAR_PHASE_RULES: TimingInterpretationRule[] = [
   {
     id: "timing_rule.moon_phase.new",
     timingFactType: "moon_phase",
     condition: { phase: "new" },
     signalLabel: "New moon",
-    signalSummary: "A quiet reset can support one small focus.",
+    signalSummary: ENRICHED_CARD_SIGNAL_SUMMARY_BY_KEY.get("new_moon") ?? "A quiet reset can support one small focus.",
     symbolicCardKeys: ["new_moon"],
     ritualStyleHints: ["reflection", "candle_or_light", "simple planning"],
     weight: 90,
@@ -84,7 +90,7 @@ const LUNAR_PHASE_RULES: TimingInterpretationRule[] = [
     timingFactType: "moon_phase",
     condition: { phase: "waxing" },
     signalLabel: "Waxing moon",
-    signalSummary: "A building phase can support one small bit of care or follow-through.",
+    signalSummary: ENRICHED_CARD_SIGNAL_SUMMARY_BY_KEY.get("waxing_moon") ?? "A building phase can support one small bit of care or follow-through.",
     symbolicCardKeys: ["waxing_moon"],
     ritualStyleHints: ["plant_tending", "home_tending", "simple planning"],
     weight: 88,
@@ -103,7 +109,7 @@ const LUNAR_PHASE_RULES: TimingInterpretationRule[] = [
     timingFactType: "moon_phase",
     condition: { phase: "full" },
     signalLabel: "Full moon",
-    signalSummary: "A visible point in the cycle can support noticing what is already clear.",
+    signalSummary: ENRICHED_CARD_SIGNAL_SUMMARY_BY_KEY.get("full_moon") ?? "A visible point in the cycle can support noticing what is already clear.",
     symbolicCardKeys: ["full_moon"],
     ritualStyleHints: ["reflection", "candle_or_light", "gratitude"],
     weight: 90,
@@ -122,7 +128,7 @@ const LUNAR_PHASE_RULES: TimingInterpretationRule[] = [
     timingFactType: "moon_phase",
     condition: { phase: "waning" },
     signalLabel: "Waning moon",
-    signalSummary: "A settling phase can support clearing one small burden.",
+    signalSummary: ENRICHED_CARD_SIGNAL_SUMMARY_BY_KEY.get("waning_moon") ?? "A settling phase can support clearing one small burden.",
     symbolicCardKeys: ["waning_moon"],
     ritualStyleHints: ["surface_reset", "plant_tending", "home_tending"],
     weight: 88,
