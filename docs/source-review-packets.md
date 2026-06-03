@@ -6,7 +6,7 @@ These packets cover source review only. They do not create symbolic card data, a
 
 These packets authorize candidate card creation but do not approve final cards. Final approval happens when symbolic cards are created, reviewed, and marked approved.
 
-Repository-safe extraction should stay generic, transformed, practical, and privacy-safe. Private personalization belongs only in private runtime storage, local gitignored files, or a private database.
+Repository-safe extraction should stay generic, transformed, practical, and privacy-safe. Private personalization belongs only in Firebase/Firestore for the hosted app, private runtime storage, or local gitignored development files.
 
 ## 1. Private Astrology/Profile Materials
 

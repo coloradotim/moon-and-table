@@ -19,7 +19,7 @@ The repository must not contain real names, birth data, relationship details, sc
 
 The repository may contain generic schemas, templates, placeholder profiles, and example data.
 
-Real personalization belongs only in private runtime storage, local gitignored files, or a private database.
+Real personalization belongs only in Firebase/Firestore for the hosted app, private runtime storage, or local gitignored development files.
 
 Use generic placeholder language in source control, such as:
 
@@ -31,6 +31,14 @@ Use generic placeholder language in source control, such as:
 * `schedule_constraints`
 
 Do not commit actual names, birth data, natal placements, schedules, or private source text.
+
+## Backend and private storage direction
+
+Firebase Auth is the planned first authentication mechanism for the hosted app, using email/password or username/password-style access as the product shape allows.
+
+Firestore is the planned first hosted storage layer for real private profile data, schedule and capacity settings, ritual feedback, saved briefs, and ritual notebook history. Source-controlled data remains generic: reviewed symbolic cards, schemas, templates, placeholder examples, and privacy-safe docs.
+
+Local gitignored files may still be useful during development, but real hosted private data should live in Firebase/Firestore. Do not commit real Firebase secrets, real profile data, names, birth data, natal placements, schedules, relationship details, or private source text.
 
 ## What the app is
 

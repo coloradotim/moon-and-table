@@ -6,7 +6,7 @@ Use this prompt to manually generate a Moon & Table brief in ChatGPT for today, 
 
 Do not put real names, birth data, chart placements, schedules, source documents, or profile notes in the repository.
 
-This prompt is generic. Real profile details should be supplied outside source control.
+This prompt is generic. Real profile details should be supplied outside source control, either from Firebase/Firestore in the hosted app or local gitignored files during development.
 
 ## Standard prompt
 

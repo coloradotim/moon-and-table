@@ -12,7 +12,7 @@ The repository must not contain real names, birth data, relationship details, sc
 
 The repository may contain generic schemas, templates, placeholder profiles, and example data.
 
-Real personalization belongs only in private runtime storage, local gitignored files, or a private database.
+Real personalization belongs only in Firebase/Firestore for the hosted app, private runtime storage, or local gitignored development files.
 
 Use generic placeholder language in source control, such as:
 
@@ -191,6 +191,8 @@ Success means the product nucleus works before building a large app surface.
 
 Build a simple private web app that can display one generated or mock weekly brief.
 
+This phase can remain backend-independent. Firebase integration should not block the generic seed-card, mock-brief, and first app-shell work.
+
 Features:
 
 * private login or simple private access approach
@@ -215,7 +217,23 @@ The app should feel:
 
 Success means a private household can use the app as a weekly ritual surface, even if much of the data is still mock or manually curated.
 
-## Phase 5 — Capacity modes and manual schedule rules
+## Phase 5 — Firebase Auth and Firestore foundation
+
+Set up the first hosted private-data direction before real private profiles are added.
+
+Use:
+
+* Firebase Auth for email/password or username/password-style authentication
+* Firestore for private profile data, schedule constraints, capacity defaults, saved briefs, feedback, and eventual ritual notebook data
+* `.env.local` for real Firebase web app config values during local development
+* `.env.example` with placeholder Firebase config names only
+* Firestore security rules that restrict private data to the authenticated user or household
+
+Local gitignored profile loading can remain useful for development, but Firestore is the target for real hosted private data.
+
+Success means the app has a privacy-safe path for hosted auth and private data without committing real profile data, real schedules, names, birth data, natal placements, relationship details, private source text, or real Firebase secrets.
+
+## Phase 6 — Capacity modes and manual schedule rules
 
 Add real-life constraints before adding complex astrology.
 
@@ -246,7 +264,7 @@ Example:
 
 Success means the app protects users from overwhelm and treats real-life capacity as a first-class constraint.
 
-## Phase 6 — Computed timing engine
+## Phase 7 — Computed timing engine
 
 Add reliable computed timing facts.
 
@@ -271,7 +289,7 @@ Timing facts should be deterministic and testable. They should be kept separate 
 
 Success means the app can compute or source timing facts without relying on AI to invent dates or events.
 
-## Phase 7 — Private profiles
+## Phase 8 — Private profiles
 
 Add private profiles without committing private data to the repository.
 
@@ -288,13 +306,13 @@ Profile fields may include:
 * schedule constraints
 * notes from actual ritual feedback
 
-Repository code should use schemas, placeholders, and examples only. Real profile data belongs in private runtime storage, local gitignored files, or a private database.
+Repository code should use schemas, placeholders, and examples only. Real hosted profile data belongs in Firestore behind Firebase Auth. Local gitignored files may be used only as a development helper.
 
 Success means the app can personalize without overclaiming, making deterministic statements, or exposing private data in source control.
 
-## Phase 8 — Ritual notebook and feedback loop
+## Phase 9 — Ritual notebook and feedback loop
 
-Add a private saved history.
+Add a private saved history in Firestore.
 
 Track:
 
@@ -312,9 +330,9 @@ Track:
 
 Practice feedback should eventually become one of the strongest personalization sources.
 
-Success means the app learns from actual use, not just from generic symbolic sources.
+Success means the app learns from actual use, not just from generic symbolic sources, while keeping real private data outside the repository.
 
-## Phase 9 — Curation workbench
+## Phase 10 — Curation workbench
 
 Add admin tools for managing source material and symbolic cards.
 
@@ -338,7 +356,7 @@ This is not a web scraper. It is a tool for disciplined human-reviewed curation.
 
 Success means source-derived knowledge can be added and refined without editing raw files by hand or committing private source text.
 
-## Phase 10 — Calendar integration
+## Phase 11 — Calendar integration
 
 Add calendar integration after manual schedule rules work.
 
