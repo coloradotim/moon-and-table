@@ -49,6 +49,7 @@ export type PrivateDisplayContext = {
 export type PrivateBriefData = {
   status: "loaded_private_data" | "using_starter_settings";
   input: GenerateWeeklyBriefInput;
+  householdId?: string;
   assumptions: PrivateProfileAssumption[];
   astrologyProfile?: PrivateAstrologyProfile;
   tuning: ProfileTuningSettings | null;
@@ -378,6 +379,7 @@ export function resolvePrivateBriefData(
   const hasLoadedData = Boolean(
     documents.profile || documents.capacitySettings || documents.scheduleConstraints,
   );
+  const householdId = getHouseholdId(documents);
 
   return {
     status: hasLoadedData ? "loaded_private_data" : "using_starter_settings",
@@ -389,6 +391,7 @@ export function resolvePrivateBriefData(
       avoidedRitualStyles,
       audience: defaultAudience,
     },
+    householdId,
     assumptions,
     astrologyProfile,
     tuning,

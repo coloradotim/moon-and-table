@@ -79,6 +79,7 @@ export type WeeklyBriefTrace = {
 };
 
 export type WeeklyBrief = {
+  briefKey: string;
   dateRange: string;
   theme: string;
   bestWindow: string;
@@ -101,6 +102,7 @@ export type GenerateWeeklyBriefInput = {
   preferredRitualStyles?: string[];
   avoidedRitualStyles?: string[];
   audience?: PrivateAudience;
+  excludedRitualPatternKeys?: string[];
 };
 
 type ResolvedGenerateWeeklyBriefInput = {
@@ -114,6 +116,7 @@ type ResolvedGenerateWeeklyBriefInput = {
   preferredRitualStyles: string[];
   avoidedRitualStyles: string[];
   audience: PrivateAudience;
+  excludedRitualPatternKeys: string[];
 };
 
 type PatternCandidate = {
@@ -466,6 +469,12 @@ function getEligiblePatternCandidates(
 
     safetyNotes.push(...safetyResult.warnings);
 
+    if (input.excludedRitualPatternKeys.includes(pattern.key)) {
+      excludedPatternKeys.push(pattern.key);
+      safetyNotes.push(`${pattern.key} skipped because try-again requested another pattern`);
+      return [];
+    }
+
     if (!safetyResult.allowed || !pattern.capacityModes.includes(input.capacityMode)) {
       excludedPatternKeys.push(pattern.key);
       return [];
@@ -740,7 +749,30 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
     preferredRitualStyles: normalizeStyleList(input.preferredRitualStyles),
     avoidedRitualStyles: normalizeStyleList(input.avoidedRitualStyles),
     audience: input.audience ?? "either",
+    excludedRitualPatternKeys: input.excludedRitualPatternKeys ?? [],
   };
+}
+
+function slugPart(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "")
+    .slice(0, 80);
+}
+
+function getBriefKey(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+): string {
+  return [
+    "brief",
+    slugPart(input.dateRange),
+    input.timingFacts.map(slugPart).join("_"),
+    input.capacityMode,
+    input.audience,
+    pattern.key,
+  ].filter(Boolean).join(".");
 }
 
 export function generateWeeklyBrief(
@@ -771,6 +803,7 @@ export function generateWeeklyBrief(
   ]);
 
   return {
+    briefKey: getBriefKey(resolvedInput, pattern),
     dateRange: resolvedInput.dateRange,
     theme: getTheme(timingCard, pattern),
     bestWindow: getBestWindow(

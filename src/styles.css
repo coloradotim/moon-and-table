@@ -167,10 +167,15 @@ h2 {
 }
 
 .feedback {
+  display: grid;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.feedback__chips {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  padding-top: 4px;
 }
 
 .feedback button,

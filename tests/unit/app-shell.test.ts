@@ -50,6 +50,26 @@ describe("app shell rendering", () => {
     expect(html).toContain("Using starter settings until private settings are created.");
     expect(html).toContain("Private settings will appear here");
     expect(html).toContain("astronomy_engine");
+    expect(html).toContain("How was this?");
+    expect(html).toContain('data-feedback-type="good"');
+    expect(html).toContain('data-feedback-type="too_much"');
+    expect(html).toContain('data-feedback-type="too_generic"');
+    expect(html).toContain('data-feedback-type="more_like_this"');
+    expect(html).toContain('data-feedback-type="not_this_style"');
+    expect(html).toContain('data-feedback-type="skipped"');
+    expect(html).toContain('data-feedback-type="try_again"');
+    expect(html).toContain("Give me something else");
+    expect(html).toContain("Feedback saves to private Firestore.");
+  });
+
+  it("renders feedback status after save or try-again", () => {
+    const html = renderSignedInShell(resolvePrivateBriefData({}), {
+      feedbackStatus: "Saved. Thank you.",
+      tryAgainStatus: "Saved. Here is another approved option.",
+    });
+
+    expect(html).toContain("Saved. Here is another approved option.");
+    expect(html).not.toContain("Feedback saves to private Firestore.");
   });
 
   it("renders editable profile tuning for loaded private data", () => {

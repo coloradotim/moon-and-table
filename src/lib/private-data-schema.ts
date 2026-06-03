@@ -111,16 +111,26 @@ export type SavedBriefDocument = {
 
 export type FeedbackDocument = {
   id: string;
-  householdId: string;
+  householdId?: string;
   userId: string;
+  userEmail?: string;
   briefId: string;
   feedbackType:
-    | "saved"
+    | "good"
     | "too_much"
-    | "too_cheesy"
-    | "do_again"
-    | "bad_timing"
-    | "good_timing";
+    | "too_generic"
+    | "more_like_this"
+    | "not_this_style"
+    | "skipped"
+    | "try_again";
+  symbolicCardKeys: string[];
+  ritualPatternKeys: string[];
+  timingFactKeys: string[];
+  capacityMode: string;
+  audience: PrivateAudience;
+  sourceReviewIds: string[];
+  sourceNoteIds: string[];
+  note?: string;
   createdAtIso: string;
 };
 

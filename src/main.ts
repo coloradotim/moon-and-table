@@ -11,7 +11,16 @@ import {
   updatePrivateProfileTuning,
   type PrivateBriefData,
 } from "./lib/private-data";
-import type { CapacityMode } from "./lib/generate-weekly-brief";
+import {
+  generateWeeklyBrief,
+  type CapacityMode,
+  type WeeklyBrief,
+} from "./lib/generate-weekly-brief";
+import {
+  isBriefFeedbackType,
+  saveBriefFeedback,
+  type BriefFeedbackType,
+} from "./lib/brief-feedback";
 import type { AstrologyVisibility } from "./lib/private-data-schema";
 import {
   PROFILE_TUNING_ASTROLOGY_VISIBILITY,
@@ -36,6 +45,7 @@ const firebaseServices = getFirebaseServices();
 let privateDataRequestId = 0;
 let activeSignedInState: Extract<AppAuthState, { status: "signed_in" }> | null = null;
 let activePrivateBriefData: PrivateBriefData | null = null;
+let activeBrief: WeeklyBrief | null = null;
 
 function render(state: AppAuthState): void {
   appRoot.innerHTML = renderAppShell(state);
@@ -62,16 +72,37 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
     .then((privateBriefData) => {
       if (requestId === privateDataRequestId) {
         activePrivateBriefData = privateBriefData;
-        appRoot.innerHTML = renderSignedInShell(privateBriefData);
+        activeBrief = generateWeeklyBrief(privateBriefData.input);
+        appRoot.innerHTML = renderSignedInShell(privateBriefData, {
+          brief: activeBrief,
+        });
       }
     })
     .catch(() => {
       if (requestId === privateDataRequestId) {
         const fallbackPrivateBriefData = resolvePrivateBriefData({});
         activePrivateBriefData = fallbackPrivateBriefData;
-        appRoot.innerHTML = renderSignedInShell(fallbackPrivateBriefData);
+        activeBrief = generateWeeklyBrief(fallbackPrivateBriefData.input);
+        appRoot.innerHTML = renderSignedInShell(fallbackPrivateBriefData, {
+          brief: activeBrief,
+        });
       }
     });
+}
+
+function renderActiveBriefStatus(
+  feedbackStatus: string,
+  tryAgainStatus?: string,
+): void {
+  if (!activePrivateBriefData || !activeBrief) {
+    return;
+  }
+
+  appRoot.innerHTML = renderSignedInShell(activePrivateBriefData, {
+    brief: activeBrief,
+    feedbackStatus,
+    tryAgainStatus,
+  });
 }
 
 function isCapacityMode(value: FormDataEntryValue | null): value is CapacityMode {
@@ -190,6 +221,71 @@ async function handleProfileTuningSubmit(form: HTMLFormElement): Promise<void> {
   }
 }
 
+async function saveActiveBriefFeedback(
+  feedbackType: BriefFeedbackType,
+): Promise<void> {
+  if (!firebaseServices || !activeSignedInState || !activePrivateBriefData || !activeBrief) {
+    throw new Error("Sign in and load a brief before saving feedback.");
+  }
+
+  await saveBriefFeedback(firebaseServices.db, {
+    feedbackType,
+    brief: activeBrief,
+    userId: activeSignedInState.user.uid,
+    userEmail: activeSignedInState.user.email,
+    householdId: activePrivateBriefData.householdId,
+  });
+}
+
+async function handleFeedbackClick(feedbackType: BriefFeedbackType): Promise<void> {
+  try {
+    await saveActiveBriefFeedback(feedbackType);
+    renderActiveBriefStatus("Saved. Thank you.");
+  } catch (error) {
+    renderActiveBriefStatus(
+      error instanceof Error ? error.message : "Could not save feedback.",
+    );
+  }
+}
+
+async function handleTryAgainClick(): Promise<void> {
+  const currentBrief = activeBrief;
+
+  try {
+    await saveActiveBriefFeedback("try_again");
+
+    if (!activePrivateBriefData || !currentBrief) {
+      throw new Error("Load a brief before trying again.");
+    }
+
+    const alternateBrief = generateWeeklyBrief({
+      ...activePrivateBriefData.input,
+      excludedRitualPatternKeys: currentBrief.trace.ritualPatterns,
+    });
+
+    if (
+      alternateBrief.trace.ritualPatterns[0] ===
+      currentBrief.trace.ritualPatterns[0]
+    ) {
+      renderActiveBriefStatus(
+        "Saved.",
+        "I do not have another safe option yet. Try changing capacity or style preferences.",
+      );
+      return;
+    }
+
+    activeBrief = alternateBrief;
+    appRoot.innerHTML = renderSignedInShell(activePrivateBriefData, {
+      brief: activeBrief,
+      tryAgainStatus: "Saved. Here is another approved option.",
+    });
+  } catch (error) {
+    renderActiveBriefStatus(
+      error instanceof Error ? error.message : "Could not try again.",
+    );
+  }
+}
+
 render({ status: "loading" });
 
 appRoot.addEventListener("click", (event) => {
@@ -210,6 +306,17 @@ appRoot.addEventListener("click", (event) => {
   }
 
   const action = target.dataset.authAction;
+  const feedbackType = target.dataset.feedbackType;
+
+  if (feedbackType && isBriefFeedbackType(feedbackType)) {
+    if (target.dataset.tryAgainAction === "true") {
+      void handleTryAgainClick();
+      return;
+    }
+
+    void handleFeedbackClick(feedbackType);
+    return;
+  }
 
   if (action === "sign-in") {
     void signInWithGoogle(firebaseServices).catch(() => {
@@ -230,6 +337,7 @@ subscribeToAuthState(firebaseServices, (state) => {
 
   activeSignedInState = null;
   activePrivateBriefData = null;
+  activeBrief = null;
   privateDataRequestId += 1;
   render(state);
 });

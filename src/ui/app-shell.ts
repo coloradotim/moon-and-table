@@ -1,5 +1,9 @@
-import { generateWeeklyBrief } from "../lib/generate-weekly-brief";
+import { generateWeeklyBrief, type WeeklyBrief } from "../lib/generate-weekly-brief";
 import type { AppAuthState } from "../lib/auth";
+import {
+  BRIEF_FEEDBACK_TYPES,
+  type BriefFeedbackType,
+} from "../lib/brief-feedback";
 import type { PrivateBriefData } from "../lib/private-data";
 import { getGroupedProfilePreferenceOptions } from "../lib/profile-preference-taxonomy";
 import {
@@ -8,8 +12,22 @@ import {
   type ProfileTuningSettings,
 } from "../lib/profile-tuning";
 
-const feedbackOptions = ["saved", "too much", "too cheesy", "do again"];
+const feedbackLabels: Record<BriefFeedbackType, string> = {
+  good: "good",
+  too_much: "too much",
+  too_generic: "too generic",
+  more_like_this: "more like this",
+  not_this_style: "not this style",
+  skipped: "skipped",
+  try_again: "try again",
+};
 const capacityModes = ["pause", "low", "steady", "high"];
+
+export type SignedInShellOptions = {
+  brief?: WeeklyBrief;
+  feedbackStatus?: string;
+  tryAgainStatus?: string;
+};
 
 function escapeHtml(value: string): string {
   return value
@@ -277,8 +295,11 @@ export function renderUnauthorizedShell(): string {
   `;
 }
 
-export function renderSignedInShell(privateBriefData: PrivateBriefData): string {
-  const brief = generateWeeklyBrief(privateBriefData.input);
+export function renderSignedInShell(
+  privateBriefData: PrivateBriefData,
+  options: SignedInShellOptions = {},
+): string {
+  const brief = options.brief ?? generateWeeklyBrief(privateBriefData.input);
   const privateDataNote =
     privateBriefData.status === "using_starter_settings"
       ? "Using starter settings until private settings are created."
@@ -357,9 +378,24 @@ export function renderSignedInShell(privateBriefData: PrivateBriefData): string 
           <p>${escapeHtml(traceSummary)}</p>
         </section>
 
-        <div class="feedback" aria-label="Feedback placeholders">
-          ${feedbackOptions.map((option) => `<button type="button">${option}</button>`).join("")}
-        </div>
+        <section class="feedback" aria-label="Brief feedback">
+          <p class="label">How was this?</p>
+          <div class="feedback__chips">
+            ${BRIEF_FEEDBACK_TYPES.filter((type) => type !== "try_again").map((type) => `
+              <button
+                type="button"
+                data-feedback-type="${escapeHtml(type)}"
+              >${escapeHtml(feedbackLabels[type])}</button>
+            `).join("")}
+          </div>
+          <button
+            class="primary-action"
+            type="button"
+            data-feedback-type="try_again"
+            data-try-again-action="true"
+          >Give me something else</button>
+          <p class="muted" data-feedback-status="true">${escapeHtml(options.tryAgainStatus ?? options.feedbackStatus ?? "Feedback saves to private Firestore.")}</p>
+        </section>
       </article>
 
       ${renderProfileTuningSection(privateBriefData)}

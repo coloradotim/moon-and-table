@@ -43,6 +43,7 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief).toMatchObject({
       dateRange: expect.any(String),
+      briefKey: expect.any(String),
       theme: expect.any(String),
       bestWindow: expect.any(String),
       recommendedRitual: expect.any(String),
@@ -226,6 +227,27 @@ describe("generateWeeklyBrief", () => {
       }),
     ]);
     expect(brief.whyThis).toContain("new moon theme");
+  });
+
+  it("can produce an alternate approved pattern when the current pattern is excluded", () => {
+    const input = {
+      currentDate: "2026-06-30T00:00:00.000Z",
+      capacityMode: "low" as const,
+      preferredRitualStyles: ["plant_tending"],
+    };
+    const firstBrief = generateWeeklyBrief(input);
+    const alternateBrief = generateWeeklyBrief({
+      ...input,
+      excludedRitualPatternKeys: firstBrief.trace.ritualPatterns,
+    });
+
+    expect(alternateBrief.trace.ritualPatterns).toHaveLength(1);
+    expect(alternateBrief.trace.ritualPatterns[0]).not.toBe(
+      firstBrief.trace.ritualPatterns[0],
+    );
+    expect(alternateBrief.trace.safety.excludedPatternKeys).toContain(
+      firstBrief.trace.ritualPatterns[0],
+    );
   });
 
   it("does not treat private profile inputs as public source citations", () => {
