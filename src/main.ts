@@ -93,6 +93,8 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
 function renderActiveBriefStatus(
   feedbackStatus: string,
   tryAgainStatus?: string,
+  selectedFeedbackType?: BriefFeedbackType,
+  savingFeedbackType?: BriefFeedbackType,
 ): void {
   if (!activePrivateBriefData || !activeBrief) {
     return;
@@ -102,6 +104,8 @@ function renderActiveBriefStatus(
     brief: activeBrief,
     feedbackStatus,
     tryAgainStatus,
+    selectedFeedbackType,
+    savingFeedbackType,
   });
 }
 
@@ -239,8 +243,9 @@ async function saveActiveBriefFeedback(
 
 async function handleFeedbackClick(feedbackType: BriefFeedbackType): Promise<void> {
   try {
+    renderActiveBriefStatus(`Saving ${feedbackType.replaceAll("_", " ")}.`, undefined, feedbackType, feedbackType);
     await saveActiveBriefFeedback(feedbackType);
-    renderActiveBriefStatus("Saved. Thank you.");
+    renderActiveBriefStatus("Saved. Thank you.", undefined, feedbackType);
   } catch (error) {
     renderActiveBriefStatus(
       error instanceof Error ? error.message : "Could not save feedback.",
@@ -252,6 +257,7 @@ async function handleTryAgainClick(): Promise<void> {
   const currentBrief = activeBrief;
 
   try {
+    renderActiveBriefStatus("Saving try again.", undefined, "try_again", "try_again");
     await saveActiveBriefFeedback("try_again");
 
     if (!activePrivateBriefData || !currentBrief) {
@@ -270,6 +276,7 @@ async function handleTryAgainClick(): Promise<void> {
       renderActiveBriefStatus(
         "Saved.",
         "I do not have another safe option yet. Try changing capacity or style preferences.",
+        "try_again",
       );
       return;
     }
@@ -278,6 +285,7 @@ async function handleTryAgainClick(): Promise<void> {
     appRoot.innerHTML = renderSignedInShell(activePrivateBriefData, {
       brief: activeBrief,
       tryAgainStatus: "Saved. Here is another approved option.",
+      selectedFeedbackType: "try_again",
     });
   } catch (error) {
     renderActiveBriefStatus(

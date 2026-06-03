@@ -27,6 +27,8 @@ export type SignedInShellOptions = {
   brief?: WeeklyBrief;
   feedbackStatus?: string;
   tryAgainStatus?: string;
+  selectedFeedbackType?: BriefFeedbackType;
+  savingFeedbackType?: BriefFeedbackType;
 };
 
 function escapeHtml(value: string): string {
@@ -116,6 +118,27 @@ function renderAssumptionControls(settings: ProfileTuningSettings): string {
       `;
     })
     .join("");
+}
+
+function renderFeedbackButton(
+  type: BriefFeedbackType,
+  options: SignedInShellOptions,
+): string {
+  const isSaving = options.savingFeedbackType === type;
+  const isSelected = options.selectedFeedbackType === type || isSaving;
+  const selectedClass = isSelected ? " feedback-button--selected" : "";
+  const disabledAttribute = options.savingFeedbackType ? " disabled" : "";
+  const pressedAttribute = isSelected ? "true" : "false";
+  const savingLabel = isSaving ? "Saving " : "";
+
+  return `
+    <button
+      class="feedback-button${selectedClass}"
+      type="button"
+      data-feedback-type="${escapeHtml(type)}"
+      aria-pressed="${pressedAttribute}"${disabledAttribute}
+    >${escapeHtml(`${savingLabel}${feedbackLabels[type]}`)}</button>
+  `;
 }
 
 function renderTuningProfileForm(
@@ -381,20 +404,16 @@ export function renderSignedInShell(
         <section class="feedback" aria-label="Brief feedback">
           <p class="label">How was this?</p>
           <div class="feedback__chips">
-            ${BRIEF_FEEDBACK_TYPES.filter((type) => type !== "try_again").map((type) => `
-              <button
-                type="button"
-                data-feedback-type="${escapeHtml(type)}"
-              >${escapeHtml(feedbackLabels[type])}</button>
-            `).join("")}
+            ${BRIEF_FEEDBACK_TYPES.filter((type) => type !== "try_again").map((type) => renderFeedbackButton(type, options)).join("")}
           </div>
           <button
-            class="primary-action"
+            class="primary-action feedback-button${options.selectedFeedbackType === "try_again" || options.savingFeedbackType === "try_again" ? " feedback-button--selected" : ""}"
             type="button"
             data-feedback-type="try_again"
             data-try-again-action="true"
-          >Give me something else</button>
-          <p class="muted" data-feedback-status="true">${escapeHtml(options.tryAgainStatus ?? options.feedbackStatus ?? "Feedback saves to private Firestore.")}</p>
+            aria-pressed="${options.selectedFeedbackType === "try_again" || options.savingFeedbackType === "try_again" ? "true" : "false"}"${options.savingFeedbackType ? " disabled" : ""}
+          >${escapeHtml(options.savingFeedbackType === "try_again" ? "Saving try again" : "Give me something else")}</button>
+          <p class="muted feedback__status" data-feedback-status="true">${escapeHtml(options.tryAgainStatus ?? options.feedbackStatus ?? "Feedback saves to private Firestore.")}</p>
         </section>
       </article>
 
