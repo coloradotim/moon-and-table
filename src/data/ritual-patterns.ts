@@ -118,9 +118,9 @@ export const starterRitualPatterns: RitualPattern[] = [
     defaultDurationMinutes: 3,
     materials: ["candle", "matches or lighter", "stable heat-safe surface"],
     steps: [
-      "Set the candle on a stable heat-safe surface away from fabric, pets, and children.",
-      "Light the candle and name the focus for this short pause.",
-      "Blow the candle out before leaving the space.",
+      "Light a candle.",
+      "Let the flame mark one small focus for this short pause.",
+      "Blow it out when you are done.",
     ],
     safetyFlags: withSafetyOverrides({
       fire: "live_flame",

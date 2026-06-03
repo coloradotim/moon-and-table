@@ -1,5 +1,7 @@
 import { seedSymbolicCards } from "../data/seed-symbolic-cards";
 import type {
+  MajorAspect,
+  PlanetName,
   TimingFact,
   TimingFactType,
   ZodiacSign,
@@ -155,35 +157,202 @@ const NUMEROLOGY_RULES: TimingInterpretationRule[] = [1, 2, 4, 6, 9].map(
   }),
 );
 
-const DRAFT_PLACEHOLDER_RULES: TimingInterpretationRule[] = [
+const ZODIAC_SIGNS: Array<{ sign: ZodiacSign; label: string; styleHint: string }> = [
+  { sign: "aries", label: "Aries", styleHint: "single-action ritual" },
+  { sign: "taurus", label: "Taurus", styleHint: "home_tending" },
+  { sign: "gemini", label: "Gemini", styleHint: "simple planning" },
+  { sign: "cancer", label: "Cancer", styleHint: "home_tending" },
+  { sign: "leo", label: "Leo", styleHint: "candle_or_light" },
+  { sign: "virgo", label: "Virgo", styleHint: "surface_reset" },
+  { sign: "libra", label: "Libra", styleHint: "atmosphere" },
+  { sign: "scorpio", label: "Scorpio", styleHint: "clearing" },
+  { sign: "sagittarius", label: "Sagittarius", styleHint: "reflection" },
+  { sign: "capricorn", label: "Capricorn", styleHint: "simple planning" },
+  { sign: "aquarius", label: "Aquarius", styleHint: "simple planning" },
+  { sign: "pisces", label: "Pisces", styleHint: "quiet pause" },
+];
+
+const CORE_PLANETS: Array<{
+  planet: PlanetName;
+  label: string;
+  styleHint: string;
+}> = [
+  { planet: "mercury", label: "Mercury", styleHint: "simple planning" },
+  { planet: "venus", label: "Venus", styleHint: "atmosphere" },
+  { planet: "mars", label: "Mars", styleHint: "single-action ritual" },
+  { planet: "jupiter", label: "Jupiter", styleHint: "reflection" },
+  { planet: "saturn", label: "Saturn", styleHint: "home_tending" },
+];
+
+const ASPECTS: Array<{
+  aspect: MajorAspect;
+  label: string;
+  styleHint: string;
+  summary: string;
+}> = [
   {
-    id: "timing_rule.moon_sign.virgo.placeholder",
+    aspect: "conjunction",
+    label: "Conjunction",
+    styleHint: "single-action ritual",
+    summary: "A blending aspect can support one simple combined focus.",
+  },
+  {
+    aspect: "opposition",
+    label: "Opposition",
+    styleHint: "reflection",
+    summary: "A polarity aspect can support balancing two visible needs without forcing a conflict story.",
+  },
+  {
+    aspect: "square",
+    label: "Square",
+    styleHint: "home_tending",
+    summary: "A friction aspect can support one practical adjustment without predicting difficulty.",
+  },
+  {
+    aspect: "trine",
+    label: "Trine",
+    styleHint: "gratitude",
+    summary: "A supportive aspect can point toward using what is already working.",
+  },
+  {
+    aspect: "sextile",
+    label: "Sextile",
+    styleHint: "simple planning",
+    summary: "An opportunity aspect can support one modest opening that still stays optional.",
+  },
+];
+
+const ASTROLOGY_RULE_SOURCE_REFERENCES = [
+  "source.steven_forrest",
+  "source.kevin_burk",
+  "source.april_elliott_kent",
+  "source.astrology_ethics_sources",
+  "source.barnum_forer_guardrail",
+  "note.astrology_symbolic_not_predictive",
+  "note.astrology_ethics_no_personal_certainty",
+  "note.barnum_forer_specificity_guardrail",
+];
+
+const MOON_SIGN_RULES: TimingInterpretationRule[] = ZODIAC_SIGNS.map(
+  ({ sign, label, styleHint }): TimingInterpretationRule => ({
+    id: `timing_rule.moon_sign.${sign}`,
     timingFactType: "moon_sign",
-    condition: { sign: "virgo" satisfies ZodiacSign },
-    signalLabel: "Moon sign placeholder",
-    signalSummary: "Moon sign interpretation is deferred until reviewed zodiac cards exist.",
-    symbolicCardKeys: [],
-    ritualStyleHints: [],
-    weight: 20,
+    condition: { sign },
+    signalLabel: `Moon in ${label}`,
+    signalSummary: `A ${label} Moon can color the timing with a ${styleHint.replaceAll("_", " ")} style, while staying symbolic and optional.`,
+    symbolicCardKeys: ["astrology_body_moon", `astrology_sign_${sign}`],
+    ritualStyleHints: ["home_tending", "reflection", styleHint],
+    weight: 62,
     strength: "supporting",
-    avoidIf: ["unsupported_zodiac_interpretation"],
-    sourceReferences: ["source.steven_forrest", "source.kevin_burk"],
-    approvalStatus: "draft",
-  },
-  {
-    id: "timing_rule.sun_sign.season.placeholder",
+    avoidIf: ["unsupported_zodiac_interpretation", "personal_identity_claims"],
+    sourceReferences: [
+      ...ASTROLOGY_RULE_SOURCE_REFERENCES,
+      "note.astrology_planets_as_functions",
+      "note.astrology_signs_as_styles",
+    ],
+    approvalStatus: "approved",
+  }),
+);
+
+const SUN_SIGN_RULES: TimingInterpretationRule[] = ZODIAC_SIGNS.map(
+  ({ sign, label, styleHint }): TimingInterpretationRule => ({
+    id: `timing_rule.sun_sign.${sign}`,
     timingFactType: "sun_sign",
-    condition: {},
-    signalLabel: "Sun sign placeholder",
-    signalSummary: "Sun sign interpretation is deferred until reviewed zodiac cards exist.",
-    symbolicCardKeys: [],
-    ritualStyleHints: [],
-    weight: 18,
+    condition: { sign },
+    signalLabel: `Sun in ${label}`,
+    signalSummary: `The Sun's current sign can add a ${label} seasonal texture without becoming the main recommendation driver.`,
+    symbolicCardKeys: ["astrology_body_sun", `astrology_sign_${sign}`],
+    ritualStyleHints: ["reflection", "simple planning", styleHint],
+    weight: 54,
     strength: "supporting",
-    avoidIf: ["unsupported_zodiac_interpretation"],
-    sourceReferences: ["source.steven_forrest", "source.kevin_burk"],
-    approvalStatus: "draft",
-  },
+    avoidIf: ["unsupported_zodiac_interpretation", "identity_certainty"],
+    sourceReferences: [
+      ...ASTROLOGY_RULE_SOURCE_REFERENCES,
+      "note.astrology_planets_as_functions",
+      "note.astrology_signs_as_styles",
+    ],
+    approvalStatus: "approved",
+  }),
+);
+
+const PLANET_SIGN_RULES: TimingInterpretationRule[] = CORE_PLANETS.flatMap(
+  ({ planet, label: planetLabel, styleHint }) =>
+    ZODIAC_SIGNS.map(
+      ({ sign, label: signLabel }): TimingInterpretationRule => ({
+        id: `timing_rule.planet_sign.${planet}.${sign}`,
+        timingFactType: "planet_sign",
+        condition: { planet, sign },
+        signalLabel: `${planetLabel} in ${signLabel}`,
+        signalSummary: `${planetLabel} can add a ${signLabel} symbolic accent to ritual choice without predicting events or describing anyone personally.`,
+        symbolicCardKeys: [`astrology_body_${planet}`, `astrology_sign_${sign}`],
+        ritualStyleHints: ["reflection", styleHint],
+        weight: 66,
+        strength: "supporting",
+        avoidIf: [
+          "unsupported_planetary_interpretation",
+          "prediction_claims",
+          "personal_identity_claims",
+        ],
+        sourceReferences: [
+          ...ASTROLOGY_RULE_SOURCE_REFERENCES,
+          "note.astrology_planets_as_functions",
+          "note.astrology_signs_as_styles",
+        ],
+        approvalStatus: "approved",
+      }),
+    ),
+);
+
+const PLANET_RETROGRADE_RULES: TimingInterpretationRule[] = CORE_PLANETS.map(
+  ({ planet, label: planetLabel, styleHint }): TimingInterpretationRule => ({
+    id: `timing_rule.planet_retrograde.${planet}`,
+    timingFactType: "planet_retrograde",
+    condition: { planet, isRetrograde: true },
+    signalLabel: `${planetLabel} retrograde`,
+    signalSummary: `${planetLabel} retrograde can support review or slowing down without blame or disruption claims.`,
+    symbolicCardKeys: [`astrology_body_${planet}`, "astrology_motion_retrograde"],
+    ritualStyleHints: ["reflection", "quiet pause", styleHint],
+    weight: 58,
+    strength: "supporting",
+    avoidIf: [
+      "retrograde_fear_language",
+      "prediction_claims",
+      "delay_necessary_action",
+    ],
+    sourceReferences: [
+      ...ASTROLOGY_RULE_SOURCE_REFERENCES,
+      "note.astrology_planets_as_functions",
+      "note.astrology_retrograde_slow_review",
+    ],
+    approvalStatus: "approved",
+  }),
+);
+
+const PLANETARY_ASPECT_RULES: TimingInterpretationRule[] = ASPECTS.map(
+  ({ aspect, label, styleHint, summary }): TimingInterpretationRule => ({
+    id: `timing_rule.planetary_aspect.${aspect}`,
+    timingFactType: "planetary_aspect",
+    condition: { aspect },
+    signalLabel: `${label} aspect`,
+    signalSummary: summary,
+    symbolicCardKeys: [`astrology_aspect_${aspect}`],
+    ritualStyleHints: ["reflection", styleHint],
+    weight: 60,
+    strength: "supporting",
+    avoidIf: [
+      "unsupported_aspect_interpretation",
+      "prediction_claims",
+      "conflict_claims",
+    ],
+    sourceReferences: [
+      ...ASTROLOGY_RULE_SOURCE_REFERENCES,
+      "note.astrology_aspects_as_relationships",
+    ],
+    approvalStatus: "approved",
+  }),
+);
+
+const DRAFT_PLACEHOLDER_RULES: TimingInterpretationRule[] = [
   {
     id: "timing_rule.solar_season.placeholder",
     timingFactType: "solar_season",
@@ -199,16 +368,44 @@ const DRAFT_PLACEHOLDER_RULES: TimingInterpretationRule[] = [
     approvalStatus: "draft",
   },
   {
-    id: "timing_rule.planetary.placeholder",
+    id: "timing_rule.outer_planet.uranus.placeholder",
     timingFactType: "planet_sign",
-    condition: {},
-    signalLabel: "Planetary placeholder",
-    signalSummary: "Planetary sign interpretation is deferred until reviewed astrology cards exist.",
+    condition: { planet: "uranus" satisfies PlanetName },
+    signalLabel: "Outer planet placeholder",
+    signalSummary: "Outer planet interpretation is deferred until a later reviewed source pass.",
     symbolicCardKeys: [],
     ritualStyleHints: [],
     weight: 10,
-    strength: "accent",
-    avoidIf: ["unsupported_planetary_interpretation"],
+    strength: "supporting",
+    avoidIf: ["unsupported_outer_planet_interpretation"],
+    sourceReferences: ["source.steven_forrest", "source.kevin_burk"],
+    approvalStatus: "draft",
+  },
+  {
+    id: "timing_rule.outer_planet.neptune.placeholder",
+    timingFactType: "planet_sign",
+    condition: { planet: "neptune" satisfies PlanetName },
+    signalLabel: "Outer planet placeholder",
+    signalSummary: "Outer planet interpretation is deferred until a later reviewed source pass.",
+    symbolicCardKeys: [],
+    ritualStyleHints: [],
+    weight: 10,
+    strength: "supporting",
+    avoidIf: ["unsupported_outer_planet_interpretation"],
+    sourceReferences: ["source.steven_forrest", "source.kevin_burk"],
+    approvalStatus: "draft",
+  },
+  {
+    id: "timing_rule.outer_planet.pluto.placeholder",
+    timingFactType: "planet_sign",
+    condition: { planet: "pluto" satisfies PlanetName },
+    signalLabel: "Outer planet placeholder",
+    signalSummary: "Outer planet interpretation is deferred until a later reviewed source pass.",
+    symbolicCardKeys: [],
+    ritualStyleHints: [],
+    weight: 10,
+    strength: "supporting",
+    avoidIf: ["unsupported_outer_planet_interpretation"],
     sourceReferences: ["source.steven_forrest", "source.kevin_burk"],
     approvalStatus: "draft",
   },
@@ -217,6 +414,11 @@ const DRAFT_PLACEHOLDER_RULES: TimingInterpretationRule[] = [
 export const starterTimingInterpretationRules: TimingInterpretationRule[] = [
   ...LUNAR_PHASE_RULES,
   ...NUMEROLOGY_RULES,
+  ...MOON_SIGN_RULES,
+  ...SUN_SIGN_RULES,
+  ...PLANET_SIGN_RULES,
+  ...PLANET_RETROGRADE_RULES,
+  ...PLANETARY_ASPECT_RULES,
   ...DRAFT_PLACEHOLDER_RULES,
 ];
 

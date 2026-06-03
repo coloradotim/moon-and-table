@@ -8,6 +8,7 @@ import {
 } from "../data/seed-symbolic-cards";
 import {
   starterSourceReviews,
+  starterSourceNotes,
 } from "../data/source-registry";
 import type { PrivateAudience } from "./private-data-schema";
 import {
@@ -20,7 +21,10 @@ import {
   normalizeProfilePreferenceValues,
 } from "./profile-preference-taxonomy";
 import { validateRitualSafety, type RitualSafetyFlags } from "./ritual-safety";
-import type { TimingFact } from "./timing-facts";
+import {
+  getTimingFactsForDate,
+  type TimingFact,
+} from "./timing-facts";
 import {
   getTimingSignalsForFacts,
   selectTimingSignals,
@@ -59,6 +63,30 @@ export type ManualScheduleConstraints = {
 
 export type WeeklyBriefTrace = {
   timingFacts: TimingFactKey[];
+  computedTimingFacts: Array<
+    Pick<
+      TimingFact,
+      | "id"
+      | "type"
+      | "label"
+      | "exactIso"
+      | "startIso"
+      | "endIso"
+      | "timezone"
+      | "computedBy"
+      | "confidence"
+    >
+  >;
+  selectedTimingSignals: Array<
+    Pick<
+      TimingSignal,
+      | "ruleId"
+      | "timingFactId"
+      | "timingFactType"
+      | "signalLabel"
+      | "strength"
+    >
+  >;
   timingFactDetails: Array<
     Pick<
       LunarTimingFact,
@@ -151,6 +179,7 @@ export type GenerateWeeklyBriefInput = {
   dateRange?: string;
   timingFacts?: TimingFactKey[];
   timingFactDetails?: LunarTimingFact[];
+  computedTimingFacts?: TimingFact[];
   privateProfileKeys?: PrivateProfilePlaceholderKey[];
   capacityMode?: CapacityMode;
   scheduleConstraints?: Partial<ManualScheduleConstraints>;
@@ -165,6 +194,7 @@ type ResolvedGenerateWeeklyBriefInput = {
   dateRange: string;
   timingFacts: TimingFactKey[];
   timingFactDetails: LunarTimingFact[];
+  computedTimingFacts: TimingFact[];
   privateProfileKeys: PrivateProfilePlaceholderKey[];
   capacityMode: CapacityMode;
   scheduleConstraints: ManualScheduleConstraints;
@@ -511,6 +541,7 @@ function getAvoidanceMatches(pattern: RitualPattern, avoidedStyles: string[]): s
 function getEligiblePatternCandidates(
   input: ResolvedGenerateWeeklyBriefInput,
   selectedCards: SymbolicCard[],
+  selectedTimingSignals: TimingSignal[],
 ): {
   candidates: PatternCandidate[];
   excludedPatternKeys: string[];
@@ -548,10 +579,20 @@ function getEligiblePatternCandidates(
       return [];
     }
 
-    const preferenceMatches = pattern.ritualStyles.filter((style) =>
-      input.preferredRitualStyles.includes(style),
-    );
+    const preferenceMatches = [
+      ...(input.preferredRitualStyles.includes(pattern.key)
+        ? [pattern.key]
+        : []),
+      ...pattern.ritualStyles.filter((style) =>
+        input.preferredRitualStyles.includes(style),
+      ),
+    ];
     const cardStyleMatches = getCardStyleMatches(selectedCards, pattern);
+    const timingSignalStyleMatches = pattern.ritualStyles.filter((style) =>
+      selectedTimingSignals.some((signal) =>
+        signal.ritualStyleHints.includes(style),
+      ),
+    );
     const defaultPatternBoost =
       pattern.key === DEFAULT_PATTERN_BY_CAPACITY[input.capacityMode] ? 1 : 0;
     const practicalProfileBoost =
@@ -566,6 +607,7 @@ function getEligiblePatternCandidates(
     const score =
       preferenceMatches.length * 3 +
       cardStyleMatches.length * 2 +
+      timingSignalStyleMatches.length * 2 +
       defaultPatternBoost +
       practicalProfileBoost +
       highCapacityBoost;
@@ -583,6 +625,7 @@ function getEligiblePatternCandidates(
 function selectPattern(
   input: ResolvedGenerateWeeklyBriefInput,
   selectedCards: SymbolicCard[],
+  selectedTimingSignals: TimingSignal[],
 ): {
   pattern: RitualPattern;
   preferenceMatches: string[];
@@ -590,7 +633,7 @@ function selectPattern(
   safetyNotes: string[];
 } {
   const { candidates, excludedPatternKeys, safetyNotes } =
-    getEligiblePatternCandidates(input, selectedCards);
+    getEligiblePatternCandidates(input, selectedCards, selectedTimingSignals);
   const sortedCandidates = [...candidates].sort(
     (a, b) => b.score - a.score,
   );
@@ -643,7 +686,7 @@ function getOptionalAddOn(
   }
 
   if (!avoidedRitualStyles.includes("live_flame")) {
-    return "Light a candle if that feels supportive and safe.";
+    return "Light a candle if that feels supportive.";
   }
 
   return "No add-on needed.";
@@ -676,7 +719,14 @@ function toTimingFact(timingFact: LunarTimingFact): TimingFact {
 function getSelectedTimingSignals(
   input: ResolvedGenerateWeeklyBriefInput,
 ): TimingSignal[] {
-  const computedFacts = input.timingFactDetails.map(toTimingFact);
+  const baselineLunarFacts = input.timingFactDetails.map(toTimingFact);
+  const computedFacts = [
+    ...input.computedTimingFacts,
+    ...baselineLunarFacts,
+  ].filter(
+    (fact, index, facts) =>
+      facts.findIndex((candidate) => candidate.id === fact.id) === index,
+  );
   const signals = getTimingSignalsForFacts(computedFacts);
 
   return selectTimingSignals(signals, {
@@ -788,12 +838,13 @@ function getBriefSignals(
   input: ResolvedGenerateWeeklyBriefInput,
   privateProfileCard: SymbolicCard | undefined,
   preferenceMatches: string[],
+  selectedTimingSignals: TimingSignal[],
 ): BriefSignal[] {
   const durationMinutes = getEffectiveDurationMinutes(
     input.capacityMode,
     input.scheduleConstraints,
   );
-  const timingSignals = getSelectedTimingSignals(input).map((signal) => ({
+  const timingSignals = selectedTimingSignals.map((signal) => ({
     label: signal.signalLabel,
     type: getSignalType(signal),
     summary: signal.signalSummary,
@@ -806,8 +857,8 @@ function getBriefSignals(
   return [
     ...timingSignals,
     capacitySignal,
-    profileSignal,
     scheduleSignal,
+    profileSignal,
   ]
     .filter((signal): signal is BriefSignal => signal !== undefined)
     .slice(0, 4);
@@ -1086,6 +1137,138 @@ function getHumanSourceLabel(reference: string): string | undefined {
   return undefined;
 }
 
+function sentenceCase(value: string): string {
+  const trimmed = value.trim();
+
+  if (!trimmed) {
+    return trimmed;
+  }
+
+  return `${trimmed.charAt(0).toUpperCase()}${trimmed.slice(1)}`;
+}
+
+function ensureSentence(value: string): string {
+  const trimmed = value.trim();
+
+  if (!trimmed || /[.!?]$/.test(trimmed)) {
+    return trimmed;
+  }
+
+  return `${trimmed}.`;
+}
+
+function getHumanStyleLabel(value: string): string {
+  if (value === "candle_or_light") {
+    return "candle or light";
+  }
+
+  return value.replaceAll("_", " ");
+}
+
+function getAvoidSummary(value: string): string {
+  const trimmed = value.replace(/\.$/, "");
+  const withoutPrefix = trimmed.replace(/^Do not\s+/i, "");
+  const firstWord = withoutPrefix.split(/\s+/)[0]?.toLowerCase();
+  const gerunds: Record<string, string> = {
+    claim: "claiming",
+    frame: "framing",
+    imply: "implying",
+    make: "making",
+    predict: "predicting",
+    push: "pushing",
+    require: "requiring",
+    say: "saying",
+    suggest: "suggesting",
+    turn: "turning",
+    use: "using",
+  };
+
+  if (firstWord && gerunds[firstWord]) {
+    return `avoid ${withoutPrefix.replace(new RegExp(`^${firstWord}`, "i"), gerunds[firstWord])}`;
+  }
+
+  return `avoid ${withoutPrefix}`;
+}
+
+function getSourceReviewSummary(
+  reference: string,
+  selectedNoteReferences: string[],
+): string | undefined {
+  const review = starterSourceReviews.find((source) => source.id === reference);
+
+  if (!review) {
+    return undefined;
+  }
+
+  const selectedNotes = selectedNoteReferences
+    .map((noteReference) =>
+      starterSourceNotes.find(
+        (sourceNote) =>
+          sourceNote.id === noteReference && sourceNote.sourceId === review.id,
+      ),
+    )
+    .filter((note): note is NonNullable<typeof note> => note !== undefined);
+  const genericNoteIds = new Set([
+    "note.four_phase_moon_mvp",
+    "note.lunar_cards_stay_invitational",
+    "note.astrology_ethics_no_personal_certainty",
+    "note.barnum_forer_specificity_guardrail",
+  ]);
+  const uniqueNotes = selectedNotes
+    .filter(
+      (note, index, notes) =>
+        notes.findIndex(
+          (candidate) => candidate.paraphrasedNote === note.paraphrasedNote,
+        ) === index,
+    )
+    .sort((a, b) => {
+      const aIsGeneric = genericNoteIds.has(a.id);
+      const bIsGeneric = genericNoteIds.has(b.id);
+
+      if (aIsGeneric === bIsGeneric) {
+        return 0;
+      }
+
+      return aIsGeneric ? 1 : -1;
+    });
+  const usedHere =
+    uniqueNotes.length > 0
+      ? uniqueNotes
+          .slice(0, 2)
+          .map((note) => ensureSentence(note.paraphrasedNote))
+          .join(" ")
+      : `This source shaped ${review.bestFor
+          .slice(0, 2)
+          .map((value) => value.toLowerCase())
+          .join(" and ")}.`;
+  const helpfulBecause = review.bestFor[0]
+    ? ` Helpful because: ${ensureSentence(review.bestFor[0])}`
+    : "";
+  const guardrail = uniqueNotes[0]?.riskNotes[0] ?? review.concerns[0];
+  const guardrailText = guardrail
+    ? ` Guardrail: ${ensureSentence(guardrail)}`
+    : "";
+
+  return `Used here: ${usedHere}${helpfulBecause}${guardrailText}`;
+}
+
+function getSymbolicCardSourceSummary(card: SymbolicCard): string {
+  return `Used here: ${card.themes.slice(0, 4).join(", ")}. Why helpful: ${card.summary} Guardrails: ${card.avoid_saying
+    .slice(0, 2)
+    .map(getAvoidSummary)
+    .join("; ")}`;
+}
+
+function getPatternSourceSummary(pattern: RitualPattern): string {
+  const firstStep = pattern.steps[0] ? ` Action: ${pattern.steps[0]}` : "";
+  const whyHelpful = `${pattern.summary} It fit ${pattern.defaultDurationMinutes} minutes and ${pattern.ritualStyles
+    .slice(0, 3)
+    .map(getHumanStyleLabel)
+    .join(", ")}.`;
+
+  return `Used here: ${pattern.title.toLowerCase()} as the actual ritual container.${firstStep} Why helpful: ${whyHelpful}`;
+}
+
 function getSourceSummaries(
   timingCard: SymbolicCard,
   pattern: RitualPattern,
@@ -1096,28 +1279,54 @@ function getSourceSummaries(
     {
       label: `${timingCard.title} card`,
       kind: "symbolic_card",
-      summary: "Approved symbolic card used for the timing theme.",
+      summary: getSymbolicCardSourceSummary(timingCard),
     },
     {
       label: `${pattern.title} pattern`,
       kind: "ritual_pattern",
-      summary: "Approved ritual pattern selected for the recommendation.",
+      summary: getPatternSourceSummary(pattern),
     },
   ];
 
-  const humanSourceLabels = [
+  const selectedReferences = [
+    ...timingSignals.flatMap((signal) => signal.sourceReferences),
     ...timingCard.source_references,
     ...pattern.sourceReferences,
-    ...timingSignals.flatMap((signal) => signal.sourceReferences),
-  ]
-    .map(getHumanSourceLabel)
-    .filter((label): label is string => label !== undefined);
+  ];
+  const selectedNoteReferences = selectedReferences.filter((reference) =>
+    reference.startsWith("note."),
+  );
+  const selectedNoteSourceIds = new Set(
+    selectedNoteReferences
+      .map((reference) =>
+        starterSourceNotes.find((sourceNote) => sourceNote.id === reference),
+      )
+      .filter((note): note is NonNullable<typeof note> => note !== undefined)
+      .map((note) => note.sourceId),
+  );
+  const sourceReferences = selectedReferences
+    .filter((reference) => reference.startsWith("source.") || reference.startsWith("docs/"))
+    .filter((reference) => {
+      if (!reference.startsWith("source.")) {
+        return true;
+      }
 
-  for (const label of [...new Set(humanSourceLabels)].slice(0, 4)) {
+      return selectedNoteSourceIds.has(reference);
+    });
+
+  for (const reference of [...new Set(sourceReferences)].slice(0, 5)) {
+    const label = getHumanSourceLabel(reference);
+
+    if (!label) {
+      continue;
+    }
+
     sourceSummaries.push({
       label,
       kind: "source_review",
-      summary: "Reviewed source context; no source prose is copied into the brief.",
+      summary:
+        getSourceReviewSummary(reference, selectedNoteReferences) ??
+        "Reviewed source context; no source prose is copied into the brief.",
     });
   }
 
@@ -1125,7 +1334,10 @@ function getSourceSummaries(
     sourceSummaries.push({
       label: "Household safety guardrails",
       kind: "safety_guardrail",
-      summary: "Used to keep the ritual practical for a real home.",
+      summary:
+        pattern.safetyFlags.fire === "live_flame"
+          ? "Used here: kept the flame handling in reviewed safety metadata while letting the brief itself say candle plainly."
+          : "Used here: checked whether the selected ritual needed reshaping for household safety, capacity, or setup burden.",
     });
   }
 
@@ -1144,11 +1356,15 @@ function getExplanation(
   excludedPatternKeys: string[],
   safetyNotes: string[],
   whyThis: string,
+  selectedTimingSignals: TimingSignal[],
 ): BriefExplanation {
-  const timingSignals = getSelectedTimingSignals(input);
-
   return {
-    signals: getBriefSignals(input, privateProfileCard, preferenceMatches),
+    signals: getBriefSignals(
+      input,
+      privateProfileCard,
+      preferenceMatches,
+      selectedTimingSignals,
+    ),
     reasoning: getReasoning(whyThis, pattern, input),
     filtersApplied: getFilterNotes(
       input,
@@ -1159,7 +1375,7 @@ function getExplanation(
     sourcesUsed: getSourceSummaries(
       timingCard,
       pattern,
-      timingSignals,
+      selectedTimingSignals,
       safetyNotes,
     ),
   };
@@ -1195,12 +1411,15 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
     (timingFactDetails.length > 0
       ? timingFactDetails.map((fact) => fact.key)
       : [lunarTimingFact.key]);
+  const computedTimingFacts =
+    input.computedTimingFacts ?? getTimingFactsForDate(currentDate);
 
   return {
     currentDate,
     dateRange: input.dateRange ?? getWeekDateRange(currentDate),
     timingFacts,
     timingFactDetails,
+    computedTimingFacts,
     privateProfileKeys:
       input.privateProfileKeys ?? DEFAULT_PRIVATE_PROFILE_KEYS,
     capacityMode,
@@ -1246,16 +1465,18 @@ export function generateWeeklyBrief(
   const privateProfileCard = selectedCards.find(
     (card) => card.category === "private_profile_theme",
   );
+  const selectedTimingSignals = getSelectedTimingSignals(resolvedInput);
   const {
     pattern,
     preferenceMatches,
     excludedPatternKeys,
     safetyNotes,
-  } = selectPattern(resolvedInput, selectedCards);
+  } = selectPattern(resolvedInput, selectedCards, selectedTimingSignals);
   const sourceReferences = [
     ...timingCard.source_references,
     ...pattern.sourceReferences,
     ...(privateProfileCard?.source_references ?? []),
+    ...selectedTimingSignals.flatMap((signal) => signal.sourceReferences),
   ];
   const { sourceReviewIds, sourceNoteIds } = splitSourceReferences([
     ...new Set(sourceReferences),
@@ -1300,9 +1521,28 @@ export function generateWeeklyBrief(
       excludedPatternKeys,
       safetyNotes,
       whyThis,
+      selectedTimingSignals,
     ),
     trace: {
       timingFacts: resolvedInput.timingFacts,
+      computedTimingFacts: resolvedInput.computedTimingFacts.map((fact) => ({
+        id: fact.id,
+        type: fact.type,
+        label: fact.label,
+        exactIso: fact.exactIso,
+        startIso: fact.startIso,
+        endIso: fact.endIso,
+        timezone: fact.timezone,
+        computedBy: fact.computedBy,
+        confidence: fact.confidence,
+      })),
+      selectedTimingSignals: selectedTimingSignals.map((signal) => ({
+        ruleId: signal.ruleId,
+        timingFactId: signal.timingFactId,
+        timingFactType: signal.timingFactType,
+        signalLabel: signal.signalLabel,
+        strength: signal.strength,
+      })),
       timingFactDetails: resolvedInput.timingFactDetails.map((fact) => ({
         key: fact.key,
         label: fact.label,

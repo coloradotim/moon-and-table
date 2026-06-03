@@ -94,7 +94,7 @@ Safety flags can block a pattern even when it matches timing, private profile co
 
 Timing facts are computed and testable. Interpretation belongs in SymbolicCards, rules, and approved content, not raw timing facts.
 
-The broader timing fact API lives in `src/lib/timing-facts.ts` and currently computes lunar phase, lunations, moon sign, sun sign, seasonal markers, planetary signs, retrograde status, major aspects, and universal numerology date facts. The first rule layer lives in `src/lib/timing-interpretation-rules.ts`; approved rules currently cover lunar phase cards and numerology cards, while zodiac and planetary placeholders remain draft-only until reviewed source cards exist.
+The broader timing fact API lives in `src/lib/timing-facts.ts` and currently computes lunar phase, lunations, moon sign, sun sign, seasonal markers, planetary signs, retrograde status, major aspects, and universal numerology date facts. The first rule layer lives in `src/lib/timing-interpretation-rules.ts`; approved rules cover lunar phase cards, numerology cards, MVP astrology cards for Sun through Saturn, all 12 signs, five major aspects, and a conservative retrograde cue. Solar season and outer-planet interpretation remain draft-only until reviewed source cards exist.
 
 Astronomy Engine is the MVP timing direction. Swiss Ephemeris remains deferred until precision, houses, natal charts, or personal transit needs justify it.
 

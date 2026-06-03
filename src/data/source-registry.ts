@@ -164,6 +164,95 @@ export const starterSourceReviews: SourceReview[] = [
     confidence: "medium",
   },
   {
+    id: "source.april_elliott_kent",
+    title: "April Elliott Kent astrology works",
+    authorOrPublisher: "April Elliott Kent",
+    category: "astrology_interpretation",
+    sourceType: "book",
+    useDecision: "use_carefully",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "plain-language astrology framing",
+      "beginner-safe timing prompts",
+      "keeping transit language practical and modest",
+    ],
+    concerns: [
+      "do not imitate voice or import horoscope-style certainty",
+    ],
+    copyrightNotes: [
+      "manual review only; transform ideas into short product notes",
+    ],
+    safetyNotes: [
+      "avoid advice about health, finances, danger, identity, or relationships",
+    ],
+    culturalContextNotes: [
+      "use as modern practical astrology context, not as factual proof",
+    ],
+    extractionNotes: [
+      "extract tone and transit prompt patterns without copying phrasing",
+    ],
+    confidence: "medium",
+  },
+  {
+    id: "source.astrology_ethics_sources",
+    title: "Astrology ethics source family",
+    authorOrPublisher: "ISAR / OPA / NCGR and related ethics material",
+    category: "astrology_ethics",
+    sourceType: "other",
+    useDecision: "use",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "interpretive boundaries",
+      "consent-aware astrology language",
+      "blocking prediction, fear, and certainty claims",
+    ],
+    concerns: [
+      "specific ethics language should be checked directly before citation",
+    ],
+    copyrightNotes: [
+      "cite organizations or source families; do not copy policy language",
+    ],
+    safetyNotes: [
+      "ethical guardrails should override symbolic signal enthusiasm",
+    ],
+    culturalContextNotes: [
+      "treat as professional conduct guidance for symbolic interpretation",
+    ],
+    extractionNotes: [
+      "extract guardrail categories and avoid-saying rules only",
+    ],
+    confidence: "medium",
+  },
+  {
+    id: "source.barnum_forer_guardrail",
+    title: "Barnum / Forer effect guardrail material",
+    authorOrPublisher: "Psychology and critical-thinking reference family",
+    category: "interpretive_safety",
+    sourceType: "article",
+    useDecision: "use",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "quality checks against vague universal claims",
+      "keeping symbolic language specific to selected facts and cards",
+    ],
+    concerns: [
+      "use as an anti-manipulation guardrail, not as a source of ritual meaning",
+    ],
+    copyrightNotes: [
+      "use only high-level transformed quality guidance",
+    ],
+    safetyNotes: [
+      "avoid language that feels personally revealing without real support",
+    ],
+    culturalContextNotes: [
+      "helps keep the product from overstating symbolic interpretation",
+    ],
+    extractionNotes: [
+      "extract QA guardrails for specificity, humility, and non-determinism",
+    ],
+    confidence: "medium",
+  },
+  {
     id: "source.sarah_faith_gottesdiener",
     title: "Sarah Faith Gottesdiener — lunar reflection source",
     authorOrPublisher: "Sarah Faith Gottesdiener",
@@ -440,6 +529,139 @@ export const starterSourceNotes: SourceNote[] = [
     ],
     copyrightNotes: [
       "short transformed note only; no ritual or source wording",
+    ],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.astrology_symbolic_not_predictive",
+    sourceId: "source.steven_forrest",
+    locationNote: "docs/source-research-synthesis.md astrology interpretation synthesis",
+    paraphrasedNote:
+      "Use astrology as symbolic timing grammar for reflection and ritual fit, not as prediction, fate, diagnosis, or certainty.",
+    category: "astrology_interpretation",
+    tags: ["astrology", "symbolic", "guardrail"],
+    riskNotes: [
+      "avoid deterministic claims and horoscope-feed framing",
+    ],
+    safetyNotes: [
+      "do not use astrology for health, danger, finance, or relationship advice",
+    ],
+    copyrightNotes: [
+      "short transformed note only; no copied delineation",
+    ],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.astrology_planets_as_functions",
+    sourceId: "source.kevin_burk",
+    locationNote: "docs/source-research-synthesis.md Batch 8 astrology accent layer",
+    paraphrasedNote:
+      "Treat planets as symbolic functions, such as attention, care, action, learning, or limits, that can color a household ritual.",
+    category: "astrology_interpretation",
+    tags: ["astrology", "planets", "timing"],
+    riskNotes: [
+      "avoid saying a planet causes events or describes a person completely",
+    ],
+    safetyNotes: [
+      "keep planetary signals secondary to capacity, schedule, and safety",
+    ],
+    copyrightNotes: [
+      "short transformed note only; no copied planet descriptions",
+    ],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.astrology_signs_as_styles",
+    sourceId: "source.kevin_burk",
+    locationNote: "docs/source-research-synthesis.md Batch 8 astrology accent layer",
+    paraphrasedNote:
+      "Use signs as symbolic styles or textures for action, never as fixed identity labels or personal judgments.",
+    category: "astrology_interpretation",
+    tags: ["astrology", "zodiac", "tone"],
+    riskNotes: [
+      "avoid personality certainty and compatibility language",
+    ],
+    safetyNotes: [
+      "do not expose private chart material or personal labels in brief copy",
+    ],
+    copyrightNotes: [
+      "short transformed note only; no copied sign delineations",
+    ],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.astrology_aspects_as_relationships",
+    sourceId: "source.steven_forrest",
+    locationNote: "docs/source-research-synthesis.md Batch 8 astrology accent layer",
+    paraphrasedNote:
+      "Treat aspects as symbolic relationships between timing factors, such as blend, friction, support, or opportunity.",
+    category: "astrology_interpretation",
+    tags: ["astrology", "aspects", "timing"],
+    riskNotes: [
+      "avoid claiming aspects produce conflict, ease, success, or failure",
+    ],
+    safetyNotes: [
+      "aspect signals should remain optional context, not urgent instruction",
+    ],
+    copyrightNotes: [
+      "short transformed note only; no copied aspect delineations",
+    ],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.astrology_retrograde_slow_review",
+    sourceId: "source.april_elliott_kent",
+    locationNote: "docs/source-research-synthesis.md astrology interpretation synthesis",
+    paraphrasedNote:
+      "Use retrograde periods conservatively as review or slowing-down cues, not as blame, disruption, or warning language.",
+    category: "astrology_interpretation",
+    tags: ["astrology", "retrograde", "review"],
+    riskNotes: [
+      "avoid fear-based Mercury retrograde jokes and deterministic disruption claims",
+    ],
+    safetyNotes: [
+      "do not use retrograde signals to discourage necessary action",
+    ],
+    copyrightNotes: [
+      "short transformed note only; no copied transit text",
+    ],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.astrology_ethics_no_personal_certainty",
+    sourceId: "source.astrology_ethics_sources",
+    locationNote: "docs/source-research-synthesis.md astrology ethics source family",
+    paraphrasedNote:
+      "Astrology copy should stay consent-aware, nonjudgmental, and humble about what a timing signal can support.",
+    category: "astrology_ethics",
+    tags: ["astrology", "ethics", "tone"],
+    riskNotes: [
+      "avoid exposed private-profile language, fate claims, and advice beyond ritual fit",
+    ],
+    safetyNotes: [
+      "capacity, consent, privacy, and safety override symbolic interpretation",
+    ],
+    copyrightNotes: [
+      "short transformed ethics summary only; no copied policy text",
+    ],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.barnum_forer_specificity_guardrail",
+    sourceId: "source.barnum_forer_guardrail",
+    locationNote: "docs/source-research-synthesis.md astrology and numerology guardrails",
+    paraphrasedNote:
+      "Keep interpretations tied to selected facts and concrete ritual choices so they do not sound vaguely personal or manipulative.",
+    category: "interpretive_safety",
+    tags: ["guardrail", "specificity", "qa"],
+    riskNotes: [
+      "avoid flattering, ominous, or broadly applicable claims that feel artificially personal",
+    ],
+    safetyNotes: [
+      "prefer concrete household language over sweeping self-description",
+    ],
+    copyrightNotes: [
+      "short transformed quality guardrail only",
     ],
     verbatimAllowed: false,
   },
