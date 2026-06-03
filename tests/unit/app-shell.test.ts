@@ -40,19 +40,33 @@ describe("app shell rendering", () => {
 
   it("renders the weekly brief only when signed in", () => {
     const html = renderSignedInShell(resolvePrivateBriefData({}));
+    const moonIndex = html.indexOf("Moon &amp; Table");
+    const practiceIndex = html.indexOf("The practice");
+    const windowIndex = html.indexOf("A good window");
+    const optionalIndex = html.indexOf("Optional");
+    const intentionIndex = html.indexOf("Intention");
+    const questionIndex = html.indexOf("A question to carry");
+    const whyIndex = html.indexOf("Why this fits");
+    const tryAgainIndex = html.indexOf("Need a different suggestion?");
+    const feedbackIndex = html.indexOf("Share feedback");
 
-    expect(html).toContain("Menu");
     expect(html).toContain("This week");
     expect(html).toContain("Profile settings");
     expect(html).toContain("Sign out");
+    expect(html).toContain('aria-label="Open menu"');
+    expect(html).not.toContain(">Menu<");
     expect(html).toContain('data-menu-action="this_week"');
     expect(html).toContain('data-menu-action="profile_settings"');
     expect(html).toContain("data-testid=\"recommended-ritual\"");
-    expect(html).toContain("Sources:");
-    expect(html).toContain("Why this");
+    expect(html).toContain("Why this fits");
     expect(html).toContain("Thursday evening, 0-5 minutes.");
-    expect(html).toContain("Using starter settings until your private settings are ready.");
-    expect(html).toContain("How was this?");
+    expect(html).toContain("The practice");
+    expect(html).toContain("A good window");
+    expect(html).toContain("Optional");
+    expect(html).toContain("Intention");
+    expect(html).toContain("A question to carry");
+    expect(html).toContain("Need a different suggestion?");
+    expect(html).toContain("Share feedback");
     expect(html).toContain('data-feedback-type="good"');
     expect(html).toContain('data-feedback-type="too_much"');
     expect(html).toContain('data-feedback-type="too_generic"');
@@ -61,14 +75,33 @@ describe("app shell rendering", () => {
     expect(html).toContain('data-feedback-type="skipped"');
     expect(html).toContain('data-feedback-type="try_again"');
     expect(html).toContain("Try something else");
-    expect(html).toContain("Feedback saves to your private profile.");
-    expect(html).toContain('<details class="why-this"');
-    expect(html).not.toContain('<details class="why-this" open');
+    expect(html).toContain('<details class="why-this" aria-label="Why this fits">');
+    expect(html).toContain('<details class="feedback" aria-label="Feedback">');
+    expect(html).not.toContain('<details class="feedback" open');
+    expect(moonIndex).toBeGreaterThan(-1);
+    expect(html.slice(0, moonIndex)).not.toContain("Private weekly ritual brief");
+    expect(practiceIndex).toBeLessThan(windowIndex);
+    expect(windowIndex).toBeLessThan(optionalIndex);
+    expect(optionalIndex).toBeLessThan(intentionIndex);
+    expect(intentionIndex).toBeLessThan(questionIndex);
+    expect(questionIndex).toBeLessThan(whyIndex);
+    expect(whyIndex).toBeLessThan(tryAgainIndex);
+    expect(tryAgainIndex).toBeLessThan(feedbackIndex);
+    expect(html).not.toContain("Private weekly ritual brief");
+    expect(html).not.toContain("Using your household settings.");
+    expect(html).not.toContain("Using starter settings until your private settings are ready.");
+    expect(html).not.toContain("low capacity");
+    expect(html).not.toContain("Best window");
+    expect(html).not.toContain("This week&#39;s ritual");
+    expect(html).not.toContain("Optional add-on");
+    expect(html).not.toContain("Reflection prompt");
+    expect(html).not.toContain("Feedback saves to your private profile.");
     expect(html).not.toContain("Firestore");
     expect(html).not.toContain("Developer trace");
     expect(html).not.toContain("private_profile.");
     expect(html).not.toContain("docs/source-");
     expect(html).not.toContain("astronomy_engine");
+    expect(html).not.toContain("Jun 1-Jun 7");
     expect(html).not.toContain("Tune profiles");
     expect(html).not.toContain("Make the suggestions fit better");
     expect(html).not.toContain("About this");
@@ -104,12 +137,13 @@ describe("app shell rendering", () => {
 
   it("renders feedback status after save or try-again", () => {
     const html = renderSignedInShell(resolvePrivateBriefData({}), {
-      feedbackStatus: "Saved. Thank you.",
-      tryAgainStatus: "Saved. Here is another approved option.",
+      feedbackStatus: "Got it.",
+      tryAgainStatus: "Here is another approved option.",
       selectedFeedbackType: "try_again",
     });
 
-    expect(html).toContain("Saved. Here is another approved option.");
+    expect(html).toContain("Here is another approved option.");
+    expect(html).toContain("Got it.");
     expect(html).toContain('aria-pressed="true"');
     expect(html).toContain("feedback-button--selected");
     expect(html).not.toContain("Feedback saves to your private profile.");
@@ -117,13 +151,13 @@ describe("app shell rendering", () => {
 
   it("renders a saving state for clicked feedback buttons", () => {
     const html = renderSignedInShell(resolvePrivateBriefData({}), {
-      feedbackStatus: "Saving too much.",
+      feedbackStatus: "Saving.",
       selectedFeedbackType: "too_much",
       savingFeedbackType: "too_much",
     });
 
-    expect(html).toContain("Saving too much");
-    expect(html).toContain("Saving too much.");
+    expect(html).toContain(">Saving</button>");
+    expect(html).toContain("Saving.");
     expect(html).toContain("feedback-button--selected");
     expect(html).toContain(" disabled");
   });

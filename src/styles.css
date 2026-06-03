@@ -133,26 +133,39 @@ h2 {
 .brief__section,
 .detail,
 .trace,
-.why-this {
+.why-this,
+.try-again,
+.feedback {
   max-width: 680px;
 }
 
 .brief__section p:last-child,
 .detail p:last-child,
 .trace p:last-child,
-.why-this p:last-child {
+.why-this p:last-child,
+.try-again p:last-child,
+.feedback p:last-child {
   margin-bottom: 0;
 }
 
-.brief__grid {
+.brief__stack {
   display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.35fr) minmax(0, 1fr);
-  gap: 18px;
+  gap: 20px;
 }
 
 .detail {
   padding-top: 16px;
   border-top: 1px solid #d9dfdc;
+}
+
+.detail--practice {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.detail--practice p:last-child {
+  color: #26312c;
+  font-size: 1.16rem;
 }
 
 .prompt {
@@ -169,29 +182,29 @@ h2 {
 }
 
 .trace summary,
-.why-this summary {
+.why-this summary,
+.feedback summary {
   color: #26312c;
   cursor: pointer;
   font-weight: 700;
 }
 
-.why-this {
+.why-this,
+.try-again,
+.feedback {
   padding: 16px 0 0;
   border-top: 1px solid #d9dfdc;
 }
 
-.why-this p {
+.why-this p,
+.feedback p {
   margin-top: 12px;
   color: #435349;
 }
 
 .feedback {
   display: grid;
-  max-width: 680px;
   gap: 12px;
-  padding: 16px 0;
-  border-top: 1px solid #d9dfdc;
-  border-bottom: 1px solid #d9dfdc;
 }
 
 .feedback__chips {
@@ -418,12 +431,23 @@ fieldset {
 
 .app-menu__button {
   display: inline-flex;
+  width: 44px;
+  justify-content: center;
   align-items: center;
+  gap: 4px;
   list-style: none;
 }
 
 .app-menu__button::-webkit-details-marker {
   display: none;
+}
+
+.app-menu__button span {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: currentColor;
 }
 
 .app-menu__panel {
@@ -471,7 +495,7 @@ fieldset {
     gap: 22px;
   }
 
-  .brief__grid {
+  .brief__stack {
     grid-template-columns: 1fr;
   }
 

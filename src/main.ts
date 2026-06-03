@@ -264,9 +264,9 @@ async function saveActiveBriefFeedback(
 
 async function handleFeedbackClick(feedbackType: BriefFeedbackType): Promise<void> {
   try {
-    renderActiveBriefStatus("Saving feedback.", undefined, feedbackType, feedbackType);
+    renderActiveBriefStatus("Saving.", undefined, feedbackType, feedbackType);
     await saveActiveBriefFeedback(feedbackType);
-    renderActiveBriefStatus("Saved. Thank you.", undefined, feedbackType);
+    renderActiveBriefStatus("Got it.", undefined, feedbackType);
   } catch (error) {
     renderActiveBriefStatus(
       error instanceof Error ? error.message : "Could not save feedback.",
@@ -306,7 +306,7 @@ async function handleTryAgainClick(): Promise<void> {
     appRoot.innerHTML = renderSignedInShell(activePrivateBriefData, {
       activeView: activeSignedInView,
       brief: activeBrief,
-      tryAgainStatus: "Saved. Here is another approved option.",
+      tryAgainStatus: "Here is another approved option.",
       selectedFeedbackType: "try_again",
       showDebugTrace,
     });
