@@ -1,5 +1,6 @@
 import {
   getApprovedRitualPatterns,
+  starterRitualPatterns,
   type RitualPattern,
 } from "../data/ritual-patterns";
 import {
@@ -110,6 +111,15 @@ export type WeeklyBriefTrace = {
   >;
   symbolicCards: string[];
   ritualPatterns: string[];
+  patternSelection: {
+    selectedPatternKey: string;
+    eligiblePatternKeys: string[];
+    excludedPatternKeys: string[];
+    capacityLimitMinutes: number;
+    preferenceMatches: string[];
+    profileSignalKeys: string[];
+    noAlternateAvailable: boolean;
+  };
   sourceReviewIds: string[];
   sourceNoteIds: string[];
   privateProfileKeys: PrivateProfilePlaceholderKey[];
@@ -121,6 +131,73 @@ export type WeeklyBriefTrace = {
   safety: {
     excludedPatternKeys: string[];
     notes: string[];
+  };
+};
+
+export type ScoreReason = {
+  code: string;
+  label: string;
+  points: number;
+  detail?: string;
+};
+
+export type EvaluatedSymbolicCard = {
+  key: string;
+  title: string;
+  matchedTimingFacts: string[];
+  matchedProfileKeys: string[];
+  sourceReferences: string[];
+  score: number;
+  scoreReasons: ScoreReason[];
+};
+
+export type EvaluatedRitualPattern = {
+  key: string;
+  title: string;
+  approvalStatus: RitualPattern["approvalStatus"];
+  capacityModes: CapacityMode[];
+  ritualStyles: string[];
+  sourceReferences: string[];
+  safetyAllowed: boolean;
+  score: number;
+  scoreReasons: ScoreReason[];
+};
+
+export type RejectedCandidate = {
+  key: string;
+  title?: string;
+  kind: "symbolic_card" | "ritual_pattern" | "timing_fact";
+  reasons: ScoreReason[];
+};
+
+export type RecommendationDecision = {
+  inputs: {
+    timingFacts: string[];
+    computedTimingFactIds: string[];
+    capacityMode: CapacityMode;
+    capacityLimitMinutes: number;
+    audience: PrivateAudience;
+    preferredRitualStyles: string[];
+    avoidedRitualStyles: string[];
+    excludedRitualPatternKeys: string[];
+  };
+  candidates: {
+    symbolicCards: EvaluatedSymbolicCard[];
+    ritualPatterns: EvaluatedRitualPattern[];
+  };
+  selected: {
+    timingSignalLabels: string[];
+    symbolicCardKeys: string[];
+    ritualPatternKey: string;
+    sourceReferences: string[];
+  };
+  rejected: {
+    ritualPatterns: RejectedCandidate[];
+  };
+  explanation: {
+    scoreSummary: string;
+    safetySummary: string;
+    noAlternateAvailable: boolean;
   };
 };
 
@@ -178,6 +255,7 @@ export type WeeklyBrief = {
   whyThis: string;
   sourceSummary: string;
   explanation: BriefExplanation;
+  decision: RecommendationDecision;
   trace: WeeklyBriefTrace;
 };
 
@@ -218,8 +296,21 @@ type ResolvedGenerateWeeklyBriefInput = {
 type PatternCandidate = {
   pattern: RitualPattern;
   score: number;
+  scoreReasons: ScoreReason[];
   preferenceMatches: string[];
   profileSignalMatches: PrivateProfileSignal[];
+};
+
+type PatternSelectionResult = {
+  pattern: RitualPattern;
+  preferenceMatches: string[];
+  profileSignalMatches: PrivateProfileSignal[];
+  evaluatedPatterns: EvaluatedRitualPattern[];
+  rejectedPatterns: RejectedCandidate[];
+  eligiblePatternKeys: string[];
+  excludedPatternKeys: string[];
+  safetyNotes: string[];
+  noAlternateAvailable: boolean;
 };
 
 const DEFAULT_SCHEDULE_CONSTRAINTS: ManualScheduleConstraints = {
@@ -545,32 +636,115 @@ function getAvoidanceMatches(pattern: RitualPattern, avoidedStyles: string[]): s
   );
 }
 
+function scoreReason(
+  code: string,
+  label: string,
+  points: number,
+  detail?: string,
+): ScoreReason {
+  return detail === undefined
+    ? { code, label, points }
+    : { code, label, points, detail };
+}
+
+function sumScoreReasons(scoreReasons: ScoreReason[]): number {
+  return scoreReasons.reduce((total, reason) => total + reason.points, 0);
+}
+
+function toRejectedPattern(
+  pattern: RitualPattern,
+  reasons: ScoreReason[],
+): RejectedCandidate {
+  return {
+    key: pattern.key,
+    title: pattern.title,
+    kind: "ritual_pattern",
+    reasons,
+  };
+}
+
 function getEligiblePatternCandidates(
   input: ResolvedGenerateWeeklyBriefInput,
   selectedCards: SymbolicCard[],
   selectedTimingSignals: TimingSignal[],
 ): {
   candidates: PatternCandidate[];
+  evaluatedPatterns: EvaluatedRitualPattern[];
+  rejectedPatterns: RejectedCandidate[];
   excludedPatternKeys: string[];
   safetyNotes: string[];
 } {
-  const approvedPatterns = getApprovedRitualPatterns();
+  const approvedPatternKeys = new Set(
+    getApprovedRitualPatterns().map((pattern) => pattern.key),
+  );
   const excludedPatternKeys: string[] = [];
   const safetyNotes: string[] = [];
-  const candidates = approvedPatterns.flatMap((pattern): PatternCandidate[] => {
+  const rejectedPatterns: RejectedCandidate[] = [];
+  const evaluatedPatterns: EvaluatedRitualPattern[] = [];
+  const durationLimitMinutes = getEffectiveDurationMinutes(
+    input.capacityMode,
+    input.scheduleConstraints,
+  );
+  const candidates = starterRitualPatterns.flatMap((pattern): PatternCandidate[] => {
     const safetyResult = validateRitualSafety(pattern.safetyFlags, pattern.steps);
+    const rejectionReasons: ScoreReason[] = [];
+    const scoreReasons: ScoreReason[] = [];
 
     safetyNotes.push(...safetyResult.warnings);
 
-    if (input.excludedRitualPatternKeys.includes(pattern.key)) {
-      excludedPatternKeys.push(pattern.key);
-      safetyNotes.push(`${pattern.key} skipped because try-again requested another pattern`);
-      return [];
+    if (!approvedPatternKeys.has(pattern.key)) {
+      rejectionReasons.push(
+        scoreReason(
+          "not_approved",
+          "Not approved",
+          -99,
+          `approval status is ${pattern.approvalStatus}`,
+        ),
+      );
     }
 
-    if (!safetyResult.allowed || !pattern.capacityModes.includes(input.capacityMode)) {
-      excludedPatternKeys.push(pattern.key);
-      return [];
+    if (input.excludedRitualPatternKeys.includes(pattern.key)) {
+      rejectionReasons.push(
+        scoreReason(
+          "try_again_excluded",
+          "Excluded by try-again",
+          -5,
+          "try-again requested a different approved pattern",
+        ),
+      );
+    }
+
+    if (!safetyResult.allowed) {
+      rejectionReasons.push(
+        ...safetyResult.blocks.map((block) =>
+          scoreReason("safety_block", "Safety exclusion", -99, block),
+        ),
+      );
+    }
+
+    if (!pattern.capacityModes.includes(input.capacityMode)) {
+      rejectionReasons.push(
+        scoreReason(
+          "capacity_mode_mismatch",
+          "Capacity mode mismatch",
+          -20,
+          `${input.capacityMode} is not supported by this pattern`,
+        ),
+      );
+    }
+
+    if (
+      input.capacityMode !== "pause" &&
+      pattern.defaultDurationMinutes > durationLimitMinutes
+    ) {
+      rejectionReasons.push(
+        scoreReason(
+          "too_long_for_capacity",
+          "Too long for capacity",
+          -10,
+          `${pattern.defaultDurationMinutes} minutes exceeds the current ${durationLimitMinutes}-minute limit`,
+        ),
+      );
     }
 
     const avoidanceMatches = getAvoidanceMatches(
@@ -579,10 +753,41 @@ function getEligiblePatternCandidates(
     );
 
     if (avoidanceMatches.length > 0) {
-      excludedPatternKeys.push(pattern.key);
-      safetyNotes.push(
-        `${pattern.key} skipped for avoided preference: ${avoidanceMatches.join(", ")}`,
+      rejectionReasons.push(
+        scoreReason(
+          "avoided_style_conflict",
+          "Avoided style conflict",
+          -20,
+          avoidanceMatches.join(", "),
+        ),
       );
+    }
+
+    if (rejectionReasons.length > 0) {
+      excludedPatternKeys.push(pattern.key);
+      rejectedPatterns.push(toRejectedPattern(pattern, rejectionReasons));
+      evaluatedPatterns.push({
+        key: pattern.key,
+        title: pattern.title,
+        approvalStatus: pattern.approvalStatus,
+        capacityModes: pattern.capacityModes,
+        ritualStyles: pattern.ritualStyles,
+        sourceReferences: pattern.sourceReferences,
+        safetyAllowed: safetyResult.allowed,
+        score: sumScoreReasons(rejectionReasons),
+        scoreReasons: rejectionReasons,
+      });
+
+      for (const reason of rejectionReasons) {
+        if (
+          reason.code === "try_again_excluded" ||
+          reason.code === "too_long_for_capacity" ||
+          reason.code === "avoided_style_conflict"
+        ) {
+          safetyNotes.push(`${pattern.key} skipped: ${reason.detail ?? reason.label}`);
+        }
+      }
+
       return [];
     }
 
@@ -608,23 +813,84 @@ function getEligiblePatternCandidates(
       (total, signal) => total + signal.weight,
       0,
     );
-    const defaultPatternBoost =
-      pattern.key === DEFAULT_PATTERN_BY_CAPACITY[input.capacityMode] ? 1 : 0;
-    const highCapacityBoost =
-      input.capacityMode === "high" && pattern.defaultDurationMinutes >= 10 ? 1 : 0;
-    const score =
-      preferenceMatches.length * 3 +
-      cardStyleMatches.length * 2 +
-      timingSignalStyleMatches.length * 2 +
-      profileSignalBoost +
-      defaultPatternBoost +
-      highCapacityBoost;
+    const profileSignalReason =
+      profileSignalBoost > 0
+        ? [
+            scoreReason(
+              "profile_theme_match",
+              "Private profile theme match",
+              profileSignalBoost,
+              profileSignalMatches.map((signal) => signal.key).join(", "),
+            ),
+          ]
+        : [];
+    const defaultPatternReason =
+      pattern.key === DEFAULT_PATTERN_BY_CAPACITY[input.capacityMode]
+        ? [
+            scoreReason(
+              "capacity_default_pattern",
+              "Default pattern for capacity",
+              1,
+              input.capacityMode,
+            ),
+          ]
+        : [];
+    const highCapacityReason =
+      input.capacityMode === "high" && pattern.defaultDurationMinutes >= 10
+        ? [
+            scoreReason(
+              "high_capacity_active_fit",
+              "Active high-capacity fit",
+              1,
+              `${pattern.defaultDurationMinutes} minutes`,
+            ),
+          ]
+        : [];
 
-    return [{ pattern, score, preferenceMatches, profileSignalMatches }];
+    scoreReasons.push(
+      scoreReason("approved_pattern", "Approved ritual pattern", 0),
+      scoreReason("capacity_fit", "Capacity fit", 2, input.capacityMode),
+      scoreReason(
+        "duration_fit",
+        "Duration fit",
+        0,
+        `${pattern.defaultDurationMinutes} minutes within ${durationLimitMinutes}-minute limit`,
+      ),
+      ...preferenceMatches.map((match) =>
+        scoreReason("preferred_style_match", "Preferred style match", 3, match),
+      ),
+      ...cardStyleMatches.map((match) =>
+        scoreReason("symbolic_card_style_match", "Timing/card style match", 2, match),
+      ),
+      ...timingSignalStyleMatches.map((match) =>
+        scoreReason("timing_signal_style_match", "Timing signal style match", 2, match),
+      ),
+      ...profileSignalReason,
+      ...defaultPatternReason,
+      ...highCapacityReason,
+    );
+
+    const score = sumScoreReasons(scoreReasons);
+
+    evaluatedPatterns.push({
+      key: pattern.key,
+      title: pattern.title,
+      approvalStatus: pattern.approvalStatus,
+      capacityModes: pattern.capacityModes,
+      ritualStyles: pattern.ritualStyles,
+      sourceReferences: pattern.sourceReferences,
+      safetyAllowed: safetyResult.allowed,
+      score,
+      scoreReasons,
+    });
+
+    return [{ pattern, score, scoreReasons, preferenceMatches, profileSignalMatches }];
   });
 
   return {
     candidates,
+    evaluatedPatterns,
+    rejectedPatterns,
     excludedPatternKeys: [...new Set(excludedPatternKeys)],
     safetyNotes: [...new Set(safetyNotes)],
   };
@@ -634,17 +900,20 @@ function selectPattern(
   input: ResolvedGenerateWeeklyBriefInput,
   selectedCards: SymbolicCard[],
   selectedTimingSignals: TimingSignal[],
-): {
-  pattern: RitualPattern;
-  preferenceMatches: string[];
-  profileSignalMatches: PrivateProfileSignal[];
-  excludedPatternKeys: string[];
-  safetyNotes: string[];
-} {
-  const { candidates, excludedPatternKeys, safetyNotes } =
+): PatternSelectionResult {
+  const {
+    candidates,
+    evaluatedPatterns,
+    rejectedPatterns,
+    excludedPatternKeys,
+    safetyNotes,
+  } =
     getEligiblePatternCandidates(input, selectedCards, selectedTimingSignals);
   const sortedCandidates = [...candidates].sort(
     (a, b) => b.score - a.score,
+  );
+  const eligiblePatternKeys = sortedCandidates.map(
+    (candidate) => candidate.pattern.key,
   );
 
   if (sortedCandidates[0]) {
@@ -652,8 +921,12 @@ function selectPattern(
       pattern: sortedCandidates[0].pattern,
       preferenceMatches: sortedCandidates[0].preferenceMatches,
       profileSignalMatches: sortedCandidates[0].profileSignalMatches,
+      evaluatedPatterns,
+      rejectedPatterns,
+      eligiblePatternKeys,
       excludedPatternKeys,
       safetyNotes,
+      noAlternateAvailable: false,
     };
   }
 
@@ -669,11 +942,17 @@ function selectPattern(
     pattern: fallbackPattern,
     preferenceMatches: [],
     profileSignalMatches: [],
+    evaluatedPatterns,
+    rejectedPatterns,
+    eligiblePatternKeys,
     excludedPatternKeys,
     safetyNotes: [
       ...safetyNotes,
-      "fallback pattern selected because no preferred pattern fit capacity and safety constraints",
+      input.excludedRitualPatternKeys.length > 0
+        ? "no alternate approved ritual pattern fit capacity, safety, and profile constraints"
+        : "fallback pattern selected because no preferred pattern fit capacity and safety constraints",
     ],
+    noAlternateAvailable: input.excludedRitualPatternKeys.length > 0,
   };
 }
 
@@ -1494,6 +1773,155 @@ function splitSourceReferences(sourceReferences: string[]): {
   };
 }
 
+function getEvaluatedSymbolicCards(
+  cards: SymbolicCard[],
+  input: ResolvedGenerateWeeklyBriefInput,
+): EvaluatedSymbolicCard[] {
+  return cards.map((card) => {
+    const traceKey = TRACE_KEY_BY_CARD_KEY[card.key] ?? card.key;
+    const matchedTimingFacts = input.timingFacts.filter(
+      (fact) => fact === traceKey,
+    );
+    const matchedProfileKeys = input.privateProfileKeys.filter(
+      (key) => PRIVATE_PROFILE_CARD_KEY_BY_PLACEHOLDER_KEY[key] === card.key,
+    );
+    const scoreReasons = [
+      ...(matchedTimingFacts.length > 0
+        ? [
+            scoreReason(
+              "timing_fact_match",
+              "Timing fact match",
+              4,
+              matchedTimingFacts.join(", "),
+            ),
+          ]
+        : []),
+      ...(matchedProfileKeys.length > 0
+        ? [
+            scoreReason(
+              "profile_theme_card",
+              "Private profile theme card",
+              1,
+              matchedProfileKeys.join(", "),
+            ),
+          ]
+        : []),
+      scoreReason("approved_symbolic_card", "Approved symbolic card", 0),
+    ];
+
+    return {
+      key: card.key,
+      title: card.title,
+      matchedTimingFacts,
+      matchedProfileKeys,
+      sourceReferences: card.source_references,
+      score: sumScoreReasons(scoreReasons),
+      scoreReasons,
+    };
+  });
+}
+
+function getDecisionScoreSummary(
+  pattern: RitualPattern,
+  evaluatedPatterns: EvaluatedRitualPattern[],
+): string {
+  const selectedPattern = evaluatedPatterns.find(
+    (candidate) => candidate.key === pattern.key,
+  );
+
+  if (!selectedPattern) {
+    return `${pattern.title} was selected as the safe fallback.`;
+  }
+
+  const positiveReasons = selectedPattern.scoreReasons
+    .filter((reason) => reason.points > 0)
+    .slice(0, 3)
+    .map((reason) => reason.label.toLowerCase());
+
+  if (positiveReasons.length === 0) {
+    return `${pattern.title} was selected with a score of ${selectedPattern.score}.`;
+  }
+
+  return `${pattern.title} scored ${selectedPattern.score} from ${positiveReasons.join(", ")}.`;
+}
+
+function getDecisionSafetySummary(
+  rejectedPatterns: RejectedCandidate[],
+  safetyNotes: string[],
+): string {
+  const safetyRejectedCount = rejectedPatterns.filter((candidate) =>
+    candidate.reasons.some((reason) => reason.code === "safety_block"),
+  ).length;
+
+  if (safetyRejectedCount > 0) {
+    return `${safetyRejectedCount} ritual pattern(s) were rejected by hard safety rules.`;
+  }
+
+  if (safetyNotes.length > 0) {
+    return "Safety and fit notes were recorded for reviewed pattern selection.";
+  }
+
+  return "No hard safety exclusions affected the selected ritual.";
+}
+
+function getRecommendationDecision({
+  input,
+  selectedCards,
+  selectedTimingSignals,
+  pattern,
+  evaluatedPatterns,
+  rejectedPatterns,
+  sourceReferences,
+  safetyNotes,
+  noAlternateAvailable,
+}: {
+  input: ResolvedGenerateWeeklyBriefInput;
+  selectedCards: SymbolicCard[];
+  selectedTimingSignals: TimingSignal[];
+  pattern: RitualPattern;
+  evaluatedPatterns: EvaluatedRitualPattern[];
+  rejectedPatterns: RejectedCandidate[];
+  sourceReferences: string[];
+  safetyNotes: string[];
+  noAlternateAvailable: boolean;
+}): RecommendationDecision {
+  return {
+    inputs: {
+      timingFacts: input.timingFacts,
+      computedTimingFactIds: input.computedTimingFacts.map((fact) => fact.id),
+      capacityMode: input.capacityMode,
+      capacityLimitMinutes: getEffectiveDurationMinutes(
+        input.capacityMode,
+        input.scheduleConstraints,
+      ),
+      audience: input.audience,
+      preferredRitualStyles: input.preferredRitualStyles,
+      avoidedRitualStyles: input.avoidedRitualStyles,
+      excludedRitualPatternKeys: input.excludedRitualPatternKeys,
+    },
+    candidates: {
+      symbolicCards: getEvaluatedSymbolicCards(selectedCards, input),
+      ritualPatterns: evaluatedPatterns.sort((a, b) => b.score - a.score),
+    },
+    selected: {
+      timingSignalLabels: selectedTimingSignals.map(
+        (signal) => signal.signalLabel,
+      ),
+      symbolicCardKeys: selectedCards.map((card) => card.key),
+      ritualPatternKey: pattern.key,
+      sourceReferences,
+    },
+    rejected: {
+      ritualPatterns: rejectedPatterns,
+    },
+    explanation: {
+      scoreSummary: getDecisionScoreSummary(pattern, evaluatedPatterns),
+      safetySummary: getDecisionSafetySummary(rejectedPatterns, safetyNotes),
+      noAlternateAvailable,
+    },
+  };
+}
+
 function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBriefInput {
   const currentDate = resolveCurrentDate(input.currentDate);
   const scheduleConstraints = resolveScheduleConstraints(
@@ -1605,8 +2033,12 @@ export function generateWeeklyBrief(
     pattern,
     preferenceMatches,
     profileSignalMatches,
+    evaluatedPatterns,
+    rejectedPatterns,
+    eligiblePatternKeys,
     excludedPatternKeys,
     safetyNotes,
+    noAlternateAvailable,
   } = selectPattern(resolvedInput, selectedCards, selectedTimingSignals);
   const sourceReferences = [
     ...timingCard.source_references,
@@ -1617,6 +2049,17 @@ export function generateWeeklyBrief(
   const { sourceReviewIds, sourceNoteIds } = splitSourceReferences([
     ...new Set(sourceReferences),
   ]);
+  const decision = getRecommendationDecision({
+    input: resolvedInput,
+    selectedCards,
+    selectedTimingSignals,
+    pattern,
+    evaluatedPatterns,
+    rejectedPatterns,
+    sourceReferences: [...new Set(sourceReferences)],
+    safetyNotes,
+    noAlternateAvailable,
+  });
   const whyThis = getWhyThis(
     timingCard,
     pattern,
@@ -1658,6 +2101,7 @@ export function generateWeeklyBrief(
       whyThis,
       selectedTimingSignals,
     ),
+    decision,
     trace: {
       timingFacts: resolvedInput.timingFacts,
       computedTimingFacts: resolvedInput.computedTimingFacts.map((fact) => ({
@@ -1694,6 +2138,15 @@ export function generateWeeklyBrief(
         (card) => TRACE_KEY_BY_CARD_KEY[card.key] ?? card.key,
       ),
       ritualPatterns: [pattern.key],
+      patternSelection: {
+        selectedPatternKey: pattern.key,
+        eligiblePatternKeys,
+        excludedPatternKeys,
+        capacityLimitMinutes: decision.inputs.capacityLimitMinutes,
+        preferenceMatches,
+        profileSignalKeys: profileSignalMatches.map((signal) => signal.key),
+        noAlternateAvailable,
+      },
       sourceReviewIds,
       sourceNoteIds,
       privateProfileKeys: resolvedInput.privateProfileKeys,

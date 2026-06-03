@@ -53,6 +53,7 @@ describe("generateWeeklyBrief", () => {
       whyThis: expect.any(String),
       sourceSummary: expect.any(String),
       explanation: expect.any(Object),
+      decision: expect.any(Object),
       trace: expect.any(Object),
     });
     expect(brief.whyThis.length).toBeGreaterThan(0);
@@ -99,6 +100,13 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.trace.ritualPatterns).toHaveLength(1);
     expect(approvedPatternKeys).toContain(brief.trace.ritualPatterns[0]);
+    expect(brief.decision.selected.ritualPatternKey).toBe(
+      brief.trace.ritualPatterns[0],
+    );
+    expect(brief.decision.candidates.ritualPatterns.length).toBeGreaterThan(1);
+    expect(brief.decision.candidates.ritualPatterns.every(
+      (pattern) => pattern.approvalStatus === "approved" || pattern.score < 0,
+    )).toBe(true);
   });
 
   it("returns one primary ritual as a single string", () => {
@@ -128,6 +136,15 @@ describe("generateWeeklyBrief", () => {
     expect(brief.bestWindow).toBe("When you have five quiet minutes.");
     expect(brief.bestWindow).not.toContain("0-5 minutes");
     expect(brief.whyThis).toContain("stays small");
+    expect(brief.decision.inputs.capacityLimitMinutes).toBe(5);
+    expect(brief.decision.candidates.ritualPatterns.find(
+      (pattern) => pattern.key === brief.trace.ritualPatterns[0],
+    )?.scoreReasons).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ code: "capacity_fit" }),
+        expect.objectContaining({ code: "duration_fit" }),
+      ]),
+    );
   });
 
   it("does not expose fallback schedule assumptions in default output", () => {
@@ -210,9 +227,105 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.trace.ritualPatterns).not.toEqual(["table_reset"]);
     expect(brief.trace.safety.excludedPatternKeys).toContain("table_reset");
+    expect(brief.decision.rejected.ritualPatterns).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          key: "table_reset",
+          reasons: expect.arrayContaining([
+            expect.objectContaining({ code: "avoided_style_conflict" }),
+          ]),
+        }),
+      ]),
+    );
     expect(brief.whyThis).toContain("A few options were set aside");
     expect(brief.whyThis).not.toContain("filter");
     expect(brief.whyThis).not.toContain("pattern option");
+  });
+
+  it("records explicit recommendation decision inputs, candidates, and score reasons", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-06-03T12:00:00.000Z",
+      capacityMode: "low",
+      preferredRitualStyles: ["plant_tending"],
+      avoidedRitualStyles: ["shopping_required"],
+    });
+    const selectedPattern = brief.decision.candidates.ritualPatterns.find(
+      (pattern) => pattern.key === brief.decision.selected.ritualPatternKey,
+    );
+
+    expect(brief.decision.inputs).toMatchObject({
+      capacityMode: "low",
+      capacityLimitMinutes: 5,
+      preferredRitualStyles: ["plant_tending"],
+      avoidedRitualStyles: ["shopping_required"],
+    });
+    expect(brief.decision.candidates.symbolicCards).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          key: "full_moon",
+          matchedTimingFacts: ["moon.full"],
+          scoreReasons: expect.arrayContaining([
+            expect.objectContaining({ code: "timing_fact_match" }),
+          ]),
+        }),
+      ]),
+    );
+    expect(selectedPattern).toBeDefined();
+    expect(selectedPattern?.key).toBe("tend_one_plant");
+    expect(selectedPattern?.score).toBeGreaterThan(0);
+    expect(selectedPattern?.scoreReasons).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ code: "preferred_style_match" }),
+        expect.objectContaining({ code: "timing_signal_style_match" }),
+        expect.objectContaining({ code: "profile_theme_match" }),
+      ]),
+    );
+    expect(brief.decision.selected.sourceReferences.length).toBeGreaterThan(0);
+    expect(brief.trace.patternSelection.selectedPatternKey).toBe("tend_one_plant");
+    expect(brief.trace.patternSelection.eligiblePatternKeys).toContain(
+      "tend_one_plant",
+    );
+  });
+
+  it("records capacity and max duration exclusions in the decision", () => {
+    const brief = generateWeeklyBrief({
+      capacityMode: "steady",
+      scheduleConstraints: { maxRitualDurationMinutes: 8 },
+      preferredRitualStyles: ["table_reset"],
+    });
+
+    expect(brief.trace.ritualPatterns).not.toEqual(["table_reset"]);
+    expect(brief.decision.inputs.capacityLimitMinutes).toBe(8);
+    expect(brief.decision.rejected.ritualPatterns).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          key: "table_reset",
+          reasons: expect.arrayContaining([
+            expect.objectContaining({ code: "too_long_for_capacity" }),
+          ]),
+        }),
+      ]),
+    );
+  });
+
+  it("records live-flame safety preference exclusions", () => {
+    const brief = generateWeeklyBrief({
+      capacityMode: "low",
+      preferredRitualStyles: ["candle_or_light", "light_focus"],
+      avoidedRitualStyles: ["live_flame"],
+    });
+
+    expect(brief.trace.ritualPatterns).not.toEqual(["candle_light_focus"]);
+    expect(brief.decision.rejected.ritualPatterns).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          key: "candle_light_focus",
+          reasons: expect.arrayContaining([
+            expect.objectContaining({ code: "avoided_style_conflict" }),
+          ]),
+        }),
+      ]),
+    );
   });
 
   it("includes source and trace data for selected cards and patterns", () => {
@@ -394,6 +507,37 @@ describe("generateWeeklyBrief", () => {
     );
     expect(alternateBrief.trace.safety.excludedPatternKeys).toContain(
       firstBrief.trace.ritualPatterns[0],
+    );
+    expect(alternateBrief.decision.rejected.ritualPatterns).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          key: firstBrief.trace.ritualPatterns[0],
+          reasons: expect.arrayContaining([
+            expect.objectContaining({ code: "try_again_excluded" }),
+          ]),
+        }),
+      ]),
+    );
+  });
+
+  it("reports no safe alternate when try-again excludes every eligible low-capacity pattern", () => {
+    const lowEligiblePatternKeys = starterRitualPatterns
+      .filter(
+        (pattern) =>
+          pattern.approvalStatus === "approved" &&
+          pattern.capacityModes.includes("low") &&
+          pattern.defaultDurationMinutes <= 5,
+      )
+      .map((pattern) => pattern.key);
+    const brief = generateWeeklyBrief({
+      capacityMode: "low",
+      excludedRitualPatternKeys: lowEligiblePatternKeys,
+    });
+
+    expect(brief.decision.explanation.noAlternateAvailable).toBe(true);
+    expect(brief.trace.patternSelection.noAlternateAvailable).toBe(true);
+    expect(brief.trace.safety.notes.join(" ")).toContain(
+      "no alternate approved ritual pattern fit",
     );
   });
 

@@ -171,6 +171,9 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("Feedback saves to your private profile.");
     expect(html).not.toContain("Firestore");
     expect(html).not.toContain("Developer trace");
+    expect(html).not.toContain("Developer decision record");
+    expect(html).not.toContain("Evaluated ritual patterns");
+    expect(html).not.toContain("Selected score reasons");
     expect(html).not.toContain("trace.timingFacts");
     expect(html).not.toContain("private_profile.");
     expect(html).not.toContain("docs/source-");
@@ -319,9 +322,16 @@ describe("app shell rendering", () => {
       showDebugTrace: true,
     });
 
-    expect(html).toContain("Developer trace");
-    expect(html).toContain("astronomy_engine");
+    expect(html).toContain("Developer decision record");
+    expect(html).toContain("Selected score reasons");
+    expect(html).toContain("Evaluated ritual patterns");
+    expect(html).toContain("Rejected ritual patterns");
+    expect(html).toContain("Source references");
+    expect(html).toContain("Selected");
+    expect(html).toContain("Inputs");
+    expect(html).toContain("capacity_fit");
     expect(html).toContain("private_profile.");
+    expect(html).not.toContain("Developer trace");
   });
 
   it("renders feedback status after save or try-again", () => {
