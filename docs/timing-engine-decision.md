@@ -1,160 +1,225 @@
 # Timing Engine Decision
 
-Moon & Table should compute timing facts separately from symbolic interpretation.
+Moon & Table timing should be factual before it is symbolic.
 
-The timing layer answers factual questions such as:
+The timing layer computes deterministic facts. It does not explain what those facts mean, predict outcomes, or read private charts. Symbolic meaning belongs in reviewed symbolic cards and explicit timing interpretation rules.
 
-- What lunar phase is active for a date?
-- When are the next new moon and full moon?
-- What solar season is active?
-- When do solstices and equinoxes occur?
-
-The symbolic layer answers different questions:
-
-- What does this timing suggest for a calm weekly brief?
-- Which approved symbolic cards are relevant?
-- Which safe ritual patterns fit the household capacity and schedule?
-
-The app should not blur those layers. A computed sky fact can be accurate without implying what a person should feel, do, decide, or expect.
-
-## Decision
+## Current Decision
 
 Use Astronomy Engine as the MVP timing engine.
 
-Astronomy Engine is the best first fit because it can provide deterministic sky facts without making interpretive claims. It keeps the first implementation focused on dates, angles, phases, positions, and provenance rather than a full astrology system.
+Astronomy Engine is already installed in the app. It can produce deterministic local calculations without adding an external API, a hosted ephemeris service, or a professional astrology dependency before the product needs one.
 
-Use the timing output as factual input only. Interpretation should continue to come from reviewed symbolic cards, approved ritual patterns, and private capacity/schedule constraints.
+## Separation Of Responsibilities
 
-## Why Not Swiss Ephemeris Yet
+```text
+computed timing facts
+-> approved timing interpretation rules
+-> approved symbolic cards and ritual patterns
+-> private profile, capacity, schedule, preferences, and feedback
+-> one brief
+```
 
-Swiss Ephemeris is useful for later professional astrology needs, especially:
+Computed facts are raw material. The app should not show every computed fact, and it should not treat every fact as relevant. Signal selection should choose only 2-4 timing/profile/context signals that actually influenced the recommendation.
 
-- houses
-- natal chart calculation
-- precise personal transits
-- more advanced astrology workflows
-- validation against professional astrology tooling
+## Model
 
-It is deferred because the MVP does not need those features yet. Adding it now would introduce licensing, deployment, native/binary, and product-scope decisions before the brief engine needs them.
+The first broader fact model lives in `src/lib/timing-facts.ts`.
 
-## MVP Timing Scope
-
-MVP timing facts should support:
-
-- current moon phase and lunar phase angle
-- new moon and full moon date/time
-- four lunar phase buckets: new, waxing, full, waning
-- solar seasons
-- solstice and equinox dates
-- basic planetary positions if practical, stored as facts only
-
-The four lunar phase buckets should stay aligned with the approved symbolic card set. Do not add an eight-phase lunar interpretation system in the timing layer.
-
-## Current Implementation
-
-The first lunar timing helper lives at `src/lib/lunar-timing.ts`.
-
-It uses Astronomy Engine's computed moon phase angle to classify a date into the MVP four-bucket model:
-
-- `new`
-- `waxing`
-- `full`
-- `waning`
-
-The helper returns a machine-readable moon-phase timing fact with a `moon.*` key, computed phase angle, UTC week date range, label, `computedBy: "astronomy_engine"`, and related symbolic card key. It does not produce symbolic interpretation, ritual recommendations, natal chart data, houses, aspects, predictions, or personal transits.
-
-Weekly brief generation consumes this timing fact by default and then performs interpretation through approved symbolic cards and approved ritual patterns.
-
-## Deferred Timing Scope
-
-Defer:
-
-- houses
-- natal chart engine
-- personal transits
-- detailed aspect interpretation
-- Swiss Ephemeris integration
-- full professional astrology calculations
-- relationship, compatibility, fate, or prediction logic
-
-Detailed aspects or planetary positions may eventually become timing facts, but their interpretation must still be handled by reviewed symbolic cards and approval workflow.
-
-## Licensing And Deployment Notes
-
-Astronomy Engine should be reviewed for package license, browser/server usage, and deterministic test behavior before implementation. It is expected to be lighter operationally than Swiss Ephemeris for the MVP.
-
-Swiss Ephemeris should not be added until there is a written licensing and deployment decision. In particular, decide whether the app needs its precision enough to justify package, hosting, and compliance complexity.
-
-## Model Plan
-
-The first model should be factual, traceable, and testable.
+Common fields:
 
 ```ts
-type TimingFactType =
-  | "moon_phase"
-  | "lunation"
-  | "solar_season"
-  | "solar_event"
-  | "planetary_position";
-
-type TimingFactConfidence = "computed" | "estimated" | "manual_review";
-
-type TimingFact = {
+type BaseTimingFact = {
   id: string;
-  type: TimingFactType;
-  dateStart: string;
-  dateEnd?: string;
-  timezone: string;
+  type:
+    | "moon_phase"
+    | "lunation"
+    | "moon_sign"
+    | "sun_sign"
+    | "solar_season"
+    | "planet_sign"
+    | "planet_retrograde"
+    | "planetary_aspect"
+    | "numerology_date";
   label: string;
-  computedBy: "astronomy_engine" | "manual_placeholder";
-  relatedSymbolicKeys: string[];
-  confidence: TimingFactConfidence;
+  startIso?: string;
+  endIso?: string;
+  exactIso?: string;
+  timezone?: string;
+  computedBy: "astronomy_engine" | "app_numerology" | "manual";
+  confidence: "computed" | "estimated" | "manual";
 };
 ```
 
-`relatedSymbolicKeys` should point to reviewed symbolic card keys. It should not contain prose interpretation.
+The public API is:
 
 ```ts
-type SkyEventType =
-  | "new_moon"
-  | "full_moon"
-  | "solstice"
-  | "equinox"
-  | "planetary_position";
-
-type SkyEvent = {
-  id: string;
-  type: SkyEventType;
-  dateTime: string;
-  timezone: string;
-  label: string;
-  computedBy: "astronomy_engine" | "manual_placeholder";
-  rawFactKeys: string[];
-  relatedTimingFactIds: string[];
-};
+getTimingFactsForDate(date, options)
 ```
 
-`SkyEvent` should represent dated events. `TimingFact` can represent active conditions or intervals derived from events.
+It returns a structured list of facts for later signal selection. It does not decide the ritual by itself.
 
-## Initial Test Plan
+## SkyEvent
 
-The eventual implementation should include deterministic tests for:
+`SkyEvent` is the broader event vocabulary for exact or bounded sky events such as lunations, solstices, equinoxes, ingresses, and later eclipses or station events. In the current implementation it is modeled as a timing fact with an `eventKey`, but it is not yet a separate persistence object.
 
-- a known new moon date/time
-- a known full moon date/time
-- waxing vs. waning classification for fixed dates
-- solstice and equinox date calculation
-- timezone boundary behavior around a lunation
-- deterministic output for the same fixed date/time input
-- no symbolic interpretation in computed timing output
+## Phase 1 — Lunar And Solar Facts
 
-Tests should use fixed dates, explicit timezones, and stable expected values. Any tolerance for astronomical calculations should be documented in the test itself.
+Implemented or represented:
 
-## Product Guardrails
+- lunar phase bucket: new, waxing, full, waning
+- current moon phase angle
+- exact new moon and full moon times when the selected UTC week contains one
+- moon sign from geocentric lunar ecliptic longitude
+- sun sign from solar ecliptic longitude
+- solstice and equinox markers when the selected UTC week contains one
 
-- Computed timing facts do not create obligations.
-- Timing facts do not make predictions.
-- Timing facts do not decide ritual safety.
-- Symbolic meaning comes from approved cards.
-- Recommended actions come from approved safe ritual patterns.
-- Capacity and schedule can override symbolic timing.
+Notes:
+
+- The moon phase bucket remains the current generator's primary timing input.
+- Moon sign and sun sign are computed as tropical zodiac positions only. They are not interpreted by the fact layer.
+- Solstice and equinox facts are factual seasonal markers, not ritual instructions.
+
+## Phase 2 — Planetary Facts
+
+Implemented:
+
+- current geocentric zodiac sign for Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, and Pluto
+- apparent retrograde/direct status based on signed geocentric ecliptic longitude motion over a two-day sample window
+- major transiting aspects between Sun, Moon, and listed planets
+
+Aspect scope:
+
+- conjunction
+- opposition
+- square
+- trine
+- sextile
+
+The default aspect orb is 3 degrees. This is intentionally conservative for MVP fact detection. Aspect facts are geometry only; they do not say what an aspect means.
+
+Validation needs before deeper use:
+
+- compare selected planetary sign and retrograde examples against a second trusted ephemeris
+- decide whether the two-day apparent-motion method is sufficient near stations
+- decide whether aspect detection should use exact searches, different orbs, or body-specific rules
+
+## Phase 3 — Numerology Facts
+
+Implemented in app code without astrology libraries:
+
+- universal year number
+- universal month number
+- universal day number
+
+Numerology remains a light accent. It should not outrank primary lunar, seasonal, ritual-fit, capacity, or schedule signals.
+
+The current calculation reduces ordinary digit sums to 1-9. Master numbers, life path numbers, names, compatibility, and personal numerology are deferred.
+
+## Phase 4 — Later Personal / Natal Timing
+
+Deferred:
+
+- personal natal transits
+- houses
+- personal aspects to natal placements
+- compatibility or synastry
+- private chart interpretation
+
+These require clearer privacy, consent, source, storage, and interpretation rules before implementation. Real birth data and natal placements tied to people must stay out of source control.
+
+## Astronomy Engine Fit
+
+Astronomy Engine can cleanly support the MVP because it can compute:
+
+- lunar phase angle
+- exact moon phases
+- solar longitude and seasons
+- geocentric moon position
+- geocentric planetary positions
+- enough apparent position data to derive signs, simple retrograde status, and major aspects
+
+Astronomy Engine should be treated as a computation source only. It is not an astrology interpretation source.
+
+## Swiss Ephemeris Decision
+
+Swiss Ephemeris is deferred.
+
+Reasons:
+
+- licensing and deployment decisions are more complex
+- native/binary packaging may complicate the Vite/Vercel setup
+- houses, natal charts, and personal transits are not MVP requirements
+- the current product needs better signal selection and approved interpretation before deeper precision
+
+Reconsider Swiss Ephemeris when Moon & Table genuinely needs:
+
+- house systems
+- more professional natal chart support
+- precise transit work tied to private chart data
+- stronger ephemeris validation requirements than Astronomy Engine can satisfy
+
+## Interpretation Rule Layer
+
+The first rule layer lives in `src/lib/timing-interpretation-rules.ts`.
+
+Rules can map computed facts into candidate signals only when they are explicit, source-backed, and tied to approved symbolic cards.
+
+Approved rules currently cover:
+
+- four lunar phase buckets
+- approved numerology cards for 1, 2, 4, 6, and 9
+
+Draft placeholders exist for moon sign, sun sign, solar season, and planetary facts. Draft rules are not eligible for generated recommendations. This prevents the app from inventing unsupported astrology.
+
+## Signal Selection
+
+The app should select only a few signals for any one brief.
+
+Selection should consider:
+
+- rule approval status
+- rule weight and strength
+- approved symbolic card fit
+- profile preference fit
+- capacity and safety constraints
+- whether a signal is primary, supporting, or accent
+
+Numerology should remain accent-level and should not be selected as the first or only timing signal.
+
+## Test Plan
+
+Implemented tests cover:
+
+- existing lunar phase bucket behavior
+- exact new moon fact for a known date
+- moon sign fact for a known date
+- sun sign boundary behavior around the June solstice
+- solstice/equinox weekly detection
+- planetary sign lookup for a known date
+- retrograde status for a known date
+- major aspect detection within the configured orb
+- universal year/month/day numerology examples
+- invalid date handling
+- UTC week boundary behavior
+- timing rule eligibility and signal selection
+- draft zodiac/planetary rules remaining ineligible
+
+Future tests should add:
+
+- second-source ephemeris comparisons for planetary facts
+- station-boundary retrograde cases
+- exact aspect search cases if the app moves beyond simple daily facts
+- timezone-aware week selection if the app later supports household timezones beyond labels
+- seasonal marker behavior around year boundaries
+
+## Non-Goals
+
+- No full timing engine UI.
+- No full astrology interpretation.
+- No personal natal charts.
+- No personal transits.
+- No houses.
+- No compatibility or synastry.
+- No AI-generated timing meaning.
+- No private chart data in source-controlled examples.

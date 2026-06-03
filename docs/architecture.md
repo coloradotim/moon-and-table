@@ -11,7 +11,7 @@ Moon & Table is a private Vite/TypeScript app hosted on Vercel, with Firebase Au
 | Private data | Firestore | Stores household, profile, capacity, schedule, feedback, and future private notes. |
 | Hosting | Vercel | Hosts the static web app. |
 | Local private setup | `npm run seed:private` | Reads gitignored local private seed JSON and writes private Firestore documents. |
-| Timing | Astronomy Engine via local deterministic helper | Produces testable timing facts; interpretation stays in symbolic content. |
+| Timing | Astronomy Engine via local deterministic helpers | Produces lunar, solar, planetary, seasonal, and numerology timing facts; interpretation stays in approved rules and symbolic content. |
 
 ## Runtime Flow
 
@@ -83,7 +83,7 @@ SourceReview
 
 `SourceReview` and `SourceNote` keep source use traceable and transformed. `SymbolicCard` stores approved symbolic meaning. `RitualPattern` stores approved low-overwhelm practices. `RitualSafetyFlags` can block or constrain recommendations even when symbolic fit is good.
 
-Timing facts are deterministic facts, not interpretations. The generator combines timing facts, approved cards, approved patterns, private profile placeholders, capacity, schedule constraints, and feedback exclusions to produce one brief.
+Timing facts are deterministic facts, not interpretations. The broader timing fact API lives in `src/lib/timing-facts.ts`; the first interpretation rule layer lives in `src/lib/timing-interpretation-rules.ts`. The generator currently remains lunar-first while future signal selection can draw from the broader fact list. It combines timing facts, approved cards, approved patterns, private profile placeholders, capacity, schedule constraints, and feedback exclusions to produce one brief.
 
 ## Deployment Model
 
@@ -112,7 +112,7 @@ Do not put Firebase Admin credentials, seed JSON, private files, or real allowed
 | Symbolic cards | Implemented starter | Initial approved generic cards exist. |
 | Ritual safety | Implemented starter | Hard exclusions and safety flags are enforced. |
 | Ritual patterns | Implemented starter | Approved capacity-aware ritual patterns are eligible for briefs. |
-| Timing facts | Implemented MVP | Lunar timing uses a deterministic helper; broader timing is planned. |
+| Timing facts | Implemented starter | Lunar timing feeds the current brief; broader lunar, solar, planetary, seasonal, and numerology facts are available for later signal selection. |
 | Weekly brief generator | Implemented | Produces one approved recommendation, intention, explanation, trace, and feedback hooks. |
 | Feedback / try-again | Implemented starter | Feedback stores trace references; try-again selects another approved pattern. |
 | Ritual notebook/history | Planned | Private Firestore history is not built yet. |
