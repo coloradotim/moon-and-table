@@ -45,6 +45,7 @@ describe("generateWeeklyBrief", () => {
       dateRange: expect.any(String),
       briefKey: expect.any(String),
       theme: expect.any(String),
+      intention: expect.any(String),
       bestWindow: expect.any(String),
       recommendedRitual: expect.any(String),
       optionalAddOn: expect.any(String),
@@ -56,8 +57,10 @@ describe("generateWeeklyBrief", () => {
     expect(brief.whyThis.length).toBeGreaterThan(0);
     expect(brief.sourceSummary).toContain("Sources:");
     expect(brief.theme).toMatch(/^[A-Z].*[.!?]$/);
+    expect(brief.intention).toMatch(/^[A-Z].*[.!?]$/);
     expect(brief.theme).not.toContain(" with offer ");
     expect(brief.theme).not.toContain("beginning with");
+    expect(brief.theme).not.toContain(":");
   });
 
   it("limits capacity modes to pause, low, steady, and high", () => {

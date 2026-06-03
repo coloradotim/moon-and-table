@@ -133,7 +133,7 @@ function renderFeedbackButton(
   const selectedClass = isSelected ? " feedback-button--selected" : "";
   const disabledAttribute = options.savingFeedbackType ? " disabled" : "";
   const pressedAttribute = isSelected ? "true" : "false";
-  const savingLabel = isSaving ? "Saving " : "";
+  const label = isSaving ? "Saving" : feedbackLabels[type];
 
   return `
     <button
@@ -141,7 +141,7 @@ function renderFeedbackButton(
       type="button"
       data-feedback-type="${escapeHtml(type)}"
       aria-pressed="${pressedAttribute}"${disabledAttribute}
-    >${escapeHtml(`${savingLabel}${feedbackLabels[type]}`)}</button>
+    >${escapeHtml(label)}</button>
   `;
 }
 
@@ -255,7 +255,11 @@ function renderAppMenu(activeView: SignedInView): string {
 
   return `
     <details class="app-menu" data-app-menu="true">
-      <summary class="app-menu__button">Menu</summary>
+      <summary class="app-menu__button" aria-label="Open menu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </summary>
       <div class="app-menu__panel" role="menu" aria-label="App menu">
         <button type="button" role="menuitem" data-menu-action="this_week" aria-pressed="${thisWeekPressed}">This week</button>
         <button type="button" role="menuitem" data-menu-action="profile_settings" aria-pressed="${profilePressed}">Profile settings</button>
@@ -344,10 +348,6 @@ export function renderSignedInShell(
 ): string {
   const activeView = options.activeView ?? "this_week";
   const brief = options.brief ?? generateWeeklyBrief(privateBriefData.input);
-  const privateDataNote =
-    privateBriefData.status === "using_starter_settings"
-      ? "Using starter settings until your private settings are ready."
-      : "Using your household settings.";
   const traceSummary = [
     brief.trace.timingFacts.join(" + "),
     brief.trace.timingFactDetails
@@ -370,60 +370,61 @@ export function renderSignedInShell(
     : "";
   const weeklyBrief = `
     <article class="brief" aria-label="Weekly brief">
-      <div class="brief__topline">
-        <span>${escapeHtml(brief.dateRange)}</span>
-        <span>${escapeHtml(brief.trace.capacityMode)} capacity</span>
-      </div>
-
-      <p class="private-note">${escapeHtml(privateDataNote)}</p>
-
-      <section class="brief__section">
-        <p class="label">Theme</p>
+      <section class="brief__section brief__invitation">
         <h2>${escapeHtml(brief.theme)}</h2>
       </section>
 
-      <section class="brief__grid" aria-label="Brief details">
-        <div class="detail">
-          <p class="label">Best window</p>
-          <p>${escapeHtml(brief.bestWindow)}</p>
-        </div>
-
-        <div class="detail" data-testid="recommended-ritual">
-          <p class="label">This week's ritual</p>
+      <section class="brief__stack" aria-label="Brief details">
+        <div class="detail detail--practice" data-testid="recommended-ritual">
+          <p class="label">The practice</p>
           <p>${escapeHtml(brief.recommendedRitual)}</p>
         </div>
 
         <div class="detail">
-          <p class="label">Optional add-on</p>
+          <p class="label">A good window</p>
+          <p>${escapeHtml(brief.bestWindow)}</p>
+        </div>
+
+        <div class="detail">
+          <p class="label">Optional</p>
           <p>${escapeHtml(brief.optionalAddOn)}</p>
         </div>
       </section>
 
-      <section class="feedback" aria-label="Brief feedback">
-        <p class="label">How was this?</p>
-        <div class="feedback__chips">
-          ${BRIEF_FEEDBACK_TYPES.filter((type) => type !== "try_again").map((type) => renderFeedbackButton(type, options)).join("")}
-        </div>
+      <section class="brief__section">
+        <p class="label">Intention</p>
+        <p class="prompt">${escapeHtml(brief.intention)}</p>
+      </section>
+
+      <section class="brief__section">
+        <p class="label">A question to carry</p>
+        <p class="prompt">${escapeHtml(brief.reflectionPrompt)}</p>
+      </section>
+
+      <details class="why-this" aria-label="Why this fits">
+        <summary>Why this fits</summary>
+        <p>${escapeHtml(brief.whyThis)}</p>
+      </details>
+
+      <section class="try-again" aria-label="Need a different suggestion?">
+        <p class="label">Need a different suggestion?</p>
         <button
           class="primary-action feedback-button${options.selectedFeedbackType === "try_again" || options.savingFeedbackType === "try_again" ? " feedback-button--selected" : ""}"
           type="button"
           data-feedback-type="try_again"
           data-try-again-action="true"
           aria-pressed="${options.selectedFeedbackType === "try_again" || options.savingFeedbackType === "try_again" ? "true" : "false"}"${options.savingFeedbackType ? " disabled" : ""}
-        >${escapeHtml(options.savingFeedbackType === "try_again" ? "Saving try again" : feedbackLabels.try_again)}</button>
-        <p class="muted feedback__status" data-feedback-status="true">${escapeHtml(options.tryAgainStatus ?? options.feedbackStatus ?? "Feedback saves to your private profile.")}</p>
+        >${escapeHtml(options.savingFeedbackType === "try_again" ? "Saving" : feedbackLabels.try_again)}</button>
+        ${options.tryAgainStatus ? `<p class="muted feedback__status" data-try-again-status="true">${escapeHtml(options.tryAgainStatus)}</p>` : ""}
       </section>
 
-      <details class="why-this" aria-label="Why this">
-        <summary>Why this?</summary>
-        <p>${escapeHtml(brief.whyThis)}</p>
-        <p class="muted">${escapeHtml(brief.sourceSummary)}</p>
+      <details class="feedback" aria-label="Feedback">
+        <summary>Share feedback</summary>
+        <div class="feedback__chips">
+          ${BRIEF_FEEDBACK_TYPES.filter((type) => type !== "try_again").map((type) => renderFeedbackButton(type, options)).join("")}
+        </div>
+        ${options.feedbackStatus ? `<p class="muted feedback__status" data-feedback-status="true">${escapeHtml(options.feedbackStatus)}</p>` : ""}
       </details>
-
-      <section class="brief__section">
-        <p class="label">Reflection prompt</p>
-        <p class="prompt">${escapeHtml(brief.reflectionPrompt)}</p>
-      </section>
 
       ${debugTrace}
     </article>
@@ -436,7 +437,6 @@ export function renderSignedInShell(
     <section class="shell" aria-labelledby="app-title">
       <header class="masthead masthead--with-session">
         <div>
-          <p class="eyebrow">Private weekly ritual brief</p>
           <h1 id="app-title">Moon &amp; Table</h1>
         </div>
 

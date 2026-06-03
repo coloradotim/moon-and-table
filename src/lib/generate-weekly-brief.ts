@@ -83,6 +83,7 @@ export type WeeklyBrief = {
   briefKey: string;
   dateRange: string;
   theme: string;
+  intention: string;
   bestWindow: string;
   recommendedRitual: string;
   optionalAddOn: string;
@@ -687,30 +688,51 @@ function getWhyThis(
 
 function getTheme(timingCard: SymbolicCard, pattern: RitualPattern): string {
   const timingPhraseByKey: Partial<Record<TimingFactKey, string>> = {
-    "moon.new": "A quiet beginning",
-    "moon.waxing": "One small support",
-    "moon.full": "Notice what is clear",
-    "moon.waning": "Clear one small thing",
+    "moon.new": "Begin quietly.",
+    "moon.waxing": "Give one small thing support.",
+    "moon.full": "Notice what is already clear.",
+    "moon.waning": "Clear one small thing.",
   };
   const patternPhraseByKey: Record<string, string> = {
-    clear_one_surface: "clear one small surface",
-    tend_one_plant: "tend one living thing",
-    candle_light_focus: "pause with candlelight",
-    table_reset: "make the table easier to use",
-    threshold_reset: "soften one threshold",
-    room_reset: "make one room corner easier",
-    close_the_evening: "let the evening close gently",
-    tea_ritual: "make one warm pause",
-    simple_warm_drink: "make one warm care moment",
-    kitchen_reset: "quiet one kitchen corner",
+    clear_one_surface: "Let one surface breathe.",
+    tend_one_plant: "Tend one living thing.",
+    candle_light_focus: "Pause with candlelight.",
+    table_reset: "Make the table easier to use.",
+    threshold_reset: "Soften one threshold.",
+    room_reset: "Make one room corner easier.",
+    close_the_evening: "Let the evening close gently.",
+    tea_ritual: "Make one warm pause.",
+    simple_warm_drink: "Make one warm care moment.",
+    kitchen_reset: "Quiet one kitchen corner.",
   };
   const timingPhrase =
     timingPhraseByKey[TRACE_KEY_BY_CARD_KEY[timingCard.key] as TimingFactKey] ??
-    "One useful household ritual";
+    "Choose one useful household ritual.";
   const patternPhrase =
-    patternPhraseByKey[pattern.key] ?? pattern.summary.toLowerCase();
+    patternPhraseByKey[pattern.key] ?? pattern.summary;
 
-  return `${timingPhrase}: ${patternPhrase}.`;
+  return `${timingPhrase} ${patternPhrase}`;
+}
+
+function getIntention(pattern: RitualPattern, capacityMode: CapacityMode): string {
+  if (capacityMode === "pause") {
+    return "Let doing less count as care.";
+  }
+
+  const intentionByPattern: Record<string, string> = {
+    clear_one_surface: "Let one small clearing make room.",
+    tend_one_plant: "Let care be small and real.",
+    candle_light_focus: "Let attention gather gently.",
+    table_reset: "Let the table feel easier to return to.",
+    threshold_reset: "Let the doorway feel kind.",
+    room_reset: "Let one corner become easier.",
+    close_the_evening: "Let the day end without extra effort.",
+    tea_ritual: "Let warmth be enough for a moment.",
+    simple_warm_drink: "Let care arrive in a simple form.",
+    kitchen_reset: "Let the kitchen feel a little quieter.",
+  };
+
+  return intentionByPattern[pattern.key] ?? "Let one useful act be enough.";
 }
 
 function getReflectionPrompt(timingFact: TimingFactKey): string {
@@ -839,6 +861,7 @@ export function generateWeeklyBrief(
     briefKey: getBriefKey(resolvedInput, pattern),
     dateRange: resolvedInput.dateRange,
     theme: getTheme(timingCard, pattern),
+    intention: getIntention(pattern, resolvedInput.capacityMode),
     bestWindow: getBestWindow(
       resolvedInput.capacityMode,
       resolvedInput.scheduleConstraints,
