@@ -10,6 +10,7 @@ import {
   renderUnauthorizedShell,
 } from "../../src/ui/app-shell";
 import { resolvePrivateBriefData } from "../../src/lib/private-data";
+import { generateWeeklyBrief } from "../../src/lib/generate-weekly-brief";
 
 describe("app shell rendering", () => {
   it("renders a loading state", () => {
@@ -41,10 +42,9 @@ describe("app shell rendering", () => {
   it("renders the weekly brief only when signed in", () => {
     const html = renderSignedInShell(resolvePrivateBriefData({}));
     const moonIndex = html.indexOf("Moon &amp; Table");
-    const practiceIndex = html.indexOf("The practice");
-    const windowIndex = html.indexOf("A good window");
-    const optionalIndex = html.indexOf("Optional");
-    const intentionIndex = html.indexOf("Intention");
+    const practiceIndex = html.indexOf('data-testid="recommended-ritual"');
+    const windowIndex = html.indexOf("Thursday evening, five minutes or less.");
+    const intentionIndex = html.indexOf("Let attention gather gently.");
     const questionIndex = html.indexOf("A question to carry");
     const whyIndex = html.indexOf("Why this fits");
     const tryAgainIndex = html.indexOf("Need a different suggestion?");
@@ -54,16 +54,23 @@ describe("app shell rendering", () => {
     expect(html).toContain("Profile settings");
     expect(html).toContain("Sign out");
     expect(html).toContain('aria-label="Open menu"');
+    expect(html.match(/class="app-menu__line"/g)).toHaveLength(3);
     expect(html).not.toContain(">Menu<");
+    expect(html).not.toContain("ellipsis");
+    expect(html).not.toContain("•••");
     expect(html).toContain('data-menu-action="this_week"');
     expect(html).toContain('data-menu-action="profile_settings"');
     expect(html).toContain("data-testid=\"recommended-ritual\"");
     expect(html).toContain("Why this fits");
-    expect(html).toContain("Thursday evening, 0-5 minutes.");
-    expect(html).toContain("The practice");
-    expect(html).toContain("A good window");
-    expect(html).toContain("Optional");
-    expect(html).toContain("Intention");
+    expect(html).toContain("Thursday evening, five minutes or less.");
+    expect(html).not.toContain("0-5 minutes");
+    expect(html).not.toContain(">The practice<");
+    expect(html).not.toContain(">A good window<");
+    expect(html).not.toContain(">Optional<");
+    expect(html).not.toContain(">Intention<");
+    expect(html).not.toContain("Optional:");
+    expect(html).not.toContain("No add-on needed.");
+    expect(html).toContain("Let attention gather gently.");
     expect(html).toContain("A question to carry");
     expect(html).toContain("Need a different suggestion?");
     expect(html).toContain("Share feedback");
@@ -76,13 +83,13 @@ describe("app shell rendering", () => {
     expect(html).toContain('data-feedback-type="try_again"');
     expect(html).toContain("Try something else");
     expect(html).toContain('<details class="why-this" aria-label="Why this fits">');
+    expect(html).not.toContain('<details class="why-this" open');
     expect(html).toContain('<details class="feedback" aria-label="Feedback">');
     expect(html).not.toContain('<details class="feedback" open');
     expect(moonIndex).toBeGreaterThan(-1);
     expect(html.slice(0, moonIndex)).not.toContain("Private weekly ritual brief");
     expect(practiceIndex).toBeLessThan(windowIndex);
-    expect(windowIndex).toBeLessThan(optionalIndex);
-    expect(optionalIndex).toBeLessThan(intentionIndex);
+    expect(windowIndex).toBeLessThan(intentionIndex);
     expect(intentionIndex).toBeLessThan(questionIndex);
     expect(questionIndex).toBeLessThan(whyIndex);
     expect(whyIndex).toBeLessThan(tryAgainIndex);
@@ -98,6 +105,7 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("Feedback saves to your private profile.");
     expect(html).not.toContain("Firestore");
     expect(html).not.toContain("Developer trace");
+    expect(html).not.toContain("trace.timingFacts");
     expect(html).not.toContain("private_profile.");
     expect(html).not.toContain("docs/source-");
     expect(html).not.toContain("astronomy_engine");
@@ -107,6 +115,41 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("About this");
     expect(html).not.toContain("Journal");
     expect(html).not.toContain("Calendar");
+  });
+
+  it("renders a real optional add-on as a quiet inline line", () => {
+    const privateBriefData = resolvePrivateBriefData({});
+    const brief = generateWeeklyBrief(privateBriefData.input);
+    const html = renderSignedInShell(privateBriefData, {
+      brief: {
+        ...brief,
+        optionalAddOn: "Light a candle if that feels supportive and safe.",
+      },
+    });
+    const windowIndex = html.indexOf("Thursday evening, five minutes or less.");
+    const optionalIndex = html.indexOf("Optional: light a candle if that feels supportive and safe.");
+    const intentionIndex = html.indexOf("Let attention gather gently.");
+
+    expect(html).toContain("Optional: light a candle if that feels supportive and safe.");
+    expect(html).not.toContain(">Optional<");
+    expect(windowIndex).toBeLessThan(optionalIndex);
+    expect(optionalIndex).toBeLessThan(intentionIndex);
+  });
+
+  it("hides the optional line when no add-on is needed", () => {
+    const privateBriefData = resolvePrivateBriefData({});
+    const brief = generateWeeklyBrief(privateBriefData.input);
+    const html = renderSignedInShell(privateBriefData, {
+      brief: {
+        ...brief,
+        optionalAddOn: "No add-on needed.",
+      },
+    });
+
+    expect(html).not.toContain("Optional:");
+    expect(html).not.toContain("No add-on needed.");
+    expect(html).toContain("Let attention gather gently.");
+    expect(html).toContain("A question to carry");
   });
 
   it("renders profile tuning only when the profile settings view is selected", () => {

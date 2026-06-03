@@ -332,14 +332,14 @@ function getDurationLabel(capacityMode: CapacityMode, minutes: number): string {
   }
 
   if (capacityMode === "low") {
-    return "0-5 minutes";
+    return "five minutes or less";
   }
 
   if (capacityMode === "steady") {
-    return `${Math.min(10, minutes)}-${minutes} minutes`;
+    return "about twenty minutes or less";
   }
 
-  return `${Math.min(20, minutes)}-${minutes} minutes`;
+  return "about half an hour or less";
 }
 
 function getBestWindow(
@@ -614,9 +614,9 @@ function getCapacityReason(
     case "low":
       return "This stays small because household capacity is low right now.";
     case "steady":
-      return `This fits a steady week by staying practical and within ${Math.min(10, durationMinutes)}-${durationMinutes} minutes.`;
+      return "This fits a steady week by staying practical and about twenty minutes or less.";
     case "high":
-      return `This can be a little more active while staying within ${Math.min(20, durationMinutes)}-${durationMinutes} minutes.`;
+      return "This can be a little more active while staying about half an hour or less.";
   }
 }
 

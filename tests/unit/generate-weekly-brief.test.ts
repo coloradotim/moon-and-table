@@ -116,21 +116,23 @@ describe("generateWeeklyBrief", () => {
     expect(brief.whyThis).toContain("pause week");
   });
 
-  it("low produces a 0-5 minute recommendation with no setup burden", () => {
+  it("low produces a five-minute-or-less recommendation with no setup burden", () => {
     const brief = generateWeeklyBrief({ capacityMode: "low" });
 
-    expect(brief.bestWindow).toContain("0-5 minutes");
+    expect(brief.bestWindow).toContain("five minutes or less");
+    expect(brief.bestWindow).not.toContain("0-5 minutes");
     expect(brief.whyThis).toContain("stays small");
   });
 
-  it("steady produces a 10-20 minute practical recommendation", () => {
+  it("steady produces a practical recommendation around twenty minutes or less", () => {
     const brief = generateWeeklyBrief({
       capacityMode: "steady",
       scheduleConstraints: { maxRitualDurationMinutes: 20 },
       preferredRitualStyles: ["table_reset"],
     });
 
-    expect(brief.bestWindow).toContain("10-20 minutes");
+    expect(brief.bestWindow).toContain("about twenty minutes or less");
+    expect(brief.bestWindow).not.toContain("10-20 minutes");
     expect(brief.trace.ritualPatterns).toEqual(["table_reset"]);
     expect(brief.whyThis).toContain("steady week");
   });
@@ -142,7 +144,8 @@ describe("generateWeeklyBrief", () => {
       preferredRitualStyles: ["surface_reset"],
     });
 
-    expect(brief.bestWindow).toContain("20-30 minutes");
+    expect(brief.bestWindow).toContain("about half an hour or less");
+    expect(brief.bestWindow).not.toContain("20-30 minutes");
     expect(brief.recommendedRitual.split("\n")).toHaveLength(1);
     expect(brief.recommendedRitual).not.toContain("1.");
     expect(brief.recommendedRitual).not.toContain("2.");
