@@ -193,6 +193,35 @@ export const starterSourceReviews: SourceReview[] = [
     confidence: "medium",
   },
   {
+    id: "source.rachel_patterson_moon",
+    title: "Rachel Patterson moon and kitchen source family",
+    authorOrPublisher: "Rachel Patterson",
+    category: "moon_phase_symbolism",
+    sourceType: "book",
+    useDecision: "use_carefully",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "practical lunar and domestic correspondences",
+      "cross-checking simple moon phase action patterns",
+    ],
+    concerns: [
+      "filter spell-timing and correspondence material through Moon & Table safety and tone rules",
+    ],
+    copyrightNotes: [
+      "manual review only; do not copy rituals, spells, prayers, chants, or distinctive instructions",
+    ],
+    safetyNotes: [
+      "no smoke, oils, live flame, ingestion, or outcome claims should be imported as defaults",
+    ],
+    culturalContextNotes: [
+      "use broad lunar/home practice context without presenting it as universal fact",
+    ],
+    extractionNotes: [
+      "extract short transformed lunar action themes only",
+    ],
+    confidence: "medium",
+  },
+  {
     id: "source.laurel_woodward",
     title: "Laurel Woodward kitchen magic works",
     authorOrPublisher: "Laurel Woodward",
@@ -317,6 +346,25 @@ export const starterSourceNotes: SourceNote[] = [
     verbatimAllowed: false,
   },
   {
+    id: "note.lunar_cards_stay_invitational",
+    sourceId: "source.rachel_patterson_moon",
+    locationNote: "docs/source-research-synthesis.md lunar and domestic moon source family",
+    paraphrasedNote:
+      "Lunar cards can suggest small domestic actions, but the phase should never make the action feel required or result-driven.",
+    category: "moon_phase_symbolism",
+    tags: ["moon", "domestic", "tone"],
+    riskNotes: [
+      "avoid spell-result framing, urgency, or copied ritual instructions",
+    ],
+    safetyNotes: [
+      "default actions should avoid smoke, oils, live flame, and special supplies",
+    ],
+    copyrightNotes: [
+      "short transformed note only; no ritual or source wording",
+    ],
+    verbatimAllowed: false,
+  },
+  {
     id: "note.safety_overrides_symbolism",
     sourceId: "source.safety_reference_families",
     locationNote: "docs/source-research-synthesis.md safety source families",
@@ -426,4 +474,3 @@ export function getApprovedSourceReviews(
 ): SourceReview[] {
   return sourceReviews.filter((review) => review.reviewStatus === "approved");
 }
-

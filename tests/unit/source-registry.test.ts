@@ -36,6 +36,7 @@ describe("source registry", () => {
         "source.steven_forrest",
         "source.kevin_burk",
         "source.sarah_faith_gottesdiener",
+        "source.rachel_patterson_moon",
         "source.laurel_woodward",
         "source.arin_murphy_hiscock",
         "source.safety_reference_families",
@@ -113,4 +114,3 @@ describe("source registry", () => {
     expect(serialized).not.toContain("private source text");
   });
 });
-
