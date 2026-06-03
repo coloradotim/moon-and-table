@@ -40,6 +40,37 @@ describe("seedSymbolicCards", () => {
     }
   });
 
+  it("keeps the lunar phase system to four approved source-traceable cards", () => {
+    const lunarCards = seedSymbolicCards.filter(
+      (card) => card.category === "moon_phase",
+    );
+
+    expect(lunarCards.map((card) => card.key).sort()).toEqual([
+      "full_moon",
+      "new_moon",
+      "waning_moon",
+      "waxing_moon",
+    ]);
+
+    for (const card of lunarCards) {
+      expect(card.approval_status).toBe("approved");
+      expect(card.source_references).toEqual(
+        expect.arrayContaining([
+          "source.sarah_faith_gottesdiener",
+          "source.rachel_patterson_moon",
+          "note.four_phase_moon_mvp",
+          "note.lunar_cards_stay_invitational",
+        ]),
+      );
+      expect(`${card.summary} ${card.ritual_ideas.join(" ")}`.toLowerCase()).not.toContain(
+        "guarantee",
+      );
+      expect(card.ritual_ideas.join(" ").toLowerCase()).not.toContain(
+        "must",
+      );
+    }
+  });
+
   it("keeps private profile cards generic placeholders", () => {
     const privateProfileCards = seedSymbolicCards.filter(
       (card) => card.category === "private_profile_theme",
