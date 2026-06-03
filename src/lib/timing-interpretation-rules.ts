@@ -80,6 +80,7 @@ const LUNAR_PHASE_RULES: TimingInterpretationRule[] = [
     sourceReferences: [
       "source.sarah_faith_gottesdiener",
       "source.rachel_patterson_moon",
+      "note.computed_facts_are_not_meanings",
       "note.four_phase_moon_mvp",
       "note.lunar_cards_stay_invitational",
     ],
@@ -99,6 +100,7 @@ const LUNAR_PHASE_RULES: TimingInterpretationRule[] = [
     sourceReferences: [
       "source.sarah_faith_gottesdiener",
       "source.rachel_patterson_moon",
+      "note.computed_facts_are_not_meanings",
       "note.four_phase_moon_mvp",
       "note.lunar_cards_stay_invitational",
     ],
@@ -118,6 +120,7 @@ const LUNAR_PHASE_RULES: TimingInterpretationRule[] = [
     sourceReferences: [
       "source.sarah_faith_gottesdiener",
       "source.rachel_patterson_moon",
+      "note.computed_facts_are_not_meanings",
       "note.four_phase_moon_mvp",
       "note.lunar_cards_stay_invitational",
     ],
@@ -137,6 +140,7 @@ const LUNAR_PHASE_RULES: TimingInterpretationRule[] = [
     sourceReferences: [
       "source.sarah_faith_gottesdiener",
       "source.rachel_patterson_moon",
+      "note.computed_facts_are_not_meanings",
       "note.four_phase_moon_mvp",
       "note.lunar_cards_stay_invitational",
     ],
@@ -584,6 +588,7 @@ const SEASONAL_RULE_SOURCE_REFERENCES = [
   "source.temperance_alden_seasonal_practice",
   "source.anna_franklin_seasonal_home",
   "source.old_farmers_almanac_context",
+  "note.computed_facts_are_not_meanings",
   "note.seasonal_facts_as_markers",
   "note.noaa_seasons_fact_guardrail",
   "note.almanac_context_not_authority",

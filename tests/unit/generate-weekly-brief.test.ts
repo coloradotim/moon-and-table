@@ -287,6 +287,25 @@ describe("generateWeeklyBrief", () => {
     );
   });
 
+  it("does not treat shopping guardrail prose as a shopping requirement", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-06-03T12:00:00.000Z",
+      capacityMode: "steady",
+      preferredRitualStyles: ["tea_ritual", "kitchen", "tea"],
+      avoidedRitualStyles: ["shopping_required"],
+    });
+    const teaCandidate = brief.decision.candidates.ritualPatterns.find(
+      (pattern) => pattern.key === "tea_ritual",
+    );
+    const rejectedTea = brief.decision.rejected.ritualPatterns.find(
+      (pattern) => pattern.key === "tea_ritual",
+    );
+
+    expect(teaCandidate).toBeDefined();
+    expect(teaCandidate?.score).toBeGreaterThan(0);
+    expect(rejectedTea).toBeUndefined();
+  });
+
   it("records capacity and max duration exclusions in the decision", () => {
     const brief = generateWeeklyBrief({
       capacityMode: "steady",
