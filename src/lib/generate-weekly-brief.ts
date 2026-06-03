@@ -597,12 +597,13 @@ function getBurdenAvoidanceMatches(
   pattern: RitualPattern,
   avoidedStyles: string[],
 ): string[] {
-  const avoidText = [...pattern.avoidIf, ...pattern.materials].join(" ").toLowerCase();
+  const materialText = pattern.materials.join(" ").toLowerCase();
+  const avoidText = [...pattern.avoidIf, materialText].join(" ").toLowerCase();
   const matches = getCleanupAvoidanceMatches(pattern.safetyFlags, avoidedStyles);
 
   if (
     avoidedStyles.includes("shopping_required") &&
-    (avoidText.includes("shopping") || avoidText.includes("special"))
+    (materialText.includes("shopping") || materialText.includes("special"))
   ) {
     matches.push("shopping_required");
   }

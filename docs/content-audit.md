@@ -43,7 +43,7 @@ Reference integrity checks from the current data:
 - Source note references used by cards, patterns, and rules resolve.
 - Timing rules do not point at missing symbolic card keys.
 - Symbolic card ritual pattern references resolve.
-- Two source notes are currently unreferenced by cards, rules, or patterns: `note.computed_facts_are_not_meanings` and `note.poison_control_essential_oil_block`.
+- No source notes are currently unreferenced by cards, rules, or patterns.
 
 ## Scorecard
 
@@ -62,7 +62,7 @@ Reference integrity checks from the current data:
 | Candle/color symbolism | Thin | Candle flame pattern exists and live flame is allowed with safety flags, but reviewed color/candle source batch is not built out. |
 | Safety model | Ready | Blocks deterministic claims, medical claims, smoke defaults, essential oil ingestion, crystal elixirs, control rituals, and undeclared candle work. |
 | Generator content use | Ready | Generator selects approved cards and approved ritual patterns, records decisions, hides raw trace by default, and keeps schedule assumptions inert. |
-| Reachability diagnostics | Thin | Tests prove important slices, but there is no content coverage report showing which cards, notes, and patterns are reachable across representative dates/preferences. |
+| Reachability diagnostics | Ready with follow-up | `npm run diagnose:content` reports selected, evaluated, rejected, and gap coverage across representative privacy-safe scenarios. Some approved patterns remain healthy rare alternates or need future taxonomy hooks. |
 
 ## SourceReview Coverage
 
@@ -98,7 +98,7 @@ What works:
 What is thin:
 
 - Location notes are intentionally safe but broad. Tests currently expect `docs/source-research-synthesis.md` in each note location. That is useful for MVP traceability, but not enough for a human curator to re-open the actual reviewed book/source location later.
-- Two notes are unreferenced: `note.computed_facts_are_not_meanings` and `note.poison_control_essential_oil_block`. Both are useful guardrail notes, but the content graph should either reference them or mark them as registry-level QA notes.
+- The previously unreferenced notes are now attached to the content graph. `note.computed_facts_are_not_meanings` supports lunar and seasonal timing interpretation rules, and `note.poison_control_essential_oil_block` supports food and drink ritual safety.
 - Source notes rarely say which source was most helpful versus which source was a guardrail. This matters for user-facing source transparency and future curation.
 
 ## SymbolicCard Coverage
@@ -159,6 +159,26 @@ Gaps and cautions:
 - There are no rejected/draft ritual patterns in the starter set. Tests exercise safety rejection, but real curation examples would make the workflow clearer.
 - User-facing ritual copy is intentionally concise. The pattern data can support more explanation, but the app should continue avoiding long scripts.
 
+## Reachability Follow-Up: Non-Winning Ritual Patterns
+
+Issue #101 reviewed the approved ritual patterns that were evaluated by `npm run diagnose:content` but did not win in the sampled scenarios. The baseline before this pass sampled 48 privacy-safe scenarios, evaluated all 24 approved ritual patterns, selected 13 patterns, and left 11 approved patterns non-winning. The goal was not to make every approved pattern win. The goal was to separate healthy rare alternates from content that is unreachable because of broken metadata or scoring.
+
+This pass found one scoring bug: shopping-avoidance guardrail prose such as "avoid if this would require shopping" was being treated as if the ritual required shopping. The generator now checks shopping burden against the materials list instead. After that targeted fix, `table_reset` naturally appears in the selected pattern set. The remaining non-winning patterns are still evaluated and remain available for future scoring, preference, or try-again improvements.
+
+| Pattern key | Current diagnosis | Classification | Action taken or no-action rationale |
+| --- | --- | --- | --- |
+| `bed_blanket_rest_cue` | Scores close to `close_the_evening` in pause scenarios, but the more general closing practice wins because it has broader profile and default-capacity fit. | intentionally uncommon | No scoring change. Keep as a rest-specific alternate for future rest preference or explicit try-again paths. |
+| `prune_one_dead_leaf` | Scores within a few points of winning in plant scenarios, but `tend_one_plant` wins because it carries broader plant-tending and card/timing fit. | healthy rare alternate | No scoring change. Keep as a narrow plant sub-action rather than pushing it above the main plant pattern. |
+| `return_one_object` | Scores close in pause/low scenarios, but candle or kitchen patterns win when light, warmth, or profile signals stack. | intentionally uncommon | No scoring change. Keep as a very small alternate for low-capacity or try-again selection. |
+| `rotate_plant_for_light` | Evaluates cleanly and receives plant/light matches, but `tend_one_plant` or kitchen patterns win when broader profile fit is stronger. | healthy rare alternate | No scoring change. Keep as a narrow plant-light option that should surface only with stronger plant/light preference hooks. |
+| `seasonal_table_home_reset` | Has seasonal/card linkage, but still loses to broad kitchen or table patterns when practical home-tending profile matches dominate. | needs better preference/profile/timing hooks | No immediate scoring boost. Future seasonal work should add a clearer seasonal-home preference hook rather than forcing this pattern to win. |
+| `shared_space_reset` | Can be rejected when heavy-cleanup avoidance is active and otherwise loses to broader table or kitchen resets. | needs better preference/profile/timing hooks | No scoring change. Keep capacity and heavy-cleanup avoidance dominant; revisit only with a clearer shared-space preference. |
+| `simple_warm_drink` | Was unfairly rejected by the shopping-prose heuristic; now evaluates positively but still loses to broader table/kitchen patterns. | needs ritual style taxonomy adjustment | Fixed the shopping heuristic. Future taxonomy should distinguish warm-drink care from generic kitchen reset. |
+| `small_repair` | Evaluates positively after the shopping-prose fix, but lacks enough structured-action timing/profile weight to beat kitchen reset in sampled scenarios. | needs better preference/profile/timing hooks | No score boost. Keep as an approved high/steady alternate; revisit with a clearer repair or bounded-action preference hook. |
+| `soften_one_corner` | Evaluates positively after the shopping-prose fix, but generic home/kitchen patterns still win when practical-care signals stack. | needs ritual style taxonomy adjustment | No score boost. Future taxonomy should distinguish atmosphere/softening from generic home tending. |
+| `table_reset` | Was unfairly rejected when shopping or heavy-cleanup avoidance came from profile inputs. After the shopping heuristic fix, it naturally wins in one sampled scenario. | needs better preference/profile/timing hooks | Targeted action taken: fixed shopping-burden detection. Heavy-cleanup avoidance still correctly blocks medium-cleanup cases. |
+| `tea_ritual` | Was unfairly rejected by the shopping-prose heuristic; now scores strongly but loses to kitchen reset when kitchen and profile signals stack. | needs ritual style taxonomy adjustment | Fixed the shopping heuristic. Future taxonomy should distinguish tea/warmth from broad kitchen reset. |
+
 ## Safety And Quality
 
 Strong protections:
@@ -175,7 +195,6 @@ Strong protections:
 
 Needed improvements:
 
-- The unreferenced Poison Control essential-oil note should connect to the safety model, kitchen/herb cards, or a registry-level QA note.
 - Candle safety should use richer source coverage so the product can be practical without sounding timid.
 - Pet and allergy handling should become more specific before expanding herbs or plants.
 - Content linting could scan the whole source-controlled library for deterministic claims, private-data markers, copied-looking long quoted text, and unsupported safety-sensitive phrases.
@@ -195,7 +214,7 @@ Ready:
 Gaps and cautions:
 
 - The legacy schedule types remain for compatibility. This is acceptable only while they remain inert in default output.
-- There is no content reachability report. As the library grows, it will be too easy to add a card or source note that never influences a recommendation.
+- The content reachability report is intentionally sampled. It should guide curation, but it should not be used as a reason to make every approved pattern win.
 - The generator can include private profile theme influence, but default UI should continue using theme language unless an explicit future feature designs deeper authenticated disclosures.
 
 ## Product-Language Audit
@@ -306,21 +325,22 @@ Acceptance criteria:
 - No unsupported rules become eligible.
 - No copied prose is added.
 
-### 6. Add content reachability diagnostics
+### 6. Deepen content reachability diagnostics
 
-Goal: Make it obvious which cards, notes, rules, and patterns can actually influence generated briefs.
+Goal: Keep the existing reachability diagnostic useful as the library grows.
 
 Tasks:
 
-- Add a script or test helper that generates representative briefs across dates, capacities, audiences, preferences, and exclusions.
-- Report selected timing rules, symbolic cards, ritual patterns, source reviews, and source notes.
-- Flag approved content that is never reachable in the sampled scenarios.
+- Expand the existing representative scenario set only when a new content area needs coverage.
+- Keep reporting selected timing rules, symbolic cards, ritual patterns, source reviews, and source notes.
+- Flag approved content that is never reachable in sampled scenarios, while preserving healthy rare alternates.
+- Add targeted diagnostics for taxonomy gaps such as warm drinks versus generic kitchen reset or softening versus generic home tending.
 - Keep this diagnostic local/test-only; do not expose raw trace in default UI.
 
 Acceptance criteria:
 
 - Diagnostics can show category coverage for lunar, astrology, numerology, seasonal, profile, capacity, and ritual patterns.
-- Unreachable approved content is reported.
+- Unreachable approved content is reported with a curation diagnosis.
 - `npm run check` passes.
 
 ### 7. Add content lint for claims, privacy, and copyright risks

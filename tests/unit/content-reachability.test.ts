@@ -88,11 +88,11 @@ describe("content reachability diagnostics", () => {
     expect(report.gaps.sourceNotesNotSelected.every((id) =>
       sourceNoteIds.includes(id),
     )).toBe(true);
-    expect(report.gaps.sourceNotesNotReferencedByContent).toEqual(
-      expect.arrayContaining([
-        "note.computed_facts_are_not_meanings",
-        "note.poison_control_essential_oil_block",
-      ]),
+    expect(report.gaps.sourceNotesNotReferencedByContent).not.toContain(
+      "note.computed_facts_are_not_meanings",
+    );
+    expect(report.gaps.sourceNotesNotReferencedByContent).not.toContain(
+      "note.poison_control_essential_oil_block",
     );
   });
 

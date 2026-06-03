@@ -393,7 +393,11 @@ export const starterRitualPatterns: RitualPattern[] = [
     toneGuidance: ["warm", "settling", "ordinary"],
     burdenAvoidFlags: ["shopping_required", "elaborate_setup"],
     contraindications: ["avoid when food, drink, allergy, or caffeine fit is uncertain"],
-    sourceNoteKeys: ["note.kitchen_magic_normal_use", "note.food_herb_safety_override"],
+    sourceNoteKeys: [
+      "note.kitchen_magic_normal_use",
+      "note.food_herb_safety_override",
+      "note.poison_control_essential_oil_block",
+    ],
     generatorUseNotes: ["Good for warmth, kitchen, and low-overwhelm care signals."],
     audienceFit: ["household", "either", "together"],
     sourceReferences: [
@@ -403,6 +407,7 @@ export const starterRitualPatterns: RitualPattern[] = [
       "source.safety_reference_families",
       "note.kitchen_magic_normal_use",
       "note.food_herb_safety_override",
+      "note.poison_control_essential_oil_block",
       "docs/source-ingestion-plan.md#batch-7--kitchen-plant-and-light-starter-set",
     ],
     approvalStatus: "approved",
@@ -441,7 +446,11 @@ export const starterRitualPatterns: RitualPattern[] = [
     toneGuidance: ["warm", "nourishing", "simple"],
     burdenAvoidFlags: ["shopping_required", "heavy_cleanup", "elaborate_setup"],
     contraindications: ["avoid recipes, health claims, unfamiliar ingredients, and high cleanup"],
-    sourceNoteKeys: ["note.kitchen_magic_normal_use", "note.food_herb_safety_override"],
+    sourceNoteKeys: [
+      "note.kitchen_magic_normal_use",
+      "note.food_herb_safety_override",
+      "note.poison_control_essential_oil_block",
+    ],
     generatorUseNotes: ["Use when kitchen warmth is a fit and capacity is steady."],
     audienceFit: ["household", "together"],
     sourceReferences: [
@@ -451,6 +460,7 @@ export const starterRitualPatterns: RitualPattern[] = [
       "source.safety_reference_families",
       "note.kitchen_magic_normal_use",
       "note.food_herb_safety_override",
+      "note.poison_control_essential_oil_block",
       "docs/source-ingestion-plan.md#batch-7--kitchen-plant-and-light-starter-set",
     ],
     approvalStatus: "approved",
