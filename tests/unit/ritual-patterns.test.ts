@@ -28,6 +28,7 @@ describe("ritual patterns", () => {
         "led_candle_light_focus",
         "table_reset",
         "threshold_reset",
+        "room_reset",
         "close_the_evening",
         "tea_ritual",
       ]),
@@ -54,9 +55,11 @@ describe("ritual patterns", () => {
       "clear_one_surface",
       "tend_one_plant",
       "led_candle_light_focus",
+      "table_reset",
+      "threshold_reset",
+      "room_reset",
       "close_the_evening",
     ]);
-    expect(approvedKeys).not.toContain("table_reset");
     expect(approvedKeys).not.toContain("tea_ritual");
   });
 
@@ -69,9 +72,49 @@ describe("ritual patterns", () => {
       "clear_one_surface",
       "tend_one_plant",
       "led_candle_light_focus",
+      "table_reset",
+      "threshold_reset",
+      "room_reset",
       "close_the_evening",
     ]);
-    expect(getEligibleRitualPatterns("high")).toEqual([]);
+    expect(getEligibleRitualPatterns("high").map((pattern) => pattern.key)).toEqual([
+      "table_reset",
+      "room_reset",
+    ]);
+  });
+
+  it("includes at least five approved home-tending starter patterns", () => {
+    const homeTendingKeys = getApprovedRitualPatterns()
+      .filter((pattern) => pattern.ritualStyles.includes("home_tending"))
+      .map((pattern) => pattern.key);
+
+    expect(homeTendingKeys).toEqual(
+      expect.arrayContaining([
+        "threshold_reset",
+        "table_reset",
+        "room_reset",
+        "clear_one_surface",
+        "close_the_evening",
+      ]),
+    );
+    expect(homeTendingKeys.length).toBeGreaterThanOrEqual(5);
+  });
+
+  it("keeps approved home-tending patterns free of smoke oils and live flame defaults", () => {
+    const homeTendingPatterns = getApprovedRitualPatterns().filter((pattern) =>
+      pattern.ritualStyles.includes("home_tending"),
+    );
+
+    for (const pattern of homeTendingPatterns) {
+      const serializedPattern = JSON.stringify(pattern).toLowerCase();
+
+      expect(pattern.safetyFlags.smoke).toBe("none");
+      expect(pattern.safetyFlags.essentialOils).toBe("none");
+      expect(pattern.safetyFlags.fire).not.toBe("live_flame_opt_in");
+      expect(serializedPattern).not.toContain("curse");
+      expect(serializedPattern).not.toContain("spiritual warfare");
+      expect(serializedPattern).not.toContain("guaranteed safety");
+    }
   });
 
   it("requires safety flags and excludes unsafe approved patterns", () => {
@@ -123,4 +166,3 @@ describe("ritual patterns", () => {
     expect(serialized).not.toContain("copied recipe");
   });
 });
-
