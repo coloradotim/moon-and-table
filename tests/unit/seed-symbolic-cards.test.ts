@@ -243,6 +243,29 @@ describe("seedSymbolicCards", () => {
     }
   });
 
+  it("backs astrology cards with concrete source notes", () => {
+    const cardByKey = new Map(seedSymbolicCards.map((card) => [card.key, card]));
+
+    expect(cardByKey.get("astrology_body_mercury")?.source_references).toContain(
+      "note.astrology_body_mercury_words_sorting",
+    );
+    expect(cardByKey.get("astrology_body_mars")?.source_references).toContain(
+      "note.astrology_body_mars_bounded_action",
+    );
+    expect(cardByKey.get("astrology_sign_cancer")?.source_references).toContain(
+      "note.astrology_sign_cancer_home_containment",
+    );
+    expect(cardByKey.get("astrology_sign_virgo")?.source_references).toContain(
+      "note.astrology_sign_virgo_useful_tending",
+    );
+    expect(cardByKey.get("astrology_aspect_square")?.source_references).toContain(
+      "note.astrology_aspect_square_useful_adjustment",
+    );
+    expect(cardByKey.get("astrology_aspect_trine")?.source_references).toContain(
+      "note.astrology_aspect_trine_available_support",
+    );
+  });
+
   it("keeps private profile cards generic placeholders", () => {
     const privateProfileCards = seedSymbolicCards.filter(
       (card) => card.category === "private_profile_theme",
