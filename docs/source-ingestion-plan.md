@@ -29,6 +29,8 @@ Moon & Table should remain a small, disciplined synthesis engine:
 - use-decision values: `use`, `use_carefully`, `context_only`, `defer`, `avoid`
 - review status values: `candidate`, `reviewed`, `approved`, `rejected`
 
+**Implementation note:** The starter TypeScript model lives in `src/data/source-registry.ts`. It includes a small reviewed-source registry, short transformed source-note examples, and validation helpers that reject unsupported decisions, missing trace fields, long copied-looking notes, and any note with `verbatimAllowed` set to anything other than `false`.
+
 **Acceptance criteria:**
 
 - Sources can be classified by category, decision, confidence, safety risk, copyright risk, and extraction notes.
