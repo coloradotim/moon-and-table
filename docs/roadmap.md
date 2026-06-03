@@ -43,7 +43,7 @@ Test:
 * one relationship or journal prompt
 * one optional add-on
 * under 20 minutes by default
-* under 5 minutes for low-capacity weeks
+* 0-5 minutes for low-capacity weeks
 * a short “why this” explanation
 
 Capture generic feedback categories:
@@ -241,26 +241,25 @@ Capacity should shape the output before astrology does.
 
 Capacity modes:
 
-* Tiny: one 3–5 minute action
-* Normal: one 10–20 minute ritual
-* Spacious: one ritual plus optional meal/journal/altar layer
-* Celebration: richer ritual allowed
-* Survival mode: no ritual, just grounding or a blessing
+* `pause`: no ritual; grounding, blessing, or permission to do nothing
+* `low`: 0-5 minutes; one small action with no shopping, setup, or cleanup
+* `steady`: 10-20 minutes; the default practical ritual size
+* `high`: 20-30 minutes; a more active or decisive ritual, still one primary recommendation
 
 Manual schedule rules:
 
-* unavailable nights
+* unavailable days or nights
 * preferred windows
 * recurring household constraints
 * work or school constraints
 * max ritual duration
-* default low-capacity mode
+* default capacity mode
 
 The app should not automatically recommend a ritual on the exact date of an astrological event. It should recommend the nearest realistic window.
 
 Example:
 
-> Full moon is Tuesday, but Tuesday is unavailable and the household is low-capacity. Recommend Thursday evening instead, and keep the ritual under 10 minutes.
+> Full moon is Tuesday, but Tuesday is unavailable and the household is low capacity. Recommend Thursday evening instead, and keep the ritual to 0-5 minutes.
 
 Success means the app protects users from overwhelm and treats real-life capacity as a first-class constraint.
 

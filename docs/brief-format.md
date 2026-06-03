@@ -35,7 +35,10 @@ Each week should include:
 - Recommend no more than one primary ritual per week.
 - Offer no more than one optional add-on.
 - Default ritual time should be under 20 minutes.
-- For low-capacity weeks, default to 3–5 minutes.
+- For `pause`, offer no required ritual; use grounding, blessing, or permission to do nothing.
+- For `low`, keep the recommendation to 0-5 minutes with no shopping, setup, or cleanup.
+- For `steady`, keep the practical recommendation to 10-20 minutes.
+- For `high`, allow a more active recommendation up to 30 minutes, but still keep one primary ritual.
 - Avoid assigning multiple rituals across multiple days unless explicitly requested.
 - Use invitation language, not obligation language.
 - Schedule and capacity constraints should override symbolic timing.
@@ -44,6 +47,8 @@ Each week should include:
 ## Generator trace
 
 The first deterministic mock generator lives at `src/lib/generate-weekly-brief.ts`. Its trace should stay short and privacy-safe, listing timing fact keys, approved symbolic card keys, generic private profile placeholder keys, capacity mode, and schedule assumption keys.
+
+Capacity modes are `pause`, `low`, `steady`, and `high`. Superseded labels such as tiny, normal, spacious, celebration, or survival should not be implemented as separate modes.
 
 ## Example
 

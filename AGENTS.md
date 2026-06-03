@@ -98,7 +98,7 @@ A default weekly brief should include:
 - one optional add-on
 - short `why this` explanation
 
-Keep the default under 20 minutes. For low-capacity or tiny mode, keep it to 3–5 minutes.
+Keep the default under 20 minutes. Use the four capacity modes: `pause`, `low`, `steady`, and `high`. For `low`, keep recommendations to 0-5 minutes. For `pause`, offer no required ritual.
 
 ## Documentation and tests
 

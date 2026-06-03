@@ -3,14 +3,28 @@ import {
   type SymbolicCard,
 } from "../data/seed-symbolic-cards";
 
+export const CAPACITY_MODES = ["pause", "low", "steady", "high"] as const;
+
+export type CapacityMode = (typeof CAPACITY_MODES)[number];
+
 export type TimingFactKey = "moon.waning" | "numerology.6";
 
 export type PrivateProfilePlaceholderKey =
   | "private_profile.practical_tending";
 
-export type CapacityMode = "tiny" | "normal";
+export type ScheduleAssumptionKey =
+  | "schedule.symbolic_event_tuesday"
+  | "schedule.realistic_window_thursday"
+  | "schedule.preferred_window_saturday_morning";
 
-export type ScheduleAssumptionKey = "schedule.realistic_window_thursday";
+export type ManualScheduleConstraints = {
+  unavailableDaysOrNights: string[];
+  preferredRitualWindows: ScheduleAssumptionKey[];
+  recurringHouseholdConstraintNotes: string[];
+  workOrSchoolConstraintNotes: string[];
+  maxRitualDurationMinutes: number;
+  defaultCapacityMode: CapacityMode;
+};
 
 export type WeeklyBriefTrace = {
   timingFacts: TimingFactKey[];
@@ -36,15 +50,36 @@ export type GenerateWeeklyBriefInput = {
   timingFacts?: TimingFactKey[];
   privateProfileKeys?: PrivateProfilePlaceholderKey[];
   capacityMode?: CapacityMode;
-  scheduleAssumptions?: ScheduleAssumptionKey[];
+  scheduleConstraints?: Partial<ManualScheduleConstraints>;
 };
 
-const DEFAULT_INPUT: Required<GenerateWeeklyBriefInput> = {
+type ResolvedGenerateWeeklyBriefInput = {
+  dateRange: string;
+  timingFacts: TimingFactKey[];
+  privateProfileKeys: PrivateProfilePlaceholderKey[];
+  capacityMode: CapacityMode;
+  scheduleConstraints: ManualScheduleConstraints;
+};
+
+const DEFAULT_SCHEDULE_CONSTRAINTS: ManualScheduleConstraints = {
+  unavailableDaysOrNights: ["Tuesday night"],
+  preferredRitualWindows: ["schedule.realistic_window_thursday"],
+  recurringHouseholdConstraintNotes: [
+    "Generic household constraint: weeknights need low setup.",
+  ],
+  workOrSchoolConstraintNotes: [
+    "Generic work or school constraint: avoid the busiest night.",
+  ],
+  maxRitualDurationMinutes: 20,
+  defaultCapacityMode: "low",
+};
+
+const DEFAULT_INPUT: ResolvedGenerateWeeklyBriefInput = {
   dateRange: "Mock week",
   timingFacts: ["moon.waning", "numerology.6"],
   privateProfileKeys: ["private_profile.practical_tending"],
-  capacityMode: "tiny",
-  scheduleAssumptions: ["schedule.realistic_window_thursday"],
+  capacityMode: DEFAULT_SCHEDULE_CONSTRAINTS.defaultCapacityMode,
+  scheduleConstraints: DEFAULT_SCHEDULE_CONSTRAINTS,
 };
 
 const TRACE_KEY_BY_CARD_KEY: Record<string, string> = {
@@ -61,6 +96,13 @@ const CARD_KEYS_FOR_BRIEF = [
   "plant_tending",
   "private_profile_practical_care_theme",
 ] as const;
+
+const CAPACITY_DURATION_LIMITS: Record<CapacityMode, number> = {
+  pause: 0,
+  low: 5,
+  steady: 20,
+  high: 30,
+};
 
 function getApprovedCardByKey(key: string): SymbolicCard {
   const card = seedSymbolicCards.find(
@@ -79,20 +121,89 @@ function getApprovedCardsForBrief(): SymbolicCard[] {
   return CARD_KEYS_FOR_BRIEF.map((key) => getApprovedCardByKey(key));
 }
 
+function resolveScheduleConstraints(
+  input?: Partial<ManualScheduleConstraints>,
+): ManualScheduleConstraints {
+  return {
+    unavailableDaysOrNights:
+      input?.unavailableDaysOrNights ??
+      DEFAULT_SCHEDULE_CONSTRAINTS.unavailableDaysOrNights,
+    preferredRitualWindows:
+      input?.preferredRitualWindows ??
+      DEFAULT_SCHEDULE_CONSTRAINTS.preferredRitualWindows,
+    recurringHouseholdConstraintNotes:
+      input?.recurringHouseholdConstraintNotes ??
+      DEFAULT_SCHEDULE_CONSTRAINTS.recurringHouseholdConstraintNotes,
+    workOrSchoolConstraintNotes:
+      input?.workOrSchoolConstraintNotes ??
+      DEFAULT_SCHEDULE_CONSTRAINTS.workOrSchoolConstraintNotes,
+    maxRitualDurationMinutes:
+      input?.maxRitualDurationMinutes ??
+      DEFAULT_SCHEDULE_CONSTRAINTS.maxRitualDurationMinutes,
+    defaultCapacityMode:
+      input?.defaultCapacityMode ??
+      DEFAULT_SCHEDULE_CONSTRAINTS.defaultCapacityMode,
+  };
+}
+
+function getEffectiveDurationMinutes(
+  capacityMode: CapacityMode,
+  scheduleConstraints: ManualScheduleConstraints,
+): number {
+  return Math.min(
+    CAPACITY_DURATION_LIMITS[capacityMode],
+    scheduleConstraints.maxRitualDurationMinutes,
+  );
+}
+
+function getPrimaryScheduleAssumption(
+  scheduleConstraints: ManualScheduleConstraints,
+): ScheduleAssumptionKey {
+  return (
+    scheduleConstraints.preferredRitualWindows[0] ??
+    "schedule.realistic_window_thursday"
+  );
+}
+
+function getWindowLabel(scheduleAssumption: ScheduleAssumptionKey): string {
+  switch (scheduleAssumption) {
+    case "schedule.preferred_window_saturday_morning":
+      return "Saturday morning";
+    case "schedule.symbolic_event_tuesday":
+      return "Tuesday evening";
+    case "schedule.realistic_window_thursday":
+      return "Thursday evening";
+  }
+}
+
+function getDurationLabel(capacityMode: CapacityMode, minutes: number): string {
+  if (capacityMode === "pause") {
+    return "no required ritual";
+  }
+
+  if (capacityMode === "low") {
+    return "0-5 minutes";
+  }
+
+  if (capacityMode === "steady") {
+    return `${Math.min(10, minutes)}-${minutes} minutes`;
+  }
+
+  return `${Math.min(20, minutes)}-${minutes} minutes`;
+}
+
 function getBestWindow(
   capacityMode: CapacityMode,
-  scheduleAssumptions: ScheduleAssumptionKey[],
+  scheduleConstraints: ManualScheduleConstraints,
 ): string {
-  const usesThursdayWindow = scheduleAssumptions.includes(
-    "schedule.realistic_window_thursday",
+  const scheduleAssumption = getPrimaryScheduleAssumption(scheduleConstraints);
+  const windowLabel = getWindowLabel(scheduleAssumption);
+  const minutes = getEffectiveDurationMinutes(
+    capacityMode,
+    scheduleConstraints,
   );
-  const windowLabel = usesThursdayWindow
-    ? "Thursday evening"
-    : "A realistic window";
 
-  return capacityMode === "tiny"
-    ? `${windowLabel}, 3-5 minutes.`
-    : `${windowLabel}, 10-20 minutes.`;
+  return `${windowLabel}, ${getDurationLabel(capacityMode, minutes)}.`;
 }
 
 function getRecommendedRitual(
@@ -102,15 +213,56 @@ function getRecommendedRitual(
   const plantAction =
     plantTendingCard.ritual_ideas[1] ?? plantTendingCard.ritual_ideas[0];
 
-  return capacityMode === "tiny"
-    ? `Tend one plant. ${plantAction}`
-    : `Tend one plant. ${plantAction} Then pause and name one small support the household can keep offering.`;
+  switch (capacityMode) {
+    case "pause":
+      return "No required ritual. Place one hand on the table or doorway and silently bless the household for getting through the week.";
+    case "low":
+      return `Tend one plant. ${plantAction}`;
+    case "steady":
+      return `Tend one plant. ${plantAction} Then clear one nearby surface and name one small support the household can keep offering.`;
+    case "high":
+      return `Tend one plant, then clear one small neglected spot with decisive care. ${plantAction} Close by naming one thing the household is ready to stop feeding.`;
+  }
 }
 
 function getOptionalAddOn(capacityMode: CapacityMode): string {
-  return capacityMode === "tiny"
-    ? "Light a candle only if that feels supportive and safe."
-    : "Light a candle nearby if that feels supportive and safe.";
+  if (capacityMode === "pause") {
+    return "Let the blessing be enough.";
+  }
+
+  return "Light a candle nearby if that feels supportive and safe.";
+}
+
+function getCapacityReason(
+  capacityMode: CapacityMode,
+  durationMinutes: number,
+): string {
+  switch (capacityMode) {
+    case "pause":
+      return "Because capacity is pause, there is no required ritual.";
+    case "low":
+      return "Because capacity is low, the action stays within 0-5 minutes with no shopping, setup, or cleanup.";
+    case "steady":
+      return `Because capacity is steady, the ritual stays practical and within ${Math.min(10, durationMinutes)}-${durationMinutes} minutes.`;
+    case "high":
+      return `Because capacity is high, the ritual can be more active and decisive while staying within ${Math.min(20, durationMinutes)}-${durationMinutes} minutes.`;
+  }
+}
+
+function getScheduleReason(
+  scheduleConstraints: ManualScheduleConstraints,
+): string {
+  const primaryWindow = getPrimaryScheduleAssumption(scheduleConstraints);
+  const windowLabel = getWindowLabel(primaryWindow);
+
+  if (
+    scheduleConstraints.unavailableDaysOrNights.length > 0 &&
+    primaryWindow !== "schedule.symbolic_event_tuesday"
+  ) {
+    return `The schedule moves the ritual away from the symbolic event timing to ${windowLabel}.`;
+  }
+
+  return `The schedule points to ${windowLabel} as the realistic window.`;
 }
 
 function getWhyThis(
@@ -118,32 +270,32 @@ function getWhyThis(
   numerologySixCard: SymbolicCard,
   privateProfileCard: SymbolicCard,
   capacityMode: CapacityMode,
-  scheduleAssumptions: ScheduleAssumptionKey[],
+  scheduleConstraints: ManualScheduleConstraints,
 ): string {
-  const capacityReason =
-    capacityMode === "tiny"
-      ? "Because capacity is tiny, the ritual stays to 3-5 minutes."
-      : "Because capacity is normal, the ritual stays under 20 minutes.";
-  const scheduleReason = scheduleAssumptions.includes(
-    "schedule.realistic_window_thursday",
-  )
-    ? "The Thursday window keeps the timing realistic."
-    : "The schedule assumption keeps the timing realistic.";
+  const durationMinutes = getEffectiveDurationMinutes(
+    capacityMode,
+    scheduleConstraints,
+  );
 
-  return `${waningMoonCard.title} supports ${waningMoonCard.themes[0]} and ${waningMoonCard.themes[1]}. ${numerologySixCard.title} adds a home-and-care emphasis. The ${privateProfileCard.title.toLowerCase()} favors concrete tending over abstract processing. ${scheduleReason} ${capacityReason}`;
+  return `${waningMoonCard.title} supports ${waningMoonCard.themes[0]} and ${waningMoonCard.themes[1]}. ${numerologySixCard.title} adds a home-and-care emphasis. The ${privateProfileCard.title.toLowerCase()} favors concrete tending over abstract processing. ${getScheduleReason(scheduleConstraints)} ${getCapacityReason(capacityMode, durationMinutes)}`;
 }
 
 export function generateWeeklyBrief(
   input: GenerateWeeklyBriefInput = {},
 ): WeeklyBrief {
-  const resolvedInput: Required<GenerateWeeklyBriefInput> = {
+  const scheduleConstraints = resolveScheduleConstraints(
+    input.scheduleConstraints,
+  );
+  const capacityMode =
+    input.capacityMode ?? scheduleConstraints.defaultCapacityMode;
+
+  const resolvedInput: ResolvedGenerateWeeklyBriefInput = {
     dateRange: input.dateRange ?? DEFAULT_INPUT.dateRange,
     timingFacts: input.timingFacts ?? DEFAULT_INPUT.timingFacts,
     privateProfileKeys:
       input.privateProfileKeys ?? DEFAULT_INPUT.privateProfileKeys,
-    capacityMode: input.capacityMode ?? DEFAULT_INPUT.capacityMode,
-    scheduleAssumptions:
-      input.scheduleAssumptions ?? DEFAULT_INPUT.scheduleAssumptions,
+    capacityMode,
+    scheduleConstraints,
   };
 
   const selectedCards = getApprovedCardsForBrief();
@@ -154,12 +306,20 @@ export function generateWeeklyBrief(
     privateProfileCard,
   ] = selectedCards;
 
+  const scheduleAssumptions = [
+    "schedule.symbolic_event_tuesday",
+    getPrimaryScheduleAssumption(scheduleConstraints),
+  ].filter(
+    (scheduleAssumption, index, allScheduleAssumptions) =>
+      allScheduleAssumptions.indexOf(scheduleAssumption) === index,
+  ) as ScheduleAssumptionKey[];
+
   return {
     dateRange: resolvedInput.dateRange,
     theme: "Clear one small thing. Feed one living thing.",
     bestWindow: getBestWindow(
       resolvedInput.capacityMode,
-      resolvedInput.scheduleAssumptions,
+      resolvedInput.scheduleConstraints,
     ),
     recommendedRitual: getRecommendedRitual(
       plantTendingCard,
@@ -173,7 +333,7 @@ export function generateWeeklyBrief(
       numerologySixCard,
       privateProfileCard,
       resolvedInput.capacityMode,
-      resolvedInput.scheduleAssumptions,
+      resolvedInput.scheduleConstraints,
     ),
     trace: {
       timingFacts: resolvedInput.timingFacts,
@@ -182,7 +342,7 @@ export function generateWeeklyBrief(
       ),
       privateProfileKeys: resolvedInput.privateProfileKeys,
       capacityMode: resolvedInput.capacityMode,
-      scheduleAssumptions: resolvedInput.scheduleAssumptions,
+      scheduleAssumptions,
     },
   };
 }

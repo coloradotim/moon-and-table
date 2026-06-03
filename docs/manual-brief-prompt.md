@@ -19,8 +19,9 @@ Use the Moon & Table approach:
 * Do not give a long list of things to do.
 * Recommend one primary ritual or action only.
 * Include at most one optional add-on.
-* Default to low-to-normal capacity unless told otherwise.
-* Keep the ritual under 20 minutes; under 5 minutes for low-capacity periods.
+* Use one of the four capacity modes: `pause`, `low`, `steady`, or `high`.
+* Default to `steady` unless capacity is constrained.
+* Use no required ritual for `pause`, 0-5 minutes for `low`, 10-20 minutes for `steady`, and 20-30 minutes for `high`.
 * Use private schedule constraints when provided.
 * If the symbolic timing is on a bad schedule day, suggest a nearby realistic window instead.
 * Explain briefly why this recommendation fits the timing, profile, schedule, and capacity.
@@ -61,15 +62,23 @@ Format the brief like this:
 Add this to the end of the prompt when life is full or the week already has too much in it:
 
 ```text
-Capacity is low. Give the smallest meaningful version. Prefer one action under 5 minutes. Do not suggest journaling, a multi-step ritual, or anything that requires shopping, setup, or cleanup.
+Capacity is low. Give the smallest meaningful version. Prefer one action within 0-5 minutes. Do not suggest journaling, a multi-step ritual, or anything that requires shopping, setup, or cleanup.
 ```
 
-## Spacious version
+## Pause version
+
+Add this when even a small ritual would be too much:
+
+```text
+Capacity is pause. Do not recommend a required ritual. Offer grounding, a blessing, or permission to do nothing.
+```
+
+## Steady or high version
 
 Add this when there is room for something fuller:
 
 ```text
-Capacity is normal-to-spacious. You may suggest one ritual up to 20 minutes and one optional add-on, but still do not give a list of multiple things to do.
+Capacity is steady or high. You may suggest one practical ritual: 10-20 minutes for steady, or 20-30 minutes for high. Include at most one optional add-on, and still do not give a list of multiple things to do.
 ```
 
 ## Schedule-aware version

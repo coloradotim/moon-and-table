@@ -167,7 +167,7 @@ The “why this” explanation should be short and user-facing, not an internal 
 
 Example:
 
-> The waning moon supports clearing and release. The private profile favors practical tending over abstract processing. Because this is a low-capacity week, the recommendation stays under five minutes.
+> The waning moon supports clearing and release. The private profile favors practical tending over abstract processing. Because capacity is low, the recommendation stays within 0-5 minutes.
 
 ### 7. Feedback loop
 
@@ -568,9 +568,9 @@ Example input:
 Possible output:
 
 > Theme: Clear one small thing. Feed one living thing.  
-> Best window: Thursday evening, 5–10 minutes.  
+> Best window: Thursday evening, 0-5 minutes.
 > Ritual: Tend one plant. Remove dead leaves or water it. Name one thing to stop feeding and one thing to nourish.  
-> Why this: The waning moon supports clearing and release. The numerology theme emphasizes home and care. The private profile favors practical tending over abstract processing. Because this is a low-capacity week, the ritual stays short.
+> Why this: The waning moon supports clearing and release. The numerology theme emphasizes home and care. The private profile favors practical tending over abstract processing. Because capacity is low, the ritual stays within 0-5 minutes.
 
 ## Early success criteria
 
