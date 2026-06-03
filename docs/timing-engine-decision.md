@@ -50,6 +50,21 @@ MVP timing facts should support:
 
 The four lunar phase buckets should stay aligned with the approved symbolic card set. Do not add an eight-phase lunar interpretation system in the timing layer.
 
+## Current Implementation
+
+The first lunar timing helper lives at `src/lib/lunar-timing.ts`.
+
+It uses Astronomy Engine's computed moon phase angle to classify a date into the MVP four-bucket model:
+
+- `new`
+- `waxing`
+- `full`
+- `waning`
+
+The helper returns a machine-readable moon-phase timing fact with a `moon.*` key, computed phase angle, UTC week date range, label, `computedBy: "astronomy_engine"`, and related symbolic card key. It does not produce symbolic interpretation, ritual recommendations, natal chart data, houses, aspects, predictions, or personal transits.
+
+Weekly brief generation consumes this timing fact by default and then performs interpretation through approved symbolic cards and approved ritual patterns.
+
 ## Deferred Timing Scope
 
 Defer:
@@ -143,4 +158,3 @@ Tests should use fixed dates, explicit timezones, and stable expected values. An
 - Symbolic meaning comes from approved cards.
 - Recommended actions come from approved safe ritual patterns.
 - Capacity and schedule can override symbolic timing.
-

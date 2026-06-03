@@ -6,6 +6,7 @@ import {
   CAPACITY_MODES,
   generateWeeklyBrief,
 } from "../../src/lib/generate-weekly-brief";
+import { getLunarTimingFact } from "../../src/lib/lunar-timing";
 
 const supersededCapacityModes = [
   "tiny",
@@ -182,8 +183,16 @@ describe("generateWeeklyBrief", () => {
       audience: "person_a",
     });
 
-    expect(brief.trace.timingFacts).toEqual(["moon.new"]);
-    expect(brief.trace.symbolicCards).toContain("moon.new");
+    expect(brief.trace.timingFacts).toEqual(["moon.full"]);
+    expect(brief.trace.timingFactDetails).toHaveLength(1);
+    expect(brief.trace.timingFactDetails[0]).toMatchObject({
+      key: "moon.full",
+      label: "Full moon",
+      computedBy: "astronomy_engine",
+      confidence: "computed",
+      relatedSymbolicKeys: ["full_moon"],
+    });
+    expect(brief.trace.symbolicCards).toContain("moon.full");
     expect(brief.trace.ritualPatterns).toHaveLength(1);
     expect(brief.trace.sourceReviewIds.length).toBeGreaterThan(0);
     expect(brief.trace.privateProfileKeys).toEqual([
@@ -199,6 +208,24 @@ describe("generateWeeklyBrief", () => {
       "schedule.symbolic_event_tuesday",
       "schedule.realistic_window_thursday",
     ]);
+  });
+
+  it("can consume a lunar timing fact object from the timing helper", () => {
+    const timingFact = getLunarTimingFact("2026-06-15T03:00:00.000Z");
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-06-15T03:00:00.000Z",
+      timingFactDetails: [timingFact],
+    });
+
+    expect(brief.trace.timingFacts).toEqual(["moon.new"]);
+    expect(brief.trace.timingFactDetails).toEqual([
+      expect.objectContaining({
+        key: "moon.new",
+        label: "New moon",
+        computedBy: "astronomy_engine",
+      }),
+    ]);
+    expect(brief.whyThis).toContain("new moon theme");
   });
 
   it("does not treat private profile inputs as public source citations", () => {

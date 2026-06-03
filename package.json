@@ -29,6 +29,7 @@
     "vitest": "^4.1.8"
   },
   "dependencies": {
+    "astronomy-engine": "^2.1.19",
     "firebase": "^12.14.0",
     "firebase-admin": "^13.10.0"
   }
