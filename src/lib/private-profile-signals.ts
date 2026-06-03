@@ -22,6 +22,7 @@ export type PrivateProfileSignalInput = {
 export type PrivateProfileSignal = {
   key: string;
   audience: PrivateAudience;
+  profileLabel?: string;
   label: string;
   themeKey: PrivateProfileThemeKey;
   themes: string[];
@@ -112,13 +113,11 @@ function makeSignal(
   return {
     key: `${source}.${profile.audience}.${themeKey}`,
     audience: profile.audience,
+    profileLabel: profile.label,
     label: definition.label,
     themeKey,
     themes: definition.themes,
-    ritualStyleHints: uniqueValues([
-      ...definition.ritualStyleHints,
-      ...normalizeProfilePreferenceValues(profile.preferredRitualStyles ?? []),
-    ]),
+    ritualStyleHints: definition.ritualStyleHints,
     toneHints: uniqueValues([
       ...definition.toneHints,
       ...normalizeProfilePreferenceValues(profile.tonePreferences ?? []),

@@ -460,7 +460,9 @@ describe("generateWeeklyBrief", () => {
       "natal_theme.person_b.private_profile.beauty_warmth",
     ]);
     expect(brief.whyThis).toContain("warmth, beauty, and affection");
-    expect(brief.whyThis).not.toContain("chart");
+    expect(brief.whyThis).toContain("Saved natal-chart themes");
+    expect(brief.whyThis).not.toContain("placement");
+    expect(brief.whyThis).not.toContain("chart says");
   });
 
   it("blends both profiles safely for together recommendations", () => {
@@ -486,7 +488,10 @@ describe("generateWeeklyBrief", () => {
       "natal_theme.person_b.private_profile.beauty_warmth",
     ]);
     expect(brief.whyThis).toContain(
-      "balances practical home-tending magic with warmth, beauty, and affection",
+      "saved profile and natal-chart themes",
+    );
+    expect(brief.whyThis).toContain(
+      "practical home-tending magic with warmth, beauty, and affection",
     );
     expect(brief.trace.ritualPatterns).toHaveLength(1);
   });
