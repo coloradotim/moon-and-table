@@ -266,10 +266,10 @@ export const starterRitualPatterns: RitualPattern[] = [
   {
     id: "ritual_pattern_tea_ritual",
     key: "tea_ritual",
-    title: "Tea Ritual",
+    title: "Tea Pause",
     summary: "Use an ordinary safe drink as a small cue for warmth and settling.",
-    ritualStyles: ["kitchen", "warm_drink", "quiet_pause"],
-    capacityModes: ["steady"],
+    ritualStyles: ["kitchen", "tea", "warm"],
+    capacityModes: ["low", "steady"],
     defaultDurationMinutes: 10,
     materials: ["ordinary tea or warm drink already safe for the household"],
     steps: [
@@ -291,10 +291,82 @@ export const starterRitualPatterns: RitualPattern[] = [
     ],
     sourceReferences: [
       "source.laurel_woodward",
+      "source.rachel_patterson_moon",
       "source.safety_reference_families",
       "docs/source-ingestion-plan.md#batch-7--kitchen-plant-and-light-starter-set",
     ],
-    approvalStatus: "reviewed",
+    approvalStatus: "approved",
+  },
+  {
+    id: "ritual_pattern_simple_warm_drink",
+    key: "simple_warm_drink",
+    title: "Simple Warm Drink",
+    summary: "Make an ordinary warm drink or simple soup already familiar to the household.",
+    ritualStyles: ["kitchen", "simple_food", "warm"],
+    capacityModes: ["steady"],
+    defaultDurationMinutes: 15,
+    materials: ["ordinary drink or simple soup ingredients already safe for the household"],
+    steps: [
+      "Choose a drink or simple soup the household already uses safely.",
+      "Prepare it without adding unfamiliar ingredients.",
+      "Let the warmth mark one ordinary care moment.",
+    ],
+    safetyFlags: withSafetyOverrides({
+      ingestion: "normal_food_use_only",
+      allergies: ["use only foods already known to fit the household"],
+      cleanupBurden: "low",
+    }),
+    safetyNotes: [
+      "Normal food use only. No medicinal herbs, supplements, essential oils, or health claims.",
+      "Avoid this pattern if food safety, allergy fit, or cleanup burden is uncertain.",
+    ],
+    avoidIf: [
+      "avoid if it requires shopping or unfamiliar ingredients",
+      "avoid if food or drink safety is uncertain",
+      "avoid if cleanup would be more than low burden",
+    ],
+    sourceReferences: [
+      "source.laurel_woodward",
+      "source.rachel_patterson_moon",
+      "source.safety_reference_families",
+      "docs/source-ingestion-plan.md#batch-7--kitchen-plant-and-light-starter-set",
+    ],
+    approvalStatus: "approved",
+  },
+  {
+    id: "ritual_pattern_kitchen_reset",
+    key: "kitchen_reset",
+    title: "Kitchen Reset",
+    summary: "Reset one small kitchen area so care feels easier and less noisy.",
+    ritualStyles: ["kitchen", "home_tending", "surface_reset"],
+    capacityModes: ["low", "steady"],
+    defaultDurationMinutes: 10,
+    materials: ["one counter, sink area, or table section", "ordinary cleaning supplies already nearby"],
+    steps: [
+      "Choose one small kitchen zone.",
+      "Put away or discard one obvious thing.",
+      "Wipe only if the safe supplies are already nearby.",
+      "Stop before it becomes a full kitchen cleanup.",
+    ],
+    safetyFlags: withSafetyOverrides({
+      cleanupBurden: "low",
+    }),
+    safetyNotes: [
+      "Use ordinary cleaning safety and ventilation.",
+      "Do not mix cleaning products or add scents, oils, smoke, or special supplies.",
+    ],
+    avoidIf: [
+      "avoid if it would become heavy cleanup",
+      "avoid if cleaning products or ventilation are uncertain",
+      "avoid if the kitchen needs repair or food-safety action instead of a ritual frame",
+    ],
+    sourceReferences: [
+      "source.laurel_woodward",
+      "source.safety_reference_families",
+      "note.safety_overrides_symbolism",
+      "docs/source-ingestion-plan.md#batch-7--kitchen-plant-and-light-starter-set",
+    ],
+    approvalStatus: "approved",
   },
 ];
 

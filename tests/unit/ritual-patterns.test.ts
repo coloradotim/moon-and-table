@@ -31,6 +31,8 @@ describe("ritual patterns", () => {
         "room_reset",
         "close_the_evening",
         "tea_ritual",
+        "simple_warm_drink",
+        "kitchen_reset",
       ]),
     );
 
@@ -59,8 +61,10 @@ describe("ritual patterns", () => {
       "threshold_reset",
       "room_reset",
       "close_the_evening",
+      "tea_ritual",
+      "simple_warm_drink",
+      "kitchen_reset",
     ]);
-    expect(approvedKeys).not.toContain("tea_ritual");
   });
 
   it("filters eligible approved patterns by capacity mode", () => {
@@ -76,7 +80,16 @@ describe("ritual patterns", () => {
       "threshold_reset",
       "room_reset",
       "close_the_evening",
+      "tea_ritual",
+      "kitchen_reset",
     ]);
+    expect(getEligibleRitualPatterns("steady").map((pattern) => pattern.key)).toEqual(
+      expect.arrayContaining([
+        "simple_warm_drink",
+        "kitchen_reset",
+        "tea_ritual",
+      ]),
+    );
     expect(getEligibleRitualPatterns("high").map((pattern) => pattern.key)).toEqual([
       "table_reset",
       "room_reset",
@@ -143,16 +156,51 @@ describe("ritual patterns", () => {
     expect(getEligibleRitualPatterns("low", [unsafePattern])).toEqual([]);
   });
 
-  it("keeps tea pattern normal-food-use only and not active until approved", () => {
+  it("keeps kitchen plant and light patterns approved with safety guardrails", () => {
+    const requiredKeys = [
+      "tea_ritual",
+      "simple_warm_drink",
+      "kitchen_reset",
+      "tend_one_plant",
+      "led_candle_light_focus",
+    ];
+    const approvedPatterns = getApprovedRitualPatterns();
+    const patternsByKey = new Map(
+      approvedPatterns.map((pattern) => [pattern.key, pattern]),
+    );
+
+    for (const key of requiredKeys) {
+      expect(patternsByKey.has(key)).toBe(true);
+    }
+
     const teaPattern = starterRitualPatterns.find(
       (pattern) => pattern.key === "tea_ritual",
     );
+    const warmDrinkPattern = starterRitualPatterns.find(
+      (pattern) => pattern.key === "simple_warm_drink",
+    );
+    const lightPattern = starterRitualPatterns.find(
+      (pattern) => pattern.key === "led_candle_light_focus",
+    );
 
     expect(teaPattern?.safetyFlags.ingestion).toBe("normal_food_use_only");
-    expect(teaPattern?.approvalStatus).toBe("reviewed");
-    expect(getEligibleRitualPatterns("steady").map((pattern) => pattern.key)).not.toContain(
-      "tea_ritual",
+    expect(warmDrinkPattern?.safetyFlags.ingestion).toBe(
+      "normal_food_use_only",
     );
+    expect(lightPattern?.safetyFlags.fire).toBe("led_default");
+
+    for (const pattern of approvedPatterns.filter((pattern) =>
+      requiredKeys.includes(pattern.key),
+    )) {
+      const serializedPattern = JSON.stringify(pattern).toLowerCase();
+
+      expect(pattern.safetyFlags.essentialOils).not.toBe("review_required");
+      expect(pattern.safetyFlags.smoke).toBe("none");
+      expect(pattern.safetyFlags.fire).not.toBe("live_flame_opt_in");
+      expect(serializedPattern).not.toContain("medical claim");
+      expect(serializedPattern).not.toContain("crystal elixir");
+      expect(serializedPattern).not.toContain("raw flour");
+    }
   });
 
   it("keeps source-controlled patterns privacy-safe and source-safe", () => {
