@@ -223,7 +223,7 @@ Set up the first hosted private-data direction before real private profiles are 
 
 Use:
 
-* Firebase Auth for email/password or username/password-style authentication
+* Firebase Auth, with Google auth as the current first provider path
 * Firestore for private profile data, schedule constraints, capacity defaults, saved briefs, feedback, and eventual ritual notebook data
 * `.env.local` for real Firebase web app config values during local development
 * `.env.example` with placeholder Firebase config names only

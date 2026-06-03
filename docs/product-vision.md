@@ -34,7 +34,7 @@ Do not commit actual names, birth data, natal placements, schedules, or private 
 
 ## Backend and private storage direction
 
-Firebase Auth is the planned first authentication mechanism for the hosted app, using email/password or username/password-style access as the product shape allows.
+Firebase Auth is the planned first authentication mechanism for the hosted app. The current first provider path is Google auth; email/password can remain a future option if the product shape calls for it.
 
 Firestore is the planned first hosted storage layer for real private profile data, schedule and capacity settings, ritual feedback, saved briefs, and ritual notebook history. Source-controlled data remains generic: reviewed symbolic cards, schemas, templates, placeholder examples, and privacy-safe docs.
 
