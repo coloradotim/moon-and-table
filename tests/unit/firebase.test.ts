@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { signInWithGoogle, signOutOfFirebase } from "../../src/lib/auth";
 import { buildFirebaseConfig } from "../../src/lib/firebase";
 
 describe("Firebase config", () => {
@@ -35,5 +36,17 @@ describe("Firebase config", () => {
       messagingSenderId: "123456789012",
       appId: "1:123456789012:web:testappid",
     });
+  });
+});
+
+describe("Firebase auth actions", () => {
+  it("throws a clear error when Google sign-in is requested without config", async () => {
+    await expect(signInWithGoogle(null)).rejects.toThrow(
+      "Firebase is not configured.",
+    );
+  });
+
+  it("allows sign-out without config", async () => {
+    await expect(signOutOfFirebase(null)).resolves.toBeUndefined();
   });
 });

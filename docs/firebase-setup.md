@@ -34,7 +34,8 @@ Use one Firebase project for early development. Add separate staging or producti
 2. Click **Get started** if Authentication has not been enabled yet.
 3. Open **Sign-in method**.
 4. Enable **Google**.
-5. Leave other providers disabled until a later issue asks for them.
+5. In **Settings** > **Authorized domains**, make sure `localhost` is allowed for local development.
+6. Leave other providers disabled until a later issue asks for them.
 
 Do not create or document real user accounts in source control.
 
@@ -74,6 +75,26 @@ VITE_FIREBASE_APP_ID=1:000000000000:web:placeholderappid
 
 Firebase web app config is not the same as a server admin secret, but Moon & Table should still avoid committing real project values while the private-data shape is being established.
 
+## Test Google Auth Locally
+
+After `.env.local` has real Firebase web app config values and Google auth is enabled:
+
+```bash
+npm run server:restart
+```
+
+Open `http://localhost:5173`.
+
+Expected behavior:
+
+1. Signed out: the page shows `Moon & Table`, private access copy, and `Sign in with Google`.
+2. Click `Sign in with Google` and complete the Google popup.
+3. Signed in: the existing weekly brief appears, along with a small `Signed in` indicator and `Sign out`.
+4. Click `Sign out`.
+5. The page returns to the signed-out private access state.
+
+This auth step does not read private profile data from Firestore yet. After sign-in, the brief still uses the current privacy-safe fallback/generated data.
+
 ## Starter Firestore Collections
 
 Use these collection names as the first planning vocabulary:
@@ -112,11 +133,10 @@ Keep these out of the repository:
 
 ## Current Non-Goals
 
-This setup guide does not implement a sign-in UI or Firestore reads and writes in the app.
+This setup guide includes the first Google sign-in UI. It does not implement Firestore reads and writes in the app.
 
 Do not add:
 
-- Firebase Auth UI
 - Firestore reads or writes
 - calendar integration
 - Supabase

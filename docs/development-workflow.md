@@ -32,6 +32,8 @@ npm run test:e2e
 
 `npm run dev` starts the local app shell in the foreground. Use the `server:*` commands to manage the Vite dev server in the background. `npm run test:e2e` starts the app through Playwright and verifies the initial `Moon & Table` brief page.
 
+For manual Google Auth testing, add real Firebase web app config values to `.env.local`, enable Google Auth in Firebase, then run `npm run server:restart` and open `http://localhost:5173`. The signed-out page should show `Sign in with Google`; after signing in, the protected weekly brief should render. Firestore profile loading is not implemented yet.
+
 There is no lint command yet because the repo does not have an app framework or linter configuration. Add linting when the app scaffold makes the project conventions clear.
 
 ## CI
