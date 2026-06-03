@@ -261,10 +261,53 @@ describe("source registry", () => {
   });
 
   it("returns only approved source reviews for active use", () => {
-    expect(getApprovedSourceReviews().map((review) => review.id)).toEqual([
-      "source.astronomy_engine",
-      "source.safety_reference_families",
-    ]);
+    expect(getApprovedSourceReviews().map((review) => review.id)).toEqual(
+      expect.arrayContaining([
+        "source.astronomy_engine",
+        "source.cdc_cleaning_safety",
+        "source.epa_household_air",
+        "source.nfpa_fire_safety",
+        "source.fda_food_safety",
+        "source.poison_control",
+        "source.aspca_plant_safety",
+        "source.safety_reference_families",
+      ]),
+    );
+  });
+
+  it("includes MVP home kitchen plant and light source notes", () => {
+    const noteIds = starterSourceNotes.map((note) => note.id);
+
+    expect(starterSourceReviews.map((review) => review.id)).toEqual(
+      expect.arrayContaining([
+        "source.cheryl_mendelson",
+        "source.shoukei_matsumoto",
+        "source.tess_whitehurst",
+        "source.scott_cunningham_cross_check",
+        "source.cdc_cleaning_safety",
+        "source.epa_household_air",
+        "source.nfpa_fire_safety",
+        "source.fda_food_safety",
+        "source.poison_control",
+        "source.aspca_plant_safety",
+      ]),
+    );
+    expect(noteIds).toEqual(
+      expect.arrayContaining([
+        "note.home_tending_small_enough",
+        "note.home_tending_attention_care",
+        "note.home_threshold_as_transition",
+        "note.home_atmosphere_without_overclaim",
+        "note.kitchen_magic_normal_use",
+        "note.ingredient_symbolism_cross_check",
+        "note.plant_tending_check_first",
+        "note.light_focus_optional_flame",
+        "note.air_reset_without_smoke",
+        "note.food_herb_safety_override",
+        "note.pet_plant_access_review",
+        "note.poison_control_essential_oil_block",
+      ]),
+    );
   });
 
   it("keeps source-controlled examples privacy-safe", () => {

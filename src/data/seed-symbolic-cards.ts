@@ -40,6 +40,13 @@ export type SymbolicCard = {
   avoid_saying: string[];
   safety_notes: string[];
   safety_flags?: RitualSafetyFlags;
+  signalSummary?: string;
+  capacityGuidance?: Partial<Record<"pause" | "low" | "steady" | "high", string>>;
+  ritualPatternKeys?: string[];
+  sourceNoteKeys?: string[];
+  interpretationNotes?: string[];
+  toneGuidance?: string[];
+  contraindications?: string[];
   source_references: string[];
   confidence: SymbolicCardConfidence;
   approval_status: SymbolicCardApprovalStatus;
@@ -611,6 +618,25 @@ export const seedSymbolicCards: SymbolicCard[] = [
       "Keep intention prompts optional and emotionally light.",
       "If capacity is low, choose no-flame reflection or one tiny home-tending action.",
     ],
+    signalSummary: "A quiet reset point for one modest intention or a small beginning.",
+    capacityGuidance: {
+      pause: "No new practice required; simply name what can wait.",
+      low: "Choose one sentence, one cleared spot, or one candle pause under five minutes.",
+      steady: "Pair one intention with a small practical reset.",
+      high: "Make room for one new focus without starting a larger project.",
+    },
+    ritualPatternKeys: ["candle_light_focus", "clear_one_surface", "return_one_object"],
+    sourceNoteKeys: ["note.four_phase_moon_mvp", "note.new_moon_quiet_reset", "note.lunar_cards_stay_invitational"],
+    interpretationNotes: [
+      "Use as an invitation to begin quietly, not as a demand for reinvention.",
+      "Best paired with low-setup reflection, light, or clearing patterns.",
+    ],
+    toneGuidance: ["quiet", "modest", "spacious", "non-urgent"],
+    contraindications: [
+      "avoid when intention-setting feels like pressure",
+      "avoid manifestation guarantees",
+      "avoid large fresh-start rituals",
+    ],
     source_references: [
       "source.sarah_faith_gottesdiener",
       "source.rachel_patterson_moon",
@@ -652,6 +678,25 @@ export const seedSymbolicCards: SymbolicCard[] = [
       "Keep plant and kitchen actions practical, brief, and allergy-aware.",
       "Check plant and ingredient safety before suggesting anything specific.",
       "Avoid adding shopping, unfamiliar ingredients, or elaborate setup.",
+    ],
+    signalSummary: "A steady support phase for tending what is already underway.",
+    capacityGuidance: {
+      pause: "Let support mean noticing one thing that is already receiving care.",
+      low: "Offer one tiny tending action with no setup or shopping.",
+      steady: "Choose one practical follow-through action under twenty minutes.",
+      high: "Add one bounded support to an existing household need.",
+    },
+    ritualPatternKeys: ["tend_one_plant", "table_reset", "small_repair"],
+    sourceNoteKeys: ["note.four_phase_moon_mvp", "note.waxing_moon_steady_support", "note.lunar_cards_stay_invitational"],
+    interpretationNotes: [
+      "Use for support and continuation rather than starting a brand-new project.",
+      "Good fit for plant, table, and small repair patterns when capacity allows.",
+    ],
+    toneGuidance: ["steady", "encouraging", "practical", "low-pressure"],
+    contraindications: [
+      "avoid productivity pressure",
+      "avoid adding supplies or tasks",
+      "avoid implying growth must be constant",
     ],
     source_references: [
       "source.sarah_faith_gottesdiener",
@@ -695,6 +740,25 @@ export const seedSymbolicCards: SymbolicCard[] = [
       "Keep reflection prompts optional and avoid emotionally heavy processing by default.",
       "Do not push conversation rituals when privacy, consent, or capacity is uncertain.",
     ],
+    signalSummary: "A visible point for noticing clarity, gratitude, or what is complete.",
+    capacityGuidance: {
+      pause: "Let acknowledgement be enough without adding a ritual.",
+      low: "Name one clear or appreciated thing in five minutes or less.",
+      steady: "Pair acknowledgement with a small light, table, or shared-space practice.",
+      high: "Mark completion with one bounded reset or appreciation action.",
+    },
+    ritualPatternKeys: ["candle_light_focus", "table_reset", "shared_space_reset"],
+    sourceNoteKeys: ["note.four_phase_moon_mvp", "note.full_moon_visibility_without_fear", "note.lunar_cards_stay_invitational"],
+    interpretationNotes: [
+      "Use visibility as acknowledgement, not exposure.",
+      "Best for gratitude, clarity, and completion without emotional escalation.",
+    ],
+    toneGuidance: ["clear", "appreciative", "grounded", "non-ominous"],
+    contraindications: [
+      "avoid fear-based full moon language",
+      "avoid forced disclosure or confrontation",
+      "avoid claiming emotional intensity is caused by the moon",
+    ],
     source_references: [
       "source.sarah_faith_gottesdiener",
       "source.rachel_patterson_moon",
@@ -737,6 +801,25 @@ export const seedSymbolicCards: SymbolicCard[] = [
       "Keep clearing rituals physically light and avoid stirring dust or scents if sensitivity is possible.",
       "Avoid smoke, strong scents, or large cleanup as default waning-moon actions.",
       "If the household needs rest, choose permission to stop instead of a clearing task.",
+    ],
+    signalSummary: "A settling phase for clearing, integrating, releasing, or resting.",
+    capacityGuidance: {
+      pause: "Choose rest or permission to stop as the ritual.",
+      low: "Clear or return one small thing, then stop.",
+      steady: "Use a bounded surface, room, or evening-closing pattern.",
+      high: "Close one loop without turning it into a large cleanup.",
+    },
+    ritualPatternKeys: ["clear_one_surface", "close_the_evening", "end_of_week_closing"],
+    sourceNoteKeys: ["note.four_phase_moon_mvp", "note.waning_moon_clear_and_rest", "note.lunar_cards_stay_invitational"],
+    interpretationNotes: [
+      "Use release as optional relief, not forced processing.",
+      "Good fit for clearing, returning, closing, and rest cues.",
+    ],
+    toneGuidance: ["settling", "gentle", "finite", "rest-friendly"],
+    contraindications: [
+      "avoid smoke or scent defaults",
+      "avoid large cleanup framing",
+      "avoid making release emotionally mandatory",
     ],
     source_references: [
       "source.sarah_faith_gottesdiener",

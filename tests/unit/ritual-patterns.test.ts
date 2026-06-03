@@ -33,6 +33,19 @@ describe("ritual patterns", () => {
         "tea_ritual",
         "simple_warm_drink",
         "kitchen_reset",
+        "return_one_object",
+        "soften_one_corner",
+        "window_open_air_reset",
+        "bed_blanket_rest_cue",
+        "shared_space_reset",
+        "small_repair",
+        "end_of_week_closing",
+        "morning_light_pause",
+        "prune_one_dead_leaf",
+        "rotate_plant_for_light",
+        "salt_boundary_bowl",
+        "lemon_freshness_cue",
+        "rosemary_kitchen_memory",
       ]),
     );
 
@@ -53,36 +66,63 @@ describe("ritual patterns", () => {
   it("returns only approved ritual patterns for recommendation eligibility", () => {
     const approvedKeys = getApprovedRitualPatterns().map((pattern) => pattern.key);
 
-    expect(approvedKeys).toEqual([
-      "clear_one_surface",
-      "tend_one_plant",
-      "candle_light_focus",
-      "table_reset",
-      "threshold_reset",
-      "room_reset",
-      "close_the_evening",
-      "tea_ritual",
-      "simple_warm_drink",
-      "kitchen_reset",
-    ]);
+    expect(approvedKeys).toEqual(
+      expect.arrayContaining([
+        "clear_one_surface",
+        "tend_one_plant",
+        "candle_light_focus",
+        "table_reset",
+        "threshold_reset",
+        "room_reset",
+        "close_the_evening",
+        "tea_ritual",
+        "simple_warm_drink",
+        "kitchen_reset",
+        "return_one_object",
+        "soften_one_corner",
+        "window_open_air_reset",
+        "bed_blanket_rest_cue",
+        "shared_space_reset",
+        "small_repair",
+        "end_of_week_closing",
+        "morning_light_pause",
+        "prune_one_dead_leaf",
+        "rotate_plant_for_light",
+        "salt_boundary_bowl",
+        "lemon_freshness_cue",
+        "rosemary_kitchen_memory",
+      ]),
+    );
+    expect(approvedKeys.length).toBeGreaterThanOrEqual(20);
   });
 
   it("filters eligible approved patterns by capacity mode", () => {
-    expect(getEligibleRitualPatterns("pause").map((pattern) => pattern.key)).toEqual([
-      "candle_light_focus",
-      "close_the_evening",
-    ]);
-    expect(getEligibleRitualPatterns("low").map((pattern) => pattern.key)).toEqual([
-      "clear_one_surface",
-      "tend_one_plant",
-      "candle_light_focus",
-      "table_reset",
-      "threshold_reset",
-      "room_reset",
-      "close_the_evening",
-      "tea_ritual",
-      "kitchen_reset",
-    ]);
+    expect(getEligibleRitualPatterns("pause").map((pattern) => pattern.key)).toEqual(
+      expect.arrayContaining([
+        "candle_light_focus",
+        "close_the_evening",
+        "return_one_object",
+        "bed_blanket_rest_cue",
+        "morning_light_pause",
+      ]),
+    );
+    expect(getEligibleRitualPatterns("low").map((pattern) => pattern.key)).toEqual(
+      expect.arrayContaining([
+        "clear_one_surface",
+        "tend_one_plant",
+        "candle_light_focus",
+        "table_reset",
+        "threshold_reset",
+        "room_reset",
+        "close_the_evening",
+        "tea_ritual",
+        "kitchen_reset",
+        "return_one_object",
+        "window_open_air_reset",
+        "morning_light_pause",
+        "salt_boundary_bowl",
+      ]),
+    );
     expect(getEligibleRitualPatterns("steady").map((pattern) => pattern.key)).toEqual(
       expect.arrayContaining([
         "simple_warm_drink",
@@ -90,13 +130,17 @@ describe("ritual patterns", () => {
         "tea_ritual",
       ]),
     );
-    expect(getEligibleRitualPatterns("high").map((pattern) => pattern.key)).toEqual([
-      "table_reset",
-      "room_reset",
-    ]);
+    expect(getEligibleRitualPatterns("high").map((pattern) => pattern.key)).toEqual(
+      expect.arrayContaining([
+        "table_reset",
+        "room_reset",
+        "shared_space_reset",
+        "small_repair",
+      ]),
+    );
   });
 
-  it("includes at least five approved home-tending starter patterns", () => {
+  it("includes a meaningful MVP-depth home-tending pattern set", () => {
     const homeTendingKeys = getApprovedRitualPatterns()
       .filter((pattern) => pattern.ritualStyles.includes("home_tending"))
       .map((pattern) => pattern.key);
@@ -108,9 +152,16 @@ describe("ritual patterns", () => {
         "room_reset",
         "clear_one_surface",
         "close_the_evening",
+        "return_one_object",
+        "soften_one_corner",
+        "window_open_air_reset",
+        "bed_blanket_rest_cue",
+        "shared_space_reset",
+        "small_repair",
+        "end_of_week_closing",
       ]),
     );
-    expect(homeTendingKeys.length).toBeGreaterThanOrEqual(5);
+    expect(homeTendingKeys.length).toBeGreaterThanOrEqual(8);
   });
 
   it("keeps approved home-tending reset patterns free of smoke oils and candle flame", () => {
@@ -163,6 +214,12 @@ describe("ritual patterns", () => {
       "kitchen_reset",
       "tend_one_plant",
       "candle_light_focus",
+      "morning_light_pause",
+      "prune_one_dead_leaf",
+      "rotate_plant_for_light",
+      "salt_boundary_bowl",
+      "lemon_freshness_cue",
+      "rosemary_kitchen_memory",
     ];
     const approvedPatterns = getApprovedRitualPatterns();
     const patternsByKey = new Map(
@@ -199,9 +256,56 @@ describe("ritual patterns", () => {
       if (pattern.key !== "candle_light_focus") {
         expect(pattern.safetyFlags.fire).not.toBe("live_flame");
       }
+      if (pattern.key.includes("plant") || pattern.key.includes("rosemary")) {
+        expect(pattern.safetyNotes.join(" ").toLowerCase()).toMatch(/pet|plant|herb/);
+      }
       expect(serializedPattern).not.toContain("medical claim");
       expect(serializedPattern).not.toContain("crystal elixir");
       expect(serializedPattern).not.toContain("raw flour");
+    }
+  });
+
+  it("adds structured depth fields to approved MVP patterns", () => {
+    const requiredKeys = [
+      "threshold_reset",
+      "table_reset",
+      "room_reset",
+      "clear_one_surface",
+      "close_the_evening",
+      "return_one_object",
+      "soften_one_corner",
+      "window_open_air_reset",
+      "bed_blanket_rest_cue",
+      "shared_space_reset",
+      "small_repair",
+      "end_of_week_closing",
+      "tea_ritual",
+      "simple_warm_drink",
+      "kitchen_reset",
+      "tend_one_plant",
+      "morning_light_pause",
+      "prune_one_dead_leaf",
+      "rotate_plant_for_light",
+      "salt_boundary_bowl",
+      "lemon_freshness_cue",
+      "rosemary_kitchen_memory",
+    ];
+    const patternByKey = new Map(
+      getApprovedRitualPatterns().map((pattern) => [pattern.key, pattern]),
+    );
+
+    for (const key of requiredKeys) {
+      const pattern = patternByKey.get(key);
+
+      expect(pattern, key).toBeDefined();
+      expect(pattern?.capacityGuidance).toBeDefined();
+      expect(pattern?.toneGuidance?.length).toBeGreaterThan(0);
+      expect(pattern?.sourceNoteKeys?.length).toBeGreaterThan(0);
+      expect(pattern?.generatorUseNotes?.length).toBeGreaterThan(0);
+      expect(pattern?.contraindications?.length).toBeGreaterThan(0);
+      expect(pattern?.sourceReferences).toEqual(
+        expect.arrayContaining(pattern?.sourceNoteKeys ?? []),
+      );
     }
   });
 

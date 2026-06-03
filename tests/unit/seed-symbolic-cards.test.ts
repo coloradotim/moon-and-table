@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 
+import { starterRitualPatterns } from "../../src/data/ritual-patterns";
 import { seedSymbolicCards } from "../../src/data/seed-symbolic-cards";
+import {
+  getTimingSignalsForFacts,
+} from "../../src/lib/timing-interpretation-rules";
 
 const expectedSeedKeys = [
   "new_moon",
@@ -189,6 +193,60 @@ describe("seedSymbolicCards", () => {
     expect(serializedLunarCards).not.toContain("private source text");
     expect(serializedLunarCards).not.toContain("birth");
     expect(serializedLunarCards).not.toContain("natal");
+  });
+
+  it("adds structured MVP-depth to the four lunar phase cards", () => {
+    const lunarCards = seedSymbolicCards.filter(
+      (card) => card.category === "moon_phase",
+    );
+    const approvedOrPlannedPatternKeys = new Set([
+      ...starterRitualPatterns.map((pattern) => pattern.key),
+      "return_one_object",
+      "small_repair",
+      "shared_space_reset",
+      "end_of_week_closing",
+    ]);
+
+    for (const card of lunarCards) {
+      expect(card.signalSummary).toEqual(expect.any(String));
+      expect(card.signalSummary?.length).toBeGreaterThan(20);
+      expect(card.capacityGuidance).toBeDefined();
+      expect(Object.keys(card.capacityGuidance ?? {}).length).toBeGreaterThanOrEqual(3);
+      expect(card.toneGuidance?.length).toBeGreaterThan(0);
+      expect(card.sourceNoteKeys).toEqual(
+        expect.arrayContaining(["note.four_phase_moon_mvp", "note.lunar_cards_stay_invitational"]),
+      );
+      expect(card.source_references).toEqual(
+        expect.arrayContaining(card.sourceNoteKeys ?? []),
+      );
+      expect(card.interpretationNotes?.length).toBeGreaterThan(0);
+      expect(card.contraindications?.length).toBeGreaterThan(0);
+      expect(card.ritualPatternKeys?.length).toBeGreaterThan(0);
+
+      for (const key of card.ritualPatternKeys ?? []) {
+        expect(approvedOrPlannedPatternKeys.has(key), key).toBe(true);
+      }
+    }
+  });
+
+  it("uses enriched lunar signal summaries for generated timing signals", () => {
+    const signals = getTimingSignalsForFacts([
+      {
+        id: "timing.moon_phase.full.test",
+        type: "moon_phase",
+        label: "Full moon",
+        phase: "full",
+        phaseAngleDegrees: 180,
+        exactIso: "2026-06-03T12:00:00.000Z",
+        timezone: "UTC",
+        computedBy: "manual",
+        confidence: "computed",
+      },
+    ]);
+
+    expect(signals[0]?.signalSummary).toBe(
+      seedSymbolicCards.find((card) => card.key === "full_moon")?.signalSummary,
+    );
   });
 
   it("adds an approved MVP astrology symbolic layer", () => {
