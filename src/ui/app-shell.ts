@@ -1,5 +1,7 @@
 import {
   generateWeeklyBrief,
+  type BriefExplanation,
+  type BriefSourceSummary,
   type CapacityMode,
   type WeeklyBrief,
 } from "../lib/generate-weekly-brief";
@@ -75,6 +77,96 @@ function renderOptionalAddOn(value: string): string {
   const softenedValue = value.charAt(0).toLowerCase() + value.slice(1);
 
   return `<p class="brief__optional">Optional: ${escapeHtml(softenedValue)}</p>`;
+}
+
+function renderBriefSignals(explanation: BriefExplanation): string {
+  if (explanation.signals.length === 0) {
+    return "";
+  }
+
+  return `
+    <section class="brief__signals" aria-label="This week's signals">
+      <h3>This week's signals</h3>
+      <ul class="brief__signal-list">
+        ${explanation.signals.map((signal) => `
+          <li class="brief__signal" data-signal-type="${escapeHtml(signal.type)}">
+            <span>${escapeHtml(signal.label)}</span>
+          </li>
+        `).join("")}
+      </ul>
+    </section>
+  `;
+}
+
+function renderBriefReasoning(explanation: BriefExplanation): string {
+  const primaryReason =
+    explanation.reasoning.find((reason) => reason.label === "Why this ritual") ??
+    explanation.reasoning[0];
+
+  if (!primaryReason) {
+    return "";
+  }
+
+  return `
+    <section class="why-this" aria-label="Why this ritual">
+      <h3>Why this ritual</h3>
+      <p>${escapeHtml(primaryReason.summary)}</p>
+    </section>
+  `;
+}
+
+function getSourceKindLabel(kind: BriefSourceSummary["kind"]): string {
+  switch (kind) {
+    case "source_review":
+      return "Source review";
+    case "symbolic_card":
+      return "Symbolic card";
+    case "ritual_pattern":
+      return "Ritual pattern";
+    case "safety_guardrail":
+      return "Safety";
+    case "timing_fact":
+      return "Timing fact";
+  }
+}
+
+function renderBriefSources(explanation: BriefExplanation): string {
+  if (explanation.sourcesUsed.length === 0) {
+    return "";
+  }
+
+  return `
+    <section class="brief__sources" aria-label="Sources used">
+      <h3>Sources used</h3>
+      <div class="brief__source-list">
+        ${explanation.sourcesUsed.map((source) => `
+          <article class="brief__source">
+            <p class="brief__source-label">${escapeHtml(source.label)}</p>
+            <p><span>${escapeHtml(getSourceKindLabel(source.kind))}</span>${source.summary ? ` — ${escapeHtml(source.summary)}` : ""}</p>
+          </article>
+        `).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderBriefChoiceDetails(explanation: BriefExplanation): string {
+  const signals = renderBriefSignals(explanation);
+  const sources = renderBriefSources(explanation);
+
+  if (!signals && !sources) {
+    return "";
+  }
+
+  return `
+    <details class="brief__choice-details" aria-label="How this was chosen">
+      <summary>How this was chosen</summary>
+      <div class="brief__choice-details-body">
+        ${signals}
+        ${sources}
+      </div>
+    </details>
+  `;
 }
 
 function renderMoonGlyph(brief: WeeklyBrief): string {
@@ -514,16 +606,13 @@ export function renderSignedInShell(
         ${renderOptionalAddOn(brief.optionalAddOn)}
       </section>
 
-      <section class="brief__depth" aria-label="Go deeper">
-        <section class="why-this" aria-label="Why this fits">
-          <h3>Why this fits</h3>
-          <p>${escapeHtml(brief.whyThis)}</p>
-        </section>
-
+      <section class="brief__depth" aria-label="Brief explanation">
+        ${renderBriefReasoning(brief.explanation)}
         <section class="brief__question" aria-label="Question to carry">
           <p class="brief__section-label">Question to carry</p>
           <p class="prompt">${escapeHtml(brief.reflectionPrompt)}</p>
         </section>
+        ${renderBriefChoiceDetails(brief.explanation)}
       </section>
 
       <section class="brief__actions" aria-label="Brief actions">

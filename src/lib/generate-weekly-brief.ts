@@ -6,6 +6,9 @@ import {
   seedSymbolicCards,
   type SymbolicCard,
 } from "../data/seed-symbolic-cards";
+import {
+  starterSourceReviews,
+} from "../data/source-registry";
 import type { PrivateAudience } from "./private-data-schema";
 import {
   getLunarTimingFact,
@@ -17,6 +20,12 @@ import {
   normalizeProfilePreferenceValues,
 } from "./profile-preference-taxonomy";
 import { validateRitualSafety, type RitualSafetyFlags } from "./ritual-safety";
+import type { TimingFact } from "./timing-facts";
+import {
+  getTimingSignalsForFacts,
+  selectTimingSignals,
+  type TimingSignal,
+} from "./timing-interpretation-rules";
 
 export const CAPACITY_MODES = ["pause", "low", "steady", "high"] as const;
 
@@ -80,6 +89,48 @@ export type WeeklyBriefTrace = {
   };
 };
 
+export type BriefSignal = {
+  label: string;
+  type:
+    | "moon"
+    | "planetary"
+    | "numerology"
+    | "seasonal"
+    | "profile"
+    | "capacity"
+    | "schedule";
+  summary: string;
+  strength: "primary" | "supporting" | "accent";
+};
+
+export type BriefReason = {
+  label: string;
+  summary: string;
+};
+
+export type BriefFilterNote = {
+  label: string;
+  summary: string;
+};
+
+export type BriefSourceSummary = {
+  label: string;
+  kind:
+    | "source_review"
+    | "symbolic_card"
+    | "ritual_pattern"
+    | "safety_guardrail"
+    | "timing_fact";
+  summary?: string;
+};
+
+export type BriefExplanation = {
+  signals: BriefSignal[];
+  reasoning: BriefReason[];
+  filtersApplied: BriefFilterNote[];
+  sourcesUsed: BriefSourceSummary[];
+};
+
 export type WeeklyBrief = {
   briefKey: string;
   dateRange: string;
@@ -91,6 +142,7 @@ export type WeeklyBrief = {
   reflectionPrompt: string;
   whyThis: string;
   sourceSummary: string;
+  explanation: BriefExplanation;
   trace: WeeklyBriefTrace;
 };
 
@@ -599,10 +651,166 @@ function getOptionalAddOn(
 
 function getTimingReason(card: SymbolicCard, timingFact?: LunarTimingFact): string {
   if (timingFact) {
-    return `The lunar timing points toward ${timingFact.label.toLowerCase()} themes of ${card.themes[0]} and ${card.themes[1]}.`;
+    return `The ${timingFact.label.toLowerCase()} points toward ${card.themes[0]} and ${card.themes[1]}.`;
   }
 
   return `${card.title} brings in themes of ${card.themes[0]} and ${card.themes[1]}.`;
+}
+
+function toTimingFact(timingFact: LunarTimingFact): TimingFact {
+  return {
+    id: timingFact.id,
+    type: timingFact.type,
+    label: timingFact.label,
+    startIso: timingFact.dateStart,
+    endIso: timingFact.dateEnd,
+    exactIso: timingFact.exactIso,
+    timezone: timingFact.timezone,
+    computedBy: timingFact.computedBy,
+    confidence: timingFact.confidence,
+    phase: timingFact.phase,
+    phaseAngleDegrees: timingFact.phaseAngleDegrees,
+  };
+}
+
+function getSelectedTimingSignals(
+  input: ResolvedGenerateWeeklyBriefInput,
+): TimingSignal[] {
+  const computedFacts = input.timingFactDetails.map(toTimingFact);
+  const signals = getTimingSignalsForFacts(computedFacts);
+
+  return selectTimingSignals(signals, {
+    maxSignals: 2,
+    preferredRitualStyles: input.preferredRitualStyles,
+    avoidedRitualStyles: input.avoidedRitualStyles,
+  });
+}
+
+function getSignalType(signal: TimingSignal): BriefSignal["type"] {
+  switch (signal.timingFactType) {
+    case "moon_phase":
+    case "lunation":
+      return "moon";
+    case "numerology_date":
+      return "numerology";
+    case "solar_season":
+      return "seasonal";
+    case "moon_sign":
+    case "sun_sign":
+    case "planet_sign":
+    case "planet_retrograde":
+    case "planetary_aspect":
+      return "planetary";
+  }
+}
+
+function getCapacitySignal(
+  capacityMode: CapacityMode,
+  durationMinutes: number,
+): BriefSignal {
+  const labelByCapacity: Record<CapacityMode, string> = {
+    pause: "Capacity — pause",
+    low: "Capacity — low",
+    steady: "Capacity — steady",
+    high: "Capacity — high",
+  };
+  const summaryByCapacity: Record<CapacityMode, string> = {
+    pause: "No ritual is required; the brief can offer permission to stop.",
+    low: "The recommendation stays very short and avoids extra setup.",
+    steady: "The recommendation can be practical while staying under twenty minutes.",
+    high: "The recommendation can be more active without becoming a task list.",
+  };
+
+  return {
+    label: labelByCapacity[capacityMode],
+    type: "capacity",
+    summary:
+      capacityMode === "pause"
+        ? summaryByCapacity[capacityMode]
+        : `${summaryByCapacity[capacityMode]} Current limit: ${durationMinutes} minutes or less.`,
+    strength: "supporting",
+  };
+}
+
+function getScheduleSignal(
+  scheduleConstraints: ManualScheduleConstraints,
+): BriefSignal {
+  const primaryWindow = getPrimaryScheduleAssumption(scheduleConstraints);
+  const windowLabel = getWindowLabel(primaryWindow);
+  const movedFromSymbolicWindow =
+    scheduleConstraints.unavailableDaysOrNights.length > 0 &&
+    primaryWindow !== "schedule.symbolic_event_tuesday";
+
+  return {
+    label: movedFromSymbolicWindow
+      ? "Schedule — realistic window"
+      : `Schedule — ${windowLabel.toLowerCase()}`,
+    type: "schedule",
+    summary: movedFromSymbolicWindow
+      ? `${windowLabel} is used because the symbolic event window is not the best fit for the household week.`
+      : `${windowLabel} is the selected household window for this suggestion.`,
+    strength: "supporting",
+  };
+}
+
+function getProfileSignal(
+  privateProfileCard: SymbolicCard | undefined,
+  preferenceMatches: string[],
+): BriefSignal | undefined {
+  if (preferenceMatches.length > 0) {
+    const label = preferenceMatches
+      .slice(0, 2)
+      .map((preference) => getProfilePreferenceLabel(preference).toLowerCase())
+      .join(" and ");
+
+    return {
+      label: `Saved preference — ${label}`,
+      type: "profile",
+      summary: "This fits a saved preference that shaped the ritual choice.",
+      strength: "supporting",
+    };
+  }
+
+  if (privateProfileCard) {
+    return {
+      label: "Saved preference — practical home tending",
+      type: "profile",
+      summary:
+        "This fits the saved preference for practical, useful home-tending rituals.",
+      strength: "supporting",
+    };
+  }
+
+  return undefined;
+}
+
+function getBriefSignals(
+  input: ResolvedGenerateWeeklyBriefInput,
+  privateProfileCard: SymbolicCard | undefined,
+  preferenceMatches: string[],
+): BriefSignal[] {
+  const durationMinutes = getEffectiveDurationMinutes(
+    input.capacityMode,
+    input.scheduleConstraints,
+  );
+  const timingSignals = getSelectedTimingSignals(input).map((signal) => ({
+    label: signal.signalLabel,
+    type: getSignalType(signal),
+    summary: signal.signalSummary,
+    strength: signal.strength,
+  }));
+  const capacitySignal = getCapacitySignal(input.capacityMode, durationMinutes);
+  const scheduleSignal = getScheduleSignal(input.scheduleConstraints);
+  const profileSignal = getProfileSignal(privateProfileCard, preferenceMatches);
+
+  return [
+    ...timingSignals,
+    capacitySignal,
+    profileSignal,
+    scheduleSignal,
+  ]
+    .filter((signal): signal is BriefSignal => signal !== undefined)
+    .slice(0, 4);
 }
 
 function getCapacityReason(
@@ -664,6 +872,38 @@ function getPreferenceReason(
   return "Your household settings help keep the suggestion practical and private.";
 }
 
+function getFitReason(
+  privateProfileCard: SymbolicCard | undefined,
+  preferenceMatches: string[],
+  avoidedRitualStyles: string[],
+): string {
+  if (preferenceMatches.length > 0) {
+    const labels = preferenceMatches
+      .slice(0, 2)
+      .map((preference) => getProfilePreferenceLabel(preference).toLowerCase());
+
+    return `Your saved preferences lean toward ${labels.join(" and ")}.`;
+  }
+
+  if (privateProfileCard) {
+    return `Your saved settings favor ${privateProfileCard.themes[0]}.`;
+  }
+
+  const burdenAvoidances = avoidedRitualStyles.filter(
+    (style) => getProfilePreferenceGroup(style) === "burden_avoid_flag",
+  );
+
+  if (burdenAvoidances.length > 0) {
+    const labels = burdenAvoidances
+      .slice(0, 2)
+      .map((preference) => getProfilePreferenceLabel(preference).toLowerCase());
+
+    return `It avoids ${labels.join(" and ")} because those are marked as a poor fit.`;
+  }
+
+  return "Your household settings keep the suggestion practical.";
+}
+
 function getWhyThis(
   timingCard: SymbolicCard,
   pattern: RitualPattern,
@@ -676,15 +916,73 @@ function getWhyThis(
     input.capacityMode,
     input.scheduleConstraints,
   );
-  const profileReason = privateProfileCard
-    ? `Your household settings point toward ${privateProfileCard.themes[0]}.`
-    : "Your household settings stay private while shaping the brief.";
   const safetyReason =
     excludedPatternKeys.length > 0
       ? `A few options were set aside because they did not fit current capacity, safety, or preferences.`
       : "";
+  const capacityReason = getCapacityReason(input.capacityMode, durationMinutes);
+  const scheduleReason = getScheduleReason(input.scheduleConstraints);
 
-  return `${getTimingReason(timingCard, input.timingFactDetails[0])} ${pattern.title} fits as one simple home practice for that theme. ${getPreferenceReason(preferenceMatches, input.avoidedRitualStyles)} ${safetyReason} ${profileReason} ${getScheduleReason(input.scheduleConstraints)} ${getCapacityReason(input.capacityMode, durationMinutes)}`.replace(/\s+/g, " ").trim();
+  return `${getTimingReason(timingCard, input.timingFactDetails[0])} ${pattern.title} was chosen as one small approved home practice for that theme. ${getFitReason(privateProfileCard, preferenceMatches, input.avoidedRitualStyles)} ${scheduleReason} ${capacityReason} ${safetyReason}`.replace(/\s+/g, " ").trim();
+}
+
+function getReasoning(
+  whyThis: string,
+  pattern: RitualPattern,
+  input: ResolvedGenerateWeeklyBriefInput,
+): BriefReason[] {
+  return [
+    {
+      label: "Why this ritual",
+      summary: whyThis,
+    },
+    {
+      label: "Why only one thing",
+      summary:
+        input.capacityMode === "high"
+          ? `${pattern.title} is still kept to one primary recommendation so the week does not turn into a task list.`
+          : `${pattern.title} is kept to one primary recommendation so the brief stays low-overwhelm.`,
+    },
+  ];
+}
+
+function getFilterNotes(
+  input: ResolvedGenerateWeeklyBriefInput,
+  preferenceMatches: string[],
+  excludedPatternKeys: string[],
+  safetyNotes: string[],
+): BriefFilterNote[] {
+  const durationMinutes = getEffectiveDurationMinutes(
+    input.capacityMode,
+    input.scheduleConstraints,
+  );
+  const notes: BriefFilterNote[] = [
+    {
+      label: "Capacity",
+      summary: getCapacityReason(input.capacityMode, durationMinutes),
+    },
+    {
+      label: "Schedule",
+      summary: getScheduleReason(input.scheduleConstraints),
+    },
+  ];
+
+  if (preferenceMatches.length > 0 || input.avoidedRitualStyles.length > 0) {
+    notes.push({
+      label: "Preferences",
+      summary: getPreferenceReason(preferenceMatches, input.avoidedRitualStyles),
+    });
+  }
+
+  if (excludedPatternKeys.length > 0 || safetyNotes.length > 0) {
+    notes.push({
+      label: "Safety and fit",
+      summary:
+        "Some options were set aside when they did not fit current capacity, preferences, or household safety guardrails.",
+    });
+  }
+
+  return notes;
 }
 
 function getTheme(timingCard: SymbolicCard, pattern: RitualPattern): string {
@@ -760,6 +1058,111 @@ function getSourceSummary(
     safetyNotes.length > 0 ? ", safety guardrails" : "";
 
   return `Sources: ${timingCard.title.toLowerCase()} card, ${pattern.title.toLowerCase()} pattern${safetySummary}.`;
+}
+
+function getHumanSourceLabel(reference: string): string | undefined {
+  if (reference.startsWith("source.")) {
+    const review = starterSourceReviews.find((source) => source.id === reference);
+
+    return review?.title;
+  }
+
+  if (reference.includes("#2-moon-phase-reference-set")) {
+    return "Moon phase source packet";
+  }
+
+  if (reference.includes("#3-numerology-reference-set")) {
+    return "Numerology source packet";
+  }
+
+  if (reference.includes("#4-home-magic-starter-set")) {
+    return "Home magic source packet";
+  }
+
+  if (reference.includes("source-ingestion-plan")) {
+    return "Source ingestion plan";
+  }
+
+  return undefined;
+}
+
+function getSourceSummaries(
+  timingCard: SymbolicCard,
+  pattern: RitualPattern,
+  timingSignals: TimingSignal[],
+  safetyNotes: string[],
+): BriefSourceSummary[] {
+  const sourceSummaries: BriefSourceSummary[] = [
+    {
+      label: `${timingCard.title} card`,
+      kind: "symbolic_card",
+      summary: "Approved symbolic card used for the timing theme.",
+    },
+    {
+      label: `${pattern.title} pattern`,
+      kind: "ritual_pattern",
+      summary: "Approved ritual pattern selected for the recommendation.",
+    },
+  ];
+
+  const humanSourceLabels = [
+    ...timingCard.source_references,
+    ...pattern.sourceReferences,
+    ...timingSignals.flatMap((signal) => signal.sourceReferences),
+  ]
+    .map(getHumanSourceLabel)
+    .filter((label): label is string => label !== undefined);
+
+  for (const label of [...new Set(humanSourceLabels)].slice(0, 4)) {
+    sourceSummaries.push({
+      label,
+      kind: "source_review",
+      summary: "Reviewed source context; no source prose is copied into the brief.",
+    });
+  }
+
+  if (safetyNotes.length > 0 || pattern.sourceReferences.includes("source.safety_reference_families")) {
+    sourceSummaries.push({
+      label: "Household safety guardrails",
+      kind: "safety_guardrail",
+      summary: "Used to keep the ritual practical for a real home.",
+    });
+  }
+
+  return sourceSummaries.filter(
+    (source, index, allSources) =>
+      allSources.findIndex((candidate) => candidate.label === source.label) === index,
+  );
+}
+
+function getExplanation(
+  timingCard: SymbolicCard,
+  pattern: RitualPattern,
+  privateProfileCard: SymbolicCard | undefined,
+  input: ResolvedGenerateWeeklyBriefInput,
+  preferenceMatches: string[],
+  excludedPatternKeys: string[],
+  safetyNotes: string[],
+  whyThis: string,
+): BriefExplanation {
+  const timingSignals = getSelectedTimingSignals(input);
+
+  return {
+    signals: getBriefSignals(input, privateProfileCard, preferenceMatches),
+    reasoning: getReasoning(whyThis, pattern, input),
+    filtersApplied: getFilterNotes(
+      input,
+      preferenceMatches,
+      excludedPatternKeys,
+      safetyNotes,
+    ),
+    sourcesUsed: getSourceSummaries(
+      timingCard,
+      pattern,
+      timingSignals,
+      safetyNotes,
+    ),
+  };
 }
 
 function splitSourceReferences(sourceReferences: string[]): {
@@ -857,6 +1260,14 @@ export function generateWeeklyBrief(
   const { sourceReviewIds, sourceNoteIds } = splitSourceReferences([
     ...new Set(sourceReferences),
   ]);
+  const whyThis = getWhyThis(
+    timingCard,
+    pattern,
+    privateProfileCard,
+    resolvedInput,
+    preferenceMatches,
+    excludedPatternKeys,
+  );
 
   return {
     briefKey: getBriefKey(resolvedInput, pattern),
@@ -878,15 +1289,18 @@ export function generateWeeklyBrief(
     reflectionPrompt: getReflectionPrompt(
       getPrimaryMoonTimingFact(resolvedInput.timingFacts),
     ),
-    whyThis: getWhyThis(
+    whyThis,
+    sourceSummary: getSourceSummary(timingCard, pattern, safetyNotes),
+    explanation: getExplanation(
       timingCard,
       pattern,
       privateProfileCard,
       resolvedInput,
       preferenceMatches,
       excludedPatternKeys,
+      safetyNotes,
+      whyThis,
     ),
-    sourceSummary: getSourceSummary(timingCard, pattern, safetyNotes),
     trace: {
       timingFacts: resolvedInput.timingFacts,
       timingFactDetails: resolvedInput.timingFactDetails.map((fact) => ({

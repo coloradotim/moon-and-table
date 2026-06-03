@@ -52,10 +52,16 @@ describe("generateWeeklyBrief", () => {
       reflectionPrompt: expect.any(String),
       whyThis: expect.any(String),
       sourceSummary: expect.any(String),
+      explanation: expect.any(Object),
       trace: expect.any(Object),
     });
     expect(brief.whyThis.length).toBeGreaterThan(0);
     expect(brief.sourceSummary).toContain("Sources:");
+    expect(brief.explanation.signals.length).toBeGreaterThan(0);
+    expect(brief.explanation.reasoning[0]).toMatchObject({
+      label: "Why this ritual",
+      summary: expect.any(String),
+    });
     expect(brief.theme).toMatch(/^[A-Z].*[.!?]$/);
     expect(brief.intention).toMatch(/^[A-Z].*[.!?]$/);
     expect(brief.theme).not.toContain(" with offer ");
@@ -222,6 +228,69 @@ describe("generateWeeklyBrief", () => {
     ]);
   });
 
+  it("returns only selected user-facing signals for the recommendation", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-06-03T12:00:00.000Z",
+      capacityMode: "low",
+      preferredRitualStyles: ["plant_tending"],
+    });
+    const labels = brief.explanation.signals.map((signal) => signal.label);
+
+    expect(brief.explanation.signals).toHaveLength(4);
+    expect(labels).toContain("Full moon");
+    expect(labels).toContain("Capacity — low");
+    expect(labels).toContain("Saved preference — plant tending");
+    expect(labels).toContain("Schedule — realistic window");
+    expect(labels).not.toContain("Moon sign");
+    expect(labels).not.toContain("Planetary aspect");
+    expect(JSON.stringify(brief.explanation.signals)).not.toContain("moon.full");
+    expect(JSON.stringify(brief.explanation.signals)).not.toContain("private_profile.");
+  });
+
+  it("keeps explanation source labels human-readable", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-06-03T12:00:00.000Z",
+      capacityMode: "low",
+      preferredRitualStyles: ["plant_tending"],
+    });
+    const serializedExplanation = JSON.stringify(brief.explanation);
+
+    expect(brief.explanation.sourcesUsed.length).toBeGreaterThan(0);
+    expect(brief.explanation.sourcesUsed).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          label: "Full Moon card",
+          kind: "symbolic_card",
+        }),
+        expect.objectContaining({
+          kind: "ritual_pattern",
+        }),
+      ]),
+    );
+    expect(serializedExplanation).not.toContain("source.");
+    expect(serializedExplanation).not.toContain("docs/source-");
+    expect(serializedExplanation).not.toContain("private_profile.");
+  });
+
+  it("explains profile, capacity, and schedule effects in human language", () => {
+    const brief = generateWeeklyBrief({
+      capacityMode: "low",
+      preferredRitualStyles: ["plant_tending"],
+      scheduleConstraints: {
+        unavailableDaysOrNights: ["Tuesday night"],
+        preferredRitualWindows: ["schedule.preferred_window_saturday_morning"],
+      },
+    });
+    const explanationText = JSON.stringify(brief.explanation);
+
+    expect(explanationText).toContain("Capacity");
+    expect(explanationText).toContain("Schedule");
+    expect(explanationText).toContain("Saved preference");
+    expect(explanationText).toContain("Saturday morning");
+    expect(explanationText).not.toContain("your chart says");
+    expect(explanationText).not.toContain("will cause");
+  });
+
   it("can consume a lunar timing fact object from the timing helper", () => {
     const timingFact = getLunarTimingFact("2026-06-15T03:00:00.000Z");
     const brief = generateWeeklyBrief({
@@ -238,7 +307,7 @@ describe("generateWeeklyBrief", () => {
         computedBy: "astronomy_engine",
       }),
     ]);
-    expect(brief.whyThis).toContain("new moon themes");
+    expect(brief.whyThis).toContain("The new moon points toward");
   });
 
   it("can produce an alternate approved pattern when the current pattern is excluded", () => {
@@ -276,6 +345,7 @@ describe("generateWeeklyBrief", () => {
       "private_profile.structured_action",
     );
     expect(brief.sourceSummary).not.toContain("private_profile");
+    expect(JSON.stringify(brief.explanation)).not.toContain("private_profile");
   });
 
   it("keeps generated output non-identifying", () => {
