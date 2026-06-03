@@ -53,6 +53,15 @@ const expectedSeedKeys = [
   "astrology_aspect_trine",
   "astrology_aspect_sextile",
   "astrology_motion_retrograde",
+  "seasonal_spring_equinox",
+  "seasonal_summer_solstice",
+  "seasonal_autumn_equinox",
+  "seasonal_winter_solstice",
+  "seasonal_opening_freshening",
+  "seasonal_warmth_light_rest",
+  "seasonal_harvest_gratitude_storing",
+  "seasonal_wintering_attention",
+  "seasonal_table_home_reset",
   "private_profile_practical_care_theme",
   "private_profile_beauty_warmth_theme",
   "private_profile_structured_action_theme",
@@ -197,6 +206,52 @@ describe("seedSymbolicCards", () => {
     expect(serializedLunarCards).not.toContain("private source text");
     expect(serializedLunarCards).not.toContain("birth");
     expect(serializedLunarCards).not.toContain("natal");
+  });
+
+  it("adds source-backed seasonal cards for anchors and home themes", () => {
+    const seasonalCards = seedSymbolicCards.filter(
+      (card) => card.category === "seasonal",
+    );
+    const seasonalText = JSON.stringify(seasonalCards).toLowerCase();
+
+    expect(seasonalCards.map((card) => card.key).sort()).toEqual([
+      "seasonal_autumn_equinox",
+      "seasonal_harvest_gratitude_storing",
+      "seasonal_opening_freshening",
+      "seasonal_spring_equinox",
+      "seasonal_summer_solstice",
+      "seasonal_table_home_reset",
+      "seasonal_warmth_light_rest",
+      "seasonal_winter_solstice",
+      "seasonal_wintering_attention",
+    ]);
+
+    for (const card of seasonalCards) {
+      expect(card.approval_status).toBe("approved");
+      expect(card.signalSummary).toEqual(expect.any(String));
+      expect(card.sourceNoteKeys?.length).toBeGreaterThan(0);
+      expect(card.toneGuidance?.length).toBeGreaterThan(0);
+      expect(card.source_references).toEqual(
+        expect.arrayContaining([
+          "source.astronomy_engine",
+          "source.noaa_nws_seasonal_facts",
+          "source.temperance_alden_seasonal_practice",
+          "source.anna_franklin_seasonal_home",
+          "source.old_farmers_almanac_context",
+          "note.seasonal_facts_as_markers",
+          "note.almanac_context_not_authority",
+        ]),
+      );
+      expect(card.avoid_saying.length).toBeGreaterThan(0);
+      expect(card.safety_notes.length).toBeGreaterThan(0);
+    }
+
+    expect(seasonalText).not.toContain("guarantee");
+    expect(seasonalText).not.toContain("must celebrate");
+    expect(seasonalText).not.toContain("copied source text");
+    expect(seasonalText).not.toContain("required festival");
+    expect(seasonalText).not.toContain("private source text");
+    expect(seasonalText).not.toContain("birth");
   });
 
   it("adds structured MVP-depth to the four lunar phase cards", () => {

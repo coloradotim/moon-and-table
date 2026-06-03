@@ -759,6 +759,57 @@ export const starterRitualPatterns: RitualPattern[] = [
     approvalStatus: "approved",
   },
   {
+    id: "ritual_pattern_seasonal_table_home_reset",
+    key: "seasonal_table_home_reset",
+    title: "Seasonal Table or Home Reset",
+    summary: "Mark a seasonal shift with one ordinary object, surface, or cleared spot.",
+    ritualStyles: ["seasonal", "table_reset", "home_tending", "threshold_reset"],
+    capacityModes: ["low", "steady"],
+    defaultDurationMinutes: 10,
+    materials: ["one ordinary household object or small surface already available"],
+    steps: [
+      "Choose one table, shelf, threshold, or small home spot.",
+      "Clear or place one ordinary object that already belongs in the home.",
+      "Name the seasonal shift in plain words, then stop before adding decor or tasks.",
+    ],
+    safetyFlags: withSafetyOverrides({ cleanupBurden: "low" }),
+    safetyNotes: [
+      "Use only ordinary items already safe and available.",
+      "Do not add flame, smoke, scent, food handling, shopping, or outdoor activity by default.",
+    ],
+    avoidIf: [
+      "avoid if it would become decorating, shopping, deep cleaning, or a festival script",
+    ],
+    capacityGuidance: {
+      low: "One object or one cleared spot is enough.",
+      steady: "A small table, threshold, or home reset can stay under twenty minutes.",
+    },
+    toneGuidance: ["seasonal", "domestic", "plain", "low-pressure"],
+    burdenAvoidFlags: ["shopping_required", "heavy_cleanup", "elaborate_setup"],
+    contraindications: [
+      "avoid decor pressure, copied seasonal rituals, culturally flattened festival language, and unsafe objects",
+    ],
+    sourceNoteKeys: [
+      "note.seasonal_table_home_reset",
+      "note.almanac_context_not_authority",
+      "note.safety_overrides_symbolism",
+    ],
+    generatorUseNotes: [
+      "Use when a seasonal anchor or home-transition signal should become one practical domestic marker.",
+    ],
+    audienceFit: ["household", "either", "together"],
+    sourceReferences: [
+      "source.anna_franklin_seasonal_home",
+      "source.temperance_alden_seasonal_practice",
+      "source.old_farmers_almanac_context",
+      "source.safety_reference_families",
+      "note.seasonal_table_home_reset",
+      "note.almanac_context_not_authority",
+      "note.safety_overrides_symbolism",
+    ],
+    approvalStatus: "approved",
+  },
+  {
     id: "ritual_pattern_morning_light_pause",
     key: "morning_light_pause",
     title: "Morning Light Pause",

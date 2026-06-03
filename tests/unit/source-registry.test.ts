@@ -45,6 +45,10 @@ describe("source registry", () => {
         "source.laurel_woodward",
         "source.arin_murphy_hiscock",
         "source.safety_reference_families",
+        "source.noaa_nws_seasonal_facts",
+        "source.temperance_alden_seasonal_practice",
+        "source.anna_franklin_seasonal_home",
+        "source.old_farmers_almanac_context",
       ]),
     );
 
@@ -219,6 +223,59 @@ describe("source registry", () => {
     expect(userFacingNoteText).not.toContain("you are a");
     expect(userFacingNoteText).not.toContain("your relationship");
     expect(userFacingNoteText).not.toContain("private source text");
+  });
+
+  it("includes reviewed seasonal and almanac sources with transformed notes", () => {
+    const requiredSourceIds = [
+      "source.astronomy_engine",
+      "source.noaa_nws_seasonal_facts",
+      "source.temperance_alden_seasonal_practice",
+      "source.anna_franklin_seasonal_home",
+      "source.old_farmers_almanac_context",
+    ];
+    const requiredNoteIds = [
+      "note.seasonal_facts_as_markers",
+      "note.noaa_seasons_fact_guardrail",
+      "note.spring_equinox_opening_balance",
+      "note.summer_solstice_light_tending",
+      "note.autumn_equinox_harvest_storing",
+      "note.winter_solstice_rest_warmth",
+      "note.seasonal_opening_airing_freshening",
+      "note.seasonal_warmth_light_rest",
+      "note.seasonal_harvest_gratitude_storing",
+      "note.wintering_quiet_attention_protection",
+      "note.seasonal_table_home_reset",
+      "note.almanac_context_not_authority",
+    ];
+    const sourceIds = starterSourceReviews.map((review) => review.id);
+    const notes = starterSourceNotes.filter((note) =>
+      requiredNoteIds.includes(note.id),
+    );
+    const userFacingNoteText = notes
+      .map((note) => note.paraphrasedNote)
+      .join(" ")
+      .toLowerCase();
+
+    expect(sourceIds).toEqual(expect.arrayContaining(requiredSourceIds));
+    expect(notes.map((note) => note.id).sort()).toEqual(
+      [...requiredNoteIds].sort(),
+    );
+
+    for (const note of notes) {
+      expect(validateSourceNote(note)).toEqual({ valid: true, errors: [] });
+      expect(note.verbatimAllowed).toBe(false);
+      expect(note.paraphrasedNote.length).toBeLessThanOrEqual(280);
+      expect(note.locationNote).toContain("docs/source-research-synthesis.md");
+    }
+
+    expect(
+      starterSourceReviews.find((source) => source.id === "source.old_farmers_almanac_context")
+        ?.useDecision,
+    ).toBe("context_only");
+    expect(userFacingNoteText).not.toContain("guaranteed");
+    expect(userFacingNoteText).not.toContain("copy forecast");
+    expect(userFacingNoteText).not.toContain("private source text");
+    expect(userFacingNoteText).not.toContain("birth");
   });
 
   it("includes strengthened astrology notes for planets signs aspects and combinations", () => {

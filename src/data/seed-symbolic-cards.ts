@@ -21,6 +21,7 @@ export type SymbolicCardCategory =
   | "astrology_sign"
   | "astrology_aspect"
   | "astrology_motion"
+  | "seasonal"
   | "home_magic"
   | "kitchen_magic"
   | "plant_magic"
@@ -584,6 +585,315 @@ export const astrologySymbolicCards: SymbolicCard[] = [
   ...astrologySignCards,
   ...astrologyAspectCards,
   ...astrologyMotionCards,
+];
+
+const SEASONAL_SOURCE_REFERENCES = [
+  "source.astronomy_engine",
+  "source.noaa_nws_seasonal_facts",
+  "source.temperance_alden_seasonal_practice",
+  "source.anna_franklin_seasonal_home",
+  "source.old_farmers_almanac_context",
+  "note.seasonal_facts_as_markers",
+  "note.noaa_seasons_fact_guardrail",
+  "note.almanac_context_not_authority",
+];
+
+type SeasonalCardSeed = Omit<
+  SymbolicCard,
+  "id" | "category" | "source_references" | "confidence" | "approval_status"
+> & {
+  source_references?: string[];
+};
+
+function makeSeasonalCard(seed: SeasonalCardSeed): SymbolicCard {
+  return {
+    ...seed,
+    id: `card_${seed.key}`,
+    category: "seasonal",
+    source_references: [
+      ...new Set([
+        ...SEASONAL_SOURCE_REFERENCES,
+        ...(seed.source_references ?? []),
+      ]),
+    ],
+    confidence: "common",
+    approval_status: "approved",
+  };
+}
+
+export const seasonalSymbolicCards: SymbolicCard[] = [
+  makeSeasonalCard({
+    key: "seasonal_spring_equinox",
+    title: "Spring Equinox",
+    summary: "A seasonal anchor for balance, opening, freshening, and one small reset as light returns.",
+    themes: ["balance", "opening", "freshening", "small reset"],
+    good_for: ["freshening one area", "marking transition", "choosing one modest reset"],
+    ritual_styles: ["seasonal", "home_tending", "air", "threshold_reset"],
+    ritual_ideas: [
+      "Use a safe fresh-air cue or threshold reset to mark a small opening.",
+      "Clear one ordinary spot without turning it into spring cleaning.",
+    ],
+    avoid_saying: [
+      "Do not require a fresh start or reinvention.",
+      "Do not turn spring into cleaning pressure.",
+      "Do not require fragrance, smoke, or outdoor activity.",
+    ],
+    safety_notes: [
+      "Fresh air depends on weather, air quality, pets, children, allergies, and security.",
+      "Keep spring rituals small and non-fragrant by default.",
+    ],
+    signalSummary: "A balance point for opening, freshening, and one small household reset.",
+    capacityGuidance: {
+      pause: "Notice the shift without doing anything.",
+      low: "Use one window, doorway, or cleared object cue for five minutes or less.",
+      steady: "Pair a threshold or table reset with one freshening action.",
+      high: "Make one seasonal reset active but bounded under half an hour.",
+    },
+    ritualPatternKeys: ["window_open_air_reset", "threshold_reset", "clear_one_surface"],
+    sourceNoteKeys: [
+      "note.spring_equinox_opening_balance",
+      "note.seasonal_opening_airing_freshening",
+    ],
+    interpretationNotes: [
+      "Keep the factual equinox marker separate from symbolic home practice.",
+      "Use opening and balance language without making seasonal reset mandatory.",
+    ],
+    toneGuidance: ["fresh", "balanced", "light", "non-demanding"],
+    contraindications: [
+      "avoid spring-cleaning pressure",
+      "avoid smoke, fragrance, or weather assumptions",
+    ],
+    source_references: [
+      "note.spring_equinox_opening_balance",
+      "note.seasonal_opening_airing_freshening",
+    ],
+  }),
+  makeSeasonalCard({
+    key: "seasonal_summer_solstice",
+    title: "Summer Solstice",
+    summary: "A seasonal anchor for light, warmth, visibility, gratitude, and tending what is fully present.",
+    themes: ["light", "warmth", "visibility", "gratitude"],
+    good_for: ["noticing what is present", "choosing a light cue", "offering gratitude without performance"],
+    ritual_styles: ["seasonal", "light_focus", "gratitude", "home_tending"],
+    ritual_ideas: [
+      "Use ordinary light as a brief attention cue.",
+      "Name one thing in the home that is already bright, useful, or appreciated.",
+    ],
+    avoid_saying: [
+      "Do not require celebration or high energy.",
+      "Do not require sun exposure, outdoor activity, or flame.",
+      "Do not make brightness into productivity pressure.",
+    ],
+    safety_notes: [
+      "Do not make sun, heat, or outdoor exposure part of the default ritual.",
+      "Live flame remains optional and supervised.",
+    ],
+    signalSummary: "A light point for gratitude, visibility, and tending what is already present.",
+    capacityGuidance: {
+      pause: "Let light be noticed without adding a ritual.",
+      low: "Use a lamp, window, or candle only if it is already safe and easy.",
+      steady: "Pair a light cue with a small gratitude or table reset.",
+      high: "Make one warm, visible care action without turning it into an event.",
+    },
+    ritualPatternKeys: ["morning_light_pause", "candle_light_focus", "table_reset"],
+    sourceNoteKeys: [
+      "note.summer_solstice_light_tending",
+      "note.seasonal_warmth_light_rest",
+    ],
+    interpretationNotes: [
+      "Use solstice light as symbolic context, not a demand for activity.",
+      "Good for light-focus and gratitude patterns when capacity fits.",
+    ],
+    toneGuidance: ["warm", "appreciative", "clear", "unforced"],
+    contraindications: [
+      "avoid heat or sun-exposure assumptions",
+      "avoid forced celebration",
+      "avoid live-flame requirements",
+    ],
+    source_references: [
+      "note.summer_solstice_light_tending",
+      "note.seasonal_warmth_light_rest",
+    ],
+  }),
+  makeSeasonalCard({
+    key: "seasonal_autumn_equinox",
+    title: "Autumn Equinox",
+    summary: "A seasonal anchor for balance, gratitude, storing, and choosing what is worth keeping.",
+    themes: ["balance", "gratitude", "storing", "keeping"],
+    good_for: ["closing one loop", "using what is already present", "putting one useful thing in its place"],
+    ritual_styles: ["seasonal", "gratitude", "home_tending", "table_reset"],
+    ritual_ideas: [
+      "Return or store one ordinary household thing so it can support the next season.",
+      "Name one thing worth keeping without making abundance claims.",
+    ],
+    avoid_saying: [
+      "Do not promise abundance, prosperity, or harvest rewards.",
+      "Do not require shopping, decor, preservation, or food preparation.",
+      "Do not moralize having enough.",
+    ],
+    safety_notes: [
+      "Food and storage actions stay normal household use only.",
+      "Avoid preservation, pantry, or food-safety advice in ritual copy.",
+    ],
+    signalSummary: "A balance point for gratitude, gathering, storing, and choosing what to keep.",
+    capacityGuidance: {
+      pause: "Notice one thing already supporting the household.",
+      low: "Return or store one object.",
+      steady: "Reset one table, shelf, or shared spot for ordinary use.",
+      high: "Close one seasonal loop without starting a larger project.",
+    },
+    ritualPatternKeys: ["return_one_object", "table_reset", "end_of_week_closing"],
+    sourceNoteKeys: [
+      "note.autumn_equinox_harvest_storing",
+      "note.seasonal_harvest_gratitude_storing",
+    ],
+    interpretationNotes: [
+      "Use harvest language as gratitude and practical keeping, not abundance promises.",
+      "Good for table, storage, and closing patterns.",
+    ],
+    toneGuidance: ["grateful", "balanced", "practical", "enough"],
+    contraindications: [
+      "avoid prosperity claims",
+      "avoid food-preservation advice",
+      "avoid shopping or decor pressure",
+    ],
+    source_references: [
+      "note.autumn_equinox_harvest_storing",
+      "note.seasonal_harvest_gratitude_storing",
+    ],
+  }),
+  makeSeasonalCard({
+    key: "seasonal_winter_solstice",
+    title: "Winter Solstice",
+    summary: "A seasonal anchor for quiet, warmth, rest, attention protection, and a small return of light.",
+    themes: ["quiet", "warmth", "rest", "returning light"],
+    good_for: ["protecting attention", "making rest easier", "using a small light or warmth cue"],
+    ritual_styles: ["seasonal", "rest", "light_focus", "home_tending"],
+    ritual_ideas: [
+      "Use a blanket, lamp, or candle-safe pause to mark rest.",
+      "Reduce one input so attention has somewhere quiet to land.",
+    ],
+    avoid_saying: [
+      "Do not make darkness ominous.",
+      "Do not require hope, cheer, or emotional processing.",
+      "Do not claim protection from danger.",
+    ],
+    safety_notes: [
+      "Warmth and light cues should not require flame.",
+      "Do not use seasonal ritual as physical safety, health, or emergency advice.",
+    ],
+    signalSummary: "A quiet turning point for warmth, rest, attention, and a small return of light.",
+    capacityGuidance: {
+      pause: "Rest can be the whole practice.",
+      low: "Use one blanket, lamp, or quiet cue.",
+      steady: "Make one rest spot easier without rearranging the room.",
+      high: "Create one bounded quiet cue while keeping the ritual under half an hour.",
+    },
+    ritualPatternKeys: ["bed_blanket_rest_cue", "morning_light_pause", "candle_light_focus"],
+    sourceNoteKeys: [
+      "note.winter_solstice_rest_warmth",
+      "note.wintering_quiet_attention_protection",
+    ],
+    interpretationNotes: [
+      "Use wintering as attention protection and rest, not fear or spiritual danger.",
+      "Good for low-capacity rest and light cues.",
+    ],
+    toneGuidance: ["quiet", "warm", "restful", "protective of attention"],
+    contraindications: [
+      "avoid darkness fear",
+      "avoid protection-from-danger claims",
+      "avoid required flame",
+    ],
+    source_references: [
+      "note.winter_solstice_rest_warmth",
+      "note.wintering_quiet_attention_protection",
+    ],
+  }),
+  makeSeasonalCard({
+    key: "seasonal_opening_freshening",
+    title: "Opening and Freshening",
+    summary: "A seasonal home theme for safe airing, threshold attention, and making one area feel fresher without smoke or scent.",
+    themes: ["opening", "freshening", "threshold", "air"],
+    good_for: ["safe fresh-air cues", "threshold resets", "light room resets"],
+    ritual_styles: ["seasonal", "air", "threshold_reset", "home_tending"],
+    ritual_ideas: ["Open a safe window briefly, or use a doorway or light cue when opening is not a fit."],
+    avoid_saying: ["Do not require smoke, scent, or deep cleaning.", "Do not make weather assumptions."],
+    safety_notes: ["Check weather, air quality, pets, children, allergies, and security first."],
+    signalSummary: "A seasonal cue for freshening one threshold or room without smoke or scent.",
+    ritualPatternKeys: ["window_open_air_reset", "threshold_reset"],
+    sourceNoteKeys: ["note.seasonal_opening_airing_freshening"],
+    toneGuidance: ["fresh", "plain", "low-pressure"],
+    contraindications: ["avoid unsafe windows, poor air quality, smoke, fragrance, or allergies"],
+    source_references: ["note.seasonal_opening_airing_freshening"],
+  }),
+  makeSeasonalCard({
+    key: "seasonal_warmth_light_rest",
+    title: "Warmth, Light, and Rest",
+    summary: "A seasonal home theme for warmth, ordinary light, and rest cues that do not require flame or performance.",
+    themes: ["warmth", "light", "rest", "settling"],
+    good_for: ["rest cues", "light pauses", "making a room feel held"],
+    ritual_styles: ["seasonal", "light_focus", "rest", "home_tending"],
+    ritual_ideas: ["Use an ordinary lamp, blanket, or supervised candle pause if that is already safe."],
+    avoid_saying: ["Do not require live flame.", "Do not force cheer or celebration."],
+    safety_notes: ["Live flame stays optional and supervised; no heat or sun claims."],
+    signalSummary: "A seasonal cue for warmth, ordinary light, and rest.",
+    ritualPatternKeys: ["morning_light_pause", "bed_blanket_rest_cue", "candle_light_focus"],
+    sourceNoteKeys: ["note.seasonal_warmth_light_rest"],
+    toneGuidance: ["warm", "restful", "simple"],
+    contraindications: ["avoid required flame, heat exposure, or emotional pressure"],
+    source_references: ["note.seasonal_warmth_light_rest"],
+  }),
+  makeSeasonalCard({
+    key: "seasonal_harvest_gratitude_storing",
+    title: "Harvest, Gratitude, and Storing",
+    summary: "A seasonal home theme for gratitude, using what is present, and putting one useful thing where it belongs.",
+    themes: ["gratitude", "storing", "enoughness", "use what is present"],
+    good_for: ["returning one object", "table resets", "closing one loop"],
+    ritual_styles: ["seasonal", "gratitude", "home_tending", "table_reset"],
+    ritual_ideas: ["Put one useful object where it supports the household and name what it already helps with."],
+    avoid_saying: ["Do not promise abundance.", "Do not require food, decor, shopping, or preservation."],
+    safety_notes: ["No food-safety or preservation advice; normal household use only."],
+    signalSummary: "A seasonal cue for gratitude, enoughness, and storing one useful thing.",
+    ritualPatternKeys: ["return_one_object", "table_reset", "end_of_week_closing"],
+    sourceNoteKeys: ["note.seasonal_harvest_gratitude_storing"],
+    toneGuidance: ["grateful", "practical", "enough"],
+    contraindications: ["avoid prosperity claims, food-safety advice, or shopping"],
+    source_references: ["note.seasonal_harvest_gratitude_storing"],
+  }),
+  makeSeasonalCard({
+    key: "seasonal_wintering_attention",
+    title: "Wintering and Attention",
+    summary: "A seasonal home theme for quieting inputs, protecting attention, and making rest easier.",
+    themes: ["quiet", "attention protection", "rest", "less input"],
+    good_for: ["rest cues", "closing tabs or inputs", "making one quiet place easier"],
+    ritual_styles: ["seasonal", "rest", "reflection", "home_tending"],
+    ritual_ideas: ["Reduce one input and make one rest cue easier to reach."],
+    avoid_saying: ["Do not imply danger or spiritual attack.", "Do not make quiet feel like isolation."],
+    safety_notes: ["Attention-protection language does not replace practical safety needs."],
+    signalSummary: "A seasonal cue for quiet, rest, and protecting attention.",
+    ritualPatternKeys: ["bed_blanket_rest_cue", "close_the_evening"],
+    sourceNoteKeys: ["note.wintering_quiet_attention_protection"],
+    toneGuidance: ["quiet", "gentle", "permission-giving"],
+    contraindications: ["avoid danger-protection claims, isolation, or forced reflection"],
+    source_references: ["note.wintering_quiet_attention_protection"],
+  }),
+  makeSeasonalCard({
+    key: "seasonal_table_home_reset",
+    title: "Seasonal Table or Home Reset",
+    summary: "A seasonal home theme for marking transition with one ordinary object, surface, or cleared spot.",
+    themes: ["transition", "table", "home reset", "ordinary marker"],
+    good_for: ["table resets", "threshold resets", "marking a seasonal change without decor pressure"],
+    ritual_styles: ["seasonal", "table_reset", "home_tending", "threshold_reset"],
+    ritual_ideas: ["Clear or place one ordinary object so the home notices the seasonal shift without becoming a project."],
+    avoid_saying: ["Do not require seasonal decor.", "Do not copy festival or folklore scripts."],
+    safety_notes: ["Use only ordinary household items already safe and available."],
+    signalSummary: "A seasonal cue for marking transition with one ordinary home reset.",
+    ritualPatternKeys: ["table_reset", "threshold_reset", "seasonal_table_home_reset"],
+    sourceNoteKeys: ["note.seasonal_table_home_reset"],
+    toneGuidance: ["domestic", "transitional", "simple"],
+    contraindications: ["avoid decor pressure, shopping, or culturally flattened festival language"],
+    source_references: ["note.seasonal_table_home_reset"],
+  }),
 ];
 
 export const seedSymbolicCards: SymbolicCard[] = [
@@ -1493,6 +1803,7 @@ export const seedSymbolicCards: SymbolicCard[] = [
     approval_status: "approved",
   },
   ...astrologySymbolicCards,
+  ...seasonalSymbolicCards,
   {
     id: "card_private_profile_practical_care_theme",
     key: "private_profile_practical_care_theme",

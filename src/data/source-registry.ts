@@ -668,6 +668,120 @@ export const starterSourceReviews: SourceReview[] = [
     ],
     confidence: "high",
   },
+  {
+    id: "source.noaa_nws_seasonal_facts",
+    title: "NOAA / NWS seasonal fact references",
+    authorOrPublisher: "NOAA and National Weather Service",
+    category: "seasonal_facts",
+    sourceType: "site",
+    useDecision: "use",
+    reviewStatus: "approved",
+    bestFor: [
+      "factual seasonal and climate context",
+      "keeping seasonal markers separate from symbolic interpretation",
+    ],
+    concerns: [
+      "do not turn broad climate or weather context into user-specific safety advice",
+    ],
+    copyrightNotes: [
+      "cite public reference family; do not copy forecast, climate, or educational prose",
+    ],
+    safetyNotes: [
+      "weather and air-quality safety should be checked directly outside ritual symbolism",
+    ],
+    culturalContextNotes: [],
+    extractionNotes: [
+      "extract factual-source role and seasonal marker guardrails only",
+    ],
+    confidence: "high",
+  },
+  {
+    id: "source.temperance_alden_seasonal_practice",
+    title: "Temperance Alden seasonal practice source",
+    authorOrPublisher: "Temperance Alden",
+    category: "seasonal_home_practice",
+    sourceType: "book",
+    useDecision: "use",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "place-aware seasonal practice framing",
+      "ordinary household attention to seasonal change",
+    ],
+    concerns: [
+      "avoid importing culturally flattened holidays or local ecology claims",
+    ],
+    copyrightNotes: [
+      "manual review only; store short transformed notes rather than seasonal rituals or distinctive phrasing",
+    ],
+    safetyNotes: [
+      "seasonal practice should not override weather, health, capacity, or household safety",
+    ],
+    culturalContextNotes: [
+      "treat place-based practice as a prompt for attention, not a universal calendar script",
+    ],
+    extractionNotes: [
+      "extract domestic seasonal themes and guardrails, not festival instructions",
+    ],
+    confidence: "medium",
+  },
+  {
+    id: "source.anna_franklin_seasonal_home",
+    title: "Anna Franklin seasonal home source",
+    authorOrPublisher: "Anna Franklin",
+    category: "seasonal_home_practice",
+    sourceType: "book",
+    useDecision: "use_carefully",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "seasonal hearth and home rhythm",
+      "light, warmth, harvest, rest, and transition themes",
+    ],
+    concerns: [
+      "filter folklore, festival, and correspondence material through Moon & Table tone and safety rules",
+    ],
+    copyrightNotes: [
+      "manual review only; do not copy rituals, prayers, chants, folklore entries, recipes, or distinctive seasonal phrasing",
+    ],
+    safetyNotes: [
+      "avoid smoke, flame, food, herbs, or outdoor practices as defaults",
+    ],
+    culturalContextNotes: [
+      "do not flatten culturally specific festivals into generic household advice",
+    ],
+    extractionNotes: [
+      "extract short transformed seasonal home themes only",
+    ],
+    confidence: "medium",
+  },
+  {
+    id: "source.old_farmers_almanac_context",
+    title: "Old Farmer's Almanac context source",
+    authorOrPublisher: "Old Farmer's Almanac",
+    category: "almanac_context",
+    sourceType: "site",
+    useDecision: "context_only",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "almanac format and seasonal context",
+      "distinguishing folklore context from scientific authority",
+    ],
+    concerns: [
+      "do not scrape, copy entries, or treat folklore as factual seasonal proof",
+    ],
+    copyrightNotes: [
+      "context only; no copied almanac entries, tables, poems, forecasts, or distinctive wording",
+    ],
+    safetyNotes: [
+      "almanac context cannot provide safety, weather, medical, or household-risk advice",
+    ],
+    culturalContextNotes: [
+      "folklore and holidays need context and should not become generic requirements",
+    ],
+    extractionNotes: [
+      "use only as format/context guardrail for what Moon & Table should not dump",
+    ],
+    confidence: "low",
+  },
 ];
 
 type SourceNoteSeed = Omit<SourceNote, "locationNote" | "category" | "copyrightNotes" | "verbatimAllowed"> & {
@@ -688,6 +802,134 @@ function makeAstrologySourceNote(seed: SourceNoteSeed): SourceNote {
     verbatimAllowed: false,
   };
 }
+
+function makeSeasonalSourceNote(seed: SourceNoteSeed): SourceNote {
+  return {
+    ...seed,
+    locationNote:
+      seed.locationNote ??
+      "docs/source-research-synthesis.md seasonal and almanac source synthesis",
+    category: seed.category ?? "seasonal_home_practice",
+    copyrightNotes: [
+      "short transformed note only; no copied almanac entry, ritual, folklore text, or seasonal prose",
+    ],
+    verbatimAllowed: false,
+  };
+}
+
+const seasonalSourceNotes: SourceNote[] = [
+  makeSeasonalSourceNote({
+    id: "note.seasonal_facts_as_markers",
+    sourceId: "source.astronomy_engine",
+    category: "seasonal_facts",
+    paraphrasedNote:
+      "Use solstices and equinoxes as computed seasonal markers; interpretation must come from reviewed symbolic cards and rules.",
+    tags: ["seasonal", "computed_fact", "solstice", "equinox"],
+    riskNotes: ["avoid treating a computed marker as a ritual instruction"],
+    safetyNotes: ["capacity and household safety still choose ritual size"],
+  }),
+  makeSeasonalSourceNote({
+    id: "note.noaa_seasons_fact_guardrail",
+    sourceId: "source.noaa_nws_seasonal_facts",
+    category: "seasonal_facts",
+    paraphrasedNote:
+      "Use NOAA/NWS as factual seasonal context only; do not turn broad weather or climate material into personal safety advice.",
+    tags: ["seasonal", "facts", "weather_guardrail"],
+    riskNotes: ["avoid forecast-like or safety-advice claims"],
+    safetyNotes: ["specific weather safety should be checked directly outside the brief"],
+  }),
+  makeSeasonalSourceNote({
+    id: "note.spring_equinox_opening_balance",
+    sourceId: "source.temperance_alden_seasonal_practice",
+    paraphrasedNote:
+      "Use spring equinox as a symbolic cue for opening, balance, freshening, and one small reset without demanding a new life.",
+    tags: ["seasonal", "spring_equinox", "opening"],
+    riskNotes: ["avoid reinvention or spring-cleaning pressure"],
+    safetyNotes: ["freshening should not require fragrance, smoke, or heavy cleaning"],
+  }),
+  makeSeasonalSourceNote({
+    id: "note.summer_solstice_light_tending",
+    sourceId: "source.anna_franklin_seasonal_home",
+    paraphrasedNote:
+      "Use summer solstice as a symbolic cue for light, warmth, visibility, gratitude, and tending what is fully present.",
+    tags: ["seasonal", "summer_solstice", "light"],
+    riskNotes: ["avoid heat, sun, productivity, or celebration pressure"],
+    safetyNotes: ["do not make sun exposure, flame, or outdoor activity a requirement"],
+  }),
+  makeSeasonalSourceNote({
+    id: "note.autumn_equinox_harvest_storing",
+    sourceId: "source.anna_franklin_seasonal_home",
+    paraphrasedNote:
+      "Use autumn equinox as a symbolic cue for gratitude, gathering, storing, balance, and choosing what is worth keeping.",
+    tags: ["seasonal", "autumn_equinox", "harvest"],
+    riskNotes: ["avoid harvest abundance claims or shopping/decor pressure"],
+    safetyNotes: ["food and storage actions must stay normal household use only"],
+  }),
+  makeSeasonalSourceNote({
+    id: "note.winter_solstice_rest_warmth",
+    sourceId: "source.temperance_alden_seasonal_practice",
+    paraphrasedNote:
+      "Use winter solstice as a symbolic cue for quiet, warmth, rest, attention protection, and a small return of light.",
+    tags: ["seasonal", "winter_solstice", "rest"],
+    riskNotes: ["avoid darkness fear, isolation, or forced hope"],
+    safetyNotes: ["warmth and light cues should not require flame or outdoor exposure"],
+  }),
+  makeSeasonalSourceNote({
+    id: "note.seasonal_opening_airing_freshening",
+    sourceId: "source.temperance_alden_seasonal_practice",
+    paraphrasedNote:
+      "Seasonal opening can mean airing, freshening, or making one threshold easier, without smoke, scent, or a large cleanout.",
+    tags: ["seasonal", "opening", "freshening", "threshold"],
+    riskNotes: ["avoid smoke cleansing or deep-cleaning pressure"],
+    safetyNotes: ["check weather, air quality, pets, children, allergies, and security before opening windows"],
+  }),
+  makeSeasonalSourceNote({
+    id: "note.seasonal_warmth_light_rest",
+    sourceId: "source.anna_franklin_seasonal_home",
+    paraphrasedNote:
+      "Seasonal warmth and light can support a rest cue, a lamp, a blanket, or a brief candle only when capacity and safety fit.",
+    tags: ["seasonal", "warmth", "light", "rest"],
+    riskNotes: ["avoid requiring flame, shopping, or forced cheer"],
+    safetyNotes: ["live flame stays optional and supervised"],
+  }),
+  makeSeasonalSourceNote({
+    id: "note.seasonal_harvest_gratitude_storing",
+    sourceId: "source.anna_franklin_seasonal_home",
+    paraphrasedNote:
+      "Harvest symbolism can become gratitude, using what is already present, and storing one useful thing without abundance claims.",
+    tags: ["seasonal", "harvest", "gratitude", "storing"],
+    riskNotes: ["avoid prosperity guarantees or moralizing plenty"],
+    safetyNotes: ["do not add food, preservation, or storage safety advice"],
+  }),
+  makeSeasonalSourceNote({
+    id: "note.wintering_quiet_attention_protection",
+    sourceId: "source.temperance_alden_seasonal_practice",
+    paraphrasedNote:
+      "Wintering can mean protecting attention, choosing quiet, reducing inputs, and making rest easier without protection-from-danger claims.",
+    tags: ["seasonal", "wintering", "attention"],
+    riskNotes: ["avoid spiritual danger, curse, or guaranteed protection language"],
+    safetyNotes: ["rest cues should not replace practical safety needs"],
+  }),
+  makeSeasonalSourceNote({
+    id: "note.seasonal_table_home_reset",
+    sourceId: "source.anna_franklin_seasonal_home",
+    paraphrasedNote:
+      "A seasonal table or home reset can mark transition with one ordinary object or cleared spot, not a decorative obligation.",
+    tags: ["seasonal", "table", "home_reset"],
+    riskNotes: ["avoid shopping lists, decor pressure, or festival scripts"],
+    safetyNotes: ["use only ordinary household items already safe and available"],
+  }),
+  makeSeasonalSourceNote({
+    id: "note.almanac_context_not_authority",
+    sourceId: "source.old_farmers_almanac_context",
+    category: "almanac_context",
+    paraphrasedNote:
+      "Use almanac material as context for seasonal format and folk texture, not as scientific authority or copied content.",
+    tags: ["seasonal", "almanac", "context"],
+    riskNotes: ["avoid copied folklore, forecast claims, or authority confusion"],
+    safetyNotes: ["almanac context does not provide household safety advice"],
+  }),
+];
 
 const strengthenedAstrologySourceNotes: SourceNote[] = [
   makeAstrologySourceNote({
@@ -1346,6 +1588,7 @@ export const starterSourceNotes: SourceNote[] = [
     verbatimAllowed: false,
   },
   ...strengthenedAstrologySourceNotes,
+  ...seasonalSourceNotes,
   {
     id: "note.astrology_ethics_no_personal_certainty",
     sourceId: "source.astrology_ethics_sources",
