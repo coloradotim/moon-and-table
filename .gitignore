@@ -5,3 +5,8 @@ dist/
 playwright-report/
 test-results/
 .env.local
+private/
+*.local.json
+*service-account*.json
+*serviceAccount*.json
+*firebase-adminsdk*.json

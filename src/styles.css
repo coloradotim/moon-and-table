@@ -112,6 +112,12 @@ h2 {
   font-size: 0.95rem;
 }
 
+.private-note {
+  margin: -8px 0 0;
+  color: #617067;
+  font-size: 0.95rem;
+}
+
 .brief__section,
 .detail,
 .trace {

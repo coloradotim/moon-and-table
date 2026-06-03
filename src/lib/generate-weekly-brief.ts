@@ -10,7 +10,9 @@ export type CapacityMode = (typeof CAPACITY_MODES)[number];
 export type TimingFactKey = "moon.waning" | "numerology.6";
 
 export type PrivateProfilePlaceholderKey =
-  | "private_profile.practical_tending";
+  | "private_profile.practical_tending"
+  | "private_profile.beauty_warmth"
+  | "private_profile.structured_action";
 
 export type ScheduleAssumptionKey =
   | "schedule.symbolic_event_tuesday"
@@ -87,15 +89,25 @@ const TRACE_KEY_BY_CARD_KEY: Record<string, string> = {
   numerology_6: "numerology.6",
   plant_tending: "plant.tending",
   private_profile_practical_care_theme: "private_profile.practical_tending",
+  private_profile_beauty_warmth_theme: "private_profile.beauty_warmth",
+  private_profile_structured_action_theme: "private_profile.structured_action",
   candle: "candle",
 };
 
-const CARD_KEYS_FOR_BRIEF = [
+const BASE_CARD_KEYS_FOR_BRIEF = [
   "waning_moon",
   "numerology_6",
   "plant_tending",
-  "private_profile_practical_care_theme",
 ] as const;
+
+const PRIVATE_PROFILE_CARD_KEY_BY_PLACEHOLDER_KEY: Record<
+  PrivateProfilePlaceholderKey,
+  string
+> = {
+  "private_profile.practical_tending": "private_profile_practical_care_theme",
+  "private_profile.beauty_warmth": "private_profile_beauty_warmth_theme",
+  "private_profile.structured_action": "private_profile_structured_action_theme",
+};
 
 const CAPACITY_DURATION_LIMITS: Record<CapacityMode, number> = {
   pause: 0,
@@ -117,8 +129,22 @@ function getApprovedCardByKey(key: string): SymbolicCard {
   return card;
 }
 
-function getApprovedCardsForBrief(): SymbolicCard[] {
-  return CARD_KEYS_FOR_BRIEF.map((key) => getApprovedCardByKey(key));
+function getPrivateProfileCardKey(
+  privateProfileKeys: PrivateProfilePlaceholderKey[],
+): string {
+  const primaryProfileKey =
+    privateProfileKeys[0] ?? "private_profile.practical_tending";
+
+  return PRIVATE_PROFILE_CARD_KEY_BY_PLACEHOLDER_KEY[primaryProfileKey];
+}
+
+function getApprovedCardsForBrief(
+  privateProfileKeys: PrivateProfilePlaceholderKey[],
+): SymbolicCard[] {
+  return [
+    ...BASE_CARD_KEYS_FOR_BRIEF,
+    getPrivateProfileCardKey(privateProfileKeys),
+  ].map((key) => getApprovedCardByKey(key));
 }
 
 function resolveScheduleConstraints(
@@ -298,7 +324,9 @@ export function generateWeeklyBrief(
     scheduleConstraints,
   };
 
-  const selectedCards = getApprovedCardsForBrief();
+  const selectedCards = getApprovedCardsForBrief(
+    resolvedInput.privateProfileKeys,
+  );
   const [
     waningMoonCard,
     numerologySixCard,

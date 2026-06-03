@@ -11,6 +11,7 @@
     "server:status": "scripts/dev.sh status",
     "server:logs": "scripts/dev.sh logs",
     "server:open": "scripts/dev.sh open",
+    "seed:private": "tsx scripts/seed-private-household.ts",
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
@@ -22,11 +23,13 @@
   "devDependencies": {
     "@playwright/test": "^1.60.0",
     "@types/node": "^25.9.1",
+    "tsx": "^4.22.4",
     "typescript": "^6.0.3",
     "vite": "^8.0.16",
     "vitest": "^4.1.8"
   },
   "dependencies": {
-    "firebase": "^12.14.0"
+    "firebase": "^12.14.0",
+    "firebase-admin": "^13.10.0"
   }
 }
