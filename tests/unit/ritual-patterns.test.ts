@@ -25,7 +25,7 @@ describe("ritual patterns", () => {
       expect.arrayContaining([
         "clear_one_surface",
         "tend_one_plant",
-        "led_candle_light_focus",
+        "candle_light_focus",
         "table_reset",
         "threshold_reset",
         "room_reset",
@@ -56,7 +56,7 @@ describe("ritual patterns", () => {
     expect(approvedKeys).toEqual([
       "clear_one_surface",
       "tend_one_plant",
-      "led_candle_light_focus",
+      "candle_light_focus",
       "table_reset",
       "threshold_reset",
       "room_reset",
@@ -69,13 +69,13 @@ describe("ritual patterns", () => {
 
   it("filters eligible approved patterns by capacity mode", () => {
     expect(getEligibleRitualPatterns("pause").map((pattern) => pattern.key)).toEqual([
-      "led_candle_light_focus",
+      "candle_light_focus",
       "close_the_evening",
     ]);
     expect(getEligibleRitualPatterns("low").map((pattern) => pattern.key)).toEqual([
       "clear_one_surface",
       "tend_one_plant",
-      "led_candle_light_focus",
+      "candle_light_focus",
       "table_reset",
       "threshold_reset",
       "room_reset",
@@ -113,7 +113,7 @@ describe("ritual patterns", () => {
     expect(homeTendingKeys.length).toBeGreaterThanOrEqual(5);
   });
 
-  it("keeps approved home-tending patterns free of smoke oils and live flame defaults", () => {
+  it("keeps approved home-tending reset patterns free of smoke oils and candle flame", () => {
     const homeTendingPatterns = getApprovedRitualPatterns().filter((pattern) =>
       pattern.ritualStyles.includes("home_tending"),
     );
@@ -123,7 +123,7 @@ describe("ritual patterns", () => {
 
       expect(pattern.safetyFlags.smoke).toBe("none");
       expect(pattern.safetyFlags.essentialOils).toBe("none");
-      expect(pattern.safetyFlags.fire).not.toBe("live_flame_opt_in");
+      expect(pattern.safetyFlags.fire).not.toBe("live_flame");
       expect(serializedPattern).not.toContain("curse");
       expect(serializedPattern).not.toContain("spiritual warfare");
       expect(serializedPattern).not.toContain("guaranteed safety");
@@ -162,7 +162,7 @@ describe("ritual patterns", () => {
       "simple_warm_drink",
       "kitchen_reset",
       "tend_one_plant",
-      "led_candle_light_focus",
+      "candle_light_focus",
     ];
     const approvedPatterns = getApprovedRitualPatterns();
     const patternsByKey = new Map(
@@ -180,14 +180,14 @@ describe("ritual patterns", () => {
       (pattern) => pattern.key === "simple_warm_drink",
     );
     const lightPattern = starterRitualPatterns.find(
-      (pattern) => pattern.key === "led_candle_light_focus",
+      (pattern) => pattern.key === "candle_light_focus",
     );
 
     expect(teaPattern?.safetyFlags.ingestion).toBe("normal_food_use_only");
     expect(warmDrinkPattern?.safetyFlags.ingestion).toBe(
       "normal_food_use_only",
     );
-    expect(lightPattern?.safetyFlags.fire).toBe("led_default");
+    expect(lightPattern?.safetyFlags.fire).toBe("live_flame");
 
     for (const pattern of approvedPatterns.filter((pattern) =>
       requiredKeys.includes(pattern.key),
@@ -196,7 +196,9 @@ describe("ritual patterns", () => {
 
       expect(pattern.safetyFlags.essentialOils).not.toBe("review_required");
       expect(pattern.safetyFlags.smoke).toBe("none");
-      expect(pattern.safetyFlags.fire).not.toBe("live_flame_opt_in");
+      if (pattern.key !== "candle_light_focus") {
+        expect(pattern.safetyFlags.fire).not.toBe("live_flame");
+      }
       expect(serializedPattern).not.toContain("medical claim");
       expect(serializedPattern).not.toContain("crystal elixir");
       expect(serializedPattern).not.toContain("raw flour");

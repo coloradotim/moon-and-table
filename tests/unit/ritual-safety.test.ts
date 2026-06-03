@@ -36,27 +36,20 @@ describe("ritual safety guardrails", () => {
     expect(result.blocks).toContain("smoke-cleansing defaults are blocked");
   });
 
-  it("requires candle and light work to default to LED or opt-in flame", () => {
+  it("allows real candle flame when fire safety is declared", () => {
     const unsafe = validateRitualSafety(lowRiskRitualSafetyFlags, [
       "Light a candle and sit quietly for two minutes.",
     ]);
-    const ledDefault = validateRitualSafety(
-      withSafetyOverrides({ fire: "led_default" }),
-      ["Use an LED candle and sit quietly for two minutes."],
-    );
-    const liveFlameOptIn = validateRitualSafety(
-      withSafetyOverrides({ fire: "live_flame_opt_in" }),
-      ["Light a candle only if a live flame is safe and wanted."],
+    const liveFlame = validateRitualSafety(
+      withSafetyOverrides({ fire: "live_flame" }),
+      ["Light a candle and sit quietly for two minutes."],
     );
 
     expect(unsafe.allowed).toBe(false);
-    expect(unsafe.blocks).toContain(
-      "candle or light work must default to LED or explicit opt-in",
-    );
-    expect(ledDefault.allowed).toBe(true);
-    expect(liveFlameOptIn.allowed).toBe(true);
-    expect(liveFlameOptIn.warnings).toContain(
-      "live flame requires explicit opt-in and a no-flame alternative",
+    expect(unsafe.blocks).toContain("candle work must declare fire safety");
+    expect(liveFlame.allowed).toBe(true);
+    expect(liveFlame.warnings).toContain(
+      "live flame requires ordinary candle safety and supervision",
     );
   });
 
@@ -123,4 +116,3 @@ describe("ritual safety guardrails", () => {
     expect(flags.allergies).toEqual(["placeholder allergy note"]);
   });
 });
-

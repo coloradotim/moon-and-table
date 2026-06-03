@@ -109,25 +109,26 @@ export const starterRitualPatterns: RitualPattern[] = [
     approvalStatus: "approved",
   },
   {
-    id: "ritual_pattern_led_candle_light_focus",
-    key: "led_candle_light_focus",
-    title: "LED Candle Light Focus",
-    summary: "Use a small light as a fire-free marker for attention and closure.",
+    id: "ritual_pattern_candle_light_focus",
+    key: "candle_light_focus",
+    title: "Candle Light Focus",
+    summary: "Use a candle flame as a small marker for attention and closure.",
     ritualStyles: ["candle_or_light", "light_focus", "reflection"],
     capacityModes: ["pause", "low", "steady"],
     defaultDurationMinutes: 3,
-    materials: ["LED candle or small lamp"],
+    materials: ["candle", "matches or lighter", "stable heat-safe surface"],
     steps: [
-      "Turn on an LED candle or a small lamp.",
-      "Take one quiet breath and name the focus for this short pause.",
-      "Turn the light off when the pause is complete.",
+      "Set the candle on a stable heat-safe surface away from fabric, pets, and children.",
+      "Light the candle and name the focus for this short pause.",
+      "Blow the candle out before leaving the space.",
     ],
     safetyFlags: withSafetyOverrides({
-      fire: "led_default",
+      fire: "live_flame",
       cleanupBurden: "tiny",
     }),
     safetyNotes: [
-      "LED or no-flame light is the default. Live flame is not required.",
+      "Never leave a flame unattended.",
+      "Keep flame away from fabric, pets, children, drafts, and clutter.",
     ],
     avoidIf: [
       "avoid if even a brief focus practice feels like pressure",
@@ -217,12 +218,11 @@ export const starterRitualPatterns: RitualPattern[] = [
       "Stop before it becomes a full-room cleanup.",
     ],
     safetyFlags: withSafetyOverrides({
-      fire: "led_default",
       cleanupBurden: "low",
     }),
     safetyNotes: [
       "Keep paths clear and avoid moving heavy items.",
-      "Use existing lamps or LED/no-flame light only; do not use smoke, oils, strong scents, or special supplies.",
+      "Use existing room lighting only; do not add candles, smoke, oils, strong scents, or special supplies.",
     ],
     avoidIf: [
       "avoid if the room needs repair, heavy lifting, or deep cleaning",

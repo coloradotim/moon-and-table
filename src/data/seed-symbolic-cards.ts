@@ -62,7 +62,7 @@ export const seedSymbolicCards: SymbolicCard[] = [
       "Do not imply a person has failed if they do not begin anything.",
     ],
     safety_notes: [
-      "Default to LED or no-flame light for focus practices.",
+      "Use ordinary candle safety when focus practices include flame.",
       "Keep intention prompts optional and emotionally light.",
     ],
     source_references: [
@@ -312,7 +312,7 @@ export const seedSymbolicCards: SymbolicCard[] = [
       "Use a stable heat-safe surface and keep flame away from fabric, pets, and children.",
     ],
     safety_flags: withSafetyOverrides({
-      fire: "led_default",
+      fire: "live_flame",
       cleanupBurden: "tiny",
     }),
     source_references: [

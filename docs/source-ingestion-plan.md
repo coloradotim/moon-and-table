@@ -65,7 +65,7 @@ Moon & Table should remain a small, disciplined synthesis engine:
 - emotional intensity
 - cleanup burden
 
-**Implementation note:** The first typed guardrail model lives in `src/lib/ritual-safety.ts`. It exposes `RitualSafetyFlags`, low-risk defaults, and validation helpers for hard exclusions such as essential oil ingestion, smoke-cleansing defaults, medical claims, crystal elixirs, raw dough/flour crafts, controlling-another-person rituals, and candle/light work without LED default or live-flame opt-in.
+**Implementation note:** The first typed guardrail model lives in `src/lib/ritual-safety.ts`. It exposes `RitualSafetyFlags`, low-risk defaults, and validation helpers for hard exclusions such as essential oil ingestion, smoke-cleansing defaults, medical claims, crystal elixirs, raw dough/flour crafts, controlling-another-person rituals, and candle work without declared fire safety.
 
 **Hard exclusions:**
 
@@ -76,7 +76,7 @@ Moon & Table should remain a small, disciplined synthesis engine:
 - no raw dough/flour crafts
 - no pet-accessible toxic foods/plants
 - no rituals aimed at controlling another person
-- LED candle or no-flame option by default
+- candle flame allowed with ordinary candle safety and supervision
 
 **Acceptance criteria:**
 
@@ -111,7 +111,7 @@ Moon & Table should remain a small, disciplined synthesis engine:
 
 - clear one surface
 - tend one plant
-- LED candle/light focus
+- candle light focus
 - table reset
 - threshold reset
 - close-the-evening pattern
@@ -233,7 +233,7 @@ Older bootstrap values such as `candle`, `home_care`, `kitchen_clearing`, `shopp
 - salt
 - rosemary
 - plant tending
-- LED candle/light
+- candle/light
 - kitchen reset
 
 **Acceptance criteria:**
@@ -310,7 +310,7 @@ Older bootstrap values such as `candle`, `home_care`, `kitchen_clearing`, `shopp
 ## Open product decisions
 
 - Should the UI say `ritual`, `practice`, `home tending`, or use a mix?
-- Should live flame be allowed in MVP or deferred behind a later opt-in?
+- What candle-safety review, if any, is needed before recommending longer candle practices?
 - Should astrology appear in every brief or only when especially relevant?
 - Should the source registry start as TypeScript/JSON or Firestore-backed data?
 - Should Front Range/Colorado seasonal ecology become part of the seasonal layer later?

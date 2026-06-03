@@ -12,7 +12,7 @@ Start with a **small, safe, domestic MVP**:
 
 1. **Astronomy Engine** for computed facts.
 2. **Four lunar phase cards**, not eight.
-3. **A tiny ritual starter set**: tea, clear one surface, tend one plant, LED candle/light, threshold/table reset.
+3. **A tiny ritual starter set**: tea, clear one surface, tend one plant, candle/light, threshold/table reset.
 4. **A source registry and approval workflow** before creating many cards.
 5. **Safety guardrails as data**, not just prose in docs.
 
@@ -116,7 +116,7 @@ Hard no: essential oil ingestion, pet-accessible toxic ingredients, raw dough cr
 
 ## Candle magic and color symbolism
 
-Make this a **light and attention practice**, not candle spellcraft. LED candle should be default. Live flame should be opt-in and safety-gated.
+Make this a **light and attention practice**, not outcome-based candle spellcraft. A candle can be a real candle; flame practices need ordinary candle safety, supervision, and stable placement.
 
 The document’s recommended MVP color/light set is strong: white/warm light, yellow/gold, green, blue, and black/unlit candle. It also correctly notes that black does not need flame; it can symbolize rest or boundary without fire risk. 
 
@@ -254,7 +254,7 @@ Purpose: domestic ritual texture.
 
 Sources: Woodward, Patterson, Green Witch, ASPCA, Poison Control, NFPA.
 
-Create: tea, soup, lemon/salt/rosemary, plant tending, LED candle/light cards.
+Create: tea, soup, lemon/salt/rosemary, plant tending, candle/light cards.
 
 Acceptance criteria: safety flags implemented; pet-toxic and essential-oil exclusions enforced.
 
@@ -293,7 +293,7 @@ safetyFlags: {
   ingestion: "none" | "normal_food_use_only" | "review_required" | "avoid";
   essentialOils: "none" | "avoid" | "review_required";
   smoke: "none" | "avoid" | "review_required";
-  fire: "none" | "led_default" | "live_flame_opt_in" | "avoid";
+  fire: "none" | "live_flame" | "led_or_no_flame" | "avoid";
   pets: "safe" | "keep_away" | "review_required" | "avoid";
   children: "safe" | "supervision" | "review_required" | "avoid";
   pregnancy: "no_claim" | "review_required" | "avoid";
@@ -310,7 +310,7 @@ Hard rules:
 * No medical, fertility, pregnancy, legal, financial, or safety advice.
 * No essential oil ingestion.
 * No smoke-cleansing defaults.
-* LED candle by default.
+* Candle flame allowed with ordinary candle safety.
 * No crystal elixirs.
 * No raw dough/flour crafts.
 * No pet-accessible toxic foods/plants.
@@ -496,7 +496,7 @@ Non-goal: build it now.
 # 10. Open Questions
 
 1. Do you want Moon & Table’s first UI language to say **ritual**, **practice**, **home tending**, or a mix?
-2. Should live flame be allowed at all in MVP, or should the first version be LED/natural-light only?
+2. What additional candle-safety review is needed before adding longer flame practices?
 3. Should the first weekly brief include astrology every time, or only when the timing is unusually relevant?
 4. Do you want the source registry in Firestore/Supabase right away, or start as Markdown/JSON seed files?
 5. Should Colorado / Front Range seasonal ecology become part of the seasonal layer later?

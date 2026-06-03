@@ -2,7 +2,7 @@ export type RitualSafetyFlags = {
   ingestion: "none" | "normal_food_use_only" | "review_required" | "avoid";
   essentialOils: "none" | "avoid" | "review_required";
   smoke: "none" | "avoid" | "review_required";
-  fire: "none" | "led_default" | "live_flame_opt_in" | "avoid";
+  fire: "none" | "live_flame" | "led_or_no_flame" | "avoid";
   pets: "safe" | "keep_away" | "review_required" | "avoid";
   children: "safe" | "supervision" | "review_required" | "avoid";
   pregnancy: "no_claim" | "review_required" | "avoid";
@@ -126,20 +126,19 @@ export function validateRitualSafety(
 
   if (
     instructions.some((instruction) =>
-      /\b(light|lit|flame|candle|burn)\b/i.test(instruction),
+      /\b(lit|flame|candle|burn)\b/i.test(instruction),
     ) &&
-    flags.fire !== "led_default" &&
-    flags.fire !== "live_flame_opt_in"
+    flags.fire === "none"
   ) {
-    blocks.push("candle or light work must default to LED or explicit opt-in");
+    blocks.push("candle work must declare fire safety");
   }
 
   if (flags.smoke === "review_required") {
     warnings.push("smoke requires review and must not be a default ritual");
   }
 
-  if (flags.fire === "live_flame_opt_in") {
-    warnings.push("live flame requires explicit opt-in and a no-flame alternative");
+  if (flags.fire === "live_flame") {
+    warnings.push("live flame requires ordinary candle safety and supervision");
   }
 
   if (flags.essentialOils === "review_required") {
