@@ -66,10 +66,26 @@ describe("app shell rendering", () => {
     const html = renderSignedInShell(resolvePrivateBriefData({}), {
       feedbackStatus: "Saved. Thank you.",
       tryAgainStatus: "Saved. Here is another approved option.",
+      selectedFeedbackType: "try_again",
     });
 
     expect(html).toContain("Saved. Here is another approved option.");
+    expect(html).toContain('aria-pressed="true"');
+    expect(html).toContain("feedback-button--selected");
     expect(html).not.toContain("Feedback saves to private Firestore.");
+  });
+
+  it("renders a saving state for clicked feedback buttons", () => {
+    const html = renderSignedInShell(resolvePrivateBriefData({}), {
+      feedbackStatus: "Saving too much.",
+      selectedFeedbackType: "too_much",
+      savingFeedbackType: "too_much",
+    });
+
+    expect(html).toContain("Saving too much");
+    expect(html).toContain("Saving too much.");
+    expect(html).toContain("feedback-button--selected");
+    expect(html).toContain(" disabled");
   });
 
   it("renders editable profile tuning for loaded private data", () => {
