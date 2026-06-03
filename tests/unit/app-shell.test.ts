@@ -101,8 +101,8 @@ describe("app shell rendering", () => {
     expect(html).toContain("This week's signals");
     expect(html).toContain('class="brief__signal-list"');
     expect(html).toContain('data-signal-type="moon"');
+    expect(html).toContain('data-signal-type="planetary"');
     expect(html).toContain('data-signal-type="capacity"');
-    expect(html).toContain('data-signal-type="profile"');
     expect(html).toContain('data-signal-type="schedule"');
     expect(html).toContain("Full moon");
     expect(html).toContain("Capacity — low");

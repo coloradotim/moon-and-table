@@ -201,6 +201,16 @@ describe("generateWeeklyBrief", () => {
     });
 
     expect(brief.trace.timingFacts).toEqual(["moon.full"]);
+    expect(brief.trace.computedTimingFacts.length).toBeGreaterThan(10);
+    expect(brief.trace.computedTimingFacts).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ type: "moon_sign" }),
+        expect.objectContaining({ type: "sun_sign" }),
+        expect.objectContaining({ type: "planet_sign" }),
+        expect.objectContaining({ type: "planetary_aspect" }),
+      ]),
+    );
+    expect(brief.trace.selectedTimingSignals.length).toBeGreaterThan(0);
     expect(brief.trace.timingFactDetails).toHaveLength(1);
     expect(brief.trace.timingFactDetails[0]).toMatchObject({
       key: "moon.full",
@@ -238,13 +248,13 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.explanation.signals).toHaveLength(4);
     expect(labels).toContain("Full moon");
+    expect(labels.some((label) => label.includes(" in "))).toBe(true);
     expect(labels).toContain("Capacity — low");
-    expect(labels).toContain("Saved preference — plant tending");
     expect(labels).toContain("Schedule — realistic window");
-    expect(labels).not.toContain("Moon sign");
-    expect(labels).not.toContain("Planetary aspect");
+    expect(labels).not.toContain("Saved preference — plant tending");
     expect(JSON.stringify(brief.explanation.signals)).not.toContain("moon.full");
     expect(JSON.stringify(brief.explanation.signals)).not.toContain("private_profile.");
+    expect(JSON.stringify(brief.explanation.signals).toLowerCase()).not.toContain("your chart");
   });
 
   it("keeps explanation source labels human-readable", () => {
@@ -264,6 +274,10 @@ describe("generateWeeklyBrief", () => {
         }),
         expect.objectContaining({
           kind: "ritual_pattern",
+        }),
+        expect.objectContaining({
+          label: "Steven Forrest astrology works",
+          kind: "source_review",
         }),
       ]),
     );
@@ -285,10 +299,38 @@ describe("generateWeeklyBrief", () => {
 
     expect(explanationText).toContain("Capacity");
     expect(explanationText).toContain("Schedule");
-    expect(explanationText).toContain("Saved preference");
+    expect(explanationText).toContain("saved settings");
     expect(explanationText).toContain("Saturday morning");
     expect(explanationText).not.toContain("your chart says");
     expect(explanationText).not.toContain("will cause");
+  });
+
+  it("uses current-sky astrology without using private natal interpretation", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-06-03T12:00:00.000Z",
+      capacityMode: "low",
+      preferredRitualStyles: ["plant_tending"],
+    });
+    const serializedBrief = JSON.stringify(brief).toLowerCase();
+
+    expect(brief.trace.selectedTimingSignals).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ timingFactType: "moon_phase" }),
+      ]),
+    );
+    expect(
+      brief.trace.selectedTimingSignals.some((signal) =>
+        ["moon_sign", "sun_sign", "planet_sign", "planetary_aspect"].includes(
+          signal.timingFactType,
+        ),
+      ),
+    ).toBe(true);
+    expect(brief.explanation.signals.some((signal) => signal.type === "planetary")).toBe(true);
+    expect(serializedBrief).not.toContain("birth");
+    expect(serializedBrief).not.toContain("natal");
+    expect(serializedBrief).not.toContain("synastry");
+    expect(serializedBrief).not.toContain("compatibility");
+    expect(serializedBrief).not.toContain("your chart");
   });
 
   it("can consume a lunar timing fact object from the timing helper", () => {

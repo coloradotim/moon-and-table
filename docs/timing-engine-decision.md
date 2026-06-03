@@ -169,8 +169,14 @@ Approved rules currently cover:
 
 - four lunar phase buckets
 - approved numerology cards for 1, 2, 4, 6, and 9
+- MVP astrology interpretation for Sun, Moon, Mercury, Venus, Mars, Jupiter, and Saturn
+- all 12 zodiac signs as symbolic styles, not identity labels
+- five major aspects: conjunction, opposition, square, trine, and sextile
+- a conservative retrograde review cue for the core planets
 
-Draft placeholders exist for moon sign, sun sign, solar season, and planetary facts. Draft rules are not eligible for generated recommendations. This prevents the app from inventing unsupported astrology.
+Draft placeholders remain for solar season interpretation and outer planet interpretation. Uranus, Neptune, and Pluto can still be computed as facts, but they are fact-only until a later reviewed source pass creates approved cards and rules.
+
+The MVP astrology cards and rules are intentionally symbolic and invitational. They can color ritual selection, but they must not predict events, describe a person, expose private chart material, judge relationships, or become the whole recommendation.
 
 ## Signal Selection
 

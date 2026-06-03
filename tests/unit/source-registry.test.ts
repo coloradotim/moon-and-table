@@ -35,6 +35,9 @@ describe("source registry", () => {
         "source.astronomy_engine",
         "source.steven_forrest",
         "source.kevin_burk",
+        "source.april_elliott_kent",
+        "source.astrology_ethics_sources",
+        "source.barnum_forer_guardrail",
         "source.sarah_faith_gottesdiener",
         "source.rachel_patterson_moon",
         "source.laurel_woodward",
@@ -53,6 +56,38 @@ describe("source registry", () => {
         "copy passages",
       );
     }
+  });
+
+  it("includes the reviewed astrology source batch for timing interpretation", () => {
+    expect(starterSourceReviews).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "source.steven_forrest",
+          reviewStatus: "reviewed",
+          useDecision: "use",
+        }),
+        expect.objectContaining({
+          id: "source.kevin_burk",
+          reviewStatus: "reviewed",
+          useDecision: "use",
+        }),
+        expect.objectContaining({
+          id: "source.april_elliott_kent",
+          reviewStatus: "reviewed",
+          useDecision: "use_carefully",
+        }),
+        expect.objectContaining({
+          id: "source.astrology_ethics_sources",
+          reviewStatus: "reviewed",
+          useDecision: "use",
+        }),
+        expect.objectContaining({
+          id: "source.barnum_forer_guardrail",
+          reviewStatus: "reviewed",
+          useDecision: "use",
+        }),
+      ]),
+    );
   });
 
   it("includes the reviewed lunar source batch for four-phase cards", () => {
@@ -104,6 +139,33 @@ describe("source registry", () => {
       expect(note.paraphrasedNote.length).toBeLessThanOrEqual(280);
       expect(note.paraphrasedNote.toLowerCase()).not.toContain("guarantee");
       expect(note.copyrightNotes.join(" ").toLowerCase()).toContain("short transformed note");
+    }
+  });
+
+  it("includes transformed source notes for MVP astrology interpretation", () => {
+    const astrologyNoteIds = [
+      "note.astrology_symbolic_not_predictive",
+      "note.astrology_planets_as_functions",
+      "note.astrology_signs_as_styles",
+      "note.astrology_aspects_as_relationships",
+      "note.astrology_retrograde_slow_review",
+      "note.astrology_ethics_no_personal_certainty",
+      "note.barnum_forer_specificity_guardrail",
+    ];
+    const astrologyNotes = starterSourceNotes.filter((note) =>
+      astrologyNoteIds.includes(note.id),
+    );
+
+    expect(astrologyNotes.map((note) => note.id).sort()).toEqual(
+      [...astrologyNoteIds].sort(),
+    );
+
+    for (const note of astrologyNotes) {
+      expect(validateSourceNote(note)).toEqual({ valid: true, errors: [] });
+      expect(note.verbatimAllowed).toBe(false);
+      expect(note.paraphrasedNote.length).toBeLessThanOrEqual(280);
+      expect(note.paraphrasedNote.toLowerCase()).not.toContain("will happen");
+      expect(note.paraphrasedNote.toLowerCase()).not.toContain("guarantee");
     }
   });
 

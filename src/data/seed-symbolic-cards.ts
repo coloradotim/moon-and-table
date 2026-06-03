@@ -17,6 +17,10 @@ export type SymbolicCardApprovalStatus =
 export type SymbolicCardCategory =
   | "moon_phase"
   | "numerology"
+  | "astrology_body"
+  | "astrology_sign"
+  | "astrology_aspect"
+  | "astrology_motion"
   | "home_magic"
   | "kitchen_magic"
   | "plant_magic"
@@ -40,6 +44,481 @@ export type SymbolicCard = {
   confidence: SymbolicCardConfidence;
   approval_status: SymbolicCardApprovalStatus;
 };
+
+type AstrologyCardSeed = Omit<
+  SymbolicCard,
+  "id" | "category" | "source_references" | "confidence" | "approval_status"
+> & {
+  category: Extract<
+    SymbolicCardCategory,
+    "astrology_body" | "astrology_sign" | "astrology_aspect" | "astrology_motion"
+  >;
+  source_references?: string[];
+};
+
+const ASTROLOGY_SOURCE_REFERENCES = [
+  "source.steven_forrest",
+  "source.kevin_burk",
+  "source.april_elliott_kent",
+  "source.astrology_ethics_sources",
+  "source.barnum_forer_guardrail",
+  "note.astrology_symbolic_not_predictive",
+  "note.astrology_ethics_no_personal_certainty",
+  "note.barnum_forer_specificity_guardrail",
+];
+
+const PLANET_SOURCE_REFERENCES = [
+  ...ASTROLOGY_SOURCE_REFERENCES,
+  "note.astrology_planets_as_functions",
+];
+
+const SIGN_SOURCE_REFERENCES = [
+  ...ASTROLOGY_SOURCE_REFERENCES,
+  "note.astrology_signs_as_styles",
+];
+
+const ASPECT_SOURCE_REFERENCES = [
+  ...ASTROLOGY_SOURCE_REFERENCES,
+  "note.astrology_aspects_as_relationships",
+];
+
+const MOTION_SOURCE_REFERENCES = [
+  ...ASTROLOGY_SOURCE_REFERENCES,
+  "note.astrology_retrograde_slow_review",
+];
+
+function makeAstrologyCard(seed: AstrologyCardSeed): SymbolicCard {
+  return {
+    ...seed,
+    id: `card_${seed.key}`,
+    source_references: seed.source_references ?? ASTROLOGY_SOURCE_REFERENCES,
+    confidence: "common",
+    approval_status: "approved",
+  };
+}
+
+const astrologyBodyCards: SymbolicCard[] = [
+  makeAstrologyCard({
+    key: "astrology_body_sun",
+    title: "Sun",
+    category: "astrology_body",
+    summary: "A symbolic timing cue for visibility, vitality, purpose, and what wants steady attention.",
+    themes: ["visibility", "vitality", "purpose", "attention"],
+    good_for: ["choosing a clear focus", "noticing what needs daylight", "supporting a steady intention"],
+    ritual_styles: ["reflection", "simple planning", "candle_or_light"],
+    ritual_ideas: [
+      "Name one household focus that benefits from being seen plainly.",
+      "Use light as a marker for one clear intention without making it a promise.",
+    ],
+    avoid_saying: [
+      "Do not say the Sun reveals a person's purpose.",
+      "Do not turn visibility into pressure to perform.",
+      "Do not make solar timing the only reason for a recommendation.",
+    ],
+    safety_notes: [
+      "Keep solar language symbolic and low-stakes.",
+      "Do not use this card for identity certainty or life-purpose claims.",
+    ],
+    source_references: PLANET_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_body_moon",
+    title: "Moon",
+    category: "astrology_body",
+    summary: "A symbolic cue for mood, care, home rhythm, memory, and what needs gentler tending.",
+    themes: ["care", "rhythm", "home", "memory"],
+    good_for: ["small household tending", "soft reflection", "choosing a gentle pace"],
+    ritual_styles: ["home_tending", "plant_tending", "reflection"],
+    ritual_ideas: [
+      "Choose one small care action that fits the household's real capacity.",
+      "Notice what needs a gentler pace before adding more effort.",
+    ],
+    avoid_saying: [
+      "Do not claim the Moon causes moods or behavior.",
+      "Do not expose private emotional assumptions.",
+      "Do not make care sound mandatory.",
+    ],
+    safety_notes: [
+      "Keep emotional language optional and light.",
+      "Do not use lunar wording to push personal disclosure.",
+    ],
+    source_references: PLANET_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_body_mercury",
+    title: "Mercury",
+    category: "astrology_body",
+    summary: "A symbolic cue for messages, small decisions, naming, sorting, and useful communication.",
+    themes: ["communication", "sorting", "naming", "small decisions"],
+    good_for: ["clarifying one note", "choosing words carefully", "sorting a small practical tangle"],
+    ritual_styles: ["reflection", "simple planning", "conversation"],
+    ritual_ideas: [
+      "Write one plain sentence about what needs to be said or sorted.",
+      "Choose one household note, list, or message to clarify and then stop.",
+    ],
+    avoid_saying: [
+      "Do not blame Mercury for confusion or conflict.",
+      "Do not imply a conversation must happen.",
+      "Do not predict communication problems.",
+    ],
+    safety_notes: [
+      "Conversation prompts should stay optional and consent-based.",
+      "Do not use Mercury timing as advice to delay necessary communication.",
+    ],
+    source_references: PLANET_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_body_venus",
+    title: "Venus",
+    category: "astrology_body",
+    summary: "A symbolic cue for pleasure, warmth, beauty, ease, appreciation, and what makes the home feel cared for.",
+    themes: ["warmth", "beauty", "ease", "appreciation"],
+    good_for: ["softening atmosphere", "choosing a gentle sensory cue", "appreciating ordinary support"],
+    ritual_styles: ["candle_or_light", "kitchen", "gratitude", "atmosphere"],
+    ritual_ideas: [
+      "Add one small touch of warmth to a shared space using what is already there.",
+      "Name one ordinary thing in the home that feels beautiful or supportive.",
+    ],
+    avoid_saying: [
+      "Do not make beauty into a requirement.",
+      "Do not imply Venus timing changes another person's feelings.",
+      "Do not use relationship-control or attraction claims.",
+    ],
+    safety_notes: [
+      "Avoid scent, food, flame, or purchases unless they fit existing household safety and preference constraints.",
+    ],
+    source_references: PLANET_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_body_mars",
+    title: "Mars",
+    category: "astrology_body",
+    summary: "A symbolic cue for action, courage, directness, boundaries, and moving one contained thing forward.",
+    themes: ["action", "directness", "courage", "boundaries"],
+    good_for: ["one decisive small action", "setting a practical boundary", "moving energy without escalation"],
+    ritual_styles: ["single-action ritual", "clearing", "home_tending"],
+    ritual_ideas: [
+      "Choose one bounded action that can be finished without turning into a task list.",
+      "Name one practical boundary around time, attention, or household energy.",
+    ],
+    avoid_saying: [
+      "Do not frame Mars as conflict, anger, or danger.",
+      "Do not push confrontation.",
+      "Do not make decisive action bigger than capacity allows.",
+    ],
+    safety_notes: [
+      "Keep action physically safe, brief, and non-confrontational.",
+      "Do not recommend heavy cleanup or emotionally charged discussion from this card alone.",
+    ],
+    source_references: PLANET_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_body_jupiter",
+    title: "Jupiter",
+    category: "astrology_body",
+    summary: "A symbolic cue for perspective, generosity, learning, encouragement, and a little more room.",
+    themes: ["perspective", "generosity", "learning", "encouragement"],
+    good_for: ["zooming out gently", "making room for support", "choosing encouragement over pressure"],
+    ritual_styles: ["reflection", "gratitude", "simple planning"],
+    ritual_ideas: [
+      "Name one helpful resource, lesson, or support already present.",
+      "Choose a tiny expansion that makes the home feel more generous without adding burden.",
+    ],
+    avoid_saying: [
+      "Do not promise luck, growth, abundance, or success.",
+      "Do not suggest taking on more than capacity allows.",
+      "Do not make optimism compulsory.",
+    ],
+    safety_notes: [
+      "Keep expansion modest and capacity-aware.",
+      "Avoid spending, shopping, or big commitments as default Jupiter responses.",
+    ],
+    source_references: PLANET_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_body_saturn",
+    title: "Saturn",
+    category: "astrology_body",
+    summary: "A symbolic cue for structure, limits, maintenance, patience, and realistic care.",
+    themes: ["structure", "limits", "maintenance", "patience"],
+    good_for: ["choosing a realistic boundary", "supporting a routine", "making one system easier to maintain"],
+    ritual_styles: ["home_tending", "simple planning", "surface_reset"],
+    ritual_ideas: [
+      "Choose one small structure that would make the week easier to live with.",
+      "Name one limit that protects attention or rest.",
+    ],
+    avoid_saying: [
+      "Do not frame Saturn as punishment, hardship, or judgment.",
+      "Do not turn structure into moral pressure.",
+      "Do not imply restriction is always the right response.",
+    ],
+    safety_notes: [
+      "Use structure as support, not criticism.",
+      "Keep maintenance rituals small enough for the selected capacity mode.",
+    ],
+    source_references: PLANET_SOURCE_REFERENCES,
+  }),
+];
+
+const astrologySignCards: SymbolicCard[] = [
+  makeAstrologyCard({
+    key: "astrology_sign_aries",
+    title: "Aries",
+    category: "astrology_sign",
+    summary: "A direct, initiating style that supports one clear start or a small brave action.",
+    themes: ["initiative", "directness", "spark", "courage"],
+    good_for: ["starting one contained thing", "choosing direct action", "naming a simple boundary"],
+    ritual_styles: ["single-action ritual", "candle_or_light", "clearing"],
+    ritual_ideas: ["Choose one direct household action and give it a clear stopping point."],
+    avoid_saying: ["Do not describe a person as impulsive or aggressive.", "Do not push urgency or confrontation."],
+    safety_notes: ["Keep Aries signals bounded so action does not outrun capacity."],
+    source_references: SIGN_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_sign_taurus",
+    title: "Taurus",
+    category: "astrology_sign",
+    summary: "A steady, sensory style that supports comfort, consistency, and practical tending.",
+    themes: ["steadiness", "comfort", "senses", "maintenance"],
+    good_for: ["making one thing easier to live with", "gentle maintenance", "noticing comfort"],
+    ritual_styles: ["home_tending", "plant_tending", "kitchen"],
+    ritual_ideas: ["Tend one physical thing slowly and stop when it feels a little more settled."],
+    avoid_saying: ["Do not describe a person as stubborn.", "Do not make comfort into avoidance."],
+    safety_notes: ["Avoid food, scent, or touch-based suggestions when household safety is unknown."],
+    source_references: SIGN_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_sign_gemini",
+    title: "Gemini",
+    category: "astrology_sign",
+    summary: "A curious, connective style that supports naming, sorting, and light exchange.",
+    themes: ["curiosity", "connection", "naming", "sorting"],
+    good_for: ["clarifying one thought", "sorting a small list", "choosing a light check-in"],
+    ritual_styles: ["reflection", "simple planning", "conversation"],
+    ritual_ideas: ["Write or say one clear sentence that makes a small household tangle easier to understand."],
+    avoid_saying: ["Do not call anyone scattered or inconsistent.", "Do not force a conversation."],
+    safety_notes: ["Keep communication prompts optional and privacy-aware."],
+    source_references: SIGN_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_sign_cancer",
+    title: "Cancer",
+    category: "astrology_sign",
+    summary: "A protective, home-centered style that supports care, memory, and gentle containment.",
+    themes: ["care", "home", "memory", "containment"],
+    good_for: ["softening the home tone", "choosing a care action", "protecting rest"],
+    ritual_styles: ["home_tending", "kitchen", "reflection"],
+    ritual_ideas: ["Choose one small action that makes the home feel more held without asking for emotional processing."],
+    avoid_saying: ["Do not imply someone is sensitive or needy.", "Do not make family or feeling language mandatory."],
+    safety_notes: ["Keep care actions consent-based and low-pressure."],
+    source_references: SIGN_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_sign_leo",
+    title: "Leo",
+    category: "astrology_sign",
+    summary: "A warm, expressive style that supports appreciation, visibility, and a little heart in the room.",
+    themes: ["warmth", "expression", "appreciation", "visibility"],
+    good_for: ["acknowledging what is working", "adding warmth", "making one effort visible"],
+    ritual_styles: ["candle_or_light", "gratitude", "atmosphere"],
+    ritual_ideas: ["Name one effort worth appreciating and let that be enough ceremony."],
+    avoid_saying: ["Do not describe anyone as dramatic or attention-seeking.", "Do not force celebration."],
+    safety_notes: ["Use flame only with ordinary candle safety and supervision."],
+    source_references: SIGN_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_sign_virgo",
+    title: "Virgo",
+    category: "astrology_sign",
+    summary: "A practical, refining style that supports small repairs, useful order, and care through attention.",
+    themes: ["usefulness", "repair", "attention", "refinement"],
+    good_for: ["one small repair", "making a system easier", "noticing what actually helps"],
+    ritual_styles: ["home_tending", "surface_reset", "simple planning"],
+    ritual_ideas: ["Improve one small thing that will be used again, then stop before perfecting it."],
+    avoid_saying: ["Do not frame Virgo as criticism, perfectionism, or cleaning pressure.", "Do not turn repair into homework."],
+    safety_notes: ["Avoid large cleanup and perfection pressure; capacity comes first."],
+    source_references: SIGN_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_sign_libra",
+    title: "Libra",
+    category: "astrology_sign",
+    summary: "A balancing, relational style that supports harmony, proportion, beauty, and fair adjustment.",
+    themes: ["balance", "harmony", "beauty", "adjustment"],
+    good_for: ["making one shared space feel calmer", "softening tone", "choosing a fairer rhythm"],
+    ritual_styles: ["atmosphere", "conversation", "reflection"],
+    ritual_ideas: ["Adjust one visible thing so a shared space feels a little more balanced."],
+    avoid_saying: ["Do not make relationship discussion required.", "Do not imply harmony must mean agreement."],
+    safety_notes: ["Shared prompts require consent; avoid compatibility or fixing language."],
+    source_references: SIGN_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_sign_scorpio",
+    title: "Scorpio",
+    category: "astrology_sign",
+    summary: "A focused, deepening style that supports privacy, discernment, release, and honest boundaries.",
+    themes: ["focus", "privacy", "discernment", "release"],
+    good_for: ["choosing what not to feed", "protecting attention", "ending one small loop"],
+    ritual_styles: ["reflection", "clearing", "threshold"],
+    ritual_ideas: ["Name one thing that can receive less attention and choose a small boundary around it."],
+    avoid_saying: ["Do not use crisis, obsession, secrecy, or transformation pressure.", "Do not imply hidden truths must be exposed."],
+    safety_notes: ["Keep depth optional; avoid emotionally intense prompts by default."],
+    source_references: SIGN_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_sign_sagittarius",
+    title: "Sagittarius",
+    category: "astrology_sign",
+    summary: "A spacious, meaning-seeking style that supports perspective, learning, humor, and a wider view.",
+    themes: ["perspective", "learning", "meaning", "spaciousness"],
+    good_for: ["zooming out", "choosing a useful lesson", "making room for encouragement"],
+    ritual_styles: ["reflection", "gratitude", "simple planning"],
+    ritual_ideas: ["Ask what view would make the week feel a little less cramped."],
+    avoid_saying: ["Do not force positivity or big beliefs.", "Do not suggest escape from practical needs."],
+    safety_notes: ["Keep expansion modest and grounded in real household capacity."],
+    source_references: SIGN_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_sign_capricorn",
+    title: "Capricorn",
+    category: "astrology_sign",
+    summary: "A grounded, durable style that supports maintenance, limits, patience, and realistic progress.",
+    themes: ["maintenance", "limits", "durability", "realistic progress"],
+    good_for: ["one useful structure", "protecting time", "choosing a manageable next step"],
+    ritual_styles: ["home_tending", "simple planning", "surface_reset"],
+    ritual_ideas: ["Set one practical limit that makes care easier to maintain."],
+    avoid_saying: ["Do not moralize discipline or productivity.", "Do not imply hard work is always the answer."],
+    safety_notes: ["Do not let structure override rest or low capacity."],
+    source_references: SIGN_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_sign_aquarius",
+    title: "Aquarius",
+    category: "astrology_sign",
+    summary: "A clarifying, pattern-seeing style that supports experiments, systems, friendship, and fresh distance.",
+    themes: ["patterns", "experiments", "systems", "fresh distance"],
+    good_for: ["trying one small adjustment", "noticing a recurring pattern", "simplifying a shared system"],
+    ritual_styles: ["simple planning", "home_tending", "reflection"],
+    ritual_ideas: ["Change one small household pattern as an experiment, not a permanent fix."],
+    avoid_saying: ["Do not call anyone detached or unusual.", "Do not turn experimentation into disruption."],
+    safety_notes: ["Keep experiments reversible and low-risk."],
+    source_references: SIGN_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_sign_pisces",
+    title: "Pisces",
+    category: "astrology_sign",
+    summary: "A soft, imaginative style that supports compassion, rest, porousness, and gentle release.",
+    themes: ["compassion", "imagination", "rest", "gentle release"],
+    good_for: ["softening a hard edge", "resting attention", "choosing a compassionate pause"],
+    ritual_styles: ["reflection", "quiet pause", "candle_or_light"],
+    ritual_ideas: ["Offer one kind sentence to the household and let that be the whole ritual."],
+    avoid_saying: ["Do not imply confusion, sacrifice, or emotional flooding.", "Do not push porous emotional language."],
+    safety_notes: ["Keep prompts simple and avoid emotional overreach."],
+    source_references: SIGN_SOURCE_REFERENCES,
+  }),
+];
+
+const astrologyAspectCards: SymbolicCard[] = [
+  makeAstrologyCard({
+    key: "astrology_aspect_conjunction",
+    title: "Conjunction",
+    category: "astrology_aspect",
+    summary: "A symbolic blending cue where two timing factors occupy the same area of attention.",
+    themes: ["blending", "focus", "emphasis", "meeting"],
+    good_for: ["choosing one combined focus", "noticing what is amplified", "keeping attention simple"],
+    ritual_styles: ["reflection", "simple planning", "single-action ritual"],
+    ritual_ideas: ["Choose one small action that lets two related themes share the same focus."],
+    avoid_saying: ["Do not claim a conjunction forces intensity.", "Do not make emphasis sound urgent or fated."],
+    safety_notes: ["Use as context only; capacity and safety still choose the ritual size."],
+    source_references: ASPECT_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_aspect_opposition",
+    title: "Opposition",
+    category: "astrology_aspect",
+    summary: "A symbolic polarity cue for balancing two visible needs without making them enemies.",
+    themes: ["polarity", "balance", "perspective", "adjustment"],
+    good_for: ["holding two needs in view", "choosing a fair adjustment", "softening either-or thinking"],
+    ritual_styles: ["reflection", "conversation", "home_tending"],
+    ritual_ideas: ["Name two needs and choose one tiny adjustment that respects both."],
+    avoid_saying: ["Do not predict conflict.", "Do not frame polarity as a relationship problem or crisis."],
+    safety_notes: ["Avoid forced conversations; shared reflection requires consent."],
+    source_references: ASPECT_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_aspect_square",
+    title: "Square",
+    category: "astrology_aspect",
+    summary: "A symbolic friction cue that can support one practical adjustment where something feels awkward.",
+    themes: ["friction", "adjustment", "effort", "practical tension"],
+    good_for: ["adjusting one snag", "choosing a direct but small response", "making friction usable"],
+    ritual_styles: ["home_tending", "surface_reset", "single-action ritual"],
+    ritual_ideas: ["Fix or soften one small snag without making it a larger problem to solve."],
+    avoid_saying: ["Do not predict difficulty, conflict, or failure.", "Do not make friction sound threatening."],
+    safety_notes: ["Keep action small and non-confrontational."],
+    source_references: ASPECT_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_aspect_trine",
+    title: "Trine",
+    category: "astrology_aspect",
+    summary: "A symbolic support cue that can help a ritual follow what is already moving with less effort.",
+    themes: ["support", "flow", "ease", "cooperation"],
+    good_for: ["using available support", "choosing the easiest helpful action", "noticing what already works"],
+    ritual_styles: ["gratitude", "home_tending", "plant_tending"],
+    ritual_ideas: ["Choose the helpful action that requires the least extra effort."],
+    avoid_saying: ["Do not promise ease, luck, or success.", "Do not imply support means no effort is needed."],
+    safety_notes: ["Do not use ease language to ignore real constraints."],
+    source_references: ASPECT_SOURCE_REFERENCES,
+  }),
+  makeAstrologyCard({
+    key: "astrology_aspect_sextile",
+    title: "Sextile",
+    category: "astrology_aspect",
+    summary: "A symbolic opportunity cue for a small cooperative step that still needs a conscious choice.",
+    themes: ["opportunity", "cooperation", "small opening", "choice"],
+    good_for: ["trying a modest option", "choosing a supportive step", "connecting two helpful themes"],
+    ritual_styles: ["simple planning", "home_tending", "reflection"],
+    ritual_ideas: ["Take one modest opening seriously enough to act on it briefly."],
+    avoid_saying: ["Do not promise opportunity, success, or improvement.", "Do not inflate a small opening into a mandate."],
+    safety_notes: ["Keep opportunities optional and realistic."],
+    source_references: ASPECT_SOURCE_REFERENCES,
+  }),
+];
+
+const astrologyMotionCards: SymbolicCard[] = [
+  makeAstrologyCard({
+    key: "astrology_motion_retrograde",
+    title: "Retrograde",
+    category: "astrology_motion",
+    summary: "A conservative timing cue for review, slowing down, revisiting, and checking assumptions.",
+    themes: ["review", "slowing down", "revisiting", "checking assumptions"],
+    good_for: ["reviewing one small thing", "pausing before adding more", "making a gentle correction"],
+    ritual_styles: ["reflection", "simple planning", "quiet pause"],
+    ritual_ideas: [
+      "Review one small household assumption before changing anything.",
+      "Pause and ask what can be checked instead of rushed.",
+    ],
+    avoid_saying: [
+      "Do not blame problems on retrograde motion.",
+      "Do not predict disruption or delay.",
+      "Do not tell users to avoid necessary action.",
+    ],
+    safety_notes: [
+      "Retrograde language should reduce pressure, not create fear.",
+      "Do not use this card to discourage medical, safety, work, or household necessities.",
+    ],
+    source_references: MOTION_SOURCE_REFERENCES,
+  }),
+];
+
+export const astrologySymbolicCards: SymbolicCard[] = [
+  ...astrologyBodyCards,
+  ...astrologySignCards,
+  ...astrologyAspectCards,
+  ...astrologyMotionCards,
+];
 
 export const seedSymbolicCards: SymbolicCard[] = [
   {
@@ -610,6 +1089,7 @@ export const seedSymbolicCards: SymbolicCard[] = [
     confidence: "common",
     approval_status: "approved",
   },
+  ...astrologySymbolicCards,
   {
     id: "card_private_profile_practical_care_theme",
     key: "private_profile_practical_care_theme",

@@ -20,6 +20,31 @@ const expectedSeedKeys = [
   "honey",
   "lemon",
   "tea",
+  "astrology_body_sun",
+  "astrology_body_moon",
+  "astrology_body_mercury",
+  "astrology_body_venus",
+  "astrology_body_mars",
+  "astrology_body_jupiter",
+  "astrology_body_saturn",
+  "astrology_sign_aries",
+  "astrology_sign_taurus",
+  "astrology_sign_gemini",
+  "astrology_sign_cancer",
+  "astrology_sign_leo",
+  "astrology_sign_virgo",
+  "astrology_sign_libra",
+  "astrology_sign_scorpio",
+  "astrology_sign_sagittarius",
+  "astrology_sign_capricorn",
+  "astrology_sign_aquarius",
+  "astrology_sign_pisces",
+  "astrology_aspect_conjunction",
+  "astrology_aspect_opposition",
+  "astrology_aspect_square",
+  "astrology_aspect_trine",
+  "astrology_aspect_sextile",
+  "astrology_motion_retrograde",
   "private_profile_practical_care_theme",
   "private_profile_beauty_warmth_theme",
   "private_profile_structured_action_theme",
@@ -164,6 +189,58 @@ describe("seedSymbolicCards", () => {
     expect(serializedLunarCards).not.toContain("private source text");
     expect(serializedLunarCards).not.toContain("birth");
     expect(serializedLunarCards).not.toContain("natal");
+  });
+
+  it("adds an approved MVP astrology symbolic layer", () => {
+    const astrologyCards = seedSymbolicCards.filter((card) =>
+      card.category.startsWith("astrology_"),
+    );
+    const astrologyKeys = astrologyCards.map((card) => card.key);
+
+    expect(astrologyCards).toHaveLength(25);
+    expect(astrologyKeys).toEqual(
+      expect.arrayContaining([
+        "astrology_body_sun",
+        "astrology_body_moon",
+        "astrology_body_mercury",
+        "astrology_body_venus",
+        "astrology_body_mars",
+        "astrology_body_jupiter",
+        "astrology_body_saturn",
+        "astrology_sign_aries",
+        "astrology_sign_pisces",
+        "astrology_aspect_square",
+        "astrology_aspect_trine",
+        "astrology_motion_retrograde",
+      ]),
+    );
+    expect(astrologyKeys).not.toEqual(
+      expect.arrayContaining([
+        "astrology_body_uranus",
+        "astrology_body_neptune",
+        "astrology_body_pluto",
+      ]),
+    );
+
+    for (const card of astrologyCards) {
+      const userFacingCardText = `${card.summary} ${card.ritual_ideas.join(" ")}`.toLowerCase();
+
+      expect(card.approval_status).toBe("approved");
+      expect(card.source_references).toEqual(
+        expect.arrayContaining([
+          "source.steven_forrest",
+          "source.kevin_burk",
+          "source.astrology_ethics_sources",
+          "source.barnum_forer_guardrail",
+        ]),
+      );
+      expect(card.avoid_saying.length).toBeGreaterThan(0);
+      expect(card.safety_notes.length).toBeGreaterThan(0);
+      expect(userFacingCardText).not.toContain("will happen");
+      expect(userFacingCardText).not.toContain("guaranteed");
+      expect(userFacingCardText).not.toContain("compatibility");
+      expect(userFacingCardText).not.toContain("your chart");
+    }
   });
 
   it("keeps private profile cards generic placeholders", () => {
