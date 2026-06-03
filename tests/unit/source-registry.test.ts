@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 
 import {
   getApprovedSourceReviews,
+  SOURCE_NOTE_LOCATION_PRECISIONS,
+  SOURCE_NOTE_REVIEW_BASES,
   SOURCE_REVIEW_STATUSES,
   SOURCE_USE_DECISIONS,
   starterSourceNotes,
@@ -120,8 +122,27 @@ describe("source registry", () => {
       expect(validateSourceNote(note)).toEqual({ valid: true, errors: [] });
       expect(note.verbatimAllowed).toBe(false);
       expect(note.paraphrasedNote.length).toBeLessThanOrEqual(280);
-      expect(note.locationNote).toContain("docs/source-research-synthesis.md");
+      expect(note.locationNote.length).toBeGreaterThan(0);
+      expect(note.sourceLocationLabel?.length).toBeGreaterThan(0);
+      expect(note.reviewedSourceArea?.length).toBeGreaterThan(0);
+      expect(SOURCE_NOTE_REVIEW_BASES).toContain(note.reviewBasis);
+      expect(SOURCE_NOTE_LOCATION_PRECISIONS).toContain(note.locationPrecision);
+      expect(Number.isNaN(Date.parse(note.reviewedAtIso ?? ""))).toBe(false);
     }
+  });
+
+  it("identifies source notes that still have synthesis-only location precision", () => {
+    const synthesisOnlyNotes = starterSourceNotes.filter(
+      (note) => note.locationPrecision === "synthesis_only",
+    );
+
+    expect(synthesisOnlyNotes.map((note) => note.id)).toEqual(
+      expect.arrayContaining(["note.safety_overrides_symbolism"]),
+    );
+    expect(synthesisOnlyNotes.every((note) =>
+      note.reviewedSourceArea?.includes("needs more precise source location") ||
+      note.sourceId === "source.safety_reference_families",
+    )).toBe(true);
   });
 
   it("includes transformed source notes for each MVP lunar phase", () => {
@@ -265,7 +286,12 @@ describe("source registry", () => {
       expect(validateSourceNote(note)).toEqual({ valid: true, errors: [] });
       expect(note.verbatimAllowed).toBe(false);
       expect(note.paraphrasedNote.length).toBeLessThanOrEqual(280);
-      expect(note.locationNote).toContain("docs/source-research-synthesis.md");
+      expect(note.sourceLocationLabel).toMatch(
+        /Reviewed seasonal and almanac source batch|Astronomy Engine documentation/,
+      );
+      expect(note.reviewBasis).toMatch(
+        /source_family_synthesis|computed_fact_documentation/,
+      );
     }
 
     expect(
@@ -345,11 +371,21 @@ describe("source registry", () => {
       id: "note.invalid_trace",
       sourceId: "source.unknown",
       locationNote: "",
+      sourceLocationLabel: "",
+      reviewedSourceArea: "",
+      reviewBasis: "unsupported" as SourceNote["reviewBasis"],
+      reviewedAtIso: "not-a-date",
+      locationPrecision: "unknown" as SourceNote["locationPrecision"],
     };
 
     expect(validateSourceNote(note).errors).toEqual([
       "note.invalid_trace: source id does not match a reviewed source",
       "note.invalid_trace: location note is required",
+      "note.invalid_trace: source location label is required",
+      "note.invalid_trace: reviewed source area is required",
+      "note.invalid_trace: review basis is not supported",
+      "note.invalid_trace: location precision is not supported",
+      "note.invalid_trace: reviewedAtIso must be an ISO date string",
     ]);
   });
 
