@@ -36,8 +36,8 @@ Each week should include:
 - Offer no more than one optional add-on.
 - Default ritual time should be under 20 minutes.
 - For `pause`, offer no required ritual; use grounding, blessing, or permission to do nothing.
-- For `low`, keep the recommendation to 0-5 minutes with no shopping, setup, or cleanup.
-- For `steady`, keep the practical recommendation to 10-20 minutes.
+- For `low`, keep the recommendation to five minutes or less with no shopping, setup, or cleanup.
+- For `steady`, keep the practical recommendation to about twenty minutes or less.
 - For `high`, allow a more active recommendation up to 30 minutes, but still keep one primary ritual.
 - Avoid assigning multiple rituals across multiple days unless explicitly requested.
 - Use invitation language, not obligation language.
@@ -68,7 +68,7 @@ Theme:
 Clear one small thing. Feed one living thing.
 
 Best window:
-Saturday evening, 15 minutes.
+Saturday evening, about twenty minutes or less.
 
 Recommended ritual:
 Tend one plant. Remove dead leaves or water it. Name one thing to stop feeding and one thing to nourish.
@@ -77,7 +77,7 @@ Prompt:
 What part of this household needs less intensity and more tending?
 
 Optional:
-Light a candle while doing it.
+Optional: light a candle while doing it.
 
 Why this:
 The waning moon supports clearing and release. The private profile prefers practical tending over abstract processing. The schedule and capacity constraints suggest this should stay short and home-based.

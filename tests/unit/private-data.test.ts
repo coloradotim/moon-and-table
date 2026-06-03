@@ -57,7 +57,7 @@ describe("private Firestore data resolution", () => {
     const brief = generateWeeklyBrief(privateBriefData.input);
 
     expect(privateBriefData.input.capacityMode).toBe("steady");
-    expect(brief.bestWindow).toContain("10-20 minutes");
+    expect(brief.bestWindow).toContain("about twenty minutes or less");
   });
 
   it("uses loaded schedule constraints to affect best window and trace", () => {

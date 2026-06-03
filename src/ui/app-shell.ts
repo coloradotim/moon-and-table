@@ -44,6 +44,16 @@ function escapeHtml(value: string): string {
     .replaceAll("'", "&#39;");
 }
 
+function renderOptionalAddOn(value: string): string {
+  if (value.trim() === "No add-on needed.") {
+    return "";
+  }
+
+  const softenedValue = value.charAt(0).toLowerCase() + value.slice(1);
+
+  return `<p class="brief__optional">Optional: ${escapeHtml(softenedValue)}</p>`;
+}
+
 function renderSelectOptions(
   options: readonly string[],
   selectedValue: string,
@@ -256,9 +266,9 @@ function renderAppMenu(activeView: SignedInView): string {
   return `
     <details class="app-menu" data-app-menu="true">
       <summary class="app-menu__button" aria-label="Open menu">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
+        <span class="app-menu__line" aria-hidden="true"></span>
+        <span class="app-menu__line" aria-hidden="true"></span>
+        <span class="app-menu__line" aria-hidden="true"></span>
       </summary>
       <div class="app-menu__panel" role="menu" aria-label="App menu">
         <button type="button" role="menuitem" data-menu-action="this_week" aria-pressed="${thisWeekPressed}">This week</button>
@@ -374,29 +384,14 @@ export function renderSignedInShell(
         <h2>${escapeHtml(brief.theme)}</h2>
       </section>
 
-      <section class="brief__stack" aria-label="Brief details">
-        <div class="detail detail--practice" data-testid="recommended-ritual">
-          <p class="label">The practice</p>
-          <p>${escapeHtml(brief.recommendedRitual)}</p>
-        </div>
-
-        <div class="detail">
-          <p class="label">A good window</p>
-          <p>${escapeHtml(brief.bestWindow)}</p>
-        </div>
-
-        <div class="detail">
-          <p class="label">Optional</p>
-          <p>${escapeHtml(brief.optionalAddOn)}</p>
-        </div>
+      <section class="brief__composition" aria-label="Weekly practice">
+        <p class="brief__practice" data-testid="recommended-ritual">${escapeHtml(brief.recommendedRitual)}</p>
+        <p class="brief__window">${escapeHtml(brief.bestWindow)}</p>
+        ${renderOptionalAddOn(brief.optionalAddOn)}
+        <p class="brief__intention">${escapeHtml(brief.intention)}</p>
       </section>
 
-      <section class="brief__section">
-        <p class="label">Intention</p>
-        <p class="prompt">${escapeHtml(brief.intention)}</p>
-      </section>
-
-      <section class="brief__section">
+      <section class="brief__section brief__question">
         <p class="label">A question to carry</p>
         <p class="prompt">${escapeHtml(brief.reflectionPrompt)}</p>
       </section>
@@ -409,7 +404,7 @@ export function renderSignedInShell(
       <section class="try-again" aria-label="Need a different suggestion?">
         <p class="label">Need a different suggestion?</p>
         <button
-          class="primary-action feedback-button${options.selectedFeedbackType === "try_again" || options.savingFeedbackType === "try_again" ? " feedback-button--selected" : ""}"
+          class="secondary-action feedback-button${options.selectedFeedbackType === "try_again" || options.savingFeedbackType === "try_again" ? " feedback-button--selected" : ""}"
           type="button"
           data-feedback-type="try_again"
           data-try-again-action="true"

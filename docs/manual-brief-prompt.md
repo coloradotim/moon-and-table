@@ -21,7 +21,7 @@ Use the Moon & Table approach:
 * Include at most one optional add-on.
 * Use one of the four capacity modes: `pause`, `low`, `steady`, or `high`.
 * Default to `steady` unless capacity is constrained.
-* Use no required ritual for `pause`, 0-5 minutes for `low`, 10-20 minutes for `steady`, and 20-30 minutes for `high`.
+* Use no required ritual for `pause`, five minutes or less for `low`, about twenty minutes or less for `steady`, and about half an hour or less for `high`.
 * Use private schedule constraints when provided.
 * If the symbolic timing is on a bad schedule day, suggest a nearby realistic window instead.
 * Explain briefly why this recommendation fits the timing, profile, schedule, and capacity.
@@ -62,7 +62,7 @@ Format the brief like this:
 Add this to the end of the prompt when life is full or the week already has too much in it:
 
 ```text
-Capacity is low. Give the smallest meaningful version. Prefer one action within 0-5 minutes. Do not suggest journaling, a multi-step ritual, or anything that requires shopping, setup, or cleanup.
+Capacity is low. Give the smallest meaningful version. Prefer one action that takes five minutes or less. Do not suggest journaling, a multi-step ritual, or anything that requires shopping, setup, or cleanup.
 ```
 
 ## Pause version
@@ -78,7 +78,7 @@ Capacity is pause. Do not recommend a required ritual. Offer grounding, a blessi
 Add this when there is room for something fuller:
 
 ```text
-Capacity is steady or high. You may suggest one practical ritual: 10-20 minutes for steady, or 20-30 minutes for high. Include at most one optional add-on, and still do not give a list of multiple things to do.
+Capacity is steady or high. You may suggest one practical ritual: about twenty minutes or less for steady, or about half an hour or less for high. Include at most one optional add-on, and still do not give a list of multiple things to do.
 ```
 
 ## Schedule-aware version
