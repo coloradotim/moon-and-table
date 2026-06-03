@@ -343,12 +343,21 @@ export function resolvePrivateBriefData(
   const astrologyProfile = sanitizeAstrologyProfile(
     documents.profile?.astrologyProfile,
   );
+  const defaultAudience = isAudience(documents.profile?.defaultAudience)
+    ? documents.profile.defaultAudience
+    : "either";
+  const preferredRitualStyles = isStringArray(
+    documents.profile?.preferredRitualStyles,
+  )
+    ? normalizeProfilePreferenceValues(documents.profile.preferredRitualStyles)
+    : [];
+  const avoidedRitualStyles = isStringArray(documents.profile?.avoidedRitualStyles)
+    ? normalizeProfilePreferenceValues(documents.profile.avoidedRitualStyles)
+    : [];
   const tuning =
     documents.profile || documents.capacitySettings
       ? {
-          defaultAudience: isAudience(documents.profile?.defaultAudience)
-            ? documents.profile.defaultAudience
-            : "either",
+          defaultAudience,
           audienceLabels: resolveAudienceLabels(
             documents.profile?.audienceLabels,
             documents.profile,
@@ -356,16 +365,8 @@ export function resolvePrivateBriefData(
           ),
           defaultCapacityMode: capacityMode,
           maxRitualDurationMinutes,
-          preferredRitualStyles: isStringArray(
-            documents.profile?.preferredRitualStyles,
-          )
-            ? normalizeProfilePreferenceValues(
-                documents.profile.preferredRitualStyles,
-              )
-            : [],
-          avoidedRitualStyles: isStringArray(documents.profile?.avoidedRitualStyles)
-            ? normalizeProfilePreferenceValues(documents.profile.avoidedRitualStyles)
-            : [],
+          preferredRitualStyles,
+          avoidedRitualStyles,
           astrologyVisibility: isAstrologyVisibility(
             documents.profile?.astrologyVisibility,
           )
@@ -384,6 +385,9 @@ export function resolvePrivateBriefData(
       privateProfileKeys,
       capacityMode,
       scheduleConstraints,
+      preferredRitualStyles,
+      avoidedRitualStyles,
+      audience: defaultAudience,
     },
     assumptions,
     astrologyProfile,

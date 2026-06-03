@@ -283,6 +283,15 @@ export function renderSignedInShell(privateBriefData: PrivateBriefData): string 
     privateBriefData.status === "using_starter_settings"
       ? "Using starter settings until private settings are created."
       : "Using private settings from Firestore.";
+  const traceSummary = [
+    brief.trace.timingFacts.join(" + "),
+    brief.trace.symbolicCards.join(" · "),
+    brief.trace.ritualPatterns.join(" · "),
+    brief.trace.sourceReviewIds.slice(0, 3).join(" · "),
+    brief.trace.scheduleAssumptions.join(" · "),
+  ]
+    .filter(Boolean)
+    .join(" · ");
 
   return `
     <section class="shell" aria-labelledby="app-title">
@@ -300,48 +309,49 @@ export function renderSignedInShell(privateBriefData: PrivateBriefData): string 
 
       <article class="brief" aria-label="Weekly brief">
         <div class="brief__topline">
-          <span>${brief.dateRange}</span>
-          <span>${brief.trace.capacityMode} capacity</span>
+          <span>${escapeHtml(brief.dateRange)}</span>
+          <span>${escapeHtml(brief.trace.capacityMode)} capacity</span>
         </div>
 
-        <p class="private-note">${privateDataNote}</p>
+        <p class="private-note">${escapeHtml(privateDataNote)}</p>
 
         <section class="brief__section">
           <p class="label">Theme</p>
-          <h2>${brief.theme}</h2>
+          <h2>${escapeHtml(brief.theme)}</h2>
         </section>
 
         <section class="brief__grid" aria-label="Brief details">
           <div class="detail">
             <p class="label">Best window</p>
-            <p>${brief.bestWindow}</p>
+            <p>${escapeHtml(brief.bestWindow)}</p>
           </div>
 
           <div class="detail" data-testid="recommended-ritual">
             <p class="label">Recommended ritual</p>
-            <p>${brief.recommendedRitual}</p>
+            <p>${escapeHtml(brief.recommendedRitual)}</p>
           </div>
 
           <div class="detail">
             <p class="label">Optional add-on</p>
-            <p>${brief.optionalAddOn}</p>
+            <p>${escapeHtml(brief.optionalAddOn)}</p>
           </div>
         </section>
 
         <section class="brief__section">
           <p class="label">Why this</p>
           <h2>Why this</h2>
-          <p>${brief.whyThis}</p>
+          <p>${escapeHtml(brief.whyThis)}</p>
+          <p class="muted">${escapeHtml(brief.sourceSummary)}</p>
         </section>
 
         <section class="brief__section">
           <p class="label">Reflection prompt</p>
-          <p class="prompt">${brief.reflectionPrompt}</p>
+          <p class="prompt">${escapeHtml(brief.reflectionPrompt)}</p>
         </section>
 
         <section class="trace" aria-label="Trace summary">
           <p class="label">Trace</p>
-          <p>${brief.trace.timingFacts.join(" + ")} · ${brief.trace.symbolicCards.join(" · ")} · ${brief.trace.scheduleAssumptions.join(" · ")}</p>
+          <p>${escapeHtml(traceSummary)}</p>
         </section>
 
         <div class="feedback" aria-label="Feedback placeholders">

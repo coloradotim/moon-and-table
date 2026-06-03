@@ -262,6 +262,17 @@ describe("private Firestore data resolution", () => {
       "elaborate_setup",
       "avoid_vague_mush",
     ]);
+    expect(privateBriefData.input.preferredRitualStyles).toEqual([
+      "candle_or_light",
+      "home_tending",
+      "surface_reset",
+    ]);
+    expect(privateBriefData.input.avoidedRitualStyles).toEqual([
+      "shopping_required",
+      "elaborate_setup",
+      "avoid_vague_mush",
+    ]);
+    expect(privateBriefData.input.audience).toBe("either");
   });
 
   it("keeps examples free of private real data", () => {

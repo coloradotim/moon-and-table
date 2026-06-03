@@ -46,7 +46,11 @@ Each week should include:
 
 ## Generator trace
 
-The first deterministic mock generator lives at `src/lib/generate-weekly-brief.ts`. Its trace should stay short and privacy-safe, listing timing fact keys, approved symbolic card keys, generic private profile placeholder keys, capacity mode, and schedule assumption keys.
+The first real vertical-slice generator lives at `src/lib/generate-weekly-brief.ts`. It uses the current week, a simple placeholder lunar timing adapter, approved symbolic cards, approved ritual patterns, private capacity/profile constraints, and schedule assumptions to choose one recommendation.
+
+Its trace should stay short and privacy-safe, listing timing fact keys, approved symbolic card keys, approved ritual pattern keys, source review ids, source note ids when available, generic private profile placeholder keys, profile preference keys, capacity mode, audience, schedule assumption keys, and any safety exclusions or notes that affected selection.
+
+Private profile, capacity, audience, and schedule values are private inputs, not public source citations. Public citation/source summary should come from selected timing cards, symbolic cards, ritual patterns, source reviews, source notes, and safety guardrails.
 
 Capacity modes are `pause`, `low`, `steady`, and `high`. Superseded labels such as tiny, normal, spacious, celebration, or survival should not be implemented as separate modes.
 
