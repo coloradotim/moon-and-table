@@ -1,18 +1,8 @@
 import { generateWeeklyBrief } from "../lib/generate-weekly-brief";
-import { getMissingPrivateDataFallback } from "../lib/private-data-schema";
 import type { AppAuthState } from "../lib/auth";
+import type { PrivateBriefData } from "../lib/private-data";
 
 const feedbackOptions = ["saved", "too much", "too cheesy", "do again"];
-
-function getFallbackBrief() {
-  const privateDataFallback = getMissingPrivateDataFallback();
-
-  return generateWeeklyBrief({
-    privateProfileKeys: privateDataFallback.privateProfileKeys,
-    capacityMode: privateDataFallback.capacityMode,
-    scheduleConstraints: privateDataFallback.scheduleConstraints,
-  });
-}
 
 export function renderLoadingShell(): string {
   return `
@@ -25,6 +15,22 @@ export function renderLoadingShell(): string {
       <article class="brief auth-panel" aria-label="Loading auth state">
         <p class="label">Private access</p>
         <p>Checking sign-in state.</p>
+      </article>
+    </section>
+  `;
+}
+
+export function renderPrivateDataLoadingShell(): string {
+  return `
+    <section class="shell shell--centered" aria-labelledby="app-title">
+      <header class="masthead">
+        <p class="eyebrow">Private weekly ritual brief</p>
+        <h1 id="app-title">Moon &amp; Table</h1>
+      </header>
+
+      <article class="brief auth-panel" aria-label="Loading private settings">
+        <p class="label">Private settings</p>
+        <p>Loading private settings for this household.</p>
       </article>
     </section>
   `;
@@ -71,8 +77,12 @@ export function renderUnauthorizedShell(): string {
   `;
 }
 
-export function renderSignedInShell(): string {
-  const brief = getFallbackBrief();
+export function renderSignedInShell(privateBriefData: PrivateBriefData): string {
+  const brief = generateWeeklyBrief(privateBriefData.input);
+  const privateDataNote =
+    privateBriefData.status === "using_starter_settings"
+      ? "Using starter settings until private settings are created."
+      : "Using private settings from Firestore.";
 
   return `
     <section class="shell" aria-labelledby="app-title">
@@ -93,6 +103,8 @@ export function renderSignedInShell(): string {
           <span>${brief.dateRange}</span>
           <span>${brief.trace.capacityMode} capacity</span>
         </div>
+
+        <p class="private-note">${privateDataNote}</p>
 
         <section class="brief__section">
           <p class="label">Theme</p>
@@ -153,5 +165,5 @@ export function renderAppShell(state: AppAuthState): string {
     return renderUnauthorizedShell();
   }
 
-  return renderSignedInShell();
+  return renderPrivateDataLoadingShell();
 }

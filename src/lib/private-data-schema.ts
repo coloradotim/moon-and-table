@@ -2,6 +2,7 @@ import type { CapacityMode, ManualScheduleConstraints } from "./generate-weekly-
 
 export const FIRESTORE_COLLECTIONS = [
   "households",
+  "profileEmailLinks",
   "profiles",
   "scheduleConstraints",
   "capacitySettings",
@@ -17,36 +18,70 @@ export type PrivateProfileThemeKey =
   | "private_profile.beauty_warmth"
   | "private_profile.structured_action";
 
+export type PrivateProfileAssumption = {
+  key: string;
+  label: string;
+  value: boolean | string | string[] | number;
+  source: "starter_assumption" | "astro_material" | "user_confirmed" | "feedback";
+  confidence: "low" | "medium" | "high";
+  editable: boolean;
+  updatedAtIso: string;
+};
+
+export type PrivateAstrologyProfile = {
+  source: "user_provided_chart" | "astro_material" | "manual_entry";
+  confidence: "low" | "medium" | "high";
+  placementKeys: string[];
+  profileThemeKeys: PrivateProfileThemeKey[];
+  updatedAtIso: string;
+};
+
 export type HouseholdDocument = {
   id: string;
-  ownerUserId: string;
+  ownerUserId?: string | null;
   displayLabel: "household";
   memberUserIds: string[];
+  memberEmails: string[];
   createdAtIso: string;
+  updatedAtIso: string;
+};
+
+export type ProfileEmailLinkDocument = {
+  id: string;
+  email: string;
+  householdId: string;
+  profileId: string;
+  userId?: string | null;
+  status: "pending" | "linked";
   updatedAtIso: string;
 };
 
 export type PrivateProfileDocument = {
   id: string;
   householdId: string;
-  userId: string;
+  userId?: string | null;
+  email?: string;
   profileThemeKeys: PrivateProfileThemeKey[];
   preferredRitualStyles: string[];
   avoidedRitualStyles: string[];
+  assumptions: PrivateProfileAssumption[];
+  astrologyProfile?: PrivateAstrologyProfile;
   updatedAtIso: string;
 };
 
 export type ScheduleConstraintsDocument = ManualScheduleConstraints & {
   id: string;
   householdId: string;
-  userId: string;
+  userId?: string | null;
+  email?: string;
   updatedAtIso: string;
 };
 
 export type CapacitySettingsDocument = {
   id: string;
   householdId: string;
-  userId: string;
+  userId?: string | null;
+  email?: string;
   defaultCapacityMode: CapacityMode;
   maxRitualDurationMinutes: number;
   updatedAtIso: string;
@@ -124,4 +159,8 @@ export function getMissingPrivateDataFallback(): PrivateDataFallback {
       defaultCapacityMode: "low",
     },
   };
+}
+
+export function getPrivateEmailDocumentId(email: string): string {
+  return encodeURIComponent(email.trim().toLowerCase());
 }

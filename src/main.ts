@@ -5,7 +5,15 @@ import {
   type AppAuthState,
 } from "./lib/auth";
 import { getFirebaseServices } from "./lib/firebase";
-import { renderAppShell } from "./ui/app-shell";
+import {
+  loadPrivateBriefData,
+  resolvePrivateBriefData,
+} from "./lib/private-data";
+import {
+  renderAppShell,
+  renderPrivateDataLoadingShell,
+  renderSignedInShell,
+} from "./ui/app-shell";
 import "./styles.css";
 
 const app = document.querySelector<HTMLElement>("#app");
@@ -16,9 +24,34 @@ if (!app) {
 
 const appRoot = app;
 const firebaseServices = getFirebaseServices();
+let privateDataRequestId = 0;
 
 function render(state: AppAuthState): void {
   appRoot.innerHTML = renderAppShell(state);
+}
+
+function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" }>): void {
+  privateDataRequestId += 1;
+  const requestId = privateDataRequestId;
+
+  if (!firebaseServices) {
+    render(state);
+    return;
+  }
+
+  appRoot.innerHTML = renderPrivateDataLoadingShell();
+
+  void loadPrivateBriefData(firebaseServices.db, state.user.uid, state.user.email)
+    .then((privateBriefData) => {
+      if (requestId === privateDataRequestId) {
+        appRoot.innerHTML = renderSignedInShell(privateBriefData);
+      }
+    })
+    .catch(() => {
+      if (requestId === privateDataRequestId) {
+        appRoot.innerHTML = renderSignedInShell(resolvePrivateBriefData({}));
+      }
+    });
 }
 
 render({ status: "loading" });
@@ -43,4 +76,12 @@ appRoot.addEventListener("click", (event) => {
   }
 });
 
-subscribeToAuthState(firebaseServices, render);
+subscribeToAuthState(firebaseServices, (state) => {
+  if (state.status === "signed_in") {
+    renderSignedInState(state);
+    return;
+  }
+
+  privateDataRequestId += 1;
+  render(state);
+});

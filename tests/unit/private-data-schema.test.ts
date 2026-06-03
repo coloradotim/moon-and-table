@@ -13,6 +13,7 @@ describe("private data schema", () => {
         "capacitySettings",
         "feedback",
         "households",
+        "profileEmailLinks",
         "profiles",
         "ritualNotes",
         "scheduleConstraints",

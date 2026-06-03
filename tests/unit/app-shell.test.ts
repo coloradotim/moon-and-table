@@ -3,10 +3,12 @@ import { describe, expect, it } from "vitest";
 import {
   renderAppShell,
   renderLoadingShell,
+  renderPrivateDataLoadingShell,
   renderSignedInShell,
   renderSignedOutShell,
   renderUnauthorizedShell,
 } from "../../src/ui/app-shell";
+import { resolvePrivateBriefData } from "../../src/lib/private-data";
 
 describe("app shell rendering", () => {
   it("renders a loading state", () => {
@@ -36,13 +38,22 @@ describe("app shell rendering", () => {
   });
 
   it("renders the weekly brief only when signed in", () => {
-    const html = renderSignedInShell();
+    const html = renderSignedInShell(resolvePrivateBriefData({}));
 
     expect(html).toContain("Signed in");
     expect(html).toContain("Sign out");
     expect(html).toContain("data-testid=\"recommended-ritual\"");
     expect(html).toContain("Clear one small thing. Feed one living thing.");
     expect(html).toContain("Thursday evening, 0-5 minutes.");
+    expect(html).toContain("Using starter settings until private settings are created.");
+  });
+
+  it("renders private data loading while signed-in Firestore data loads", () => {
+    const html = renderPrivateDataLoadingShell();
+
+    expect(html).toContain("Moon &amp; Table");
+    expect(html).toContain("Loading private settings for this household.");
+    expect(html).not.toContain("data-testid=\"recommended-ritual\"");
   });
 
   it("renders unauthorized accounts without showing the brief", () => {
@@ -68,6 +79,6 @@ describe("app shell rendering", () => {
         status: "signed_in",
         user: { uid: "placeholder-user-id", email: "person_a@example.com" },
       }),
-    ).toContain("Sign out");
+    ).toContain("Loading private settings for this household.");
   });
 });

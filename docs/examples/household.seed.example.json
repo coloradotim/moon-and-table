@@ -1,0 +1,74 @@
+{
+  "household": {
+    "id": "household_placeholder",
+    "memberEmails": ["person_a@example.com", "person_b@example.com"],
+    "defaultCapacityMode": "low",
+    "maxRitualDurationMinutes": 5,
+    "preferredRitualStyles": ["tiny_home_ritual", "plant_tending"],
+    "avoidedRitualStyles": ["large_task_list", "shopping_required"],
+    "astrologyVisibility": "placeholder_keys_only",
+    "scheduleConstraints": {
+      "unavailableDaysOrNights": ["Generic busy night"],
+      "preferredRitualWindows": ["schedule.realistic_window_thursday"],
+      "recurringHouseholdConstraintNotes": [
+        "Generic household constraint: weeknights need low setup."
+      ],
+      "workOrSchoolConstraintNotes": [
+        "Generic work or school constraint: avoid the busiest night."
+      ]
+    }
+  },
+  "profiles": [
+    {
+      "personKey": "person_a",
+      "email": "person_a@example.com",
+      "profileThemeKeys": ["private_profile.practical_tending"],
+      "assumptions": [
+        {
+          "key": "assumption.low_overwhelm",
+          "label": "May prefer low-overwhelm suggestions",
+          "value": true,
+          "source": "starter_assumption",
+          "confidence": "low",
+          "editable": true,
+          "updatedAtIso": "2026-01-01T00:00:00.000Z"
+        }
+      ],
+      "astrologyProfile": {
+        "source": "manual_entry",
+        "confidence": "low",
+        "placementKeys": ["placement.sun.placeholder"],
+        "profileThemeKeys": ["private_profile.practical_tending"],
+        "updatedAtIso": "2026-01-01T00:00:00.000Z"
+      }
+    },
+    {
+      "personKey": "person_b",
+      "email": "person_b@example.com",
+      "profileThemeKeys": ["private_profile.beauty_warmth"],
+      "defaultCapacityMode": "steady",
+      "maxRitualDurationMinutes": 20,
+      "scheduleConstraints": {
+        "preferredRitualWindows": ["schedule.preferred_window_saturday_morning"]
+      },
+      "assumptions": [
+        {
+          "key": "assumption.one_meaningful_thing",
+          "label": "May prefer one meaningful thing over many options",
+          "value": true,
+          "source": "starter_assumption",
+          "confidence": "low",
+          "editable": true,
+          "updatedAtIso": "2026-01-01T00:00:00.000Z"
+        }
+      ],
+      "astrologyProfile": {
+        "source": "manual_entry",
+        "confidence": "low",
+        "placementKeys": ["placement.moon.placeholder"],
+        "profileThemeKeys": ["private_profile.beauty_warmth"],
+        "updatedAtIso": "2026-01-01T00:00:00.000Z"
+      }
+    }
+  ]
+}

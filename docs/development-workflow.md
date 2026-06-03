@@ -24,6 +24,7 @@ npm run server:start
 npm run server:stop
 npm run server:restart
 npm run server:status
+npm run seed:private
 npm run build
 npm run typecheck
 npm run test
@@ -32,7 +33,25 @@ npm run test:e2e
 
 `npm run dev` starts the local app shell in the foreground. Use the `server:*` commands to manage the Vite dev server in the background. `npm run test:e2e` starts the app through Playwright and verifies the initial `Moon & Table` brief page.
 
-For manual Google Auth testing, add real Firebase web app config values and `VITE_AUTH_ALLOWED_EMAILS` to `.env.local`, enable Google Auth in Firebase, then run `npm run server:restart` and open `http://localhost:5173`. The signed-out page should show `Sign in with Google`; after signing in with an allowed account, the protected weekly brief should render. Firestore profile loading is not implemented yet.
+For manual Google Auth and Firestore testing, add real Firebase web app config values and `VITE_AUTH_ALLOWED_EMAILS` to `.env.local`, enable Google Auth in Firebase, seed private Firestore data locally if desired, then run `npm run server:restart` and open `http://localhost:5173`. The signed-out page should show `Sign in with Google`; after signing in with an allowed account, the app loads UID-linked or pending email-linked Firestore documents and renders the protected weekly brief.
+
+Missing Firestore documents are safe. With no `profiles/{uid}`, `capacitySettings/{uid}`, or `scheduleConstraints/{uid}` documents, the brief should render with `Using starter settings until private settings are created.`
+
+Optional private-data verification uses the local seed script:
+
+1. Sign in locally with an allowed Google account.
+2. Copy `docs/examples/household.seed.example.json` to `private/household.seed.local.json`.
+3. Edit the local seed file with real private values. Do not commit it.
+4. Authenticate the seed script with `GOOGLE_APPLICATION_CREDENTIALS` or `FIREBASE_SERVICE_ACCOUNT_PATH` pointing to a gitignored local service account file.
+5. Run `npm run seed:private`.
+6. Refresh the app.
+7. Confirm the brief shows `Using private settings from Firestore.` and that capacity, profile theme, or schedule changes affect the brief trace.
+
+The seed script does not require every household member to have logged in already. If an account does not exist yet in Firebase Auth, the seed writes pending documents by email; when that person later signs in with the same Google Auth email, the app can read the seeded profile through the email link.
+
+Keep optional Firestore test values generic. Do not use real names, birth data, natal placements, relationship details, private source text, or schedules tied to a real person in source-controlled examples, tests, or screenshots.
+
+Manual Firebase console inspection is fine for debugging, but normal setup should not require manual Firestore document creation.
 
 There is no lint command yet because the repo does not have an app framework or linter configuration. Add linting when the app scaffold makes the project conventions clear.
 
