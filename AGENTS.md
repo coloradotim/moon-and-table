@@ -79,7 +79,7 @@ Current first sequence:
 
 1. Create privacy-safe source review packets.
 2. Add privacy-safe symbolic card model and first generic approved cards.
-3. Build privacy-safe mock weekly brief generator from seed cards.
+3. Build first generic brief generator from seed symbolic cards.
 4. Render privacy-safe weekly brief in initial app shell.
 5. Add privacy-safe capacity modes and manual schedule constraints.
 
@@ -100,6 +100,25 @@ A default weekly brief should include:
 
 Keep the default under 20 minutes. For low-capacity or tiny mode, keep it to 3â€“5 minutes.
 
+## Documentation and tests
+
+Keep documentation and tests up to date with every meaningful change.
+
+When changing product behavior, data shapes, privacy rules, curation workflow, or brief generation:
+
+- update the relevant docs in the same PR
+- add or update tests for the changed behavior
+- update examples or fixtures so they remain accurate and privacy-safe
+- document any skipped tests or missing test framework in the PR notes
+
+When adding generation logic, source-card validation, capacity logic, schedule logic, private-profile loading, or trace construction, tests are expected.
+
+If no test framework exists yet, do not create a large framework unless the issue asks for it. Instead:
+
+- keep the implementation small and strongly typed
+- document the test gap in the PR notes
+- add a follow-up issue for test setup or targeted coverage if needed
+
 ## Engineering expectations
 
 - Keep early implementation simple and testable.
@@ -108,7 +127,7 @@ Keep the default under 20 minutes. For low-capacity or tiny mode, keep it to 3â€
 - Add tests when adding generation logic or constraint logic.
 - Avoid introducing external APIs until the relevant issue asks for them.
 - Avoid database work until the relevant issue asks for persistence.
-- Keep code and docs aligned with the privacy boundary.
+- Keep code, docs, and tests aligned with the privacy boundary.
 
 ## Before committing or opening a PR
 
@@ -130,6 +149,8 @@ Also verify:
 - symbolic cards include `avoid_saying` and `safety_notes`
 - generated briefs recommend only one primary ritual
 - schedule/capacity constraints are treated as first-class inputs
+- docs are updated when behavior or data shapes change
+- tests are added or updated for generation and constraint logic
 
 ## Tone
 
