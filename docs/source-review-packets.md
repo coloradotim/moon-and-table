@@ -280,7 +280,7 @@ Use to create practical, accessible ritual options that fit Moon & Table's calm 
 - Simple ritual uses for common home actions and materials.
 - Safety notes for fire, smoke, ingestion, herbs, oils, pets, children, pregnancy, allergies, and cleanup.
 - Avoid-saying guardrails for overclaiming, shopping pressure, or culturally careless language.
-- Practical ritual ideas that default under 20 minutes and can scale down to 3-5 minutes.
+- Practical ritual ideas that default under 20 minutes and can scale down to 0-5 minutes for low capacity.
 
 ### What May Be Extracted Only Into Private Storage
 

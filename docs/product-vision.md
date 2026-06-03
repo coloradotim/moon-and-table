@@ -228,17 +228,16 @@ The app should not simply recommend a ritual on the exact date of an astrologica
 
 Example:
 
-> Full moon is Tuesday, but Tuesday is unavailable and the week is low-capacity. Recommend Thursday evening instead, and keep the ritual under 10 minutes.
+> Full moon is Tuesday, but Tuesday is unavailable and the week is low capacity. Recommend Thursday evening instead, and keep the ritual to 0-5 minutes.
 
 ## Capacity modes
 
 The app should support weekly capacity settings:
 
-* Tiny: one 3–5 minute action
-* Normal: one 10–20 minute ritual
-* Spacious: one ritual plus optional meal/journal/altar layer
-* Celebration: richer ritual allowed
-* Survival mode: no ritual, just grounding or a blessing
+* `pause`: no ritual; grounding, blessing, or permission to do nothing
+* `low`: 0-5 minutes; one small action with no shopping, setup, or cleanup
+* `steady`: 10-20 minutes; the default practical ritual size
+* `high`: 20-30 minutes; a more active or decisive ritual, still one primary recommendation
 
 Capacity should shape the output before astrology does.
 
