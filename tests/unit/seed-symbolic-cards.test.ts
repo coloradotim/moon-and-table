@@ -74,7 +74,7 @@ describe("seedSymbolicCards", () => {
 
     expect(
       starterCards.find((card) => card.key === "candle")?.safety_flags?.fire,
-    ).toBe("led_default");
+    ).toBe("live_flame");
     expect(
       starterCards.find((card) => card.key === "tea")?.safety_flags?.ingestion,
     ).toBe("normal_food_use_only");

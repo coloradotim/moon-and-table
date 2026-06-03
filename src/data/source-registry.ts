@@ -211,7 +211,7 @@ export const starterSourceReviews: SourceReview[] = [
       "manual review only; do not copy rituals, spells, prayers, chants, or distinctive instructions",
     ],
     safetyNotes: [
-      "no smoke, oils, live flame, ingestion, or outcome claims should be imported as defaults",
+      "no smoke, oils, ingestion, or outcome claims should be imported as defaults; flame needs ordinary candle safety",
     ],
     culturalContextNotes: [
       "use broad lunar/home practice context without presenting it as universal fact",
@@ -357,7 +357,7 @@ export const starterSourceNotes: SourceNote[] = [
       "avoid spell-result framing, urgency, or copied ritual instructions",
     ],
     safetyNotes: [
-      "default actions should avoid smoke, oils, live flame, and special supplies",
+      "default actions should avoid smoke, oils, and special supplies; candle actions need ordinary flame safety",
     ],
     copyrightNotes: [
       "short transformed note only; no ritual or source wording",
