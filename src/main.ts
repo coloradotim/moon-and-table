@@ -390,7 +390,10 @@ appRoot.addEventListener("click", (event) => {
   }
 
   const action = target.dataset.authAction;
-  const menuAction = target.dataset.menuAction;
+  const homeActionTarget = target.closest<HTMLElement>("[data-home-action]");
+  const homeAction = homeActionTarget?.dataset.homeAction;
+  const menuActionTarget = target.closest<HTMLElement>("[data-menu-action]");
+  const menuAction = menuActionTarget?.dataset.menuAction;
   const feedbackType = target.dataset.feedbackType;
   const capacityMode = target.dataset.capacityMode;
 
@@ -405,10 +408,25 @@ appRoot.addEventListener("click", (event) => {
     return;
   }
 
+  if (homeAction === "this_week") {
+    event.preventDefault();
+    activeSignedInView = "this_week";
+    activeCapacityPickerOpen = false;
+
+    if (activePrivateBriefData && activeBrief) {
+      renderActiveSignedInShell();
+    }
+
+    return;
+  }
+
   if (menuAction === "this_week" || menuAction === "profile_settings") {
+    event.preventDefault();
     activeSignedInView = menuAction;
     activeCapacityPickerOpen = false;
-    target.closest("details[data-app-menu='true']")?.removeAttribute("open");
+    menuActionTarget
+      ?.closest("details[data-app-menu='true']")
+      ?.removeAttribute("open");
 
     if (activePrivateBriefData) {
       renderActiveSignedInShell();

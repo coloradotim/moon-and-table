@@ -98,7 +98,10 @@ function renderMoonGlyph(brief: WeeklyBrief): string {
       aria-label="${escapeHtml(tooltip)}"
     >
       ${getMoonPhaseGlyphSvgForAngle(phaseAngle)}
-      <span class="moon-phase-tooltip" role="tooltip">${escapeHtml(tooltip)}</span>
+      <span class="moon-phase-tooltip" role="tooltip">
+        <span><strong>Current phase:</strong> ${escapeHtml(currentPhase)}</span>
+        <span><strong>Next lunar milestone:</strong> ${escapeHtml(`${nextMilestone.label} on ${nextMilestoneDate}`)}</span>
+      </span>
     </span>
   `;
 }
@@ -559,7 +562,14 @@ export function renderSignedInShell(
       <header class="masthead masthead--with-session">
         <div class="masthead__nameplate">
           ${renderMoonGlyph(brief)}
-          <h1 id="app-title">Moon &amp; Table</h1>
+          <button
+            class="masthead__home"
+            type="button"
+            data-home-action="this_week"
+            aria-label="Show this week's brief"
+          >
+            <h1 id="app-title">Moon &amp; Table</h1>
+          </button>
         </div>
 
         ${renderAppMenu(activeView)}

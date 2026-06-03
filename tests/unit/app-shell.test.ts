@@ -74,6 +74,9 @@ describe("app shell rendering", () => {
     expect(html).toContain("Current phase:");
     expect(html).toContain("Next lunar milestone:");
     expect(html).toContain("Last quarter moon on");
+    expect(html).toContain('class="masthead__home"');
+    expect(html).toContain('data-home-action="this_week"');
+    expect(html).toContain('aria-label="Show this week\'s brief"');
     expect(html).toContain('aria-hidden="true"');
     expect(html).toContain("data-moon-phase-glyph=");
     expect(html).toContain('aria-label="Open menu"');
