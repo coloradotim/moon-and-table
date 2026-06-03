@@ -44,10 +44,12 @@ describe("app shell rendering", () => {
     expect(html).toContain("Signed in");
     expect(html).toContain("Sign out");
     expect(html).toContain("data-testid=\"recommended-ritual\"");
-    expect(html).toContain("Clear one small thing. Feed one living thing.");
+    expect(html).toContain("Sources:");
+    expect(html).toContain("Why this");
     expect(html).toContain("Thursday evening, 0-5 minutes.");
     expect(html).toContain("Using starter settings until private settings are created.");
     expect(html).toContain("Private settings will appear here");
+    expect(html).toContain("close_the_evening");
   });
 
   it("renders editable profile tuning for loaded private data", () => {

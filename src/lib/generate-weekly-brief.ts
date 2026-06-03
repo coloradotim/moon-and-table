@@ -1,13 +1,28 @@
 import {
+  getApprovedRitualPatterns,
+  type RitualPattern,
+} from "../data/ritual-patterns";
+import {
   seedSymbolicCards,
   type SymbolicCard,
 } from "../data/seed-symbolic-cards";
+import type { PrivateAudience } from "./private-data-schema";
+import {
+  getProfilePreferenceGroup,
+  normalizeProfilePreferenceValues,
+} from "./profile-preference-taxonomy";
+import { validateRitualSafety, type RitualSafetyFlags } from "./ritual-safety";
 
 export const CAPACITY_MODES = ["pause", "low", "steady", "high"] as const;
 
 export type CapacityMode = (typeof CAPACITY_MODES)[number];
 
-export type TimingFactKey = "moon.waning" | "numerology.6";
+export type TimingFactKey =
+  | "moon.new"
+  | "moon.waxing"
+  | "moon.full"
+  | "moon.waning"
+  | "numerology.6";
 
 export type PrivateProfilePlaceholderKey =
   | "private_profile.practical_tending"
@@ -31,9 +46,18 @@ export type ManualScheduleConstraints = {
 export type WeeklyBriefTrace = {
   timingFacts: TimingFactKey[];
   symbolicCards: string[];
+  ritualPatterns: string[];
+  sourceReviewIds: string[];
+  sourceNoteIds: string[];
   privateProfileKeys: PrivateProfilePlaceholderKey[];
+  profilePreferenceKeys: string[];
   capacityMode: CapacityMode;
+  audience: PrivateAudience;
   scheduleAssumptions: ScheduleAssumptionKey[];
+  safety: {
+    excludedPatternKeys: string[];
+    notes: string[];
+  };
 };
 
 export type WeeklyBrief = {
@@ -44,23 +68,38 @@ export type WeeklyBrief = {
   optionalAddOn: string;
   reflectionPrompt: string;
   whyThis: string;
+  sourceSummary: string;
   trace: WeeklyBriefTrace;
 };
 
 export type GenerateWeeklyBriefInput = {
+  currentDate?: Date | string;
   dateRange?: string;
   timingFacts?: TimingFactKey[];
   privateProfileKeys?: PrivateProfilePlaceholderKey[];
   capacityMode?: CapacityMode;
   scheduleConstraints?: Partial<ManualScheduleConstraints>;
+  preferredRitualStyles?: string[];
+  avoidedRitualStyles?: string[];
+  audience?: PrivateAudience;
 };
 
 type ResolvedGenerateWeeklyBriefInput = {
+  currentDate: Date;
   dateRange: string;
   timingFacts: TimingFactKey[];
   privateProfileKeys: PrivateProfilePlaceholderKey[];
   capacityMode: CapacityMode;
   scheduleConstraints: ManualScheduleConstraints;
+  preferredRitualStyles: string[];
+  avoidedRitualStyles: string[];
+  audience: PrivateAudience;
+};
+
+type PatternCandidate = {
+  pattern: RitualPattern;
+  score: number;
+  preferenceMatches: string[];
 };
 
 const DEFAULT_SCHEDULE_CONSTRAINTS: ManualScheduleConstraints = {
@@ -76,15 +115,31 @@ const DEFAULT_SCHEDULE_CONSTRAINTS: ManualScheduleConstraints = {
   defaultCapacityMode: "low",
 };
 
-const DEFAULT_INPUT: ResolvedGenerateWeeklyBriefInput = {
-  dateRange: "Mock week",
-  timingFacts: ["moon.waning", "numerology.6"],
-  privateProfileKeys: ["private_profile.practical_tending"],
-  capacityMode: DEFAULT_SCHEDULE_CONSTRAINTS.defaultCapacityMode,
-  scheduleConstraints: DEFAULT_SCHEDULE_CONSTRAINTS,
+const DEFAULT_PRIVATE_PROFILE_KEYS: PrivateProfilePlaceholderKey[] = [
+  "private_profile.practical_tending",
+];
+
+const CAPACITY_DURATION_LIMITS: Record<CapacityMode, number> = {
+  pause: 0,
+  low: 5,
+  steady: 20,
+  high: 30,
+};
+
+const MOON_CARD_KEY_BY_TIMING_FACT: Record<
+  Exclude<TimingFactKey, "numerology.6">,
+  string
+> = {
+  "moon.new": "new_moon",
+  "moon.waxing": "waxing_moon",
+  "moon.full": "full_moon",
+  "moon.waning": "waning_moon",
 };
 
 const TRACE_KEY_BY_CARD_KEY: Record<string, string> = {
+  new_moon: "moon.new",
+  waxing_moon: "moon.waxing",
+  full_moon: "moon.full",
   waning_moon: "moon.waning",
   numerology_6: "numerology.6",
   plant_tending: "plant.tending",
@@ -93,12 +148,6 @@ const TRACE_KEY_BY_CARD_KEY: Record<string, string> = {
   private_profile_structured_action_theme: "private_profile.structured_action",
   candle: "candle",
 };
-
-const BASE_CARD_KEYS_FOR_BRIEF = [
-  "waning_moon",
-  "numerology_6",
-  "plant_tending",
-] as const;
 
 const PRIVATE_PROFILE_CARD_KEY_BY_PLACEHOLDER_KEY: Record<
   PrivateProfilePlaceholderKey,
@@ -109,12 +158,71 @@ const PRIVATE_PROFILE_CARD_KEY_BY_PLACEHOLDER_KEY: Record<
   "private_profile.structured_action": "private_profile_structured_action_theme",
 };
 
-const CAPACITY_DURATION_LIMITS: Record<CapacityMode, number> = {
-  pause: 0,
-  low: 5,
-  steady: 20,
-  high: 30,
+const DEFAULT_PATTERN_BY_CAPACITY: Record<CapacityMode, string> = {
+  pause: "close_the_evening",
+  low: "tend_one_plant",
+  steady: "table_reset",
+  high: "room_reset",
 };
+
+function isValidDate(value: Date): boolean {
+  return !Number.isNaN(value.getTime());
+}
+
+function resolveCurrentDate(value: Date | string | undefined): Date {
+  if (value instanceof Date && isValidDate(value)) {
+    return value;
+  }
+
+  if (typeof value === "string") {
+    const date = new Date(value);
+
+    if (isValidDate(date)) {
+      return date;
+    }
+  }
+
+  return new Date();
+}
+
+function getWeekDateRange(date: Date): string {
+  const start = new Date(date);
+  const day = start.getDay();
+  const diffToMonday = day === 0 ? -6 : 1 - day;
+
+  start.setDate(start.getDate() + diffToMonday);
+  start.setHours(0, 0, 0, 0);
+
+  const end = new Date(start);
+  end.setDate(start.getDate() + 6);
+
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+
+  return `${formatter.format(start)}-${formatter.format(end)}`;
+}
+
+// Placeholder lunar adapter for the first vertical slice. It keeps timing factual
+// and swappable while a later issue wires in Astronomy Engine.
+function getPlaceholderMoonTimingFact(date: Date): Exclude<TimingFactKey, "numerology.6"> {
+  const bucket = Math.floor((date.getDate() - 1) / 7);
+
+  if (bucket === 0) {
+    return "moon.new";
+  }
+
+  if (bucket === 1) {
+    return "moon.waxing";
+  }
+
+  if (bucket === 2) {
+    return "moon.full";
+  }
+
+  return "moon.waning";
+}
 
 function getApprovedCardByKey(key: string): SymbolicCard {
   const card = seedSymbolicCards.find(
@@ -129,22 +237,33 @@ function getApprovedCardByKey(key: string): SymbolicCard {
   return card;
 }
 
-function getPrivateProfileCardKey(
-  privateProfileKeys: PrivateProfilePlaceholderKey[],
-): string {
-  const primaryProfileKey =
-    privateProfileKeys[0] ?? "private_profile.practical_tending";
+function getPrimaryMoonTimingFact(timingFacts: TimingFactKey[]): Exclude<TimingFactKey, "numerology.6"> {
+  return (
+    timingFacts.find((fact): fact is Exclude<TimingFactKey, "numerology.6"> =>
+      fact.startsWith("moon."),
+    ) ?? "moon.waning"
+  );
+}
 
-  return PRIVATE_PROFILE_CARD_KEY_BY_PLACEHOLDER_KEY[primaryProfileKey];
+function getPrivateProfileCardKeys(
+  privateProfileKeys: PrivateProfilePlaceholderKey[],
+): string[] {
+  return privateProfileKeys.map(
+    (key) => PRIVATE_PROFILE_CARD_KEY_BY_PLACEHOLDER_KEY[key],
+  );
 }
 
 function getApprovedCardsForBrief(
+  timingFacts: TimingFactKey[],
   privateProfileKeys: PrivateProfilePlaceholderKey[],
 ): SymbolicCard[] {
-  return [
-    ...BASE_CARD_KEYS_FOR_BRIEF,
-    getPrivateProfileCardKey(privateProfileKeys),
-  ].map((key) => getApprovedCardByKey(key));
+  const moonCardKey = MOON_CARD_KEY_BY_TIMING_FACT[getPrimaryMoonTimingFact(timingFacts)];
+  const cardKeys = [
+    moonCardKey,
+    ...getPrivateProfileCardKeys(privateProfileKeys),
+  ];
+
+  return [...new Set(cardKeys)].map((key) => getApprovedCardByKey(key));
 }
 
 function resolveScheduleConstraints(
@@ -232,31 +351,242 @@ function getBestWindow(
   return `${windowLabel}, ${getDurationLabel(capacityMode, minutes)}.`;
 }
 
-function getRecommendedRitual(
-  plantTendingCard: SymbolicCard,
-  capacityMode: CapacityMode,
-): string {
-  const plantAction =
-    plantTendingCard.ritual_ideas[1] ?? plantTendingCard.ritual_ideas[0];
-
-  switch (capacityMode) {
-    case "pause":
-      return "No required ritual. Place one hand on the table or doorway and silently bless the household for getting through the week.";
-    case "low":
-      return `Tend one plant. ${plantAction}`;
-    case "steady":
-      return `Tend one plant. ${plantAction} Then clear one nearby surface and name one small support the household can keep offering.`;
-    case "high":
-      return `Tend one plant, then clear one small neglected spot with decisive care. ${plantAction} Close by naming one thing the household is ready to stop feeding.`;
-  }
+function getScheduleAssumptions(
+  scheduleConstraints: ManualScheduleConstraints,
+): ScheduleAssumptionKey[] {
+  return [
+    "schedule.symbolic_event_tuesday",
+    getPrimaryScheduleAssumption(scheduleConstraints),
+  ].filter(
+    (scheduleAssumption, index, allScheduleAssumptions) =>
+      allScheduleAssumptions.indexOf(scheduleAssumption) === index,
+  ) as ScheduleAssumptionKey[];
 }
 
-function getOptionalAddOn(capacityMode: CapacityMode): string {
-  if (capacityMode === "pause") {
-    return "Let the blessing be enough.";
+function normalizeStyleList(values: string[] | undefined): string[] {
+  return normalizeProfilePreferenceValues(values ?? []);
+}
+
+function getCardStyleMatches(cards: SymbolicCard[], pattern: RitualPattern): string[] {
+  const cardStyles = new Set(
+    cards.flatMap((card) => normalizeStyleList(card.ritual_styles)),
+  );
+
+  return pattern.ritualStyles.filter((style) => cardStyles.has(style));
+}
+
+function getCleanupAvoidanceMatches(
+  flags: RitualSafetyFlags,
+  avoidedStyles: string[],
+): string[] {
+  const matches: string[] = [];
+
+  if (
+    avoidedStyles.includes("heavy_cleanup") &&
+    (flags.cleanupBurden === "medium" || flags.cleanupBurden === "high")
+  ) {
+    matches.push("heavy_cleanup");
   }
 
-  return "Light a candle nearby if that feels supportive and safe.";
+  if (avoidedStyles.includes("live_flame") && flags.fire === "live_flame") {
+    matches.push("live_flame");
+  }
+
+  if (avoidedStyles.includes("smoke") && flags.smoke !== "none") {
+    matches.push("smoke");
+  }
+
+  if (
+    avoidedStyles.includes("emotionally_heavy") &&
+    flags.emotionalIntensity === "avoid_when_low_capacity"
+  ) {
+    matches.push("emotionally_heavy");
+  }
+
+  return matches;
+}
+
+function getBurdenAvoidanceMatches(
+  pattern: RitualPattern,
+  avoidedStyles: string[],
+): string[] {
+  const avoidText = [...pattern.avoidIf, ...pattern.materials].join(" ").toLowerCase();
+  const matches = getCleanupAvoidanceMatches(pattern.safetyFlags, avoidedStyles);
+
+  if (
+    avoidedStyles.includes("shopping_required") &&
+    (avoidText.includes("shopping") || avoidText.includes("special"))
+  ) {
+    matches.push("shopping_required");
+  }
+
+  if (
+    avoidedStyles.includes("long_journaling") &&
+    (avoidText.includes("journal") || pattern.steps.join(" ").toLowerCase().includes("write"))
+  ) {
+    matches.push("long_journaling");
+  }
+
+  if (
+    avoidedStyles.includes("elaborate_setup") &&
+    (pattern.defaultDurationMinutes > 20 || pattern.materials.length > 3)
+  ) {
+    matches.push("elaborate_setup");
+  }
+
+  return [...new Set(matches)];
+}
+
+function getAvoidanceMatches(pattern: RitualPattern, avoidedStyles: string[]): string[] {
+  const directMatches = pattern.ritualStyles.filter((style) =>
+    avoidedStyles.includes(style),
+  );
+
+  return [
+    ...directMatches,
+    ...getBurdenAvoidanceMatches(pattern, avoidedStyles),
+  ].filter(
+    (match, index, matches) => matches.indexOf(match) === index,
+  );
+}
+
+function getEligiblePatternCandidates(
+  input: ResolvedGenerateWeeklyBriefInput,
+  selectedCards: SymbolicCard[],
+): {
+  candidates: PatternCandidate[];
+  excludedPatternKeys: string[];
+  safetyNotes: string[];
+} {
+  const approvedPatterns = getApprovedRitualPatterns();
+  const excludedPatternKeys: string[] = [];
+  const safetyNotes: string[] = [];
+  const candidates = approvedPatterns.flatMap((pattern): PatternCandidate[] => {
+    const safetyResult = validateRitualSafety(pattern.safetyFlags, pattern.steps);
+
+    safetyNotes.push(...safetyResult.warnings);
+
+    if (!safetyResult.allowed || !pattern.capacityModes.includes(input.capacityMode)) {
+      excludedPatternKeys.push(pattern.key);
+      return [];
+    }
+
+    const avoidanceMatches = getAvoidanceMatches(
+      pattern,
+      input.avoidedRitualStyles,
+    );
+
+    if (avoidanceMatches.length > 0) {
+      excludedPatternKeys.push(pattern.key);
+      safetyNotes.push(
+        `${pattern.key} skipped for avoided preference: ${avoidanceMatches.join(", ")}`,
+      );
+      return [];
+    }
+
+    const preferenceMatches = pattern.ritualStyles.filter((style) =>
+      input.preferredRitualStyles.includes(style),
+    );
+    const cardStyleMatches = getCardStyleMatches(selectedCards, pattern);
+    const defaultPatternBoost =
+      pattern.key === DEFAULT_PATTERN_BY_CAPACITY[input.capacityMode] ? 1 : 0;
+    const practicalProfileBoost =
+      input.privateProfileKeys.includes("private_profile.practical_tending") &&
+      pattern.ritualStyles.some((style) =>
+        ["home_tending", "plant", "plant_tending", "kitchen"].includes(style),
+      )
+        ? 1
+        : 0;
+    const highCapacityBoost =
+      input.capacityMode === "high" && pattern.defaultDurationMinutes >= 10 ? 1 : 0;
+    const score =
+      preferenceMatches.length * 3 +
+      cardStyleMatches.length * 2 +
+      defaultPatternBoost +
+      practicalProfileBoost +
+      highCapacityBoost;
+
+    return [{ pattern, score, preferenceMatches }];
+  });
+
+  return {
+    candidates,
+    excludedPatternKeys: [...new Set(excludedPatternKeys)],
+    safetyNotes: [...new Set(safetyNotes)],
+  };
+}
+
+function selectPattern(
+  input: ResolvedGenerateWeeklyBriefInput,
+  selectedCards: SymbolicCard[],
+): {
+  pattern: RitualPattern;
+  preferenceMatches: string[];
+  excludedPatternKeys: string[];
+  safetyNotes: string[];
+} {
+  const { candidates, excludedPatternKeys, safetyNotes } =
+    getEligiblePatternCandidates(input, selectedCards);
+  const sortedCandidates = [...candidates].sort(
+    (a, b) => b.score - a.score,
+  );
+
+  if (sortedCandidates[0]) {
+    return {
+      pattern: sortedCandidates[0].pattern,
+      preferenceMatches: sortedCandidates[0].preferenceMatches,
+      excludedPatternKeys,
+      safetyNotes,
+    };
+  }
+
+  const fallbackPattern = getApprovedRitualPatterns().find(
+    (pattern) => pattern.key === "close_the_evening",
+  );
+
+  if (!fallbackPattern) {
+    throw new Error("Missing approved fallback ritual pattern: close_the_evening");
+  }
+
+  return {
+    pattern: fallbackPattern,
+    preferenceMatches: [],
+    excludedPatternKeys,
+    safetyNotes: [
+      ...safetyNotes,
+      "fallback pattern selected because no preferred pattern fit capacity and safety constraints",
+    ],
+  };
+}
+
+function getRecommendedRitual(
+  pattern: RitualPattern,
+  capacityMode: CapacityMode,
+): string {
+  if (capacityMode === "pause") {
+    return `No required ritual. ${pattern.steps.join(" ")}`;
+  }
+
+  return pattern.steps.join(" ");
+}
+
+function getOptionalAddOn(
+  pattern: RitualPattern,
+  avoidedRitualStyles: string[],
+): string {
+  if (pattern.key === "candle_light_focus") {
+    return "No add-on needed.";
+  }
+
+  if (!avoidedRitualStyles.includes("live_flame")) {
+    return "Light a candle if that feels supportive and safe.";
+  }
+
+  return "No add-on needed.";
+}
+
+function getTimingReason(card: SymbolicCard): string {
+  return `${card.title} is the selected timing card for this week, with ${card.themes[0]} and ${card.themes[1]} as the useful themes.`;
 }
 
 function getCapacityReason(
@@ -265,13 +595,13 @@ function getCapacityReason(
 ): string {
   switch (capacityMode) {
     case "pause":
-      return "Because capacity is pause, there is no required ritual.";
+      return "Capacity is pause, so there is no required ritual.";
     case "low":
-      return "Because capacity is low, the action stays within 0-5 minutes with no shopping, setup, or cleanup.";
+      return "Capacity is low, so the action stays within 0-5 minutes with no shopping or elaborate setup.";
     case "steady":
-      return `Because capacity is steady, the ritual stays practical and within ${Math.min(10, durationMinutes)}-${durationMinutes} minutes.`;
+      return `Capacity is steady, so the ritual stays practical and within ${Math.min(10, durationMinutes)}-${durationMinutes} minutes.`;
     case "high":
-      return `Because capacity is high, the ritual can be more active and decisive while staying within ${Math.min(20, durationMinutes)}-${durationMinutes} minutes.`;
+      return `Capacity is high, so the ritual can be more active while staying within ${Math.min(20, durationMinutes)}-${durationMinutes} minutes.`;
   }
 }
 
@@ -291,86 +621,192 @@ function getScheduleReason(
   return `The schedule points to ${windowLabel} as the realistic window.`;
 }
 
-function getWhyThis(
-  waningMoonCard: SymbolicCard,
-  numerologySixCard: SymbolicCard,
-  privateProfileCard: SymbolicCard,
-  capacityMode: CapacityMode,
-  scheduleConstraints: ManualScheduleConstraints,
+function getPreferenceReason(
+  preferenceMatches: string[],
+  avoidedRitualStyles: string[],
 ): string {
-  const durationMinutes = getEffectiveDurationMinutes(
-    capacityMode,
-    scheduleConstraints,
+  if (preferenceMatches.length > 0) {
+    return `Saved preferences favor ${preferenceMatches.slice(0, 2).join(" and ")}.`;
+  }
+
+  const burdenAvoidances = avoidedRitualStyles.filter(
+    (style) => getProfilePreferenceGroup(style) === "burden_avoid_flag",
   );
 
-  return `${waningMoonCard.title} supports ${waningMoonCard.themes[0]} and ${waningMoonCard.themes[1]}. ${numerologySixCard.title} adds a home-and-care emphasis. The ${privateProfileCard.title.toLowerCase()} favors concrete tending over abstract processing. ${getScheduleReason(scheduleConstraints)} ${getCapacityReason(capacityMode, durationMinutes)}`;
+  if (burdenAvoidances.length > 0) {
+    return `Saved avoid flags keep the recommendation away from ${burdenAvoidances.slice(0, 2).join(" and ")}.`;
+  }
+
+  return "Private profile inputs are used as quiet constraints, not public source citations.";
 }
 
-export function generateWeeklyBrief(
-  input: GenerateWeeklyBriefInput = {},
-): WeeklyBrief {
+function getWhyThis(
+  timingCard: SymbolicCard,
+  pattern: RitualPattern,
+  privateProfileCard: SymbolicCard | undefined,
+  input: ResolvedGenerateWeeklyBriefInput,
+  preferenceMatches: string[],
+  excludedPatternKeys: string[],
+): string {
+  const durationMinutes = getEffectiveDurationMinutes(
+    input.capacityMode,
+    input.scheduleConstraints,
+  );
+  const profileReason = privateProfileCard
+    ? `The private profile theme points toward ${privateProfileCard.themes[0]} without exposing private details.`
+    : "Private profile inputs stay behind the brief as constraints.";
+  const safetyReason =
+    excludedPatternKeys.length > 0
+      ? `Safety and avoid filters skipped ${excludedPatternKeys.length} pattern option.`
+      : "";
+
+  return `${getTimingReason(timingCard)} ${pattern.title} fits as the selected approved ritual pattern. ${getPreferenceReason(preferenceMatches, input.avoidedRitualStyles)} ${safetyReason} ${profileReason} ${getScheduleReason(input.scheduleConstraints)} ${getCapacityReason(input.capacityMode, durationMinutes)}`.replace(/\s+/g, " ").trim();
+}
+
+function getTheme(timingCard: SymbolicCard, pattern: RitualPattern): string {
+  return `${timingCard.themes[0]} with ${pattern.summary.toLowerCase()}`;
+}
+
+function getReflectionPrompt(timingFact: TimingFactKey): string {
+  switch (timingFact) {
+    case "moon.new":
+      return "What is one small thing this household can make room for this week?";
+    case "moon.waxing":
+      return "What ordinary support would help this household keep going gently?";
+    case "moon.full":
+      return "What is already clear enough to acknowledge without making it bigger?";
+    case "moon.waning":
+      return "What can this household stop feeding with attention this week?";
+    case "numerology.6":
+      return "What kind of care would feel useful instead of obligatory?";
+  }
+}
+
+function getSourceSummary(
+  timingCard: SymbolicCard,
+  pattern: RitualPattern,
+  safetyNotes: string[],
+): string {
+  const safetySummary =
+    safetyNotes.length > 0 ? ", safety guardrails" : "";
+
+  return `Sources: ${timingCard.title.toLowerCase()} card, ${pattern.title.toLowerCase()} pattern${safetySummary}.`;
+}
+
+function splitSourceReferences(sourceReferences: string[]): {
+  sourceReviewIds: string[];
+  sourceNoteIds: string[];
+} {
+  return {
+    sourceReviewIds: sourceReferences.filter((reference) =>
+      reference.startsWith("source.") || reference.startsWith("docs/"),
+    ),
+    sourceNoteIds: sourceReferences.filter((reference) =>
+      reference.startsWith("note."),
+    ),
+  };
+}
+
+function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBriefInput {
+  const currentDate = resolveCurrentDate(input.currentDate);
   const scheduleConstraints = resolveScheduleConstraints(
     input.scheduleConstraints,
   );
   const capacityMode =
     input.capacityMode ?? scheduleConstraints.defaultCapacityMode;
+  const timingFacts =
+    input.timingFacts ?? [getPlaceholderMoonTimingFact(currentDate)];
 
-  const resolvedInput: ResolvedGenerateWeeklyBriefInput = {
-    dateRange: input.dateRange ?? DEFAULT_INPUT.dateRange,
-    timingFacts: input.timingFacts ?? DEFAULT_INPUT.timingFacts,
+  return {
+    currentDate,
+    dateRange: input.dateRange ?? getWeekDateRange(currentDate),
+    timingFacts,
     privateProfileKeys:
-      input.privateProfileKeys ?? DEFAULT_INPUT.privateProfileKeys,
+      input.privateProfileKeys ?? DEFAULT_PRIVATE_PROFILE_KEYS,
     capacityMode,
     scheduleConstraints,
+    preferredRitualStyles: normalizeStyleList(input.preferredRitualStyles),
+    avoidedRitualStyles: normalizeStyleList(input.avoidedRitualStyles),
+    audience: input.audience ?? "either",
   };
+}
 
+export function generateWeeklyBrief(
+  input: GenerateWeeklyBriefInput = {},
+): WeeklyBrief {
+  const resolvedInput = resolveInput(input);
   const selectedCards = getApprovedCardsForBrief(
+    resolvedInput.timingFacts,
     resolvedInput.privateProfileKeys,
   );
-  const [
-    waningMoonCard,
-    numerologySixCard,
-    plantTendingCard,
-    privateProfileCard,
-  ] = selectedCards;
-
-  const scheduleAssumptions = [
-    "schedule.symbolic_event_tuesday",
-    getPrimaryScheduleAssumption(scheduleConstraints),
-  ].filter(
-    (scheduleAssumption, index, allScheduleAssumptions) =>
-      allScheduleAssumptions.indexOf(scheduleAssumption) === index,
-  ) as ScheduleAssumptionKey[];
+  const timingCard = selectedCards[0];
+  const privateProfileCard = selectedCards.find(
+    (card) => card.category === "private_profile_theme",
+  );
+  const {
+    pattern,
+    preferenceMatches,
+    excludedPatternKeys,
+    safetyNotes,
+  } = selectPattern(resolvedInput, selectedCards);
+  const sourceReferences = [
+    ...timingCard.source_references,
+    ...pattern.sourceReferences,
+    ...(privateProfileCard?.source_references ?? []),
+  ];
+  const { sourceReviewIds, sourceNoteIds } = splitSourceReferences([
+    ...new Set(sourceReferences),
+  ]);
 
   return {
     dateRange: resolvedInput.dateRange,
-    theme: "Clear one small thing. Feed one living thing.",
+    theme: getTheme(timingCard, pattern),
     bestWindow: getBestWindow(
       resolvedInput.capacityMode,
       resolvedInput.scheduleConstraints,
     ),
     recommendedRitual: getRecommendedRitual(
-      plantTendingCard,
+      pattern,
       resolvedInput.capacityMode,
     ),
-    optionalAddOn: getOptionalAddOn(resolvedInput.capacityMode),
-    reflectionPrompt:
-      "What part of this household needs less intensity and more tending?",
+    optionalAddOn: getOptionalAddOn(
+      pattern,
+      resolvedInput.avoidedRitualStyles,
+    ),
+    reflectionPrompt: getReflectionPrompt(
+      getPrimaryMoonTimingFact(resolvedInput.timingFacts),
+    ),
     whyThis: getWhyThis(
-      waningMoonCard,
-      numerologySixCard,
+      timingCard,
+      pattern,
       privateProfileCard,
-      resolvedInput.capacityMode,
-      resolvedInput.scheduleConstraints,
+      resolvedInput,
+      preferenceMatches,
+      excludedPatternKeys,
     ),
+    sourceSummary: getSourceSummary(timingCard, pattern, safetyNotes),
     trace: {
       timingFacts: resolvedInput.timingFacts,
       symbolicCards: selectedCards.map(
         (card) => TRACE_KEY_BY_CARD_KEY[card.key] ?? card.key,
       ),
+      ritualPatterns: [pattern.key],
+      sourceReviewIds,
+      sourceNoteIds,
       privateProfileKeys: resolvedInput.privateProfileKeys,
+      profilePreferenceKeys: [
+        ...resolvedInput.preferredRitualStyles,
+        ...resolvedInput.avoidedRitualStyles,
+      ],
       capacityMode: resolvedInput.capacityMode,
-      scheduleAssumptions,
+      audience: resolvedInput.audience,
+      scheduleAssumptions: getScheduleAssumptions(
+        resolvedInput.scheduleConstraints,
+      ),
+      safety: {
+        excludedPatternKeys,
+        notes: safetyNotes,
+      },
     },
   };
 }
