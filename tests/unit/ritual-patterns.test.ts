@@ -40,6 +40,7 @@ describe("ritual patterns", () => {
         "shared_space_reset",
         "small_repair",
         "end_of_week_closing",
+        "seasonal_table_home_reset",
         "morning_light_pause",
         "prune_one_dead_leaf",
         "rotate_plant_for_light",
@@ -85,6 +86,7 @@ describe("ritual patterns", () => {
         "shared_space_reset",
         "small_repair",
         "end_of_week_closing",
+        "seasonal_table_home_reset",
         "morning_light_pause",
         "prune_one_dead_leaf",
         "rotate_plant_for_light",
@@ -279,6 +281,7 @@ describe("ritual patterns", () => {
       "shared_space_reset",
       "small_repair",
       "end_of_week_closing",
+      "seasonal_table_home_reset",
       "tea_ritual",
       "simple_warm_drink",
       "kitchen_reset",
@@ -318,5 +321,36 @@ describe("ritual patterns", () => {
     expect(serialized).not.toContain("private source text");
     expect(serialized).not.toContain("copied ritual");
     expect(serialized).not.toContain("copied recipe");
+  });
+
+  it("adds a source-backed seasonal table or home reset pattern", () => {
+    const pattern = getApprovedRitualPatterns().find(
+      (candidate) => candidate.key === "seasonal_table_home_reset",
+    );
+    const serializedPattern = JSON.stringify(pattern).toLowerCase();
+
+    expect(pattern).toBeDefined();
+    expect(pattern?.ritualStyles).toEqual(
+      expect.arrayContaining(["seasonal", "table_reset", "home_tending"]),
+    );
+    expect(pattern?.capacityModes).toEqual(
+      expect.arrayContaining(["low", "steady"]),
+    );
+    expect(pattern?.defaultDurationMinutes).toBeLessThanOrEqual(10);
+    expect(pattern?.sourceReferences).toEqual(
+      expect.arrayContaining([
+        "source.anna_franklin_seasonal_home",
+        "source.temperance_alden_seasonal_practice",
+        "source.old_farmers_almanac_context",
+        "note.seasonal_table_home_reset",
+        "note.almanac_context_not_authority",
+      ]),
+    );
+    expect(pattern?.safetyFlags.smoke).toBe("none");
+    expect(pattern?.safetyFlags.essentialOils).toBe("none");
+    expect(pattern?.safetyFlags.fire).not.toBe("live_flame");
+    expect(serializedPattern).not.toContain("guarantee");
+    expect(serializedPattern).not.toContain("protection from danger");
+    expect(serializedPattern).not.toContain("private source text");
   });
 });

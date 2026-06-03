@@ -578,6 +578,112 @@ const PLANETARY_ASPECT_RULES: TimingInterpretationRule[] = ASPECTS.map(
   }),
 );
 
+const SEASONAL_RULE_SOURCE_REFERENCES = [
+  "source.astronomy_engine",
+  "source.noaa_nws_seasonal_facts",
+  "source.temperance_alden_seasonal_practice",
+  "source.anna_franklin_seasonal_home",
+  "source.old_farmers_almanac_context",
+  "note.seasonal_facts_as_markers",
+  "note.noaa_seasons_fact_guardrail",
+  "note.almanac_context_not_authority",
+];
+
+const SEASONAL_MARKER_RULES: TimingInterpretationRule[] = [
+  {
+    id: "timing_rule.solar_season.spring_equinox",
+    timingFactType: "solar_season",
+    condition: { marker: "march_equinox" },
+    signalLabel: "Spring equinox — opening and balance",
+    signalSummary:
+      "A seasonal marker for balance, opening, freshening, and one small household reset without spring-cleaning pressure.",
+    symbolicCardKeys: ["seasonal_spring_equinox", "seasonal_opening_freshening"],
+    ritualStyleHints: ["seasonal", "air", "threshold_reset", "home_tending"],
+    weight: 74,
+    strength: "supporting",
+    avoidIf: [
+      "seasonal_practice_as_requirement",
+      "spring_cleaning_pressure",
+      "weather_assumptions",
+    ],
+    sourceReferences: [
+      ...SEASONAL_RULE_SOURCE_REFERENCES,
+      "note.spring_equinox_opening_balance",
+      "note.seasonal_opening_airing_freshening",
+    ],
+    approvalStatus: "approved",
+  },
+  {
+    id: "timing_rule.solar_season.summer_solstice",
+    timingFactType: "solar_season",
+    condition: { marker: "june_solstice" },
+    signalLabel: "Summer solstice — light and tending",
+    signalSummary:
+      "A seasonal marker for light, warmth, gratitude, and tending what is already present without requiring heat, sun, or celebration.",
+    symbolicCardKeys: ["seasonal_summer_solstice", "seasonal_warmth_light_rest"],
+    ritualStyleHints: ["seasonal", "light_focus", "gratitude", "home_tending"],
+    weight: 74,
+    strength: "supporting",
+    avoidIf: [
+      "seasonal_practice_as_requirement",
+      "sun_exposure_assumption",
+      "forced_celebration",
+    ],
+    sourceReferences: [
+      ...SEASONAL_RULE_SOURCE_REFERENCES,
+      "note.summer_solstice_light_tending",
+      "note.seasonal_warmth_light_rest",
+    ],
+    approvalStatus: "approved",
+  },
+  {
+    id: "timing_rule.solar_season.autumn_equinox",
+    timingFactType: "solar_season",
+    condition: { marker: "september_equinox" },
+    signalLabel: "Autumn equinox — gratitude and storing",
+    signalSummary:
+      "A seasonal marker for balance, gratitude, using what is present, and storing one useful thing without abundance claims.",
+    symbolicCardKeys: ["seasonal_autumn_equinox", "seasonal_harvest_gratitude_storing"],
+    ritualStyleHints: ["seasonal", "gratitude", "table_reset", "home_tending"],
+    weight: 74,
+    strength: "supporting",
+    avoidIf: [
+      "seasonal_practice_as_requirement",
+      "abundance_guarantees",
+      "food_preservation_advice",
+    ],
+    sourceReferences: [
+      ...SEASONAL_RULE_SOURCE_REFERENCES,
+      "note.autumn_equinox_harvest_storing",
+      "note.seasonal_harvest_gratitude_storing",
+    ],
+    approvalStatus: "approved",
+  },
+  {
+    id: "timing_rule.solar_season.winter_solstice",
+    timingFactType: "solar_season",
+    condition: { marker: "december_solstice" },
+    signalLabel: "Winter solstice — quiet and returning light",
+    signalSummary:
+      "A seasonal marker for quiet, warmth, rest, attention protection, and a small return of light without darkness fear.",
+    symbolicCardKeys: ["seasonal_winter_solstice", "seasonal_wintering_attention"],
+    ritualStyleHints: ["seasonal", "rest", "light_focus", "home_tending"],
+    weight: 74,
+    strength: "supporting",
+    avoidIf: [
+      "seasonal_practice_as_requirement",
+      "darkness_fear",
+      "protection_from_danger_claims",
+    ],
+    sourceReferences: [
+      ...SEASONAL_RULE_SOURCE_REFERENCES,
+      "note.winter_solstice_rest_warmth",
+      "note.wintering_quiet_attention_protection",
+    ],
+    approvalStatus: "approved",
+  },
+];
+
 const DRAFT_PLACEHOLDER_RULES: TimingInterpretationRule[] = [
   {
     id: "timing_rule.solar_season.placeholder",
@@ -645,6 +751,7 @@ export const starterTimingInterpretationRules: TimingInterpretationRule[] = [
   ...PLANET_SIGN_RULES,
   ...PLANET_RETROGRADE_RULES,
   ...PLANETARY_ASPECT_RULES,
+  ...SEASONAL_MARKER_RULES,
   ...DRAFT_PLACEHOLDER_RULES,
 ];
 

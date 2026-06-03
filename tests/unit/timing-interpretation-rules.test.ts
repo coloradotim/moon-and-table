@@ -46,6 +46,73 @@ describe("timing interpretation rules", () => {
     );
   });
 
+  it("creates approved source-backed seasonal signals only when seasonal facts exist", () => {
+    const solsticeFacts = getTimingFactsForDate("2026-06-21T00:00:00.000Z");
+    const ordinaryFacts = getTimingFactsForDate("2026-07-10T00:00:00.000Z");
+    const solsticeSignals = getTimingSignalsForFacts(solsticeFacts).filter(
+      (signal) => signal.timingFactType === "solar_season",
+    );
+    const ordinarySignals = getTimingSignalsForFacts(ordinaryFacts).filter(
+      (signal) => signal.timingFactType === "solar_season",
+    );
+
+    expect(solsticeSignals).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          ruleId: "timing_rule.solar_season.summer_solstice",
+          signalLabel: "Summer solstice — light and tending",
+          symbolicCardKeys: [
+            "seasonal_summer_solstice",
+            "seasonal_warmth_light_rest",
+          ],
+          strength: "supporting",
+        }),
+      ]),
+    );
+    expect(ordinarySignals).toEqual([]);
+
+    for (const signal of solsticeSignals) {
+      expect(signal.sourceReferences).toEqual(
+        expect.arrayContaining([
+          "source.astronomy_engine",
+          "source.noaa_nws_seasonal_facts",
+          "source.temperance_alden_seasonal_practice",
+          "source.anna_franklin_seasonal_home",
+          "source.old_farmers_almanac_context",
+          "note.seasonal_facts_as_markers",
+          "note.almanac_context_not_authority",
+        ]),
+      );
+      expect(signal.signalSummary.toLowerCase()).not.toContain("guarantee");
+      expect(signal.signalSummary.toLowerCase()).not.toContain("must");
+      expect(signal.signalSummary.toLowerCase()).not.toContain("forecast");
+    }
+  });
+
+  it("includes approved seasonal rules for all four astronomical anchors", () => {
+    const seasonalRules = getEligibleTimingInterpretationRules().filter(
+      (rule) => rule.timingFactType === "solar_season",
+    );
+
+    expect(seasonalRules.map((rule) => rule.id).sort()).toEqual([
+      "timing_rule.solar_season.autumn_equinox",
+      "timing_rule.solar_season.spring_equinox",
+      "timing_rule.solar_season.summer_solstice",
+      "timing_rule.solar_season.winter_solstice",
+    ]);
+
+    for (const rule of seasonalRules) {
+      expect(rule.approvalStatus).toBe("approved");
+      expect(rule.symbolicCardKeys.length).toBe(2);
+      expect(rule.ritualStyleHints).toContain("seasonal");
+      expect(rule.sourceReferences.some((reference) =>
+        reference.startsWith("note."),
+      )).toBe(true);
+      expect(rule.signalLabel).not.toContain("placeholder");
+      expect(rule.signalSummary.toLowerCase()).not.toContain("scientific authority");
+    }
+  });
+
   it("keeps approved numerology rules source-backed and accent-level for 1-9", () => {
     const rules = getEligibleTimingInterpretationRules().filter(
       (rule) => rule.timingFactType === "numerology_date",
