@@ -28,15 +28,17 @@ Real private data belongs in Firebase behind authentication, private runtime sto
 
 Use one Firebase project for early development. Add separate staging or production projects later if deployment needs become clearer.
 
-## Enable Email/Password Auth
+## Enable Google Auth
 
 1. In the Firebase console, open Authentication.
 2. Click **Get started** if Authentication has not been enabled yet.
 3. Open **Sign-in method**.
-4. Enable **Email/Password**.
+4. Enable **Google**.
 5. Leave other providers disabled until a later issue asks for them.
 
 Do not create or document real user accounts in source control.
+
+Email/password can be enabled later if the product needs it, but the current first provider path is Google auth.
 
 ## Create Firestore
 
@@ -45,7 +47,7 @@ Do not create or document real user accounts in source control.
 3. Choose a region appropriate for the hosted app.
 4. Start with locked-down rules for private data.
 
-Firestore is the planned hosted storage layer for private profile data, schedule constraints, capacity settings, generated briefs, feedback, and ritual notes. Security rules should restrict private data to the authenticated household or user when implementation begins.
+Firestore is the planned hosted storage layer for private profile data, schedule constraints, capacity settings, generated briefs, feedback, and ritual notes. The starting rules live in `firestore.rules` and restrict private collections to authenticated user-scoped documents or household members.
 
 ## Configure Local Environment Values
 
@@ -86,6 +88,10 @@ Use these collection names as the first planning vocabulary:
 
 Keep collection documents private and generic in documentation. Do not commit real household profiles, schedules, capacity notes, feedback, or ritual journal entries.
 
+The matching TypeScript schema lives in `src/lib/private-data-schema.ts`.
+
+You do not need to manually create empty collections for this foundation step. Firestore collections can be created by app writes when later issues add real reads and writes.
+
 ## Source-Controlled Data
 
 Keep these in the repository:
@@ -106,11 +112,10 @@ Keep these out of the repository:
 
 ## Current Non-Goals
 
-This setup guide does not implement Firebase in the app.
+This setup guide does not implement a sign-in UI or Firestore reads and writes in the app.
 
 Do not add:
 
-- Firebase SDK initialization
 - Firebase Auth UI
 - Firestore reads or writes
 - calendar integration

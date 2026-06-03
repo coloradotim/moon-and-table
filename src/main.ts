@@ -1,7 +1,13 @@
 import { generateWeeklyBrief } from "./lib/generate-weekly-brief";
+import { getMissingPrivateDataFallback } from "./lib/private-data-schema";
 import "./styles.css";
 
-const brief = generateWeeklyBrief();
+const privateDataFallback = getMissingPrivateDataFallback();
+const brief = generateWeeklyBrief({
+  privateProfileKeys: privateDataFallback.privateProfileKeys,
+  capacityMode: privateDataFallback.capacityMode,
+  scheduleConstraints: privateDataFallback.scheduleConstraints,
+});
 const app = document.querySelector<HTMLElement>("#app");
 
 if (!app) {
