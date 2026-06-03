@@ -20,24 +20,6 @@ export type AppAuthState =
   | { status: "unauthorized"; configReady: boolean }
   | { status: "signed_in"; user: AuthenticatedUser };
 
-export function parseAllowedEmails(value: string | undefined): string[] {
-  return (value ?? "")
-    .split(",")
-    .map((email) => email.trim().toLowerCase())
-    .filter(Boolean);
-}
-
-export function isEmailAllowed(
-  email: string | null | undefined,
-  allowedEmails: string[],
-): boolean {
-  if (allowedEmails.length === 0) {
-    return true;
-  }
-
-  return Boolean(email && allowedEmails.includes(email.toLowerCase()));
-}
-
 export function toAuthenticatedUser(user: User): AuthenticatedUser {
   return { uid: user.uid, email: user.email, displayName: user.displayName };
 }
@@ -45,7 +27,6 @@ export function toAuthenticatedUser(user: User): AuthenticatedUser {
 export function subscribeToAuthState(
   services: FirebaseServices | null,
   onChange: (state: AppAuthState) => void,
-  allowedEmails: string[] = parseAllowedEmails(import.meta.env.VITE_AUTH_ALLOWED_EMAILS),
 ): Unsubscribe {
   if (!services) {
     onChange({ status: "signed_out", configReady: false });
@@ -53,12 +34,6 @@ export function subscribeToAuthState(
   }
 
   return onAuthStateChanged(services.auth, (user) => {
-    if (user && !isEmailAllowed(user.email, allowedEmails)) {
-      onChange({ status: "unauthorized", configReady: true });
-      void signOut(services.auth);
-      return;
-    }
-
     onChange(
       user
         ? { status: "signed_in", user: toAuthenticatedUser(user) }

@@ -6,8 +6,8 @@ import {
 } from "./lib/auth";
 import { getFirebaseServices } from "./lib/firebase";
 import {
+  hasLoadedPrivateData,
   loadPrivateBriefData,
-  resolvePrivateBriefData,
   updatePrivateProfileTuning,
   type PrivateBriefData,
 } from "./lib/private-data";
@@ -74,6 +74,18 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
   )
     .then((privateBriefData) => {
       if (requestId === privateDataRequestId) {
+        if (!hasLoadedPrivateData(privateBriefData)) {
+          activeSignedInState = null;
+          activePrivateBriefData = null;
+          activeBrief = null;
+          activeSignedInView = "this_week";
+          appRoot.innerHTML = renderAppShell({
+            status: "unauthorized",
+            configReady: true,
+          });
+          return;
+        }
+
         activePrivateBriefData = privateBriefData;
         activeBrief = generateWeeklyBrief(privateBriefData.input);
         appRoot.innerHTML = renderSignedInShell(privateBriefData, {
@@ -85,13 +97,13 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
     })
     .catch(() => {
       if (requestId === privateDataRequestId) {
-        const fallbackPrivateBriefData = resolvePrivateBriefData({});
-        activePrivateBriefData = fallbackPrivateBriefData;
-        activeBrief = generateWeeklyBrief(fallbackPrivateBriefData.input);
-        appRoot.innerHTML = renderSignedInShell(fallbackPrivateBriefData, {
-          activeView: activeSignedInView,
-          brief: activeBrief,
-          showDebugTrace,
+        activeSignedInState = null;
+        activePrivateBriefData = null;
+        activeBrief = null;
+        activeSignedInView = "this_week";
+        appRoot.innerHTML = renderAppShell({
+          status: "unauthorized",
+          configReady: true,
         });
       }
     });

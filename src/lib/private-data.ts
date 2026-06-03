@@ -61,6 +61,10 @@ export function shouldLoadPrivateData(state: AppAuthState): boolean {
   return state.status === "signed_in";
 }
 
+export function hasLoadedPrivateData(privateBriefData: PrivateBriefData): boolean {
+  return privateBriefData.status === "loaded_private_data";
+}
+
 const CAPACITY_MODES: CapacityMode[] = ["pause", "low", "steady", "high"];
 const PROFILE_KEYS: PrivateProfileThemeKey[] = [
   "private_profile.practical_tending",

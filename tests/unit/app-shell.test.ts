@@ -229,7 +229,8 @@ describe("app shell rendering", () => {
     const html = renderUnauthorizedShell();
 
     expect(html).toContain("This account is not invited yet.");
-    expect(html).toContain("Sign in with Google");
+    expect(html).toContain("Sign out");
+    expect(html).toContain('data-auth-action="sign-out"');
     expect(html).not.toContain("data-testid=\"recommended-ritual\"");
   });
 

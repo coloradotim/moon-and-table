@@ -32,12 +32,11 @@ VITE_FIREBASE_PROJECT_ID
 VITE_FIREBASE_STORAGE_BUCKET
 VITE_FIREBASE_MESSAGING_SENDER_ID
 VITE_FIREBASE_APP_ID
-VITE_AUTH_ALLOWED_EMAILS
 ```
 
 Use the Firebase web app config values from Firebase project settings. These are client web config values, not Firebase Admin credentials, but keep real values out of source control.
 
-`VITE_AUTH_ALLOWED_EMAILS` is currently a client-visible allowlist used for a friendly not-invited screen. Because Vite bundles `VITE_` variables into the browser app, real emails in this value are visible to anyone who inspects the deployed JavaScript. Firestore rules remain the real access-control layer for private data. If the privacy tradeoff is not acceptable, leave this value empty and rely on Firestore rules until the allowlist is moved out of client-visible config. Follow-up issue #58 tracks moving this allowlist out of client-visible Vite env.
+Do not add real allowed-user emails to Vercel env vars. Vite bundles `VITE_` values into browser JavaScript. Moon & Table uses Google Auth plus readable seeded Firestore private documents as the hosted authorization signal. Firestore rules remain the real access-control layer for private data.
 
 Do not add these to Vercel:
 
@@ -54,9 +53,8 @@ Do not add these to Vercel:
 2. Open the `moon-and-table` project.
 3. Go to **Settings** > **Environment Variables**.
 4. Add the Firebase web config variables listed above.
-5. Add `VITE_AUTH_ALLOWED_EMAILS` only if you accept the client-visible email tradeoff for now.
-6. Apply the variables to Production and, if needed, Preview.
-7. Redeploy the latest production deployment so the new Vite env values are baked into the static bundle.
+5. Apply the variables to Production and, if needed, Preview.
+6. Redeploy the latest production deployment so the new Vite env values are baked into the static bundle.
 
 Vite reads these values at build time. Changing Vercel env vars does not affect an already-built deployment until it is redeployed.
 
@@ -96,13 +94,13 @@ After Vercel env vars and Firebase authorized domains are set:
 1. Redeploy production in Vercel.
 2. Open `https://moon-and-table.vercel.app`.
 3. Confirm the page shows `Moon & Table` and the Google sign-in button.
-4. Sign in with an allowed Google account.
+4. Sign in with a seeded Google account.
 5. Confirm the weekly brief loads.
 6. Open `Menu` > `Profile settings`.
 7. Confirm seeded private profile settings load.
 8. Save a harmless settings edit and confirm it persists after refresh.
 9. Sign out from the menu.
-10. Sign in with an unauthorized Google account, if available.
+10. Sign in with an unseeded Google account, if available.
 11. Confirm the account cannot read private Firestore data and sees either the not-invited screen or a no-private-data starter state.
 12. Confirm no private seed files or Firebase Admin credential files are present in Vercel project files or environment variables.
 
