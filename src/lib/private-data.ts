@@ -1,4 +1,4 @@
-import { doc, getDoc, type Firestore } from "firebase/firestore";
+import { doc, getDoc, updateDoc, type Firestore } from "firebase/firestore";
 
 import type { AppAuthState } from "./auth";
 import type {
@@ -11,14 +11,23 @@ import type {
 import {
   getMissingPrivateDataFallback,
   getPrivateEmailDocumentId,
+  type AstrologyVisibility,
   type CapacitySettingsDocument,
+  type HouseholdDocument,
   type PrivateAstrologyProfile,
+  type PrivateAudience,
   type PrivateProfileAssumption,
   type PrivateProfileDocument,
   type PrivateProfileThemeKey,
   type ProfileEmailLinkDocument,
   type ScheduleConstraintsDocument,
 } from "./private-data-schema";
+import {
+  buildProfileTuningUpdate,
+  type ProfileTuningFormInput,
+  type ProfileTuningProfile,
+  type ProfileTuningSettings,
+} from "./profile-tuning";
 
 export type FirestorePrivateDocuments = {
   profile?: Partial<PrivateProfileDocument> | null;
@@ -26,11 +35,24 @@ export type FirestorePrivateDocuments = {
   scheduleConstraints?: Partial<ScheduleConstraintsDocument> | null;
 };
 
+export type PrivateDocumentRefs = {
+  profileId?: string;
+  capacitySettingsId?: string;
+  scheduleConstraintsId?: string;
+};
+
+export type PrivateDisplayContext = {
+  currentUserDisplayName?: string | null;
+};
+
 export type PrivateBriefData = {
   status: "loaded_private_data" | "using_starter_settings";
   input: GenerateWeeklyBriefInput;
   assumptions: PrivateProfileAssumption[];
   astrologyProfile?: PrivateAstrologyProfile;
+  tuning: ProfileTuningSettings | null;
+  tuningProfiles: ProfileTuningProfile[];
+  documentRefs: PrivateDocumentRefs;
 };
 
 export function shouldLoadPrivateData(state: AppAuthState): boolean {
@@ -64,6 +86,12 @@ const ASTROLOGY_SOURCES: PrivateAstrologyProfile["source"][] = [
   "astro_material",
   "manual_entry",
 ];
+const AUDIENCES: PrivateAudience[] = ["person_a", "person_b", "together", "either"];
+const ASTROLOGY_VISIBILITY_VALUES: AstrologyVisibility[] = [
+  "subtle",
+  "balanced",
+  "explicit",
+];
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
@@ -79,6 +107,101 @@ function isCapacityMode(value: unknown): value is CapacityMode {
 
 function isProfileKey(value: unknown): value is PrivateProfileThemeKey {
   return typeof value === "string" && PROFILE_KEYS.includes(value as PrivateProfileThemeKey);
+}
+
+function isAudience(value: unknown): value is PrivateAudience {
+  return typeof value === "string" && AUDIENCES.includes(value as PrivateAudience);
+}
+
+function getFallbackAudienceLabel(audience: PrivateAudience): string {
+  switch (audience) {
+    case "person_a":
+      return "Person A";
+    case "person_b":
+      return "Person B";
+    case "together":
+      return "Together";
+    case "either":
+      return "Either";
+  }
+}
+
+function getFirstDisplayNamePart(value: string | null | undefined): string | null {
+  const firstPart = value?.trim().split(/\s+/)[0];
+
+  return firstPart && firstPart.length > 0 ? firstPart : null;
+}
+
+function resolveAudienceLabels(
+  value: unknown,
+  profile: Partial<PrivateProfileDocument> | null | undefined,
+  displayContext: PrivateDisplayContext,
+): Record<PrivateAudience, string> {
+  const labels = Object.fromEntries(
+    AUDIENCES.map((audience) => [audience, getFallbackAudienceLabel(audience)]),
+  ) as Record<PrivateAudience, string>;
+
+  if (!isRecord(value)) {
+    return labels;
+  }
+
+  for (const audience of AUDIENCES) {
+    const label = value[audience];
+
+    if (typeof label === "string" && label.trim().length > 0) {
+      labels[audience] = label.trim();
+    }
+  }
+
+  if (
+    isAudience(profile?.personKey) &&
+    typeof profile.displayLabel === "string" &&
+    profile.displayLabel.trim().length > 0
+  ) {
+    labels[profile.personKey] = profile.displayLabel.trim();
+  }
+
+  if (isAudience(profile?.personKey)) {
+    const currentUserFirstName = getFirstDisplayNamePart(
+      displayContext.currentUserDisplayName,
+    );
+
+    if (currentUserFirstName) {
+      labels[profile.personKey] = currentUserFirstName;
+    }
+  }
+
+  return labels;
+}
+
+function resolveProfileLabel(
+  profile: Partial<PrivateProfileDocument> | null | undefined,
+  displayContext: PrivateDisplayContext = {},
+): string {
+  const currentUserFirstName = getFirstDisplayNamePart(
+    displayContext.currentUserDisplayName,
+  );
+
+  if (currentUserFirstName) {
+    return currentUserFirstName;
+  }
+
+  if (typeof profile?.displayLabel === "string" && profile.displayLabel.trim()) {
+    return profile.displayLabel.trim();
+  }
+
+  if (isAudience(profile?.personKey)) {
+    return getFallbackAudienceLabel(profile.personKey);
+  }
+
+  return "Profile";
+}
+
+function isAstrologyVisibility(value: unknown): value is AstrologyVisibility {
+  return (
+    typeof value === "string" &&
+    ASTROLOGY_VISIBILITY_VALUES.includes(value as AstrologyVisibility)
+  );
 }
 
 function sanitizeProfileKeys(value: unknown): PrivateProfilePlaceholderKey[] {
@@ -190,6 +313,9 @@ function resolveScheduleConstraints(
 
 export function resolvePrivateBriefData(
   documents: FirestorePrivateDocuments,
+  documentRefs: PrivateDocumentRefs = {},
+  displayContext: PrivateDisplayContext = {},
+  tuningProfiles: ProfileTuningProfile[] = [],
 ): PrivateBriefData {
   const fallback = getMissingPrivateDataFallback();
   const fallbackSchedule = fallback.scheduleConstraints;
@@ -216,6 +342,35 @@ export function resolvePrivateBriefData(
   const astrologyProfile = sanitizeAstrologyProfile(
     documents.profile?.astrologyProfile,
   );
+  const tuning =
+    documents.profile || documents.capacitySettings
+      ? {
+          defaultAudience: isAudience(documents.profile?.defaultAudience)
+            ? documents.profile.defaultAudience
+            : "either",
+          audienceLabels: resolveAudienceLabels(
+            documents.profile?.audienceLabels,
+            documents.profile,
+            displayContext,
+          ),
+          defaultCapacityMode: capacityMode,
+          maxRitualDurationMinutes,
+          preferredRitualStyles: isStringArray(
+            documents.profile?.preferredRitualStyles,
+          )
+            ? documents.profile.preferredRitualStyles
+            : [],
+          avoidedRitualStyles: isStringArray(documents.profile?.avoidedRitualStyles)
+            ? documents.profile.avoidedRitualStyles
+            : [],
+          astrologyVisibility: isAstrologyVisibility(
+            documents.profile?.astrologyVisibility,
+          )
+            ? documents.profile.astrologyVisibility
+            : "balanced",
+          assumptions,
+        }
+      : null;
   const hasLoadedData = Boolean(
     documents.profile || documents.capacitySettings || documents.scheduleConstraints,
   );
@@ -229,29 +384,58 @@ export function resolvePrivateBriefData(
     },
     assumptions,
     astrologyProfile,
+    tuning,
+    tuningProfiles:
+      tuning && documentRefs.profileId && documentRefs.capacitySettingsId && documentRefs.scheduleConstraintsId
+        ? [
+            {
+              id: documentRefs.profileId,
+              label: resolveProfileLabel(documents.profile, displayContext),
+              settings: tuning,
+              documentRefs: {
+                profileId: documentRefs.profileId,
+                capacitySettingsId: documentRefs.capacitySettingsId,
+                scheduleConstraintsId: documentRefs.scheduleConstraintsId,
+              },
+            },
+            ...tuningProfiles.filter((profile) => profile.id !== documentRefs.profileId),
+          ]
+        : tuningProfiles,
+    documentRefs,
   };
 }
+
+type LoadedDocument<T> = {
+  id: string;
+  data: Partial<T>;
+};
 
 async function getUserScopedDocument<T>(
   db: Firestore,
   collectionName: string,
   userId: string,
-): Promise<Partial<T> | null> {
+): Promise<LoadedDocument<T> | null> {
   const snapshot = await getDoc(doc(db, collectionName, userId));
 
   if (!snapshot.exists()) {
     return null;
   }
 
-  return snapshot.data() as Partial<T>;
+  return {
+    id: snapshot.id,
+    data: snapshot.data() as Partial<T>,
+  };
 }
 
 async function getEmailLinkedDocuments(
   db: Firestore,
   email: string | null | undefined,
-): Promise<FirestorePrivateDocuments> {
+): Promise<{
+  documents: FirestorePrivateDocuments;
+  documentRefs: PrivateDocumentRefs;
+}> {
   if (!email) {
-    return {};
+    return { documents: {}, documentRefs: {} };
   }
 
   try {
@@ -260,13 +444,13 @@ async function getEmailLinkedDocuments(
     );
 
     if (!linkSnapshot.exists()) {
-      return {};
+      return { documents: {}, documentRefs: {} };
     }
 
     const link = linkSnapshot.data() as Partial<ProfileEmailLinkDocument>;
 
     if (typeof link.profileId !== "string" || link.profileId.length === 0) {
-      return {};
+      return { documents: {}, documentRefs: {} };
     }
 
     const [profile, capacitySettings, scheduleConstraints] = await Promise.all([
@@ -284,21 +468,117 @@ async function getEmailLinkedDocuments(
     ]);
 
     return {
-      profile,
-      capacitySettings,
-      scheduleConstraints,
+      documents: {
+        profile: profile?.data,
+        capacitySettings: capacitySettings?.data,
+        scheduleConstraints: scheduleConstraints?.data,
+      },
+      documentRefs: {
+        profileId: profile?.id,
+        capacitySettingsId: capacitySettings?.id,
+        scheduleConstraintsId: scheduleConstraints?.id,
+      },
     };
   } catch {
-    return {};
+    return { documents: {}, documentRefs: {} };
   }
+}
+
+async function getHouseholdDocument(
+  db: Firestore,
+  householdId: string | undefined,
+): Promise<Partial<HouseholdDocument> | null> {
+  if (!householdId) {
+    return null;
+  }
+
+  const snapshot = await getDoc(doc(db, "households", householdId));
+
+  if (!snapshot.exists()) {
+    return null;
+  }
+
+  return snapshot.data() as Partial<HouseholdDocument>;
+}
+
+function getProfileTuningSettings(
+  documents: FirestorePrivateDocuments,
+  displayContext: PrivateDisplayContext = {},
+): ProfileTuningSettings | null {
+  return resolvePrivateBriefData(documents, {}, displayContext, []).tuning;
+}
+
+function getHouseholdId(documents: FirestorePrivateDocuments): string | undefined {
+  return (
+    documents.profile?.householdId ??
+    documents.capacitySettings?.householdId ??
+    documents.scheduleConstraints?.householdId
+  );
+}
+
+async function getHouseholdTuningProfiles(
+  db: Firestore,
+  documents: FirestorePrivateDocuments,
+  currentProfileId: string | undefined,
+  currentEmail: string | null | undefined,
+  currentDisplayName: string | null | undefined,
+): Promise<ProfileTuningProfile[]> {
+  const household = await getHouseholdDocument(db, getHouseholdId(documents));
+  const memberEmails = Array.isArray(household?.memberEmails)
+    ? household.memberEmails
+    : [];
+
+  if (memberEmails.length === 0) {
+    return [];
+  }
+
+  const profiles = await Promise.all(
+    memberEmails.map(async (email) => {
+      const result = await getEmailLinkedDocuments(db, email);
+      const isCurrentMember =
+        typeof currentEmail === "string" &&
+        email.trim().toLowerCase() === currentEmail.trim().toLowerCase();
+      const memberDisplayContext =
+        isCurrentMember
+          ? { currentUserDisplayName: currentDisplayName }
+          : {};
+      const settings = getProfileTuningSettings(
+        result.documents,
+        memberDisplayContext,
+      );
+      const { profileId, capacitySettingsId, scheduleConstraintsId } =
+        result.documentRefs;
+
+      if (!settings || !profileId || !capacitySettingsId || !scheduleConstraintsId) {
+        return null;
+      }
+
+      return {
+        id: profileId,
+        label: resolveProfileLabel(result.documents.profile, memberDisplayContext),
+        settings,
+        documentRefs: {
+          profileId,
+          capacitySettingsId,
+          scheduleConstraintsId,
+        },
+      };
+    }),
+  );
+
+  return profiles.filter(
+    (profile): profile is ProfileTuningProfile =>
+      Boolean(profile && profile.id !== currentProfileId),
+  );
 }
 
 export async function loadPrivateBriefData(
   db: Firestore,
   userId: string,
   email?: string | null,
+  displayName?: string | null,
 ): Promise<PrivateBriefData> {
-  const [profile, capacitySettings, scheduleConstraints, emailLinkedDocuments] =
+  const [profile, capacitySettings, scheduleConstraints, emailLinkedResult] =
     await Promise.all([
     getUserScopedDocument<PrivateProfileDocument>(db, "profiles", userId),
     getUserScopedDocument<CapacitySettingsDocument>(
@@ -313,11 +593,58 @@ export async function loadPrivateBriefData(
     ),
     getEmailLinkedDocuments(db, email),
   ]);
-
-  return resolvePrivateBriefData({
-    profile: profile ?? emailLinkedDocuments.profile,
-    capacitySettings: capacitySettings ?? emailLinkedDocuments.capacitySettings,
+  const documents = {
+    profile: profile?.data ?? emailLinkedResult.documents.profile,
+    capacitySettings:
+      capacitySettings?.data ?? emailLinkedResult.documents.capacitySettings,
     scheduleConstraints:
-      scheduleConstraints ?? emailLinkedDocuments.scheduleConstraints,
-  });
+      scheduleConstraints?.data ?? emailLinkedResult.documents.scheduleConstraints,
+  };
+  const documentRefs = {
+    profileId: profile?.id ?? emailLinkedResult.documentRefs.profileId,
+    capacitySettingsId:
+      capacitySettings?.id ?? emailLinkedResult.documentRefs.capacitySettingsId,
+    scheduleConstraintsId:
+      scheduleConstraints?.id ?? emailLinkedResult.documentRefs.scheduleConstraintsId,
+  };
+
+  const householdTuningProfiles = await getHouseholdTuningProfiles(
+    db,
+    documents,
+    documentRefs.profileId,
+    email,
+    displayName,
+  ).catch(() => []);
+
+  return resolvePrivateBriefData(documents, documentRefs, {
+    currentUserDisplayName: displayName,
+  }, householdTuningProfiles);
+}
+
+export async function updatePrivateProfileTuning(
+  db: Firestore,
+  tuningProfile: ProfileTuningProfile,
+  input: ProfileTuningFormInput,
+): Promise<void> {
+  const { profileId, capacitySettingsId, scheduleConstraintsId } =
+    tuningProfile.documentRefs;
+
+  if (!profileId || !capacitySettingsId || !scheduleConstraintsId) {
+    throw new Error("Private profile document references are missing.");
+  }
+
+  const update = buildProfileTuningUpdate(
+    tuningProfile.settings,
+    input,
+    new Date().toISOString(),
+  );
+
+  await Promise.all([
+    updateDoc(doc(db, "profiles", profileId), update.profile),
+    updateDoc(doc(db, "capacitySettings", capacitySettingsId), update.capacitySettings),
+    updateDoc(
+      doc(db, "scheduleConstraints", scheduleConstraintsId),
+      update.scheduleConstraints,
+    ),
+  ]);
 }

@@ -1,8 +1,198 @@
 import { generateWeeklyBrief } from "../lib/generate-weekly-brief";
 import type { AppAuthState } from "../lib/auth";
 import type { PrivateBriefData } from "../lib/private-data";
+import {
+  getRitualStyleOptions,
+  PROFILE_TUNING_ASTROLOGY_VISIBILITY,
+  type ProfileTuningProfile,
+  type ProfileTuningSettings,
+} from "../lib/profile-tuning";
 
 const feedbackOptions = ["saved", "too much", "too cheesy", "do again"];
+const capacityModes = ["pause", "low", "steady", "high"];
+
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function renderSelectOptions(
+  options: readonly string[],
+  selectedValue: string,
+  labels: Record<string, string> = {},
+): string {
+  return options
+    .map((option) => {
+      const selectedAttribute = option === selectedValue ? " selected" : "";
+      const label = labels[option] ?? option;
+
+      return `<option value="${escapeHtml(option)}"${selectedAttribute}>${escapeHtml(label)}</option>`;
+    })
+    .join("");
+}
+
+function renderStyleOptions(
+  name: "preferredRitualStyles" | "avoidedRitualStyles",
+  selectedValues: string[],
+): string {
+  const selectedValueSet = new Set(selectedValues);
+
+  return getRitualStyleOptions(selectedValues)
+    .map((option) => {
+      const checkedAttribute = selectedValueSet.has(option.value) ? " checked" : "";
+
+      return `
+        <label class="choice-pill">
+          <input
+            type="checkbox"
+            name="${name}"
+            value="${escapeHtml(option.value)}"${checkedAttribute}
+          />
+          <span>${escapeHtml(option.label)}</span>
+        </label>
+      `;
+    })
+    .join("");
+}
+
+function renderAssumptionControls(settings: ProfileTuningSettings): string {
+  if (settings.assumptions.length === 0) {
+    return `<p class="muted">No editable preferences are saved yet.</p>`;
+  }
+
+  return settings.assumptions
+    .map((assumption) => {
+      const disabledAttribute =
+        !assumption.editable || typeof assumption.value !== "boolean"
+          ? " disabled"
+          : "";
+      const checkedAttribute = assumption.value === true ? " checked" : "";
+
+      return `
+        <label class="toggle-row">
+          <input
+            type="checkbox"
+            name="assumption.${escapeHtml(assumption.key)}"
+            value="true"${checkedAttribute}${disabledAttribute}
+          />
+          <span>${escapeHtml(assumption.label)}</span>
+        </label>
+      `;
+    })
+    .join("");
+}
+
+function renderTuningProfileForm(
+  profile: ProfileTuningProfile,
+  isOpen: boolean,
+): string {
+  const settings = profile.settings;
+  const openAttribute = isOpen ? " open" : "";
+
+  return `
+    <details class="profile-tuning-card"${openAttribute}>
+      <summary>
+        <span>${escapeHtml(profile.label)}</span>
+        <span class="muted">Private profile settings</span>
+      </summary>
+
+      <form
+        class="tuning-form"
+        data-profile-tuning-form="true"
+        data-profile-tuning-id="${escapeHtml(profile.id)}"
+      >
+        <div class="tuning-grid">
+          <label>
+            <span>Default capacity</span>
+            <select name="defaultCapacityMode">
+              ${renderSelectOptions(capacityModes, settings.defaultCapacityMode)}
+            </select>
+          </label>
+
+          <label>
+            <span>Max ritual time</span>
+            <input
+              name="maxRitualDurationMinutes"
+              type="number"
+              min="0"
+              max="30"
+              step="1"
+              value="${settings.maxRitualDurationMinutes}"
+            />
+          </label>
+
+          <label>
+            <span>Make astrology</span>
+            <select name="astrologyVisibility">
+              ${renderSelectOptions(PROFILE_TUNING_ASTROLOGY_VISIBILITY, settings.astrologyVisibility)}
+            </select>
+          </label>
+        </div>
+
+        <fieldset>
+          <legend>Prefer</legend>
+          <div class="choice-list">
+            ${renderStyleOptions("preferredRitualStyles", settings.preferredRitualStyles)}
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Avoid</legend>
+          <div class="choice-list">
+            ${renderStyleOptions("avoidedRitualStyles", settings.avoidedRitualStyles)}
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Suggestions usually work better when...</legend>
+          <div class="toggle-list">
+            ${renderAssumptionControls(settings)}
+          </div>
+        </fieldset>
+
+        <div class="tuning-actions">
+          <button class="primary-action" type="submit">Save ${escapeHtml(profile.label)}</button>
+          <p class="muted" data-profile-tuning-status="true">Edits update this private Firestore profile only.</p>
+        </div>
+      </form>
+    </details>
+  `;
+}
+
+export function renderProfileTuningSection(
+  privateBriefData: PrivateBriefData,
+): string {
+  const profiles = privateBriefData.tuningProfiles;
+
+  if (profiles.length === 0) {
+    return `
+      <section class="tuning-panel" aria-label="Profile tuning">
+        <div>
+          <p class="label">Tune profiles</p>
+          <h2>Make the suggestions fit better</h2>
+        </div>
+        <p class="muted">Private settings will appear here after seeded profile data is available.</p>
+      </section>
+    `;
+  }
+
+  return `
+    <section class="tuning-panel" aria-label="Profile tuning">
+      <div>
+        <p class="label">Tune profiles</p>
+        <h2>Make the suggestions fit better</h2>
+        <p class="muted">Adjust each household profile separately.</p>
+      </div>
+      <div class="profile-tuning-list">
+        ${profiles.map((profile, index) => renderTuningProfileForm(profile, index === 0)).join("")}
+      </div>
+    </section>
+  `;
+}
 
 export function renderLoadingShell(): string {
   return `
@@ -148,6 +338,8 @@ export function renderSignedInShell(privateBriefData: PrivateBriefData): string 
           ${feedbackOptions.map((option) => `<button type="button">${option}</button>`).join("")}
         </div>
       </article>
+
+      ${renderProfileTuningSection(privateBriefData)}
     </section>
   `;
 }

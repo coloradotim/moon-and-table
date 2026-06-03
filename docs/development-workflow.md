@@ -49,6 +49,8 @@ Optional private-data verification uses the local seed script:
 
 The seed script does not require every household member to have logged in already. If an account does not exist yet in Firebase Auth, the seed writes pending documents by email; when that person later signs in with the same Google Auth email, the app can read the seeded profile through the email link.
 
+After seeded private data loads, the signed-in app shows a small profile tuning section below the weekly brief. It renders one tuning card per seeded household profile and edits that profile's existing Firestore profile, capacity, and schedule documents. It is not an import flow, setup wizard, account manager, or seed editor.
+
 Keep optional Firestore test values generic. Do not use real names, birth data, natal placements, relationship details, private source text, or schedules tied to a real person in source-controlled examples, tests, or screenshots.
 
 Manual Firebase console inspection is fine for debugging, but normal setup should not require manual Firestore document creation.
