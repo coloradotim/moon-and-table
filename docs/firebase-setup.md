@@ -1,0 +1,118 @@
+# Firebase Setup
+
+This guide sets up Moon & Table's first hosted path for private authentication and private storage. It is documentation only. Do not add Firebase app code, real config values, secrets, or private profile data to the repository for this step.
+
+## Privacy Boundary
+
+Keep source-controlled examples generic and placeholder-only.
+
+Do not commit:
+
+- real Firebase secrets or real Firebase config values
+- real names
+- birth data
+- natal placements tied to a real person
+- relationship details
+- schedules tied to a real person
+- private source documents or private source text
+- personal profile notes
+
+Real private data belongs in Firebase behind authentication, private runtime storage, or local gitignored files. Generic symbolic cards remain source-controlled for now because they are reviewed, privacy-safe product knowledge rather than private household data.
+
+## Create the Firebase Project
+
+1. Open the Firebase console.
+2. Create a new project with a generic project name.
+3. Use the Spark/free plan for early development.
+4. Skip optional product setup that is not needed yet, such as analytics or storage, unless a later issue asks for it.
+
+Use one Firebase project for early development. Add separate staging or production projects later if deployment needs become clearer.
+
+## Enable Email/Password Auth
+
+1. In the Firebase console, open Authentication.
+2. Click **Get started** if Authentication has not been enabled yet.
+3. Open **Sign-in method**.
+4. Enable **Email/Password**.
+5. Leave other providers disabled until a later issue asks for them.
+
+Do not create or document real user accounts in source control.
+
+## Create Firestore
+
+1. In the Firebase console, open Firestore Database.
+2. Create a database.
+3. Choose a region appropriate for the hosted app.
+4. Start with locked-down rules for private data.
+
+Firestore is the planned hosted storage layer for private profile data, schedule constraints, capacity settings, generated briefs, feedback, and ritual notes. Security rules should restrict private data to the authenticated household or user when implementation begins.
+
+## Configure Local Environment Values
+
+Copy the placeholder example file:
+
+```bash
+cp .env.example .env.local
+```
+
+Then replace the placeholder values in `.env.local` with the Firebase web app config values from the Firebase console.
+
+Example placeholder names:
+
+```bash
+VITE_FIREBASE_API_KEY=placeholder-api-key
+VITE_FIREBASE_AUTH_DOMAIN=placeholder-project-id.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=placeholder-project-id
+VITE_FIREBASE_STORAGE_BUCKET=placeholder-project-id.firebasestorage.app
+VITE_FIREBASE_MESSAGING_SENDER_ID=000000000000
+VITE_FIREBASE_APP_ID=1:000000000000:web:placeholderappid
+```
+
+`.env.local` is gitignored and is where real local config values belong. `.env.example` stays source-controlled and must contain placeholders only.
+
+Firebase web app config is not the same as a server admin secret, but Moon & Table should still avoid committing real project values while the private-data shape is being established.
+
+## Starter Firestore Collections
+
+Use these collection names as the first planning vocabulary:
+
+- `households`
+- `profiles`
+- `scheduleConstraints`
+- `capacitySettings`
+- `briefs`
+- `feedback`
+- `ritualNotes`
+
+Keep collection documents private and generic in documentation. Do not commit real household profiles, schedules, capacity notes, feedback, or ritual journal entries.
+
+## Source-Controlled Data
+
+Keep these in the repository:
+
+- approved generic symbolic cards
+- schemas and TypeScript types
+- privacy-safe placeholder examples
+- setup and development documentation
+
+Keep these out of the repository:
+
+- real Firebase config values
+- service account keys
+- private profile details
+- real schedule constraints
+- real capacity settings
+- saved briefs, feedback, and ritual notes from actual use
+
+## Current Non-Goals
+
+This setup guide does not implement Firebase in the app.
+
+Do not add:
+
+- Firebase SDK initialization
+- Firebase Auth UI
+- Firestore reads or writes
+- calendar integration
+- Supabase
+- real private data
