@@ -65,6 +65,8 @@ Moon & Table should remain a small, disciplined synthesis engine:
 - emotional intensity
 - cleanup burden
 
+**Implementation note:** The first typed guardrail model lives in `src/lib/ritual-safety.ts`. It exposes `RitualSafetyFlags`, low-risk defaults, and validation helpers for hard exclusions such as essential oil ingestion, smoke-cleansing defaults, medical claims, crystal elixirs, raw dough/flour crafts, controlling-another-person rituals, and candle/light work without LED default or live-flame opt-in.
+
 **Hard exclusions:**
 
 - no essential oil ingestion
