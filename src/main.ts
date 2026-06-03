@@ -420,7 +420,11 @@ appRoot.addEventListener("click", (event) => {
     return;
   }
 
-  if (menuAction === "this_week" || menuAction === "profile_settings") {
+  if (
+    menuAction === "this_week" ||
+    menuAction === "profile_settings" ||
+    menuAction === "how_it_works"
+  ) {
     event.preventDefault();
     activeSignedInView = menuAction;
     activeCapacityPickerOpen = false;

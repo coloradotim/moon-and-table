@@ -76,6 +76,7 @@ describe("app shell rendering", () => {
     expect(capacityIndex).toBeGreaterThan(actionsIndex);
     expect(html).toContain("This week");
     expect(html).toContain("Profile settings");
+    expect(html).toContain("How it works");
     expect(html).toContain("Sign out");
     expect(html).toContain("moon-glyph");
     expect(html).toContain("moon-phase-indicator");
@@ -97,6 +98,7 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("•••");
     expect(html).toContain('data-menu-action="this_week"');
     expect(html).toContain('data-menu-action="profile_settings"');
+    expect(html).toContain('data-menu-action="how_it_works"');
     expect(html).toContain("data-testid=\"recommended-ritual\"");
     expect(html).toContain("This week's signals");
     expect(html).toContain('class="brief__signal-list"');
@@ -177,6 +179,37 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("About this");
     expect(html).not.toContain("Journal");
     expect(html).not.toContain("Calendar");
+  });
+
+  it("renders a signed-in How it works page from the app menu", () => {
+    const html = renderSignedInShell(resolvePrivateBriefData({}), {
+      activeView: "how_it_works",
+    });
+
+    expect(html).toContain('data-menu-action="how_it_works"');
+    expect(html).toContain('aria-pressed="true">How it works</button>');
+    expect(html).toContain('aria-label="How Moon &amp; Table works"');
+    expect(html).toContain("timing, symbolism, and household magic");
+    expect(html).toContain("Recommendation pipeline");
+    expect(html).toContain("What it calculates");
+    expect(html).toContain("Lunar timing");
+    expect(html).toContain("Astrology");
+    expect(html).toContain("Natal-chart themes");
+    expect(html).toContain("Numerology");
+    expect(html).toContain("Seasonal timing");
+    expect(html).toContain("Sources");
+    expect(html).toContain("Recommendation creation");
+    expect(html).toContain("Capacity");
+    expect(html).toContain("Safety");
+    expect(html).toContain("Feedback");
+    expect(html).toContain("What it does not do");
+    expect(html).toContain('data-home-action="this_week"');
+    expect(html).toContain("Back to this week");
+    expect(html).not.toContain('data-testid="recommended-ritual"');
+    expect(html).not.toContain("person_a@example.com");
+    expect(html).not.toContain("birth data");
+    expect(html).not.toContain("service-account");
+    expect(html).not.toContain("firebase config");
   });
 
   it("renders the capacity picker in the brief controls when requested", () => {
