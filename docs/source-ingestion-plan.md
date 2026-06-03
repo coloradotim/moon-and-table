@@ -105,6 +105,8 @@ Moon & Table should remain a small, disciplined synthesis engine:
 - source references
 - approval status
 
+**Implementation note:** The first typed pattern model lives in `src/data/ritual-patterns.ts`. It includes a small starter set, `RitualSafetyFlags` from `src/lib/ritual-safety.ts`, validation helpers, and eligibility helpers that only return approved, safety-allowed patterns for a requested capacity mode.
+
 **Initial pattern candidates:**
 
 - clear one surface

@@ -1,0 +1,358 @@
+import type { CapacityMode } from "../lib/generate-weekly-brief";
+import {
+  lowRiskRitualSafetyFlags,
+  validateRitualSafety,
+  withSafetyOverrides,
+  type RitualSafetyFlags,
+} from "../lib/ritual-safety";
+
+export const RITUAL_PATTERN_APPROVAL_STATUSES = [
+  "draft",
+  "reviewed",
+  "approved",
+  "rejected",
+] as const;
+
+export type RitualPatternApprovalStatus =
+  (typeof RITUAL_PATTERN_APPROVAL_STATUSES)[number];
+
+export type RitualPattern = {
+  id: string;
+  key: string;
+  title: string;
+  summary: string;
+  ritualStyles: string[];
+  capacityModes: CapacityMode[];
+  defaultDurationMinutes: number;
+  materials: string[];
+  steps: string[];
+  safetyFlags: RitualSafetyFlags;
+  safetyNotes: string[];
+  avoidIf: string[];
+  sourceReferences: string[];
+  approvalStatus: RitualPatternApprovalStatus;
+};
+
+export type RitualPatternValidationResult = {
+  valid: boolean;
+  errors: string[];
+  warnings: string[];
+};
+
+const CAPACITY_MODES: CapacityMode[] = ["pause", "low", "steady", "high"];
+const MAX_PATTERN_STEPS = 5;
+const MAX_STEP_LENGTH = 180;
+
+export const starterRitualPatterns: RitualPattern[] = [
+  {
+    id: "ritual_pattern_clear_one_surface",
+    key: "clear_one_surface",
+    title: "Clear One Surface",
+    summary: "Reset one small surface and stop before it turns into a bigger project.",
+    ritualStyles: ["home_care", "kitchen_clearing", "gentle_cleanup"],
+    capacityModes: ["low", "steady"],
+    defaultDurationMinutes: 5,
+    materials: ["one small surface", "trash or return-home spot"],
+    steps: [
+      "Choose one surface no larger than a small table or counter section.",
+      "Remove trash, dishes, or items that already have a place.",
+      "Pause when the chosen surface is clearer, even if the rest of the room is not.",
+    ],
+    safetyFlags: withSafetyOverrides({
+      cleanupBurden: "low",
+    }),
+    safetyNotes: [
+      "Do not lift heavy items or stir dust if that is not a good fit today.",
+    ],
+    avoidIf: [
+      "avoid when cleanup would expand into a full-room project",
+      "avoid when the household needs rest more than tidying",
+    ],
+    sourceReferences: [
+      "source.arin_murphy_hiscock",
+      "source.safety_reference_families",
+      "docs/source-ingestion-plan.md#batch-6--home-tending-starter-patterns",
+    ],
+    approvalStatus: "approved",
+  },
+  {
+    id: "ritual_pattern_tend_one_plant",
+    key: "tend_one_plant",
+    title: "Tend One Plant",
+    summary: "Offer one practical care action to a plant as a quiet tending ritual.",
+    ritualStyles: ["plant_tending", "home_care"],
+    capacityModes: ["low", "steady"],
+    defaultDurationMinutes: 5,
+    materials: ["one household plant", "water if needed"],
+    steps: [
+      "Choose one plant that is already part of the home.",
+      "Check the soil or leaves before doing anything.",
+      "Water, trim a dead leaf, or simply notice what kind of care is actually needed.",
+    ],
+    safetyFlags: withSafetyOverrides({
+      pets: "review_required",
+      cleanupBurden: "tiny",
+    }),
+    safetyNotes: [
+      "Keep plant material away from pets and children unless the plant has been reviewed as safe.",
+    ],
+    avoidIf: [
+      "avoid if the plant may be toxic and pets or children can access it",
+      "avoid if plant care would become a larger cleanup task",
+    ],
+    sourceReferences: [
+      "source.arin_murphy_hiscock",
+      "source.safety_reference_families",
+      "docs/source-ingestion-plan.md#batch-7--kitchen-plant-and-light-starter-set",
+    ],
+    approvalStatus: "approved",
+  },
+  {
+    id: "ritual_pattern_led_candle_light_focus",
+    key: "led_candle_light_focus",
+    title: "LED Candle Light Focus",
+    summary: "Use a small light as a fire-free marker for attention and closure.",
+    ritualStyles: ["candle", "reflection", "quiet_pause"],
+    capacityModes: ["pause", "low", "steady"],
+    defaultDurationMinutes: 3,
+    materials: ["LED candle or small lamp"],
+    steps: [
+      "Turn on an LED candle or a small lamp.",
+      "Take one quiet breath and name the focus for this short pause.",
+      "Turn the light off when the pause is complete.",
+    ],
+    safetyFlags: withSafetyOverrides({
+      fire: "led_default",
+      cleanupBurden: "tiny",
+    }),
+    safetyNotes: [
+      "LED or no-flame light is the default. Live flame is not required.",
+    ],
+    avoidIf: [
+      "avoid if even a brief focus practice feels like pressure",
+    ],
+    sourceReferences: [
+      "source.safety_reference_families",
+      "docs/source-ingestion-plan.md#batch-7--kitchen-plant-and-light-starter-set",
+    ],
+    approvalStatus: "approved",
+  },
+  {
+    id: "ritual_pattern_table_reset",
+    key: "table_reset",
+    title: "Table Reset",
+    summary: "Make the table a little more ready for ordinary care, food, or conversation.",
+    ritualStyles: ["home_care", "kitchen", "table_reset"],
+    capacityModes: ["steady", "high"],
+    defaultDurationMinutes: 15,
+    materials: ["table or shared surface", "cloth if already nearby"],
+    steps: [
+      "Clear only the table or shared eating surface.",
+      "Wipe it if the supplies are already nearby.",
+      "Place back only what supports the next ordinary use.",
+    ],
+    safetyFlags: withSafetyOverrides({
+      cleanupBurden: "medium",
+    }),
+    safetyNotes: [
+      "Do not use strong scents or cleaners if anyone in the household may be sensitive.",
+    ],
+    avoidIf: [
+      "avoid during low capacity",
+      "avoid if cleaning supplies would require extra setup or shopping",
+    ],
+    sourceReferences: [
+      "source.arin_murphy_hiscock",
+      "source.safety_reference_families",
+      "docs/source-ingestion-plan.md#batch-6--home-tending-starter-patterns",
+    ],
+    approvalStatus: "reviewed",
+  },
+  {
+    id: "ritual_pattern_threshold_reset",
+    key: "threshold_reset",
+    title: "Threshold Reset",
+    summary: "Tend an entry point as a practical cue for arriving, leaving, and returning.",
+    ritualStyles: ["home_care", "threshold", "gentle_cleanup"],
+    capacityModes: ["steady"],
+    defaultDurationMinutes: 10,
+    materials: ["entry area", "one return-home spot"],
+    steps: [
+      "Choose one doorway, entry shelf, or landing spot.",
+      "Remove one thing that does not belong there.",
+      "Name one quality the household wants when crossing that threshold.",
+    ],
+    safetyFlags: withSafetyOverrides({
+      cleanupBurden: "low",
+    }),
+    safetyNotes: [
+      "Keep doorways physically clear and do not block exits.",
+    ],
+    avoidIf: [
+      "avoid if the entry area needs a larger safety or repair fix",
+    ],
+    sourceReferences: [
+      "source.arin_murphy_hiscock",
+      "source.safety_reference_families",
+      "docs/source-ingestion-plan.md#batch-6--home-tending-starter-patterns",
+    ],
+    approvalStatus: "reviewed",
+  },
+  {
+    id: "ritual_pattern_close_the_evening",
+    key: "close_the_evening",
+    title: "Close the Evening",
+    summary: "Mark the end of the day with one small action that asks for less intensity.",
+    ritualStyles: ["quiet_pause", "reflection", "home_care"],
+    capacityModes: ["pause", "low"],
+    defaultDurationMinutes: 3,
+    materials: ["nothing required"],
+    steps: [
+      "Choose one tiny closing action, such as putting one item away.",
+      "Say, silently or aloud, that this is enough for tonight.",
+    ],
+    safetyFlags: lowRiskRitualSafetyFlags,
+    safetyNotes: [
+      "Keep this as permission to stop, not a list of tasks.",
+    ],
+    avoidIf: [
+      "avoid if any reflection prompt would feel emotionally heavy",
+    ],
+    sourceReferences: [
+      "docs/source-ingestion-plan.md#batch-6--home-tending-starter-patterns",
+    ],
+    approvalStatus: "approved",
+  },
+  {
+    id: "ritual_pattern_tea_ritual",
+    key: "tea_ritual",
+    title: "Tea Ritual",
+    summary: "Use an ordinary safe drink as a small cue for warmth and settling.",
+    ritualStyles: ["kitchen", "warm_drink", "quiet_pause"],
+    capacityModes: ["steady"],
+    defaultDurationMinutes: 10,
+    materials: ["ordinary tea or warm drink already safe for the household"],
+    steps: [
+      "Prepare a normal drink already used safely in the household.",
+      "Hold the cup for a short pause before doing the next thing.",
+      "Name one thing that can be softened tonight.",
+    ],
+    safetyFlags: withSafetyOverrides({
+      ingestion: "normal_food_use_only",
+      allergies: ["use only foods or drinks already known to fit the household"],
+      cleanupBurden: "low",
+    }),
+    safetyNotes: [
+      "Normal food use only. Do not use herbs, supplements, or ingredients for health claims.",
+    ],
+    avoidIf: [
+      "avoid if food or drink safety is uncertain",
+      "avoid if it would require shopping or unfamiliar ingredients",
+    ],
+    sourceReferences: [
+      "source.laurel_woodward",
+      "source.safety_reference_families",
+      "docs/source-ingestion-plan.md#batch-7--kitchen-plant-and-light-starter-set",
+    ],
+    approvalStatus: "reviewed",
+  },
+];
+
+function hasRequiredString(value: string): boolean {
+  return value.trim().length > 0;
+}
+
+function hasAllowedCapacityMode(value: CapacityMode): boolean {
+  return CAPACITY_MODES.includes(value);
+}
+
+export function validateRitualPattern(
+  pattern: RitualPattern,
+): RitualPatternValidationResult {
+  const errors: string[] = [];
+  const warnings: string[] = [];
+
+  if (!hasRequiredString(pattern.id)) {
+    errors.push("ritual pattern id is required");
+  }
+
+  if (!hasRequiredString(pattern.key)) {
+    errors.push(`${pattern.id}: ritual pattern key is required`);
+  }
+
+  if (!hasRequiredString(pattern.title)) {
+    errors.push(`${pattern.id}: ritual pattern title is required`);
+  }
+
+  if (pattern.capacityModes.length === 0) {
+    errors.push(`${pattern.id}: at least one capacity mode is required`);
+  }
+
+  if (!pattern.capacityModes.every(hasAllowedCapacityMode)) {
+    errors.push(`${pattern.id}: unsupported capacity mode`);
+  }
+
+  if (
+    !Number.isFinite(pattern.defaultDurationMinutes) ||
+    pattern.defaultDurationMinutes < 0 ||
+    pattern.defaultDurationMinutes > 30
+  ) {
+    errors.push(`${pattern.id}: default duration must be between 0 and 30 minutes`);
+  }
+
+  if (pattern.steps.length === 0) {
+    errors.push(`${pattern.id}: at least one step is required`);
+  }
+
+  if (pattern.steps.length > MAX_PATTERN_STEPS) {
+    errors.push(`${pattern.id}: too many steps for a starter pattern`);
+  }
+
+  if (pattern.steps.some((step) => step.length > MAX_STEP_LENGTH)) {
+    errors.push(`${pattern.id}: steps must stay short and paraphrased`);
+  }
+
+  if (pattern.safetyNotes.length === 0) {
+    errors.push(`${pattern.id}: safety notes are required`);
+  }
+
+  if (pattern.sourceReferences.length === 0) {
+    errors.push(`${pattern.id}: source references are required`);
+  }
+
+  if (!RITUAL_PATTERN_APPROVAL_STATUSES.includes(pattern.approvalStatus)) {
+    errors.push(`${pattern.id}: approval status is not supported`);
+  }
+
+  const safetyResult = validateRitualSafety(pattern.safetyFlags, pattern.steps);
+
+  if (!safetyResult.allowed) {
+    errors.push(...safetyResult.blocks.map((block) => `${pattern.id}: ${block}`));
+  }
+
+  warnings.push(...safetyResult.warnings.map((warning) => `${pattern.id}: ${warning}`));
+
+  return {
+    valid: errors.length === 0,
+    errors,
+    warnings,
+  };
+}
+
+export function getApprovedRitualPatterns(
+  patterns: RitualPattern[] = starterRitualPatterns,
+): RitualPattern[] {
+  return patterns.filter((pattern) => pattern.approvalStatus === "approved");
+}
+
+export function getEligibleRitualPatterns(
+  capacityMode: CapacityMode,
+  patterns: RitualPattern[] = starterRitualPatterns,
+): RitualPattern[] {
+  return getApprovedRitualPatterns(patterns).filter((pattern) => {
+    const safetyResult = validateRitualSafety(pattern.safetyFlags, pattern.steps);
+
+    return safetyResult.allowed && pattern.capacityModes.includes(capacityMode);
+  });
+}
+
