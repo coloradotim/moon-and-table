@@ -133,7 +133,7 @@ The seed file supports:
 
 The script normalizes a few local-authoring conveniences:
 
-- missing `household.scheduleConstraints` falls back to a generic realistic window
+- missing `household.scheduleConstraints` falls back to empty schedule lists
 - missing `updatedAtIso` values are filled when seeding
 - missing assumption `source` and `confidence` default to `starter_assumption` and `low`
 - assumption `editability` is accepted as a synonym for `editable`
@@ -292,14 +292,10 @@ Example `scheduleConstraints/{uid}`:
   "id": "placeholder-user-id",
   "householdId": "placeholder-household-id",
   "userId": "placeholder-user-id",
-  "unavailableDaysOrNights": ["Generic busy night"],
-  "preferredRitualWindows": ["schedule.realistic_window_thursday"],
-  "recurringHouseholdConstraintNotes": [
-    "Generic household constraint: weeknights need low setup."
-  ],
-  "workOrSchoolConstraintNotes": [
-    "Generic work or school constraint: avoid the busiest night."
-  ],
+  "unavailableDaysOrNights": [],
+  "preferredRitualWindows": [],
+  "recurringHouseholdConstraintNotes": [],
+  "workOrSchoolConstraintNotes": [],
   "maxRitualDurationMinutes": 5,
   "defaultCapacityMode": "low",
   "updatedAtIso": "2026-01-01T00:00:00.000Z"

@@ -27,14 +27,10 @@ describe("private data schema", () => {
       privateProfileKeys: ["private_profile.practical_tending"],
       capacityMode: "low",
       scheduleConstraints: {
-        unavailableDaysOrNights: ["Tuesday night"],
-        preferredRitualWindows: ["schedule.realistic_window_thursday"],
-        recurringHouseholdConstraintNotes: [
-          "Generic household constraint: weeknights need low setup.",
-        ],
-        workOrSchoolConstraintNotes: [
-          "Generic work or school constraint: avoid the busiest night.",
-        ],
+        unavailableDaysOrNights: [],
+        preferredRitualWindows: [],
+        recurringHouseholdConstraintNotes: [],
+        workOrSchoolConstraintNotes: [],
         maxRitualDurationMinutes: 20,
         defaultCapacityMode: "low",
       },

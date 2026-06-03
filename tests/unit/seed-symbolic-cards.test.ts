@@ -13,8 +13,12 @@ const expectedSeedKeys = [
   "waning_moon",
   "numerology_1",
   "numerology_2",
+  "numerology_3",
   "numerology_4",
+  "numerology_5",
   "numerology_6",
+  "numerology_7",
+  "numerology_8",
   "numerology_9",
   "candle",
   "kitchen_clearing",
@@ -247,6 +251,51 @@ describe("seedSymbolicCards", () => {
     expect(signals[0]?.signalSummary).toBe(
       seedSymbolicCards.find((card) => card.key === "full_moon")?.signalSummary,
     );
+  });
+
+  it("adds source-backed MVP-depth numerology cards for numbers 1-9", () => {
+    const numerologyCards = seedSymbolicCards.filter(
+      (card) => card.category === "numerology",
+    );
+    const userFacingText = numerologyCards
+      .map((card) => `${card.summary} ${card.ritual_ideas.join(" ")}`)
+      .join(" ")
+      .toLowerCase();
+
+    expect(numerologyCards.map((card) => card.key).sort()).toEqual(
+      Array.from({ length: 9 }, (_, index) => `numerology_${index + 1}`).sort(),
+    );
+
+    for (const card of numerologyCards) {
+      expect(card.approval_status).toBe("approved");
+      expect(card.confidence).toBe("common");
+      expect(card.signalSummary).toEqual(expect.any(String));
+      expect(card.signalSummary?.toLowerCase()).toContain("light");
+      expect(card.sourceNoteKeys).toEqual(
+        expect.arrayContaining([
+          "note.numerology_calculation_reduced_universal_dates",
+          "note.numerology_guardrail_accent_only",
+        ]),
+      );
+      expect(card.source_references).toEqual(
+        expect.arrayContaining([
+          "source.hans_decoz_tom_monte",
+          "source.barnum_forer_guardrail",
+          ...(card.sourceNoteKeys ?? []),
+        ]),
+      );
+      expect(card.toneGuidance?.length).toBeGreaterThan(0);
+      expect(card.contraindications?.length).toBeGreaterThan(0);
+      expect(card.avoid_saying.join(" ").toLowerCase()).toContain(
+        "main reason",
+      );
+    }
+
+    expect(userFacingText).not.toContain("guarantee");
+    expect(userFacingText).not.toContain("compatibility");
+    expect(userFacingText).not.toContain("you are");
+    expect(userFacingText).not.toContain("destiny");
+    expect(userFacingText).not.toContain("private source text");
   });
 
   it("adds an approved MVP astrology symbolic layer", () => {

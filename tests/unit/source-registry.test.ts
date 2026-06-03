@@ -38,6 +38,8 @@ describe("source registry", () => {
         "source.april_elliott_kent",
         "source.astrology_ethics_sources",
         "source.barnum_forer_guardrail",
+        "source.hans_decoz_tom_monte",
+        "source.david_phillips_numerology",
         "source.sarah_faith_gottesdiener",
         "source.rachel_patterson_moon",
         "source.laurel_woodward",
@@ -167,6 +169,56 @@ describe("source registry", () => {
       expect(note.paraphrasedNote.toLowerCase()).not.toContain("will happen");
       expect(note.paraphrasedNote.toLowerCase()).not.toContain("guarantee");
     }
+  });
+
+  it("includes reviewed numerology sources and transformed notes for numbers 1-9", () => {
+    const requiredSourceIds = [
+      "source.hans_decoz_tom_monte",
+      "source.david_phillips_numerology",
+      "source.barnum_forer_guardrail",
+    ];
+    const requiredNoteIds = [
+      "note.numerology_calculation_reduced_universal_dates",
+      "note.numerology_guardrail_accent_only",
+      "note.numerology_1_beginning_focus",
+      "note.numerology_2_cooperation_balance",
+      "note.numerology_3_expression_warmth",
+      "note.numerology_4_structure_repair",
+      "note.numerology_5_change_freshness",
+      "note.numerology_6_home_care",
+      "note.numerology_7_reflection_pause",
+      "note.numerology_8_capacity_power",
+      "note.numerology_9_completion_release",
+    ];
+    const sources = starterSourceReviews.filter((review) =>
+      requiredSourceIds.includes(review.id),
+    );
+    const notes = starterSourceNotes.filter((note) =>
+      requiredNoteIds.includes(note.id),
+    );
+    const userFacingNoteText = notes
+      .map((note) => note.paraphrasedNote)
+      .join(" ")
+      .toLowerCase();
+
+    expect(sources.map((source) => source.id).sort()).toEqual(
+      [...requiredSourceIds].sort(),
+    );
+    expect(notes.map((note) => note.id).sort()).toEqual(
+      [...requiredNoteIds].sort(),
+    );
+
+    for (const note of notes) {
+      expect(validateSourceNote(note)).toEqual({ valid: true, errors: [] });
+      expect(note.verbatimAllowed).toBe(false);
+      expect(note.paraphrasedNote.length).toBeLessThanOrEqual(280);
+    }
+
+    expect(userFacingNoteText).not.toContain("guarantees");
+    expect(userFacingNoteText).not.toContain("will happen");
+    expect(userFacingNoteText).not.toContain("you are a");
+    expect(userFacingNoteText).not.toContain("your relationship");
+    expect(userFacingNoteText).not.toContain("private source text");
   });
 
   it("includes strengthened astrology notes for planets signs aspects and combinations", () => {

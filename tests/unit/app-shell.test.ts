@@ -51,7 +51,7 @@ describe("app shell rendering", () => {
     const moonIndex = html.indexOf("Moon &amp; Table");
     const practiceIndex = html.indexOf('data-testid="recommended-ritual"');
     const intentionIndex = html.indexOf('class="brief__intention"');
-    const windowIndex = html.indexOf("Thursday evening, five minutes or less.");
+    const windowIndex = html.indexOf("When you have five quiet minutes.");
     const questionIndex = html.indexOf("Question to carry");
     const signalsIndex = html.indexOf("This week's signals");
     const whyIndex = html.indexOf("Why this ritual");
@@ -105,10 +105,10 @@ describe("app shell rendering", () => {
     expect(html).toContain('data-signal-type="moon"');
     expect(html).toContain('data-signal-type="planetary"');
     expect(html).toContain('data-signal-type="capacity"');
-    expect(html).toContain('data-signal-type="schedule"');
+    expect(html).not.toContain('data-signal-type="schedule"');
     expect(html).toContain("Full moon");
     expect(html).toContain("Capacity — low");
-    expect(html).toContain("Schedule — realistic window");
+    expect(html).not.toContain("Schedule — realistic window");
     expect(html).toContain("Why this ritual");
     expect(html).toContain("How this was chosen");
     expect(html).toContain("Sources used");
@@ -118,7 +118,10 @@ describe("app shell rendering", () => {
     expect(html).toContain("Symbolic card");
     expect(html).toContain("Ritual pattern");
     expect(html).toContain("Source review");
-    expect(html).toContain("Thursday evening, five minutes or less.");
+    expect(html).toContain("When you have five quiet minutes.");
+    expect(html).not.toContain("Thursday evening");
+    expect(html).not.toContain("Tuesday evening");
+    expect(html).not.toContain("Saturday morning");
     expect(html).not.toContain("0-5 minutes");
     expect(html).not.toContain(">The practice<");
     expect(html).not.toContain(">A good window<");
@@ -254,7 +257,7 @@ describe("app shell rendering", () => {
         optionalAddOn: "Light a candle if that feels supportive and safe.",
       },
     });
-    const windowIndex = html.indexOf("Thursday evening, five minutes or less.");
+    const windowIndex = html.indexOf("When you have five quiet minutes.");
     const optionalIndex = html.indexOf("Optional: light a candle if that feels supportive and safe.");
     const intentionIndex = html.indexOf("Let attention gather gently.");
 

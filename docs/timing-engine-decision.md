@@ -16,11 +16,13 @@ Astronomy Engine is already installed in the app. It can produce deterministic l
 computed timing facts
 -> approved timing interpretation rules
 -> approved symbolic cards and ritual patterns
--> private profile, capacity, schedule, preferences, and feedback
+-> private profile, capacity, preferences, and feedback
 -> one brief
 ```
 
 Computed facts are raw material. The app should not show every computed fact, and it should not treat every fact as relevant. Signal selection should choose only 2-4 timing/profile/context signals that actually influenced the recommendation.
+
+Schedule awareness is deferred until it has a real product design. Current brief timing/window copy is capacity-based, not calendar-based, and should not name hard-coded weekday windows.
 
 ## Model
 
@@ -112,9 +114,15 @@ Implemented in app code without astrology libraries:
 - universal month number
 - universal day number
 
-Numerology remains a light accent. It should not outrank primary lunar, seasonal, ritual-fit, capacity, or schedule signals.
+Numerology remains a light accent. It should not outrank primary lunar, seasonal, ritual-fit, capacity, or profile signals.
 
-The current calculation reduces ordinary digit sums to 1-9. Master numbers, life path numbers, names, compatibility, and personal numerology are deferred.
+The current calculation reduces ordinary digit sums to 1-9:
+
+- universal year: reduce the UTC year digits
+- universal month: reduce universal year number plus UTC month number
+- universal day: reduce universal year number plus UTC month number plus UTC day number
+
+Master numbers 11 and 22 are reduced for MVP. Life path numbers, names, compatibility, and personal numerology are deferred.
 
 ## Phase 4 — Later Personal / Natal Timing
 

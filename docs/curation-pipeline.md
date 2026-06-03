@@ -42,7 +42,7 @@ Generated briefs should come from:
    Human-approved symbolic cards extracted from sources and transformed into concise, structured meanings.
 
 3. **Private synthesis**  
-   A weekly or monthly recommendation that combines timing facts, symbolic cards, private profile context, schedule constraints, capacity, and prior feedback.
+   A weekly or monthly recommendation that combines timing facts, symbolic cards, private profile context, capacity, and prior feedback. Schedule awareness is deferred until it has a real product design.
 
 The AI layer, if used, should synthesize from approved material. It should not invent the underlying symbolic system.
 
@@ -160,7 +160,7 @@ A generated brief should be able to explain:
 * which timing facts mattered
 * which symbolic cards were used
 * which private profile themes shaped the recommendation
-* which schedule or capacity constraints changed the recommendation
+* which capacity constraints changed the recommendation
 * why this ritual was chosen instead of other possible rituals
 
 The “why this” explanation should be short and user-facing, not an internal debug dump.
@@ -405,8 +405,8 @@ Suggested fields:
 * `timing_fact_ids`
 * `symbolic_card_ids`
 * `private_profile_keys`
-* `schedule_constraints_used`
 * `capacity_mode`
+* `schedule_constraints_used` later, when schedule awareness is active
 * `why_this_summary`
 
 This supports user trust and debugging.
@@ -562,13 +562,12 @@ Example input:
 * Numerology: 6 day
 * Private profile: practical tending theme
 * Capacity: low
-* Schedule: Thursday is realistic
 * Approved cards: waning moon, numerology 6, plant tending, private profile theme
 
 Possible output:
 
 > Theme: Clear one small thing. Feed one living thing.  
-> Best window: Thursday evening, five minutes or less.
+> Best window: When you have five quiet minutes.
 > Ritual: Tend one plant. Remove dead leaves or water it. Name one thing to stop feeding and one thing to nourish.  
 > Why this: The waning moon supports clearing and release. The numerology theme emphasizes home and care. The private profile favors practical tending over abstract processing. Because capacity is low, the ritual stays at five minutes or less.
 

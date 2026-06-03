@@ -45,7 +45,7 @@ Optional private-data verification uses the local seed script:
 4. Authenticate the seed script with `GOOGLE_APPLICATION_CREDENTIALS` or `FIREBASE_SERVICE_ACCOUNT_PATH` pointing to a gitignored local service account file.
 5. Run `npm run seed:private`.
 6. Refresh the app.
-7. Confirm the brief shows `Using your household settings.` and that capacity, profile theme, or schedule changes affect the brief.
+7. Confirm the brief shows `Using your household settings.` and that capacity or profile theme changes affect the brief. Schedule changes are stored only for the deferred schedule-awareness feature and should not change current best-window copy.
 
 The seed script does not require every household member to have logged in already. If an account does not exist yet in Firebase Auth, the seed writes pending documents by email; when that person later signs in with the same Google Auth email, the app can read the seeded profile through the email link.
 

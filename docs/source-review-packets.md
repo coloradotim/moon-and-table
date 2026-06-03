@@ -190,7 +190,7 @@ Numerology, number symbolism, simple date-based symbolic layer
 
 ### Intended Use
 
-Use as a light symbolic layer for briefs, not as the dominant recommendation engine. Numerology should add simple texture when it supports the main recommendation and should stay secondary to capacity, schedule, and approved ritual cards.
+Use as a light symbolic layer for briefs, not as the dominant recommendation engine. Numerology should add simple texture when it supports the main recommendation and should stay secondary to capacity, profile fit, safety, and stronger approved timing or ritual cards.
 
 ### What May Be Extracted Into The Repository
 

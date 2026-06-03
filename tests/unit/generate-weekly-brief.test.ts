@@ -117,7 +117,7 @@ describe("generateWeeklyBrief", () => {
   it("pause produces no required ritual", () => {
     const brief = generateWeeklyBrief({ capacityMode: "pause" });
 
-    expect(brief.bestWindow).toContain("no required ritual");
+    expect(brief.bestWindow).toBe("No timing needed.");
     expect(brief.recommendedRitual).toContain("No required ritual");
     expect(brief.whyThis).toContain("pause week");
   });
@@ -125,9 +125,32 @@ describe("generateWeeklyBrief", () => {
   it("low produces a five-minute-or-less recommendation with no setup burden", () => {
     const brief = generateWeeklyBrief({ capacityMode: "low" });
 
-    expect(brief.bestWindow).toContain("five minutes or less");
+    expect(brief.bestWindow).toBe("When you have five quiet minutes.");
     expect(brief.bestWindow).not.toContain("0-5 minutes");
     expect(brief.whyThis).toContain("stays small");
+  });
+
+  it("does not expose fallback schedule assumptions in default output", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-06-03T12:00:00.000Z",
+      capacityMode: "low",
+    });
+    const defaultOutput = JSON.stringify({
+      bestWindow: brief.bestWindow,
+      whyThis: brief.whyThis,
+      signals: brief.explanation.signals,
+      filtersApplied: brief.explanation.filtersApplied,
+      scheduleAssumptions: brief.trace.scheduleAssumptions,
+    });
+
+    expect(defaultOutput).not.toContain("Schedule — Thursday evening");
+    expect(defaultOutput).not.toContain("Schedule — Tuesday evening");
+    expect(defaultOutput).not.toContain("Schedule — realistic window");
+    expect(defaultOutput).not.toContain("Thursday evening");
+    expect(defaultOutput).not.toContain("Tuesday evening");
+    expect(defaultOutput).not.toContain("Saturday morning");
+    expect(defaultOutput).not.toContain("schedule.realistic_window_thursday");
+    expect(defaultOutput).not.toContain("schedule.symbolic_event_tuesday");
   });
 
   it("steady produces a practical recommendation around twenty minutes or less", () => {
@@ -137,7 +160,7 @@ describe("generateWeeklyBrief", () => {
       preferredRitualStyles: ["table_reset"],
     });
 
-    expect(brief.bestWindow).toContain("about twenty minutes or less");
+    expect(brief.bestWindow).toBe("When you have a little space this week.");
     expect(brief.bestWindow).not.toContain("10-20 minutes");
     expect(brief.trace.ritualPatterns).toEqual(["table_reset"]);
     expect(brief.whyThis).toContain("steady week");
@@ -150,7 +173,7 @@ describe("generateWeeklyBrief", () => {
       preferredRitualStyles: ["surface_reset"],
     });
 
-    expect(brief.bestWindow).toContain("about half an hour or less");
+    expect(brief.bestWindow).toBe("When you have room to linger this week.");
     expect(brief.bestWindow).not.toContain("20-30 minutes");
     expect(brief.recommendedRitual.split("\n")).toHaveLength(1);
     expect(brief.recommendedRitual).not.toContain("1.");
@@ -158,7 +181,7 @@ describe("generateWeeklyBrief", () => {
     expect(brief.trace.ritualPatterns).toHaveLength(1);
   });
 
-  it("schedule constraints can move the recommended window", () => {
+  it("legacy schedule constraints do not shape user-facing timing", () => {
     const brief = generateWeeklyBrief({
       capacityMode: "low",
       scheduleConstraints: {
@@ -168,13 +191,14 @@ describe("generateWeeklyBrief", () => {
       },
     });
 
-    expect(brief.bestWindow).toContain("Saturday morning");
+    expect(brief.bestWindow).toBe("When you have five quiet minutes.");
+    expect(brief.bestWindow).not.toContain("Thursday evening");
+    expect(brief.bestWindow).not.toContain("Tuesday evening");
     expect(brief.bestWindow).not.toContain("Tuesday");
-    expect(brief.whyThis).toContain("fits real life");
-    expect(brief.trace.scheduleAssumptions).toEqual([
-      "schedule.symbolic_event_tuesday",
-      "schedule.preferred_window_saturday_morning",
-    ]);
+    expect(brief.bestWindow).not.toContain("Saturday morning");
+    expect(brief.whyThis).not.toContain("fits real life");
+    expect(brief.whyThis).not.toContain("best window moves");
+    expect(brief.trace.scheduleAssumptions).toEqual([]);
   });
 
   it("avoided styles and burdens can exclude a pattern", () => {
@@ -232,10 +256,7 @@ describe("generateWeeklyBrief", () => {
     ]);
     expect(brief.trace.capacityMode).toBe("low");
     expect(brief.trace.audience).toBe("person_a");
-    expect(brief.trace.scheduleAssumptions).toEqual([
-      "schedule.symbolic_event_tuesday",
-      "schedule.realistic_window_thursday",
-    ]);
+    expect(brief.trace.scheduleAssumptions).toEqual([]);
   });
 
   it("returns only selected user-facing signals for the recommendation", () => {
@@ -250,8 +271,8 @@ describe("generateWeeklyBrief", () => {
     expect(labels).toContain("Full moon");
     expect(labels.some((label) => label.includes(" in "))).toBe(true);
     expect(labels).toContain("Capacity — low");
-    expect(labels).toContain("Schedule — realistic window");
-    expect(labels).not.toContain("Saved preference — plant tending");
+    expect(labels).not.toContain("Schedule — realistic window");
+    expect(labels).not.toContain("Schedule — Thursday evening");
     expect(JSON.stringify(brief.explanation.signals)).not.toContain("moon.full");
     expect(JSON.stringify(brief.explanation.signals)).not.toContain("private_profile.");
     expect(JSON.stringify(brief.explanation.signals).toLowerCase()).not.toContain("your chart");
@@ -286,7 +307,7 @@ describe("generateWeeklyBrief", () => {
     expect(serializedExplanation).not.toContain("private_profile.");
   });
 
-  it("explains profile, capacity, and schedule effects in human language", () => {
+  it("explains profile and capacity effects without fake schedule knowledge", () => {
     const brief = generateWeeklyBrief({
       capacityMode: "low",
       preferredRitualStyles: ["plant_tending"],
@@ -298,9 +319,12 @@ describe("generateWeeklyBrief", () => {
     const explanationText = JSON.stringify(brief.explanation);
 
     expect(explanationText).toContain("Capacity");
-    expect(explanationText).toContain("Schedule");
     expect(explanationText).toContain("saved profile theme");
-    expect(explanationText).toContain("Saturday morning");
+    expect(explanationText).not.toContain("Schedule");
+    expect(explanationText).not.toContain("Saturday morning");
+    expect(explanationText).not.toContain("Thursday evening");
+    expect(explanationText).not.toContain("Tuesday evening");
+    expect(explanationText).not.toContain("realistic window");
     expect(explanationText).not.toContain("your chart says");
     expect(explanationText).not.toContain("will cause");
   });

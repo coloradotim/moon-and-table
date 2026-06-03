@@ -10,6 +10,10 @@ import {
   type PlanetaryAspectFact,
   type SeasonalMarkerFact,
 } from "../../src/lib/timing-facts";
+import {
+  getNumerologyTimingFacts,
+  reduceNumerology,
+} from "../../src/lib/numerology-timing";
 
 describe("timing facts", () => {
   it("keeps the existing four-bucket lunar phase behavior available", () => {
@@ -139,12 +143,72 @@ describe("timing facts", () => {
       (fact): fact is NumerologyDateFact => fact.type === "numerology_date",
     );
 
-    expect(numbers).toEqual({ year: 1, month: 7, day: 1 });
+    expect(numbers).toEqual({
+      universal_year: 1,
+      universal_month: 7,
+      universal_day: 1,
+    });
     expect(numerologyFacts.map((fact) => fact.label)).toEqual([
       "Universal year 1",
       "Universal month 7",
       "Universal day 1",
     ]);
+    expect(numerologyFacts).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          key: "numerology.universal_year.1",
+          scope: "universal_year",
+          number: 1,
+          relatedSymbolicKeys: ["numerology_1"],
+        }),
+        expect.objectContaining({
+          key: "numerology.universal_month.7",
+          scope: "universal_month",
+          number: 7,
+          relatedSymbolicKeys: ["numerology_7"],
+        }),
+      ]),
+    );
+  });
+
+  it("reduces numerology values to 1-9 for MVP", () => {
+    expect(reduceNumerology(2026)).toBe(1);
+    expect(reduceNumerology(29)).toBe(2);
+    expect(reduceNumerology(11)).toBe(2);
+    expect(reduceNumerology(22)).toBe(4);
+  });
+
+  it("computes fixed universal numerology date examples deterministically", () => {
+    expect(getUniversalNumerologyNumbers("2026-01-01T00:00:00.000Z")).toEqual({
+      universal_year: 1,
+      universal_month: 2,
+      universal_day: 3,
+    });
+    expect(getUniversalNumerologyNumbers("2027-12-31T23:59:59.000Z")).toEqual({
+      universal_year: 2,
+      universal_month: 5,
+      universal_day: 9,
+    });
+  });
+
+  it("exposes a reusable numerology fact API with UTC-stable dates", () => {
+    const facts = getNumerologyTimingFacts("2026-06-21T00:30:00.000+02:00");
+
+    expect(facts).toHaveLength(3);
+    expect(facts[0]).toMatchObject({
+      id: "timing.numerology.universal_year.1.2026-06-20",
+      type: "numerology_date",
+      dateIso: "2026-06-20",
+      exactIso: "2026-06-20T22:30:00.000Z",
+      computedBy: "app_numerology",
+      confidence: "computed",
+    });
+  });
+
+  it("rejects invalid dates in the numerology fact API", () => {
+    expect(() => getNumerologyTimingFacts("not-a-date")).toThrow(
+      "A valid date is required for numerology timing facts.",
+    );
   });
 
   it("rejects invalid dates", () => {

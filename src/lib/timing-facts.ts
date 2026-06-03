@@ -13,6 +13,13 @@ import {
   classifyLunarPhaseAngle,
   type LunarPhaseBucket,
 } from "./lunar-timing";
+import {
+  getNumerologyTimingFacts,
+  type NumerologyTimingFact,
+  type NumerologyTimingScope,
+} from "./numerology-timing";
+
+export { getUniversalNumerologyNumbers } from "./numerology-timing";
 
 export const TIMING_FACT_TYPES = [
   "moon_phase",
@@ -72,7 +79,7 @@ export type MajorAspect =
   | "trine"
   | "sextile";
 
-export type NumerologyScope = "year" | "month" | "day";
+export type NumerologyScope = NumerologyTimingScope;
 
 export type BaseTimingFact = {
   id: string;
@@ -145,11 +152,7 @@ export type PlanetaryAspectFact = BaseTimingFact & {
   orbDegrees: number;
 };
 
-export type NumerologyDateFact = BaseTimingFact & {
-  type: "numerology_date";
-  numerologyScope: NumerologyScope;
-  numerologyNumber: number;
-};
+export type NumerologyDateFact = BaseTimingFact & NumerologyTimingFact;
 
 export type TimingFact =
   | MoonPhaseFact
@@ -538,56 +541,6 @@ function buildPlanetaryAspectFacts(
   return facts;
 }
 
-function reduceNumerology(value: number): number {
-  let result = Math.abs(Math.trunc(value));
-
-  while (result > 9) {
-    result = String(result)
-      .split("")
-      .reduce((sum, digit) => sum + Number(digit), 0);
-  }
-
-  return result === 0 ? 0 : result;
-}
-
-export function getUniversalNumerologyNumbers(date: Date | string): {
-  year: number;
-  month: number;
-  day: number;
-} {
-  const resolvedDate = resolveDate(date);
-  const year = resolvedDate.getUTCFullYear();
-  const month = resolvedDate.getUTCMonth() + 1;
-  const day = resolvedDate.getUTCDate();
-  const universalYear = reduceNumerology(year);
-  const universalMonth = reduceNumerology(universalYear + month);
-
-  return {
-    year: universalYear,
-    month: universalMonth,
-    day: reduceNumerology(universalYear + month + day),
-  };
-}
-
-function buildNumerologyFacts(
-  date: Date,
-  timezone: string,
-): NumerologyDateFact[] {
-  const numbers = getUniversalNumerologyNumbers(date);
-
-  return (Object.keys(numbers) as NumerologyScope[]).map((scope) => ({
-    id: `timing.numerology.${scope}.${numbers[scope]}.${date.toISOString().slice(0, 10)}`,
-    type: "numerology_date",
-    label: `Universal ${scope} ${numbers[scope]}`,
-    exactIso: date.toISOString(),
-    timezone,
-    numerologyScope: scope,
-    numerologyNumber: numbers[scope],
-    computedBy: "app_numerology",
-    confidence: "computed",
-  }));
-}
-
 export function getTimingFactsForDate(
   value: Date | string,
   options: TimingFactOptions = {},
@@ -609,6 +562,6 @@ export function getTimingFactsForDate(
     ...(includePlanetaryAspects
       ? buildPlanetaryAspectFacts(date, timezone, aspectOrbDegrees)
       : []),
-    ...buildNumerologyFacts(date, timezone),
+    ...getNumerologyTimingFacts(date, timezone),
   ];
 }

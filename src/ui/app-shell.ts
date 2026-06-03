@@ -128,7 +128,7 @@ const howItWorksSections: HowItWorksSection[] = [
   {
     title: "Recommendation creation",
     body: [
-      "After timing and symbolic signals are selected, the app checks who the ritual is for, current capacity, max ritual time, preferences, avoided styles, schedule constraints, profile themes, and prior feedback where available.",
+      "After timing and symbolic signals are selected, the app checks who the ritual is for, current capacity, max ritual time, preferences, avoided styles, profile themes, and prior feedback where available. Schedule awareness is deferred until it has a real design.",
       "Then it offers one ritual, not a feed of competing options.",
     ],
   },

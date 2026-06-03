@@ -172,7 +172,8 @@ Generated briefs should be able to answer:
 * What timing facts mattered?
 * Which symbolic cards were used?
 * What private profile context shaped the recommendation?
-* What schedule or capacity constraint affected the ritual window?
+* What capacity constraint affected the ritual window?
+* Later, when schedule awareness is designed, what real schedule constraint affected the ritual window?
 * Why was this recommendation chosen?
 
 This does not need to be shown as a technical audit log. But the user-facing “why this” should be grounded and explainable.
@@ -215,9 +216,16 @@ That milestone proves the core product before building a large app surface.
 
 ## Schedule-aware planning
 
-Schedule awareness is a core requirement.
+Schedule awareness is a future product feature, not current brief behavior.
 
-The app should not simply recommend a ritual on the exact date of an astrological event. It should recommend the nearest realistic window based on private schedule constraints, such as:
+The current app does not use hard-coded schedule assumptions or pretend it knows a realistic weekday window. The visible best-window line is capacity-based:
+
+* pause: `No timing needed.`
+* low: `When you have five quiet minutes.`
+* steady: `When you have a little space this week.`
+* high: `When you have room to linger this week.`
+
+Later schedule awareness should be designed separately and may include:
 
 * recurring unavailable nights
 * school/work demands
@@ -226,9 +234,7 @@ The app should not simply recommend a ritual on the exact date of an astrologica
 * max ritual duration
 * calendar integration later
 
-Example:
-
-> Full moon is Tuesday, but Tuesday is unavailable and the week is low capacity. Recommend Thursday evening instead, and keep the ritual to 0-5 minutes.
+Until that exists, the app should not name Thursday, Tuesday, Saturday, or any other specific window as if it came from real household knowledge.
 
 ## Capacity modes
 

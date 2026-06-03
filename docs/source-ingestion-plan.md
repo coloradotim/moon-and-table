@@ -4,7 +4,9 @@ This plan turns the issue #7 source-research synthesis into implementation-sized
 
 Moon & Table should remain a small, disciplined synthesis engine:
 
-> computed timing facts → reviewed symbolic cards → safe ritual patterns → private schedule/capacity filter → one useful recommendation.
+> computed timing facts → reviewed symbolic cards → safe ritual patterns → private capacity/profile filter → one useful recommendation.
+
+Schedule awareness is deferred. Current recommendations should not use hard-coded or fallback schedule windows.
 
 ## Operating rules
 
@@ -283,7 +285,7 @@ Older bootstrap values such as `candle`, `home_care`, `kitchen_clearing`, `shopp
 **Create:**
 
 - approval statuses for cards/patterns/source notes
-- recommendation trace linking timing facts, symbolic cards, ritual patterns, private profile/capacity/schedule inputs
+- recommendation trace linking timing facts, symbolic cards, ritual patterns, private profile/capacity inputs
 - tests that draft/unapproved content cannot be recommended
 
 **Acceptance criteria:**

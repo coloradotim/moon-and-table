@@ -125,7 +125,7 @@ describe("private household seed validation", () => {
     expect(parsedSeed.household.astrologyVisibility).toBe("placeholder_keys_only");
     expect(parsedSeed.household.scheduleConstraints).toEqual({
       unavailableDaysOrNights: [],
-      preferredRitualWindows: ["schedule.realistic_window_thursday"],
+      preferredRitualWindows: [],
       recurringHouseholdConstraintNotes: [],
       workOrSchoolConstraintNotes: [],
     });

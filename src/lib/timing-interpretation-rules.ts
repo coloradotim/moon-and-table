@@ -144,23 +144,66 @@ const LUNAR_PHASE_RULES: TimingInterpretationRule[] = [
   },
 ];
 
-const NUMEROLOGY_RULES: TimingInterpretationRule[] = [1, 2, 4, 6, 9].map(
-  (number): TimingInterpretationRule => ({
-    id: `timing_rule.numerology.${number}`,
-    timingFactType: "numerology_date",
-    condition: { numerologyNumber: number },
-    signalLabel: `Numerology ${number}`,
-    signalSummary: "A light numerology accent can color the brief without driving it.",
-    symbolicCardKeys: [`numerology_${number}`],
-    ritualStyleHints: ["reflection"],
-    weight: 28,
-    strength: "accent",
-    avoidIf: ["numerology_as_primary_driver"],
-    sourceReferences: [
-      "docs/source-review-packets.md#3-numerology-reference-set",
-    ],
-    approvalStatus: "approved",
-  }),
+const NUMEROLOGY_SOURCE_REFERENCES = [
+  "source.hans_decoz_tom_monte",
+  "source.david_phillips_numerology",
+  "source.barnum_forer_guardrail",
+  "note.numerology_calculation_reduced_universal_dates",
+  "note.numerology_guardrail_accent_only",
+];
+
+const NUMEROLOGY_STYLE_HINTS_BY_NUMBER: Record<number, string[]> = {
+  1: ["single-action ritual", "simple planning"],
+  2: ["conversation", "shared care task"],
+  3: ["atmosphere", "candle_or_light"],
+  4: ["home_tending", "surface_reset"],
+  5: ["air_reset", "single-action ritual"],
+  6: ["home_tending", "kitchen", "plant_tending"],
+  7: ["reflection", "quiet pause"],
+  8: ["single-action ritual", "simple planning"],
+  9: ["reflection", "clearing"],
+};
+
+const NUMEROLOGY_NOTE_BY_NUMBER: Record<number, string> = {
+  1: "note.numerology_1_beginning_focus",
+  2: "note.numerology_2_cooperation_balance",
+  3: "note.numerology_3_expression_warmth",
+  4: "note.numerology_4_structure_repair",
+  5: "note.numerology_5_change_freshness",
+  6: "note.numerology_6_home_care",
+  7: "note.numerology_7_reflection_pause",
+  8: "note.numerology_8_capacity_power",
+  9: "note.numerology_9_completion_release",
+};
+
+const NUMEROLOGY_RULES: TimingInterpretationRule[] = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(
+  (number): TimingInterpretationRule => {
+    const cardKey = `numerology_${number}`;
+
+    return {
+      id: `timing_rule.numerology.${number}`,
+      timingFactType: "numerology_date",
+      condition: { numerologyNumber: number },
+      signalLabel: `Numerology ${number}`,
+      signalSummary:
+        ENRICHED_CARD_SIGNAL_SUMMARY_BY_KEY.get(cardKey) ??
+        `Numerology ${number} can add a light symbolic accent without driving the brief.`,
+      symbolicCardKeys: [cardKey],
+      ritualStyleHints: NUMEROLOGY_STYLE_HINTS_BY_NUMBER[number],
+      weight: 28,
+      strength: "accent",
+      avoidIf: [
+        "numerology_as_primary_driver",
+        "destiny_language",
+        "personality_certainty",
+      ],
+      sourceReferences: [
+        ...NUMEROLOGY_SOURCE_REFERENCES,
+        NUMEROLOGY_NOTE_BY_NUMBER[number],
+      ],
+      approvalStatus: "approved",
+    };
+  },
 );
 
 const ZODIAC_SIGNS: Array<{ sign: ZodiacSign; label: string; styleHint: string }> = [
