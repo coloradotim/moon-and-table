@@ -78,6 +78,8 @@ Firebase web app config is not the same as a server admin secret, but Moon & Tab
 
 `VITE_AUTH_ALLOWED_EMAILS` is a comma-separated local allowlist for Google Auth. Put real allowed account emails in `.env.local` only. Do not commit real email addresses to `.env.example`, docs, tests, or source code.
 
+For Vercel, add the same Firebase web config variable names in the Vercel project environment settings, then redeploy. See `docs/deployment.md` for hosted setup, Firebase authorized domains, and verification steps.
+
 ## Test Google Auth Locally
 
 After `.env.local` has real Firebase web app config values and Google auth is enabled:
@@ -92,13 +94,13 @@ Expected behavior:
 
 1. Signed out: the page shows `Moon & Table`, private access copy, and `Sign in with Google`.
 2. Click `Sign in with Google` and complete the Google popup.
-3. Signed in: the app loads private settings from Firestore, then shows the weekly brief with a small `Signed in` indicator and `Sign out`.
-4. Click `Sign out`.
+3. Signed in: the app loads private settings from Firestore, then shows the weekly brief with a small `Menu` button.
+4. Open `Menu` and click `Sign out`.
 5. The page returns to the signed-out private access state.
 
 If the signed-in Google account is not listed in `VITE_AUTH_ALLOWED_EMAILS`, the app signs it back out and shows that the account is not invited yet.
 
-If private Firestore documents do not exist yet, the app uses privacy-safe starter settings and shows `Using starter settings until private settings are created.`
+If private Firestore documents do not exist yet, the app uses privacy-safe starter settings and shows `Using starter settings until your private settings are ready.`
 
 ## Seed Private Firestore Data Locally
 
@@ -170,11 +172,11 @@ npm run seed:private -- private/another-household.seed.local.json
 
 The seed script is idempotent. It uses stable document ids and Firestore merge writes, so rerunning updates existing documents rather than creating duplicates.
 
-After seeding, sign into the app normally with Google Auth. The app reads existing Firestore documents and should show `Using private settings from Firestore.`
+After seeding, sign into the app normally with Google Auth. The app reads existing Firestore documents and should show `Using your household settings.`
 
 ## Tune Seeded Private Settings
 
-After the app loads seeded private Firestore data, a small profile tuning section appears below the weekly brief. It shows one tuning card per seeded household profile, using private display labels from Firestore when available. Each card edits that profile's existing profile, capacity, and schedule settings, such as:
+After the app loads seeded private Firestore data, use `Menu` > `Profile settings` to open the profile tuning section. It shows one tuning card per seeded household profile, using private display labels from Firestore when available. Each card edits that profile's existing profile, capacity, and schedule settings, such as:
 
 - default capacity mode
 - max ritual time
@@ -187,7 +189,7 @@ This tuning section is for revising existing private data after backend/local se
 
 When an editable assumption is changed, the app stores it as user-confirmed with high confidence while preserving non-editable and non-boolean assumption metadata.
 
-The profile cards and audience dropdown use private display labels from Firestore. Source-controlled examples use placeholders such as `Person A`; real names belong only in the local seed file and Firestore.
+The profile cards use private display labels from Firestore. Source-controlled examples use placeholders such as `Person A`; real names belong only in the local seed file and Firestore.
 
 ## Starter Firestore Collections
 
