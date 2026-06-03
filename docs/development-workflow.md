@@ -44,6 +44,7 @@ The CI workflow runs:
 - TypeScript typecheck
 - Vite build
 - Vitest unit tests
+- Playwright Chromium browser installation
 - Playwright tests
 
 Unit tests cover the privacy-safe seed symbolic cards and the deterministic mock weekly brief generator.
