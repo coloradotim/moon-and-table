@@ -27,7 +27,7 @@ describe("app shell rendering", () => {
     const html = renderSignedOutShell(true);
 
     expect(html).toContain("Moon &amp; Table");
-    expect(html).toContain("A quiet place for one household.");
+    expect(html).toContain("Small rituals for a more magical home.");
     expect(html).toContain("Sign in with Google");
     expect(html).not.toContain("Sign in to continue.");
     expect(html).not.toContain("brief");

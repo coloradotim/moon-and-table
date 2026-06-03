@@ -453,7 +453,7 @@ export function renderSignedOutShell(configReady: boolean): string {
 
   return renderEntryShell({
     ariaLabel: "Sign in",
-    title: "A quiet place for one household.",
+    title: "Small rituals for a more magical home.",
     body: configMessage,
     action: `<button class="primary-action entry-action" type="button" data-auth-action="sign-in"${disabledAttribute}>Sign in with Google</button>`,
   });
