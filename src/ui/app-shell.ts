@@ -46,7 +46,7 @@ const capacityPickerDescriptions: Record<CapacityMode, string> = {
   high: "about half an hour",
 };
 
-export type SignedInView = "this_week" | "profile_settings";
+export type SignedInView = "this_week" | "profile_settings" | "how_it_works";
 
 export type SignedInShellOptions = {
   activeView?: SignedInView;
@@ -59,6 +59,106 @@ export type SignedInShellOptions = {
   savingFeedbackType?: BriefFeedbackType;
   showDebugTrace?: boolean;
 };
+
+type HowItWorksSection = {
+  title: string;
+  body: string[];
+};
+
+const howItWorksSections: HowItWorksSection[] = [
+  {
+    title: "What Moon & Table is",
+    body: [
+      "Moon & Table turns timing, symbolism, and household magic into one small ritual for the week.",
+      "It is not a horoscope feed, spell database, task manager, or productivity system. It offers one grounded practice that fits real life.",
+    ],
+  },
+  {
+    title: "Recommendation pipeline",
+    body: [
+      "The app gathers computed timing facts, selects symbolic signals, checks reviewed cards and ritual patterns, applies private household context, filters for safety and practicality, and returns one weekly recommendation.",
+    ],
+  },
+  {
+    title: "What it calculates",
+    body: [
+      "Moon & Table can calculate lunar phase, lunations, moon sign, sun sign, seasonal markers, planetary signs, retrogrades, major aspects, and numerology date values.",
+      "A calculated fact is not automatically a recommendation. It only becomes visible when it actually helps choose the ritual.",
+    ],
+  },
+  {
+    title: "Lunar timing",
+    body: [
+      "The first version uses four lunar phases: new moon for a small beginning, waxing moon for steady support, full moon for clarity or gratitude, and waning moon for release, clearing, integration, or rest.",
+    ],
+  },
+  {
+    title: "Astrology",
+    body: [
+      "Astrology is treated as symbolic weather, not a command. Planetary and lunar signals can point toward beauty, courage, communication, care, structure, repair, or useful adjustment.",
+      "Computed astrology facts stay internal unless an approved interpretation rule supports a user-facing signal.",
+    ],
+  },
+  {
+    title: "Natal-chart themes",
+    body: [
+      "Saved chart themes are private profile context. They can shape ritual fit, tone, and audience without exposing raw placements in the weekly brief.",
+      "The app uses theme language such as practical tending, warmth, beauty, care, structure, or grounded effort.",
+    ],
+  },
+  {
+    title: "Numerology",
+    body: [
+      "Numerology is a small accent. It can add a home, care, structure, or transition undertone, but it should not take over the recommendation by itself.",
+    ],
+  },
+  {
+    title: "Seasonal timing",
+    body: [
+      "Seasonal markers can support practices around light, warmth, rest, freshening, harvest, thresholds, and transitions.",
+    ],
+  },
+  {
+    title: "Sources",
+    body: [
+      "The symbolic library comes from reviewed sources, transformed source notes, approved cards, ritual patterns, and safety guardrails.",
+      "Moon & Table does not copy passages, rituals, prayers, chants, recipes, correspondence tables, or distinctive source phrasing.",
+    ],
+  },
+  {
+    title: "Recommendation creation",
+    body: [
+      "After timing and symbolic signals are selected, the app checks who the ritual is for, current capacity, max ritual time, preferences, avoided styles, schedule constraints, profile themes, and prior feedback where available.",
+      "Then it offers one ritual, not a feed of competing options.",
+    ],
+  },
+  {
+    title: "Capacity",
+    body: [
+      "Capacity decides how much effort the ritual should ask for: pause, low, steady, or high.",
+      "Capacity is not a judgment. It helps the app meet the household where it actually is.",
+    ],
+  },
+  {
+    title: "Safety",
+    body: [
+      "Safety comes before symbolism. Fire, smoke, plants, food, allergies, pets, children, cleanup burden, and emotional intensity can reshape or block a ritual.",
+      "A good ritual should leave the household better held, not overloaded.",
+    ],
+  },
+  {
+    title: "Feedback",
+    body: [
+      "Feedback helps future recommendations shift gradually. It can teach the app which styles, tones, capacities, and patterns feel useful without turning the experience into a survey.",
+    ],
+  },
+  {
+    title: "What it does not do",
+    body: [
+      "Moon & Table does not predict the future, tell anyone who they are, give medical, legal, financial, emergency, or safety advice, copy rituals from books, or expose private profile data in the repository.",
+    ],
+  },
+];
 
 function escapeHtml(value: string): string {
   return value
@@ -459,9 +559,35 @@ export function renderProfileTuningSection(
   `;
 }
 
+function renderHowItWorksSection(): string {
+  return `
+    <article class="how-it-works" aria-label="How Moon &amp; Table works">
+      <header class="how-it-works__header">
+        <p class="label">How it works</p>
+        <h2>One small ritual, chosen with care.</h2>
+        <p>Moon &amp; Table uses timing, symbolism, and household magic to choose one grounded practice for the week.</p>
+      </header>
+
+      <div class="how-it-works__sections">
+        ${howItWorksSections.map((section) => `
+          <section class="how-it-works__section">
+            <h3>${escapeHtml(section.title)}</h3>
+            ${section.body.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}
+          </section>
+        `).join("")}
+      </div>
+
+      <div class="how-it-works__actions">
+        <button class="secondary-action" type="button" data-home-action="this_week">Back to this week</button>
+      </div>
+    </article>
+  `;
+}
+
 function renderAppMenu(activeView: SignedInView): string {
   const thisWeekPressed = activeView === "this_week" ? "true" : "false";
   const profilePressed = activeView === "profile_settings" ? "true" : "false";
+  const howItWorksPressed = activeView === "how_it_works" ? "true" : "false";
 
   return `
     <details class="app-menu" data-app-menu="true">
@@ -482,6 +608,7 @@ function renderAppMenu(activeView: SignedInView): string {
       <div class="app-menu__panel" role="menu" aria-label="App menu">
         <button type="button" role="menuitem" data-menu-action="this_week" aria-pressed="${thisWeekPressed}">This week</button>
         <button type="button" role="menuitem" data-menu-action="profile_settings" aria-pressed="${profilePressed}">Profile settings</button>
+        <button type="button" role="menuitem" data-menu-action="how_it_works" aria-pressed="${howItWorksPressed}">How it works</button>
         <button type="button" role="menuitem" data-auth-action="sign-out">Sign out</button>
       </div>
     </details>
@@ -640,9 +767,12 @@ export function renderSignedInShell(
     </article>
   `;
   const profileSettings = renderProfileTuningSection(privateBriefData);
+  const howItWorks = renderHowItWorksSection();
   const activeContent =
     activeView === "profile_settings"
       ? profileSettings
+      : activeView === "how_it_works"
+        ? howItWorks
       : weeklyBrief;
 
   return `
