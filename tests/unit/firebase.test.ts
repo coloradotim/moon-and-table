@@ -1,8 +1,6 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  isEmailAllowed,
-  parseAllowedEmails,
   signInWithGoogle,
   signOutOfFirebase,
 } from "../../src/lib/auth";
@@ -53,27 +51,5 @@ describe("Firebase auth actions", () => {
 
   it("allows sign-out without config", async () => {
     await expect(signOutOfFirebase(null)).resolves.toBeUndefined();
-  });
-});
-
-describe("auth allowlist", () => {
-  it("parses comma-separated allowed emails without committing real users", () => {
-    expect(
-      parseAllowedEmails(" person_a@example.com,PERSON_B@example.com "),
-    ).toEqual(["person_a@example.com", "person_b@example.com"]);
-  });
-
-  it("allows everyone when no allowlist is configured", () => {
-    expect(isEmailAllowed("anyone@example.com", [])).toBe(true);
-  });
-
-  it("limits access to configured emails", () => {
-    const allowedEmails = parseAllowedEmails(
-      "person_a@example.com,person_b@example.com",
-    );
-
-    expect(isEmailAllowed("person_a@example.com", allowedEmails)).toBe(true);
-    expect(isEmailAllowed("other@example.com", allowedEmails)).toBe(false);
-    expect(isEmailAllowed(null, allowedEmails)).toBe(false);
   });
 });

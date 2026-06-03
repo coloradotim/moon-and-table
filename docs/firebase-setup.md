@@ -69,14 +69,13 @@ VITE_FIREBASE_PROJECT_ID=placeholder-project-id
 VITE_FIREBASE_STORAGE_BUCKET=placeholder-project-id.firebasestorage.app
 VITE_FIREBASE_MESSAGING_SENDER_ID=000000000000
 VITE_FIREBASE_APP_ID=1:000000000000:web:placeholderappid
-VITE_AUTH_ALLOWED_EMAILS=person_a@example.com,person_b@example.com
 ```
 
 `.env.local` is gitignored and is where real local config values belong. `.env.example` stays source-controlled and must contain placeholders only.
 
 Firebase web app config is not the same as a server admin secret, but Moon & Table should still avoid committing real project values while the private-data shape is being established.
 
-`VITE_AUTH_ALLOWED_EMAILS` is a comma-separated local allowlist for Google Auth. Put real allowed account emails in `.env.local` only. Do not commit real email addresses to `.env.example`, docs, tests, or source code.
+Do not add real allowed-user emails to `VITE_` env vars. Vite bundles `VITE_` values into browser JavaScript. Moon & Table now uses readable seeded Firestore private documents as the authorization signal after Google Auth.
 
 For Vercel, add the same Firebase web config variable names in the Vercel project environment settings, then redeploy. See `docs/deployment.md` for hosted setup, Firebase authorized domains, and verification steps.
 
@@ -98,9 +97,9 @@ Expected behavior:
 4. Open `Menu` and click `Sign out`.
 5. The page returns to the signed-out private access state.
 
-If the signed-in Google account is not listed in `VITE_AUTH_ALLOWED_EMAILS`, the app signs it back out and shows that the account is not invited yet.
+If the signed-in Google account does not have readable seeded Firestore private documents by UID or pending email link, the app shows that the account is not invited yet.
 
-If private Firestore documents do not exist yet, the app uses privacy-safe starter settings and shows `Using starter settings until your private settings are ready.`
+The app does not require local seed files at runtime, but the account must have seeded Firestore private documents before it can use the hosted brief.
 
 ## Seed Private Firestore Data Locally
 
@@ -207,13 +206,13 @@ Keep collection documents private and generic in documentation. Do not commit re
 
 The matching TypeScript schema lives in `src/lib/private-data-schema.ts`.
 
-The app currently reads these user-scoped documents after an allowed Google sign-in:
+The app currently reads these user-scoped documents after Google sign-in:
 
 - `profiles/{uid}`
 - `capacitySettings/{uid}`
 - `scheduleConstraints/{uid}`
 
-Missing documents are allowed. The app falls back to starter settings instead of blocking the brief.
+Missing documents are safe but are not treated as authorization for the hosted app. If no UID-linked or pending email-linked profile can be read, the app shows the not-invited screen.
 
 The local seed script writes:
 

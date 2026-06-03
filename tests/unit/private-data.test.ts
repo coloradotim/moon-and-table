@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { generateWeeklyBrief } from "../../src/lib/generate-weekly-brief";
 import {
+  hasLoadedPrivateData,
   resolvePrivateBriefData,
   shouldLoadPrivateData,
 } from "../../src/lib/private-data";
@@ -19,6 +20,7 @@ describe("private Firestore data resolution", () => {
     const brief = generateWeeklyBrief(privateBriefData.input);
 
     expect(privateBriefData.status).toBe("using_starter_settings");
+    expect(hasLoadedPrivateData(privateBriefData)).toBe(false);
     expect(privateBriefData.input.privateProfileKeys).toEqual([
       "private_profile.practical_tending",
     ]);
@@ -35,6 +37,7 @@ describe("private Firestore data resolution", () => {
     const brief = generateWeeklyBrief(privateBriefData.input);
 
     expect(privateBriefData.status).toBe("loaded_private_data");
+    expect(hasLoadedPrivateData(privateBriefData)).toBe(true);
     expect(privateBriefData.input.privateProfileKeys).toEqual([
       "private_profile.beauty_warmth",
     ]);

@@ -332,7 +332,7 @@ export function renderUnauthorizedShell(): string {
         <p class="label">Private access</p>
         <h2>This account is not invited yet.</h2>
         <p>Moon &amp; Table is limited to the private household allowlist.</p>
-        <button class="primary-action" type="button" data-auth-action="sign-in">Sign in with Google</button>
+        <button class="primary-action" type="button" data-auth-action="sign-out">Sign out</button>
       </article>
     </section>
   `;
