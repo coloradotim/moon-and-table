@@ -17,14 +17,21 @@ describe("app shell rendering", () => {
     const html = renderLoadingShell();
 
     expect(html).toContain("Moon &amp; Table");
-    expect(html).toContain("Checking sign-in state.");
+    expect(html).toContain("Opening Moon &amp; Table.");
+    expect(html).toContain("Checking sign-in.");
+    expect(html).toContain("entry-moon-loader");
+    expect(html).not.toContain("Private access");
   });
 
   it("renders a signed-out Google sign-in state", () => {
     const html = renderSignedOutShell(true);
 
     expect(html).toContain("Moon &amp; Table");
+    expect(html).toContain("A quiet place for one household.");
     expect(html).toContain("Sign in with Google");
+    expect(html).not.toContain("Sign in to continue.");
+    expect(html).not.toContain("brief");
+    expect(html).not.toContain("Private access");
     expect(html).not.toContain("data-testid=\"recommended-ritual\"");
   });
 
@@ -244,7 +251,7 @@ describe("app shell rendering", () => {
     expect(defaultHtml).not.toContain("Tune profiles");
     expect(settingsHtml).toContain("Tune profiles");
     expect(settingsHtml).toContain("Make the suggestions fit better");
-    expect(settingsHtml).toContain("Private settings will appear here");
+    expect(settingsHtml).toContain("Household settings will appear here");
     expect(settingsHtml).not.toContain("data-testid=\"recommended-ritual\"");
     expect(settingsHtml).toContain('data-menu-action="this_week"');
     expect(settingsHtml).toContain('aria-pressed="true">Profile settings');
@@ -371,7 +378,7 @@ describe("app shell rendering", () => {
     expect(html).not.toContain('name="preferredRitualStyles"\n            type="text"');
     expect(html).toContain("Save Alex&#39;s settings");
     expect(html).toContain("Save Blair&#39;s settings");
-    expect(html).toContain("Saved to this private profile.");
+    expect(html).toContain("Saved to this profile.");
     expect(html).toContain("Open to edit settings");
     expect(html).not.toContain("starter assumption");
     expect(html).not.toContain("Firestore");
@@ -381,7 +388,10 @@ describe("app shell rendering", () => {
     const html = renderPrivateDataLoadingShell();
 
     expect(html).toContain("Moon &amp; Table");
-    expect(html).toContain("Loading private settings for this household.");
+    expect(html).toContain("Preparing this week.");
+    expect(html).toContain("Loading household settings.");
+    expect(html).toContain("entry-moon-loader");
+    expect(html).not.toContain("Private settings");
     expect(html).not.toContain("data-testid=\"recommended-ritual\"");
   });
 
@@ -396,7 +406,7 @@ describe("app shell rendering", () => {
 
   it("routes auth states to the correct shell", () => {
     expect(renderAppShell({ status: "loading" })).toContain(
-      "Checking sign-in state.",
+      "Checking sign-in.",
     );
     expect(
       renderAppShell({ status: "signed_out", configReady: true }),
@@ -413,6 +423,6 @@ describe("app shell rendering", () => {
           displayName: "Person A",
         },
       }),
-    ).toContain("Loading private settings for this household.");
+    ).toContain("Loading household settings.");
   });
 });

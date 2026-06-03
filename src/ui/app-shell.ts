@@ -329,7 +329,7 @@ function renderTuningProfileForm(
 
         <div class="tuning-actions">
           <button class="primary-action" type="submit">${escapeHtml(`Save ${profile.label}'s settings`)}</button>
-          <p class="muted" data-profile-tuning-status="true">Saved to this private profile.</p>
+          <p class="muted" data-profile-tuning-status="true">Saved to this profile.</p>
         </div>
       </form>
     </details>
@@ -348,7 +348,7 @@ export function renderProfileTuningSection(
           <p class="label">Tune profiles</p>
           <h2>Make the suggestions fit better</h2>
         </div>
-        <p class="muted">Private settings will appear here after household settings are available.</p>
+        <p class="muted">Household settings will appear here when they are available.</p>
       </section>
     `;
   }
@@ -396,77 +396,76 @@ function renderAppMenu(activeView: SignedInView): string {
   `;
 }
 
-export function renderLoadingShell(): string {
+function renderEntryShell({
+  ariaLabel,
+  title,
+  body,
+  action,
+  loading = false,
+}: {
+  ariaLabel: string;
+  title: string;
+  body?: string;
+  action?: string;
+  loading?: boolean;
+}): string {
   return `
-    <section class="shell shell--centered" aria-labelledby="app-title">
-      <header class="masthead">
-        <p class="eyebrow">Private weekly ritual brief</p>
+    <section class="shell shell--entry" aria-labelledby="app-title">
+      <header class="entry-brand">
         <h1 id="app-title">Moon &amp; Table</h1>
       </header>
 
-      <article class="brief auth-panel" aria-label="Loading auth state">
-        <p class="label">Private access</p>
-        <p>Checking sign-in state.</p>
+      <article class="entry-panel" aria-label="${escapeHtml(ariaLabel)}">
+        ${loading ? '<span class="entry-moon-loader" aria-hidden="true"></span>' : ""}
+        <div class="entry-panel__copy">
+          <h2>${escapeHtml(title)}</h2>
+          ${body ? `<p>${escapeHtml(body)}</p>` : ""}
+        </div>
+        ${action ?? ""}
       </article>
     </section>
   `;
 }
 
-export function renderPrivateDataLoadingShell(): string {
-  return `
-    <section class="shell shell--centered" aria-labelledby="app-title">
-      <header class="masthead">
-        <p class="eyebrow">Private weekly ritual brief</p>
-        <h1 id="app-title">Moon &amp; Table</h1>
-      </header>
+export function renderLoadingShell(): string {
+  return renderEntryShell({
+    ariaLabel: "Loading sign-in state",
+    title: "Opening Moon & Table.",
+    body: "Checking sign-in.",
+    loading: true,
+  });
+}
 
-      <article class="brief auth-panel" aria-label="Loading private settings">
-        <p class="label">Private settings</p>
-        <p>Loading private settings for this household.</p>
-      </article>
-    </section>
-  `;
+export function renderPrivateDataLoadingShell(): string {
+  return renderEntryShell({
+    ariaLabel: "Loading household settings",
+    title: "Preparing this week.",
+    body: "Loading household settings.",
+    loading: true,
+  });
 }
 
 export function renderSignedOutShell(configReady: boolean): string {
   const configMessage = configReady
-    ? "Sign in to open the private weekly brief."
+    ? undefined
     : "Firebase is not configured yet. Add local config values in .env.local to enable sign-in.";
   const disabledAttribute = configReady ? "" : " disabled";
 
-  return `
-    <section class="shell shell--centered" aria-labelledby="app-title">
-      <header class="masthead">
-        <p class="eyebrow">Private weekly ritual brief</p>
-        <h1 id="app-title">Moon &amp; Table</h1>
-      </header>
-
-      <article class="brief auth-panel" aria-label="Private sign-in">
-        <p class="label">Private access</p>
-        <h2>A quiet place for one household brief.</h2>
-        <p>${configMessage}</p>
-        <button class="primary-action" type="button" data-auth-action="sign-in"${disabledAttribute}>Sign in with Google</button>
-      </article>
-    </section>
-  `;
+  return renderEntryShell({
+    ariaLabel: "Sign in",
+    title: "A quiet place for one household.",
+    body: configMessage,
+    action: `<button class="primary-action entry-action" type="button" data-auth-action="sign-in"${disabledAttribute}>Sign in with Google</button>`,
+  });
 }
 
 export function renderUnauthorizedShell(): string {
-  return `
-    <section class="shell shell--centered" aria-labelledby="app-title">
-      <header class="masthead">
-        <p class="eyebrow">Private weekly ritual brief</p>
-        <h1 id="app-title">Moon &amp; Table</h1>
-      </header>
-
-      <article class="brief auth-panel" aria-label="Private access limited">
-        <p class="label">Private access</p>
-        <h2>This account is not invited yet.</h2>
-        <p>Moon &amp; Table is limited to the private household allowlist.</p>
-        <button class="primary-action" type="button" data-auth-action="sign-out">Sign out</button>
-      </article>
-    </section>
-  `;
+  return renderEntryShell({
+    ariaLabel: "Access limited",
+    title: "This account is not invited yet.",
+    body: "Use an invited Google account to continue.",
+    action: '<button class="primary-action entry-action" type="button" data-auth-action="sign-out">Sign out</button>',
+  });
 }
 
 export function renderSignedInShell(
