@@ -41,6 +41,10 @@ Each week should include:
 - Schedule and capacity constraints should override symbolic timing.
 - Repository examples must remain generic and non-identifying.
 
+## Generator trace
+
+The first deterministic mock generator lives at `src/lib/generate-weekly-brief.ts`. Its trace should stay short and privacy-safe, listing timing fact keys, approved symbolic card keys, generic private profile placeholder keys, capacity mode, and schedule assumption keys.
+
 ## Example
 
 Theme:
