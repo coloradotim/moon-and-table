@@ -55,12 +55,55 @@ describe("source registry", () => {
     }
   });
 
+  it("includes the reviewed lunar source batch for four-phase cards", () => {
+    expect(starterSourceReviews).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "source.sarah_faith_gottesdiener",
+          title: "Sarah Faith Gottesdiener — lunar reflection source",
+          reviewStatus: "reviewed",
+          useDecision: "use",
+        }),
+        expect.objectContaining({
+          id: "source.rachel_patterson_moon",
+          title: "Rachel Patterson — lunar/domestic magic source",
+          reviewStatus: "reviewed",
+          useDecision: "use_carefully",
+        }),
+      ]),
+    );
+  });
+
   it("keeps starter source notes short, transformed, and non-verbatim", () => {
     for (const note of starterSourceNotes) {
       expect(validateSourceNote(note)).toEqual({ valid: true, errors: [] });
       expect(note.verbatimAllowed).toBe(false);
       expect(note.paraphrasedNote.length).toBeLessThanOrEqual(280);
       expect(note.locationNote).toContain("docs/source-research-synthesis.md");
+    }
+  });
+
+  it("includes transformed source notes for each MVP lunar phase", () => {
+    const lunarNoteIds = [
+      "note.new_moon_quiet_reset",
+      "note.waxing_moon_steady_support",
+      "note.full_moon_visibility_without_fear",
+      "note.waning_moon_clear_and_rest",
+    ];
+    const lunarNotes = starterSourceNotes.filter((note) =>
+      lunarNoteIds.includes(note.id),
+    );
+
+    expect(lunarNotes.map((note) => note.id).sort()).toEqual(
+      [...lunarNoteIds].sort(),
+    );
+
+    for (const note of lunarNotes) {
+      expect(note.category).toBe("moon_phase_symbolism");
+      expect(note.verbatimAllowed).toBe(false);
+      expect(note.paraphrasedNote.length).toBeLessThanOrEqual(280);
+      expect(note.paraphrasedNote.toLowerCase()).not.toContain("guarantee");
+      expect(note.copyrightNotes.join(" ").toLowerCase()).toContain("short transformed note");
     }
   });
 
