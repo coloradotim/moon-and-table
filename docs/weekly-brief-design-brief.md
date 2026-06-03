@@ -20,14 +20,15 @@ Default-visible content is:
 
 - theme / invitation
 - practice
-- intention
-- timing/window
+- labeled intention
+- labeled best window
 - optional add-on, only when present
+- why this fits
 - question to carry
 
 ### 3. Go-deeper content is available but not dominant
 
-Reflection and reasoning are valuable, but they serve different moments than receiving the brief. The reflection question should feel like part of the brief. The reasoning should remain available behind an intentional disclosure.
+Reflection and reasoning are valuable, but they serve different moments than receiving the brief. The reasoning should be visible as trust-building product copy. The reflection question should be available without looking like the most important thing on the card.
 
 ### 4. Controls do not compete with the ritual
 
@@ -45,21 +46,24 @@ Render in this order:
 
 1. `brief.theme`
 2. `brief.recommendedRitual`
-3. `brief.intention`
-4. `brief.bestWindow`
+3. `brief.intention`, labeled `Intention`
+4. `brief.bestWindow`, labeled `Best window`
 5. `brief.optionalAddOn`, only if there is a real optional add-on
 
 ### Zone B — Reflection And Reasoning
 
-Use one visible reflective section and one disclosure:
+Use two visible sections:
 
-1. `Question to carry`
+1. `Why this fits`
+   - content: `brief.whyThis`
+   - visible by default
+   - headline, not a disclosure
+   - calm and trust-building
+2. `Question to carry`
    - content: `brief.reflectionPrompt`
    - visible by default
-   - warmer and more primary than the reasoning disclosure
-2. `Why this fits`
-   - content: `brief.whyThis`
-   - closed by default
+   - softer than the reasoning section
+   - not a highlighted card
 
 Keep the label exactly:
 
@@ -189,16 +193,16 @@ Menu interaction rules:
 - Signed-in wordmark is a nameplate.
 - Theme is the dominant type on the screen.
 - Practice paragraph is readable and calm.
-- Intention is visually distinct, softer, and ritual-like.
-- `Question to carry` is a warm reflective section.
-- `Why this fits` is a quiet disclosure summary.
+- Intention is labeled, visually distinct, softer, and ritual-like.
+- Best window is labeled and compact so timing does not feel mushed into the prose.
+- `Why this fits` is an always-visible section headline.
+- `Question to carry` is a soft reflective prompt.
 - Supporting text is smaller and muted.
 
 ## Anti-Patterns
 
 - Do not render every brief field as a labeled section.
 - Do not make the screen feel like a form or worksheet.
-- Do not show `whyThis` content by default.
 - Do not show feedback chips by default.
 - Do not show raw trace/debug/source ids by default.
 - Do not show date range in the default brief.

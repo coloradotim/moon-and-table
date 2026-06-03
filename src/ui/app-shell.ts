@@ -466,21 +466,29 @@ export function renderSignedInShell(
       <section class="brief__core" aria-label="Weekly practice">
         <h2 class="brief__theme">${renderBriefTheme(brief.theme)}</h2>
         <p class="brief__practice" data-testid="recommended-ritual">${escapeHtml(brief.recommendedRitual)}</p>
-        <p class="brief__intention">${escapeHtml(brief.intention)}</p>
-        <p class="brief__window">${escapeHtml(brief.bestWindow)}</p>
+        <div class="brief__orientation" aria-label="Brief orientation">
+          <section class="brief__orientation-item" aria-label="Intention">
+            <p class="brief__section-label">Intention</p>
+            <p class="brief__intention">${escapeHtml(brief.intention)}</p>
+          </section>
+          <section class="brief__orientation-item" aria-label="Best window">
+            <p class="brief__section-label">Best window</p>
+            <p class="brief__window">${escapeHtml(brief.bestWindow)}</p>
+          </section>
+        </div>
         ${renderOptionalAddOn(brief.optionalAddOn)}
       </section>
 
       <section class="brief__depth" aria-label="Go deeper">
-        <section class="brief__question" aria-label="Question to carry">
-          <p class="brief__question-label">Question to carry</p>
-          <p class="prompt">${escapeHtml(brief.reflectionPrompt)}</p>
+        <section class="why-this" aria-label="Why this fits">
+          <h3>Why this fits</h3>
+          <p>${escapeHtml(brief.whyThis)}</p>
         </section>
 
-        <details class="why-this" aria-label="Why this fits">
-          <summary>Why this fits</summary>
-          <p>${escapeHtml(brief.whyThis)}</p>
-        </details>
+        <section class="brief__question" aria-label="Question to carry">
+          <p class="brief__section-label">Question to carry</p>
+          <p class="prompt">${escapeHtml(brief.reflectionPrompt)}</p>
+        </section>
       </section>
 
       <section class="brief__actions" aria-label="Brief actions">
