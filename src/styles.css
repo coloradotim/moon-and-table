@@ -250,8 +250,7 @@ h2 {
 }
 
 .trace summary,
-.why-this summary,
-.feedback summary {
+.why-this summary {
   color: #53645a;
   cursor: pointer;
   font-weight: 700;
@@ -299,6 +298,9 @@ h2 {
   background: rgba(255, 255, 255, 0.62);
   color: #26312c;
   box-shadow: 0 1px 0 rgba(38, 49, 44, 0.06);
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 0.96rem;
   transition:
     background 140ms ease,
     border-color 140ms ease,
@@ -451,7 +453,7 @@ h2 {
 
 .capacity-control__toggle span {
   color: #26312c;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .capacity-control__chevron {

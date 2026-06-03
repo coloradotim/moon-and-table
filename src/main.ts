@@ -394,7 +394,7 @@ appRoot.addEventListener("click", (event) => {
   const feedbackType = target.dataset.feedbackType;
   const capacityMode = target.dataset.capacityMode;
 
-  if (target.dataset.capacityToggle === "true") {
+  if (target.closest("[data-capacity-toggle='true']")) {
     activeCapacityPickerOpen = !activeCapacityPickerOpen;
     renderActiveSignedInShell();
     return;

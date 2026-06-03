@@ -487,11 +487,11 @@ export function renderSignedInShell(
         <div class="brief__control-group">
           ${renderCapacityControl(capacityMode, options.capacityPickerOpen ?? false)}
           <button
-            class="secondary-action feedback-button${options.selectedFeedbackType === "try_again" || options.savingFeedbackType === "try_again" ? " feedback-button--selected" : ""}"
+            class="secondary-action try-again-button"
             type="button"
             data-feedback-type="try_again"
             data-try-again-action="true"
-            aria-pressed="${options.selectedFeedbackType === "try_again" || options.savingFeedbackType === "try_again" ? "true" : "false"}"${options.savingFeedbackType ? " disabled" : ""}
+            aria-pressed="false"${options.savingFeedbackType ? " disabled" : ""}
           >${escapeHtml(options.savingFeedbackType === "try_again" ? "Saving" : feedbackLabels.try_again)}</button>
           <details class="feedback" aria-label="Feedback">
             <summary>Give feedback</summary>

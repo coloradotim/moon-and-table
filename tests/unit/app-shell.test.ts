@@ -258,8 +258,9 @@ describe("app shell rendering", () => {
 
     expect(html).toContain("Here is another approved option.");
     expect(html).toContain("Got it.");
-    expect(html).toContain('aria-pressed="true"');
-    expect(html).toContain("feedback-button--selected");
+    expect(html).toContain('class="secondary-action try-again-button"');
+    expect(html).toContain('data-try-again-action="true"\n            aria-pressed="false"');
+    expect(html).not.toContain("try-again-button feedback-button--selected");
     expect(html).not.toContain("Feedback saves to your private profile.");
   });
 
