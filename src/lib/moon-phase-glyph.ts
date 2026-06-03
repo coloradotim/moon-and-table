@@ -1,4 +1,4 @@
-import { MoonPhase } from "astronomy-engine";
+import { MoonPhase, SearchMoonPhase } from "astronomy-engine";
 
 export type MoonPhaseGlyphState =
   | "new"
@@ -28,15 +28,20 @@ const GLYPH_SHAPES: Record<MoonPhaseGlyphState, MoonPhaseGlyphShape> = {
   waning_crescent: { label: "Waning crescent moon", lightCx: 12, darkCx: 29, darkOpacity: 1 },
 };
 
-const NEXT_QUARTER_LABELS: Record<MoonPhaseGlyphState, string> = {
-  new: "First quarter moon",
-  waxing_crescent: "First quarter moon",
-  first_quarter: "Full moon",
-  waxing_gibbous: "Full moon",
-  full: "Last quarter moon",
-  waning_gibbous: "Last quarter moon",
-  last_quarter: "New moon",
-  waning_crescent: "New moon",
+type MoonPhaseMilestone = {
+  label: string;
+  angleDegrees: 0 | 90 | 180 | 270;
+};
+
+const NEXT_MILESTONES: Record<MoonPhaseGlyphState, MoonPhaseMilestone> = {
+  new: { label: "First quarter moon", angleDegrees: 90 },
+  waxing_crescent: { label: "First quarter moon", angleDegrees: 90 },
+  first_quarter: { label: "Full moon", angleDegrees: 180 },
+  waxing_gibbous: { label: "Full moon", angleDegrees: 180 },
+  full: { label: "Last quarter moon", angleDegrees: 270 },
+  waning_gibbous: { label: "Last quarter moon", angleDegrees: 270 },
+  last_quarter: { label: "New moon", angleDegrees: 0 },
+  waning_crescent: { label: "New moon", angleDegrees: 0 },
 };
 
 function normalizePhaseAngle(angleDegrees: number): number {
@@ -84,7 +89,40 @@ export function getMoonPhaseGlyphLabelForAngle(angleDegrees: number): string {
 }
 
 export function getNextQuarterLabelForAngle(angleDegrees: number): string {
-  return NEXT_QUARTER_LABELS[getMoonPhaseGlyphStateForAngle(angleDegrees)];
+  return NEXT_MILESTONES[getMoonPhaseGlyphStateForAngle(angleDegrees)].label;
+}
+
+function resolveDate(value: Date | string): Date {
+  const date = value instanceof Date ? value : new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    throw new Error("A valid date is required for the moon phase milestone.");
+  }
+
+  return date;
+}
+
+export function getNextMoonPhaseMilestoneForAngle(
+  angleDegrees: number,
+  date: Date | string = new Date(),
+): { label: string; exactIso: string } {
+  const start = resolveDate(date);
+  const milestone = NEXT_MILESTONES[getMoonPhaseGlyphStateForAngle(angleDegrees)];
+  const searchStart = new Date(start.getTime() + 60 * 1000);
+  const eventTime = SearchMoonPhase(
+    milestone.angleDegrees,
+    searchStart,
+    40,
+  );
+
+  if (!eventTime) {
+    throw new Error("Could not find the next moon phase milestone.");
+  }
+
+  return {
+    label: milestone.label,
+    exactIso: eventTime.date.toISOString(),
+  };
 }
 
 export function getMoonPhaseGlyphSvgForAngle(angleDegrees: number): string {

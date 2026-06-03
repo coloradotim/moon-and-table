@@ -5,6 +5,7 @@ import {
   getMoonPhaseGlyphStateForAngle,
   getMoonPhaseGlyphSvg,
   getMoonPhaseGlyphSvgForAngle,
+  getNextMoonPhaseMilestoneForAngle,
   getNextQuarterLabelForAngle,
 } from "../../src/lib/moon-phase-glyph";
 
@@ -37,6 +38,16 @@ describe("moon phase glyph", () => {
     expect(getNextQuarterLabelForAngle(180)).toBe("Last quarter moon");
     expect(getMoonPhaseGlyphLabelForAngle(45)).toBe("Waxing crescent moon");
     expect(getNextQuarterLabelForAngle(45)).toBe("First quarter moon");
+  });
+
+  it("finds the next lunar milestone date from astronomy calculations", () => {
+    const milestone = getNextMoonPhaseMilestoneForAngle(
+      225,
+      "2026-06-03T12:00:00.000Z",
+    );
+
+    expect(milestone.label).toBe("Last quarter moon");
+    expect(milestone.exactIso.slice(0, 10)).toBe("2026-06-08");
   });
 
   it("changes SVG state for different phase dates", () => {

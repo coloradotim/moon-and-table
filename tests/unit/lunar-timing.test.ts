@@ -32,6 +32,7 @@ describe("lunar timing", () => {
       relatedSymbolicKeys: ["new_moon"],
     });
     expect(fact.phaseAngleDegrees).toBeLessThan(1);
+    expect(fact.exactIso).toBe("2026-06-15T03:00:00.000Z");
     expect(fact.dateStart).toBe("2026-06-15T00:00:00.000Z");
     expect(fact.dateEnd).toBe("2026-06-21T23:59:59.999Z");
   });

@@ -11,7 +11,7 @@ import {
 import {
   getMoonPhaseGlyphLabelForAngle,
   getMoonPhaseGlyphSvgForAngle,
-  getNextQuarterLabelForAngle,
+  getNextMoonPhaseMilestoneForAngle,
 } from "../lib/moon-phase-glyph";
 import type { PrivateBriefData } from "../lib/private-data";
 import { getGroupedProfilePreferenceOptions } from "../lib/profile-preference-taxonomy";
@@ -78,10 +78,18 @@ function renderOptionalAddOn(value: string): string {
 }
 
 function renderMoonGlyph(brief: WeeklyBrief): string {
-  const phaseAngle = brief.trace.timingFactDetails[0]?.phaseAngleDegrees ?? 0;
+  const lunarTiming = brief.trace.timingFactDetails[0];
+  const phaseAngle = lunarTiming?.phaseAngleDegrees ?? 0;
+  const phaseDate = lunarTiming?.exactIso ?? lunarTiming?.dateStart ?? new Date().toISOString();
   const currentPhase = getMoonPhaseGlyphLabelForAngle(phaseAngle);
-  const nextQuarter = getNextQuarterLabelForAngle(phaseAngle);
-  const tooltip = `Current phase: ${currentPhase}. Next quarter: ${nextQuarter}.`;
+  const nextMilestone = getNextMoonPhaseMilestoneForAngle(phaseAngle, phaseDate);
+  const nextMilestoneDate = new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: lunarTiming?.timezone ?? "UTC",
+  }).format(new Date(nextMilestone.exactIso));
+  const tooltip = `Current phase: ${currentPhase}. Next lunar milestone: ${nextMilestone.label} on ${nextMilestoneDate}.`;
 
   return `
     <span

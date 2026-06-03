@@ -199,6 +199,7 @@ describe("generateWeeklyBrief", () => {
     expect(brief.trace.timingFactDetails[0]).toMatchObject({
       key: "moon.full",
       label: "Full moon",
+      exactIso: "2026-06-03T12:00:00.000Z",
       computedBy: "astronomy_engine",
       confidence: "computed",
       relatedSymbolicKeys: ["full_moon"],
@@ -233,6 +234,7 @@ describe("generateWeeklyBrief", () => {
       expect.objectContaining({
         key: "moon.new",
         label: "New moon",
+        exactIso: "2026-06-15T03:00:00.000Z",
         computedBy: "astronomy_engine",
       }),
     ]);

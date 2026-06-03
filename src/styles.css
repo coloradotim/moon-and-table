@@ -113,7 +113,7 @@ button:disabled {
 .moon-phase-tooltip {
   position: absolute;
   z-index: 10;
-  bottom: calc(100% + 8px);
+  top: calc(100% + 8px);
   left: 0;
   width: max-content;
   max-width: min(72vw, 310px);
@@ -127,7 +127,7 @@ button:disabled {
   line-height: 1.35;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(3px);
+  transform: translateY(-3px);
   transition:
     opacity 120ms ease,
     transform 120ms ease;

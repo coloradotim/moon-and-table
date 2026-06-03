@@ -12,6 +12,7 @@ export type LunarTimingFact = {
   key: Exclude<TimingFactKey, "numerology.6">;
   phase: LunarPhaseBucket;
   label: string;
+  exactIso: string;
   dateStart: string;
   dateEnd: string;
   timezone: string;
@@ -110,6 +111,7 @@ export function getLunarTimingFact(
     key: TIMING_FACT_KEY_BY_PHASE[phase],
     phase,
     label: LUNAR_PHASE_LABEL_BY_PHASE[phase],
+    exactIso: date.toISOString(),
     dateStart,
     dateEnd,
     timezone,
