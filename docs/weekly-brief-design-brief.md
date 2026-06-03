@@ -23,10 +23,11 @@ Default-visible content is:
 - intention
 - timing/window
 - optional add-on, only when present
+- question to carry
 
 ### 3. Go-deeper content is available but not dominant
 
-Reflection and reasoning are valuable, but they serve a different moment than receiving the brief. They should live behind intentional disclosures.
+Reflection and reasoning are valuable, but they serve different moments than receiving the brief. The reflection question should feel like part of the brief. The reasoning should remain available behind an intentional disclosure.
 
 ### 4. Controls do not compete with the ritual
 
@@ -48,14 +49,17 @@ Render in this order:
 4. `brief.bestWindow`
 5. `brief.optionalAddOn`, only if there is a real optional add-on
 
-### Zone B — Go Deeper, Closed By Default
+### Zone B — Reflection And Reasoning
 
-Use two disclosures:
+Use one visible reflective section and one disclosure:
 
-1. `A question to carry`
+1. `Question to carry`
    - content: `brief.reflectionPrompt`
+   - visible by default
+   - warmer and more primary than the reasoning disclosure
 2. `Why this fits`
    - content: `brief.whyThis`
+   - closed by default
 
 Keep the label exactly:
 
@@ -73,19 +77,20 @@ Why this, this week
 
 Actions:
 
+- `Capacity: [current capacity]`
 - `Try something else`
-- `Share feedback`
+- `Give feedback`
 
-`Try something else` is an action, not feedback. `Share feedback` opens feedback options. Feedback chips are hidden by default.
+These controls should read as one quiet secondary control group and wrap cleanly on mobile. `Try something else` is an action, not feedback. `Give feedback` opens feedback options. Feedback chips are hidden by default.
 
 ## Current Capacity Control
 
-Capacity is a visible control outside and above the card. It describes the user's available life energy, not suggestion size and not a judgment.
+Capacity is a visible control in the lower action group, near try-again and feedback. It describes the user's available life energy, not suggestion size and not a judgment.
 
 Visible line:
 
 ```text
-Current capacity: Bare minimum
+Capacity: Bare minimum
 ```
 
 Picker title:
@@ -176,6 +181,7 @@ Menu interaction rules:
 - Use no more than two internal zone separators in the card.
 - Practice text should have comfortable line-height and readable text measure.
 - Lower controls should be visibly secondary.
+- If the theme is two short sentences, render them as two visual lines. Single-sentence themes render normally.
 
 ## Typography
 
@@ -184,14 +190,14 @@ Menu interaction rules:
 - Theme is the dominant type on the screen.
 - Practice paragraph is readable and calm.
 - Intention is visually distinct, softer, and ritual-like.
-- `A question to carry` and `Why this fits` are quiet disclosure summaries.
+- `Question to carry` is a warm reflective section.
+- `Why this fits` is a quiet disclosure summary.
 - Supporting text is smaller and muted.
 
 ## Anti-Patterns
 
 - Do not render every brief field as a labeled section.
 - Do not make the screen feel like a form or worksheet.
-- Do not show reflection prompt by default.
 - Do not show `whyThis` content by default.
 - Do not show feedback chips by default.
 - Do not show raw trace/debug/source ids by default.

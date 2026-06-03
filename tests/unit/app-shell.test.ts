@@ -45,19 +45,26 @@ describe("app shell rendering", () => {
     const practiceIndex = html.indexOf('data-testid="recommended-ritual"');
     const intentionIndex = html.indexOf("Let attention gather gently.");
     const windowIndex = html.indexOf("Thursday evening, five minutes or less.");
-    const questionIndex = html.indexOf("A question to carry");
+    const questionIndex = html.indexOf("Question to carry");
     const whyIndex = html.indexOf("Why this fits");
     const tryAgainIndex = html.indexOf("Try something else");
-    const feedbackIndex = html.indexOf("Share feedback");
+    const feedbackIndex = html.indexOf("Give feedback");
+    const actionsIndex = html.indexOf('class="brief__actions"');
+    const capacityIndex = html.indexOf('data-capacity-control="true"');
 
     expect(html).toContain('class="brief__core"');
     expect(html).toContain('class="brief__theme"');
+    expect(html).toContain('class="brief__theme-line"');
     expect(html).toContain('class="brief__depth"');
     expect(html).toContain('class="brief__actions"');
-    expect(html).toContain("Current capacity: <span>Bare minimum</span>");
+    expect(html).toContain('class="brief__control-group"');
+    expect(html).toContain("Capacity: <span>Bare minimum</span>");
+    expect(html).not.toContain("Current capacity:");
     expect(html).toContain('data-capacity-toggle="true"');
     expect(html).toContain('aria-expanded="false"');
     expect(html).not.toContain("How much do you have this week?");
+    expect(actionsIndex).toBeGreaterThan(-1);
+    expect(capacityIndex).toBeGreaterThan(actionsIndex);
     expect(html).toContain("This week");
     expect(html).toContain("Profile settings");
     expect(html).toContain("Sign out");
@@ -82,9 +89,10 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("Optional:");
     expect(html).not.toContain("No add-on needed.");
     expect(html).toContain("Let attention gather gently.");
-    expect(html).toContain("A question to carry");
+    expect(html).toContain("Question to carry");
     expect(html).not.toContain("Need a different suggestion?");
-    expect(html).toContain("Share feedback");
+    expect(html).toContain("Give feedback");
+    expect(html).not.toContain("Share feedback");
     expect(html).toContain('data-feedback-type="good"');
     expect(html).not.toContain('data-feedback-type="too_much"');
     expect(html).not.toContain("Simpler, please");
@@ -94,8 +102,8 @@ describe("app shell rendering", () => {
     expect(html).toContain('data-feedback-type="skipped"');
     expect(html).toContain('data-feedback-type="try_again"');
     expect(html).toContain("Try something else");
-    expect(html).toContain('<details class="brief__question-details" aria-label="A question to carry">');
-    expect(html).not.toContain('<details class="brief__question-details" open');
+    expect(html).toContain('<section class="brief__question" aria-label="Question to carry">');
+    expect(html).not.toContain('class="brief__question-details"');
     expect(html).toContain('<details class="why-this" aria-label="Why this fits">');
     expect(html).not.toContain('<details class="why-this" open');
     expect(html).toContain('<details class="feedback" aria-label="Feedback">');
@@ -132,7 +140,7 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("Calendar");
   });
 
-  it("renders the current-capacity picker when requested", () => {
+  it("renders the capacity picker in the brief controls when requested", () => {
     const privateBriefData = resolvePrivateBriefData({});
     const brief = generateWeeklyBrief({
       ...privateBriefData.input,
@@ -144,7 +152,13 @@ describe("app shell rendering", () => {
       capacityPickerOpen: true,
     });
 
-    expect(html).toContain("Current capacity: <span>Steady</span>");
+    const actionsIndex = html.indexOf('class="brief__actions"');
+    const capacityIndex = html.indexOf('data-capacity-control="true"');
+
+    expect(html).toContain("Capacity: <span>Steady</span>");
+    expect(html).not.toContain("Current capacity:");
+    expect(actionsIndex).toBeGreaterThan(-1);
+    expect(capacityIndex).toBeGreaterThan(actionsIndex);
     expect(html).toContain('aria-expanded="true"');
     expect(html).toContain("How much do you have this week?");
     expect(html).toContain("Surviving — nothing required");
@@ -178,6 +192,21 @@ describe("app shell rendering", () => {
     expect(intentionIndex).toBeLessThan(windowIndex);
   });
 
+  it("splits two-sentence brief themes into two visual lines", () => {
+    const privateBriefData = resolvePrivateBriefData({});
+    const brief = generateWeeklyBrief(privateBriefData.input);
+    const html = renderSignedInShell(privateBriefData, {
+      brief: {
+        ...brief,
+        theme: "Notice what is already clear. Tend one living thing.",
+      },
+    });
+
+    expect(html).toContain(
+      '<span class="brief__theme-line">Notice what is already clear.</span><span class="brief__theme-line">Tend one living thing.</span>',
+    );
+  });
+
   it("hides the optional line when no add-on is needed", () => {
     const privateBriefData = resolvePrivateBriefData({});
     const brief = generateWeeklyBrief(privateBriefData.input);
@@ -191,7 +220,7 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("Optional:");
     expect(html).not.toContain("No add-on needed.");
     expect(html).toContain("Let attention gather gently.");
-    expect(html).toContain("A question to carry");
+    expect(html).toContain("Question to carry");
   });
 
   it("renders profile tuning only when the profile settings view is selected", () => {

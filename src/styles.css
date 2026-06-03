@@ -176,8 +176,16 @@ h2 {
 
 .brief__theme {
   max-width: 650px;
-  font-size: clamp(2.35rem, 7vw, 4rem);
+  font-size: clamp(2.3rem, 6.4vw, 3.75rem);
   line-height: 1.02;
+}
+
+.brief__theme-line {
+  display: block;
+}
+
+.brief__theme-line + .brief__theme-line {
+  margin-top: 0.04em;
 }
 
 .brief__practice {
@@ -214,12 +222,17 @@ h2 {
 }
 
 .brief__actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 14px;
+  display: grid;
+  gap: 12px;
   padding-top: 20px;
   border-top: 1px solid rgba(217, 208, 193, 0.72);
+}
+
+.brief__control-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 10px;
 }
 
 .prompt {
@@ -237,7 +250,6 @@ h2 {
 }
 
 .trace summary,
-.brief__question-details summary,
 .why-this summary,
 .feedback summary {
   color: #53645a;
@@ -246,27 +258,77 @@ h2 {
   font-size: 0.96rem;
 }
 
-.brief__question-details p,
+.brief__question {
+  padding: 16px 18px;
+  border: 1px solid rgba(200, 190, 173, 0.58);
+  border-radius: 8px;
+  background: rgba(247, 243, 235, 0.52);
+}
+
+.brief__question-label {
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: #53645a;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.brief__question p,
 .why-this p {
   margin-top: 12px;
   color: #435349;
 }
 
-.brief__question-details summary:hover,
+.brief__question .brief__question-label {
+  margin-top: 0;
+}
+
 .why-this summary:hover {
   color: #26312c;
 }
 
 .feedback summary {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
   width: fit-content;
-  text-decoration: underline;
-  text-decoration-color: rgba(83, 100, 90, 0.38);
-  text-underline-offset: 3px;
+  padding: 0 14px;
+  border: 1px solid #b7c2bb;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.62);
+  color: #26312c;
+  box-shadow: 0 1px 0 rgba(38, 49, 44, 0.06);
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    color 140ms ease,
+    transform 80ms ease;
+}
+
+.feedback summary::-webkit-details-marker {
+  display: none;
+}
+
+.feedback summary::marker {
+  content: "";
 }
 
 .feedback summary:hover {
-  color: #26312c;
-  text-decoration-color: currentColor;
+  border-color: #667b5c;
+  background: #eef3f1;
+  box-shadow: 0 2px 7px rgba(51, 72, 61, 0.11);
+}
+
+.feedback summary:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(51, 72, 61, 0.12);
+}
+
+.feedback summary:focus-visible {
+  outline: 3px solid rgba(102, 123, 92, 0.34);
+  outline-offset: 2px;
 }
 
 .feedback {
@@ -348,6 +410,7 @@ h2 {
   background: rgba(255, 255, 255, 0.62);
   color: #26312c;
   cursor: pointer;
+  box-shadow: 0 1px 0 rgba(38, 49, 44, 0.06);
   transition:
     background 140ms ease,
     border-color 140ms ease,
@@ -360,35 +423,56 @@ h2 {
   position: relative;
   z-index: 4;
   width: fit-content;
-  margin: 0 0 14px;
+  margin: 0;
 }
 
 .capacity-control__toggle {
-  min-height: 34px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: #53645a;
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 14px;
+  border: 1px solid #b7c2bb;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.62);
+  color: #26312c;
+  box-shadow: 0 1px 0 rgba(38, 49, 44, 0.06);
   cursor: pointer;
   font: inherit;
-  font-size: 0.95rem;
+  font-size: 0.96rem;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    color 140ms ease,
+    transform 80ms ease;
 }
 
 .capacity-control__toggle span {
   color: #26312c;
   font-weight: 700;
-  text-decoration: underline;
-  text-decoration-color: rgba(83, 100, 90, 0.38);
-  text-underline-offset: 3px;
 }
 
-.capacity-control__toggle:hover span {
-  text-decoration-color: currentColor;
+.capacity-control__chevron {
+  margin-left: 2px;
+  color: #667b5c;
+}
+
+.capacity-control__toggle:hover {
+  border-color: #667b5c;
+  background: #eef3f1;
+  box-shadow: 0 2px 7px rgba(51, 72, 61, 0.11);
+}
+
+.capacity-control__toggle:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(51, 72, 61, 0.12);
 }
 
 .capacity-control__toggle:focus-visible {
   outline: 3px solid rgba(102, 123, 92, 0.34);
-  outline-offset: 3px;
+  outline-offset: 2px;
 }
 
 .capacity-control__popover {
@@ -651,10 +735,12 @@ fieldset {
   outline-offset: 2px;
 }
 
-.app-menu__button span {
+.app-menu__line {
   display: block;
   width: 20px;
   height: 2px;
+  min-height: 2px;
+  flex: 0 0 2px;
   border-radius: 999px;
   background: currentColor;
 }
