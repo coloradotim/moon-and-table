@@ -26,7 +26,6 @@ import {
   getNextMoonPhaseMilestoneForAngle,
 } from "../lib/moon-phase-glyph";
 import type { PrivateBriefData } from "../lib/private-data";
-import { getGroupedProfilePreferenceOptions } from "../lib/profile-preference-taxonomy";
 import {
   PROFILE_TUNING_ASTROLOGY_VISIBILITY,
   type ProfileTuningProfile,
@@ -55,6 +54,50 @@ const capacityPickerDescriptions: Record<CapacityMode, string> = {
   steady: "about twenty minutes",
   high: "about half an hour",
 };
+const profileCapacityLabels: Record<CapacityMode, string> = {
+  pause: "Barely any",
+  low: "A little",
+  steady: "Enough to engage",
+  high: "Room for something deeper",
+};
+const ritualSizeChoices = ["five", "twenty", "thirty", "custom"] as const;
+const ritualSizeLabels: Record<(typeof ritualSizeChoices)[number], string> = {
+  five: "Five minutes or less",
+  twenty: "About twenty minutes",
+  thirty: "About half an hour",
+  custom: "Custom",
+};
+const astrologyVisibilityLabels: Record<string, string> = {
+  subtle: "Subtle",
+  balanced: "Balanced",
+  explicit: "Explicit",
+};
+const profileWorksOptions = [
+  { value: "home_tending", label: "Home tending" },
+  { value: "kitchen", label: "Kitchen" },
+  { value: "plant_tending", label: "Plants" },
+  { value: "candle_or_light", label: "Candle or light" },
+  { value: "conversation", label: "Conversation" },
+  { value: "reflection", label: "Reflection" },
+  { value: "seasonal", label: "Seasonal" },
+];
+const profileAvoidOptions = [
+  { value: "shopping_required", label: "Shopping required" },
+  { value: "heavy_cleanup", label: "Heavy cleanup" },
+  { value: "long_journaling", label: "Long journaling" },
+  { value: "elaborate_setup", label: "Elaborate setup" },
+  { value: "emotionally_heavy", label: "Emotionally heavy" },
+  { value: "live_flame", label: "Live flame" },
+  { value: "smoke", label: "Smoke" },
+];
+const profileToneOptions = [
+  { value: "practical", label: "Practical", description: "Plain, useful, low-fuss." },
+  { value: "warm", label: "Warm", description: "Gentle and encouraging." },
+  { value: "direct", label: "Direct", description: "Clear, brief, not precious." },
+  { value: "symbolic", label: "Symbolic", description: "A little more magical." },
+  { value: "playful", label: "Playful", description: "Lighter and less solemn." },
+  { value: "romantic", label: "Tender", description: "Soft, affectionate, intimate." },
+];
 
 export type SignedInView = "this_week" | "profile_settings" | "how_it_works";
 
@@ -68,6 +111,7 @@ export type SignedInShellOptions = {
   selectedFeedbackType?: BriefFeedbackType;
   savingFeedbackType?: BriefFeedbackType;
   showDebugTrace?: boolean;
+  activeProfileSettingsTabId?: string | null;
 };
 
 function escapeHtml(value: string): string {
@@ -584,69 +628,100 @@ function renderSelectOptions(
     .join("");
 }
 
-function renderStyleOptions(
+function renderChoiceOptions(
   name: "preferredRitualStyles" | "avoidedRitualStyles",
   selectedValues: string[],
+  options: Array<{ value: string; label: string; description?: string }>,
 ): string {
   const selectedValueSet = new Set(selectedValues);
 
-  return getGroupedProfilePreferenceOptions(selectedValues)
-    .filter((group) => group.group !== "audience")
-    .map((group) => {
-      const options = group.options
-        .map((option) => {
-          const checkedAttribute = selectedValueSet.has(option.value) ? " checked" : "";
-
-          return `
-            <label class="choice-pill">
-              <input
-                type="checkbox"
-                name="${name}"
-                value="${escapeHtml(option.value)}"${checkedAttribute}
-              />
-              <span>${escapeHtml(option.label)}</span>
-            </label>
-          `;
-        })
-        .join("");
+  return options
+    .map((option) => {
+      const checkedAttribute = selectedValueSet.has(option.value) ? " checked" : "";
 
       return `
-        <div class="preference-group">
-          <p class="preference-group-label">${escapeHtml(group.label)}</p>
-          <div class="choice-list">
-            ${options}
-          </div>
-        </div>
+        <label class="profile-option">
+          <input
+            type="checkbox"
+            name="${name}"
+            value="${escapeHtml(option.value)}"${checkedAttribute}
+          />
+          <span>
+            <strong>${escapeHtml(option.label)}</strong>
+            ${option.description ? `<small>${escapeHtml(option.description)}</small>` : ""}
+          </span>
+        </label>
       `;
     })
     .join("");
 }
 
-function renderAssumptionControls(settings: ProfileTuningSettings): string {
-  if (settings.assumptions.length === 0) {
-    return `<p class="muted">No editable preferences are saved yet.</p>`;
+function renderSummaryItem(label: string, value: string): string {
+  return `
+    <div class="profile-summary__item">
+      <dt>${escapeHtml(label)}</dt>
+      <dd>${escapeHtml(value)}</dd>
+    </div>
+  `;
+}
+
+function getRitualSizeChoice(minutes: number): (typeof ritualSizeChoices)[number] {
+  if (minutes <= 5) {
+    return "five";
   }
 
-  return settings.assumptions
-    .map((assumption) => {
-      const disabledAttribute =
-        !assumption.editable || typeof assumption.value !== "boolean"
-          ? " disabled"
-          : "";
-      const checkedAttribute = assumption.value === true ? " checked" : "";
+  if (minutes <= 20) {
+    return "twenty";
+  }
 
-      return `
-        <label class="toggle-row">
-          <input
-            type="checkbox"
-            name="assumption.${escapeHtml(assumption.key)}"
-            value="true"${checkedAttribute}${disabledAttribute}
-          />
-          <span>${escapeHtml(assumption.label)}</span>
-        </label>
-      `;
-    })
-    .join("");
+  if (minutes <= 30) {
+    return "thirty";
+  }
+
+  return "custom";
+}
+
+function renderRitualSizeControls(minutes: number): string {
+  const selectedChoice = getRitualSizeChoice(minutes);
+  const customHiddenAttribute = selectedChoice === "custom" ? "" : " hidden";
+
+  return `
+    <label>
+      <span>Maximum ritual size</span>
+      <select name="ritualSizeChoice">
+        ${renderSelectOptions(ritualSizeChoices, selectedChoice, ritualSizeLabels)}
+      </select>
+    </label>
+
+    <label class="custom-duration-field"${customHiddenAttribute}>
+      <span>Custom minutes</span>
+      <input
+        name="maxRitualDurationMinutes"
+        type="number"
+        min="0"
+        max="30"
+        step="1"
+        value="${minutes}"
+      />
+    </label>
+  `;
+}
+
+function renderAstrologyProfileNote(settings: ProfileTuningSettings): string {
+  const placementCount = settings.natalProfile?.placements.length ?? 0;
+  const hasThemeMetadata =
+    (settings.profileThemeKeys?.length ?? 0) > 0 ||
+    (settings.astrologyProfileThemeKeys?.length ?? 0) > 0;
+  const status = placementCount > 0
+    ? "loaded privately"
+    : hasThemeMetadata
+      ? "theme metadata loaded"
+      : "not loaded";
+  const placements = placementCount > 0
+    ? `${placementCount} private placements available`
+    : "No private placements available";
+
+  return `${status}. ${placements}.`;
 }
 
 function renderFeedbackButton(
@@ -670,81 +745,124 @@ function renderFeedbackButton(
   `;
 }
 
-function renderTuningProfileForm(
-  profile: ProfileTuningProfile,
-  isOpen: boolean,
-): string {
+function renderProfileSettingsForm(profile: ProfileTuningProfile): string {
   const settings = profile.settings;
-  const openAttribute = isOpen ? " open" : "";
 
   return `
-    <details class="profile-tuning-card"${openAttribute}>
-      <summary>
-        <span>${escapeHtml(profile.label)}</span>
-        <span class="muted">Open to edit settings</span>
-      </summary>
-
-      <form
-        class="tuning-form"
-        data-profile-tuning-form="true"
-        data-profile-tuning-id="${escapeHtml(profile.id)}"
-      >
+    <form
+      class="tuning-form profile-settings-form"
+      data-profile-tuning-form="true"
+      data-profile-tuning-id="${escapeHtml(profile.id)}"
+    >
+      <section class="profile-settings-block">
+        <h3>Defaults</h3>
         <div class="tuning-grid">
           <label>
-            <span>Default capacity</span>
+            <span>Usual energy</span>
             <select name="defaultCapacityMode">
-              ${renderSelectOptions(capacityModes, settings.defaultCapacityMode)}
+              ${renderSelectOptions(capacityModes, settings.defaultCapacityMode, profileCapacityLabels)}
             </select>
           </label>
 
-          <label>
-            <span>Max ritual time (minutes)</span>
-            <input
-              name="maxRitualDurationMinutes"
-              type="number"
-              min="0"
-              max="30"
-              step="1"
-              value="${settings.maxRitualDurationMinutes}"
-            />
-          </label>
+          ${renderRitualSizeControls(settings.maxRitualDurationMinutes)}
 
           <label>
-            <span>Astrology detail</span>
+            <span>Astrology visibility</span>
             <select name="astrologyVisibility">
-              ${renderSelectOptions(PROFILE_TUNING_ASTROLOGY_VISIBILITY, settings.astrologyVisibility)}
+              ${renderSelectOptions(PROFILE_TUNING_ASTROLOGY_VISIBILITY, settings.astrologyVisibility, astrologyVisibilityLabels)}
             </select>
+            <small>${escapeHtml(renderAstrologyProfileNote(settings))}</small>
           </label>
         </div>
+      </section>
 
+      <section class="profile-settings-block">
+        <h3>Long-term fit</h3>
         <fieldset>
-          <legend>Prefer</legend>
-          ${renderStyleOptions("preferredRitualStyles", settings.preferredRitualStyles)}
-        </fieldset>
-
-        <fieldset>
-          <legend>Avoid</legend>
-          ${renderStyleOptions("avoidedRitualStyles", settings.avoidedRitualStyles)}
-        </fieldset>
-
-        <fieldset>
-          <legend>Suggestions usually work better when...</legend>
-          <div class="toggle-list">
-            ${renderAssumptionControls(settings)}
+          <legend>What usually works</legend>
+          <div class="profile-option-list">
+            ${renderChoiceOptions("preferredRitualStyles", settings.preferredRitualStyles, profileWorksOptions)}
           </div>
         </fieldset>
 
-        <div class="tuning-actions">
-          <button class="primary-action" type="submit">${escapeHtml(`Save ${profile.label}'s settings`)}</button>
-          <p class="muted" data-profile-tuning-status="true">Saved to this profile.</p>
+        <fieldset>
+          <legend>Avoid by default</legend>
+          <div class="profile-option-list">
+            ${renderChoiceOptions("avoidedRitualStyles", settings.avoidedRitualStyles, profileAvoidOptions)}
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="profile-settings-block">
+        <h3>Language</h3>
+        <fieldset>
+          <legend>How should the recommendation sound?</legend>
+          <div class="profile-option-list">
+            ${renderChoiceOptions("preferredRitualStyles", settings.preferredRitualStyles, profileToneOptions)}
+          </div>
+        </fieldset>
+      </section>
+
+      <div class="tuning-actions">
+        <button class="primary-action" type="submit">${escapeHtml(`Save ${profile.label}'s settings`)}</button>
+        <p class="muted" data-profile-tuning-status="true" aria-live="polite"></p>
+      </div>
+    </form>
+  `;
+}
+
+function renderProfileSettingsPanel(profile: ProfileTuningProfile): string {
+  return `
+    <article class="profile-settings-panel" data-profile-settings-panel="${escapeHtml(profile.id)}">
+      <div class="profile-settings-panel__header">
+        <h3>${escapeHtml(profile.label)}</h3>
+        <p class="muted">What is usually true for this profile.</p>
+      </div>
+
+      ${renderProfileSettingsForm(profile)}
+    </article>
+  `;
+}
+
+function renderHouseholdSettingsPanel(profiles: ProfileTuningProfile[]): string {
+  const loadedProfileLabels = profiles
+    .filter((profile) => (profile.settings.natalProfile?.placements.length ?? 0) > 0)
+    .map((profile) => profile.label);
+  const firstProfile = profiles[0];
+  const householdLabels = firstProfile?.settings.audienceLabels;
+
+  return `
+    <article class="profile-settings-panel" data-profile-settings-panel="household">
+      <div class="profile-settings-panel__header">
+        <h3>Household</h3>
+        <p class="muted">Shared defaults and household-level fit.</p>
+      </div>
+
+      <dl class="profile-summary">
+        ${renderSummaryItem("Default audience", householdLabels?.together ?? "Together")}
+        ${renderSummaryItem("Usually works well", "Home tending, kitchen, conversation, plants")}
+        ${renderSummaryItem("Usually avoid", "Shopping required, elaborate setup, heavy cleanup")}
+        ${renderSummaryItem("Private astrology context", loadedProfileLabels.length > 0 ? `${loadedProfileLabels.join(", ")} loaded privately` : "No private placements loaded")}
+      </dl>
+
+      <section class="profile-settings-block">
+        <h3>Household editing</h3>
+        <p class="muted">Household-level editing is separate from personal profile defaults and is not wired to a dedicated Firestore document yet.</p>
+      </section>
+
+      <details class="profile-advanced">
+        <summary>Advanced tuning</summary>
+        <div class="profile-advanced__body">
+          <p class="muted">Future household-only exclusions, shared defaults, and diagnostics can live here without crowding the main profile page.</p>
         </div>
-      </form>
-    </details>
+      </details>
+    </article>
   `;
 }
 
 export function renderProfileTuningSection(
   privateBriefData: PrivateBriefData,
+  activeTabId?: string | null,
 ): string {
   const profiles = privateBriefData.tuningProfiles;
 
@@ -752,24 +870,53 @@ export function renderProfileTuningSection(
     return `
       <section class="tuning-panel" aria-label="Profile tuning">
         <div>
-          <p class="label">Tune profiles</p>
-          <h2>Make the suggestions fit better</h2>
+          <p class="label">Profile settings</p>
+          <h2>What is usually true?</h2>
         </div>
         <p class="muted">Household settings will appear here when they are available.</p>
       </section>
     `;
   }
 
+  const tabItems = [
+    ...profiles.map((profile) => ({ id: profile.id, label: profile.label })),
+    { id: "household", label: "Household" },
+  ];
+  const selectedTabId = tabItems.some((item) => item.id === activeTabId)
+    ? activeTabId
+    : tabItems[0]?.id;
+  const activeProfile = profiles.find((profile) => profile.id === selectedTabId);
+  const activePanel = activeProfile
+    ? renderProfileSettingsPanel(activeProfile)
+    : renderHouseholdSettingsPanel(profiles);
+
   return `
     <section class="tuning-panel" aria-label="Profile tuning">
       <div>
-        <p class="label">Tune profiles</p>
-        <h2>Make the suggestions fit better</h2>
-        <p class="muted">Fine-tune each household profile separately.</p>
+        <p class="label">Profile settings</p>
+        <h2>What is usually true?</h2>
+        <p class="muted">Profiles hold long-term defaults. The check-in handles what is true right now.</p>
       </div>
-      <div class="profile-tuning-list">
-        ${profiles.map((profile, index) => renderTuningProfileForm(profile, index === 0)).join("")}
+
+      <div class="profile-settings-tabs" role="tablist" aria-label="Profile settings">
+        ${tabItems
+          .map((item) => {
+            const selected = item.id === selectedTabId;
+
+            return `
+              <button
+                class="profile-settings-tab${selected ? " profile-settings-tab--active" : ""}"
+                type="button"
+                role="tab"
+                aria-selected="${selected ? "true" : "false"}"
+                data-profile-settings-tab="${escapeHtml(item.id)}"
+              >${escapeHtml(item.label)}</button>
+            `;
+          })
+          .join("")}
       </div>
+
+      ${activePanel}
     </section>
   `;
 }
@@ -1408,7 +1555,10 @@ export function renderSignedInShell(
       ${debugTrace}
     </article>
   `;
-  const profileSettings = renderProfileTuningSection(privateBriefData);
+  const profileSettings = renderProfileTuningSection(
+    privateBriefData,
+    options.activeProfileSettingsTabId,
+  );
   const howItWorks = renderHowItWorksSection();
   const activeContent =
     activeView === "profile_settings"

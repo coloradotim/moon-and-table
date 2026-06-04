@@ -15,6 +15,25 @@ Moon & Table should help choose one ritual that fits the moment. It should not b
 
 Profiles hold durable defaults and private symbolic themes. Check-ins should capture current context only. Feedback should tune future recommendations over time. Current-moment ritual selection work should not be moved into the profile page.
 
+## Profile Settings
+
+The profile settings page is for long-term defaults, not today's ritual choice. It should show one editable profile or household surface at a time, using tabs such as `person_a`, `person_b`, and `household` with private display labels supplied at runtime.
+
+The main editor should stay calm and durable:
+
+- usual energy/capacity
+- maximum ritual size
+- astrology visibility
+- broad long-term fit preferences
+- broad long-term avoid preferences
+- tone preferences
+- private astrology profile status
+- a simple private astrology loaded/not-loaded note
+
+Specific action-pattern tags, ingredient-level preferences, herb/color/candle specifics, raw-ish diagnostics, and legacy assumptions should not appear in the normal editor. The default view should not expose the whole internal preference taxonomy.
+
+The profile editor may show private runtime display labels and private loaded/not-loaded status after sign-in, but source-controlled code and tests must continue to use placeholders only. It should not show raw natal placements, birth data, real emails, relationship details, private schedules, or private source text.
+
 ## Opening Copy
 
 The check-in flow uses simple, signed-in copy:

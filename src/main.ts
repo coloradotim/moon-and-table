@@ -71,12 +71,33 @@ let activeSignedInState: Extract<AppAuthState, { status: "signed_in" }> | null =
 let activePrivateBriefData: PrivateBriefData | null = null;
 let activeBrief: WeeklyBrief | null = null;
 let activeSignedInView: SignedInView = "this_week";
+let activeProfileSettingsTabId: string | null = null;
 let activeCapacityModeOverride: CapacityMode | null = null;
 let activeCapacityPickerOpen = false;
 let activeCheckInDraft: RitualCheckInDraft = createInitialRitualCheckInDraft();
 let activeCurrentRitualCheckIn: CurrentRitualCheckIn | null = null;
 let checkInLoadingTimeout: number | null = null;
 const showDebugTrace = new URLSearchParams(window.location.search).get("debug") === "true";
+
+function getRequestedSignedInView(): SignedInView | null {
+  const requestedView = new URLSearchParams(window.location.search).get("view");
+  const requestedHash = window.location.hash.replace(/^#/, "");
+  const requested = requestedView ?? requestedHash;
+
+  if (requested === "profile" || requested === "profile_settings") {
+    return "profile_settings";
+  }
+
+  if (requested === "how" || requested === "how_it_works") {
+    return "how_it_works";
+  }
+
+  if (requested === "this_week") {
+    return "this_week";
+  }
+
+  return null;
+}
 
 function clearCheckInLoadingTimeout(): void {
   if (!checkInLoadingTimeout) {
@@ -130,6 +151,15 @@ function renderActiveCheckInShell(): void {
 }
 
 function renderPrivateWelcomeOrCheckIn(): void {
+  const requestedView = getRequestedSignedInView();
+
+  if (requestedView && requestedView !== "this_week") {
+    activeSignedInView = requestedView;
+    activeBrief = generateWeeklyBrief(getActiveBriefInput());
+    renderActiveSignedInShell();
+    return;
+  }
+
   if (activePrivateBriefData && shouldShowPrivateFirstLoginWelcome(activePrivateBriefData)) {
     appRoot.innerHTML = renderPrivateFirstLoginWelcomeShell();
     return;
@@ -158,6 +188,7 @@ function renderActiveSignedInShell(options: {
     selectedFeedbackType: options.selectedFeedbackType,
     savingFeedbackType: options.savingFeedbackType,
     showDebugTrace,
+    activeProfileSettingsTabId,
   });
 }
 
@@ -188,6 +219,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
           activePrivateBriefData = null;
           activeBrief = null;
           activeSignedInView = "this_week";
+          activeProfileSettingsTabId = null;
           activeCapacityModeOverride = null;
           activeCapacityPickerOpen = false;
           appRoot.innerHTML = renderAppShell({
@@ -198,6 +230,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         }
 
         activePrivateBriefData = privateBriefData;
+        activeProfileSettingsTabId = null;
         activeBrief = null;
         activeCurrentRitualCheckIn = null;
         activeCheckInDraft = createInitialRitualCheckInDraft();
@@ -210,6 +243,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activePrivateBriefData = null;
         activeBrief = null;
         activeSignedInView = "this_week";
+        activeProfileSettingsTabId = null;
         activeCapacityModeOverride = null;
         activeCapacityPickerOpen = false;
         activeCurrentRitualCheckIn = null;
@@ -262,6 +296,7 @@ function completeCheckIn(checkIn: CurrentRitualCheckIn): void {
   activeCapacityModeOverride = null;
   activeCapacityPickerOpen = false;
   activeSignedInView = "this_week";
+  activeProfileSettingsTabId = null;
   activeBrief = generateWeeklyBrief(getActiveBriefInput());
   renderActiveSignedInShell();
 }
@@ -488,6 +523,24 @@ function getStringListFormValues(formData: FormData, key: string): string[] {
     .filter(Boolean);
 }
 
+function getProfileRitualDuration(formData: FormData): number {
+  const ritualSizeChoice = formData.get("ritualSizeChoice");
+
+  if (ritualSizeChoice === "five") {
+    return 5;
+  }
+
+  if (ritualSizeChoice === "twenty") {
+    return 20;
+  }
+
+  if (ritualSizeChoice === "thirty") {
+    return 30;
+  }
+
+  return Number(formData.get("maxRitualDurationMinutes"));
+}
+
 function getProfileTuningFormInput(
   form: HTMLFormElement,
   tuningProfile: ProfileTuningProfile,
@@ -495,9 +548,7 @@ function getProfileTuningFormInput(
   const formData = new FormData(form);
   const defaultCapacityMode = formData.get("defaultCapacityMode");
   const astrologyVisibility = formData.get("astrologyVisibility");
-  const maxRitualDurationMinutes = Number(
-    formData.get("maxRitualDurationMinutes"),
-  );
+  const maxRitualDurationMinutes = getProfileRitualDuration(formData);
 
   if (!isCapacityMode(defaultCapacityMode)) {
     throw new Error("Choose a supported capacity mode.");
@@ -528,12 +579,7 @@ function getProfileTuningFormInput(
       "avoidedRitualStyles",
     ),
     astrologyVisibility,
-    assumptionValues: Object.fromEntries(
-      tuningProfile.settings.assumptions.map((assumption) => [
-        assumption.key,
-        formData.has(`assumption.${assumption.key}`),
-      ]),
-    ),
+    assumptionValues: {},
   };
 }
 
@@ -671,6 +717,7 @@ function startCheckInOver(): void {
   activeCapacityModeOverride = null;
   activeCapacityPickerOpen = false;
   activeSignedInView = "this_week";
+  activeProfileSettingsTabId = null;
   renderActiveCheckInShell();
 }
 
@@ -698,6 +745,10 @@ appRoot.addEventListener("click", (event) => {
   const homeAction = homeActionTarget?.dataset.homeAction;
   const menuActionTarget = target.closest<HTMLElement>("[data-menu-action]");
   const menuAction = menuActionTarget?.dataset.menuAction;
+  const profileSettingsTabTarget = target.closest<HTMLElement>(
+    "[data-profile-settings-tab]",
+  );
+  const profileSettingsTab = profileSettingsTabTarget?.dataset.profileSettingsTab;
   const feedbackType = target.dataset.feedbackType;
   const capacityMode = target.dataset.capacityMode;
   const checkInActionTarget = target.closest<HTMLElement>("[data-check-in-action]");
@@ -758,6 +809,13 @@ appRoot.addEventListener("click", (event) => {
       renderActiveSignedInShell();
     }
 
+    return;
+  }
+
+  if (profileSettingsTab) {
+    event.preventDefault();
+    activeProfileSettingsTabId = profileSettingsTab;
+    renderActiveSignedInShell();
     return;
   }
 
@@ -839,6 +897,7 @@ subscribeToAuthState(firebaseServices, (state) => {
   activePrivateBriefData = null;
   activeBrief = null;
   activeSignedInView = "this_week";
+  activeProfileSettingsTabId = null;
   activeCapacityModeOverride = null;
   activeCapacityPickerOpen = false;
   activeCurrentRitualCheckIn = null;

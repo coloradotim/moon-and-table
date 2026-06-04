@@ -117,15 +117,19 @@ export function buildProfileTuningUpdate(
       ),
       astrologyVisibility: input.astrologyVisibility,
       assumptions: currentSettings.assumptions.map((assumption) => {
+        if (!assumption.editable || typeof assumption.value !== "boolean") {
+          return assumption;
+        }
+
         const nextValue = input.assumptionValues[assumption.key];
 
-        if (!assumption.editable || typeof assumption.value !== "boolean") {
+        if (typeof nextValue !== "boolean") {
           return assumption;
         }
 
         return {
           ...assumption,
-          value: Boolean(nextValue),
+          value: nextValue,
           source: "user_confirmed",
           confidence: "high",
           updatedAtIso,

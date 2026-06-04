@@ -129,4 +129,22 @@ describe("profile tuning helpers", () => {
       maxRitualDurationMinutes: 20,
     });
   });
+
+  it("does not rewrite assumptions when the profile form does not submit them", () => {
+    const update = buildProfileTuningUpdate(
+      currentSettings,
+      {
+        defaultAudience: "either",
+        defaultCapacityMode: "low",
+        maxRitualDurationMinutes: 5,
+        preferredRitualStyles: ["home_tending"],
+        avoidedRitualStyles: ["shopping_required"],
+        astrologyVisibility: "balanced",
+        assumptionValues: {},
+      },
+      "2026-02-01T00:00:00.000Z",
+    );
+
+    expect(update.profile.assumptions).toEqual(currentSettings.assumptions);
+  });
 });

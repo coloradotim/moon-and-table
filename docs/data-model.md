@@ -144,6 +144,24 @@ The generator can use this context for capacity, audience fit, practice type mat
 
 It is not a long-term profile setting. It should stay in the current app session/current generated ritual flow unless a later issue explicitly adds persistence.
 
+## Profile Settings Data
+
+Profile settings are long-term private defaults. The settings UI edits one loaded profile at a time and keeps household/profile tabs separate from the current check-in flow.
+
+The main profile editor uses broad durable fields:
+
+- usual energy/capacity
+- maximum ritual size
+- astrology visibility
+- long-term fit preferences
+- long-term avoid preferences
+- tone preferences
+- private astrology loaded/not-loaded status
+
+Legacy assumptions and advanced taxonomy are not part of the normal profile editor. The default UI should not expose ingredient lists, herb lists, raw internal taxonomy groups, raw placement records, birth data, emails, private schedules, or source text.
+
+For local UI testing after sign-in, `?view=profile` or `#profile` opens Profile settings directly instead of starting the pre-brief check-in flow.
+
 ## Feedback Data
 
 | Object | Responsibility |
