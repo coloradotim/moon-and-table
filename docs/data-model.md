@@ -134,6 +134,12 @@ User-facing explanations should not show raw trace keys, repo paths, Firestore d
 
 `RecommendationDecision` is documented in `docs/recommendation-decision-model.md`. It supports developer inspection and golden tests without exposing the full scoring/debug record in the default UI.
 
+## Current Check-In Data
+
+`CurrentRitualCheckIn` is current-view context for the pre-brief flow. It records time scope, current energy/capacity, optional audience, practice type hints, optional ritual focus key, optional short focus text, and safe timing-window candidate ids.
+
+It is not a long-term profile setting. It should stay in the current app session/current generated ritual flow unless a later issue explicitly adds persistence.
+
 ## Feedback Data
 
 | Object | Responsibility |

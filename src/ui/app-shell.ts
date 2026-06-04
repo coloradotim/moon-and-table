@@ -5,6 +5,16 @@ import {
   type CapacityMode,
   type WeeklyBrief,
 } from "../lib/generate-weekly-brief";
+import {
+  audienceOptions,
+  energyCapacityOptions,
+  getPracticeOptionsForEnergy,
+  timeScopeOptions,
+  type RitualCheckInDraft,
+  type RitualCheckInEnergyCapacity,
+  type RitualCheckInTimeScope,
+} from "../lib/current-ritual-check-in";
+import { ritualFocusOptions } from "../data/ritual-focus-options";
 import type { AppAuthState } from "../lib/auth";
 import {
   BRIEF_FEEDBACK_TYPES,
@@ -167,6 +177,12 @@ function escapeHtml(value: string): string {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
+}
+
+function getFirstName(value: string | null | undefined): string {
+  const firstName = value?.trim().split(/\s+/)[0];
+
+  return firstName && firstName.length > 0 ? firstName : "there";
 }
 
 function renderOptionalAddOn(value: string): string {
@@ -366,6 +382,16 @@ function renderDeveloperDecision(brief: WeeklyBrief): string {
           <p><strong>Audience:</strong> ${escapeHtml(brief.decision.inputs.audience)}</p>
           <p><strong>Preferred:</strong> ${escapeHtml(brief.decision.inputs.preferredRitualStyles.join(" · ") || "none")}</p>
           <p><strong>Avoided:</strong> ${escapeHtml(brief.decision.inputs.avoidedRitualStyles.join(" · ") || "none")}</p>
+          <p><strong>Check-in:</strong> ${escapeHtml(
+            brief.decision.inputs.currentRitualCheckIn
+              ? [
+                  brief.decision.inputs.currentRitualCheckIn.timeScope,
+                  brief.decision.inputs.currentRitualCheckIn.energyCapacity,
+                  brief.decision.inputs.currentRitualCheckIn.audience,
+                  brief.decision.inputs.currentRitualCheckIn.ritualFocusKey,
+                ].filter(Boolean).join(" · ")
+              : "none",
+          )}</p>
           <p><strong>Natal profiles:</strong> ${escapeHtml(`${brief.decision.inputs.privateNatalProfileCount}`)} loaded</p>
           <p><strong>Natal contacts:</strong> ${escapeHtml(`${brief.decision.inputs.natalContactsComputed}`)} computed</p>
           <p><strong>Private chart status:</strong> ${escapeHtml(renderNatalDebugStatus(brief))}</p>
@@ -831,6 +857,286 @@ export function renderUnauthorizedShell(): string {
   });
 }
 
+function renderCheckInOptionButton({
+  action,
+  value,
+  label,
+  description,
+}: {
+  action: string;
+  value: string;
+  label: string;
+  description?: string;
+}): string {
+  return `
+    <button
+      class="check-in-option"
+      type="button"
+      data-check-in-action="${escapeHtml(action)}"
+      data-check-in-value="${escapeHtml(value)}"
+    >
+      <span>${escapeHtml(label)}</span>
+      ${description ? `<small>${escapeHtml(description)}</small>` : ""}
+    </button>
+  `;
+}
+
+const timeScopeAcknowledgements: Record<RitualCheckInTimeScope, string> = {
+  today: "For today.",
+  best_moment_this_week: "Looking across the week.",
+};
+
+const timeScopeReviewLabels: Record<RitualCheckInTimeScope, string> = {
+  today: "For today",
+  best_moment_this_week: "Across the week",
+};
+
+const energyAcknowledgements: Record<RitualCheckInEnergyCapacity, string> = {
+  barely_any: "Barely any capacity.",
+  a_little: "A little capacity.",
+  enough_to_engage: "Enough to engage.",
+  room_for_something_deeper: "Room for something deeper.",
+};
+
+const energyReviewLabels: Record<RitualCheckInEnergyCapacity, string> = {
+  barely_any: "Barely any",
+  a_little: "A little",
+  enough_to_engage: "Enough to engage",
+  room_for_something_deeper: "Room for something deeper",
+};
+
+function renderCheckInAcknowledgement(draft: RitualCheckInDraft): string {
+  const acknowledgement =
+    draft.step === "review"
+      ? undefined
+      : draft.ritualFocusText
+        ? draft.ritualFocusText
+        : draft.ritualFocusLabel
+          ? draft.ritualFocusLabel
+          : draft.practiceTypeLabel
+            ? draft.practiceTypeLabel
+            : draft.audience
+              ? audienceOptions.find((option) => option.key === draft.audience)?.label
+              : draft.energyCapacity
+      ? energyAcknowledgements[draft.energyCapacity]
+      : draft.timeScope
+        ? timeScopeAcknowledgements[draft.timeScope]
+        : undefined;
+
+  return acknowledgement
+    ? `<p class="check-in__acknowledgement">${escapeHtml(acknowledgement)}</p>`
+    : "";
+}
+
+function renderCheckInQuestion(draft: RitualCheckInDraft): string {
+  if (draft.step === "time_scope") {
+    return `
+      <section class="check-in-step" aria-label="Time scope">
+        <h3>Are you wanting something for today, or looking across the week?</h3>
+        <div class="check-in-options check-in-options--choice-pair">
+          ${timeScopeOptions.map((option) => renderCheckInOptionButton({
+            action: "time_scope",
+            value: option.key,
+            label: option.key === "best_moment_this_week" ? "Across the week" : option.label,
+          })).join("")}
+        </div>
+      </section>
+    `;
+  }
+
+  if (draft.step === "energy_capacity") {
+    return `
+      <section class="check-in-step" aria-label="Energy and capacity">
+        <h3>How much energy or capacity do you have?</h3>
+        <div class="check-in-options">
+          ${energyCapacityOptions.map((option) => renderCheckInOptionButton({
+            action: "energy_capacity",
+            value: option.key,
+            label: option.label,
+            description: option.description,
+          })).join("")}
+        </div>
+      </section>
+    `;
+  }
+
+  if (draft.step === "audience") {
+    return `
+      <section class="check-in-step" aria-label="Audience">
+        <h3>Who is this for?</h3>
+        <div class="check-in-options check-in-options--two">
+          ${audienceOptions.map((option) => renderCheckInOptionButton({
+            action: "audience",
+            value: option.key,
+            label: option.label,
+          })).join("")}
+        </div>
+      </section>
+    `;
+  }
+
+  if (draft.step === "practice_type" && draft.energyCapacity) {
+    return `
+      <section class="check-in-step" aria-label="Practice type">
+        <h3>What feels welcome?</h3>
+        <div class="check-in-options">
+          ${getPracticeOptionsForEnergy(draft.energyCapacity).map((option) => renderCheckInOptionButton({
+            action: "practice_type",
+            value: option.key,
+            label: option.label,
+          })).join("")}
+        </div>
+      </section>
+    `;
+  }
+
+  if (draft.step === "ritual_focus") {
+    return `
+      <section class="check-in-step" aria-label="Ritual focus">
+        <h3>What intention should this hold?</h3>
+        <div class="check-in-options">
+          ${ritualFocusOptions.map((option) => renderCheckInOptionButton({
+            action: "ritual_focus",
+            value: option.key,
+            label: option.label,
+          })).join("")}
+        </div>
+      </section>
+    `;
+  }
+
+  if (draft.step === "ritual_focus_text") {
+    return `
+      <section class="check-in-step" aria-label="Something else">
+        <h3>What intention should this hold?</h3>
+        <form class="check-in-text-form" data-check-in-text-form="true">
+          <label>
+            <span>Something else</span>
+            <input
+              name="ritualFocusText"
+              type="text"
+              maxlength="120"
+              autocomplete="off"
+            />
+          </label>
+          <button class="primary-action" type="submit">Choose ritual</button>
+        </form>
+      </section>
+    `;
+  }
+
+  return "";
+}
+
+function lowercaseFirst(value: string): string {
+  return value.charAt(0).toLowerCase() + value.slice(1);
+}
+
+function renderReviewBullet(value: string | undefined): string {
+  return value ? `<li>${escapeHtml(value)}</li>` : "";
+}
+
+function renderReviewBullets(draft: RitualCheckInDraft): string {
+  const timing = draft.timeScope
+    ? lowercaseFirst(timeScopeReviewLabels[draft.timeScope])
+    : undefined;
+  const capacity = draft.energyCapacity
+    ? `with ${lowercaseFirst(energyReviewLabels[draft.energyCapacity])} capacity`
+    : undefined;
+  const audience = draft.audience
+    ? draft.audience === "both_of_us"
+      ? "for both of you"
+      : "for you"
+    : undefined;
+  const practice = draft.practiceTypeLabel
+    ? `with ${lowercaseFirst(draft.practiceTypeLabel)}`
+    : undefined;
+  const intention = draft.ritualFocusText ?? draft.ritualFocusLabel;
+  const intentionPhrase = intention
+    ? `holding ${lowercaseFirst(intention)}`
+    : undefined;
+
+  return [
+    renderReviewBullet(timing),
+    renderReviewBullet(audience),
+    renderReviewBullet(capacity),
+    renderReviewBullet(practice),
+    renderReviewBullet(intentionPhrase),
+  ].join("");
+}
+
+function renderCheckInReview(draft: RitualCheckInDraft): string {
+  if (draft.step !== "review" || !draft.timeScope || !draft.energyCapacity) {
+    return "";
+  }
+
+  return `
+    <section class="check-in-review" aria-label="Review your choices">
+      <h3>Ready.</h3>
+      <p>I’ll look for something:</p>
+      <ul>
+        ${renderReviewBullets(draft)}
+      </ul>
+      <p>I’ll use this with your saved profile to recommend one ritual.</p>
+      <div class="check-in-review__actions">
+        <button class="primary-action" type="button" data-check-in-action="confirm_review" data-check-in-value="confirm">Recommend a ritual</button>
+        <button class="secondary-action" type="button" data-check-in-start-over="true">Start over</button>
+      </div>
+    </section>
+  `;
+}
+
+export function renderRitualCheckInShell({
+  draft,
+  displayName,
+}: {
+  draft: RitualCheckInDraft;
+  displayName?: string | null;
+}): string {
+  const intro = draft.step === "time_scope"
+    ? `
+        <header class="check-in__header">
+          <p>Welcome back, ${escapeHtml(getFirstName(displayName))}.</p>
+        </header>
+      `
+    : "";
+
+  return `
+    <section class="shell shell--check-in" aria-labelledby="app-title">
+      <header class="masthead masthead--check-in">
+        <div class="masthead__nameplate">
+          <h1 id="app-title">Moon &amp; Table</h1>
+        </div>
+      </header>
+
+      <article class="check-in" aria-label="Ritual check-in">
+        ${intro}
+        ${renderCheckInAcknowledgement(draft)}
+
+        ${draft.step === "review" ? renderCheckInReview(draft) : renderCheckInQuestion(draft)}
+      </article>
+    </section>
+  `;
+}
+
+export function renderRitualCheckInLoadingShell(): string {
+  return `
+    <section class="shell shell--check-in" aria-labelledby="app-title">
+      <header class="masthead masthead--check-in">
+        <div class="masthead__nameplate">
+          <h1 id="app-title">Moon &amp; Table</h1>
+        </div>
+      </header>
+
+      <article class="check-in check-in--loading" aria-label="Choosing ritual">
+        <span class="entry-moon-loader" aria-hidden="true"></span>
+        <p>Reading the moon.</p>
+        <p>Choosing one ritual.</p>
+      </article>
+    </section>
+  `;
+}
+
 export function renderSignedInShell(
   privateBriefData: PrivateBriefData,
   options: SignedInShellOptions = {},
@@ -877,6 +1183,11 @@ export function renderSignedInShell(
             data-try-again-action="true"
             aria-pressed="false"${options.savingFeedbackType ? " disabled" : ""}
           >${escapeHtml(options.savingFeedbackType === "try_again" ? "Saving" : feedbackLabels.try_again)}</button>
+          <button
+            class="secondary-action"
+            type="button"
+            data-check-in-start-over="true"
+          >Start over</button>
           <details class="feedback" aria-label="Feedback">
             <summary>Give feedback</summary>
             <div class="feedback__chips">

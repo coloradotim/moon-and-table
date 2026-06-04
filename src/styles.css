@@ -84,6 +84,10 @@ button:disabled {
   margin-bottom: 14px;
 }
 
+.masthead--check-in {
+  margin-bottom: 16px;
+}
+
 .masthead__nameplate {
   display: inline-flex;
   align-items: center;
@@ -315,6 +319,217 @@ h2 {
   border-radius: 8px;
   background: rgba(255, 253, 247, 0.93);
   box-shadow: 0 22px 58px rgba(79, 64, 42, 0.1);
+}
+
+.shell--check-in {
+  width: min(100%, 680px);
+  padding-top: 34px;
+}
+
+.check-in {
+  display: grid;
+  max-width: 560px;
+  gap: 24px;
+  padding: clamp(22px, 4vw, 30px);
+  border: 1px solid rgba(200, 190, 173, 0.58);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.93);
+  box-shadow: 0 22px 58px rgba(79, 64, 42, 0.1);
+}
+
+.check-in__header {
+  display: grid;
+  gap: 8px;
+}
+
+.check-in__header p {
+  max-width: 455px;
+  margin-bottom: 0;
+  color: #26312c;
+  font-size: 1.05rem;
+  font-weight: 650;
+}
+
+.check-in__acknowledgement {
+  max-width: 455px;
+  margin: 0 0 -4px;
+  color: #26312c;
+  font-size: 1.05rem;
+  font-weight: 650;
+}
+
+.check-in-step {
+  display: grid;
+  max-width: 455px;
+  gap: 16px;
+}
+
+.check-in-step h3 {
+  margin: 0;
+  color: #26312c;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-size: 1.05rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.check-in-options {
+  display: grid;
+  max-width: 320px;
+  gap: 8px;
+}
+
+.check-in-options--two {
+  max-width: 320px;
+}
+
+.check-in-options--choice-pair {
+  display: inline-grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: min(100%, 380px);
+  max-width: none;
+  justify-self: center;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid rgba(159, 174, 166, 0.78);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.72);
+}
+
+.check-in-options--choice-pair .check-in-option {
+  min-height: 42px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  text-align: center;
+}
+
+.check-in-options--choice-pair .check-in-option + .check-in-option {
+  border-left: 1px solid rgba(159, 174, 166, 0.78);
+}
+
+.check-in-options--choice-pair .check-in-option:hover {
+  background: rgba(244, 247, 242, 0.95);
+  box-shadow: none;
+}
+
+.check-in-option {
+  display: grid;
+  min-height: 40px;
+  gap: 5px;
+  align-content: center;
+  padding: 8px 12px;
+  border: 1px solid rgba(159, 174, 166, 0.72);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.58);
+  color: #26312c;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    transform 80ms ease;
+}
+
+.check-in-option span {
+  font-size: 0.98rem;
+  font-weight: 650;
+}
+
+.check-in-option small {
+  color: #52635a;
+  font-size: 0.96rem;
+  line-height: 1.35;
+}
+
+.check-in-option:hover {
+  border-color: #667b5c;
+  background: rgba(244, 247, 242, 0.92);
+  box-shadow: 0 2px 8px rgba(51, 72, 61, 0.1);
+}
+
+.check-in-option:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(51, 72, 61, 0.12);
+}
+
+.check-in-option:focus-visible {
+  outline: 3px solid rgba(102, 123, 92, 0.34);
+  outline-offset: 2px;
+}
+
+.check-in-text-form {
+  display: grid;
+  max-width: 520px;
+  gap: 16px;
+}
+
+.check-in-text-form label {
+  display: grid;
+  gap: 8px;
+  color: #52635a;
+  font-weight: 700;
+}
+
+.check-in-review {
+  display: grid;
+  max-width: 455px;
+  gap: 12px;
+}
+
+.check-in-review h3,
+.check-in--loading p {
+  margin: 0;
+  color: #26312c;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-size: 1.05rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.check-in-review p {
+  max-width: 420px;
+  margin: 0;
+  color: #52635a;
+  font-size: 1.05rem;
+  line-height: 1.42;
+}
+
+.check-in-review ul {
+  display: grid;
+  gap: 5px;
+  margin: -2px 0 0;
+  padding-left: 1.2rem;
+  color: #52635a;
+  font-size: 1.05rem;
+  line-height: 1.42;
+}
+
+.check-in-review li::marker {
+  color: #667b5c;
+}
+
+.check-in-review__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  padding-top: 4px;
+}
+
+.check-in--loading {
+  justify-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.check-in--loading .entry-moon-loader {
+  margin-bottom: 4px;
 }
 
 .auth-panel {
@@ -1248,6 +1463,14 @@ fieldset {
 
   .brief {
     padding: 24px;
+  }
+
+  .check-in {
+    padding: 24px;
+  }
+
+  .check-in-options {
+    grid-template-columns: 1fr;
   }
 
   .brief__topline {

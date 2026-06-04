@@ -4,7 +4,9 @@ import {
   renderAppShell,
   renderLoadingShell,
   renderPrivateDataLoadingShell,
+  renderRitualCheckInLoadingShell,
   renderProfileTuningSection,
+  renderRitualCheckInShell,
   renderSignedInShell,
   renderSignedOutShell,
   renderUnauthorizedShell,
@@ -13,6 +15,233 @@ import { resolvePrivateBriefData } from "../../src/lib/private-data";
 import { generateWeeklyBrief } from "../../src/lib/generate-weekly-brief";
 
 describe("app shell rendering", () => {
+  it("renders the pre-brief check-in before a generated brief", () => {
+    const html = renderRitualCheckInShell({
+      draft: { step: "time_scope" },
+      displayName: "Morgan Example",
+    });
+
+    expect(html).toContain(
+      "Welcome back, Morgan.",
+    );
+    expect(html).toContain("Are you wanting something for today, or looking across the week?");
+    expect(html).toContain("For today");
+    expect(html).toContain("Across the week");
+    expect(html).not.toContain("Use this moment and keep the ritual close at hand.");
+    expect(html).not.toContain("Let the timing layer look for a stronger fit.");
+    expect(html).not.toContain("data-testid=\"recommended-ritual\"");
+    expect(html).not.toContain('aria-label="Open menu"');
+    expect(html).not.toContain('class="app-menu__icon"');
+    expect(html).not.toContain("before it chooses");
+    expect(html).not.toContain("what are we making space for");
+    expect(html).not.toContain("tune this week");
+    expect(html).not.toContain("use usual settings");
+    expect(html).not.toContain("AI");
+    expect(html).not.toContain("algorithm");
+    expect(html).not.toContain("generated");
+  });
+
+  it("renders exact energy labels and no follow-up content before energy is chosen", () => {
+    const html = renderRitualCheckInShell({
+      draft: {
+        step: "energy_capacity",
+        timeScope: "today",
+      },
+      displayName: "Morgan Example",
+    });
+
+    expect(html).toContain("How much energy or capacity do you have?");
+    expect(html).not.toContain("Welcome back");
+    expect(html).toContain("For today.");
+    expect(html).toContain("Barely any");
+    expect(html).toContain("A pause, a noticing, or one tiny act.");
+    expect(html).toContain("A little");
+    expect(html).toContain("Five minutes or less.");
+    expect(html).toContain("Enough to engage");
+    expect(html).toContain("A simple ritual with some attention.");
+    expect(html).toContain("Room for something deeper");
+    expect(html).toContain("More time, reflection, conversation, or ritual shape.");
+    expect(html).not.toContain("Who is this for?");
+    expect(html).not.toContain("What feels welcome?");
+    expect(html).not.toContain("What intention should this hold?");
+  });
+
+  it("acknowledges the selected week scope before the next question", () => {
+    const html = renderRitualCheckInShell({
+      draft: {
+        step: "energy_capacity",
+        timeScope: "best_moment_this_week",
+      },
+      displayName: "Morgan Example",
+    });
+
+    expect(html).toContain("Looking across the week.");
+    expect(html).toContain("How much energy or capacity do you have?");
+    expect(html).not.toContain("Welcome back");
+  });
+
+  it("renders adaptive A little practice options only", () => {
+    const html = renderRitualCheckInShell({
+      draft: {
+        step: "practice_type",
+        timeScope: "today",
+        energyCapacity: "a_little",
+        capacityMode: "low",
+      },
+    });
+
+    expect(html).toContain("What feels welcome?");
+    expect(html).toContain("Home");
+    expect(html).toContain("Plant");
+    expect(html).toContain("Kitchen");
+    expect(html).toContain("Candle or light");
+    expect(html).toContain("Conversation");
+    expect(html).toContain("Surprise me");
+    expect(html).not.toContain("Who is this for?");
+    expect(html).not.toContain("Home tending");
+    expect(html).not.toContain("Reflection");
+    expect(html).not.toContain("Seasonal");
+    expect(html).not.toContain("What intention should this hold?");
+  });
+
+  it("renders audience and deeper ritual-focus steps", () => {
+    const audienceHtml = renderRitualCheckInShell({
+      draft: {
+        step: "audience",
+        timeScope: "best_moment_this_week",
+        energyCapacity: "room_for_something_deeper",
+        capacityMode: "high",
+      },
+    });
+    const practiceHtml = renderRitualCheckInShell({
+      draft: {
+        step: "practice_type",
+        timeScope: "best_moment_this_week",
+        energyCapacity: "room_for_something_deeper",
+        capacityMode: "high",
+        audience: "both_of_us",
+      },
+    });
+    const focusHtml = renderRitualCheckInShell({
+      draft: {
+        step: "ritual_focus",
+        timeScope: "best_moment_this_week",
+        energyCapacity: "room_for_something_deeper",
+        capacityMode: "high",
+        audience: "both_of_us",
+        practiceTypeHints: ["seasonal"],
+      },
+    });
+
+    expect(audienceHtml).toContain("Who is this for?");
+    expect(audienceHtml).toContain("Me");
+    expect(audienceHtml).toContain("Both of us");
+    expect(practiceHtml).toContain("Seasonal");
+    expect(focusHtml).toContain("What intention should this hold?");
+    expect(focusHtml).toContain("Getting grounded");
+    expect(focusHtml).toContain("Making a beginning");
+    expect(focusHtml).toContain("Clearing something out");
+    expect(focusHtml).toContain("Resting");
+    expect(focusHtml).toContain("Saying something clearly");
+    expect(focusHtml).toContain("Tending us");
+    expect(focusHtml).toContain("Tending the home");
+    expect(focusHtml).toContain("Marking a threshold");
+    expect(focusHtml).toContain("Something else");
+  });
+
+  it("renders an intention step even for barely-any capacity", () => {
+    const html = renderRitualCheckInShell({
+      draft: {
+        step: "ritual_focus",
+        timeScope: "today",
+        energyCapacity: "barely_any",
+        capacityMode: "pause",
+        audience: "me",
+      },
+    });
+
+    expect(html).toContain("Me");
+    expect(html).not.toContain("Barely any capacity.");
+    expect(html).toContain("What intention should this hold?");
+    expect(html).toContain("Resting");
+    expect(html).toContain("Getting grounded");
+  });
+
+  it("renders a review screen before generating the brief", () => {
+    const html = renderRitualCheckInShell({
+      draft: {
+        step: "review",
+        timeScope: "best_moment_this_week",
+        energyCapacity: "a_little",
+        capacityMode: "low",
+        audience: "both_of_us",
+        practiceTypeLabel: "Plant",
+        ritualFocusLabel: "Tending the home",
+      },
+    });
+
+    expect(html).toContain("Ready.");
+    expect(html).toContain("I’ll look for something:");
+    expect(html).toContain("<li>across the week</li>");
+    expect(html).toContain("<li>for both of you</li>");
+    expect(html).toContain("<li>with a little capacity</li>");
+    expect(html).toContain("<li>with plant</li>");
+    expect(html).toContain("<li>holding tending the home</li>");
+    expect(html).not.toContain("for both of us");
+    expect(html).toContain(
+      "I’ll use this with your saved profile to recommend one ritual.",
+    );
+    expect(html).toContain("Recommend a ritual");
+    expect(html).not.toContain("Show my ritual");
+    expect(html).toContain("Start over");
+    expect(html).not.toContain("data-testid=\"recommended-ritual\"");
+  });
+
+  it("uses app-facing audience wording in the review summary", () => {
+    const html = renderRitualCheckInShell({
+      draft: {
+        step: "review",
+        timeScope: "today",
+        energyCapacity: "barely_any",
+        capacityMode: "pause",
+        audience: "me",
+        ritualFocusLabel: "Getting grounded",
+      },
+    });
+
+    expect(html).toContain("<li>for you</li>");
+    expect(html).not.toContain("<li>Me</li>");
+    expect(html).not.toContain("for me");
+  });
+
+  it("renders a moon loading beat before the recommendation", () => {
+    const html = renderRitualCheckInLoadingShell();
+
+    expect(html).toContain("entry-moon-loader");
+    expect(html).toContain("Reading the moon.");
+    expect(html).toContain("Choosing one ritual.");
+    expect(html).not.toContain("data-testid=\"recommended-ritual\"");
+  });
+
+  it("renders Something else as short text without interpretation copy", () => {
+    const html = renderRitualCheckInShell({
+      draft: {
+        step: "ritual_focus_text",
+        timeScope: "best_moment_this_week",
+        energyCapacity: "room_for_something_deeper",
+        capacityMode: "high",
+        ritualFocusKey: "something_else",
+      },
+    });
+
+    expect(html).toContain("Something else");
+    expect(html).toContain('maxlength="120"');
+    expect(html).toContain("Choose ritual");
+    expect(html).not.toContain("AI");
+    expect(html).not.toContain("free-associate");
+    expect(html).not.toContain("interpret");
+  });
+
   it("renders a loading state", () => {
     const html = renderLoadingShell();
 
@@ -147,6 +376,8 @@ describe("app shell rendering", () => {
     expect(html).toContain('data-feedback-type="skipped"');
     expect(html).toContain('data-feedback-type="try_again"');
     expect(html).toContain("Try something else");
+    expect(html).toContain("Start over");
+    expect(html).toContain('data-check-in-start-over="true"');
     expect(html).toContain('<section class="brief__question" aria-label="Question to carry">');
     expect(html).not.toContain('class="brief__question-details"');
     expect(html).toContain('<section class="why-this" aria-label="Why this ritual">');
@@ -322,7 +553,19 @@ describe("app shell rendering", () => {
   });
 
   it("renders developer trace only when debug trace is requested", () => {
+    const brief = generateWeeklyBrief({
+      ...resolvePrivateBriefData({}).input,
+      currentRitualCheckIn: {
+        timeScope: "best_moment_this_week",
+        energyCapacity: "room_for_something_deeper",
+        capacityMode: "high",
+        audience: "both_of_us",
+        practiceTypeHints: ["seasonal"],
+        ritualFocusKey: "marking_a_threshold",
+      },
+    });
     const html = renderSignedInShell(resolvePrivateBriefData({}), {
+      brief,
       showDebugTrace: true,
     });
 
@@ -333,6 +576,10 @@ describe("app shell rendering", () => {
     expect(html).toContain("Source references");
     expect(html).toContain("Selected");
     expect(html).toContain("Inputs");
+    expect(html).toContain("Check-in:");
+    expect(html).toContain("best_moment_this_week");
+    expect(html).toContain("room_for_something_deeper");
+    expect(html).toContain("marking_a_threshold");
     expect(html).toContain("Private chart status:");
     expect(html).toContain("No placement records loaded.");
     expect(html).toContain("capacity_fit");
