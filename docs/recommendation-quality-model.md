@@ -161,6 +161,12 @@ numerology and practice-choice diagnostics, selected score reasons, rejected
 near alternatives, automatic warnings, and a blank human-review note for each
 scenario.
 
+After Batch 1, the report also includes content-health sections for approved
+pattern count, RitualPresentation coverage, selected-pattern diversity, source
+coverage, category coverage, must-support coverage, nice-to-have status,
+weak-pattern flags, demotions, and timing honesty. These sections make coverage
+visible, but they still do not prove the recommendation is good.
+
 Automatic warnings are prompts for review. They do not prove the recommendation
 is bad, and the absence of warnings does not prove it is good. Tim should still
 read the recommendation for coherence, specificity, and grimoire-worthiness.

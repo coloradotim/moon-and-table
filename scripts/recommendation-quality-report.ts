@@ -2,6 +2,19 @@ import { fileURLToPath } from "node:url";
 
 import { recommendationQualityScenarios, type RecommendationQualityScenario } from "../tests/fixtures/recommendation-quality-scenarios";
 import {
+  batchOneDemotedRitualPatternKeys,
+  batchOneMustSupportCoverage,
+  batchOneNiceToHaveStatus,
+  batchOneRebuiltPatternKeys,
+  batchOneSourceNotes,
+  batchOneSourceReviews,
+  batchOneTaskDressedPatternKeys,
+} from "../src/data/batch-1-ritual-library";
+import {
+  getApprovedRitualPatterns,
+  starterRitualPatterns,
+} from "../src/data/ritual-patterns";
+import {
   generateWeeklyBrief,
   type ScoreReason,
   type WeeklyBrief,
@@ -18,6 +31,9 @@ export const RECOMMENDATION_QUALITY_WARNING_IDS = [
   "carry_prompt_contradicts_focus",
   "best_window_reason_too_thin",
   "source_id_visible_in_normal_copy",
+  "missing_presentation_selected",
+  "task_dressed_pattern_selected",
+  "surprise_me_unresolved",
 ] as const;
 
 export type RecommendationQualityWarningId =
@@ -69,6 +85,48 @@ export type RecommendationQualityReport = {
   scenarioCount: number;
   scenarioResults: RecommendationQualityScenarioResult[];
   warningCounts: Record<RecommendationQualityWarningId, number>;
+  contentHealth: RecommendationQualityContentHealth;
+};
+
+export type RecommendationQualityContentHealth = {
+  approvedPatternCount: number;
+  approvedPatternsWithPresentation: string[];
+  approvedPatternsWithoutPresentation: string[];
+  batchOneSourceReviewIds: string[];
+  batchOneSourceNoteIds: string[];
+  selectedPatternCounts: Array<{ key: string; count: number }>;
+  distinctSelectedPatternCount: number;
+  sourceCoverage: Array<{
+    patternKey: string;
+    sourceReviewIds: string[];
+    sourceNoteKeys: string[];
+  }>;
+  categoryCoverage: Array<{
+    category: string;
+    patternKeys: string[];
+  }>;
+  weakPatternFlags: Array<{
+    key: string;
+    status: "active" | "demoted";
+    reason: string;
+  }>;
+  mustSupportGaps: Array<{
+    category: string;
+    coverage: string;
+    status: string;
+    patternKeys: string[];
+  }>;
+  niceToHaveStatus: Array<{
+    item: string;
+    status: string;
+    patternKeys: string[];
+    note: string;
+  }>;
+  demotionList: Array<{
+    key: string;
+    status: "demoted" | "not_found";
+    reason: string;
+  }>;
 };
 
 const IMPERATIVE_STARTERS = [
@@ -96,7 +154,7 @@ const SOURCE_ID_PATTERN =
   /\b(?:source|note|docs\/source|private_profile|profile_theme|natal_theme|timing_rule|moon|numerology|schedule)\.[a-z0-9_.-]+\b/i;
 
 const DEBUG_KEY_PATTERN =
-  /\b(?:score|scored|points|trace|candidate|candidates|rejected|decision|debug|sourceReferences|ritualPatternKey|selectedPatternKey)\b/i;
+  /\b(?:score|scored|points|candidate|candidates|rejected|decision|debug|sourceReferences|ritualPatternKey|selectedPatternKey)\b/i;
 
 function normalCopyText(copy: RecommendationQualityCopyFields): string {
   return [
@@ -306,6 +364,45 @@ export function getRecommendationQualityWarnings(args: {
     }
   }
 
+  if (args.brief) {
+    const selectedPattern = getApprovedRitualPatterns().find(
+      (pattern) => pattern.key === args.brief?.decision.selected.ritualPatternKey,
+    );
+
+    if (!selectedPattern?.presentation) {
+      warnings.push(
+        warning(
+          "missing_presentation_selected",
+          "Selected pattern has no RitualPresentation and is using legacy fallback copy.",
+        ),
+      );
+    }
+  }
+
+  if (
+    args.selectedRitualPatternKey &&
+    batchOneTaskDressedPatternKeys.includes(args.selectedRitualPatternKey as never)
+  ) {
+    warnings.push(
+      warning(
+        "task_dressed_pattern_selected",
+        "Selected pattern is flagged as task-dressed or weak content.",
+      ),
+    );
+  }
+
+  if (
+    scenario.currentRitualCheckIn.practiceTypeLabel === "Surprise me" &&
+    args.brief?.decision.inputs.practiceChoice?.status !== "resolved_open_preference"
+  ) {
+    warnings.push(
+      warning(
+        "surprise_me_unresolved",
+        "Surprise me did not resolve to one real visible category before recommendation.",
+      ),
+    );
+  }
+
   return warnings.filter(
     (item, index, all) =>
       all.findIndex((candidate) => candidate.id === item.id) === index,
@@ -336,6 +433,119 @@ function getTopRejectedAlternatives(brief: WeeklyBrief) {
       title: candidate.title,
       reasons: candidate.reasons.slice(0, 3),
     }));
+}
+
+function countBy(values: string[]): Array<{ key: string; count: number }> {
+  const counts = new Map<string, number>();
+
+  for (const value of values) {
+    counts.set(value, (counts.get(value) ?? 0) + 1);
+  }
+
+  return [...counts.entries()]
+    .map(([key, count]) => ({ key, count }))
+    .sort((a, b) => b.count - a.count || a.key.localeCompare(b.key));
+}
+
+function getSourceCoverage() {
+  const batchOnePatternKeySet = new Set<string>(batchOneRebuiltPatternKeys);
+
+  return getApprovedRitualPatterns()
+    .filter((pattern) => batchOnePatternKeySet.has(pattern.key))
+    .map((pattern) => ({
+      patternKey: pattern.key,
+      sourceReviewIds: pattern.sourceReferences.filter((reference) =>
+        reference.startsWith("source."),
+      ),
+      sourceNoteKeys: pattern.sourceNoteKeys ?? [],
+    }));
+}
+
+function getCategoryCoverage() {
+  const visibleCategoryStyles = [
+    { category: "Home", styles: ["home_tending", "threshold_reset", "table_reset"] },
+    { category: "Plant", styles: ["plant", "plant_tending"] },
+    { category: "Kitchen", styles: ["kitchen"] },
+    { category: "Candle or light", styles: ["candle_or_light", "light_focus"] },
+    { category: "Reflection", styles: ["reflection", "naming"] },
+    { category: "Seasonal", styles: ["seasonal"] },
+  ];
+  const approvedPatterns = getApprovedRitualPatterns();
+
+  return visibleCategoryStyles.map(({ category, styles }) => ({
+    category,
+    patternKeys: approvedPatterns
+      .filter((pattern) =>
+        styles.some((style) => pattern.ritualStyles.includes(style)),
+      )
+      .map((pattern) => pattern.key)
+      .sort(),
+  }));
+}
+
+function getContentHealth(
+  scenarioResults: RecommendationQualityScenarioResult[],
+): RecommendationQualityContentHealth {
+  const approvedPatterns = getApprovedRitualPatterns();
+  const approvedPatternKeys = approvedPatterns.map((pattern) => pattern.key);
+  const selectedPatternCounts = countBy(
+    scenarioResults.map((result) => result.selectedRitualPattern.key),
+  );
+  const batchDemotionKeySet = new Set<string>(batchOneDemotedRitualPatternKeys);
+  const batchTaskDressedKeySet = new Set<string>(batchOneTaskDressedPatternKeys);
+
+  return {
+    approvedPatternCount: approvedPatterns.length,
+    approvedPatternsWithPresentation: approvedPatterns
+      .filter((pattern) => pattern.presentation)
+      .map((pattern) => pattern.key)
+      .sort(),
+    approvedPatternsWithoutPresentation: approvedPatterns
+      .filter((pattern) => !pattern.presentation)
+      .map((pattern) => pattern.key)
+      .sort(),
+    batchOneSourceReviewIds: batchOneSourceReviews.map((review) => review.id),
+    batchOneSourceNoteIds: batchOneSourceNotes.map((note) => note.id),
+    selectedPatternCounts,
+    distinctSelectedPatternCount: selectedPatternCounts.length,
+    sourceCoverage: getSourceCoverage(),
+    categoryCoverage: getCategoryCoverage(),
+    weakPatternFlags: [
+      ...approvedPatternKeys
+        .filter((key) => batchTaskDressedKeySet.has(key))
+        .map((key) => ({
+          key,
+          status: "active" as const,
+          reason: "Flagged as task-dressed or weak by Batch 1 audit.",
+        })),
+      ...starterRitualPatterns
+        .filter((pattern) => batchDemotionKeySet.has(pattern.key))
+        .map((pattern) => ({
+          key: pattern.key,
+          status: "demoted" as const,
+          reason: "Demoted by Batch 1 because a stronger source-backed ritual form replaced it.",
+        })),
+    ].sort((a, b) => a.key.localeCompare(b.key)),
+    mustSupportGaps: batchOneMustSupportCoverage.map((item) => ({
+      category: item.category,
+      coverage: item.coverage,
+      status: item.status,
+      patternKeys: [...item.patternKeys],
+    })),
+    niceToHaveStatus: batchOneNiceToHaveStatus.map((item) => ({
+      item: item.item,
+      status: item.status,
+      patternKeys: [...item.patternKeys],
+      note: item.note,
+    })),
+    demotionList: batchOneDemotedRitualPatternKeys.map((key) => ({
+      key,
+      status: starterRitualPatterns.some((pattern) => pattern.key === key)
+        ? "demoted"
+        : "not_found",
+      reason: "Rebuilt, merged, hidden, or deferred by Batch 1.",
+    })),
+  };
 }
 
 export function createRecommendationQualityReport(
@@ -394,6 +604,7 @@ export function createRecommendationQualityReport(
     scenarioCount: scenarioResults.length,
     scenarioResults,
     warningCounts,
+    contentHealth: getContentHealth(scenarioResults),
   };
 }
 
@@ -424,6 +635,72 @@ export function formatRecommendationQualityReport(
     ...RECOMMENDATION_QUALITY_WARNING_IDS.map(
       (id) => `- ${id}: ${report.warningCounts[id]}`,
     ),
+    "",
+    "## Content Health",
+    "",
+    `- Approved pattern count: ${report.contentHealth.approvedPatternCount}`,
+    `- Distinct selected patterns: ${report.contentHealth.distinctSelectedPatternCount}`,
+    `- Batch 1 SourceReviews: ${report.contentHealth.batchOneSourceReviewIds.length}`,
+    `- Batch 1 SourceNotes: ${report.contentHealth.batchOneSourceNoteIds.length}`,
+    "",
+    "### RitualPresentation Coverage",
+    "",
+    `- Approved patterns with presentation (${report.contentHealth.approvedPatternsWithPresentation.length}): ${formatList(report.contentHealth.approvedPatternsWithPresentation)}`,
+    `- Approved patterns without presentation (${report.contentHealth.approvedPatternsWithoutPresentation.length}): ${formatList(report.contentHealth.approvedPatternsWithoutPresentation)}`,
+    "",
+    "### Scenario Selection Diversity",
+    "",
+    ...report.contentHealth.selectedPatternCounts.map(
+      (item) => `- ${item.key}: ${item.count}`,
+    ),
+    "",
+    "### Batch 1 Source Coverage",
+    "",
+    `- SourceReviews: ${formatList(report.contentHealth.batchOneSourceReviewIds)}`,
+    `- SourceNotes: ${formatList(report.contentHealth.batchOneSourceNoteIds)}`,
+    "",
+    ...report.contentHealth.sourceCoverage.map(
+      (item) =>
+        `- ${item.patternKey}: sources=${formatList(item.sourceReviewIds)}; notes=${formatList(item.sourceNoteKeys)}`,
+    ),
+    "",
+    "### Category Coverage",
+    "",
+    ...report.contentHealth.categoryCoverage.map(
+      (item) => `- ${item.category}: ${formatList(item.patternKeys)}`,
+    ),
+    "",
+    "### Must-Support Gaps",
+    "",
+    ...report.contentHealth.mustSupportGaps.map(
+      (item) =>
+        `- ${item.category} / ${item.coverage}: ${item.status}; patterns=${formatList(item.patternKeys)}`,
+    ),
+    "",
+    "### Nice-to-Have Status",
+    "",
+    ...report.contentHealth.niceToHaveStatus.map(
+      (item) =>
+        `- ${item.item}: ${item.status}; patterns=${formatList(item.patternKeys)}; note=${item.note}`,
+    ),
+    "",
+    "### Weak-Pattern Flags",
+    "",
+    ...(report.contentHealth.weakPatternFlags.length > 0
+      ? report.contentHealth.weakPatternFlags.map(
+          (item) => `- ${item.key}: ${item.status}; ${item.reason}`,
+        )
+      : ["- none"]),
+    "",
+    "### Demotion List",
+    "",
+    ...report.contentHealth.demotionList.map(
+      (item) => `- ${item.key}: ${item.status}; ${item.reason}`,
+    ),
+    "",
+    "### Timing Honesty Check",
+    "",
+    "- See scenario warnings for `best_window_reason_too_thin`, `focus_timing_unbridged`, and source/debug leakage.",
     "",
     "## Scenarios",
   ];

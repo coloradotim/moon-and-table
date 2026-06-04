@@ -249,7 +249,12 @@ export type PracticeChoiceDiagnostic = {
   selectedLabel?: string;
   selectedHints: string[];
   selectedPatternMatches: string[];
-  status: "not_asked" | "open_preference" | "matched_selected_pattern" | "set_aside";
+  status:
+    | "not_asked"
+    | "open_preference"
+    | "resolved_open_preference"
+    | "matched_selected_pattern"
+    | "set_aside";
   note: string;
 };
 
@@ -507,10 +512,10 @@ const PRIVATE_PROFILE_CARD_KEY_BY_PLACEHOLDER_KEY: Record<
 };
 
 const DEFAULT_PATTERN_BY_CAPACITY: Record<CapacityMode, string> = {
-  pause: "close_the_evening",
-  low: "tend_one_plant",
-  steady: "table_reset",
-  high: "room_reset",
+  pause: "bank_the_house_light",
+  low: "threshold_bowl",
+  steady: "house_from_root_to_roof",
+  high: "house_from_root_to_roof",
 };
 
 const MAX_PROFILE_THEME_SCORE = 8;
@@ -535,6 +540,79 @@ const NATAL_CONTACT_THEME_STYLE_HINTS: Record<string, string[]> = {
   available_support: ["gratitude", "home_tending", "warm"],
   small_opening: ["simple planning", "conversation", "single-action ritual"],
 };
+
+type ResolvedPracticeChoice = {
+  label: string;
+  practiceTypeHints: string[];
+};
+
+const DEFAULT_SURPRISE_ME_CATEGORY: ResolvedPracticeChoice = {
+  label: "Home",
+  practiceTypeHints: ["home_tending"],
+};
+
+const SURPRISE_ME_CATEGORY_BY_FOCUS: Partial<
+  Record<RitualFocusOption["key"], ResolvedPracticeChoice>
+> = {
+  getting_grounded: {
+    label: "Home",
+    practiceTypeHints: ["home_tending", "grounding"],
+  },
+  making_a_beginning: {
+    label: "Home",
+    practiceTypeHints: ["home_tending", "threshold_reset", "beginning"],
+  },
+  clearing_something_out: {
+    label: "Home",
+    practiceTypeHints: ["home_tending", "threshold_reset", "clearing"],
+  },
+  resting: {
+    label: "Candle or light",
+    practiceTypeHints: ["candle_or_light", "light_focus", "rest"],
+  },
+  saying_something_clearly: {
+    label: "Reflection",
+    practiceTypeHints: ["reflection", "naming"],
+  },
+  tending_us: {
+    label: "Kitchen",
+    practiceTypeHints: ["kitchen", "shared_space", "table_reset"],
+  },
+  tending_the_home: {
+    label: "Home",
+    practiceTypeHints: ["home_tending"],
+  },
+  marking_a_threshold: {
+    label: "Seasonal",
+    practiceTypeHints: ["seasonal", "threshold_reset"],
+  },
+};
+
+function resolveSurpriseMePracticeChoice(
+  checkIn?: CurrentRitualCheckIn,
+): CurrentRitualCheckIn | undefined {
+  if (!checkIn) {
+    return undefined;
+  }
+
+  const selectedLabel = checkIn.practiceTypeLabel?.trim().toLowerCase();
+  const selectedHints = checkIn.practiceTypeHints ?? [];
+
+  if (selectedLabel !== "surprise me" || selectedHints.length > 0) {
+    return checkIn;
+  }
+
+  const resolved =
+    (checkIn.ritualFocusKey
+      ? SURPRISE_ME_CATEGORY_BY_FOCUS[checkIn.ritualFocusKey]
+      : undefined) ?? DEFAULT_SURPRISE_ME_CATEGORY;
+
+  return {
+    ...checkIn,
+    practiceTypeLabel: `Surprise me -> ${resolved.label}`,
+    practiceTypeHints: resolved.practiceTypeHints,
+  };
+}
 
 function isValidDate(value: Date): boolean {
   return !Number.isNaN(value.getTime());
@@ -1607,11 +1685,11 @@ function selectPattern(
   }
 
   const fallbackPattern = getApprovedRitualPatterns().find(
-    (pattern) => pattern.key === "close_the_evening",
+    (pattern) => pattern.key === "bank_the_house_light",
   );
 
   if (!fallbackPattern) {
-    throw new Error("Missing approved fallback ritual pattern: close_the_evening");
+    throw new Error("Missing approved fallback ritual pattern: bank_the_house_light");
   }
 
   return {
@@ -1711,23 +1789,9 @@ function getToneClosing(tonePreferences: string[]): string {
 }
 
 function getOptionalAddOn(
-  pattern: RitualPattern,
-  avoidedRitualStyles: string[],
+  _pattern: RitualPattern,
+  _avoidedRitualStyles: string[],
 ): string {
-  if (
-    pattern.key === "candle_light_focus" ||
-    (pattern.presentation &&
-      pattern.ritualStyles.some((style) =>
-        ["candle_or_light", "light_focus"].includes(style),
-      ))
-  ) {
-    return "No add-on needed.";
-  }
-
-  if (!avoidedRitualStyles.includes("live_flame")) {
-    return "Light a candle if that feels supportive.";
-  }
-
   return "No add-on needed.";
 }
 
@@ -2206,6 +2270,17 @@ function getPracticeChoiceDiagnostic(
   const selectedHints = checkIn.practiceTypeHints ?? [];
   const selectedPatternMatches = getPatternStyleMatches(pattern, selectedHints);
 
+  if (checkIn.practiceTypeLabel?.startsWith("Surprise me ->")) {
+    return {
+      visibleOptions,
+      selectedLabel: checkIn.practiceTypeLabel,
+      selectedHints,
+      selectedPatternMatches,
+      status: "resolved_open_preference",
+      note: "Surprise me resolved to one visible practice category before recommendation.",
+    };
+  }
+
   if (checkIn.practiceTypeLabel && selectedHints.length === 0) {
     return {
       visibleOptions,
@@ -2306,6 +2381,15 @@ function getWhyThisFits(
     driverParts.push(`Your focus on ${focusFit.label.toLowerCase()} helped point toward ${getPatternTitle(pattern)}.`);
   } else {
     driverParts.push(`${getPatternTitle(pattern)} gave the timing a practical household shape.`);
+  }
+
+  if (
+    input.currentRitualCheckIn?.ritualFocusKey === "making_a_beginning" &&
+    input.timingFacts.includes("moon.waning")
+  ) {
+    driverParts.push(
+      "Because this is waning timing, the beginning is treated as preparation: making room, naming the first step, or clearing attention.",
+    );
   }
 
   if (preferenceMatches.length > 0) {
@@ -2823,7 +2907,7 @@ function getCheckInReason(
   const practiceFit = getPracticeFit(input, pattern);
 
   if (practiceFit.label && practiceFit.matched) {
-    reasons.push(`Your practice choice, ${practiceFit.label.toLowerCase()}, shaped which approved patterns scored well.`);
+    reasons.push(`Your practice choice, ${practiceFit.label.toLowerCase()}, shaped which approved patterns fit well.`);
   } else if (practiceFit.openPreference) {
     reasons.push(`${practiceFit.label} left the practice style open instead of boosting one practice category.`);
   }
@@ -2832,6 +2916,15 @@ function getCheckInReason(
 
   if (focusLabel) {
     reasons.push(`Your intention around ${focusLabel.toLowerCase()} helped steer the fit.`);
+  }
+
+  if (
+    checkIn.ritualFocusKey === "making_a_beginning" &&
+    input.timingFacts.includes("moon.waning")
+  ) {
+    reasons.push(
+      "Because the timing is waning, the beginning is treated as preparation: making room, naming the first step, or clearing attention before pushing forward.",
+    );
   }
 
   if (checkIn.audience === "both_of_us") {
@@ -3621,13 +3714,16 @@ function mergeTimingFacts(facts: TimingFact[]): TimingFact[] {
 
 function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBriefInput {
   const currentDate = resolveCurrentDate(input.currentDate);
+  const currentRitualCheckIn = resolveSurpriseMePracticeChoice(
+    input.currentRitualCheckIn,
+  );
   const scheduleConstraints = resolveScheduleConstraints(
     input.scheduleConstraints,
   );
   const capacityMode =
     input.capacityMode ?? scheduleConstraints.defaultCapacityMode;
   const audience = input.audience ?? "either";
-  const timeScope = input.currentRitualCheckIn?.timeScope ?? "today";
+  const timeScope = currentRitualCheckIn?.timeScope ?? "today";
   const fallbackPrivateProfileKeys =
     input.privateProfileKeys ?? DEFAULT_PRIVATE_PROFILE_KEYS;
   const profileInputs =
@@ -3671,7 +3767,7 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
       : [];
   const selectedTimingWindow = selectTimingWindowCandidate(
     timingWindowCandidates,
-    input.currentRitualCheckIn,
+    currentRitualCheckIn,
   );
   const strongSelectedTimingWindow = isStrongTimingWindow(selectedTimingWindow)
     ? selectedTimingWindow
@@ -3741,12 +3837,12 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
     astrologyVisibility,
     audience,
     excludedRitualPatternKeys: input.excludedRitualPatternKeys ?? [],
-    currentRitualCheckIn: input.currentRitualCheckIn,
+    currentRitualCheckIn,
     timeScope,
     timingWindowCandidates,
     selectedTimingWindow,
-    selectedRitualFocus: input.currentRitualCheckIn?.ritualFocusKey
-      ? getRitualFocusOptionByKey(input.currentRitualCheckIn.ritualFocusKey)
+    selectedRitualFocus: currentRitualCheckIn?.ritualFocusKey
+      ? getRitualFocusOptionByKey(currentRitualCheckIn.ritualFocusKey)
       : undefined,
   };
 }

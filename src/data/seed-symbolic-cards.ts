@@ -1,4 +1,5 @@
 import { withSafetyOverrides, type RitualSafetyFlags } from "../lib/ritual-safety";
+import { batchOneSymbolicCards } from "./batch-1-ritual-library";
 
 export type SymbolicCardConfidence =
   | "core"
@@ -896,7 +897,7 @@ export const seasonalSymbolicCards: SymbolicCard[] = [
   }),
 ];
 
-export const seedSymbolicCards: SymbolicCard[] = [
+const baseSeedSymbolicCards: SymbolicCard[] = [
   {
     id: "card_moon_phase_new_moon",
     key: "new_moon",
@@ -2471,4 +2472,9 @@ export const seedSymbolicCards: SymbolicCard[] = [
     confidence: "personal",
     approval_status: "approved",
   },
+];
+
+export const seedSymbolicCards: SymbolicCard[] = [
+  ...baseSeedSymbolicCards,
+  ...batchOneSymbolicCards,
 ];
