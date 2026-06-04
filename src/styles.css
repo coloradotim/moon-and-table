@@ -1770,6 +1770,11 @@ fieldset {
     grid-template-columns: 1fr;
   }
 
+  .check-in-options--choice-pair .check-in-option + .check-in-option {
+    border-top: 1px solid rgba(159, 174, 166, 0.78);
+    border-left: 0;
+  }
+
   .brief__topline {
     display: grid;
   }
