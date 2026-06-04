@@ -619,6 +619,111 @@ export const starterSourceReviews: SourceReview[] = [
     confidence: "high",
   },
   {
+    id: "source.madame_pamita_candle",
+    title: "Madame Pamita candle magic source",
+    authorOrPublisher: "Madame Pamita",
+    category: "candle_color_magic",
+    sourceType: "book",
+    useDecision: "use_carefully",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "candle flame as a focus practice",
+      "simple candle-color symbolism after filtering",
+    ],
+    concerns: [
+      "filter out outcome claims, elaborate spell scripts, and purchase pressure",
+    ],
+    copyrightNotes: [
+      "manual review only; no copied spells, chants, prayers, affirmations, or distinctive instructions",
+    ],
+    safetyNotes: [
+      "live flame must remain optional, supervised, and ordinary household candle use only",
+    ],
+    culturalContextNotes: [
+      "treat candle correspondences as modern symbolic context, not universal fact",
+    ],
+    extractionNotes: [
+      "extract brief transformed focus, attention, and optional color-accent themes only",
+    ],
+    confidence: "medium",
+  },
+  {
+    id: "source.sandra_kynes_color_cross_check",
+    title: "Sandra Kynes color correspondence cross-check",
+    authorOrPublisher: "Sandra Kynes",
+    category: "candle_color_magic",
+    sourceType: "book",
+    useDecision: "context_only",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "cross-checking common color correspondence themes",
+    ],
+    concerns: [
+      "do not import long lists, certainty claims, or tradition-specific meaning as product truth",
+    ],
+    copyrightNotes: [
+      "context only; no copied correspondence lists or distinctive wording",
+    ],
+    safetyNotes: [
+      "color symbolism must not require buying candles or using flame",
+    ],
+    culturalContextNotes: [
+      "color meanings vary by context and should stay optional",
+    ],
+    extractionNotes: [
+      "use only to check broad color-accent vocabulary for approved cards",
+    ],
+    confidence: "low",
+  },
+  {
+    id: "source.usfa_fire_safety",
+    title: "USFA fire safety references",
+    authorOrPublisher: "U.S. Fire Administration",
+    category: "ritual_safety",
+    sourceType: "safety_reference",
+    useDecision: "use",
+    reviewStatus: "approved",
+    bestFor: ["plain household candle and fire safety guardrails"],
+    concerns: ["check directly before citing specific fire guidance"],
+    copyrightNotes: ["cite public reference family; do not paste passages"],
+    safetyNotes: ["candle flame practices need supervision, stable placement, and a clear stop"],
+    culturalContextNotes: [],
+    extractionNotes: ["extract practical candle-risk guardrail categories only"],
+    confidence: "high",
+  },
+  {
+    id: "source.cpsc_candle_safety",
+    title: "CPSC candle safety references",
+    authorOrPublisher: "Consumer Product Safety Commission",
+    category: "ritual_safety",
+    sourceType: "safety_reference",
+    useDecision: "use",
+    reviewStatus: "approved",
+    bestFor: ["consumer candle safety and product-risk guardrails"],
+    concerns: ["check directly before citing specific product guidance"],
+    copyrightNotes: ["cite public reference family; do not paste passages"],
+    safetyNotes: ["ordinary product safety overrides symbolic fit"],
+    culturalContextNotes: [],
+    extractionNotes: ["extract candle-product safety categories only"],
+    confidence: "high",
+  },
+  {
+    id: "source.candle_association_safety",
+    title: "Candle Association safety references",
+    authorOrPublisher: "National Candle Association",
+    category: "ritual_safety",
+    sourceType: "safety_reference",
+    useDecision: "use",
+    reviewStatus: "reviewed",
+    bestFor: ["ordinary candle-use safety vocabulary"],
+    concerns: ["industry source; use only for practical safety context and cross-check with public safety references"],
+    copyrightNotes: ["cite source family; do not paste safety copy"],
+    safetyNotes: ["candle-use guidance should stay practical and concise"],
+    culturalContextNotes: [],
+    extractionNotes: ["extract ordinary candle handling concepts only"],
+    confidence: "medium",
+  },
+  {
     id: "source.fda_food_safety",
     title: "FDA food safety references",
     authorOrPublisher: "Food and Drug Administration",
@@ -860,6 +965,9 @@ function getSourceAreaForNote(note: SourceNote): Pick<
       "source.cdc_cleaning_safety",
       "source.epa_household_air",
       "source.nfpa_fire_safety",
+      "source.usfa_fire_safety",
+      "source.cpsc_candle_safety",
+      "source.candle_association_safety",
       "source.fda_food_safety",
       "source.poison_control",
       "source.aspca_plant_safety",
@@ -874,6 +982,15 @@ function getSourceAreaForNote(note: SourceNote): Pick<
         note.sourceId === "source.safety_reference_families"
           ? "synthesis_only"
           : "source_family",
+    };
+  }
+
+  if (note.category === "candle_color_magic") {
+    return {
+      sourceLocationLabel: "Reviewed candle and color source batch",
+      reviewedSourceArea: "candle flame focus, optional color accents, and ordinary candle-use boundaries",
+      reviewBasis: "source_family_synthesis",
+      locationPrecision: "source_family",
     };
   }
 
@@ -1861,6 +1978,58 @@ const starterSourceNoteSeeds: SourceNote[] = [
     verbatimAllowed: false,
   },
   {
+    id: "note.candle_flame_attention_marker",
+    sourceId: "source.madame_pamita_candle",
+    locationNote: "docs/source-research-synthesis.md candle and color source batch",
+    paraphrasedNote:
+      "A candle flame can mark attention, focus, closure, or a short ritual pause without promising results.",
+    category: "candle_color_magic",
+    tags: ["candle", "flame", "focus"],
+    riskNotes: ["avoid outcome claims and elaborate candle spell scripts"],
+    safetyNotes: ["live flame remains optional and supervised"],
+    copyrightNotes: ["short transformed note only; no copied candle ritual text"],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.color_symbolism_optional_accent",
+    sourceId: "source.sandra_kynes_color_cross_check",
+    locationNote: "docs/source-research-synthesis.md candle and color source batch",
+    paraphrasedNote:
+      "Color can be a light symbolic accent for mood, tone, or focus, but it should stay optional and non-deterministic.",
+    category: "candle_color_magic",
+    tags: ["color", "symbolism", "accent"],
+    riskNotes: ["avoid fixed color meanings or purchase requirements"],
+    safetyNotes: ["color symbolism should work without flame or shopping"],
+    copyrightNotes: ["short transformed note only; no copied correspondence list"],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.simple_candle_selection_no_shopping",
+    sourceId: "source.madame_pamita_candle",
+    locationNote: "docs/source-research-synthesis.md candle and color source batch",
+    paraphrasedNote:
+      "For Moon & Table, the best candle is one already safe and available; color may be ignored or chosen loosely from what is on hand.",
+    category: "candle_color_magic",
+    tags: ["candle", "color", "no_shopping"],
+    riskNotes: ["avoid making a candle purchase feel necessary"],
+    safetyNotes: ["use an unlit object or lamp when flame is not a fit"],
+    copyrightNotes: ["short transformed note only; no copied candle guidance"],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.ordinary_candle_safety",
+    sourceId: "source.usfa_fire_safety",
+    locationNote: "docs/source-research-synthesis.md candle and color source batch",
+    paraphrasedNote:
+      "Candle practices should stay brief, supervised, stable, away from hazards, and fully ended before leaving the space.",
+    category: "ritual_safety",
+    tags: ["candle", "fire", "safety"],
+    riskNotes: ["avoid vague or buried flame safety"],
+    safetyNotes: ["fire safety overrides symbolic candle fit"],
+    copyrightNotes: ["short transformed safety note only; no copied safety passage"],
+    verbatimAllowed: false,
+  },
+  {
     id: "note.air_reset_without_smoke",
     sourceId: "source.epa_household_air",
     locationNote: "docs/source-research-synthesis.md kitchen plant light MVP depth",
@@ -1910,6 +2079,58 @@ const starterSourceNoteSeeds: SourceNote[] = [
     riskNotes: ["avoid ingestion or internal-use language"],
     safetyNotes: ["essential oil ingestion is blocked"],
     copyrightNotes: ["short transformed safety note only; no copied safety passage"],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.bread_everyday_nourishment",
+    sourceId: "source.laurel_woodward",
+    locationNote: "docs/source-research-synthesis.md ordinary kitchen ingredient layer",
+    paraphrasedNote:
+      "Bread can be used as an ordinary kitchen symbol for nourishment, sharing, enoughness, and simple grounding.",
+    category: "kitchen_magic",
+    tags: ["bread", "kitchen", "nourishment"],
+    riskNotes: ["avoid copied recipes, raw dough, or prosperity claims"],
+    safetyNotes: ["normal food use only; food fit and allergies override symbolism"],
+    copyrightNotes: ["short transformed note only; no copied recipe or ritual text"],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.oats_steady_care",
+    sourceId: "source.laurel_woodward",
+    locationNote: "docs/source-research-synthesis.md ordinary kitchen ingredient layer",
+    paraphrasedNote:
+      "Oats can be framed as a simple symbol for steadiness, comfort, patience, and ordinary household care.",
+    category: "kitchen_magic",
+    tags: ["oats", "kitchen", "steady_care"],
+    riskNotes: ["avoid health, diet, or abundance claims"],
+    safetyNotes: ["normal food use only; allergy and household fit matter"],
+    copyrightNotes: ["short transformed note only; no copied recipe or ritual text"],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.apple_freshness_choice",
+    sourceId: "source.laurel_woodward",
+    locationNote: "docs/source-research-synthesis.md ordinary kitchen ingredient layer",
+    paraphrasedNote:
+      "Apple can be used as a familiar kitchen symbol for freshness, sweetness, choice, and a small seasonal-feeling reset.",
+    category: "kitchen_magic",
+    tags: ["apple", "kitchen", "freshness"],
+    riskNotes: ["avoid love, attraction, or health claims"],
+    safetyNotes: ["normal food use only; allergies and household fit override symbolism"],
+    copyrightNotes: ["short transformed note only; no copied recipe or ritual text"],
+    verbatimAllowed: false,
+  },
+  {
+    id: "note.ordinary_cooking_as_care",
+    sourceId: "source.laurel_woodward",
+    locationNote: "docs/source-research-synthesis.md ordinary kitchen ingredient layer",
+    paraphrasedNote:
+      "Ordinary cooking can become a care cue when the action is familiar, safe, already planned, and not turned into a recipe assignment.",
+    category: "kitchen_magic",
+    tags: ["cooking", "kitchen", "care"],
+    riskNotes: ["avoid recipes, performance pressure, or unfamiliar ingredients"],
+    safetyNotes: ["normal food safety, allergies, and cleanup burden override symbolism"],
+    copyrightNotes: ["short transformed note only; no copied recipe or ritual text"],
     verbatimAllowed: false,
   },
   {

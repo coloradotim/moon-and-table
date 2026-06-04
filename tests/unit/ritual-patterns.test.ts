@@ -32,6 +32,10 @@ describe("ritual patterns", () => {
         "close_the_evening",
         "tea_ritual",
         "simple_warm_drink",
+        "bread_enoughness_cue",
+        "oats_steady_care_cue",
+        "apple_fresh_choice_cue",
+        "ordinary_cooking_care_cue",
         "kitchen_reset",
         "return_one_object",
         "soften_one_corner",
@@ -78,6 +82,10 @@ describe("ritual patterns", () => {
         "close_the_evening",
         "tea_ritual",
         "simple_warm_drink",
+        "bread_enoughness_cue",
+        "oats_steady_care_cue",
+        "apple_fresh_choice_cue",
+        "ordinary_cooking_care_cue",
         "kitchen_reset",
         "return_one_object",
         "soften_one_corner",
@@ -119,6 +127,9 @@ describe("ritual patterns", () => {
         "close_the_evening",
         "tea_ritual",
         "kitchen_reset",
+        "bread_enoughness_cue",
+        "oats_steady_care_cue",
+        "apple_fresh_choice_cue",
         "return_one_object",
         "window_open_air_reset",
         "morning_light_pause",
@@ -128,6 +139,7 @@ describe("ritual patterns", () => {
     expect(getEligibleRitualPatterns("steady").map((pattern) => pattern.key)).toEqual(
       expect.arrayContaining([
         "simple_warm_drink",
+        "ordinary_cooking_care_cue",
         "kitchen_reset",
         "tea_ritual",
       ]),
@@ -213,6 +225,10 @@ describe("ritual patterns", () => {
     const requiredKeys = [
       "tea_ritual",
       "simple_warm_drink",
+      "bread_enoughness_cue",
+      "oats_steady_care_cue",
+      "apple_fresh_choice_cue",
+      "ordinary_cooking_care_cue",
       "kitchen_reset",
       "tend_one_plant",
       "candle_light_focus",
@@ -238,12 +254,18 @@ describe("ritual patterns", () => {
     const warmDrinkPattern = starterRitualPatterns.find(
       (pattern) => pattern.key === "simple_warm_drink",
     );
+    const ordinaryCookingPattern = starterRitualPatterns.find(
+      (pattern) => pattern.key === "ordinary_cooking_care_cue",
+    );
     const lightPattern = starterRitualPatterns.find(
       (pattern) => pattern.key === "candle_light_focus",
     );
 
     expect(teaPattern?.safetyFlags.ingestion).toBe("normal_food_use_only");
     expect(warmDrinkPattern?.safetyFlags.ingestion).toBe(
+      "normal_food_use_only",
+    );
+    expect(ordinaryCookingPattern?.safetyFlags.ingestion).toBe(
       "normal_food_use_only",
     );
     expect(lightPattern?.safetyFlags.fire).toBe("live_flame");
@@ -284,6 +306,10 @@ describe("ritual patterns", () => {
       "seasonal_table_home_reset",
       "tea_ritual",
       "simple_warm_drink",
+      "bread_enoughness_cue",
+      "oats_steady_care_cue",
+      "apple_fresh_choice_cue",
+      "ordinary_cooking_care_cue",
       "kitchen_reset",
       "tend_one_plant",
       "morning_light_pause",

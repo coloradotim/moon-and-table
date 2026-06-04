@@ -20,6 +20,8 @@ describe("profile preference taxonomy", () => {
     });
     expect(getProfilePreferenceGroup("plant")).toBe("ritual_style");
     expect(getProfilePreferenceGroup("surface_reset")).toBe("action_pattern");
+    expect(getProfilePreferenceGroup("bread")).toBe("action_pattern");
+    expect(getProfilePreferenceGroup("color_accent")).toBe("action_pattern");
     expect(getProfilePreferenceGroup("shopping_required")).toBe(
       "burden_avoid_flag",
     );
@@ -77,4 +79,3 @@ describe("profile preference taxonomy", () => {
     expect(serialized).not.toContain("private source text");
   });
 });
-
