@@ -49,6 +49,7 @@ Real personalization belongs only in Firebase/Firestore for the hosted app, priv
 - Rituals should feel like support, not homework.
 - Moon & Table chooses one ritual from our private household grimoire, then explains how the moment gives it shape.
 - Moon & Table has a house voice. User settings may constrain intensity, visibility, capacity, and practice fit, but they should not remix the ritual into a different writing style.
+- Safety should constrain recommendations; it should not rewrite the metaphysics of the practice.
 - Schedule and capacity constraints override symbolic timing.
 - The app should avoid deterministic claims.
 - Symbolic meaning should come from reviewed, traceable, approved cards.
@@ -70,6 +71,7 @@ Before opening a PR that can affect recommendation output, check:
 - optional candle misuse: no generic `light a candle` add-on when the ritual is already candle/light-based or when the accent is not contextual
 - timing/focus contradictions: selected focus is bridged, not vetoed or contradicted by raw timing fallback
 - house voice: no user-facing tone selector, writing-style picker, or prompt-style mixer is introduced without a deliberate product decision
+- metaphysical integrity: magical practice is treated as meaningful on its own terms, without flattening it into wellness metaphor, decorative prop, or safety disclaimer
 - privacy/source boundaries: no private data, raw trace keys, or source-compliance machinery leaks into user-facing copy
 - no copied source text: source-derived language is transformed, short, and traceable
 - no private data: no real names, emails, birth data, natal placements tied to people, relationship details, private schedules, or private source text

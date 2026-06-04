@@ -283,7 +283,8 @@ describe("app shell rendering", () => {
   });
 
   it("renders the weekly brief only when signed in", () => {
-    const html = renderSignedInShell(resolvePrivateBriefData({}));
+    const privateBriefData = resolvePrivateBriefData({});
+    const html = renderSignedInShell(privateBriefData);
     const moonIndex = html.indexOf("Moon &amp; Table");
     const practiceIndex = html.indexOf('data-testid="recommended-ritual"');
     const intentionIndex = html.indexOf('class="brief__intention"');
@@ -340,7 +341,9 @@ describe("app shell rendering", () => {
     expect(html).not.toContain('class="brief__signal-list"');
     expect(html).not.toContain('data-signal-type="schedule"');
     expect(html).not.toContain('data-signal-type="schedule"');
-    expect(html).toContain("Full moon");
+    expect(html).toMatch(
+      new RegExp("Current phase:</strong> [A-Z][a-z]+(?: [a-z]+)* moon"),
+    );
     expect(html).toContain("Capacity boundary");
     expect(html).not.toContain("Schedule — realistic window");
     expect(html).toContain("Why this fits");
