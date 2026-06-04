@@ -146,6 +146,29 @@ describe("timing interpretation rules", () => {
     expect(serializedRules).not.toContain("your relationship");
   });
 
+  it("can select a matched numerology signal only as a secondary accent", () => {
+    const facts = getTimingFactsForDate("2026-06-06T12:00:00.000Z");
+    const signals = getTimingSignalsForFacts(facts);
+    const selected = selectTimingSignals(signals, {
+      maxSignals: 3,
+      preferredRitualStyles: ["home_tending", "plant_tending"],
+      accentRitualStyles: ["home_tending", "plant_tending"],
+      includeMatchedAccent: true,
+    });
+
+    expect(selected.length).toBeGreaterThan(1);
+    expect(selected[0].strength).not.toBe("accent");
+    expect(selected.filter((signal) => signal.strength === "accent")).toHaveLength(1);
+    expect(selected).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          timingFactType: "numerology_date",
+          strength: "accent",
+        }),
+      ]),
+    );
+  });
+
   it("creates approved source-backed astrology signals from computed facts", () => {
     const facts = getTimingFactsForDate("2026-06-21T00:00:00.000Z");
     const signals = getTimingSignalsForFacts(facts);

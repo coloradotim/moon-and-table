@@ -126,7 +126,6 @@ describe("ritual patterns", () => {
       "plant_tending",
       "kitchen",
       "candle_or_light",
-      "conversation",
       "reflection",
       "seasonal",
     ];

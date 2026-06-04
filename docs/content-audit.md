@@ -337,7 +337,9 @@ Tasks:
 
 Acceptance criteria:
 
-- Diagnostics can show category coverage for lunar, astrology, numerology, seasonal, profile, capacity, and ritual patterns.
+- Diagnostics can show category coverage for lunar, astrology, numerology, seasonal, profile, capacity, check-in practice choices, and ritual patterns.
+- Practice-choice diagnostics distinguish visible choices that matched the selected ritual, were set aside, were skipped, or were intentionally open through `Surprise me`.
+- Numerology diagnostics distinguish computed date numbers that were selected as accents, matched but stayed hidden, or did not match the selected ritual context.
 - Unreachable approved content is reported with a curation diagnosis.
 - `npm run check` passes.
 

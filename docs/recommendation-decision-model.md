@@ -19,6 +19,8 @@ Current check-in context can add a selected `RitualFocusOption` to this flow. Th
 
 The pre-brief check-in passes `CurrentRitualCheckIn` into `generateWeeklyBrief()`. Capacity, audience, practice type, ritual focus, conservative free-text aliases, and selected timing-window candidates can all affect scoring. The normal UI should explain this in human language and keep raw keys in developer-only output.
 
+Universal date numerology is computed as part of the timing layer, but it is not a check-in question. Numerology may appear only as a small accent when an approved numerology signal matches the selected ritual context and a stronger non-numerology signal is already present. It must not be the first, only, or dominant reason for a recommendation.
+
 ## Decision Record
 
 `generateWeeklyBrief()` returns a `decision` object beside the user-facing brief fields. The decision record includes:
@@ -29,6 +31,8 @@ The pre-brief check-in passes `CurrentRitualCheckIn` into `generateWeeklyBrief()
 - selected ritual pattern key
 - private natal profile counts and selected private timing contacts, when available
 - current check-in influence labels
+- practice-choice diagnostics, including visible options sampled, selected practice label, selected hints, selected pattern matches, and whether the answer matched, was set aside, was skipped, or was intentionally open
+- numerology diagnostics, including computed fact ids, eligible signal labels, matched signal labels, selected signal labels, and whether numerology was selected as an accent or left hidden
 - selected timing window summary, when the user asked to look across the week
 - evaluated symbolic cards
 - evaluated ritual pattern candidates
@@ -89,6 +93,10 @@ Current rejection reasons include:
 
 Safety, explicit avoid flags, approval status, capacity mode, and max duration can remove a pattern from eligibility. Preferences and symbolic fit can improve ranking, but they do not override hard exclusions.
 
+`Surprise me` is not a scoring style. It records that the person left practice type open, then lets timing, capacity, focus, saved profile context, and approved pattern fit do the work.
+
+Numerology accents are selected conservatively. A matched universal date number can take the final timing-signal slot, but only after a non-accent timing signal has already been selected. If numerology is computed but does not match the ritual context, or if stronger timing signals fill the recommendation cleanly, it stays in diagnostics instead of the visible brief.
+
 ## Debug View
 
 The app renders the decision record only when debug mode is enabled:
@@ -98,6 +106,8 @@ The app renders the decision record only when debug mode is enabled:
 ```
 
 The developer view shows selected cards and pattern, normalized inputs, selected score reasons, evaluated candidate scores, rejected candidates, source references, and count/detail summaries for selected private timing contacts.
+
+The developer view also shows check-in practice diagnostics and numerology diagnostics. These are meant to answer whether a visible check-in option or computed date number actually affected the selected ritual.
 
 Debug output should stay privacy-safe. Use generic ids, keys, and labels. Do not render private notes, birth data, real schedules, raw natal placements, private source text, service credentials, or Firestore internals.
 

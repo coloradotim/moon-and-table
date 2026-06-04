@@ -73,7 +73,7 @@ export const ritualFocusOptions: RitualFocusOption[] = [
     label: "Saying something clearly",
     description: "A ritual-oriented focus for naming one truth or useful sentence.",
     themeKeys: ["voice", "naming", "declaration", "truth", "clarity"],
-    ritualStyleHints: ["conversation", "reflection", "light_focus"],
+    ritualStyleHints: ["conversation", "naming"],
     symbolicCardKeys: ["astrology_body_mercury"],
     avoidIfCapacityModes: ["pause"],
     drivesScoringByDefault: true,

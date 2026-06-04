@@ -124,6 +124,8 @@ The current calculation reduces ordinary digit sums to 1-9:
 
 Master numbers 11 and 22 are reduced for MVP. Life path numbers, names, compatibility, and personal numerology are deferred.
 
+Universal numerology is a timing accent, not a check-in input. The generator computes it for the current or selected date and may pass it through approved timing interpretation rules, but it can only surface when it matches the selected ritual context and a stronger non-numerology signal is already present. Numerology should remain secondary to lunar, seasonal, astrology, capacity, profile, and check-in fit.
+
 ## Phase 4 — Private Natal Contact Computation
 
 Implemented as a private computation layer:
@@ -261,6 +263,7 @@ Implemented tests cover:
 - known exact new and full moon timing windows
 - known solstice/equinox timing windows
 - universal day numerology as an accent timing candidate
+- numerology selection diagnostics showing whether computed date numbers were eligible, matched the ritual context, selected as an accent, or left hidden
 - private natal-contact boosts using fake profiles only
 - privacy-safe timing-window natal diagnostics
 

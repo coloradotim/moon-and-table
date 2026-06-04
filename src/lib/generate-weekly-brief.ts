@@ -16,7 +16,10 @@ import type {
   PrivateAudience,
   PrivateNatalProfile,
 } from "./private-data-schema";
-import type { CurrentRitualCheckIn } from "./current-ritual-check-in";
+import {
+  getPracticeOptionsForEnergy,
+  type CurrentRitualCheckIn,
+} from "./current-ritual-check-in";
 import {
   getNatalContactsForTimingFacts,
   type NatalContact,
@@ -208,9 +211,11 @@ export type RecommendationDecision = {
     privateNatalProfileCount: number;
     natalPlacementCounts: Partial<Record<"person_a" | "person_b", number>>;
     natalContactsComputed: number;
+    numerology?: NumerologyDiagnostic;
     timeScope: "today" | "best_moment_this_week";
     selectedTimingWindow?: SelectedTimingWindowSummary;
     checkInInfluences: string[];
+    practiceChoice?: PracticeChoiceDiagnostic;
     currentRitualCheckIn?: CurrentRitualCheckIn;
   };
   candidates: {
@@ -233,6 +238,27 @@ export type RecommendationDecision = {
     safetySummary: string;
     noAlternateAvailable: boolean;
   };
+};
+
+export type PracticeChoiceDiagnostic = {
+  visibleOptions: Array<{
+    label: string;
+    practiceTypeHints: string[];
+  }>;
+  selectedLabel?: string;
+  selectedHints: string[];
+  selectedPatternMatches: string[];
+  status: "not_asked" | "open_preference" | "matched_selected_pattern" | "set_aside";
+  note: string;
+};
+
+export type NumerologyDiagnostic = {
+  computedFactIds: string[];
+  eligibleSignalLabels: string[];
+  selectedSignalLabels: string[];
+  matchedSignalLabels: string[];
+  status: "not_computed" | "eligible_hidden" | "matched_selected" | "computed_unmatched";
+  note: string;
 };
 
 export type SelectedTimingWindowSummary = {
@@ -311,6 +337,7 @@ export type BriefSourceSummary = {
 
 export type ExplanationSectionKind =
   | "timing_choice"
+  | "numerology_accent"
   | "check_in_fit"
   | "ritual_focus"
   | "ritual_fit"
@@ -1173,6 +1200,28 @@ function selectedTimingWindowStyleHints(
   return uniqueValues([...signalHints, ...natalHints, ...focusHints]);
 }
 
+function getFocusStyleHints(input: ResolvedGenerateWeeklyBriefInput): string[] {
+  const checkIn = input.currentRitualCheckIn;
+  const focus = input.selectedRitualFocus;
+
+  if (focus?.drivesScoringByDefault === false) {
+    return getCheckInTextStyleHints(checkIn?.ritualFocusText);
+  }
+
+  return uniqueValues([
+    ...(focus?.ritualStyleHints ?? []),
+    ...getCheckInTextStyleHints(checkIn?.ritualFocusText),
+  ]);
+}
+
+function getAccentRitualStyles(input: ResolvedGenerateWeeklyBriefInput): string[] {
+  return uniqueValues([
+    ...input.preferredRitualStyles,
+    ...(input.currentRitualCheckIn?.practiceTypeHints ?? []),
+    ...getFocusStyleHints(input),
+  ]);
+}
+
 function getCheckInPatternScoreReasons(
   input: ResolvedGenerateWeeklyBriefInput,
   pattern: RitualPattern,
@@ -1208,12 +1257,7 @@ function getCheckInPatternScoreReasons(
   }
 
   const focus = input.selectedRitualFocus;
-  const focusStyleHints = focus?.drivesScoringByDefault === false
-    ? getCheckInTextStyleHints(checkIn.ritualFocusText)
-    : [
-        ...(focus?.ritualStyleHints ?? []),
-        ...getCheckInTextStyleHints(checkIn.ritualFocusText),
-      ];
+  const focusStyleHints = getFocusStyleHints(input);
   const focusMatches = getPatternStyleMatches(pattern, focusStyleHints);
 
   if (focusMatches.length > 0) {
@@ -1691,10 +1735,65 @@ function getSelectedTimingSignals(
   );
 
   return selectTimingSignals(candidateFirstSignals, {
-    maxSignals: 2,
+    maxSignals: 3,
     preferredRitualStyles: input.preferredRitualStyles,
     avoidedRitualStyles: input.avoidedRitualStyles,
+    accentRitualStyles: getAccentRitualStyles(input),
+    includeMatchedAccent: true,
   });
+}
+
+function getNumerologyDiagnostic(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+  selectedTimingSignals: TimingSignal[],
+): NumerologyDiagnostic {
+  const numerologyFacts = input.computedTimingFacts.filter(
+    (fact) => fact.type === "numerology_date",
+  );
+
+  if (numerologyFacts.length === 0) {
+    return {
+      computedFactIds: [],
+      eligibleSignalLabels: [],
+      selectedSignalLabels: [],
+      matchedSignalLabels: [],
+      status: "not_computed",
+      note: "No universal date numerology facts were available for this brief.",
+    };
+  }
+
+  const eligibleSignals = getTimingSignalsForFacts(numerologyFacts);
+  const selectedNumerologySignals = selectedTimingSignals.filter(
+    (signal) => signal.timingFactType === "numerology_date",
+  );
+  const accentStyles = uniqueValues([
+    ...getAccentRitualStyles(input),
+    ...pattern.ritualStyles,
+  ]);
+  const matchedSignals = eligibleSignals.filter((signal) =>
+    signal.ritualStyleHints.some((style) => accentStyles.includes(style)),
+  );
+  const status: NumerologyDiagnostic["status"] =
+    selectedNumerologySignals.length > 0
+      ? "matched_selected"
+      : matchedSignals.length > 0
+        ? "eligible_hidden"
+        : "computed_unmatched";
+
+  return {
+    computedFactIds: numerologyFacts.map((fact) => fact.id),
+    eligibleSignalLabels: eligibleSignals.map((signal) => signal.signalLabel),
+    selectedSignalLabels: selectedNumerologySignals.map((signal) => signal.signalLabel),
+    matchedSignalLabels: matchedSignals.map((signal) => signal.signalLabel),
+    status,
+    note:
+      status === "matched_selected"
+        ? "Universal date numerology was used as a small accent because it matched the selected ritual context."
+        : status === "eligible_hidden"
+          ? "Universal date numerology matched some context but stayed behind stronger timing signals."
+          : "Universal date numerology was computed but did not match the selected ritual strongly enough to surface.",
+  };
 }
 
 function getSignalType(signal: TimingSignal): BriefSignal["type"] {
@@ -2014,15 +2113,80 @@ function getPracticeFit(
   label?: string;
   matched: boolean;
   matches: string[];
+  openPreference: boolean;
 } {
   const checkIn = input.currentRitualCheckIn;
   const hints = checkIn?.practiceTypeHints ?? [];
   const matches = getPatternStyleMatches(pattern, hints);
+  const openPreference = Boolean(checkIn?.practiceTypeLabel && hints.length === 0);
 
   return {
     label: checkIn?.practiceTypeLabel,
-    matched: hints.length === 0 || matches.length > 0,
+    matched: hints.length > 0 && matches.length > 0,
     matches,
+    openPreference,
+  };
+}
+
+function getPracticeChoiceDiagnostic(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+): PracticeChoiceDiagnostic | undefined {
+  const checkIn = input.currentRitualCheckIn;
+
+  if (!checkIn) {
+    return undefined;
+  }
+
+  const visibleOptions = getPracticeOptionsForEnergy(checkIn.energyCapacity).map(
+    (option) => ({
+      label: option.label,
+      practiceTypeHints: option.practiceTypeHints ?? [],
+    }),
+  );
+
+  if (visibleOptions.length === 0) {
+    return {
+      visibleOptions,
+      selectedHints: [],
+      selectedPatternMatches: [],
+      status: "not_asked",
+      note: "This capacity level skips the practice-choice step.",
+    };
+  }
+
+  const selectedHints = checkIn.practiceTypeHints ?? [];
+  const selectedPatternMatches = getPatternStyleMatches(pattern, selectedHints);
+
+  if (checkIn.practiceTypeLabel && selectedHints.length === 0) {
+    return {
+      visibleOptions,
+      selectedLabel: checkIn.practiceTypeLabel,
+      selectedHints,
+      selectedPatternMatches,
+      status: "open_preference",
+      note: "The selected practice answer was open, so no practice style was boosted.",
+    };
+  }
+
+  if (selectedPatternMatches.length > 0) {
+    return {
+      visibleOptions,
+      selectedLabel: checkIn.practiceTypeLabel,
+      selectedHints,
+      selectedPatternMatches,
+      status: "matched_selected_pattern",
+      note: "The selected practice answer matched the winning ritual pattern.",
+    };
+  }
+
+  return {
+    visibleOptions,
+    selectedLabel: checkIn.practiceTypeLabel,
+    selectedHints,
+    selectedPatternMatches,
+    status: "set_aside",
+    note: "The selected practice answer did not match the winning ritual pattern and was set aside for stronger fit signals.",
   };
 }
 
@@ -2036,12 +2200,7 @@ function getFocusFit(
 } {
   const checkIn = input.currentRitualCheckIn;
   const focus = input.selectedRitualFocus;
-  const focusStyleHints = focus?.drivesScoringByDefault === false
-    ? getCheckInTextStyleHints(checkIn?.ritualFocusText)
-    : [
-        ...(focus?.ritualStyleHints ?? []),
-        ...getCheckInTextStyleHints(checkIn?.ritualFocusText),
-      ];
+  const focusStyleHints = getFocusStyleHints(input);
   const matches = getPatternStyleMatches(pattern, focusStyleHints);
 
   return {
@@ -2178,17 +2337,39 @@ function getCheckInFitSection(
   }
 
   if (practiceFit.label) {
-    parts.push(
-      practiceFit.matched
-        ? `Your ${practiceFit.label.toLowerCase()} choice matched ${getPatternTitle(pattern)}.`
-        : `You leaned toward ${practiceFit.label.toLowerCase()}, but ${getPatternTitle(pattern)} was a stronger fit for the rest of the check-in.`,
-    );
+    if (practiceFit.openPreference) {
+      parts.push(`${practiceFit.label} left the practice type open, so it did not boost any one ritual style.`);
+    } else {
+      parts.push(
+        practiceFit.matched
+          ? `Your ${practiceFit.label.toLowerCase()} choice matched ${getPatternTitle(pattern)}.`
+          : `You leaned toward ${practiceFit.label.toLowerCase()}, but ${getPatternTitle(pattern)} was a stronger fit for the rest of the check-in.`,
+      );
+    }
   }
 
   return {
     kind: "check_in_fit",
     title: "Your check-in",
     body: parts.join(" "),
+  };
+}
+
+function getNumerologyAccentSection(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+  selectedTimingSignals: TimingSignal[],
+): ExplanationSection | undefined {
+  const diagnostic = getNumerologyDiagnostic(input, pattern, selectedTimingSignals);
+
+  if (diagnostic.status !== "matched_selected") {
+    return undefined;
+  }
+
+  return {
+    kind: "numerology_accent",
+    title: "Numerology accent",
+    body: `${diagnostic.selectedSignalLabels.join(" and ")} matched the selected ritual context, so it was allowed in as a small accent. Lunar, timing, capacity, and check-in fit still carried the recommendation.`,
   };
 }
 
@@ -2331,7 +2512,7 @@ function getTradeoffSection(
   const focusFit = getFocusFit(input, pattern);
   const mismatchParts: string[] = [];
 
-  if (practiceFit.label && !practiceFit.matched) {
+  if (practiceFit.label && !practiceFit.matched && !practiceFit.openPreference) {
     mismatchParts.push(`The practice answer leaned toward ${practiceFit.label.toLowerCase()}, but the selected ritual fit capacity, timing, and profile context better.`);
   }
 
@@ -2385,6 +2566,7 @@ function getHowThisWasChosen(
 ): ExplanationSection[] {
   return [
     getTimingChoiceSection(timingCard, input, selectedTimingSignals),
+    getNumerologyAccentSection(input, pattern, selectedTimingSignals),
     getCheckInFitSection(input, pattern),
     getRitualFocusSection(input, pattern),
     getRitualFitSection(pattern, preferenceMatches),
@@ -2555,7 +2737,10 @@ function getFitReason(
   return "Your household settings keep the suggestion practical.";
 }
 
-function getCheckInReason(input: ResolvedGenerateWeeklyBriefInput): string {
+function getCheckInReason(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+): string {
   const checkIn = input.currentRitualCheckIn;
 
   if (!checkIn) {
@@ -2578,8 +2763,12 @@ function getCheckInReason(input: ResolvedGenerateWeeklyBriefInput): string {
     reasons.push("You asked for something for today, so the recommendation stays close to the current moment.");
   }
 
-  if (checkIn.practiceTypeLabel) {
-    reasons.push(`Your practice choice, ${checkIn.practiceTypeLabel.toLowerCase()}, shaped which approved patterns scored well.`);
+  const practiceFit = getPracticeFit(input, pattern);
+
+  if (practiceFit.label && practiceFit.matched) {
+    reasons.push(`Your practice choice, ${practiceFit.label.toLowerCase()}, shaped which approved patterns scored well.`);
+  } else if (practiceFit.openPreference) {
+    reasons.push(`${practiceFit.label} left the practice style open instead of boosting one practice category.`);
   }
 
   const focusLabel = input.selectedRitualFocus?.label ?? checkIn.ritualFocusText;
@@ -2616,7 +2805,7 @@ function getWhyThis(
       ? `A few options were set aside because they did not fit current capacity, preferences, or practical constraints.`
       : "";
   const capacityReason = getCapacityReason(input.capacityMode, durationMinutes);
-  return `${getTimingReason(timingCard, input.timingFactDetails[0])} ${getCheckInReason(input)} ${pattern.title} was chosen as one small approved home practice for that theme. ${getFitReason(privateProfileCard, preferenceMatches, input.avoidedRitualStyles, profileSignalMatches, natalContactMatches, input.astrologyVisibility, input.audience)} ${capacityReason} ${fitReason}`.replace(/\s+/g, " ").trim();
+  return `${getTimingReason(timingCard, input.timingFactDetails[0])} ${getCheckInReason(input, pattern)} ${pattern.title} was chosen as one small approved home practice for that theme. ${getFitReason(privateProfileCard, preferenceMatches, input.avoidedRitualStyles, profileSignalMatches, natalContactMatches, input.astrologyVisibility, input.audience)} ${capacityReason} ${fitReason}`.replace(/\s+/g, " ").trim();
 }
 
 function getReasoning(
@@ -3257,11 +3446,15 @@ function getRecommendationDecision({
       privateNatalProfileCount: input.natalDiagnostics.privateNatalProfileCount,
       natalPlacementCounts: input.natalDiagnostics.natalPlacementCounts,
       natalContactsComputed: input.natalDiagnostics.natalContactsComputed,
+      numerology: getNumerologyDiagnostic(input, pattern, selectedTimingSignals),
       timeScope: input.timeScope,
       ...(input.selectedTimingWindow
         ? { selectedTimingWindow: summarizeTimingWindow(input.selectedTimingWindow) }
         : {}),
       checkInInfluences: getCheckInInfluences(input),
+      ...(input.currentRitualCheckIn
+        ? { practiceChoice: getPracticeChoiceDiagnostic(input, pattern) }
+        : {}),
       ...(input.currentRitualCheckIn
         ? { currentRitualCheckIn: input.currentRitualCheckIn }
         : {}),

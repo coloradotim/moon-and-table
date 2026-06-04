@@ -57,7 +57,6 @@ describe("current ritual check-in", () => {
       "Plant",
       "Kitchen",
       "Candle or light",
-      "Conversation",
       "Surprise me",
     ]);
     expect(
@@ -67,7 +66,6 @@ describe("current ritual check-in", () => {
       "Kitchen",
       "Plant",
       "Candle or light",
-      "Conversation",
       "Reflection",
       "Surprise me",
     ]);
@@ -80,7 +78,6 @@ describe("current ritual check-in", () => {
       "Kitchen",
       "Plant",
       "Candle or light",
-      "Conversation",
       "Reflection",
       "Seasonal",
       "Surprise me",

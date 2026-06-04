@@ -85,6 +85,23 @@ describe("content reachability diagnostics", () => {
       expect.arrayContaining(approvedPatternKeys),
     );
     expect(report.coverage.rejectedRitualPatternKeys.length).toBeGreaterThan(0);
+    expect(report.scenarioResults.some((result) =>
+      result.practiceChoiceStatus === "open_preference",
+    )).toBe(true);
+    expect(report.scenarioResults.some((result) =>
+      result.practiceChoiceVisibleOptions.includes("Surprise me"),
+    )).toBe(true);
+    expect(report.scenarioResults.every((result) =>
+      !result.practiceChoiceVisibleOptions.includes("Conversation"),
+    )).toBe(true);
+    expect(report.scenarioResults.some((result) =>
+      result.numerologySelectedSignalLabels.length > 0,
+    )).toBe(true);
+    expect(report.scenarioResults.every((result) =>
+      result.numerologySelectedSignalLabels.every((label) =>
+        label.startsWith("Numerology "),
+      ),
+    )).toBe(true);
   });
 
   it("identifies cards and notes that are not selected in sampled generation", () => {
@@ -118,6 +135,10 @@ describe("content reachability diagnostics", () => {
     expect(formatted).toContain("Scenarios sampled:");
     expect(formatted).toContain("Approved ritual patterns not selected:");
     expect(formatted).toContain("Source notes not referenced by cards, rules, or patterns:");
+    expect(formatted).toContain("## Practice Choice Diagnostics");
+    expect(formatted).toContain("## Numerology Diagnostics");
+    expect(formatted).toContain("Visible practice options sampled:");
+    expect(formatted).toContain("Numerology statuses:");
     expect(formatted).not.toContain("birth date");
     expect(formatted).not.toContain("private source text");
   });

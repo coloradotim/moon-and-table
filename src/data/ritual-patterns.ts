@@ -373,7 +373,7 @@ export const starterRitualPatterns: RitualPattern[] = [
     key: "one_clear_sentence",
     title: "One Clear Sentence",
     summary: "Name one small household need, appreciation, or next step without turning it into a heavy talk.",
-    ritualStyles: ["conversation"],
+    ritualStyles: ["conversation", "naming"],
     capacityModes: ["low", "steady"],
     defaultDurationMinutes: 5,
     materials: ["nothing required"],
