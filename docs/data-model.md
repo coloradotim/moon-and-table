@@ -78,10 +78,13 @@ Copyrighted source material should be transformed into short SourceNotes, not in
 | --- | --- |
 | `SymbolicCard` | Describes approved symbolic meaning: summary, themes, good-for uses, ritual styles, ritual ideas, avoid-saying guardrails, safety notes, source references, confidence, and approval status. |
 | `RitualPattern` | Describes what to do: duration, capacity modes, materials, steps, safety flags, avoid-if notes, source references, and approval status. |
+| `RitualFocusOption` | Controlled current-moment focus vocabulary for future check-ins. Each scoring option carries theme keys plus generator-usable metadata such as ritual style hints, timing affinities, or symbolic card links. |
 | `RitualSafetyFlags` | Encodes safety constraints such as ingestion, oils, smoke, fire, pets, children, pregnancy, allergies, medical claims, emotional intensity, and cleanup burden. |
 | Approval status | Determines whether content is eligible for recommendation. Only approved cards and approved patterns should be used. |
 
 SymbolicCards describe meaning. RitualPatterns describe practice. The generator should not turn symbolic meaning directly into unreviewed actions.
+
+RitualFocusOptions describe what the user says the current ritual should focus on. They are source-controlled controlled vocabulary, not free-text interpretation. The initial vocabulary lives in `src/data/ritual-focus-options.ts`; it is not wired into scoring until the recommendation flow explicitly accepts current check-in context.
 
 Safety flags can block a pattern even when it matches timing, private profile context, or preferences.
 
