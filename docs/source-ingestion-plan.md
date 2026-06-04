@@ -310,6 +310,29 @@ Older bootstrap values such as `candle`, `home_care`, `kitchen_clearing`, `shopp
 - No public citation-heavy UI.
 - No full curation workbench yet.
 
+## Batch 10 — Content packet workflow
+
+**Purpose:** Add a lightweight review format for source-backed content batches before active implementation.
+
+**Create:**
+
+- `docs/content-packets/README.md`
+- content packet template
+- privacy-safe example packet
+- status values for packet workflow: `draft`, `ready_for_review`, `approved_for_implementation`, `implemented`, and `rejected`
+
+**Acceptance criteria:**
+
+- Future packet issues such as #171 through #176 can produce review-ready packet documents before adding active content.
+- Draft and `ready_for_review` packets do not affect generation, scoring, source registry eligibility, active cards, active ritual patterns, or UI.
+- Only `approved_for_implementation` packets can support active source/content implementation.
+- Packets include metaphysical integrity, source/copyright, practical eligibility, cultural sensitivity, privacy, and recommendation quality review sections.
+
+**Non-goals:**
+
+- No new approved sources.
+- No active SourceReviews, SourceNotes, cards, ritual patterns, presentations, bridges, scoring, generator, or UI behavior.
+
 ## Recommended implementation order
 
 1. Source registry and SourceNote foundation

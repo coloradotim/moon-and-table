@@ -39,7 +39,7 @@ The normal product should not expose tone selectors, writing-style pickers, broa
 
 Moon & Table treats magical practice as meaningful on its own terms. Do not tell the user what to believe, and do not flatten practices like moon water, threshold charms, candle work, kitchen magic, plant magic, or household rites into "visual markers," "just symbolic cues," wellness metaphors, or decorative props.
 
-Safety should constrain recommendations; it should not rewrite the metaphysics of the practice. If a ritual form creates safety, source, or privacy risk, choose a safer approved form, quietly constrain eligibility, or set the pattern aside. Safety boundaries should be practical and mostly internal. They should not dominate user-facing copy or explain away the practice.
+Safety should constrain recommendations; it should not rewrite the metaphysics of the practice. If a ritual form creates source, privacy, or practical eligibility risk, choose an approved form that fits, quietly constrain eligibility, or set the pattern aside. Practical boundaries should be mostly internal. They should not dominate user-facing copy or explain away the practice.
 
 Preserve ritual meaning while avoiding unsupported claims. Do not promise healing, guaranteed outcomes, protection from danger, prosperity, love, medical effects, legal outcomes, or safety outcomes. Do not include unsafe default instructions.
 
@@ -55,7 +55,7 @@ Better:
 
 - "Moon water belongs to lunar material practice and should be handled as a meaningful ritual material within source-backed boundaries."
 - "A threshold charm can mark welcome, intention, or monthly household attention without promising prosperity or protection."
-- "Safety constraints shape which version the app recommends; they do not explain away the practice."
+- "Practical constraints shape which version the app recommends; they do not explain away the practice."
 
 ## Recommendation Quality Bar
 
@@ -122,7 +122,9 @@ A privacy-safe scenario used to judge output quality. It is not just a unit test
 
 `ContentPacket`
 
-A planned human-reviewed packet for adding new source-backed content in batches. A packet can include source reviews, transformed notes, cards, patterns, presentation language, meaning bridges, quality scenarios, and follow-up notes.
+A human-reviewed packet for adding new source-backed content in batches. A packet can include source candidates, review notes, proposed transformed notes, proposed cards, proposed patterns, presentation language, meaning bridges, quality scenarios, and follow-up notes.
+
+The packet workflow lives in `docs/content-packets/README.md`. Only packets marked `approved_for_implementation` can support active implementation. Draft and `ready_for_review` packets are planning and review artifacts only; they must not change recommendation behavior.
 
 Folk household magic packets should follow `docs/folk-household-magic-taxonomy.md` before adding active content. That taxonomy keeps visible practice routes simple while organizing deeper source-backed material forms, magical functions, timing affinities, activation modes, closure modes, and metaphysical integrity checks.
 
@@ -175,12 +177,13 @@ Prioritize depth in existing practice areas before adding major new categories:
 
 Conversation remains important, but it should not distract from fixing generic recommendation quality. Conversation needs its own source-backed content work before it becomes a mainline visible practice preference.
 
-Future content packets should include a metaphysical integrity check:
+Future content packets should use the workflow in `docs/content-packets/README.md` and include a metaphysical integrity check:
 
 - Does this preserve the ritual meaning of the practice?
-- Did we accidentally reduce it to a wellness metaphor, visual prop, or safety disclaimer?
+- Did we accidentally reduce it to a wellness metaphor, visual prop, psychological cue, safety disclaimer, or decorative object?
 - Are claims bounded without condescension?
-- Are safety constraints handled quietly and practically?
+- Are practical constraints handled quietly?
+- Does the packet avoid telling the practitioner what to believe?
 
 For folk household magic packets, use `docs/folk-household-magic-taxonomy.md` as the planning source before implementing moon water, threshold charms, salt/boundary practices, sweetening work, written charms, or container/object rites.
 

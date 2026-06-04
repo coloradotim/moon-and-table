@@ -82,6 +82,8 @@ Diagnostics and passing tests are necessary, but they do not prove recommendatio
 
 Follow `docs/curation-pipeline.md`.
 
+For new source-backed content batches, use the content packet workflow in `docs/content-packets/README.md`. A content packet is not active recommendation content unless it has been human-reviewed and marked `approved_for_implementation`.
+
 Source material should move through this lifecycle:
 
 1. Source candidate
@@ -93,6 +95,8 @@ Source material should move through this lifecycle:
 7. Feedback from actual practice
 
 Only approved symbolic cards should be used in generated briefs.
+
+Draft or `ready_for_review` packets may organize source candidates, proposed notes, cards, ritual patterns, presentations, bridges, and quality scenarios. They must not change active generation, scoring, source registry eligibility, or UI behavior. Codex must not treat random web sources, copied source text, or its own interpretations as approved content.
 
 ## Current implementation sequence
 

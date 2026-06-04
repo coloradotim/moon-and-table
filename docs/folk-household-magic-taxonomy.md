@@ -8,15 +8,15 @@ Moon & Table treats magical practice as meaningful on its own terms. Do not tell
 
 Safety should constrain recommendations; it should not rewrite the metaphysics of the practice.
 
-This means safety, source, and privacy boundaries can shape eligibility, variants, and wording. They can cause a risky or unsupported form to be set aside. They should not flatten the practice into something less magical in order to make it feel safer.
+This means source, privacy, and practical boundaries can shape eligibility, variants, and wording. They can cause a risky or unsupported form to be set aside. They should not flatten the practice into something less magical in order to make it feel safer.
 
 ## Core Rules
 
 - Preserve ritual meaning while bounding claims.
 - Do not make unsupported claims about healing, protection, prosperity, love, medical outcomes, legal outcomes, safety outcomes, certainty, or guaranteed results.
 - Do not include unsafe default instructions.
-- If a ritual form creates safety, source, or privacy risk, choose a safer approved form, quietly constrain eligibility, or set the pattern aside.
-- Safety boundaries should be quiet, practical, and mostly internal.
+- If a ritual form creates source, privacy, or practical eligibility risk, choose an approved form that fits, quietly constrain eligibility, or set the pattern aside.
+- Practical boundaries should be quiet and mostly internal.
 - Do not copy distinctive rituals, spells, prayers, chants, recipes, correspondence tables, or private source text.
 - Materials are vehicles, not top-level categories.
 
@@ -428,12 +428,15 @@ Current and future examples:
 
 ## Content Packet Guidance
 
+Use the workflow in `docs/content-packets/README.md` for future folk household magic packets, including #171 through #176. Packets should start as `draft` or `ready_for_review`. They should not produce active SourceReviews, SourceNotes, SymbolicCards, RitualPatterns, RitualPresentation, RitualMeaningBridges, scoring behavior, generator behavior, or UI changes until a human reviewer marks the packet `approved_for_implementation`.
+
 Future folk household magic content packets should include a metaphysical integrity check:
 
 - Does this preserve the ritual meaning of the practice?
-- Did we accidentally reduce it to a wellness metaphor, visual prop, or safety disclaimer?
+- Did we accidentally reduce it to a wellness metaphor, visual prop, psychological cue, safety disclaimer, or decorative object?
 - Are claims bounded without condescension?
-- Are safety constraints handled quietly and practically?
+- Are practical constraints handled quietly?
+- Does the packet avoid telling the practitioner what to believe?
 
 Packets should also identify:
 
@@ -445,7 +448,7 @@ Packets should also identify:
 - proposed RitualPresentation needs
 - proposed RitualMeaningBridges
 - proposed recommendation quality scenarios
-- safety, source, copyright, cultural sensitivity, and privacy risks
+- practical, source, copyright, cultural sensitivity, and privacy risks
 - what Codex may implement after human approval
 - what Codex must not implement
 
@@ -466,6 +469,6 @@ Do not use this taxonomy issue to:
 - implement moon water
 - implement cinnamon threshold rites
 - implement charms, jars, bowls, petitions, protection, or prosperity practices
-- weaken safety/source/privacy constraints
+- weaken source/privacy/practical constraints
 - add private data
 - copy source text
