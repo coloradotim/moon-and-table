@@ -328,11 +328,14 @@ function sanitizeNatalPlacements(value: unknown): PrivateNatalPlacement[] | unde
       return [];
     }
 
+    const degree = typeof item.degree === "number" ? item.degree : undefined;
+    const themeKeys = isStringArray(item.themeKeys) ? item.themeKeys : undefined;
+
     return [{
       bodyOrPoint: item.bodyOrPoint as NatalPoint,
       sign: item.sign as ZodiacSign,
-      degree: item.degree,
-      themeKeys: item.themeKeys,
+      ...(degree !== undefined ? { degree } : {}),
+      ...(themeKeys ? { themeKeys } : {}),
     }];
   });
 }

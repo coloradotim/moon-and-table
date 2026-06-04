@@ -505,8 +505,8 @@ function parseNatalPlacements(
     return [{
       bodyOrPoint: item.bodyOrPoint as NatalPoint,
       sign: item.sign as ZodiacSign,
-      degree,
-      themeKeys,
+      ...(degree !== undefined ? { degree } : {}),
+      ...(themeKeys ? { themeKeys } : {}),
     }];
   });
 }
