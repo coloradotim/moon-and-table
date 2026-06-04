@@ -78,7 +78,6 @@ const profileWorksOptions = [
   { value: "kitchen", label: "Kitchen" },
   { value: "plant_tending", label: "Plant" },
   { value: "candle_or_light", label: "Candle or light" },
-  { value: "conversation", label: "Conversation" },
   { value: "reflection", label: "Reflection" },
   { value: "seasonal", label: "Seasonal" },
 ];
@@ -369,6 +368,14 @@ function renderCheckInDebug(brief: WeeklyBrief): string {
     (total, reason) => total + reason.points,
     0,
   );
+  const practiceChoice = brief.decision.inputs.practiceChoice;
+  const practiceDiagnostic = practiceChoice
+    ? `
+      <p><strong>Visible practice options:</strong> ${escapeHtml(practiceChoice.visibleOptions.map((option) => option.label).join(" · ") || "none")}</p>
+      <p><strong>Practice diagnostic:</strong> ${escapeHtml(`${practiceChoice.status}: ${practiceChoice.note}`)}</p>
+      <p><strong>Practice matches selected pattern:</strong> ${escapeHtml(practiceChoice.selectedPatternMatches.join(" · ") || "none")}</p>
+    `
+    : "";
 
   return `
     <div class="decision-debug__check-in">
@@ -386,6 +393,7 @@ function renderCheckInDebug(brief: WeeklyBrief): string {
           : "none recorded on the selected pattern",
       )}</p>
       <p><strong>Check-in influence:</strong> ${escapeHtml(brief.decision.inputs.checkInInfluences.join(" · ") || "none")}</p>
+      ${practiceDiagnostic}
     </div>
   `;
 }
@@ -412,6 +420,24 @@ function renderTimingWindowDebug(brief: WeeklyBrief): string {
       <p><strong>Starts:</strong> ${escapeHtml(timingWindow.startsAtIso)}</p>
       <p><strong>Strength:</strong> ${escapeHtml(`${timingWindow.strength}${timingWindow.isStrong ? " / strong enough" : " / not strong enough"}`)}</p>
       <p><strong>Why this window:</strong> ${escapeHtml(scoreReasonText || timingWindow.reasonLabels.join(" · ") || "no score reasons recorded")}</p>
+    </div>
+  `;
+}
+
+function renderNumerologyDebug(brief: WeeklyBrief): string {
+  const numerology = brief.decision.inputs.numerology;
+
+  if (!numerology) {
+    return "<p><strong>Numerology:</strong> no diagnostic recorded</p>";
+  }
+
+  return `
+    <div class="decision-debug__numerology">
+      <p><strong>Numerology:</strong> ${escapeHtml(`${numerology.status}: ${numerology.note}`)}</p>
+      <p><strong>Computed facts:</strong> ${escapeHtml(numerology.computedFactIds.join(" · ") || "none")}</p>
+      <p><strong>Eligible signals:</strong> ${escapeHtml(numerology.eligibleSignalLabels.join(" · ") || "none")}</p>
+      <p><strong>Matched signals:</strong> ${escapeHtml(numerology.matchedSignalLabels.join(" · ") || "none")}</p>
+      <p><strong>Selected signals:</strong> ${escapeHtml(numerology.selectedSignalLabels.join(" · ") || "none")}</p>
     </div>
   `;
 }
@@ -482,6 +508,7 @@ function renderDeveloperDecision(brief: WeeklyBrief): string {
           <p><strong>Avoided:</strong> ${escapeHtml(brief.decision.inputs.avoidedRitualStyles.join(" · ") || "none")}</p>
           ${renderCheckInDebug(brief)}
           ${renderTimingWindowDebug(brief)}
+          ${renderNumerologyDebug(brief)}
           <p><strong>Natal profiles:</strong> ${escapeHtml(`${brief.decision.inputs.privateNatalProfileCount}`)} loaded</p>
           <p><strong>Natal contacts:</strong> ${escapeHtml(`${brief.decision.inputs.natalContactsComputed}`)} computed</p>
           <p><strong>Private chart status:</strong> ${escapeHtml(renderNatalDebugStatus(brief))}</p>

@@ -99,8 +99,8 @@ describe("app shell rendering", () => {
     expect(html).toContain("Plant");
     expect(html).toContain("Kitchen");
     expect(html).toContain("Candle or light");
-    expect(html).toContain("Conversation");
     expect(html).toContain("Surprise me");
+    expect(html).not.toContain("Conversation");
     expect(html).not.toContain("Who is this for?");
     expect(html).not.toContain("Home tending");
     expect(html).not.toContain("Reflection");
@@ -761,7 +761,7 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("Tone preferences");
     expect(html).toContain("Plant");
     expect(html).toContain("Candle or light");
-    expect(html).toContain("Conversation");
+    expect(html).not.toContain("Conversation");
     expect(html).toContain("About ten minutes");
     expect(html).not.toContain("Custom Saved Value");
     expect(html).toContain("Shopping required");

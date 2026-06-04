@@ -11,6 +11,11 @@ import {
   type GenerateWeeklyBriefInput,
   type WeeklyBrief,
 } from "./generate-weekly-brief";
+import {
+  getCapacityModeForEnergy,
+  getPracticeOptionsForEnergy,
+  type RitualCheckInEnergyCapacity,
+} from "./current-ritual-check-in";
 import type { PrivateAudience } from "./private-data-schema";
 import type { PrivateProfileSignalInput } from "./private-profile-signals";
 import { getEligibleTimingInterpretationRules } from "./timing-interpretation-rules";
@@ -32,6 +37,13 @@ export type ContentReachabilityScenarioResult = {
   computedTimingFactTypes: string[];
   selectedSymbolicCardKeys: string[];
   selectedRitualPatternKey: string;
+  practiceChoiceStatus?: string;
+  practiceChoiceLabel?: string;
+  practiceChoiceVisibleOptions: string[];
+  practiceChoiceSelectedMatches: string[];
+  numerologyStatus: string;
+  numerologyEligibleSignalLabels: string[];
+  numerologySelectedSignalLabels: string[];
   evaluatedRitualPatternKeys: string[];
   rejectedRitualPatternKeys: string[];
   sourceReviewIds: string[];
@@ -201,7 +213,43 @@ export function getDefaultContentReachabilityScenarios(): ContentReachabilitySce
       }),
   );
 
-  return [...patternScenarios, ...timingScenarios];
+  const practiceEnergies: RitualCheckInEnergyCapacity[] = [
+    "a_little",
+    "enough_to_engage",
+    "room_for_something_deeper",
+  ];
+  const practiceScenarios: ContentReachabilityScenario[] = practiceEnergies.flatMap(
+    (energyCapacity, energyIndex) =>
+      getPracticeOptionsForEnergy(energyCapacity).map((practiceOption, optionIndex) => {
+        const capacityMode = getCapacityModeForEnergy(energyCapacity);
+        const audience = optionIndex % 2 === 0 ? "either" : "together";
+
+        return {
+          id: `checkin.practice.${energyCapacity}.${practiceOption.key}`,
+          label: `Check-in practice reachability: ${practiceOption.label} (${energyCapacity})`,
+          input: {
+            currentDate: SAMPLE_DATES[(energyIndex + optionIndex) % SAMPLE_DATES.length],
+            capacityMode,
+            audience,
+            privateProfileKeys: getProfileKeysForAudience(audience),
+            profileInputs: SAMPLE_PROFILE_INPUTS,
+            preferredRitualStyles: ["home_tending", "kitchen", "plant_tending", "candle_or_light"],
+            avoidedRitualStyles: ["shopping_required", "long_journaling"],
+            currentRitualCheckIn: {
+              timeScope: optionIndex % 3 === 0 ? "best_moment_this_week" : "today",
+              energyCapacity,
+              capacityMode,
+              audience: audience === "together" ? "both_of_us" : "me",
+              practiceTypeHints: practiceOption.practiceTypeHints,
+              practiceTypeLabel: practiceOption.label,
+              ritualFocusKey: optionIndex % 2 === 0 ? "tending_the_home" : "getting_grounded",
+            },
+          },
+        } satisfies ContentReachabilityScenario;
+      }),
+  );
+
+  return [...patternScenarios, ...timingScenarios, ...practiceScenarios];
 }
 
 function toScenarioResult(
@@ -233,6 +281,17 @@ function toScenarioResult(
       ),
     ]),
     selectedRitualPatternKey: brief.decision.selected.ritualPatternKey,
+    practiceChoiceStatus: brief.decision.inputs.practiceChoice?.status,
+    practiceChoiceLabel: brief.decision.inputs.practiceChoice?.selectedLabel,
+    practiceChoiceVisibleOptions:
+      brief.decision.inputs.practiceChoice?.visibleOptions.map((option) => option.label) ?? [],
+    practiceChoiceSelectedMatches:
+      brief.decision.inputs.practiceChoice?.selectedPatternMatches ?? [],
+    numerologyStatus: brief.decision.inputs.numerology?.status ?? "missing",
+    numerologyEligibleSignalLabels:
+      brief.decision.inputs.numerology?.eligibleSignalLabels ?? [],
+    numerologySelectedSignalLabels:
+      brief.decision.inputs.numerology?.selectedSignalLabels ?? [],
     evaluatedRitualPatternKeys: brief.decision.candidates.ritualPatterns.map(
       (pattern) => pattern.key,
     ),
@@ -346,6 +405,26 @@ function formatList(values: string[], emptyLabel = "none"): string {
   return values.join(", ");
 }
 
+function countBy(values: string[]): Array<[string, number]> {
+  const counts = new Map<string, number>();
+
+  for (const value of values) {
+    counts.set(value, (counts.get(value) ?? 0) + 1);
+  }
+
+  return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+}
+
+function formatCounts(values: string[], emptyLabel = "none"): string {
+  const counts = countBy(values);
+
+  if (counts.length === 0) {
+    return emptyLabel;
+  }
+
+  return counts.map(([value, count]) => `${value}: ${count}`).join(", ");
+}
+
 export function formatContentReachabilityReport(
   report: ContentReachabilityReport,
 ): string {
@@ -372,6 +451,18 @@ export function formatContentReachabilityReport(
     `- Eligible timing rules not selected in sampled scenarios: ${report.gaps.eligibleTimingRulesNotSelected.length}`,
     `- Source notes not selected in sampled scenarios: ${report.gaps.sourceNotesNotSelected.length}`,
     `- Source notes not referenced by cards, rules, or patterns: ${formatList(report.gaps.sourceNotesNotReferencedByContent)}`,
+    "",
+    "## Practice Choice Diagnostics",
+    "",
+    `- Practice choice statuses: ${formatCounts(report.scenarioResults.flatMap((result) => result.practiceChoiceStatus ? [result.practiceChoiceStatus] : []))}`,
+    `- Visible practice options sampled: ${formatList(uniqueSorted(report.scenarioResults.flatMap((result) => result.practiceChoiceVisibleOptions)))}`,
+    `- Practice choices set aside: ${formatList(report.scenarioResults.filter((result) => result.practiceChoiceStatus === "set_aside").map((result) => `${result.id} (${result.practiceChoiceLabel ?? "unlabeled"} -> ${result.selectedRitualPatternKey})`), "none")}`,
+    "",
+    "## Numerology Diagnostics",
+    "",
+    `- Numerology statuses: ${formatCounts(report.scenarioResults.map((result) => result.numerologyStatus))}`,
+    `- Eligible numerology signals sampled: ${formatList(uniqueSorted(report.scenarioResults.flatMap((result) => result.numerologyEligibleSignalLabels)))}`,
+    `- Selected numerology signals sampled: ${formatList(uniqueSorted(report.scenarioResults.flatMap((result) => result.numerologySelectedSignalLabels)))}`,
     "",
     "## Selected Ritual Pattern Samples",
     "",

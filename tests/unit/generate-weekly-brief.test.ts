@@ -460,6 +460,115 @@ describe("generateWeeklyBrief", () => {
     );
   });
 
+  it("treats Surprise me as an open practice preference instead of a scoring match", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-06-06T12:00:00.000Z",
+      capacityMode: "low",
+      preferredRitualStyles: ["home_tending", "plant_tending"],
+      currentRitualCheckIn: {
+        timeScope: "today",
+        energyCapacity: "a_little",
+        capacityMode: "low",
+        audience: "me",
+        practiceTypeHints: [],
+        practiceTypeLabel: "Surprise me",
+        ritualFocusKey: "tending_the_home",
+      },
+    });
+    const selectedPattern = brief.decision.candidates.ritualPatterns.find(
+      (pattern) => pattern.key === brief.decision.selected.ritualPatternKey,
+    );
+    const serializedExplanation = JSON.stringify(brief.explanation).toLowerCase();
+
+    expect(brief.decision.inputs.practiceChoice).toMatchObject({
+      selectedLabel: "Surprise me",
+      selectedHints: [],
+      selectedPatternMatches: [],
+      status: "open_preference",
+    });
+    expect(brief.decision.inputs.checkInInfluences).not.toContain("practice_type");
+    expect(selectedPattern?.scoreReasons).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ code: "checkin_practice_type_match" }),
+      ]),
+    );
+    expect(serializedExplanation).toContain("left the practice type open");
+    expect(serializedExplanation).not.toContain("surprise me choice helped");
+  });
+
+  it("records when a visible practice answer is set aside by the selected ritual", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-06-03T12:00:00.000Z",
+      capacityMode: "low",
+      preferredRitualStyles: ["candle_or_light", "light_focus"],
+      currentRitualCheckIn: {
+        timeScope: "today",
+        energyCapacity: "a_little",
+        capacityMode: "low",
+        audience: "me",
+        practiceTypeHints: ["plant", "plant_tending"],
+        practiceTypeLabel: "Plant",
+        ritualFocusKey: "saying_something_clearly",
+      },
+    });
+
+    expect(brief.decision.inputs.practiceChoice).toMatchObject({
+      selectedLabel: "Plant",
+      status: "set_aside",
+      selectedPatternMatches: [],
+    });
+    expect(brief.explanation.howThisWasChosen).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          kind: "tradeoff_or_alternative",
+          body: expect.stringContaining("practice answer leaned toward plant"),
+        }),
+      ]),
+    );
+  });
+
+  it("lets matched universal numerology appear only as a small accent signal", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-06-06T12:00:00.000Z",
+      capacityMode: "low",
+      preferredRitualStyles: ["home_tending", "plant_tending"],
+      currentRitualCheckIn: {
+        timeScope: "today",
+        energyCapacity: "a_little",
+        capacityMode: "low",
+        audience: "me",
+        practiceTypeHints: ["home_tending"],
+        practiceTypeLabel: "Home",
+        ritualFocusKey: "tending_the_home",
+      },
+    });
+    const selectedSignals = brief.trace.selectedTimingSignals;
+
+    expect(brief.decision.inputs.numerology).toMatchObject({
+      status: "matched_selected",
+      selectedSignalLabels: expect.arrayContaining(["Numerology 4"]),
+      matchedSignalLabels: expect.arrayContaining(["Numerology 4"]),
+    });
+    expect(selectedSignals[0].strength).not.toBe("accent");
+    expect(selectedSignals.filter((signal) => signal.strength === "accent")).toHaveLength(1);
+    expect(brief.explanation.howThisWasChosen).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          kind: "numerology_accent",
+          body: expect.stringContaining("small accent"),
+        }),
+      ]),
+    );
+    const visibleExplanationText = JSON.stringify([
+      brief.explanation.whyThisFits,
+      brief.explanation.signals,
+      brief.explanation.howThisWasChosen,
+    ]).toLowerCase();
+
+    expect(visibleExplanationText).not.toContain("guarantee");
+    expect(visibleExplanationText).not.toContain("you are a");
+  });
+
   it("uses an across-the-week timing candidate in the decision record and scoring", () => {
     const brief = generateWeeklyBrief({
       currentDate: "2026-06-03T12:00:00.000Z",

@@ -51,6 +51,8 @@ export type TimingSignalSelectionOptions = {
   maxSignals?: number;
   preferredRitualStyles?: string[];
   avoidedRitualStyles?: string[];
+  accentRitualStyles?: string[];
+  includeMatchedAccent?: boolean;
 };
 
 const APPROVED_CARD_KEYS = new Set(
@@ -855,15 +857,23 @@ function scoreSignal(
   const preferredMatches = signal.ritualStyleHints.filter((style) =>
     options.preferredRitualStyles?.includes(style),
   ).length;
+  const accentMatches = signal.ritualStyleHints.filter((style) =>
+    options.accentRitualStyles?.includes(style),
+  ).length;
   const avoidedMatches = signal.ritualStyleHints.filter((style) =>
     options.avoidedRitualStyles?.includes(style),
   ).length;
+  const matchedAccentBoost =
+    options.includeMatchedAccent && signal.strength === "accent"
+      ? accentMatches * 12
+      : 0;
 
   return (
     signal.weight +
     strengthRank(signal.strength) * 10 +
     preferredMatches * 4 -
-    avoidedMatches * 8
+    avoidedMatches * 8 +
+    matchedAccentBoost
   );
 }
 
@@ -892,6 +902,29 @@ export function selectTimingSignals(
     }
 
     selectedSignals.push(signal);
+  }
+
+  if (
+    options.includeMatchedAccent &&
+    !accentSelected &&
+    selectedSignals.length > 0 &&
+    maxSignals > 1
+  ) {
+    const matchedAccent = sortedSignals.find(
+      (signal) =>
+        signal.strength === "accent" &&
+        signal.ritualStyleHints.some((style) =>
+          options.accentRitualStyles?.includes(style),
+        ),
+    );
+
+    if (matchedAccent) {
+      if (selectedSignals.length >= maxSignals) {
+        selectedSignals.splice(maxSignals - 1, 1, matchedAccent);
+      } else {
+        selectedSignals.push(matchedAccent);
+      }
+    }
   }
 
   return selectedSignals;

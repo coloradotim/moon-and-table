@@ -118,13 +118,31 @@ The app should ask only questions it can use.
 
 Selected focus guides recommendation scoring. Timing should shape the form of the ritual, not veto the selected focus. For example, `Making a beginning` under waning or dark timing can become a quieter preparatory beginning rather than disappearing.
 
+## Practice Type
+
+The practice-type question asks what feels welcome right now. It should only show options the generator can trace and diagnose.
+
+Visible v1 options:
+
+- `Home`
+- `Plant`
+- `Kitchen`
+- `Candle or light`
+- `Reflection`
+- `Seasonal`
+- `Surprise me`
+
+`Reflection` appears only when the selected capacity can support it. `Seasonal` appears only for the higher-capacity path. `Surprise me` means the practice type is intentionally open; it must not boost a hidden style or pretend it matched the selected ritual.
+
+`Conversation` is intentionally not a visible practice-type option right now. Conversation-shaped ritual content can remain in the approved library for focus-based or future use, but it needs a dedicated source/content pass before it becomes a top-level check-in/profile preference.
+
 ## Current Implementation
 
 The pre-brief check-in stores answers in a `CurrentRitualCheckIn` object for the current session. It is passed into the generation path and appears in developer-only decision output.
 
 `Try something else` reuses the same check-in answers and private profile context. `Start over` clears the current check-in and returns to the first question.
 
-The current implementation uses check-in capacity, audience, practice type, ritual focus, conservative free-text aliases, and selected timing-window candidates in recommendation scoring. The decision record names which check-in fields influenced the selected pattern.
+The current implementation uses check-in capacity, audience, practice type, ritual focus, conservative free-text aliases, and selected timing-window candidates in recommendation scoring. The decision record names which check-in fields influenced the selected pattern and records a practice-choice diagnostic so visible choices can be audited as matched, set aside, skipped, or intentionally open.
 
 The user-facing explanation has two normal layers. `Why this fits` is the short card-level reason. `How this was chosen` is collapsed by default and can show timing choice, check-in fit, ritual focus, ritual fit, profile or private timing fit, capacity boundaries, tradeoffs, and sources. Debug remains separate for raw score reasons, ids, candidate lists, and exact private contact keys.
 
