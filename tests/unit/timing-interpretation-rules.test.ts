@@ -202,6 +202,45 @@ describe("timing interpretation rules", () => {
         "note.astrology_combo_mercury_cancer_careful_words",
       ]),
     );
+
+    const eligibleRules = getEligibleTimingInterpretationRules();
+    const venusLibra = eligibleRules.find(
+      (rule) => rule.id === "timing_rule.planet_sign.venus.libra",
+    );
+    const saturnTaurus = eligibleRules.find(
+      (rule) => rule.id === "timing_rule.planet_sign.saturn.taurus",
+    );
+    const jupiterSagittarius = eligibleRules.find(
+      (rule) => rule.id === "timing_rule.planet_sign.jupiter.sagittarius",
+    );
+
+    expect(venusLibra).toMatchObject({
+      signalLabel: "Venus in Libra — shared beauty",
+      ritualStyleHints: expect.arrayContaining(["shared_space", "table_reset"]),
+      sourceReferences: expect.arrayContaining([
+        "note.astrology_body_venus_warmth_worth",
+        "note.astrology_sign_libra_shared_balance",
+        "note.astrology_combo_venus_libra_shared_beauty",
+      ]),
+    });
+    expect(saturnTaurus).toMatchObject({
+      signalLabel: "Saturn in Taurus — steady maintenance",
+      ritualStyleHints: expect.arrayContaining(["small_repair", "home_tending"]),
+      sourceReferences: expect.arrayContaining([
+        "note.astrology_body_saturn_limits_structure",
+        "note.astrology_sign_taurus_steady_care",
+        "note.astrology_combo_saturn_taurus_steady_maintenance",
+      ]),
+    });
+    expect(jupiterSagittarius).toMatchObject({
+      signalLabel: "Jupiter in Sagittarius — wider view",
+      ritualStyleHints: expect.arrayContaining(["reflection", "simple planning"]),
+      sourceReferences: expect.arrayContaining([
+        "note.astrology_body_jupiter_perspective_support",
+        "note.astrology_sign_sagittarius_wider_view",
+        "note.astrology_combo_jupiter_sagittarius_wider_view",
+      ]),
+    });
   });
 
   it("keeps approved astrology rule summaries practical and non-deterministic", () => {
@@ -221,7 +260,10 @@ describe("timing interpretation rules", () => {
       "timing_rule.planet_sign.mercury.cancer",
       "timing_rule.planet_sign.mercury.virgo",
       "timing_rule.planet_sign.venus.leo",
+      "timing_rule.planet_sign.venus.libra",
       "timing_rule.planet_sign.mars.capricorn",
+      "timing_rule.planet_sign.saturn.taurus",
+      "timing_rule.planet_sign.jupiter.sagittarius",
       "timing_rule.planetary_aspect.square",
       "timing_rule.planetary_aspect.trine",
       "timing_rule.planetary_aspect.sextile",
@@ -253,6 +295,38 @@ describe("timing interpretation rules", () => {
     expect(serializedRules).not.toContain("synastry");
     expect(serializedRules).not.toContain("compatibility");
     expect(serializedRules).not.toContain("natal");
+  });
+
+  it("keeps major aspect signals household-actionable without planet-specific overreach", () => {
+    const rules = getEligibleTimingInterpretationRules().filter(
+      (rule) => rule.timingFactType === "planetary_aspect",
+    );
+    const rulesById = new Map(rules.map((rule) => [rule.id, rule]));
+
+    expect(rulesById.get("timing_rule.planetary_aspect.square")).toMatchObject({
+      signalSummary:
+        "A square can point to one useful repair or practical adjustment, not a crisis or a prediction of difficulty.",
+      ritualStyleHints: expect.arrayContaining([
+        "home_tending",
+        "small_repair",
+        "surface_reset",
+      ]),
+    });
+    expect(rulesById.get("timing_rule.planetary_aspect.trine")).toMatchObject({
+      ritualStyleHints: expect.arrayContaining(["gratitude", "home_tending"]),
+    });
+    expect(rulesById.get("timing_rule.planetary_aspect.opposition")).toMatchObject({
+      ritualStyleHints: expect.arrayContaining(["shared_space", "table_reset"]),
+    });
+
+    for (const rule of rules) {
+      expect(rule.sourceReferences).toEqual(
+        expect.arrayContaining(["note.astrology_aspects_as_relationships"]),
+      );
+      expect(rule.signalSummary.toLowerCase()).not.toContain("will");
+      expect(rule.signalSummary.toLowerCase()).not.toContain("fated");
+      expect(rule.signalSummary.toLowerCase()).not.toContain("conflict");
+    }
   });
 
   it("keeps draft outer-planet placeholders ineligible", () => {

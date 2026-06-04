@@ -55,7 +55,7 @@ Reference integrity checks from the current data:
 | Lunar cards | Ready | Four-phase MVP is structured, approved, source-backed, and linked to patterns. |
 | Numerology | Ready | Universal date numerology is computed and interpreted as accent-level only with 1-9 cards and rules. |
 | Seasonal anchors | Ready | Solstice/equinox anchors exist with source notes, cards, rules, and safe ritual links. |
-| Astrology timing | Ready with follow-up | Sun through Saturn, all signs, major aspects, retrograde, and selected combinations are usable. Source-note location precision and combination breadth need future work. |
+| Astrology timing | Ready with follow-up | Sun through Saturn, all signs, major aspects, retrograde, and selected practical combinations are usable. Source-note location precision and future planet/aspect combination breadth need follow-up. |
 | Private profile themes | Ready for runtime use | Repo cards are generic placeholders; runtime profile data can influence scoring and explanation without exposing raw placements by default. |
 | Home-tending patterns | Ready | Pattern set is useful, approved, bounded, and safety-filtered. |
 | Kitchen, plant, light patterns | Ready with follow-up | Core patterns, ordinary bread/oats/apple/cooking cues, basil/mint/thyme/sage/lavender, houseplant cues, and pet/allergy guardrails exist; future work can add per-household plant safety state. |
@@ -90,7 +90,7 @@ What works:
 - Source notes are short, transformed, and non-verbatim.
 - The note categories line up with the current product areas: computed timing, lunar, numerology, astrology, seasonal, home tending, kitchen/plant, and safety.
 - Current card, rule, and pattern references resolve to existing note ids.
-- The astrology note layer now has practical notes for bodies, signs, aspects, retrograde, and useful combinations.
+- The astrology note layer now has practical notes for bodies, signs, aspects, retrograde, and household-actionable combinations, including Moon/Cancer, Moon/Virgo, Mercury/Cancer, Mercury/Virgo, Venus/Leo, Venus/Libra, Mars/Capricorn, Saturn/Taurus, Jupiter/Sagittarius, and selected aspect patterns.
 - Numerology notes cover numbers 1-9 and guard against destiny, compatibility, and personality certainty.
 - Seasonal notes distinguish factual solar markers from symbolic home practice.
 
@@ -138,7 +138,7 @@ Gaps and cautions:
 - Seasonal signals are available, but tests should continue proving they can surface near solstice/equinox dates without dumping every computed timing fact.
 - Numerology should continue to be regression-tested as accent-level only.
 - Planetary interpretation should stay limited to approved rules. Computed planetary facts alone should not create visible claims.
-- Aspect rules are deliberately broad. That is appropriate for MVP, but future source work should add practical combinations only where source notes support them.
+- Aspect rules stay broad enough to avoid unsupported planet-specific claims, but now use practical household-action summaries and ritual-style hints. Future source work should add planet/aspect combinations only where source notes support them.
 
 ## RitualPattern Coverage
 
@@ -357,20 +357,21 @@ Acceptance criteria:
 - It catches obvious deterministic, privacy, and copied-text risks.
 - It does not require real private data.
 
-### 8. Deepen astrology source notes and combinations
+### 8. Continue astrology source notes and combinations
 
-Goal: Make astrology timing more specific without exposing natal data or making claims.
+Goal: Extend astrology timing carefully after the first practical combination pass, without exposing natal data or making claims.
 
 Tasks:
 
-- Add more precise source notes for practical planet/sign/aspect combinations that the generator is likely to select.
-- Prioritize combinations that map cleanly to household action: Moon/Cancer, Moon/Virgo, Mercury/Cancer, Mercury/Virgo, Venus/Leo, Mars/Capricorn, Saturn/Taurus, Venus/Libra, Jupiter/Sagittarius, and selected aspects.
+- Add more precise source notes for additional practical planet/sign/aspect combinations that the generator is likely to select.
+- Treat Moon/Cancer, Moon/Virgo, Mercury/Cancer, Mercury/Virgo, Venus/Leo, Mars/Capricorn, Saturn/Taurus, Venus/Libra, Jupiter/Sagittarius, and selected aspects as the current approved MVP coverage.
+- Prioritize any next combinations only when they map cleanly to household action.
 - Keep outer planets fact-only unless a new reviewed source pass approves them.
 - Keep all language symbolic, invitational, and non-predictive.
 
 Acceptance criteria:
 
-- Approved astrology rules have sourceNoteKeys/sourceReferences and useful ritual-style hints.
+- Approved astrology rules continue to have sourceNoteKeys/sourceReferences and useful ritual-style hints.
 - Unsupported combinations remain broad, draft, or ineligible.
 - No raw natal placements or private profile data appear in repo content.
 
@@ -401,7 +402,7 @@ Open follow-up issues in this order:
 5. Plant/herb expansion.
 6. Deferred/context source registry pass.
 7. Content lint.
-8. Astrology combination deepening.
+8. Additional astrology combination coverage only after source-location precision improves.
 9. Curation lifecycle examples.
 
 This order keeps the library auditable before expanding it much further. The current product can continue using the existing approved content while those follow-ups improve depth and governance.

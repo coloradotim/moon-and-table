@@ -240,43 +240,48 @@ const CORE_PLANETS: Array<{
 const ASPECTS: Array<{
   aspect: MajorAspect;
   label: string;
-  styleHint: string;
+  ritualStyleHints: string[];
   summary: string;
   sourceNote: string;
 }> = [
   {
     aspect: "conjunction",
     label: "Conjunction",
-    styleHint: "single-action ritual",
-    summary: "A conjunction can support one joined focus without treating emphasis as urgency.",
+    ritualStyleHints: ["single-action ritual", "simple planning", "reflection"],
+    summary:
+      "A conjunction can support one joined household focus or bounded action without treating emphasis as urgency.",
     sourceNote: "note.astrology_aspect_conjunction_joined_focus",
   },
   {
     aspect: "opposition",
     label: "Opposition",
-    styleHint: "reflection",
-    summary: "An opposition can support noticing contrast, balance, or mirroring without assuming conflict.",
+    ritualStyleHints: ["reflection", "shared_space", "table_reset"],
+    summary:
+      "An opposition can support noticing contrast, balance, or one shared-space adjustment without assuming tension.",
     sourceNote: "note.astrology_aspect_opposition_balance_contrast",
   },
   {
     aspect: "square",
     label: "Square",
-    styleHint: "home_tending",
-    summary: "A square can point to one useful adjustment, not a crisis or a prediction of difficulty.",
+    ritualStyleHints: ["home_tending", "small_repair", "surface_reset"],
+    summary:
+      "A square can point to one useful repair or practical adjustment, not a crisis or a prediction of difficulty.",
     sourceNote: "note.astrology_aspect_square_useful_adjustment",
   },
   {
     aspect: "trine",
     label: "Trine",
-    styleHint: "gratitude",
-    summary: "A trine can point toward available support or ease without promising an outcome.",
+    ritualStyleHints: ["gratitude", "home_tending", "warmth"],
+    summary:
+      "A trine can point toward available support, gratitude, or ease that helps one small ritual happen without promising an outcome.",
     sourceNote: "note.astrology_aspect_trine_available_support",
   },
   {
     aspect: "sextile",
     label: "Sextile",
-    styleHint: "simple planning",
-    summary: "A sextile can suggest a small cooperative opening that still needs a conscious choice.",
+    ritualStyleHints: ["simple planning", "conversation", "single-action ritual"],
+    summary:
+      "A sextile can suggest one reachable next step or cooperative opening that still needs a conscious choice.",
     sourceNote: "note.astrology_aspect_sextile_small_opening",
   },
 ];
@@ -389,12 +394,33 @@ const COMBINATION_DETAILS: Partial<
     ritualStyleHints: ["gratitude", "atmosphere", "candle_or_light"],
     sourceNote: "note.astrology_combo_venus_leo_visible_warmth",
   },
+  "venus.libra": {
+    label: "Venus in Libra — shared beauty",
+    summary:
+      "A signal for appreciation, shared-space beauty, fairness, and one small adjustment that makes relating easier.",
+    ritualStyleHints: ["atmosphere", "table_reset", "shared_space", "gratitude"],
+    sourceNote: "note.astrology_combo_venus_libra_shared_beauty",
+  },
   "mars.capricorn": {
     label: "Mars in Capricorn — bounded practical action",
     summary:
       "A signal for one disciplined household action that stays bounded and stops before overwork.",
     ritualStyleHints: ["single-action ritual", "home_tending", "simple planning"],
     sourceNote: "note.astrology_combo_mars_capricorn_bounded_action",
+  },
+  "jupiter.sagittarius": {
+    label: "Jupiter in Sagittarius — wider view",
+    summary:
+      "A signal for encouragement, humor, learning, or a wider view without turning expansion into overreach.",
+    ritualStyleHints: ["reflection", "gratitude", "conversation", "simple planning"],
+    sourceNote: "note.astrology_combo_jupiter_sagittarius_wider_view",
+  },
+  "saturn.taurus": {
+    label: "Saturn in Taurus — steady maintenance",
+    summary:
+      "A signal for practical limits, durable comfort, steady maintenance, and making one thing easier to sustain.",
+    ritualStyleHints: ["home_tending", "small_repair", "surface_reset", "simple planning"],
+    sourceNote: "note.astrology_combo_saturn_taurus_steady_maintenance",
   },
   "moon.virgo": {
     label: "Moon in Virgo — useful tending",
@@ -558,14 +584,14 @@ const PLANET_RETROGRADE_RULES: TimingInterpretationRule[] = CORE_PLANETS.map(
 );
 
 const PLANETARY_ASPECT_RULES: TimingInterpretationRule[] = ASPECTS.map(
-  ({ aspect, label, styleHint, summary, sourceNote }): TimingInterpretationRule => ({
+  ({ aspect, label, ritualStyleHints, summary, sourceNote }): TimingInterpretationRule => ({
     id: `timing_rule.planetary_aspect.${aspect}`,
     timingFactType: "planetary_aspect",
     condition: { aspect },
     signalLabel: `${label} aspect`,
     signalSummary: summary,
     symbolicCardKeys: [`astrology_aspect_${aspect}`],
-    ritualStyleHints: ["reflection", styleHint],
+    ritualStyleHints,
     weight: 60,
     strength: "supporting",
     avoidIf: [
