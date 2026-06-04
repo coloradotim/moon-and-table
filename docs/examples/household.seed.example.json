@@ -35,6 +35,14 @@
         "source": "manual_entry",
         "confidence": "low",
         "placementKeys": ["placement.sun.placeholder"],
+        "placements": [
+          {
+            "bodyOrPoint": "moon",
+            "sign": "virgo",
+            "degree": 12,
+            "themeKeys": ["practical_care"]
+          }
+        ],
         "profileThemeKeys": ["private_profile.practical_tending"],
         "updatedAtIso": "2026-01-01T00:00:00.000Z"
       }
@@ -64,6 +72,14 @@
         "source": "manual_entry",
         "confidence": "low",
         "placementKeys": ["placement.moon.placeholder"],
+        "placements": [
+          {
+            "bodyOrPoint": "venus",
+            "sign": "leo",
+            "degree": 13,
+            "themeKeys": ["visible_warmth"]
+          }
+        ],
         "profileThemeKeys": ["private_profile.beauty_warmth"],
         "updatedAtIso": "2026-01-01T00:00:00.000Z"
       }

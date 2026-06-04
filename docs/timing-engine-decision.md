@@ -124,17 +124,25 @@ The current calculation reduces ordinary digit sums to 1-9:
 
 Master numbers 11 and 22 are reduced for MVP. Life path numbers, names, compatibility, and personal numerology are deferred.
 
-## Phase 4 — Later Personal / Natal Timing
+## Phase 4 — Private Natal Contact Computation
 
-Deferred:
+Implemented as a private computation layer:
 
-- personal natal transits
+- same-sign resonance between current timing facts and private natal profile placements
+- near conjunctions with a conservative 3 degree orb when both degrees are available
+- opposition, square, trine, and sextile contacts with a conservative 3 degree orb when both degrees are available
+- structured theme-key output for later scoring and explanation work
+
+This layer lives in `src/lib/private-natal-contacts.ts`. The contact engine itself returns structured records; the brief generator may use selected records as bounded scoring signals and visibility-aware explanation context. It does not add houses, synastry, compatibility, predictions, or identity claims. Real private chart values must stay in Firestore or local gitignored files, not source control.
+
+Still deferred:
+
+- richer user-facing private natal explanation controls
 - houses
-- personal aspects to natal placements
-- compatibility or synastry
-- private chart interpretation
-
-These require clearer privacy, consent, source, storage, and interpretation rules before implementation. Real birth data and natal placements tied to people must stay out of source control.
+- synastry or compatibility
+- body-specific orbs
+- elemental or modality resonance
+- user-facing editing or import UI for detailed placements
 
 ## Astronomy Engine Fit
 
@@ -225,6 +233,7 @@ Future tests should add:
 - second-source ephemeris comparisons for planetary facts
 - station-boundary retrograde cases
 - exact aspect search cases if the app moves beyond simple daily facts
+- runtime integration tests for private natal contact behavior in the signed-in app shell
 - timezone-aware week selection if the app later supports household timezones beyond labels
 - seasonal marker behavior around year boundaries
 
@@ -232,8 +241,8 @@ Future tests should add:
 
 - No full timing engine UI.
 - No full astrology interpretation.
-- No personal natal charts.
-- No personal transits.
+- No user-facing personal natal chart explanations.
+- No user-facing personal transit claims.
 - No houses.
 - No compatibility or synastry.
 - No AI-generated timing meaning.

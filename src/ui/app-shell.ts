@@ -250,11 +250,27 @@ function renderBriefSources(explanation: BriefExplanation): string {
   `;
 }
 
+function renderBriefFilterNotes(explanation: BriefExplanation): string {
+  if (explanation.filtersApplied.length === 0) {
+    return "";
+  }
+
+  return `
+    <section class="brief__filter-notes" aria-label="Fit notes">
+      <h3>Fit notes</h3>
+      ${explanation.filtersApplied.map((note) => `
+        <p><strong>${escapeHtml(note.label)}:</strong> ${escapeHtml(note.summary)}</p>
+      `).join("")}
+    </section>
+  `;
+}
+
 function renderBriefChoiceDetails(explanation: BriefExplanation): string {
   const signals = renderBriefSignals(explanation);
+  const filterNotes = renderBriefFilterNotes(explanation);
   const sources = renderBriefSources(explanation);
 
-  if (!signals && !sources) {
+  if (!signals && !filterNotes && !sources) {
     return "";
   }
 
@@ -263,6 +279,7 @@ function renderBriefChoiceDetails(explanation: BriefExplanation): string {
       <summary>How this was chosen</summary>
       <div class="brief__choice-details-body">
         ${signals}
+        ${filterNotes}
         ${sources}
       </div>
     </details>
@@ -283,6 +300,46 @@ function renderScoreReasons(
       ${reason.detail ? `<small>${escapeHtml(reason.detail)}</small>` : ""}
     </li>
   `).join("");
+}
+
+function renderNatalContactDebug(
+  contacts: WeeklyBrief["decision"]["selected"]["natalContacts"],
+): string {
+  if (contacts.length === 0) {
+    return "<p>No selected natal contacts affected this recommendation.</p>";
+  }
+
+  return `<ol>${contacts.map((contact) => `
+    <li>
+      <strong>${escapeHtml(contact.key)}</strong>
+      <small>${escapeHtml([
+        contact.personKey,
+        contact.transitingBody,
+        contact.contactType,
+        contact.aspectType,
+        contact.natalBodyOrPoint,
+        contact.orbDegrees !== undefined ? `${contact.orbDegrees}° orb` : undefined,
+      ].filter(Boolean).join(" · "))}</small>
+      <small>${escapeHtml(contact.themeKeys.join(" · "))}</small>
+    </li>
+  `).join("")}</ol>`;
+}
+
+function renderNatalDebugStatus(brief: WeeklyBrief): string {
+  const placementCount = Object.values(
+    brief.decision.inputs.natalPlacementCounts,
+  ).reduce((total, count) => total + (count ?? 0), 0);
+  const selectedContactCount = brief.decision.selected.natalContacts.length;
+
+  if (placementCount === 0) {
+    return "No placement records loaded. Saved private profile theme cards can still affect fit, but private timing contacts require astrologyProfile.placements in Firestore.";
+  }
+
+  if (selectedContactCount === 0) {
+    return `${placementCount} placement record${placementCount === 1 ? "" : "s"} loaded and checked; none affected the selected ritual.`;
+  }
+
+  return `${placementCount} placement record${placementCount === 1 ? "" : "s"} loaded; ${selectedContactCount} ranked private timing contact${selectedContactCount === 1 ? "" : "s"} affected the selected ritual.`;
 }
 
 function renderDeveloperDecision(brief: WeeklyBrief): string {
@@ -309,6 +366,9 @@ function renderDeveloperDecision(brief: WeeklyBrief): string {
           <p><strong>Audience:</strong> ${escapeHtml(brief.decision.inputs.audience)}</p>
           <p><strong>Preferred:</strong> ${escapeHtml(brief.decision.inputs.preferredRitualStyles.join(" · ") || "none")}</p>
           <p><strong>Avoided:</strong> ${escapeHtml(brief.decision.inputs.avoidedRitualStyles.join(" · ") || "none")}</p>
+          <p><strong>Natal profiles:</strong> ${escapeHtml(`${brief.decision.inputs.privateNatalProfileCount}`)} loaded</p>
+          <p><strong>Natal contacts:</strong> ${escapeHtml(`${brief.decision.inputs.natalContactsComputed}`)} computed</p>
+          <p><strong>Private chart status:</strong> ${escapeHtml(renderNatalDebugStatus(brief))}</p>
         </section>
       </div>
       ${selectedPattern ? `
@@ -340,6 +400,10 @@ function renderDeveloperDecision(brief: WeeklyBrief): string {
             `).join("")}</ol>`
           : "<p>No rejected ritual patterns recorded.</p>"
         }
+      </section>
+      <section class="decision-debug__section">
+        <h3>Selected natal contacts</h3>
+        ${renderNatalContactDebug(brief.decision.selected.natalContacts)}
       </section>
       <section class="decision-debug__section">
         <h3>Source references</h3>

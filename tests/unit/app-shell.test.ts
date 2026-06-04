@@ -110,7 +110,11 @@ describe("app shell rendering", () => {
     expect(html).toContain("Capacity — low");
     expect(html).not.toContain("Schedule — realistic window");
     expect(html).toContain("Why this ritual");
+    expect(html).not.toContain("Private chart fit");
+    expect(html).not.toContain("No saved natal placements were loaded for this brief.");
     expect(html).toContain("How this was chosen");
+    expect(html).toContain("Fit notes");
+    expect(html).toContain("Capacity:");
     expect(html).toContain("Sources used");
     expect(html).toContain('<details class="brief__choice-details" aria-label="How this was chosen">');
     expect(html).not.toContain('<details class="brief__choice-details" aria-label="How this was chosen" open');
@@ -329,6 +333,8 @@ describe("app shell rendering", () => {
     expect(html).toContain("Source references");
     expect(html).toContain("Selected");
     expect(html).toContain("Inputs");
+    expect(html).toContain("Private chart status:");
+    expect(html).toContain("No placement records loaded.");
     expect(html).toContain("capacity_fit");
     expect(html).toContain("private_profile.");
     expect(html).not.toContain("Developer trace");

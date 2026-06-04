@@ -117,6 +117,19 @@ describe("private Firestore data resolution", () => {
           source: "manual_entry",
           confidence: "low",
           placementKeys: ["placement.sun.placeholder"],
+          placements: [
+            {
+              bodyOrPoint: "moon",
+              sign: "virgo",
+              degree: 12,
+              themeKeys: ["practical_care"],
+            },
+            {
+              bodyOrPoint: "unknown" as never,
+              sign: "virgo",
+              degree: 12,
+            },
+          ],
           profileThemeKeys: ["private_profile.structured_action"],
           updatedAtIso: "2026-01-01T00:00:00.000Z",
         },
@@ -127,6 +140,14 @@ describe("private Firestore data resolution", () => {
       source: "manual_entry",
       confidence: "low",
       placementKeys: ["placement.sun.placeholder"],
+      placements: [
+        {
+          bodyOrPoint: "moon",
+          sign: "virgo",
+          degree: 12,
+          themeKeys: ["practical_care"],
+        },
+      ],
       profileThemeKeys: ["private_profile.structured_action"],
       updatedAtIso: "2026-01-01T00:00:00.000Z",
     });
@@ -309,8 +330,9 @@ describe("private Firestore data resolution", () => {
     ).toLowerCase();
 
     expect(serialized).not.toContain("birth");
-    expect(serialized).not.toContain("natal");
     expect(serialized).not.toContain("relationship details");
     expect(serialized).not.toContain("private source text");
+    expect(serialized).not.toContain("jessica");
+    expect(serialized).not.toContain("tim");
   });
 });

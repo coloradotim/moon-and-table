@@ -16,12 +16,16 @@ import {
   type HouseholdDocument,
   type PrivateAstrologyProfile,
   type PrivateAudience,
+  type PrivateNatalPlacement,
+  type PrivateNatalProfile,
+  type NatalPoint,
   type PrivateProfileAssumption,
   type PrivateProfileDocument,
   type PrivateProfileThemeKey,
   type ProfileEmailLinkDocument,
   type ScheduleConstraintsDocument,
 } from "./private-data-schema";
+import type { ZodiacSign } from "./timing-facts";
 import {
   buildProfileTuningUpdate,
   type ProfileTuningFormInput,
@@ -53,6 +57,7 @@ export type PrivateBriefData = {
   householdId?: string;
   assumptions: PrivateProfileAssumption[];
   astrologyProfile?: PrivateAstrologyProfile;
+  natalProfiles: PrivateNatalProfile[];
   tuning: ProfileTuningSettings | null;
   tuningProfiles: ProfileTuningProfile[];
   documentRefs: PrivateDocumentRefs;
@@ -98,6 +103,33 @@ const ASTROLOGY_VISIBILITY_VALUES: AstrologyVisibility[] = [
   "subtle",
   "balanced",
   "explicit",
+];
+const NATAL_POINTS: NatalPoint[] = [
+  "sun",
+  "moon",
+  "mercury",
+  "venus",
+  "mars",
+  "jupiter",
+  "saturn",
+  "ascendant",
+  "midheaven",
+  "node",
+  "chiron",
+];
+const ZODIAC_SIGNS: ZodiacSign[] = [
+  "aries",
+  "taurus",
+  "gemini",
+  "cancer",
+  "leo",
+  "virgo",
+  "libra",
+  "scorpio",
+  "sagittarius",
+  "capricorn",
+  "aquarius",
+  "pisces",
 ];
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -260,6 +292,54 @@ function sanitizeAssumptions(value: unknown): PrivateProfileAssumption[] {
   });
 }
 
+function sanitizeNatalPlacements(value: unknown): PrivateNatalPlacement[] | undefined {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  if (!Array.isArray(value)) {
+    return undefined;
+  }
+
+  return value.flatMap((item): PrivateNatalPlacement[] => {
+    if (
+      !isRecord(item) ||
+      typeof item.bodyOrPoint !== "string" ||
+      !NATAL_POINTS.includes(item.bodyOrPoint as NatalPoint) ||
+      typeof item.sign !== "string" ||
+      !ZODIAC_SIGNS.includes(item.sign as ZodiacSign)
+    ) {
+      return [];
+    }
+
+    if (
+      item.degree !== undefined &&
+      (
+        typeof item.degree !== "number" ||
+        !Number.isFinite(item.degree) ||
+        item.degree < 0 ||
+        item.degree >= 30
+      )
+    ) {
+      return [];
+    }
+
+    if (item.themeKeys !== undefined && !isStringArray(item.themeKeys)) {
+      return [];
+    }
+
+    const degree = typeof item.degree === "number" ? item.degree : undefined;
+    const themeKeys = isStringArray(item.themeKeys) ? item.themeKeys : undefined;
+
+    return [{
+      bodyOrPoint: item.bodyOrPoint as NatalPoint,
+      sign: item.sign as ZodiacSign,
+      ...(degree !== undefined ? { degree } : {}),
+      ...(themeKeys ? { themeKeys } : {}),
+    }];
+  });
+}
+
 function sanitizeAstrologyProfile(
   value: unknown,
 ): PrivateAstrologyProfile | undefined {
@@ -279,13 +359,39 @@ function sanitizeAstrologyProfile(
   }
 
   const profileThemeKeys = sanitizeProfileKeys(value.profileThemeKeys);
+  const placements = sanitizeNatalPlacements(value.placements);
 
   return {
     source: value.source as PrivateAstrologyProfile["source"],
     confidence: value.confidence as PrivateAstrologyProfile["confidence"],
     placementKeys: value.placementKeys,
+    ...(placements ? { placements } : {}),
     profileThemeKeys,
     updatedAtIso: value.updatedAtIso,
+  };
+}
+
+function buildPrivateNatalProfile(
+  profile: Partial<PrivateProfileDocument> | null | undefined,
+  astrologyProfile: PrivateAstrologyProfile | undefined,
+): PrivateNatalProfile | undefined {
+  if (
+    !isAudience(profile?.personKey) ||
+    profile.personKey === "together" ||
+    profile.personKey === "either" ||
+    !astrologyProfile?.placements ||
+    astrologyProfile.placements.length === 0
+  ) {
+    return undefined;
+  }
+
+  return {
+    personKey: profile.personKey,
+    placements: astrologyProfile.placements,
+    profileThemeKeys: astrologyProfile.profileThemeKeys,
+    astrologyVisibility: isAstrologyVisibility(profile?.astrologyVisibility)
+      ? profile.astrologyVisibility
+      : "balanced",
   };
 }
 
@@ -349,6 +455,10 @@ export function resolvePrivateBriefData(
   const astrologyProfile = sanitizeAstrologyProfile(
     documents.profile?.astrologyProfile,
   );
+  const currentNatalProfile = buildPrivateNatalProfile(
+    documents.profile,
+    astrologyProfile,
+  );
   const defaultAudience = isAudience(documents.profile?.defaultAudience)
     ? documents.profile.defaultAudience
     : "either";
@@ -381,6 +491,7 @@ export function resolvePrivateBriefData(
           avoidedRitualStyles,
           profileThemeKeys: privateProfileKeys,
           astrologyProfileThemeKeys: astrologyProfile?.profileThemeKeys ?? [],
+          natalProfile: currentNatalProfile,
           tonePreferences,
           astrologyVisibility: isAstrologyVisibility(
             documents.profile?.astrologyVisibility,
@@ -415,11 +526,19 @@ export function resolvePrivateBriefData(
           defaultAudience,
         },
       ),
+      natalProfiles: buildGeneratorNatalProfiles(
+        currentNatalProfile,
+        tuningProfiles,
+      ),
+      astrologyVisibility: isAstrologyVisibility(documents.profile?.astrologyVisibility)
+        ? documents.profile.astrologyVisibility
+        : "balanced",
       audience: defaultAudience,
     },
     householdId,
     assumptions,
     astrologyProfile,
+    natalProfiles: buildGeneratorNatalProfiles(currentNatalProfile, tuningProfiles),
     tuning,
     tuningProfiles:
       tuning && documentRefs.profileId && documentRefs.capacitySettingsId && documentRefs.scheduleConstraintsId
@@ -439,6 +558,21 @@ export function resolvePrivateBriefData(
         : tuningProfiles,
     documentRefs,
   };
+}
+
+function buildGeneratorNatalProfiles(
+  currentNatalProfile: PrivateNatalProfile | undefined,
+  tuningProfiles: ProfileTuningProfile[],
+): PrivateNatalProfile[] {
+  return [
+    ...(currentNatalProfile ? [currentNatalProfile] : []),
+    ...tuningProfiles.flatMap((profile) =>
+      profile.settings.natalProfile ? [profile.settings.natalProfile] : [],
+    ),
+  ].filter(
+    (profile, index, profiles) =>
+      profiles.findIndex((candidate) => candidate.personKey === profile.personKey) === index,
+  );
 }
 
 function buildGeneratorProfileInputs(

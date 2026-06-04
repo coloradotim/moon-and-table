@@ -11,7 +11,15 @@ import {
   starterSourceReviews,
   starterSourceNotes,
 } from "../data/source-registry";
-import type { PrivateAudience } from "./private-data-schema";
+import type {
+  AstrologyVisibility,
+  PrivateAudience,
+  PrivateNatalProfile,
+} from "./private-data-schema";
+import {
+  getNatalContactsForTimingFacts,
+  type NatalContact,
+} from "./private-natal-contacts";
 import {
   getLunarTimingFact,
   type LunarTimingFact,
@@ -125,6 +133,8 @@ export type WeeklyBriefTrace = {
   sourceNoteIds: string[];
   privateProfileKeys: PrivateProfilePlaceholderKey[];
   profileSignalKeys: string[];
+  privateNatalDiagnostics: PrivateNatalDiagnostics;
+  selectedNatalContacts: NatalContactSummary[];
   profilePreferenceKeys: string[];
   capacityMode: CapacityMode;
   audience: PrivateAudience;
@@ -162,6 +172,7 @@ export type EvaluatedRitualPattern = {
   safetyAllowed: boolean;
   score: number;
   scoreReasons: ScoreReason[];
+  natalContactKeys: string[];
 };
 
 export type RejectedCandidate = {
@@ -181,6 +192,11 @@ export type RecommendationDecision = {
     preferredRitualStyles: string[];
     avoidedRitualStyles: string[];
     excludedRitualPatternKeys: string[];
+    astrologyVisibility: AstrologyVisibility;
+    privateNatalProfilesLoaded: boolean;
+    privateNatalProfileCount: number;
+    natalPlacementCounts: Partial<Record<"person_a" | "person_b", number>>;
+    natalContactsComputed: number;
   };
   candidates: {
     symbolicCards: EvaluatedSymbolicCard[];
@@ -191,6 +207,8 @@ export type RecommendationDecision = {
     symbolicCardKeys: string[];
     ritualPatternKey: string;
     sourceReferences: string[];
+    natalContacts: NatalContactSummary[];
+    natalContactThemeKeys: string[];
   };
   rejected: {
     ritualPatterns: RejectedCandidate[];
@@ -200,6 +218,28 @@ export type RecommendationDecision = {
     safetySummary: string;
     noAlternateAvailable: boolean;
   };
+};
+
+export type NatalContactSummary = {
+  key: string;
+  personKey: "person_a" | "person_b";
+  transitingBody: string;
+  natalBodyOrPoint: string;
+  contactType: NatalContact["contactType"];
+  aspectType?: NatalContact["aspectType"];
+  orbDegrees?: number;
+  transitSign?: string;
+  natalSign?: string;
+  themeKeys: string[];
+  strength: NatalContact["strength"];
+  visibility: AstrologyVisibility;
+};
+
+export type PrivateNatalDiagnostics = {
+  privateNatalProfilesLoaded: boolean;
+  privateNatalProfileCount: number;
+  natalPlacementCounts: Partial<Record<"person_a" | "person_b", number>>;
+  natalContactsComputed: number;
 };
 
 export type BriefSignal = {
@@ -272,6 +312,8 @@ export type GenerateWeeklyBriefInput = {
   preferredRitualStyles?: string[];
   avoidedRitualStyles?: string[];
   profileInputs?: PrivateProfileSignalInput[];
+  natalProfiles?: PrivateNatalProfile[];
+  astrologyVisibility?: AstrologyVisibility;
   audience?: PrivateAudience;
   excludedRitualPatternKeys?: string[];
 };
@@ -290,6 +332,12 @@ type ResolvedGenerateWeeklyBriefInput = {
   profileInputs: PrivateProfileSignalInput[];
   selectedProfileInputs: PrivateProfileSignalInput[];
   profileSignals: PrivateProfileSignal[];
+  natalProfiles: PrivateNatalProfile[];
+  selectedNatalProfiles: PrivateNatalProfile[];
+  natalContacts: NatalContact[];
+  selectedNatalContacts: NatalContact[];
+  natalDiagnostics: PrivateNatalDiagnostics;
+  astrologyVisibility: AstrologyVisibility;
   audience: PrivateAudience;
   excludedRitualPatternKeys: string[];
 };
@@ -300,12 +348,14 @@ type PatternCandidate = {
   scoreReasons: ScoreReason[];
   preferenceMatches: string[];
   profileSignalMatches: PrivateProfileSignal[];
+  natalContactMatches: NatalContact[];
 };
 
 type PatternSelectionResult = {
   pattern: RitualPattern;
   preferenceMatches: string[];
   profileSignalMatches: PrivateProfileSignal[];
+  natalContactMatches: NatalContact[];
   evaluatedPatterns: EvaluatedRitualPattern[];
   rejectedPatterns: RejectedCandidate[];
   eligiblePatternKeys: string[];
@@ -371,6 +421,29 @@ const DEFAULT_PATTERN_BY_CAPACITY: Record<CapacityMode, string> = {
   low: "tend_one_plant",
   steady: "table_reset",
   high: "room_reset",
+};
+
+const MAX_PROFILE_THEME_SCORE = 8;
+const MAX_SELECTED_NATAL_CONTACTS = 3;
+
+const NATAL_CONTACT_THEME_STYLE_HINTS: Record<string, string[]> = {
+  practical_care: ["plant", "plant_tending", "home_tending", "surface_reset", "small_repair"],
+  home_and_belonging: ["home_tending", "kitchen", "table_reset", "threshold_reset"],
+  careful_words: ["conversation", "reflection", "simple planning"],
+  visible_warmth: ["candle_or_light", "light_focus", "gratitude", "atmosphere"],
+  relationship_balance: ["shared_space", "table_reset", "conversation", "gratitude"],
+  direct_action: ["single-action ritual", "surface_reset", "threshold_reset"],
+  embodied_tending: ["plant", "plant_tending", "home_tending", "warm"],
+  structure_and_repair: ["small_repair", "surface_reset", "table_reset", "simple planning"],
+  beauty_and_affection: ["candle_or_light", "light_focus", "gratitude", "atmosphere"],
+  quiet_integration: ["reflection", "close_evening", "home_tending"],
+  steady_care: ["plant_tending", "home_tending", "table_reset"],
+  soft_release: ["reflection", "close_evening", "low_woo"],
+  focused_contact: ["single-action ritual", "reflection"],
+  balance_and_contrast: ["shared_space", "table_reset", "reflection"],
+  practical_adjustment: ["small_repair", "surface_reset", "home_tending"],
+  available_support: ["gratitude", "home_tending", "warm"],
+  small_opening: ["simple planning", "conversation", "single-action ritual"],
 };
 
 function isValidDate(value: Date): boolean {
@@ -543,6 +616,38 @@ function getProfileAvoidedStyles(
   );
 }
 
+function isPersonAudience(audience: PrivateAudience): audience is "person_a" | "person_b" {
+  return audience === "person_a" || audience === "person_b";
+}
+
+function getNatalProfilesForAudience(
+  natalProfiles: PrivateNatalProfile[],
+  audience: PrivateAudience,
+): PrivateNatalProfile[] {
+  if (isPersonAudience(audience)) {
+    return natalProfiles.filter((profile) => profile.personKey === audience);
+  }
+
+  return natalProfiles;
+}
+
+function getNatalDiagnostics(
+  natalProfiles: PrivateNatalProfile[],
+  natalContacts: NatalContact[],
+): PrivateNatalDiagnostics {
+  return {
+    privateNatalProfilesLoaded: natalProfiles.length > 0,
+    privateNatalProfileCount: natalProfiles.length,
+    natalPlacementCounts: Object.fromEntries(
+      natalProfiles.map((profile) => [
+        profile.personKey,
+        profile.placements.length,
+      ]),
+    ),
+    natalContactsComputed: natalContacts.length,
+  };
+}
+
 function getCardStyleMatches(cards: SymbolicCard[], pattern: RitualPattern): string[] {
   const cardStyles = new Set(
     cards.flatMap((card) => normalizeStyleList(card.ritual_styles)),
@@ -559,6 +664,218 @@ function getProfileSignalMatches(
     signal.ritualStyleHints.some(
       (hint) => hint === pattern.key || pattern.ritualStyles.includes(hint),
     ),
+  );
+}
+
+function getContactKey(contact: NatalContact): string {
+  return [
+    contact.personKey,
+    contact.transitingBody,
+    contact.contactType,
+    contact.aspectType,
+    contact.natalBodyOrPoint,
+    contact.transitSign,
+    contact.natalSign,
+    contact.orbDegrees,
+  ].filter((part) => part !== undefined).join(".");
+}
+
+function getNatalContactStyleHints(contact: NatalContact): string[] {
+  return uniqueValues(
+    contact.themeKeys.flatMap((themeKey) =>
+      NATAL_CONTACT_THEME_STYLE_HINTS[themeKey] ?? [],
+    ),
+  );
+}
+
+function getNatalContactMatches(
+  natalContacts: NatalContact[],
+  pattern: RitualPattern,
+): NatalContact[] {
+  return natalContacts.filter((contact) => {
+    const styleHints = getNatalContactStyleHints(contact);
+
+    return styleHints.some(
+      (hint) => hint === pattern.key || pattern.ritualStyles.includes(hint),
+    );
+  });
+}
+
+function getNatalContactRank(
+  contact: NatalContact,
+  pattern: RitualPattern,
+): number {
+  const contactTypeScore: Record<NatalContact["contactType"], number> = {
+    near_conjunction: 8,
+    major_aspect: 6,
+    same_sign: 2,
+    elemental_resonance: 1,
+    modality_resonance: 1,
+  };
+  const strengthScore: Record<NatalContact["strength"], number> = {
+    primary: 4,
+    supporting: 2,
+    accent: 1,
+  };
+  const styleMatchCount = getNatalContactStyleHints(contact).filter(
+    (hint) => hint === pattern.key || pattern.ritualStyles.includes(hint),
+  ).length;
+  const orbScore =
+    contact.orbDegrees === undefined
+      ? 0
+      : Math.max(0, 3 - contact.orbDegrees);
+
+  return contactTypeScore[contact.contactType] +
+    strengthScore[contact.strength] +
+    styleMatchCount * 2 +
+    orbScore;
+}
+
+function selectNatalContactMatches(
+  natalContacts: NatalContact[],
+  pattern: RitualPattern,
+): NatalContact[] {
+  const selected: NatalContact[] = [];
+  const perPersonCount = new Map<NatalContact["personKey"], number>();
+  const matches = [...getNatalContactMatches(natalContacts, pattern)].sort(
+    (a, b) =>
+      getNatalContactRank(b, pattern) - getNatalContactRank(a, pattern) ||
+      getContactKey(a).localeCompare(getContactKey(b)),
+  );
+
+  for (const contact of matches) {
+    const personCount = perPersonCount.get(contact.personKey) ?? 0;
+
+    if (
+      personCount >= 2 &&
+      selected.length < MAX_SELECTED_NATAL_CONTACTS - 1
+    ) {
+      continue;
+    }
+
+    selected.push(contact);
+    perPersonCount.set(contact.personKey, personCount + 1);
+
+    if (selected.length >= MAX_SELECTED_NATAL_CONTACTS) {
+      break;
+    }
+  }
+
+  return selected;
+}
+
+function getSharedNatalThemeKeys(
+  contacts: NatalContact[],
+): string[] {
+  const themeCounts = new Map<string, Set<NatalContact["personKey"]>>();
+
+  for (const contact of contacts) {
+    for (const themeKey of contact.themeKeys) {
+      const people = themeCounts.get(themeKey) ?? new Set<NatalContact["personKey"]>();
+
+      people.add(contact.personKey);
+      themeCounts.set(themeKey, people);
+    }
+  }
+
+  return [...themeCounts.entries()]
+    .filter(([, people]) => people.size > 1)
+    .map(([themeKey]) => themeKey);
+}
+
+function getNatalContactScoreReasons(
+  contacts: NatalContact[],
+  pattern: RitualPattern,
+  audience: PrivateAudience,
+): ScoreReason[] {
+  if (contacts.length === 0) {
+    return [];
+  }
+
+  const contactKeys = contacts.map(getContactKey);
+  const scoreReasons = [
+    scoreReason(
+      "natal_contact_theme_match",
+      "Private natal contact theme match",
+      Math.min(2, contacts.length),
+      contactKeys.slice(0, MAX_SELECTED_NATAL_CONTACTS).join(", "),
+    ),
+  ];
+  const sharedThemeKeys = getSharedNatalThemeKeys(contacts);
+
+  if ((audience === "together" || audience === "either") && sharedThemeKeys.length > 0) {
+    scoreReasons.push(
+      scoreReason(
+        "shared_natal_contact_match",
+        "Shared natal contact match",
+        1,
+        sharedThemeKeys.slice(0, 3).join(", "),
+      ),
+    );
+  }
+
+  if (
+    contacts.some((contact) =>
+      getNatalContactStyleHints(contact).some((hint) =>
+        pattern.ritualStyles.includes(hint),
+      ),
+    )
+  ) {
+    scoreReasons.push(
+      scoreReason(
+        "profile_timing_resonance",
+        "Profile timing resonance",
+        1,
+        uniqueValues(
+          contacts.flatMap((contact) =>
+            getNatalContactStyleHints(contact).filter((hint) =>
+              pattern.ritualStyles.includes(hint),
+            ),
+          ),
+        ).slice(0, 3).join(", "),
+      ),
+    );
+  }
+
+  return scoreReasons;
+}
+
+function summarizeNatalContact(contact: NatalContact): NatalContactSummary {
+  return {
+    key: getContactKey(contact),
+    personKey: contact.personKey,
+    transitingBody: contact.transitingBody,
+    natalBodyOrPoint: contact.natalBodyOrPoint,
+    contactType: contact.contactType,
+    aspectType: contact.aspectType,
+    orbDegrees: contact.orbDegrees,
+    transitSign: contact.transitSign,
+    natalSign: contact.natalSign,
+    themeKeys: contact.themeKeys,
+    strength: contact.strength,
+    visibility: contact.visibility,
+  };
+}
+
+function getNatalContactThemeKeys(contacts: NatalContact[]): string[] {
+  return uniqueValues(contacts.flatMap((contact) => contact.themeKeys));
+}
+
+function getProfileSignalScore(
+  profileSignalMatches: PrivateProfileSignal[],
+): number {
+  const bestWeightByTheme = new Map<string, number>();
+
+  for (const signal of profileSignalMatches) {
+    bestWeightByTheme.set(
+      signal.themeKey,
+      Math.max(bestWeightByTheme.get(signal.themeKey) ?? 0, signal.weight),
+    );
+  }
+
+  return Math.min(
+    MAX_PROFILE_THEME_SCORE,
+    [...bestWeightByTheme.values()].reduce((total, weight) => total + weight, 0),
   );
 }
 
@@ -778,6 +1095,7 @@ function getEligiblePatternCandidates(
         safetyAllowed: safetyResult.allowed,
         score: sumScoreReasons(rejectionReasons),
         scoreReasons: rejectionReasons,
+        natalContactKeys: [],
       });
 
       for (const reason of rejectionReasons) {
@@ -811,10 +1129,11 @@ function getEligiblePatternCandidates(
       input.profileSignals,
       pattern,
     );
-    const profileSignalBoost = profileSignalMatches.reduce(
-      (total, signal) => total + signal.weight,
-      0,
+    const natalContactMatches = selectNatalContactMatches(
+      input.selectedNatalContacts,
+      pattern,
     );
+    const profileSignalBoost = getProfileSignalScore(profileSignalMatches);
     const profileSignalReason =
       profileSignalBoost > 0
         ? [
@@ -822,7 +1141,7 @@ function getEligiblePatternCandidates(
               "profile_theme_match",
               "Private profile theme match",
               profileSignalBoost,
-              profileSignalMatches.map((signal) => signal.key).join(", "),
+              profileSignalMatches.map((signal) => signal.key).slice(0, 6).join(", "),
             ),
           ]
         : [];
@@ -848,6 +1167,11 @@ function getEligiblePatternCandidates(
             ),
           ]
         : [];
+    const natalContactReasons = getNatalContactScoreReasons(
+      natalContactMatches,
+      pattern,
+      input.audience,
+    );
 
     scoreReasons.push(
       scoreReason("approved_pattern", "Approved ritual pattern", 0),
@@ -868,6 +1192,7 @@ function getEligiblePatternCandidates(
         scoreReason("timing_signal_style_match", "Timing signal style match", 2, match),
       ),
       ...profileSignalReason,
+      ...natalContactReasons,
       ...defaultPatternReason,
       ...highCapacityReason,
     );
@@ -884,9 +1209,17 @@ function getEligiblePatternCandidates(
       safetyAllowed: safetyResult.allowed,
       score,
       scoreReasons,
+      natalContactKeys: natalContactMatches.map(getContactKey),
     });
 
-    return [{ pattern, score, scoreReasons, preferenceMatches, profileSignalMatches }];
+    return [{
+      pattern,
+      score,
+      scoreReasons,
+      preferenceMatches,
+      profileSignalMatches,
+      natalContactMatches,
+    }];
   });
 
   return {
@@ -923,6 +1256,7 @@ function selectPattern(
       pattern: sortedCandidates[0].pattern,
       preferenceMatches: sortedCandidates[0].preferenceMatches,
       profileSignalMatches: sortedCandidates[0].profileSignalMatches,
+      natalContactMatches: sortedCandidates[0].natalContactMatches,
       evaluatedPatterns,
       rejectedPatterns,
       eligiblePatternKeys,
@@ -944,6 +1278,7 @@ function selectPattern(
     pattern: fallbackPattern,
     preferenceMatches: [],
     profileSignalMatches: [],
+    natalContactMatches: [],
     evaluatedPatterns,
     rejectedPatterns,
     eligiblePatternKeys,
@@ -1285,13 +1620,70 @@ function getProfileThemeReason(
   return `This also fits the saved profile theme for ${labels[0]}.`;
 }
 
+function labelFromSnake(value: string | undefined): string {
+  if (!value) {
+    return "";
+  }
+
+  return value
+    .split("_")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function getNatalContactThemeLabel(contact: NatalContact): string {
+  const firstTheme = contact.themeKeys.find(
+    (themeKey) => themeKey !== "private_natal_contact",
+  );
+
+  return firstTheme ? firstTheme.replaceAll("_", " ") : "private timing";
+}
+
+function getNatalContactReason(
+  contacts: NatalContact[],
+  visibility: AstrologyVisibility,
+): string {
+  if (contacts.length === 0) {
+    return "";
+  }
+
+  const primary = contacts[0];
+  const themeLabel = getNatalContactThemeLabel(primary);
+
+  if (visibility === "explicit") {
+    const transit = `${labelFromSnake(primary.transitingBody)}${primary.transitSign ? ` in ${labelFromSnake(primary.transitSign)}` : ""}`;
+    const natal = `private natal ${labelFromSnake(primary.natalBodyOrPoint)}${primary.natalSign ? ` in ${labelFromSnake(primary.natalSign)}` : ""}`;
+    const aspect =
+      primary.contactType === "near_conjunction"
+        ? "resonates closely with"
+        : primary.aspectType
+          ? `forms a ${primary.aspectType.replaceAll("_", " ")} to`
+          : "resonates with";
+
+    return `${transit} ${aspect} ${natal}; the brief uses that private contact as a ${themeLabel} emphasis, not a prediction.`;
+  }
+
+  if (visibility === "balanced") {
+    return `Current timing lines up with a ${themeLabel} theme in the private profile, so the app lets that shape the ritual fit without making a chart claim.`;
+  }
+
+  return `This also fits a private timing pattern around ${themeLabel}, so the ritual stays grounded in a theme that is already marked as resonant.`;
+}
+
 function getFitReason(
   privateProfileCard: SymbolicCard | undefined,
   preferenceMatches: string[],
   avoidedRitualStyles: string[],
   profileSignalMatches: PrivateProfileSignal[],
+  natalContactMatches: NatalContact[],
+  astrologyVisibility: AstrologyVisibility,
   audience: PrivateAudience,
 ): string {
+  const natalContactReason = getNatalContactReason(
+    natalContactMatches,
+    astrologyVisibility,
+  );
+
   if (preferenceMatches.length > 0) {
     const labels = preferenceMatches
       .slice(0, 2)
@@ -1299,14 +1691,18 @@ function getFitReason(
     const preferenceReason = `Your saved preferences lean toward ${labels.join(" and ")}.`;
 
     if (profileSignalMatches.length > 0) {
-      return `${preferenceReason} ${getProfileThemeReason(profileSignalMatches, audience)}`;
+      return `${preferenceReason} ${getProfileThemeReason(profileSignalMatches, audience)} ${natalContactReason}`.trim();
     }
 
-    return preferenceReason;
+    return `${preferenceReason} ${natalContactReason}`.trim();
   }
 
   if (profileSignalMatches.length > 0) {
-    return getProfileThemeReason(profileSignalMatches, audience);
+    return `${getProfileThemeReason(profileSignalMatches, audience)} ${natalContactReason}`.trim();
+  }
+
+  if (natalContactReason) {
+    return natalContactReason;
   }
 
   if (privateProfileCard) {
@@ -1335,6 +1731,7 @@ function getWhyThis(
   input: ResolvedGenerateWeeklyBriefInput,
   preferenceMatches: string[],
   profileSignalMatches: PrivateProfileSignal[],
+  natalContactMatches: NatalContact[],
   excludedPatternKeys: string[],
 ): string {
   const durationMinutes = getEffectiveDurationMinutes(
@@ -1347,7 +1744,7 @@ function getWhyThis(
       : "";
   const capacityReason = getCapacityReason(input.capacityMode, durationMinutes);
 
-  return `${getTimingReason(timingCard, input.timingFactDetails[0])} ${pattern.title} was chosen as one small approved home practice for that theme. ${getFitReason(privateProfileCard, preferenceMatches, input.avoidedRitualStyles, profileSignalMatches, input.audience)} ${capacityReason} ${safetyReason}`.replace(/\s+/g, " ").trim();
+  return `${getTimingReason(timingCard, input.timingFactDetails[0])} ${pattern.title} was chosen as one small approved home practice for that theme. ${getFitReason(privateProfileCard, preferenceMatches, input.avoidedRitualStyles, profileSignalMatches, natalContactMatches, input.astrologyVisibility, input.audience)} ${capacityReason} ${safetyReason}`.replace(/\s+/g, " ").trim();
 }
 
 function getReasoning(
@@ -1374,6 +1771,7 @@ function getFilterNotes(
   input: ResolvedGenerateWeeklyBriefInput,
   preferenceMatches: string[],
   profileSignalMatches: PrivateProfileSignal[],
+  natalContactMatches: NatalContact[],
   excludedPatternKeys: string[],
   safetyNotes: string[],
 ): BriefFilterNote[] {
@@ -1399,6 +1797,16 @@ function getFilterNotes(
     notes.push({
       label: "Profile themes",
       summary: getProfileThemeReason(profileSignalMatches, input.audience),
+    });
+  }
+
+  if (natalContactMatches.length > 0) {
+    notes.push({
+      label: "Private timing resonance",
+      summary: getNatalContactReason(
+        natalContactMatches,
+        input.astrologyVisibility,
+      ),
     });
   }
 
@@ -1731,6 +2139,7 @@ function getExplanation(
   input: ResolvedGenerateWeeklyBriefInput,
   preferenceMatches: string[],
   profileSignalMatches: PrivateProfileSignal[],
+  natalContactMatches: NatalContact[],
   excludedPatternKeys: string[],
   safetyNotes: string[],
   whyThis: string,
@@ -1749,6 +2158,7 @@ function getExplanation(
       input,
       preferenceMatches,
       profileSignalMatches,
+      natalContactMatches,
       excludedPatternKeys,
       safetyNotes,
     ),
@@ -1876,6 +2286,7 @@ function getRecommendationDecision({
   sourceReferences,
   safetyNotes,
   noAlternateAvailable,
+  natalContactMatches,
 }: {
   input: ResolvedGenerateWeeklyBriefInput;
   selectedCards: SymbolicCard[];
@@ -1886,6 +2297,7 @@ function getRecommendationDecision({
   sourceReferences: string[];
   safetyNotes: string[];
   noAlternateAvailable: boolean;
+  natalContactMatches: NatalContact[];
 }): RecommendationDecision {
   return {
     inputs: {
@@ -1900,6 +2312,11 @@ function getRecommendationDecision({
       preferredRitualStyles: input.preferredRitualStyles,
       avoidedRitualStyles: input.avoidedRitualStyles,
       excludedRitualPatternKeys: input.excludedRitualPatternKeys,
+      astrologyVisibility: input.astrologyVisibility,
+      privateNatalProfilesLoaded: input.natalDiagnostics.privateNatalProfilesLoaded,
+      privateNatalProfileCount: input.natalDiagnostics.privateNatalProfileCount,
+      natalPlacementCounts: input.natalDiagnostics.natalPlacementCounts,
+      natalContactsComputed: input.natalDiagnostics.natalContactsComputed,
     },
     candidates: {
       symbolicCards: getEvaluatedSymbolicCards(selectedCards, input),
@@ -1912,6 +2329,8 @@ function getRecommendationDecision({
       symbolicCardKeys: selectedCards.map((card) => card.key),
       ritualPatternKey: pattern.key,
       sourceReferences,
+      natalContacts: natalContactMatches.map(summarizeNatalContact),
+      natalContactThemeKeys: getNatalContactThemeKeys(natalContactMatches),
     },
     rejected: {
       ritualPatterns: rejectedPatterns,
@@ -1968,6 +2387,23 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
     profileInputs,
     audience,
   );
+  const natalProfiles = input.natalProfiles ?? [];
+  const selectedNatalProfiles = getNatalProfilesForAudience(
+    natalProfiles,
+    audience,
+  );
+  const astrologyVisibility = input.astrologyVisibility ?? "balanced";
+  const natalContacts = getNatalContactsForTimingFacts({
+    timingFacts: computedTimingFacts,
+    natalProfiles,
+    options: { visibility: astrologyVisibility },
+  });
+  const selectedNatalContacts = getNatalContactsForTimingFacts({
+    timingFacts: computedTimingFacts,
+    natalProfiles: selectedNatalProfiles,
+    options: { visibility: astrologyVisibility },
+  });
+  const natalDiagnostics = getNatalDiagnostics(natalProfiles, natalContacts);
   const preferredRitualStyles = uniqueValues([
     ...normalizeStyleList(input.preferredRitualStyles),
     ...getProfilePreferredStyles(selectedProfileInputs),
@@ -1991,6 +2427,12 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
     profileInputs,
     selectedProfileInputs,
     profileSignals,
+    natalProfiles,
+    selectedNatalProfiles,
+    natalContacts,
+    selectedNatalContacts,
+    natalDiagnostics,
+    astrologyVisibility,
     audience,
     excludedRitualPatternKeys: input.excludedRitualPatternKeys ?? [],
   };
@@ -2035,6 +2477,7 @@ export function generateWeeklyBrief(
     pattern,
     preferenceMatches,
     profileSignalMatches,
+    natalContactMatches,
     evaluatedPatterns,
     rejectedPatterns,
     eligiblePatternKeys,
@@ -2061,6 +2504,7 @@ export function generateWeeklyBrief(
     sourceReferences: [...new Set(sourceReferences)],
     safetyNotes,
     noAlternateAvailable,
+    natalContactMatches,
   });
   const whyThis = getWhyThis(
     timingCard,
@@ -2069,6 +2513,7 @@ export function generateWeeklyBrief(
     resolvedInput,
     preferenceMatches,
     profileSignalMatches,
+    natalContactMatches,
     excludedPatternKeys,
   );
 
@@ -2098,6 +2543,7 @@ export function generateWeeklyBrief(
       resolvedInput,
       preferenceMatches,
       profileSignalMatches,
+      natalContactMatches,
       excludedPatternKeys,
       safetyNotes,
       whyThis,
@@ -2154,6 +2600,8 @@ export function generateWeeklyBrief(
       sourceNoteIds,
       privateProfileKeys: resolvedInput.privateProfileKeys,
       profileSignalKeys: profileSignalMatches.map((signal) => signal.key),
+      privateNatalDiagnostics: resolvedInput.natalDiagnostics,
+      selectedNatalContacts: natalContactMatches.map(summarizeNatalContact),
       profilePreferenceKeys: [
         ...resolvedInput.preferredRitualStyles,
         ...resolvedInput.avoidedRitualStyles,

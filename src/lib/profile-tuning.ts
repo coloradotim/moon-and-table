@@ -2,6 +2,7 @@ import type { CapacityMode } from "./generate-weekly-brief";
 import type {
   AstrologyVisibility,
   PrivateAudience,
+  PrivateNatalProfile,
   PrivateProfileAssumption,
   PrivateProfileThemeKey,
 } from "./private-data-schema";
@@ -35,6 +36,7 @@ export type ProfileTuningSettings = {
   avoidedRitualStyles: string[];
   profileThemeKeys?: PrivateProfileThemeKey[];
   astrologyProfileThemeKeys?: PrivateProfileThemeKey[];
+  natalProfile?: PrivateNatalProfile;
   tonePreferences?: string[];
   astrologyVisibility: AstrologyVisibility;
   assumptions: PrivateProfileAssumption[];

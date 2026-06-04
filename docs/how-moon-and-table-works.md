@@ -67,11 +67,11 @@ The app can compute astrology facts, but facts are not meaning. Planetary facts 
 
 ## How natal-chart themes are used
 
-Moon & Table can use saved natal-chart themes as private profile context.
+Moon & Table can use saved natal-chart themes as private profile context. When private placements are available, it can also compare current timing with saved chart placements and turn selected matches into theme language.
 
 Those themes help the app understand what kinds of magic may feel resonant for each person and for the household. For example, one profile may lean toward practical tending, direct action, beauty, conversation, depth, warmth, or structure. Another may lean toward reflection, care, plants, candlelight, home rhythms, or grounded effort.
 
-The app treats these themes as living context, not fixed labels. A chart theme can help shape the kind of ritual offered, but it should not define a person or explain them away.
+The app treats these themes as living context, not fixed labels. A chart theme can help shape the kind of ritual offered, but it should not define a person or explain them away. Depending on the saved visibility setting, the app can keep this subtle, describe the theme plainly, or name the private timing match more explicitly after sign-in.
 
 Private profile data belongs in Firestore or local gitignored seed files. It should not be committed to the repository.
 
