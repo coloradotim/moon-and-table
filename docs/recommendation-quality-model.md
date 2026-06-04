@@ -114,6 +114,24 @@ Recommendation quality needs scenario review and human judgment. A privacy-safe 
 
 Good scenarios should catch output that technically uses the right inputs but still feels generic, contradictory, overassembled, or thin.
 
+The current scenario bench lives in `tests/fixtures/recommendation-quality-scenarios.ts`.
+Run it with:
+
+```sh
+npm run recommendation:quality
+```
+
+The command prints a Markdown report to stdout. It is a review artifact, not app
+UI and not a CI gate. The report shows the selected ritual, the user-facing copy,
+the expanded explanation sections, selected timing signals, timing-window status,
+numerology and practice-choice diagnostics, selected score reasons, rejected
+near alternatives, automatic warnings, and a blank human-review note for each
+scenario.
+
+Automatic warnings are prompts for review. They do not prove the recommendation
+is bad, and the absence of warnings does not prove it is good. Tim should still
+read the recommendation for coherence, specificity, and grimoire-worthiness.
+
 ## Content Expansion Direction
 
 Prioritize depth in existing practice areas before adding major new categories:

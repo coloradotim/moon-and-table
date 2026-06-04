@@ -2,6 +2,31 @@
 
 This note tracks small recommendation-behavior audits that do not belong in source reviews or card content.
 
+## Issue 152: Recommendation Quality Scenario Report
+
+The recommendation quality scenario bench is a human-review tool for output quality.
+It does not tune scoring, rewrite ritual copy, add sources, or change the visible UI.
+
+Run:
+
+```sh
+npm run recommendation:quality
+```
+
+The report samples privacy-safe scenarios across pause capacity, waning timing with
+beginning focus, candle/light practice, plant practice, kitchen warmth, tending
+us with low capacity, across-week timing, numerology accents, source/debug
+leakage, and repeated filler. Each scenario prints the generated ritual, the
+short `Why this fits`, expanded `How this was chosen` sections, timing and
+practice diagnostics, selected score reasons, rejected near alternatives, and
+automatic warnings.
+
+Warnings are visibility, not verdicts. They help catch slop such as generic
+candle add-ons, unbridged timing/focus tension, raw debug language in normal
+copy, or generic filler phrases. A recommendation still needs human review for
+whether it feels authored, coherent, specific, and worthy of the private
+household grimoire.
+
 ## Issue 129: Check-in Practice Choice Diagnostics
 
 The check-in practice step now has explicit diagnostics in the recommendation decision record and content reachability report.
