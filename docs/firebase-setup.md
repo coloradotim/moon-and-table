@@ -128,6 +128,7 @@ The seed file supports:
 - `profiles[].displayLabel`
 - `profiles[].email`
 - `profiles[].profileThemeKeys`
+- optional `profiles[].firstLoginWelcome`
 - `profiles[].assumptions`
 - `profiles[].astrologyProfile`
 
@@ -245,6 +246,9 @@ Example seeded `profiles/{uid}` shape:
   },
   "defaultAudience": "either",
   "profileThemeKeys": ["private_profile.practical_tending"],
+  "firstLoginWelcome": {
+    "enabled": true
+  },
   "preferredRitualStyles": ["tiny_home_ritual"],
   "avoidedRitualStyles": ["large_task_list"],
   "astrologyVisibility": "balanced",
@@ -269,6 +273,8 @@ Example seeded `profiles/{uid}` shape:
   "updatedAtIso": "2026-01-01T00:00:00.000Z"
 }
 ```
+
+`firstLoginWelcome.enabled` is optional. Put it only on the private profile that should see the one-time welcome screen. After that person clicks `Get Started`, the app writes `firstLoginWelcome.hasSeenFirstLoginWelcome` and `firstLoginWelcome.firstLoginWelcomeSeenAt` back to that private profile document. Do not add this flag by hand in the Firebase console for normal setup; keep it in the local gitignored seed.
 
 `placementKeys` are abstract metadata keys. They can support saved profile themes, but they do not give the app enough information to compute private timing contacts.
 

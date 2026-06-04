@@ -52,6 +52,9 @@
       "displayLabel": "Person B",
       "email": "person_b@example.com",
       "profileThemeKeys": ["private_profile.beauty_warmth"],
+      "firstLoginWelcome": {
+        "enabled": true
+      },
       "defaultCapacityMode": "steady",
       "maxRitualDurationMinutes": 20,
       "scheduleConstraints": {

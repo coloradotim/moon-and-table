@@ -2,6 +2,7 @@ import { CAPACITY_MODES, type CapacityMode } from "./generate-weekly-brief";
 import type {
   NatalPoint,
   PrivateAstrologyProfile,
+  PrivateFirstLoginWelcome,
   PrivateNatalPlacement,
   PrivateProfileAssumption,
   PrivateProfileThemeKey,
@@ -26,6 +27,7 @@ export type PrivateHouseholdSeedProfile = {
   astrologyProfile: PrivateAstrologyProfile;
   preferredRitualStyles?: string[];
   avoidedRitualStyles?: string[];
+  firstLoginWelcome?: PrivateFirstLoginWelcome;
   defaultCapacityMode?: CapacityMode;
   maxRitualDurationMinutes?: number;
   scheduleConstraints?: Partial<PrivateHouseholdSeedSchedule>;
@@ -582,6 +584,49 @@ function parseOptionalSchedule(
   };
 }
 
+function parseFirstLoginWelcome(
+  value: unknown,
+  path: string,
+  errors: string[],
+): PrivateFirstLoginWelcome | undefined {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  if (!isRecord(value)) {
+    errors.push(`${path} must be an object when provided`);
+    return undefined;
+  }
+
+  if (value.enabled !== true) {
+    errors.push(`${path}.enabled must be true when provided`);
+  }
+
+  if (
+    value.hasSeenFirstLoginWelcome !== undefined &&
+    typeof value.hasSeenFirstLoginWelcome !== "boolean"
+  ) {
+    errors.push(`${path}.hasSeenFirstLoginWelcome must be a boolean when provided`);
+  }
+
+  if (
+    value.firstLoginWelcomeSeenAt !== undefined &&
+    typeof value.firstLoginWelcomeSeenAt !== "string"
+  ) {
+    errors.push(`${path}.firstLoginWelcomeSeenAt must be a string when provided`);
+  }
+
+  return {
+    enabled: value.enabled === true,
+    ...(typeof value.hasSeenFirstLoginWelcome === "boolean"
+      ? { hasSeenFirstLoginWelcome: value.hasSeenFirstLoginWelcome }
+      : {}),
+    ...(typeof value.firstLoginWelcomeSeenAt === "string"
+      ? { firstLoginWelcomeSeenAt: value.firstLoginWelcomeSeenAt }
+      : {}),
+  };
+}
+
 export function parsePrivateHouseholdSeed(input: unknown): PrivateHouseholdSeed {
   const errors: string[] = [];
 
@@ -680,6 +725,11 @@ export function parsePrivateHouseholdSeed(input: unknown): PrivateHouseholdSeed 
           avoidedRitualStyles: getOptionalStringArray(
             profile,
             `${path}.avoidedRitualStyles`,
+            errors,
+          ),
+          firstLoginWelcome: parseFirstLoginWelcome(
+            profile.firstLoginWelcome,
+            `${path}.firstLoginWelcome`,
             errors,
           ),
           defaultCapacityMode:

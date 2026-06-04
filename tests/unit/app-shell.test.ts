@@ -4,6 +4,7 @@ import {
   renderAppShell,
   renderLoadingShell,
   renderPrivateDataLoadingShell,
+  renderPrivateFirstLoginWelcomeShell,
   renderRitualCheckInLoadingShell,
   renderProfileTuningSection,
   renderRitualCheckInShell,
@@ -350,6 +351,9 @@ describe("app shell rendering", () => {
     expect(html).toContain("How this was chosen");
     expect(html).toContain("Fit notes");
     expect(html).toContain("Capacity:");
+    expect(html).not.toContain("Safety and fit");
+    expect(html).not.toContain("Household safety guardrails");
+    expect(html).not.toContain("Safety filters applied");
     expect(html).toContain("Sources used");
     expect(html).toContain('<details class="brief__choice-details" aria-label="How this was chosen">');
     expect(html).not.toContain('<details class="brief__choice-details" aria-label="How this was chosen" open');
@@ -439,27 +443,51 @@ describe("app shell rendering", () => {
     expect(html).toContain('data-menu-action="how_it_works"');
     expect(html).toContain('aria-pressed="true">How it works</button>');
     expect(html).toContain('aria-label="How Moon &amp; Table works"');
-    expect(html).toContain("timing, symbolism, and household magic");
-    expect(html).toContain("Recommendation pipeline");
-    expect(html).toContain("What it calculates");
-    expect(html).toContain("Lunar timing");
-    expect(html).toContain("Astrology");
-    expect(html).toContain("Natal-chart themes");
-    expect(html).toContain("Numerology");
-    expect(html).toContain("Seasonal timing");
-    expect(html).toContain("Sources");
-    expect(html).toContain("Recommendation creation");
-    expect(html).toContain("Capacity");
-    expect(html).toContain("Safety");
-    expect(html).toContain("Feedback");
-    expect(html).toContain("What it does not do");
+    expect(html).toContain("My love");
+    expect(html).toContain("I made just for us");
+    expect(html).toContain("We met on 8/8");
+    expect(html).toContain("the day before a full moon");
+    expect(html).toContain("candle magic");
+    expect(html).toContain("The basic idea");
+    expect(html).toContain("What happens under the hood");
+    expect(html).toContain("How timing becomes meaning");
+    expect(html).toContain("Where the symbolic library comes from");
+    expect(html).toContain("How current context changes the answer");
+    expect(html).toContain("How it chooses one ritual");
+    expect(html).toContain("What shows up in the ritual brief");
+    expect(html).toContain("How it learns and stays private");
+    expect(html).toContain("How we can shape it together");
+    expect(html).toContain("To Us");
+    expect(html).toContain("One small ritual, for us, built with love and chosen with care.");
+    expect(html).toContain("I love you.");
+    expect(html).toContain("natal contacts");
+    expect(html).not.toContain('class="how-it-works__sections"');
+    expect(html).not.toContain('class="how-it-works__section"');
+    expect(html).not.toContain(">Safety<");
+    expect(html).not.toContain("Safety comes before symbolism");
     expect(html).toContain('data-home-action="this_week"');
     expect(html).toContain("Back to this week");
     expect(html).not.toContain('data-testid="recommended-ritual"');
     expect(html).not.toContain("person_a@example.com");
-    expect(html).not.toContain("birth data");
     expect(html).not.toContain("service-account");
     expect(html).not.toContain("firebase config");
+  });
+
+  it("renders the one-time private welcome without onboarding links", () => {
+    const html = renderPrivateFirstLoginWelcomeShell();
+
+    expect(html).toContain("Welcome, my love.");
+    expect(html).toContain("I built this for us");
+    expect(html).toContain("Get Started");
+    expect(html).toContain('data-private-welcome-action="dismiss"');
+    expect(html).toContain('aria-hidden="true"');
+    expect(html).not.toContain("How Moon &amp; Table Works");
+    expect(html).not.toContain("How it works");
+    expect(html).not.toContain("Skip");
+    expect(html).not.toContain("Close");
+    expect(html).not.toContain("person_b@example.com");
+    expect(html).not.toContain("birth");
+    expect(html).not.toContain("natal placement");
   });
 
   it("renders the capacity picker in the brief controls when requested", () => {

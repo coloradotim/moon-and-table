@@ -70,6 +70,12 @@ export type PrivateAstrologyProfile = {
   updatedAtIso: string;
 };
 
+export type PrivateFirstLoginWelcome = {
+  enabled?: boolean;
+  hasSeenFirstLoginWelcome?: boolean;
+  firstLoginWelcomeSeenAt?: string;
+};
+
 export type HouseholdDocument = {
   id: string;
   ownerUserId?: string | null;
@@ -105,6 +111,7 @@ export type PrivateProfileDocument = {
   enabledAudiences?: PrivateAudience[];
   tonePreferences?: string[];
   astrologyVisibility?: AstrologyVisibility;
+  firstLoginWelcome?: PrivateFirstLoginWelcome;
   assumptions: PrivateProfileAssumption[];
   astrologyProfile?: PrivateAstrologyProfile;
   updatedAtIso: string;

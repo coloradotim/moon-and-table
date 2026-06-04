@@ -19,6 +19,7 @@ import {
   type PrivateNatalPlacement,
   type PrivateNatalProfile,
   type NatalPoint,
+  type PrivateFirstLoginWelcome,
   type PrivateProfileAssumption,
   type PrivateProfileDocument,
   type PrivateProfileThemeKey,
@@ -55,12 +56,17 @@ export type PrivateBriefData = {
   status: "loaded_private_data" | "using_starter_settings";
   input: GenerateWeeklyBriefInput;
   householdId?: string;
+  firstLoginWelcome: PrivateFirstLoginWelcomeState | null;
   assumptions: PrivateProfileAssumption[];
   astrologyProfile?: PrivateAstrologyProfile;
   natalProfiles: PrivateNatalProfile[];
   tuning: ProfileTuningSettings | null;
   tuningProfiles: ProfileTuningProfile[];
   documentRefs: PrivateDocumentRefs;
+};
+
+export type PrivateFirstLoginWelcomeState = PrivateFirstLoginWelcome & {
+  profileId: string;
 };
 
 export function shouldLoadPrivateData(state: AppAuthState): boolean {
@@ -371,6 +377,24 @@ function sanitizeAstrologyProfile(
   };
 }
 
+function sanitizeFirstLoginWelcome(
+  value: unknown,
+  profileId: string | undefined,
+): PrivateFirstLoginWelcomeState | null {
+  if (!profileId || !isRecord(value) || value.enabled !== true) {
+    return null;
+  }
+
+  return {
+    profileId,
+    enabled: true,
+    hasSeenFirstLoginWelcome: value.hasSeenFirstLoginWelcome === true,
+    ...(typeof value.firstLoginWelcomeSeenAt === "string"
+      ? { firstLoginWelcomeSeenAt: value.firstLoginWelcomeSeenAt }
+      : {}),
+  };
+}
+
 function buildPrivateNatalProfile(
   profile: Partial<PrivateProfileDocument> | null | undefined,
   astrologyProfile: PrivateAstrologyProfile | undefined,
@@ -455,6 +479,10 @@ export function resolvePrivateBriefData(
   const astrologyProfile = sanitizeAstrologyProfile(
     documents.profile?.astrologyProfile,
   );
+  const firstLoginWelcome = sanitizeFirstLoginWelcome(
+    documents.profile?.firstLoginWelcome,
+    documentRefs.profileId,
+  );
   const currentNatalProfile = buildPrivateNatalProfile(
     documents.profile,
     astrologyProfile,
@@ -536,6 +564,7 @@ export function resolvePrivateBriefData(
       audience: defaultAudience,
     },
     householdId,
+    firstLoginWelcome,
     assumptions,
     astrologyProfile,
     natalProfiles: buildGeneratorNatalProfiles(currentNatalProfile, tuningProfiles),
@@ -557,6 +586,34 @@ export function resolvePrivateBriefData(
           ]
         : tuningProfiles,
     documentRefs,
+  };
+}
+
+export function shouldShowPrivateFirstLoginWelcome(
+  privateBriefData: PrivateBriefData,
+): boolean {
+  return (
+    privateBriefData.status === "loaded_private_data" &&
+    privateBriefData.firstLoginWelcome?.enabled === true &&
+    privateBriefData.firstLoginWelcome.hasSeenFirstLoginWelcome !== true
+  );
+}
+
+export function markPrivateFirstLoginWelcomeSeen(
+  privateBriefData: PrivateBriefData,
+  seenAtIso: string,
+): PrivateBriefData {
+  if (!privateBriefData.firstLoginWelcome) {
+    return privateBriefData;
+  }
+
+  return {
+    ...privateBriefData,
+    firstLoginWelcome: {
+      ...privateBriefData.firstLoginWelcome,
+      hasSeenFirstLoginWelcome: true,
+      firstLoginWelcomeSeenAt: seenAtIso,
+    },
   };
 }
 
@@ -862,4 +919,25 @@ export async function updatePrivateProfileTuning(
       update.scheduleConstraints,
     ),
   ]);
+}
+
+export async function dismissPrivateFirstLoginWelcome(
+  db: Firestore,
+  privateBriefData: PrivateBriefData,
+): Promise<PrivateBriefData> {
+  const welcome = privateBriefData.firstLoginWelcome;
+
+  if (!welcome?.profileId) {
+    throw new Error("Private welcome profile reference is missing.");
+  }
+
+  const seenAtIso = new Date().toISOString();
+
+  await updateDoc(doc(db, "profiles", welcome.profileId), {
+    "firstLoginWelcome.hasSeenFirstLoginWelcome": true,
+    "firstLoginWelcome.firstLoginWelcomeSeenAt": seenAtIso,
+    updatedAtIso: seenAtIso,
+  });
+
+  return markPrivateFirstLoginWelcomeSeen(privateBriefData, seenAtIso);
 }

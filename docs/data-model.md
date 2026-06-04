@@ -37,6 +37,8 @@ These objects live in Firestore. Source-controlled examples use placeholders onl
 
 Profile assumptions can move from starter or seeded assumptions to user-confirmed assumptions when edited. The app preserves assumption metadata and stores edited boolean assumptions as user-confirmed.
 
+`PrivateProfile.firstLoginWelcome` may enable a one-time private welcome screen for a specific profile. The dismissal flag and timestamp are written back to the same private profile document after `Get Started`; no source-controlled identity, email, or profile detail is needed.
+
 ## Local Private Seed Data
 
 The normal setup path is:

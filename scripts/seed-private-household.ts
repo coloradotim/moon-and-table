@@ -183,6 +183,9 @@ async function seedPrivateHousehold(seedPath: string): Promise<void> {
           profile.avoidedRitualStyles ?? seed.household.avoidedRitualStyles,
         assumptions: profile.assumptions,
         astrologyProfile: profile.astrologyProfile,
+        ...(profile.firstLoginWelcome
+          ? { firstLoginWelcome: profile.firstLoginWelcome }
+          : {}),
         updatedAtIso: nowIso,
       },
       { merge: true },

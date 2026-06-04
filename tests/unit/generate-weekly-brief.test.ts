@@ -248,6 +248,26 @@ describe("generateWeeklyBrief", () => {
     expect(defaultOutput).not.toContain("schedule.symbolic_event_tuesday");
   });
 
+  it("keeps routine safety language out of default explanation copy", () => {
+    const brief = generateWeeklyBrief({
+      capacityMode: "low",
+      preferredRitualStyles: ["candle_or_light"],
+    });
+    const defaultOutput = JSON.stringify({
+      whyThis: brief.whyThis,
+      sourceSummary: brief.sourceSummary,
+      filtersApplied: brief.explanation.filtersApplied,
+      sourcesUsed: brief.explanation.sourcesUsed,
+    });
+
+    expect(defaultOutput).not.toContain("Safety and fit");
+    expect(defaultOutput).not.toContain("Household safety guardrails");
+    expect(defaultOutput).not.toContain("safety filtering");
+    expect(defaultOutput).not.toContain("safety filters");
+    expect(defaultOutput).not.toContain("household safety guardrails");
+    expect(defaultOutput).toContain("Practical");
+  });
+
   it("steady produces a practical recommendation around twenty minutes or less", () => {
     const brief = generateWeeklyBrief({
       capacityMode: "steady",

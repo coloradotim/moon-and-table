@@ -2113,13 +2113,13 @@ function getWhyThis(
     input.capacityMode,
     input.scheduleConstraints,
   );
-  const safetyReason =
+  const fitReason =
     excludedPatternKeys.length > 0
-      ? `A few options were set aside because they did not fit current capacity, safety, or preferences.`
+      ? `A few options were set aside because they did not fit current capacity, preferences, or practical constraints.`
       : "";
   const capacityReason = getCapacityReason(input.capacityMode, durationMinutes);
 
-  return `${getTimingReason(timingCard, input.timingFactDetails[0])} ${getCheckInReason(input)} ${pattern.title} was chosen as one small approved home practice for that theme. ${getFitReason(privateProfileCard, preferenceMatches, input.avoidedRitualStyles, profileSignalMatches, natalContactMatches, input.astrologyVisibility, input.audience)} ${capacityReason} ${safetyReason}`.replace(/\s+/g, " ").trim();
+  return `${getTimingReason(timingCard, input.timingFactDetails[0])} ${getCheckInReason(input)} ${pattern.title} was chosen as one small approved home practice for that theme. ${getFitReason(privateProfileCard, preferenceMatches, input.avoidedRitualStyles, profileSignalMatches, natalContactMatches, input.astrologyVisibility, input.audience)} ${capacityReason} ${fitReason}`.replace(/\s+/g, " ").trim();
 }
 
 function getReasoning(
@@ -2187,9 +2187,9 @@ function getFilterNotes(
 
   if (excludedPatternKeys.length > 0 || safetyNotes.length > 0) {
     notes.push({
-      label: "Safety and fit",
+      label: "Practical fit",
       summary:
-        "Some options were set aside when they did not fit current capacity, preferences, or household safety guardrails.",
+        "Some options were set aside when they did not fit current capacity, preferences, or practical household constraints.",
     });
   }
 
@@ -2265,10 +2265,10 @@ function getSourceSummary(
   pattern: RitualPattern,
   safetyNotes: string[],
 ): string {
-  const safetySummary =
-    safetyNotes.length > 0 ? ", safety guardrails" : "";
+  const fitSummary =
+    safetyNotes.length > 0 ? ", practical guardrails" : "";
 
-  return `Sources: ${timingCard.title.toLowerCase()} card, ${pattern.title.toLowerCase()} pattern${safetySummary}.`;
+  return `Sources: ${timingCard.title.toLowerCase()} card, ${pattern.title.toLowerCase()} pattern${fitSummary}.`;
 }
 
 function getHumanSourceLabel(reference: string): string | undefined {
@@ -2492,12 +2492,12 @@ function getSourceSummaries(
 
   if (safetyNotes.length > 0 || pattern.sourceReferences.includes("source.safety_reference_families")) {
     sourceSummaries.push({
-      label: "Household safety guardrails",
+      label: "Practical household guardrails",
       kind: "safety_guardrail",
       summary:
         pattern.safetyFlags.fire === "live_flame"
-          ? "Used here: kept the flame handling in reviewed safety metadata while letting the brief itself say candle plainly."
-          : "Used here: checked whether the selected ritual needed reshaping for household safety, capacity, or setup burden.",
+          ? "Used here: kept candle handling ordinary and optional while letting the brief itself say candle plainly."
+          : "Used here: checked whether the selected ritual needed reshaping for capacity, setup burden, or household fit.",
     });
   }
 
@@ -2670,7 +2670,7 @@ function getDecisionSafetySummary(
   }
 
   if (safetyNotes.length > 0) {
-    return "Safety and fit notes were recorded for reviewed pattern selection.";
+    return "Practical fit notes were recorded for reviewed pattern selection.";
   }
 
   return "No hard safety exclusions affected the selected ritual.";
