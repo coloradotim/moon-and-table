@@ -178,6 +178,17 @@ describe("generateWeeklyBrief", () => {
     }
   });
 
+  it("uses saved language tone as controlled recommendation copy", () => {
+    const brief = generateWeeklyBrief({
+      preferredRitualStyles: ["home_tending"],
+      tonePreferences: ["direct"],
+      capacityMode: "low",
+    });
+
+    expect(brief.recommendedRitual).toContain("Stop there.");
+    expect(brief.recommendedRitual).not.toContain("Plain, useful");
+  });
+
   it("uses approved cards only", () => {
     const brief = generateWeeklyBrief({
       currentDate: "2026-06-03T12:00:00.000Z",

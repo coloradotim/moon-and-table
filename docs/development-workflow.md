@@ -51,7 +51,7 @@ Optional private-data verification uses the local seed script:
 
 The seed script does not require every household member to have logged in already. If an account does not exist yet in Firebase Auth, the seed writes pending documents by email; when that person later signs in with the same Google Auth email, the app can read the seeded profile through the email link.
 
-After seeded private data loads, the signed-in app shows the weekly brief by default. Use `Menu` > `Profile settings` to open one tuning card per seeded household profile and edit that profile's existing Firestore profile, capacity, and schedule documents. It is not an import flow, setup wizard, account manager, or seed editor.
+After seeded private data loads, the signed-in app shows the weekly brief by default. Use `Menu` > `Profile settings` to open the tabbed profile settings page and edit each seeded profile's existing Firestore profile, capacity, and schedule documents. It is not an import flow, setup wizard, account manager, or seed editor.
 
 Use `npm run diagnose:content` to generate a local content reachability report. The report samples privacy-safe weekly briefs across representative dates, capacity modes, audiences, profile themes, and preferences, then shows which approved timing rules, symbolic cards, ritual patterns, source reviews, and source notes are selected or left untouched. It is a curation diagnostic only and does not expose raw trace in the app UI.
 

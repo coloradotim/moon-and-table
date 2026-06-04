@@ -576,8 +576,7 @@ describe("app shell rendering", () => {
     expect(defaultHtml).toContain("data-testid=\"recommended-ritual\"");
     expect(defaultHtml).not.toContain("What is usually true?");
     expect(settingsHtml).toContain("Profile settings");
-    expect(settingsHtml).toContain("What is usually true?");
-    expect(settingsHtml).toContain("Household settings will appear here");
+    expect(settingsHtml).toContain("Profile settings will appear here");
     expect(settingsHtml).not.toContain("data-testid=\"recommended-ritual\"");
     expect(settingsHtml).toContain('data-menu-action="this_week"');
     expect(settingsHtml).toContain('aria-pressed="true">Profile settings');
@@ -657,6 +656,7 @@ describe("app shell rendering", () => {
       {
         profile: {
           displayLabel: "Alex",
+          personKey: "person_a",
           defaultAudience: "person_a",
           audienceLabels: {
             person_a: "Alex",
@@ -678,6 +678,24 @@ describe("app shell rendering", () => {
               updatedAtIso: "2026-01-01T00:00:00.000Z",
             },
           ],
+          astrologyProfile: {
+            source: "manual_entry",
+            confidence: "low",
+            placementKeys: ["placement.sun.placeholder", "placement.moon.placeholder"],
+            placements: [
+              {
+                bodyOrPoint: "sun",
+                sign: "libra",
+                degree: 13.25,
+              },
+              {
+                bodyOrPoint: "moon",
+                sign: "virgo",
+              },
+            ],
+            profileThemeKeys: ["private_profile.structured_action"],
+            updatedAtIso: "2026-01-01T00:00:00.000Z",
+          },
         },
         capacitySettings: {
           defaultCapacityMode: "steady",
@@ -710,8 +728,8 @@ describe("app shell rendering", () => {
     const html = renderProfileTuningSection(privateBriefData);
 
     expect(html).toContain("Profile settings");
-    expect(html).toContain("What is usually true?");
-    expect(html).toContain("Profiles hold long-term defaults.");
+    expect(html).not.toContain("What is usually true?");
+    expect(html).toContain("Long-term defaults.");
     expect(html).toContain("Usual energy");
     expect(html).toContain("Maximum ritual size");
     expect(html).toContain("Astrology visibility");
@@ -721,7 +739,7 @@ describe("app shell rendering", () => {
     expect(html).not.toContain('data-profile-tuning-id="profile_blair"');
     expect(html).toContain('data-profile-settings-tab="profile_alex"');
     expect(html).toContain('data-profile-settings-tab="profile_blair"');
-    expect(html).toContain('data-profile-settings-tab="household"');
+    expect(html).not.toContain('data-profile-settings-tab="household"');
     expect(html).toContain('aria-selected="true"');
     expect(html).not.toContain("Use this profile when brief is for");
     expect(html).not.toContain('name="defaultAudience"');
@@ -731,6 +749,8 @@ describe("app shell rendering", () => {
     expect(html).toContain("Avoid by default");
     expect(html).toContain("Language");
     expect(html).toContain("How should the recommendation sound?");
+    expect(html).toContain('type="radio"');
+    expect(html).toContain('name="tonePreference"');
     expect(html).toContain("Plain, useful, low-fuss.");
     expect(html).toContain("Clear, brief, not precious.");
     expect(html).toContain("Tender");
@@ -739,15 +759,21 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("Action patterns");
     expect(html).not.toContain("Burden / avoid flags");
     expect(html).not.toContain("Tone preferences");
-    expect(html).toContain("Plants");
+    expect(html).toContain("Plant");
     expect(html).toContain("Candle or light");
+    expect(html).toContain("Conversation");
+    expect(html).toContain("About ten minutes");
     expect(html).not.toContain("Custom Saved Value");
     expect(html).toContain("Shopping required");
     expect(html).not.toContain("Too vague");
     expect(html).not.toContain("Too precious");
     expect(html).not.toContain("Too clinical");
-    expect(html).toContain("theme metadata loaded");
-    expect(html).toContain("No private placements available");
+    expect(html).not.toContain("private placements available");
+    expect(html).toContain("View chart context");
+    expect(html).toContain("Sun");
+    expect(html).toContain("in Libra, 13.3 degrees");
+    expect(html).toContain("Moon");
+    expect(html).toContain("in Virgo");
     expect(html).not.toContain("Assumptions");
     expect(html).not.toContain("Advanced tuning");
     expect(html).not.toContain("Specific saved tags");
@@ -756,6 +782,7 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("Bread");
     expect(html).not.toContain("Oats");
     expect(html).toContain('name="preferredRitualStyles"');
+    expect(html).not.toContain('name="preferredRitualStyles"\n            value="practical"');
     expect(html).not.toContain('name="preferredRitualStyles"\n            type="text"');
     expect(html).toContain("Save Alex&#39;s settings");
     expect(html).not.toContain("Save Blair&#39;s settings");
@@ -765,11 +792,6 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("avoid vague mush");
     expect(html).not.toContain("starter assumption");
     expect(html).not.toContain("Firestore");
-
-    const householdHtml = renderProfileTuningSection(privateBriefData, "household");
-    expect(householdHtml).toContain("Household");
-    expect(householdHtml).toContain("Default audience");
-    expect(householdHtml).not.toContain('data-profile-tuning-id="profile_alex"');
   });
 
   it("renders private data loading while signed-in Firestore data loads", () => {

@@ -530,6 +530,10 @@ function getProfileRitualDuration(formData: FormData): number {
     return 5;
   }
 
+  if (ritualSizeChoice === "ten") {
+    return 10;
+  }
+
   if (ritualSizeChoice === "twenty") {
     return 20;
   }
@@ -578,6 +582,7 @@ function getProfileTuningFormInput(
       formData,
       "avoidedRitualStyles",
     ),
+    tonePreferences: getStringListFormValues(formData, "tonePreference"),
     astrologyVisibility,
     assumptionValues: {},
   };

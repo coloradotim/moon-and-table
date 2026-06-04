@@ -59,15 +59,22 @@ describe("content reachability diagnostics", () => {
         "bread_enoughness_cue",
         "candle_light_focus",
         "close_the_evening",
+        "end_of_week_closing",
+        "houseplant_check_in",
         "kitchen_reset",
-        "oats_steady_care_cue",
+        "lavender_soft_rest_cue",
         "ordinary_cooking_care_cue",
         "prune_one_dead_leaf",
+        "return_one_object",
+        "room_reset",
+        "seasonal_table_home_reset",
         "table_reset",
-        "tea_ritual",
         "tend_one_plant",
         "threshold_reset",
       ]),
+    );
+    expect(report.gaps.approvedRitualPatternsNotSelected).toEqual(
+      expect.arrayContaining(["one_clear_sentence", "tea_ritual"]),
     );
     expect(report.gaps.approvedRitualPatternsNotSelected.length).toBeGreaterThan(0);
     expect(report.gaps.approvedRitualPatternsNotSelected.every((key) =>

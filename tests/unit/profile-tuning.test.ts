@@ -92,6 +92,7 @@ describe("profile tuning helpers", () => {
         maxRitualDurationMinutes: 20,
         preferredRitualStyles: ["plant_tending", "candle"],
         avoidedRitualStyles: ["shopping", "vague_mush"],
+        tonePreferences: ["warm"],
         astrologyVisibility: "subtle",
         assumptionValues: {
           "assumption.low_overwhelm": false,
@@ -105,6 +106,7 @@ describe("profile tuning helpers", () => {
       defaultAudience: "together",
       preferredRitualStyles: ["plant_tending", "candle_or_light"],
       avoidedRitualStyles: ["shopping_required", "avoid_vague_mush"],
+      tonePreferences: ["warm"],
       astrologyVisibility: "subtle",
       updatedAtIso: "2026-02-01T00:00:00.000Z",
     });
@@ -139,6 +141,7 @@ describe("profile tuning helpers", () => {
         maxRitualDurationMinutes: 5,
         preferredRitualStyles: ["home_tending"],
         avoidedRitualStyles: ["shopping_required"],
+        tonePreferences: ["direct"],
         astrologyVisibility: "balanced",
         assumptionValues: {},
       },

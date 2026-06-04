@@ -30,6 +30,7 @@ describe("ritual patterns", () => {
         "threshold_reset",
         "room_reset",
         "close_the_evening",
+        "one_clear_sentence",
         "tea_ritual",
         "simple_warm_drink",
         "bread_enoughness_cue",
@@ -86,6 +87,7 @@ describe("ritual patterns", () => {
         "threshold_reset",
         "room_reset",
         "close_the_evening",
+        "one_clear_sentence",
         "tea_ritual",
         "simple_warm_drink",
         "bread_enoughness_cue",
@@ -118,6 +120,40 @@ describe("ritual patterns", () => {
     expect(approvedKeys.length).toBeGreaterThanOrEqual(20);
   });
 
+  it("has approved ritual coverage for visible practice areas", () => {
+    const visiblePracticeStyles = [
+      "home_tending",
+      "plant_tending",
+      "kitchen",
+      "candle_or_light",
+      "conversation",
+      "reflection",
+      "seasonal",
+    ];
+    const approvedPatterns = getApprovedRitualPatterns();
+
+    for (const style of visiblePracticeStyles) {
+      expect(
+        approvedPatterns.some((pattern) => pattern.ritualStyles.includes(style)),
+      ).toBe(true);
+    }
+  });
+
+  it("keeps conversation patterns bounded and consent-aware", () => {
+    const conversationPatterns = getApprovedRitualPatterns().filter((pattern) =>
+      pattern.ritualStyles.includes("conversation"),
+    );
+    const serializedConversation = JSON.stringify(conversationPatterns).toLowerCase();
+
+    expect(conversationPatterns.map((pattern) => pattern.key)).toContain(
+      "one_clear_sentence",
+    );
+    expect(serializedConversation).toContain("consent");
+    expect(serializedConversation).toContain("capacity");
+    expect(serializedConversation).not.toContain("couples counseling");
+    expect(serializedConversation).not.toContain("relationship advice");
+  });
+
   it("filters eligible approved patterns by capacity mode", () => {
     expect(getEligibleRitualPatterns("pause").map((pattern) => pattern.key)).toEqual(
       expect.arrayContaining([
@@ -138,6 +174,7 @@ describe("ritual patterns", () => {
         "threshold_reset",
         "room_reset",
         "close_the_evening",
+        "one_clear_sentence",
         "tea_ritual",
         "kitchen_reset",
         "bread_enoughness_cue",

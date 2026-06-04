@@ -369,6 +369,58 @@ export const starterRitualPatterns: RitualPattern[] = [
     approvalStatus: "approved",
   },
   {
+    id: "ritual_pattern_one_clear_sentence",
+    key: "one_clear_sentence",
+    title: "One Clear Sentence",
+    summary: "Name one small household need, appreciation, or next step without turning it into a heavy talk.",
+    ritualStyles: ["conversation"],
+    capacityModes: ["low", "steady"],
+    defaultDurationMinutes: 5,
+    materials: ["nothing required"],
+    steps: [
+      "Choose one sentence that brings a little clarity to the household.",
+      "Say it only when a small exchange is welcome; otherwise write it down for yourself.",
+      "Stop after the sentence and one response, without opening a larger conversation.",
+    ],
+    safetyFlags: withSafetyOverrides({
+      emotionalIntensity: "low",
+      cleanupBurden: "tiny",
+    }),
+    safetyNotes: [
+      "Conversation practices require consent, capacity, and an easy stop.",
+    ],
+    avoidIf: [
+      "avoid if it would become conflict, advice, or heavy relationship processing",
+      "avoid if either person does not have capacity for a small exchange",
+    ],
+    capacityGuidance: {
+      low: "One sentence, or write it privately if saying it would be too much.",
+      steady: "One short exchange is enough; do not turn it into a discussion agenda.",
+    },
+    toneGuidance: ["clear", "consent-aware", "gentle", "bounded"],
+    burdenAvoidFlags: ["emotionally_heavy", "long_journaling"],
+    contraindications: ["avoid forced vulnerability", "avoid conflict resolution claims"],
+    sourceNoteKeys: [
+      "note.astrology_body_mercury_words_sorting",
+      "note.astrology_combo_mercury_cancer_careful_words",
+      "note.numerology_2_cooperation_balance",
+    ],
+    generatorUseNotes: [
+      "Starter conversation coverage for check-in and profile practice preferences.",
+      "Use when conversation is requested but capacity should stay low-pressure.",
+    ],
+    audienceFit: ["either", "together", "household"],
+    sourceReferences: [
+      "source.kevin_burk",
+      "source.april_elliott_kent",
+      "source.safety_reference_families",
+      "note.astrology_body_mercury_words_sorting",
+      "note.astrology_combo_mercury_cancer_careful_words",
+      "note.numerology_2_cooperation_balance",
+    ],
+    approvalStatus: "approved",
+  },
+  {
     id: "ritual_pattern_tea_ritual",
     key: "tea_ritual",
     title: "Tea Pause",

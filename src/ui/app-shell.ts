@@ -60,9 +60,10 @@ const profileCapacityLabels: Record<CapacityMode, string> = {
   steady: "Enough to engage",
   high: "Room for something deeper",
 };
-const ritualSizeChoices = ["five", "twenty", "thirty", "custom"] as const;
+const ritualSizeChoices = ["five", "ten", "twenty", "thirty", "custom"] as const;
 const ritualSizeLabels: Record<(typeof ritualSizeChoices)[number], string> = {
   five: "Five minutes or less",
+  ten: "About ten minutes",
   twenty: "About twenty minutes",
   thirty: "About half an hour",
   custom: "Custom",
@@ -73,9 +74,9 @@ const astrologyVisibilityLabels: Record<string, string> = {
   explicit: "Explicit",
 };
 const profileWorksOptions = [
-  { value: "home_tending", label: "Home tending" },
+  { value: "home_tending", label: "Home" },
   { value: "kitchen", label: "Kitchen" },
-  { value: "plant_tending", label: "Plants" },
+  { value: "plant_tending", label: "Plant" },
   { value: "candle_or_light", label: "Candle or light" },
   { value: "conversation", label: "Conversation" },
   { value: "reflection", label: "Reflection" },
@@ -656,18 +657,39 @@ function renderChoiceOptions(
     .join("");
 }
 
-function renderSummaryItem(label: string, value: string): string {
-  return `
-    <div class="profile-summary__item">
-      <dt>${escapeHtml(label)}</dt>
-      <dd>${escapeHtml(value)}</dd>
-    </div>
-  `;
+function renderLanguageOptions(selectedValues: string[]): string {
+  const selectedTone = selectedValues.find((value) =>
+    profileToneOptions.some((option) => option.value === value),
+  ) ?? "practical";
+
+  return profileToneOptions
+    .map((option) => {
+      const checkedAttribute = option.value === selectedTone ? " checked" : "";
+
+      return `
+        <label class="profile-option">
+          <input
+            type="radio"
+            name="tonePreference"
+            value="${escapeHtml(option.value)}"${checkedAttribute}
+          />
+          <span>
+            <strong>${escapeHtml(option.label)}</strong>
+            <small>${escapeHtml(option.description)}</small>
+          </span>
+        </label>
+      `;
+    })
+    .join("");
 }
 
 function getRitualSizeChoice(minutes: number): (typeof ritualSizeChoices)[number] {
   if (minutes <= 5) {
     return "five";
+  }
+
+  if (minutes <= 10) {
+    return "ten";
   }
 
   if (minutes <= 20) {
@@ -707,21 +729,42 @@ function renderRitualSizeControls(minutes: number): string {
   `;
 }
 
-function renderAstrologyProfileNote(settings: ProfileTuningSettings): string {
-  const placementCount = settings.natalProfile?.placements.length ?? 0;
-  const hasThemeMetadata =
-    (settings.profileThemeKeys?.length ?? 0) > 0 ||
-    (settings.astrologyProfileThemeKeys?.length ?? 0) > 0;
-  const status = placementCount > 0
-    ? "loaded privately"
-    : hasThemeMetadata
-      ? "theme metadata loaded"
-      : "not loaded";
-  const placements = placementCount > 0
-    ? `${placementCount} private placements available`
-    : "No private placements available";
+function formatProfileAstrologyLabel(value: string): string {
+  return value
+    .split("_")
+    .map((part) => `${part.slice(0, 1).toUpperCase()}${part.slice(1)}`)
+    .join(" ");
+}
 
-  return `${status}. ${placements}.`;
+function renderAstrologyProfileContext(settings: ProfileTuningSettings): string {
+  const placements = settings.natalProfile?.placements ?? [];
+
+  if (placements.length === 0) {
+    return "";
+  }
+
+  return `
+    <details class="profile-chart-context">
+      <summary>View chart context</summary>
+      <ul>
+        ${placements
+          .map((placement) => {
+            const degree =
+              typeof placement.degree === "number"
+                ? `, ${placement.degree.toFixed(1).replace(/\\.0$/, "")} degrees`
+                : "";
+
+            return `
+              <li>
+                <strong>${escapeHtml(formatProfileAstrologyLabel(placement.bodyOrPoint))}</strong>
+                <span>${escapeHtml(`in ${formatProfileAstrologyLabel(placement.sign)}${degree}`)}</span>
+              </li>
+            `;
+          })
+          .join("")}
+      </ul>
+    </details>
+  `;
 }
 
 function renderFeedbackButton(
@@ -755,7 +798,6 @@ function renderProfileSettingsForm(profile: ProfileTuningProfile): string {
       data-profile-tuning-id="${escapeHtml(profile.id)}"
     >
       <section class="profile-settings-block">
-        <h3>Defaults</h3>
         <div class="tuning-grid">
           <label>
             <span>Usual energy</span>
@@ -771,7 +813,7 @@ function renderProfileSettingsForm(profile: ProfileTuningProfile): string {
             <select name="astrologyVisibility">
               ${renderSelectOptions(PROFILE_TUNING_ASTROLOGY_VISIBILITY, settings.astrologyVisibility, astrologyVisibilityLabels)}
             </select>
-            <small>${escapeHtml(renderAstrologyProfileNote(settings))}</small>
+            ${renderAstrologyProfileContext(settings)}
           </label>
         </div>
       </section>
@@ -798,7 +840,7 @@ function renderProfileSettingsForm(profile: ProfileTuningProfile): string {
         <fieldset>
           <legend>How should the recommendation sound?</legend>
           <div class="profile-option-list">
-            ${renderChoiceOptions("preferredRitualStyles", settings.preferredRitualStyles, profileToneOptions)}
+            ${renderLanguageOptions(settings.tonePreferences ?? [])}
           </div>
         </fieldset>
       </section>
@@ -814,48 +856,7 @@ function renderProfileSettingsForm(profile: ProfileTuningProfile): string {
 function renderProfileSettingsPanel(profile: ProfileTuningProfile): string {
   return `
     <article class="profile-settings-panel" data-profile-settings-panel="${escapeHtml(profile.id)}">
-      <div class="profile-settings-panel__header">
-        <h3>${escapeHtml(profile.label)}</h3>
-        <p class="muted">What is usually true for this profile.</p>
-      </div>
-
       ${renderProfileSettingsForm(profile)}
-    </article>
-  `;
-}
-
-function renderHouseholdSettingsPanel(profiles: ProfileTuningProfile[]): string {
-  const loadedProfileLabels = profiles
-    .filter((profile) => (profile.settings.natalProfile?.placements.length ?? 0) > 0)
-    .map((profile) => profile.label);
-  const firstProfile = profiles[0];
-  const householdLabels = firstProfile?.settings.audienceLabels;
-
-  return `
-    <article class="profile-settings-panel" data-profile-settings-panel="household">
-      <div class="profile-settings-panel__header">
-        <h3>Household</h3>
-        <p class="muted">Shared defaults and household-level fit.</p>
-      </div>
-
-      <dl class="profile-summary">
-        ${renderSummaryItem("Default audience", householdLabels?.together ?? "Together")}
-        ${renderSummaryItem("Usually works well", "Home tending, kitchen, conversation, plants")}
-        ${renderSummaryItem("Usually avoid", "Shopping required, elaborate setup, heavy cleanup")}
-        ${renderSummaryItem("Private astrology context", loadedProfileLabels.length > 0 ? `${loadedProfileLabels.join(", ")} loaded privately` : "No private placements loaded")}
-      </dl>
-
-      <section class="profile-settings-block">
-        <h3>Household editing</h3>
-        <p class="muted">Household-level editing is separate from personal profile defaults and is not wired to a dedicated Firestore document yet.</p>
-      </section>
-
-      <details class="profile-advanced">
-        <summary>Advanced tuning</summary>
-        <div class="profile-advanced__body">
-          <p class="muted">Future household-only exclusions, shared defaults, and diagnostics can live here without crowding the main profile page.</p>
-        </div>
-      </details>
     </article>
   `;
 }
@@ -870,32 +871,27 @@ export function renderProfileTuningSection(
     return `
       <section class="tuning-panel" aria-label="Profile tuning">
         <div>
-          <p class="label">Profile settings</p>
-          <h2>What is usually true?</h2>
+          <h2>Profile settings</h2>
         </div>
-        <p class="muted">Household settings will appear here when they are available.</p>
+        <p class="muted">Profile settings will appear here when private profile data is available.</p>
       </section>
     `;
   }
 
   const tabItems = [
     ...profiles.map((profile) => ({ id: profile.id, label: profile.label })),
-    { id: "household", label: "Household" },
   ];
   const selectedTabId = tabItems.some((item) => item.id === activeTabId)
     ? activeTabId
     : tabItems[0]?.id;
-  const activeProfile = profiles.find((profile) => profile.id === selectedTabId);
-  const activePanel = activeProfile
-    ? renderProfileSettingsPanel(activeProfile)
-    : renderHouseholdSettingsPanel(profiles);
+  const activeProfile = profiles.find((profile) => profile.id === selectedTabId) ?? profiles[0];
+  const activePanel = renderProfileSettingsPanel(activeProfile);
 
   return `
     <section class="tuning-panel" aria-label="Profile tuning">
       <div>
-        <p class="label">Profile settings</p>
-        <h2>What is usually true?</h2>
-        <p class="muted">Profiles hold long-term defaults. The check-in handles what is true right now.</p>
+        <h2>Profile settings</h2>
+        <p class="muted">Long-term defaults. The check-in handles what is true right now.</p>
       </div>
 
       <div class="profile-settings-tabs" role="tablist" aria-label="Profile settings">
