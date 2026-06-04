@@ -237,6 +237,19 @@ async function seedPrivateHousehold(seedPath: string): Promise<void> {
   console.log(
     `Seeded household ${seed.household.id} for ${resolvedProfiles.length} profile(s), including ${resolvedProfiles.filter((profile) => !profile.uid).length} pending profile(s).`,
   );
+
+  const profilesWithoutPlacementRecords = seed.profiles.filter(
+    (profile) =>
+      profile.astrologyProfile.placementKeys.length > 0 &&
+      (!profile.astrologyProfile.placements ||
+        profile.astrologyProfile.placements.length === 0),
+  );
+
+  if (profilesWithoutPlacementRecords.length > 0) {
+    console.warn(
+      `${profilesWithoutPlacementRecords.length} profile(s) have astrologyProfile.placementKeys but no astrologyProfile.placements. Profile themes can still affect fit, but private timing contact computation requires placements with bodyOrPoint, sign, and optional degree.`,
+    );
+  }
 }
 
 async function resolveSeedPath(): Promise<string> {

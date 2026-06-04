@@ -215,63 +215,6 @@ function renderBriefReasoning(explanation: BriefExplanation): string {
   `;
 }
 
-function labelFromSnake(value: string | undefined): string {
-  if (!value) {
-    return "";
-  }
-
-  return value
-    .split("_")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
-}
-
-function getContactThemeLabel(
-  contact: WeeklyBrief["decision"]["selected"]["natalContacts"][number],
-): string {
-  const themeKey = contact.themeKeys.find(
-    (candidate) => candidate !== "private_natal_contact",
-  );
-
-  return themeKey ? themeKey.replaceAll("_", " ") : "private timing";
-}
-
-function getPrivateChartFitSummary(brief: WeeklyBrief): string {
-  const profileCount = brief.decision.inputs.privateNatalProfileCount;
-  const contactCount = brief.decision.inputs.natalContactsComputed;
-  const selectedContact = brief.decision.selected.natalContacts[0];
-
-  if (profileCount === 0) {
-    return "No saved natal placements were loaded for this brief.";
-  }
-
-  if (!selectedContact) {
-    if (contactCount > 0) {
-      return `${profileCount} saved natal profile${profileCount === 1 ? "" : "s"} loaded. Current timing was checked, but it did not affect this ritual choice.`;
-    }
-
-    return `${profileCount} saved natal profile${profileCount === 1 ? "" : "s"} loaded. No current timing match was selected for this ritual.`;
-  }
-
-  if (brief.decision.inputs.astrologyVisibility === "explicit") {
-    const transit = `${labelFromSnake(selectedContact.transitingBody)}${selectedContact.transitSign ? ` in ${labelFromSnake(selectedContact.transitSign)}` : ""}`;
-    const natal = `saved natal ${labelFromSnake(selectedContact.natalBodyOrPoint)}${selectedContact.natalSign ? ` in ${labelFromSnake(selectedContact.natalSign)}` : ""}`;
-
-    return `Used this week: ${transit} resonated with ${natal} and helped shape the ritual fit.`;
-  }
-
-  return `Used this week: current timing matched a saved chart theme around ${getContactThemeLabel(selectedContact)} and helped shape the ritual fit.`;
-}
-
-function renderPrivateChartFit(brief: WeeklyBrief): string {
-  return `
-    <section class="brief__chart-fit" aria-label="Private chart fit">
-      <p class="brief__section-label">Private chart fit</p>
-      <p>${escapeHtml(getPrivateChartFitSummary(brief))}</p>
-    </section>
-  `;
-}
-
 function getSourceKindLabel(kind: BriefSourceSummary["kind"]): string {
   switch (kind) {
     case "source_review":
@@ -382,6 +325,23 @@ function renderNatalContactDebug(
   `).join("")}</ol>`;
 }
 
+function renderNatalDebugStatus(brief: WeeklyBrief): string {
+  const placementCount = Object.values(
+    brief.decision.inputs.natalPlacementCounts,
+  ).reduce((total, count) => total + (count ?? 0), 0);
+  const selectedContactCount = brief.decision.selected.natalContacts.length;
+
+  if (placementCount === 0) {
+    return "No placement records loaded. Saved private profile theme cards can still affect fit, but private timing contacts require astrologyProfile.placements in Firestore.";
+  }
+
+  if (selectedContactCount === 0) {
+    return `${placementCount} placement record${placementCount === 1 ? "" : "s"} loaded and checked; none affected the selected ritual.`;
+  }
+
+  return `${placementCount} placement record${placementCount === 1 ? "" : "s"} loaded; ${selectedContactCount} private timing contact${selectedContactCount === 1 ? "" : "s"} affected the selected ritual.`;
+}
+
 function renderDeveloperDecision(brief: WeeklyBrief): string {
   const selectedPattern = brief.decision.candidates.ritualPatterns.find(
     (candidate) => candidate.key === brief.decision.selected.ritualPatternKey,
@@ -408,6 +368,7 @@ function renderDeveloperDecision(brief: WeeklyBrief): string {
           <p><strong>Avoided:</strong> ${escapeHtml(brief.decision.inputs.avoidedRitualStyles.join(" · ") || "none")}</p>
           <p><strong>Natal profiles:</strong> ${escapeHtml(`${brief.decision.inputs.privateNatalProfileCount}`)} loaded</p>
           <p><strong>Natal contacts:</strong> ${escapeHtml(`${brief.decision.inputs.natalContactsComputed}`)} computed</p>
+          <p><strong>Private chart status:</strong> ${escapeHtml(renderNatalDebugStatus(brief))}</p>
         </section>
       </div>
       ${selectedPattern ? `
@@ -899,7 +860,6 @@ export function renderSignedInShell(
 
       <section class="brief__depth" aria-label="Brief explanation">
         ${renderBriefReasoning(brief.explanation)}
-        ${renderPrivateChartFit(brief)}
         <section class="brief__question" aria-label="Question to carry">
           <p class="brief__section-label">Question to carry</p>
           <p class="prompt">${escapeHtml(brief.reflectionPrompt)}</p>

@@ -11,51 +11,6 @@ import {
 } from "../../src/ui/app-shell";
 import { resolvePrivateBriefData } from "../../src/lib/private-data";
 import { generateWeeklyBrief } from "../../src/lib/generate-weekly-brief";
-import type { PrivateNatalProfile } from "../../src/lib/private-data-schema";
-import type { TimingFact, ZodiacSign } from "../../src/lib/timing-facts";
-
-const fakeTimingBase = {
-  exactIso: "2026-01-01T00:00:00.000Z",
-  timezone: "UTC",
-  computedBy: "manual" as const,
-  confidence: "manual" as const,
-};
-
-function fakePlanetSignFact({
-  planet,
-  sign,
-  degree,
-  longitude,
-}: {
-  planet: "venus";
-  sign: ZodiacSign;
-  degree: number;
-  longitude: number;
-}): TimingFact {
-  return {
-    ...fakeTimingBase,
-    id: `fake.timing.${planet}`,
-    type: "planet_sign",
-    label: `${planet} fake position`,
-    planet,
-    sign,
-    degree,
-    eclipticLongitudeDegrees: longitude,
-  };
-}
-
-const fakeVenusWarmthProfile: PrivateNatalProfile = {
-  personKey: "person_b",
-  placements: [
-    {
-      bodyOrPoint: "venus",
-      sign: "leo",
-      degree: 13,
-      themeKeys: ["visible_warmth"],
-    },
-  ],
-  profileThemeKeys: [],
-};
 
 describe("app shell rendering", () => {
   it("renders a loading state", () => {
@@ -155,8 +110,8 @@ describe("app shell rendering", () => {
     expect(html).toContain("Capacity — low");
     expect(html).not.toContain("Schedule — realistic window");
     expect(html).toContain("Why this ritual");
-    expect(html).toContain("Private chart fit");
-    expect(html).toContain("No saved natal placements were loaded for this brief.");
+    expect(html).not.toContain("Private chart fit");
+    expect(html).not.toContain("No saved natal placements were loaded for this brief.");
     expect(html).toContain("How this was chosen");
     expect(html).toContain("Fit notes");
     expect(html).toContain("Capacity:");
@@ -350,62 +305,6 @@ describe("app shell rendering", () => {
     expect(html).toContain("Question to carry");
   });
 
-  it("renders whether private natal placements affected the weekly brief", () => {
-    const brief = generateWeeklyBrief({
-      currentDate: "2026-01-01T00:00:00.000Z",
-      timingFacts: ["moon.full"],
-      computedTimingFacts: [
-        fakePlanetSignFact({
-          planet: "venus",
-          sign: "leo",
-          degree: 13,
-          longitude: 133,
-        }),
-      ],
-      capacityMode: "low",
-      audience: "person_b",
-      natalProfiles: [fakeVenusWarmthProfile],
-      astrologyVisibility: "balanced",
-    });
-    const html = renderSignedInShell(resolvePrivateBriefData({}), { brief });
-
-    expect(html).toContain("Private chart fit");
-    expect(html).toContain(
-      "Used this week: current timing matched a saved chart theme around visible warmth and helped shape the ritual fit.",
-    );
-    expect(html).toContain("Private timing resonance");
-    expect(html).toContain("Current timing lines up with a visible warmth theme");
-    expect(html).not.toContain("private_profile.");
-    expect(html).not.toContain("birth");
-  });
-
-  it("can render explicit private timing fit when astrology visibility allows it", () => {
-    const brief = generateWeeklyBrief({
-      currentDate: "2026-01-01T00:00:00.000Z",
-      timingFacts: ["moon.full"],
-      computedTimingFacts: [
-        fakePlanetSignFact({
-          planet: "venus",
-          sign: "leo",
-          degree: 13,
-          longitude: 133,
-        }),
-      ],
-      capacityMode: "low",
-      audience: "person_b",
-      natalProfiles: [fakeVenusWarmthProfile],
-      astrologyVisibility: "explicit",
-    });
-    const html = renderSignedInShell(resolvePrivateBriefData({}), { brief });
-
-    expect(html).toContain(
-      "Used this week: Venus in Leo resonated with saved natal Venus in Leo and helped shape the ritual fit.",
-    );
-    expect(html).toContain("Venus in Leo resonates closely with private natal Venus in Leo");
-    expect(html).not.toContain("birth");
-    expect(html).not.toContain("will cause");
-  });
-
   it("renders profile tuning only when the profile settings view is selected", () => {
     const defaultHtml = renderSignedInShell(resolvePrivateBriefData({}));
     const settingsHtml = renderSignedInShell(resolvePrivateBriefData({}), {
@@ -434,6 +333,8 @@ describe("app shell rendering", () => {
     expect(html).toContain("Source references");
     expect(html).toContain("Selected");
     expect(html).toContain("Inputs");
+    expect(html).toContain("Private chart status:");
+    expect(html).toContain("No placement records loaded.");
     expect(html).toContain("capacity_fit");
     expect(html).toContain("private_profile.");
     expect(html).not.toContain("Developer trace");

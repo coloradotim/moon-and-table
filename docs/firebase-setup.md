@@ -270,7 +270,9 @@ Example seeded `profiles/{uid}` shape:
 }
 ```
 
-`placementKeys` must stay abstract placeholder keys in source-controlled docs and tests. Do not write real chart placements, birth data, names, private interpretations, relationship details, or private source text into the repository.
+`placementKeys` are abstract metadata keys. They can support saved profile themes, but they do not give the app enough information to compute private timing contacts.
+
+For private timing contacts, the gitignored local seed may include `astrologyProfile.placements` records with `bodyOrPoint`, `sign`, optional `degree`, and optional generic `themeKeys`. Source-controlled examples use fake placeholder placement records only. Do not write real chart placements, birth data, names, private interpretations, relationship details, or private source text into the repository.
 
 Example `capacitySettings/{uid}`:
 
