@@ -419,7 +419,10 @@ describe("source registry", () => {
       "note.astrology_combo_mercury_cancer_careful_words",
       "note.astrology_combo_mercury_virgo_practical_detail",
       "note.astrology_combo_venus_leo_visible_warmth",
+      "note.astrology_combo_venus_libra_shared_beauty",
       "note.astrology_combo_mars_capricorn_bounded_action",
+      "note.astrology_combo_saturn_taurus_steady_maintenance",
+      "note.astrology_combo_jupiter_sagittarius_wider_view",
       "note.astrology_combo_moon_virgo_useful_tending",
       "note.astrology_combo_moon_cancer_home_rhythm",
       "note.astrology_combo_sun_cancer_household_attention",
@@ -438,7 +441,7 @@ describe("source registry", () => {
       expect(note.verbatimAllowed).toBe(false);
       expect(note.paraphrasedNote.length).toBeLessThanOrEqual(280);
       expect(note.paraphrasedNote).toMatch(
-        /Use|support|signal|can|Mercury|Venus|Mars|Moon|Sun/,
+        /Use|support|signal|can|Mercury|Venus|Mars|Moon|Sun|Saturn|Jupiter/,
       );
     }
 

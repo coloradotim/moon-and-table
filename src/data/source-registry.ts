@@ -1840,7 +1840,7 @@ const strengthenedAstrologySourceNotes: SourceNote[] = [
     id: "note.astrology_aspect_conjunction_joined_focus",
     sourceId: "source.steven_forrest",
     paraphrasedNote:
-      "Use conjunctions as joined focus or emphasis, not automatic intensity or a demand for action.",
+      "Use conjunctions as joined focus or emphasis: choose one household action and keep the focus bounded.",
     tags: ["astrology", "conjunction", "aspect"],
     riskNotes: ["avoid urgent or fated emphasis"],
     safetyNotes: ["one focus is enough"],
@@ -1849,7 +1849,7 @@ const strengthenedAstrologySourceNotes: SourceNote[] = [
     id: "note.astrology_aspect_opposition_balance_contrast",
     sourceId: "source.steven_forrest",
     paraphrasedNote:
-      "Use oppositions as contrast, mirroring, and balance, not conflict by default.",
+      "Use oppositions as contrast, mirroring, and balance: adjust one shared space without assuming tension.",
     tags: ["astrology", "opposition", "aspect"],
     riskNotes: ["avoid relationship-crisis language"],
     safetyNotes: ["do not force shared processing"],
@@ -1858,7 +1858,7 @@ const strengthenedAstrologySourceNotes: SourceNote[] = [
     id: "note.astrology_aspect_square_useful_adjustment",
     sourceId: "source.steven_forrest",
     paraphrasedNote:
-      "Use squares as useful friction or adjustment points, not crisis, conflict, or failure.",
+      "Use squares as useful adjustment points: repair or shift one practical thing without treating friction as crisis.",
     tags: ["astrology", "square", "aspect"],
     riskNotes: ["avoid difficulty predictions"],
     safetyNotes: ["keep the adjustment small"],
@@ -1867,7 +1867,7 @@ const strengthenedAstrologySourceNotes: SourceNote[] = [
     id: "note.astrology_aspect_trine_available_support",
     sourceId: "source.steven_forrest",
     paraphrasedNote:
-      "Use trines as available support or ease, not a promised outcome or proof that effort is unnecessary.",
+      "Use trines as available support: notice one resource, gratitude, or ease that can help a small ritual happen.",
     tags: ["astrology", "trine", "aspect"],
     riskNotes: ["avoid guaranteed ease or luck claims"],
     safetyNotes: ["real constraints still matter"],
@@ -1876,7 +1876,7 @@ const strengthenedAstrologySourceNotes: SourceNote[] = [
     id: "note.astrology_aspect_sextile_small_opening",
     sourceId: "source.kevin_burk",
     paraphrasedNote:
-      "Use sextiles as a cooperative small opening or opportunity that still needs a conscious choice.",
+      "Use sextiles as a cooperative small opening: choose one reachable next step, not a forced opportunity.",
     tags: ["astrology", "sextile", "aspect"],
     riskNotes: ["avoid obligation or success claims"],
     safetyNotes: ["keep opportunities optional"],
@@ -1909,6 +1909,15 @@ const strengthenedAstrologySourceNotes: SourceNote[] = [
     safetyNotes: ["keep warmth optional and practical"],
   }),
   makeAstrologySourceNote({
+    id: "note.astrology_combo_venus_libra_shared_beauty",
+    sourceId: "source.april_elliott_kent",
+    paraphrasedNote:
+      "Venus plus Libra can support shared beauty, fairness, appreciation, and one small adjustment to a common space.",
+    tags: ["astrology", "venus", "libra", "combination"],
+    riskNotes: ["avoid fixed partner-fit claims, romance certainty, or forced relationship talk"],
+    safetyNotes: ["shared-space suggestions need consent and low pressure"],
+  }),
+  makeAstrologySourceNote({
     id: "note.astrology_combo_mars_capricorn_bounded_action",
     sourceId: "source.kevin_burk",
     paraphrasedNote:
@@ -1916,6 +1925,24 @@ const strengthenedAstrologySourceNotes: SourceNote[] = [
     tags: ["astrology", "mars", "capricorn", "combination"],
     riskNotes: ["avoid grind, pressure, or conflict language"],
     safetyNotes: ["capacity limits the action"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_combo_saturn_taurus_steady_maintenance",
+    sourceId: "source.kevin_burk",
+    paraphrasedNote:
+      "Saturn plus Taurus can support steady maintenance, practical limits, durable comfort, and making one thing easier to sustain.",
+    tags: ["astrology", "saturn", "taurus", "combination"],
+    riskNotes: ["avoid scarcity, punishment, or stuckness claims"],
+    safetyNotes: ["structure should protect rest and capacity"],
+  }),
+  makeAstrologySourceNote({
+    id: "note.astrology_combo_jupiter_sagittarius_wider_view",
+    sourceId: "source.kevin_burk",
+    paraphrasedNote:
+      "Jupiter plus Sagittarius can support a wider view, encouragement, humor, or learning without turning expansion into overreach.",
+    tags: ["astrology", "jupiter", "sagittarius", "combination"],
+    riskNotes: ["avoid luck, destiny, travel, or forced positivity claims"],
+    safetyNotes: ["keep perspective shifts realistic and small"],
   }),
   makeAstrologySourceNote({
     id: "note.astrology_combo_moon_virgo_useful_tending",
