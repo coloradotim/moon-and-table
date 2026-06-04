@@ -98,10 +98,13 @@ Lifecycle examples may exist as separate fixture data for curation training and 
 | `SkyEvent` | Broader event vocabulary for exact or bounded sky events such as lunations, solstices, equinoxes, and later ingresses or station events. |
 | `TimingInterpretationRule` | Explicit reviewed mapping from a computed fact condition to candidate symbolic cards, ritual style hints, weight, strength, and source references. |
 | `TimingSignal` | Candidate user-facing signal produced by eligible rules; signal selection should limit visible signals to a small meaningful set. |
+| `TimingWindowCandidate` | Structured look-ahead candidate for a meaningful timing moment in the next several days. It includes timing facts, signal keys, safe natal-contact keys/theme keys, score, and score reasons. |
 
 Timing facts are computed and testable. Interpretation belongs in SymbolicCards, rules, and approved content, not raw timing facts.
 
 The broader timing fact API lives in `src/lib/timing-facts.ts` and currently computes lunar phase, lunations, moon sign, sun sign, seasonal markers, planetary signs, retrograde status, major aspects, and universal numerology date facts. Universal numerology facts come from `src/lib/numerology-timing.ts`, which computes universal year, month, and day numbers by reducing date sums to 1-9; master numbers are reduced for MVP. The first rule layer lives in `src/lib/timing-interpretation-rules.ts`; approved rules cover lunar phase cards, numerology cards, four solstice/equinox seasonal anchors, MVP astrology cards for Sun through Saturn, all 12 signs, five major aspects, and a conservative retrograde cue. Weather-aware seasonal interpretation, local ecology, cross-quarter days, and outer-planet interpretation remain deferred until reviewed source cards exist.
+
+Timing look-ahead lives in `src/lib/timing-window-candidates.ts`. It scans a default seven-day range and returns sorted timing-window candidates for the future `Best moment this week` flow. This is timing look-ahead, not schedule awareness: candidates do not use fake availability, hard-coded weekdays, or placeholder household windows.
 
 Astronomy Engine is the MVP timing direction. Swiss Ephemeris remains deferred until precision, houses, natal charts, or personal transit needs justify it.
 
@@ -110,6 +113,8 @@ Astronomy Engine is the MVP timing direction. Swiss Ephemeris remains deferred u
 `src/lib/private-natal-contacts.ts` computes private contacts between current timing facts and private natal profile placements. It supports same-sign resonance, near conjunctions, and major aspect geometry with a conservative 3 degree orb when degrees are available.
 
 Natal contacts return structured theme keys and contact metadata. The weekly brief generator can use selected contacts as bounded scoring signals and visibility-aware explanation context. They do not create predictions, identity claims, houses, synastry, compatibility, or raw chart displays in the default UI.
+
+Timing-window candidates may include safe natal-contact keys and theme keys. Those keys are for scoring and debugging only; they should not render raw placements, degrees, birth data, or private profile details in the default UI.
 
 Source-controlled tests use fake placeholder profiles only. Real private placement values belong in Firestore or local gitignored files, not the repository.
 

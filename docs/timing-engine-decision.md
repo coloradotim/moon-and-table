@@ -210,6 +210,36 @@ Selection should consider:
 
 Numerology should remain accent-level and should not be selected as the first or only timing signal.
 
+## Timing Window Look-Ahead
+
+`src/lib/timing-window-candidates.ts` provides the first reusable timing look-ahead API for the future `Best moment this week` choice.
+
+```ts
+getTimingWindowCandidates({
+  startDate,
+  daysAhead,
+  timezone,
+  privateNatalProfiles,
+  astrologyVisibility,
+  options,
+})
+```
+
+The default look-ahead is 7 days. The function scans deterministic timing facts, applies eligible timing interpretation rules, and returns sorted `TimingWindowCandidate` records with:
+
+- start and optional end timestamps
+- a human-readable label
+- source timing facts
+- timing signal keys
+- score and score reasons
+- safe natal-contact keys and theme keys when private natal profiles are available
+
+Candidate sources currently include exact new/full moon events, lunar phase baseline, moon sign timing, solstice/equinox markers, core major aspects, conservative retrograde cues, universal day numerology accents, and private transit-to-natal contacts when profiles are passed in.
+
+This is not schedule awareness. The look-ahead does not know household availability, does not name fake weekday windows, and does not use hard-coded assumptions such as realistic Thursday evening. A future schedule feature can filter or combine timing candidates only after it has real private schedule inputs.
+
+Natal contacts can improve candidate relevance when current timing touches private profiles, especially when contacts are shared or multiple contacts point to the same theme. They must remain bounded scoring signals. They do not create predictions, expose raw placements, override capacity or user choice, or turn timing into compatibility/synastry.
+
 ## Test Plan
 
 Implemented tests cover:
@@ -227,6 +257,12 @@ Implemented tests cover:
 - UTC week boundary behavior
 - timing rule eligibility and signal selection
 - draft zodiac/planetary rules remaining ineligible
+- seven-day timing window candidate generation
+- known exact new and full moon timing windows
+- known solstice/equinox timing windows
+- universal day numerology as an accent timing candidate
+- private natal-contact boosts using fake profiles only
+- privacy-safe timing-window natal diagnostics
 
 Future tests should add:
 
@@ -236,6 +272,7 @@ Future tests should add:
 - runtime integration tests for private natal contact behavior in the signed-in app shell
 - timezone-aware week selection if the app later supports household timezones beyond labels
 - seasonal marker behavior around year boundaries
+- generator integration for the future `Best moment this week` check-in path
 
 ## Non-Goals
 

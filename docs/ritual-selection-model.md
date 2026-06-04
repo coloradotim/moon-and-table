@@ -42,6 +42,10 @@ Visible options:
 
 `For today` uses current timing. `Best moment this week` requires real timing look-ahead. It must not use fake schedule assumptions, hard-coded weekdays, or placeholder windows.
 
+The first timing look-ahead API is `getTimingWindowCandidates()` in `src/lib/timing-window-candidates.ts`. It scans the next seven days by default and returns structured timing candidates from computed facts, approved timing rules, and safe private natal-contact metadata when profiles are available.
+
+This is not schedule awareness. It can say that a meaningful timing event occurs at a real computed time, but it does not know whether the household is free then.
+
 ## Capacity
 
 The capacity question is:

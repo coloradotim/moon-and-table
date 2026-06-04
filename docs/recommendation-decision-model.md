@@ -15,6 +15,8 @@ timing facts + approved cards + approved ritual patterns + capacity + preference
 
 Future check-in context can add a selected `RitualFocusOption` to this flow. That vocabulary is controlled data, not open-ended interpretation, and is documented in `docs/ritual-selection-model.md`. It is not part of current scoring until generator inputs explicitly accept it.
 
+Future `Best moment this week` context can use `TimingWindowCandidate` records from `src/lib/timing-window-candidates.ts`. Those records are inspectable timing candidates, not final recommendations. The current generator does not consume them yet.
+
 ## Decision Record
 
 `generateWeeklyBrief()` returns a `decision` object beside the user-facing brief fields. The decision record includes:
@@ -71,6 +73,8 @@ The app renders the decision record only when debug mode is enabled:
 The developer view shows selected cards and pattern, normalized inputs, selected score reasons, evaluated candidate scores, rejected candidates, source references, and count/detail summaries for selected private timing contacts.
 
 Debug output should stay privacy-safe. Use generic ids, keys, and labels. Do not render private notes, birth data, real schedules, raw natal placements, private source text, service credentials, or Firestore internals.
+
+Timing-window diagnostics should follow the same rule: show safe timing fact labels, signal keys, score reasons, and safe natal theme/contact keys; do not show raw private placement details by default.
 
 ## Golden Tests
 

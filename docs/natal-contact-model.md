@@ -86,3 +86,9 @@ These keys are private computation hints for scoring and explanation. They shoul
 - user-facing editing or import UI for detailed placements
 
 Future issues can deepen the scoring weights and explanation controls once privacy, consent, and display rules mature.
+
+## Timing Look-Ahead
+
+`getTimingWindowCandidates()` can compute private natal contacts for each candidate timing fact when private natal profiles are supplied. Contacts can add score reasons such as private contact present, shared contact, or repeated theme.
+
+The timing-window layer stores only safe contact keys and theme keys on each candidate. It must not use contact labels that expose raw natal placements, degrees, birth data, or private profile notes. User-facing copy should stay at the theme level unless a later issue adds explicit visibility controls for more detailed chart display.
