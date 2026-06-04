@@ -131,6 +131,146 @@ export const starterSourceReviews: SourceReview[] = [
     confidence: "high",
   },
   {
+    id: "source.swiss_ephemeris_deferred",
+    title: "Swiss Ephemeris",
+    authorOrPublisher: "Astrodienst / Swiss Ephemeris",
+    category: "computed_timing_deferred",
+    sourceType: "software",
+    useDecision: "defer",
+    reviewStatus: "candidate",
+    bestFor: [
+      "later professional-grade astrology calculations",
+      "chart houses and more precise personal transit work",
+    ],
+    concerns: [
+      "licensing, native packaging, deployment, and product need are unresolved",
+      "deeper precision should not arrive before approved interpretation and privacy handling",
+    ],
+    copyrightNotes: [
+      "review license and implementation terms before any use; do not reproduce documentation prose",
+    ],
+    safetyNotes: [
+      "computed precision must not create deterministic or overly personal claims",
+    ],
+    culturalContextNotes: [
+      "use only as a calculation source, not an interpretation authority",
+    ],
+    extractionNotes: [
+      "Before use: resolve licensing and deployment, define chart/privacy needs, and add computation-only tests",
+    ],
+    confidence: "medium",
+  },
+  {
+    id: "source.sweph_swisseph_deferred",
+    title: "sweph / swisseph wrapper family",
+    authorOrPublisher: "Swiss Ephemeris wrapper ecosystem",
+    category: "computed_timing_deferred",
+    sourceType: "software",
+    useDecision: "defer",
+    reviewStatus: "candidate",
+    bestFor: [
+      "possible Swiss Ephemeris integration wrappers",
+      "later deployment research",
+    ],
+    concerns: [
+      "wrapper licensing, maintenance, native runtime support, and hosted deployment fit are unresolved",
+    ],
+    copyrightNotes: [
+      "review wrapper and upstream licenses directly before any dependency decision",
+    ],
+    safetyNotes: [
+      "wrappers should provide facts only and must not import interpretation text",
+    ],
+    culturalContextNotes: [],
+    extractionNotes: [
+      "Before use: choose an implementation path, document license compatibility, and prove Vercel/runtime support",
+    ],
+    confidence: "low",
+  },
+  {
+    id: "source.kerykeion_astrologer_api_deferred",
+    title: "Kerykeion / Astrologer-API schema references",
+    authorOrPublisher: "Kerykeion and related astrology API projects",
+    category: "computed_timing_deferred",
+    sourceType: "software",
+    useDecision: "defer",
+    reviewStatus: "candidate",
+    bestFor: [
+      "later chart schema comparison",
+      "possible API shape inspiration",
+    ],
+    concerns: [
+      "not needed for the MVP and could blur calculation, schema, and interpretation responsibilities",
+    ],
+    copyrightNotes: [
+      "review project licenses before adapting structures or dependencies",
+    ],
+    safetyNotes: [
+      "do not import interpretations or chart claims from API examples",
+    ],
+    culturalContextNotes: [],
+    extractionNotes: [
+      "Before use: define a chart schema need and keep any adoption limited to source-safe structural ideas",
+    ],
+    confidence: "low",
+  },
+  {
+    id: "source.astrology_api_family_context",
+    title: "Astrology API source family",
+    authorOrPublisher: "Third-party astrology APIs",
+    category: "computed_timing_context",
+    sourceType: "api",
+    useDecision: "context_only",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "backup comparison for raw positions only",
+      "understanding API boundary risks",
+    ],
+    concerns: [
+      "external APIs may mix calculations with unsupported interpretations or horoscope copy",
+      "network dependency is not part of the current product architecture",
+    ],
+    copyrightNotes: [
+      "do not reuse API interpretation text, examples, or proprietary output copy",
+    ],
+    safetyNotes: [
+      "API outputs must not create unsupported astrology claims",
+    ],
+    culturalContextNotes: [],
+    extractionNotes: [
+      "Before use: restrict to raw computed facts, document provider terms, and add tests proving no interpretation text enters briefs",
+    ],
+    confidence: "low",
+  },
+  {
+    id: "source.jpl_horizons_context",
+    title: "JPL Horizons",
+    authorOrPublisher: "NASA Jet Propulsion Laboratory",
+    category: "computed_timing_context",
+    sourceType: "site",
+    useDecision: "context_only",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "astronomical validation reference",
+      "cross-checking computed positions when deeper validation is needed",
+    ],
+    concerns: [
+      "not a ritual or astrology interpretation source",
+      "not needed for routine MVP brief generation",
+    ],
+    copyrightNotes: [
+      "cite as a public reference when used; do not reproduce documentation or query output prose",
+    ],
+    safetyNotes: [
+      "validation data should remain separate from symbolic meaning",
+    ],
+    culturalContextNotes: [],
+    extractionNotes: [
+      "Before use: define a validation need and add tests comparing facts without adding interpretation",
+    ],
+    confidence: "high",
+  },
+  {
     id: "source.steven_forrest",
     title: "Steven Forrest astrology works",
     authorOrPublisher: "Steven Forrest",
@@ -217,6 +357,126 @@ export const starterSourceReviews: SourceReview[] = [
       "extract tone and transit prompt patterns without copying phrasing",
     ],
     confidence: "medium",
+  },
+  {
+    id: "source.chani_nicholas_context",
+    title: "Chani Nicholas astrology works",
+    authorOrPublisher: "Chani Nicholas",
+    category: "astrology_interpretation_context",
+    sourceType: "book",
+    useDecision: "context_only",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "humane reflection tone as later context",
+      "non-fatalistic astrology framing",
+    ],
+    concerns: [
+      "do not imitate voice, prompts, app structure, or distinctive phrasing",
+      "not currently used for Moon & Table interpretation rules",
+    ],
+    copyrightNotes: [
+      "manual review only; no copied prompts, exercises, or distinctive wording",
+    ],
+    safetyNotes: [
+      "tone inspiration must not become personal certainty or emotional pressure",
+    ],
+    culturalContextNotes: [
+      "treat as a modern astrology voice, not a universal standard",
+    ],
+    extractionNotes: [
+      "Before use: create transformed source notes, approve specific tone guardrails, and prove no voice imitation",
+    ],
+    confidence: "medium",
+  },
+  {
+    id: "source.robert_hand_deferred",
+    title: "Robert Hand astrology works",
+    authorOrPublisher: "Robert Hand",
+    category: "astrology_interpretation_deferred",
+    sourceType: "book",
+    useDecision: "defer",
+    reviewStatus: "candidate",
+    bestFor: [
+      "later transit grammar research",
+      "cross-checking traditional transit concepts",
+    ],
+    concerns: [
+      "transit delineations can become too deterministic or copied if not heavily transformed",
+      "not MVP scope until stronger transit curation exists",
+    ],
+    copyrightNotes: [
+      "manual review required; no copied delineations or distinctive transit text",
+    ],
+    safetyNotes: [
+      "transit language must avoid predictions, fear, and personal certainty",
+    ],
+    culturalContextNotes: [
+      "treat as one major astrology framework, not product truth",
+    ],
+    extractionNotes: [
+      "Before use: define a source-note batch, add approved rules only from transformed notes, and test against deterministic claims",
+    ],
+    confidence: "medium",
+  },
+  {
+    id: "source.demetra_george_deferred",
+    title: "Demetra George astrology works",
+    authorOrPublisher: "Demetra George",
+    category: "astrology_interpretation_deferred",
+    sourceType: "book",
+    useDecision: "defer",
+    reviewStatus: "candidate",
+    bestFor: [
+      "later rigorous astrology expansion",
+      "traditional and interpretive context beyond MVP",
+    ],
+    concerns: [
+      "scope is deeper than the current low-overwhelm timing layer",
+      "requires careful curation before any user-facing rules",
+    ],
+    copyrightNotes: [
+      "manual review required; no copied instructional or interpretive prose",
+    ],
+    safetyNotes: [
+      "advanced astrology should not expose raw chart details or certainty claims by default",
+    ],
+    culturalContextNotes: [
+      "use with explicit framework labeling if it ever becomes active",
+    ],
+    extractionNotes: [
+      "Before use: create a dedicated advanced astrology source batch with approval gates and tests",
+    ],
+    confidence: "medium",
+  },
+  {
+    id: "source.popular_astrology_sites_context",
+    title: "Popular astrology site family",
+    authorOrPublisher: "General commercial and magazine-style astrology sites",
+    category: "astrology_context",
+    sourceType: "site",
+    useDecision: "context_only",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "understanding what the product should not become",
+      "vocabulary caution during copy review",
+    ],
+    concerns: [
+      "not a core source of truth",
+      "often horoscope-like, predictive, generic, or commercially optimized",
+    ],
+    copyrightNotes: [
+      "do not reuse site copy, horoscopes, or distinctive framing",
+    ],
+    safetyNotes: [
+      "avoid fear, urgency, prediction, and broad personality claims",
+    ],
+    culturalContextNotes: [
+      "popular astrology language varies widely and should not be treated as authoritative",
+    ],
+    extractionNotes: [
+      "Before use: limit to anti-pattern review or vocabulary QA; never use as a meaning source for approved rules",
+    ],
+    confidence: "low",
   },
   {
     id: "source.astrology_ethics_sources",
@@ -337,6 +597,66 @@ export const starterSourceReviews: SourceReview[] = [
     confidence: "medium",
   },
   {
+    id: "source.juno_jordan_javane_lawrence_context",
+    title: "Juno Jordan / Javane / Lawrence numerology lineage",
+    authorOrPublisher: "Juno Jordan, Faith Javane, Dusty Bunker, and related numerology authors",
+    category: "numerology_interpretation_context",
+    sourceType: "book",
+    useDecision: "context_only",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "numerology lineage and framework context",
+      "future cross-checking of number themes",
+    ],
+    concerns: [
+      "not needed for current universal date numerology",
+      "some material can become personality-heavy or overly certain",
+    ],
+    copyrightNotes: [
+      "manual review only; no copied number descriptions or calculation prose",
+    ],
+    safetyNotes: [
+      "avoid destiny, compatibility, personality certainty, and prediction claims",
+    ],
+    culturalContextNotes: [
+      "treat as numerology lineage context, not a single authority",
+    ],
+    extractionNotes: [
+      "Before use: document a cross-check need and add transformed source notes with accent-level limits",
+    ],
+    confidence: "low",
+  },
+  {
+    id: "source.commercial_numerology_sites_avoid",
+    title: "Commercial numerology site family",
+    authorOrPublisher: "General commercial numerology websites",
+    category: "numerology_avoid_core",
+    sourceType: "site",
+    useDecision: "avoid",
+    reviewStatus: "rejected",
+    bestFor: [
+      "anti-pattern review",
+      "checking that Moon & Table does not become personality-certain or salesy",
+    ],
+    concerns: [
+      "not a source of truth for number meanings",
+      "often prediction-heavy, personality-heavy, compatibility-focused, or commercially optimized",
+    ],
+    copyrightNotes: [
+      "do not reuse site copy, readings, calculators, or sales framing",
+    ],
+    safetyNotes: [
+      "avoid destiny, compatibility, personality certainty, and prediction claims",
+    ],
+    culturalContextNotes: [
+      "commercial numerology language should not define product meaning",
+    ],
+    extractionNotes: [
+      "Do not use for approved cards or rules; use only as a content-lint anti-pattern reference if needed",
+    ],
+    confidence: "medium",
+  },
+  {
     id: "source.sarah_faith_gottesdiener",
     title: "Sarah Faith Gottesdiener — lunar reflection source",
     authorOrPublisher: "Sarah Faith Gottesdiener",
@@ -398,6 +718,126 @@ export const starterSourceReviews: SourceReview[] = [
     confidence: "medium",
   },
   {
+    id: "source.yasmin_boland_moonology_context",
+    title: "Yasmin Boland / Moonology",
+    authorOrPublisher: "Yasmin Boland",
+    category: "moon_phase_symbolism_context",
+    sourceType: "book",
+    useDecision: "context_only",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "common modern moon pattern context",
+      "checking whether Moon & Table stays simpler than popular moon systems",
+    ],
+    concerns: [
+      "do not import manifestation guarantees, scripts, or distinctive moon-prompt wording",
+      "not needed for the current four-phase lunar cards",
+    ],
+    copyrightNotes: [
+      "manual review only; no copied moon rituals, prompts, or affirmations",
+    ],
+    safetyNotes: [
+      "avoid urgency, certainty, or pressure around moon timing",
+    ],
+    culturalContextNotes: [
+      "treat as modern moonology context, not lunar fact",
+    ],
+    extractionNotes: [
+      "Before use: define specific transformed notes and prove they add value beyond current four-phase cards",
+    ],
+    confidence: "medium",
+  },
+  {
+    id: "source.diane_ahlquist_context",
+    title: "Diane Ahlquist moon timing source",
+    authorOrPublisher: "Diane Ahlquist",
+    category: "moon_timing_context",
+    sourceType: "book",
+    useDecision: "context_only",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "spell-timing context for later review",
+      "understanding timing material that should be filtered hard",
+    ],
+    concerns: [
+      "spell timing can become prescriptive, elaborate, or outcome-focused",
+      "not appropriate as a default Moon & Table meaning source",
+    ],
+    copyrightNotes: [
+      "manual review only; no copied spell timing text, rituals, chants, or prayers",
+    ],
+    safetyNotes: [
+      "filter out smoke, oils, outcome claims, and high-pressure timing advice",
+    ],
+    culturalContextNotes: [
+      "label any future use as modern spell-timing context, not universal practice",
+    ],
+    extractionNotes: [
+      "Before use: create a focused timing-source batch with safety and tone gates before any card or rule linkage",
+    ],
+    confidence: "low",
+  },
+  {
+    id: "source.llewellyn_moon_sign_book_context",
+    title: "Llewellyn Moon Sign Book",
+    authorOrPublisher: "Llewellyn",
+    category: "almanac_context",
+    sourceType: "book",
+    useDecision: "context_only",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "almanac and moon-sign context",
+      "later comparison for timing vocabulary",
+    ],
+    concerns: [
+      "do not treat almanac claims as proof or user-specific advice",
+      "too much moon-sign detail could overload the weekly product",
+    ],
+    copyrightNotes: [
+      "manual review only; no copied almanac entries or moon-sign text",
+    ],
+    safetyNotes: [
+      "almanac timing should not override capacity, safety, or ordinary household fit",
+    ],
+    culturalContextNotes: [
+      "treat as almanac context, not factual authority for ritual outcomes",
+    ],
+    extractionNotes: [
+      "Before use: define a limited almanac-context batch and keep any output non-deterministic",
+    ],
+    confidence: "low",
+  },
+  {
+    id: "source.we_moon_oracle_context",
+    title: "We'Moon / oracle deck source family",
+    authorOrPublisher: "We'Moon and oracle deck publishers",
+    category: "format_context_deferred",
+    sourceType: "other",
+    useDecision: "defer",
+    reviewStatus: "candidate",
+    bestFor: [
+      "format inspiration only",
+      "understanding what card-like presentation should avoid copying",
+    ],
+    concerns: [
+      "oracle and almanac formats carry distinctive voice, structure, and artwork risks",
+      "not a source of Moon & Table meanings",
+    ],
+    copyrightNotes: [
+      "do not copy card text, spreads, artwork concepts, prompts, or almanac phrasing",
+    ],
+    safetyNotes: [
+      "format inspiration must not create fortune-telling or certainty language",
+    ],
+    culturalContextNotes: [
+      "oracle formats may draw from varied traditions and need careful attribution if ever studied",
+    ],
+    extractionNotes: [
+      "Before use: restrict to UI/content-format anti-pattern review and avoid meaning extraction",
+    ],
+    confidence: "low",
+  },
+  {
     id: "source.laurel_woodward",
     title: "Laurel Woodward kitchen magic works",
     authorOrPublisher: "Laurel Woodward",
@@ -452,6 +892,36 @@ export const starterSourceReviews: SourceReview[] = [
     ],
     extractionNotes: [
       "extract starter pattern candidates for plant and room tending",
+    ],
+    confidence: "medium",
+  },
+  {
+    id: "source.rosemary_gladstar_context",
+    title: "Rosemary Gladstar herbalism context",
+    authorOrPublisher: "Rosemary Gladstar",
+    category: "herbalism_context",
+    sourceType: "book",
+    useDecision: "context_only",
+    reviewStatus: "reviewed",
+    bestFor: [
+      "reminding the product that herbalism is serious and out of scope",
+      "guarding against casual herb advice",
+    ],
+    concerns: [
+      "Moon & Table should not provide herbal medicine, supplement, or health guidance",
+      "not a source for ritual recommendations",
+    ],
+    copyrightNotes: [
+      "manual review only; no copied herbal guidance, recipes, or remedies",
+    ],
+    safetyNotes: [
+      "herbs remain ordinary household symbolism only; health use is out of scope",
+    ],
+    culturalContextNotes: [
+      "respect herbalism as a distinct practice requiring expertise beyond this product",
+    ],
+    extractionNotes: [
+      "Before use: limit to safety guardrails or out-of-scope notes; never use as app advice",
     ],
     confidence: "medium",
   },

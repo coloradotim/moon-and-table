@@ -31,7 +31,7 @@ Current inventory:
 
 | Content area | Count |
 | --- | ---: |
-| SourceReview entries | 33 |
+| SourceReview entries | 49 |
 | SourceNote entries | 96 |
 | SymbolicCard entries | 69 |
 | RitualPattern entries | 34 |
@@ -68,11 +68,11 @@ Reference integrity checks from the current data:
 
 Strong coverage:
 
-- Computed timing: Astronomy Engine.
-- Astrology interpretation and ethics: Steven Forrest, Kevin Burk, April Elliott Kent, astrology ethics source family, Barnum/Forer guardrails.
-- Numerology: Hans Decoz / Tom Monte, David Phillips, Barnum/Forer guardrails.
-- Lunar symbolism: Sarah Faith Gottesdiener and Rachel Patterson.
-- Home, kitchen, plant, and domestic magic: Laurel Woodward, Arin Murphy-Hiscock, Cheryl Mendelson, Shoukei Matsumoto, Tess Whitehurst, Scott Cunningham as context-only cross-check.
+- Computed timing: Astronomy Engine, with Swiss Ephemeris, wrappers/APIs, and JPL Horizons now explicit as deferred or context-only source families.
+- Astrology interpretation and ethics: Steven Forrest, Kevin Burk, April Elliott Kent, astrology ethics source family, Barnum/Forer guardrails, with Chani Nicholas, Robert Hand, Demetra George, and popular astrology sites explicit as deferred/context-only or anti-pattern context.
+- Numerology: Hans Decoz / Tom Monte, David Phillips, Barnum/Forer guardrails, with Juno Jordan / Javane / Lawrence and commercial numerology sites explicit as context/avoid source families.
+- Lunar symbolism: Sarah Faith Gottesdiener and Rachel Patterson, with Yasmin Boland, Diane Ahlquist, Llewellyn Moon Sign Book, and We'Moon/oracle decks explicit as context/deferred source families.
+- Home, kitchen, plant, and domestic magic: Laurel Woodward, Arin Murphy-Hiscock, Cheryl Mendelson, Shoukei Matsumoto, Tess Whitehurst, Scott Cunningham as context-only cross-check, and Rosemary Gladstar as herbalism context only.
 - Safety: CDC, EPA, NFPA, FDA, Poison Control, ASPCA, VCA, and a general safety reference family.
 - Seasonal/almanac: NOAA/NWS, Temperance Alden, Anna Franklin, Old Farmer's Almanac as context only.
 
@@ -81,8 +81,7 @@ Gaps and follow-up needs:
 - Candle/color source family now has a reviewed MVP batch: Madame Pamita, Sandra Kynes as context, USFA, CPSC, Candle Association, and NFPA safety coverage.
 - Kitchen ingredient breadth now covers ordinary-use tea, soup/warm drink, lemon, salt, rosemary, bread, oats, apples, ordinary cooking, kitchen reset, and related patterns. Future expansion should stay ordinary-use and safety-gated.
 - Plant/herb breadth now covers rosemary, basil, mint, thyme, sage, lavender, plant tending, and a generic houseplant cue. All plant/herb content requires pet/allergy caution and stays out of herbal medicine, smoke, essential oil, and supplement territory.
-- Astrology deferred/context sources are intentionally not implemented. Swiss Ephemeris is documented as deferred, and Chani Nicholas, Robert Hand, Demetra George, Yasmin Boland, Diane Ahlquist, Llewellyn Moon Sign Book, and JPL Horizons are not represented as current source reviews. This is acceptable for MVP, but future astrology/moon expansion should make the deferrals explicit in the registry or a follow-up source review batch.
-- Safety references could be more specific for candle/light work. NFPA exists, but USFA, CPSC, and Candle Association are not represented separately.
+- Deferred/context source families are now represented in the registry, but they intentionally do not power approved cards, ritual patterns, or timing interpretation rules. Future work should add transformed SourceNotes and tests before any deferred/context family becomes active content.
 
 ## SourceNote Depth
 
@@ -310,17 +309,17 @@ Acceptance criteria:
 
 ### 5. Add deferred/context source registry pass
 
-Goal: Make intentional deferrals visible instead of relying on docs alone.
+Goal: Keep intentional deferrals visible instead of relying on docs alone.
 
 Tasks:
 
-- Add `defer` or `context_only` SourceReview entries, as appropriate, for Swiss Ephemeris, JPL Horizons, Chani Nicholas, Robert Hand, Demetra George, Yasmin Boland, Diane Ahlquist, Llewellyn Moon Sign Book, Rosemary Gladstar, and other source families named in the synthesis.
-- Keep deferred entries from powering approved cards or rules.
+- Keep `defer`, `context_only`, and `avoid` SourceReview entries current as the synthesis changes.
+- Keep deferred/context entries from powering approved cards or rules until a focused source-note batch promotes them.
 - Document what would need to change before each deferred source becomes usable.
 
 Acceptance criteria:
 
-- Deferred/context source families are explicit.
+- Deferred/context source families remain explicit.
 - No unsupported rules become eligible.
 - No copied prose is added.
 
