@@ -20,6 +20,10 @@ describe("profile preference taxonomy", () => {
     });
     expect(getProfilePreferenceGroup("plant")).toBe("ritual_style");
     expect(getProfilePreferenceGroup("surface_reset")).toBe("action_pattern");
+    expect(getProfilePreferenceGroup("houseplant")).toBe("action_pattern");
+    expect(getProfilePreferenceGroup("herb")).toBe("action_pattern");
+    expect(getProfilePreferenceGroup("basil")).toBe("action_pattern");
+    expect(getProfilePreferenceGroup("lavender")).toBe("action_pattern");
     expect(getProfilePreferenceGroup("bread")).toBe("action_pattern");
     expect(getProfilePreferenceGroup("color_accent")).toBe("action_pattern");
     expect(getProfilePreferenceGroup("shopping_required")).toBe(

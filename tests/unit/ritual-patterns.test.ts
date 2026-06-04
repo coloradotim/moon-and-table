@@ -51,6 +51,12 @@ describe("ritual patterns", () => {
         "salt_boundary_bowl",
         "lemon_freshness_cue",
         "rosemary_kitchen_memory",
+        "houseplant_check_in",
+        "basil_kitchen_warmth_cue",
+        "mint_freshness_cue",
+        "thyme_steady_care_cue",
+        "sage_clear_reflection_cue",
+        "lavender_soft_rest_cue",
       ]),
     );
 
@@ -101,6 +107,12 @@ describe("ritual patterns", () => {
         "salt_boundary_bowl",
         "lemon_freshness_cue",
         "rosemary_kitchen_memory",
+        "houseplant_check_in",
+        "basil_kitchen_warmth_cue",
+        "mint_freshness_cue",
+        "thyme_steady_care_cue",
+        "sage_clear_reflection_cue",
+        "lavender_soft_rest_cue",
       ]),
     );
     expect(approvedKeys.length).toBeGreaterThanOrEqual(20);
@@ -114,6 +126,7 @@ describe("ritual patterns", () => {
         "return_one_object",
         "bed_blanket_rest_cue",
         "morning_light_pause",
+        "lavender_soft_rest_cue",
       ]),
     );
     expect(getEligibleRitualPatterns("low").map((pattern) => pattern.key)).toEqual(
@@ -134,6 +147,12 @@ describe("ritual patterns", () => {
         "window_open_air_reset",
         "morning_light_pause",
         "salt_boundary_bowl",
+        "houseplant_check_in",
+        "basil_kitchen_warmth_cue",
+        "mint_freshness_cue",
+        "thyme_steady_care_cue",
+        "sage_clear_reflection_cue",
+        "lavender_soft_rest_cue",
       ]),
     );
     expect(getEligibleRitualPatterns("steady").map((pattern) => pattern.key)).toEqual(
@@ -238,6 +257,12 @@ describe("ritual patterns", () => {
       "salt_boundary_bowl",
       "lemon_freshness_cue",
       "rosemary_kitchen_memory",
+      "houseplant_check_in",
+      "basil_kitchen_warmth_cue",
+      "mint_freshness_cue",
+      "thyme_steady_care_cue",
+      "sage_clear_reflection_cue",
+      "lavender_soft_rest_cue",
     ];
     const approvedPatterns = getApprovedRitualPatterns();
     const patternsByKey = new Map(
@@ -280,8 +305,17 @@ describe("ritual patterns", () => {
       if (pattern.key !== "candle_light_focus") {
         expect(pattern.safetyFlags.fire).not.toBe("live_flame");
       }
-      if (pattern.key.includes("plant") || pattern.key.includes("rosemary")) {
+      if (pattern.ritualStyles.includes("plant") || pattern.ritualStyles.includes("herb")) {
         expect(pattern.safetyNotes.join(" ").toLowerCase()).toMatch(/pet|plant|herb/);
+        expect(pattern.safetyFlags.pets, pattern.key).toBe("review_required");
+        expect(pattern.safetyFlags.allergies.length, pattern.key).toBeGreaterThan(0);
+        expect(pattern.sourceReferences, pattern.key).toEqual(
+          expect.arrayContaining([
+            "source.aspca_plant_safety",
+            "source.vca_pet_plant_safety",
+            "note.vca_pet_plant_allergy_guardrail",
+          ]),
+        );
       }
       expect(serializedPattern).not.toContain("medical claim");
       expect(serializedPattern).not.toContain("crystal elixir");
@@ -318,6 +352,12 @@ describe("ritual patterns", () => {
       "salt_boundary_bowl",
       "lemon_freshness_cue",
       "rosemary_kitchen_memory",
+      "houseplant_check_in",
+      "basil_kitchen_warmth_cue",
+      "mint_freshness_cue",
+      "thyme_steady_care_cue",
+      "sage_clear_reflection_cue",
+      "lavender_soft_rest_cue",
     ];
     const patternByKey = new Map(
       getApprovedRitualPatterns().map((pattern) => [pattern.key, pattern]),

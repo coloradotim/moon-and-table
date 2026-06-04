@@ -2,7 +2,7 @@
 
 This audit reviews the source-controlled Moon & Table content library after the first source, symbolic card, ritual pattern, timing, and generator passes. It only covers repository content. It does not inspect private Firestore data, local private seed files, birth data, raw natal placements, relationship details, schedules, or private source text.
 
-The current library is strong enough to keep producing privacy-safe weekly recommendations from approved cards, approved timing rules, approved ritual patterns, capacity, preferences, and private profile theme signals. The main product risk is not lack of structure. The main risk is uneven depth: lunar, numerology, seasonal anchors, astrology grammar, home-tending, candle/color, and ordinary kitchen ingredients have usable MVP coverage, while plant/herb breadth, source-location precision, and deeper reachability diagnostics need follow-up.
+The current library is strong enough to keep producing privacy-safe weekly recommendations from approved cards, approved timing rules, approved ritual patterns, capacity, preferences, and private profile theme signals. The main product risk is not lack of structure. The main risk is uneven depth: lunar, numerology, seasonal anchors, astrology grammar, home-tending, candle/color, ordinary kitchen ingredients, and careful plant/herb cues have usable MVP coverage, while source-location precision, deeper reachability diagnostics, and future plant-specific safety state need follow-up.
 
 ## Audit Baseline
 
@@ -31,10 +31,10 @@ Current inventory:
 
 | Content area | Count |
 | --- | ---: |
-| SourceReview entries | 32 |
-| SourceNote entries | 89 |
-| SymbolicCard entries | 63 |
-| RitualPattern entries | 28 |
+| SourceReview entries | 33 |
+| SourceNote entries | 96 |
+| SymbolicCard entries | 69 |
+| RitualPattern entries | 34 |
 | TimingInterpretationRule entries | 115 |
 | Eligible timing rules | 111 |
 
@@ -58,7 +58,7 @@ Reference integrity checks from the current data:
 | Astrology timing | Ready with follow-up | Sun through Saturn, all signs, major aspects, retrograde, and selected combinations are usable. Source-note location precision and combination breadth need future work. |
 | Private profile themes | Ready for runtime use | Repo cards are generic placeholders; runtime profile data can influence scoring and explanation without exposing raw placements by default. |
 | Home-tending patterns | Ready | Pattern set is useful, approved, bounded, and safety-filtered. |
-| Kitchen, plant, light patterns | Ready with follow-up | Core patterns and ordinary bread/oats/apple/cooking cues exist; plant/herb breadth still needs future pet/allergy-specific expansion. |
+| Kitchen, plant, light patterns | Ready with follow-up | Core patterns, ordinary bread/oats/apple/cooking cues, basil/mint/thyme/sage/lavender, houseplant cues, and pet/allergy guardrails exist; future work can add per-household plant safety state. |
 | Candle/color symbolism | Ready with follow-up | Candle flame, optional color accents, and safety sources are traceable; deeper color/candle mechanics should remain optional and non-deterministic. |
 | Safety model | Ready | Blocks deterministic claims, medical claims, smoke defaults, essential oil ingestion, crystal elixirs, control rituals, and undeclared candle work. |
 | Generator content use | Ready | Generator selects approved cards and approved ritual patterns, records decisions, hides raw trace by default, and keeps schedule assumptions inert. |
@@ -73,14 +73,14 @@ Strong coverage:
 - Numerology: Hans Decoz / Tom Monte, David Phillips, Barnum/Forer guardrails.
 - Lunar symbolism: Sarah Faith Gottesdiener and Rachel Patterson.
 - Home, kitchen, plant, and domestic magic: Laurel Woodward, Arin Murphy-Hiscock, Cheryl Mendelson, Shoukei Matsumoto, Tess Whitehurst, Scott Cunningham as context-only cross-check.
-- Safety: CDC, EPA, NFPA, FDA, Poison Control, ASPCA, and a general safety reference family.
+- Safety: CDC, EPA, NFPA, FDA, Poison Control, ASPCA, VCA, and a general safety reference family.
 - Seasonal/almanac: NOAA/NWS, Temperance Alden, Anna Franklin, Old Farmer's Almanac as context only.
 
 Gaps and follow-up needs:
 
 - Candle/color source family now has a reviewed MVP batch: Madame Pamita, Sandra Kynes as context, USFA, CPSC, Candle Association, and NFPA safety coverage.
 - Kitchen ingredient breadth now covers ordinary-use tea, soup/warm drink, lemon, salt, rosemary, bread, oats, apples, ordinary cooking, kitchen reset, and related patterns. Future expansion should stay ordinary-use and safety-gated.
-- Plant/herb breadth is narrow. The synthesis names rosemary, basil, mint, thyme, sage, lavender, and generic houseplant with pet/allergy review. The current implementation has generic plant tending and rosemary but not the other herbs.
+- Plant/herb breadth now covers rosemary, basil, mint, thyme, sage, lavender, plant tending, and a generic houseplant cue. All plant/herb content requires pet/allergy caution and stays out of herbal medicine, smoke, essential oil, and supplement territory.
 - Astrology deferred/context sources are intentionally not implemented. Swiss Ephemeris is documented as deferred, and Chani Nicholas, Robert Hand, Demetra George, Yasmin Boland, Diane Ahlquist, Llewellyn Moon Sign Book, and JPL Horizons are not represented as current source reviews. This is acceptable for MVP, but future astrology/moon expansion should make the deferrals explicit in the registry or a follow-up source review batch.
 - Safety references could be more specific for candle/light work. NFPA exists, but USFA, CPSC, and Candle Association are not represented separately.
 
@@ -117,8 +117,8 @@ Gaps and cautions:
 - All cards are approved. That is operationally convenient, but the library does not currently demonstrate a normal candidate/review/reject lifecycle in real data.
 - No eight-phase lunar system exists, which is correct for MVP.
 - No personal/natal cards tied to real people exist, which is correct. Private profile cards remain generic schema/prototype placeholders.
-- Candle/color cards are thin. Candle exists as practice and source-safe safety metadata, but color symbolism is not represented as a reviewed card layer.
-- Kitchen and plant cards are intentionally small. Additional ordinary ingredients and herbs should be added only through reviewed source notes, safety flags, and normal-use constraints.
+- Candle/color cards remain intentionally compact. Candle exists as practice and source-safe safety metadata, while color symbolism is represented only as an optional accent.
+- Kitchen and plant cards are intentionally small. Additional ordinary ingredients, herbs, or plants should be added only through reviewed source notes, safety flags, and normal-use constraints.
 - Outer planets are not approved symbolic cards. This is consistent with current timing docs: Uranus, Neptune, and Pluto can be computed as facts, but should remain fact-only until a reviewed source pass creates cards and rules.
 
 ## TimingInterpretationRule Coverage
@@ -145,8 +145,8 @@ Gaps and cautions:
 
 Ready:
 
-- There are 24 approved ritual patterns.
-- Patterns include home tending, plant tending, candle/light focus, table reset, threshold reset, room reset, close-the-evening, kitchen, object return, rest cue, shared-space reset, small repair, seasonal anchors, salt/lemon/rosemary, and related low-overwhelm practices.
+- There are 34 approved ritual patterns.
+- Patterns include home tending, plant tending, candle/light focus, table reset, threshold reset, room reset, close-the-evening, kitchen, object return, rest cue, shared-space reset, small repair, seasonal anchors, salt/lemon/rosemary, basil/mint/thyme/sage/lavender, houseplant, and related low-overwhelm practices.
 - Patterns have capacity modes, default durations, safety flags, safety notes, avoid-if notes, source references, and approval status.
 - The generator selects from approved patterns instead of hardcoded ritual text.
 - Pattern steps are bounded and generally avoid task lists, shopping, smoke, essential oils, medical claims, and heavy cleanup defaults.
@@ -155,7 +155,7 @@ Gaps and cautions:
 
 - Candle/light now has a real candle flame pattern, light-focused seasonal patterns, reviewed candle/color notes, and an optional color-accent card. Color remains an accent, not a rule.
 - Kitchen patterns avoid recipes, which is correct. Bread, oats, apples, and ordinary cooking are represented as small normal-use cues rather than recipe assignments.
-- Plant/herb patterns need stronger pet/allergy metadata before adding more herbs.
+- Plant/herb patterns now have pet/allergy metadata and ASPCA/VCA safety references. Future work should add household-specific plant safety state before suggesting named plant contact more confidently.
 - There are no rejected/draft ritual patterns in the starter set. Tests exercise safety rejection, but real curation examples would make the workflow clearer.
 - User-facing ritual copy is intentionally concise. The pattern data can support more explanation, but the app should continue avoiding long scripts.
 
@@ -291,20 +291,20 @@ Acceptance criteria:
 - Generated briefs can use them only when preferences/capacity/safety fit.
 - No copied recipes or private data appear.
 
-### 4. Expand plant and kitchen-herb layer safely
+### 4. Deepen plant and kitchen-herb layer beyond the MVP
 
-Goal: Add a slightly deeper plant/herb set without turning Moon & Table into herbal medicine.
+Goal: Build on the careful plant/herb set without turning Moon & Table into herbal medicine.
 
 Tasks:
 
-- Add basil, mint, thyme, sage, lavender, and generic houseplant notes/cards where source-backed and safe.
-- Add ASPCA/VCA/pet/allergy guardrails before generator eligibility.
+- Add household-specific plant safety state before recommending named plant contact more confidently.
+- Consider additional plants or herbs only where source-backed, ordinary-use, and safety-gated.
 - Keep herbs framed as ordinary household/kitchen symbolism only.
 - Do not make medicinal, ingestion-as-therapy, smoke, or essential oil claims.
 
 Acceptance criteria:
 
-- Plant/herb entries have explicit pet/allergy caution.
+- Plant/herb entries keep explicit pet/allergy caution.
 - Unsafe or uncertain plant/herb use is blocked or review-required.
 - No casual pet-toxic recommendations are generated.
 

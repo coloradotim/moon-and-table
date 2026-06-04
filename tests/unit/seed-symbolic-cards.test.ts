@@ -24,8 +24,14 @@ const expectedSeedKeys = [
   "color_accent",
   "kitchen_clearing",
   "plant_tending",
+  "houseplant",
   "salt",
   "rosemary",
+  "basil",
+  "mint",
+  "thyme",
+  "sage",
+  "lavender",
   "honey",
   "lemon",
   "bread",
@@ -94,6 +100,12 @@ describe("seedSymbolicCards", () => {
       "lemon",
       "salt",
       "rosemary",
+      "basil",
+      "mint",
+      "thyme",
+      "sage",
+      "lavender",
+      "houseplant",
       "plant_tending",
       "candle",
       "color_accent",
@@ -141,6 +153,20 @@ describe("seedSymbolicCards", () => {
       starterCards.find((card) => card.key === "rosemary")?.safety_flags
         ?.essentialOils,
     ).toBe("avoid");
+
+    for (const key of ["houseplant", "basil", "mint", "thyme", "sage", "lavender"]) {
+      const card = starterCards.find((candidate) => candidate.key === key);
+
+      expect(card?.safety_flags?.pets, key).toBe("review_required");
+      expect(card?.safety_flags?.allergies.length, key).toBeGreaterThan(0);
+      expect(card?.source_references, key).toEqual(
+        expect.arrayContaining([
+          "source.aspca_plant_safety",
+          "source.vca_pet_plant_safety",
+          "note.vca_pet_plant_allergy_guardrail",
+        ]),
+      );
+    }
   });
 
   it("keeps the lunar phase system to four approved source-traceable cards", () => {
