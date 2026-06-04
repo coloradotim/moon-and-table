@@ -30,6 +30,7 @@ import {
   sanitizeRitualFocusText,
   type CurrentRitualCheckIn,
   type RitualCheckInDraft,
+  type RitualCheckInStep,
 } from "./lib/current-ritual-check-in";
 import { getTimingWindowCandidates } from "./lib/timing-window-candidates";
 import {
@@ -292,6 +293,12 @@ function maybeCompleteCheckIn(
 }
 
 function handleCheckInAction(action: string, value: string): void {
+  if (action === "go_back") {
+    activeCheckInDraft = getPreviousCheckInDraft(activeCheckInDraft);
+    renderActiveCheckInShell();
+    return;
+  }
+
   if (action === "time_scope" && isTimeScope(value)) {
     activeCheckInDraft = {
       ...activeCheckInDraft,
@@ -380,6 +387,35 @@ function handleCheckInAction(action: string, value: string): void {
       showCheckInLoadingThenComplete(completed);
     }
   }
+}
+
+function getPreviousCheckInStep(draft: RitualCheckInDraft): RitualCheckInStep {
+  switch (draft.step) {
+    case "energy_capacity":
+      return "time_scope";
+    case "audience":
+      return "energy_capacity";
+    case "practice_type":
+      return "audience";
+    case "ritual_focus":
+      return draft.energyCapacity === "barely_any" ? "audience" : "practice_type";
+    case "ritual_focus_text":
+      return "ritual_focus";
+    case "review":
+      return draft.ritualFocusKey === "something_else"
+        ? "ritual_focus_text"
+        : "ritual_focus";
+    case "time_scope":
+    default:
+      return "time_scope";
+  }
+}
+
+function getPreviousCheckInDraft(draft: RitualCheckInDraft): RitualCheckInDraft {
+  return {
+    ...draft,
+    step: getPreviousCheckInStep(draft),
+  };
 }
 
 function handleCheckInTextSubmit(form: HTMLFormElement): void {
