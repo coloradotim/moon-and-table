@@ -94,6 +94,20 @@ household magic packets. It keeps materials such as water, cinnamon, salt,
 honey, keys, coins, jars, bowls, and paper as vehicles underneath existing
 visible routes rather than top-level categories.
 
+## Issue 156: Content Packet Workflow
+
+New source-backed content batches should start as content packets under
+`docs/content-packets/`. Draft and review-ready packets can organize source
+candidates, proposed notes, cards, patterns, presentations, bridges, and
+quality scenarios, but they are not active recommendation content.
+
+Only packets marked `approved_for_implementation` should support later active
+SourceReviews, SourceNotes, SymbolicCards, RitualPatterns, RitualPresentation,
+RitualMeaningBridges, diagnostics, tests, scoring, generator behavior, or UI
+changes. Issues #171 through #176 should use this packet workflow before
+implementing moon water, threshold charms, boundary/clearing practices,
+sweetening/warmth work, written charms, or container/object rites.
+
 ## Issue 165: Runtime-Sensitive Test Stabilization
 
 Tests should keep catching real recommendation regressions without freezing

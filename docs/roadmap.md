@@ -345,7 +345,7 @@ Deliverables:
 * contextual optional accents and carry prompts
 * clean ritual closing patterns
 * Moon & Table house voice instead of user-facing writing-style knobs
-* content packet workflow for reviewed source-backed batches
+* content packet workflow for reviewed source-backed batches, using `docs/content-packets/README.md`
 * folk household magic taxonomy for material forms, functions, timing affinities, activation modes, and closure modes
 * deeper candle and light magic content
 * deeper home / threshold / table / arrival ritual content
@@ -365,6 +365,8 @@ This phase should prevent:
 * folk household magic becoming a pile of isolated material categories instead of source-backed practice structures under existing routes
 
 Success means a generated recommendation feels authored, coherent, specific, private, and sourced, not merely explainable by the debug record.
+
+Future source/content packet issues should use the packet statuses from `docs/content-packets/README.md`. Issues #171 through #176 should produce review-ready packet documents first, not active recommendation content, unless a packet is later marked `approved_for_implementation`.
 
 ## Phase 11 — Curation workbench
 

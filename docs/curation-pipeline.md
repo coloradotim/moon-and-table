@@ -111,6 +111,10 @@ Examples:
 
 For private or copyrighted sources, preserve only generic location notes and transformed source references in the repository. Keep actual private details outside source control.
 
+For new source-backed content batches, create a content packet before adding active cards or patterns. Use `docs/content-packets/README.md` and the template in `docs/content-packets/templates/content-packet-template.md`.
+
+A packet can collect source candidates, source-risk notes, proposed SourceNotes, proposed SymbolicCards, proposed RitualPatterns, proposed RitualPresentation, proposed RitualMeaningBridges, and recommendation quality scenarios. It is not active content unless it is human-reviewed and marked `approved_for_implementation`.
+
 ### 4. Normalization
 
 Each extracted idea should become a structured symbolic card.
@@ -433,6 +437,7 @@ Use these rules when turning sources into cards:
 * Include `avoid_saying` guardrails on every card.
 * Include safety notes where relevant.
 * Distinguish common correspondences from experimental or private ones.
+* Use content packets for new source-backed batches before implementing active notes, cards, patterns, presentations, or bridges.
 * Do not conflate astronomy facts with astrology interpretations.
 * Do not allow a source to produce active recommendations until reviewed.
 * Do not make deterministic claims such as “this transit will cause X.”
