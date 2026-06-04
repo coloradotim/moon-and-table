@@ -12,6 +12,8 @@ The recommendation engine chooses from approved grimoire content. It should not 
 
 Moon & Table has a house voice. User settings can shape what kind of ritual fits, how much capacity it should require, and how visible astrology should be, but they should not remix the writing style of the ritual itself.
 
+Safety should constrain recommendations; it should not rewrite the metaphysics of the practice. The engine may set aside unsafe, unsupported, or privacy-risky ritual forms, but it should not turn magical practice into a wellness metaphor or decorative prop to make it feel safer.
+
 ## Product Split
 
 | Layer | Responsibility |

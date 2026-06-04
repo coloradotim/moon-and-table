@@ -37,6 +37,26 @@ The house voice should be private, adult, warm, intentional, grounded, specific,
 
 The normal product should not expose tone selectors, writing-style pickers, broad avoid-language controls, or prompt-style mixers. `toneGuidance` on ritual patterns is editorial metadata for curation and review, not a user setting.
 
+Moon & Table treats magical practice as meaningful on its own terms. Do not tell the user what to believe, and do not flatten practices like moon water, threshold charms, candle work, kitchen magic, plant magic, or household rites into "visual markers," "just symbolic cues," wellness metaphors, or decorative props.
+
+Safety should constrain recommendations; it should not rewrite the metaphysics of the practice. If a ritual form creates safety, source, or privacy risk, choose a safer approved form, quietly constrain eligibility, or set the pattern aside. Safety boundaries should be practical and mostly internal. They should not dominate user-facing copy or explain away the practice.
+
+Preserve ritual meaning while avoiding unsupported claims. Do not promise healing, guaranteed outcomes, protection from danger, prosperity, love, medical effects, legal outcomes, or safety outcomes. Do not include unsafe default instructions.
+
+Bad:
+
+- "Moon water is just a visual marker."
+- "Use this to guarantee protection."
+- "Drink this to absorb lunar energy."
+- "This charm will bring money into the home."
+- "Do not believe this; it is only symbolic."
+
+Better:
+
+- "Moon water belongs to lunar material practice and should be handled as a meaningful ritual material within source-backed boundaries."
+- "A threshold charm can mark welcome, intention, or monthly household attention without promising prosperity or protection."
+- "Safety constraints shape which version the app recommends; they do not explain away the practice."
+
 ## Recommendation Quality Bar
 
 A good recommendation includes six parts:
@@ -152,6 +172,13 @@ Prioritize depth in existing practice areas before adding major new categories:
 - ritual closure, carrying, and after-practice
 
 Conversation remains important, but it should not distract from fixing generic recommendation quality. Conversation needs its own source-backed content work before it becomes a mainline visible practice preference.
+
+Future content packets should include a metaphysical integrity check:
+
+- Does this preserve the ritual meaning of the practice?
+- Did we accidentally reduce it to a wellness metaphor, visual prop, or safety disclaimer?
+- Are claims bounded without condescension?
+- Are safety constraints handled quietly and practically?
 
 ## Enforcement
 

@@ -40,6 +40,18 @@ const approvedPatternKeys = new Set(
 );
 const approvedPatternKeyList = [...approvedPatternKeys];
 
+function getSelectedPattern(brief: ReturnType<typeof generateWeeklyBrief>) {
+  return starterRitualPatterns.find(
+    (pattern) => pattern.key === brief.trace.ritualPatterns[0],
+  );
+}
+
+function getSelectedPatternDecision(brief: ReturnType<typeof generateWeeklyBrief>) {
+  return brief.decision.candidates.ritualPatterns.find(
+    (pattern) => pattern.key === brief.decision.selected.ritualPatternKey,
+  );
+}
+
 const fakeTimingBase = {
   exactIso: "2026-01-01T00:00:00.000Z",
   timezone: "UTC",
@@ -1540,8 +1552,16 @@ describe("generateWeeklyBrief", () => {
         },
       ],
     });
+    const selectedPattern = getSelectedPattern(brief);
+    const selectedPatternDecision = getSelectedPatternDecision(brief);
+    const selectedReasonCodes = selectedPatternDecision?.scoreReasons.map(
+      (reason) => reason.code,
+    ) ?? [];
 
-    expect(brief.trace.ritualPatterns).toEqual(["candle_light_focus"]);
+    expect(brief.trace.ritualPatterns).toHaveLength(1);
+    expect(approvedPatternKeys.has(brief.trace.ritualPatterns[0] ?? "")).toBe(true);
+    expect(selectedPattern?.capacityModes).toContain("low");
+    expect(selectedReasonCodes).toContain("profile_theme_match");
     expect(brief.trace.profileSignalKeys).toEqual([
       "profile_theme.person_b.private_profile.beauty_warmth",
       "natal_theme.person_b.private_profile.beauty_warmth",
@@ -1629,10 +1649,40 @@ describe("generateWeeklyBrief", () => {
         },
       ],
     });
+    const withBeautyThemeSelectedPattern = getSelectedPattern(withBeautyTheme);
+    const withBeautyThemePatternDecision = getSelectedPatternDecision(withBeautyTheme);
+    const withoutBeautyThemePatternDecision = getSelectedPatternDecision(withoutBeautyTheme);
+    const withBeautyThemeReasonCodes = withBeautyThemePatternDecision?.scoreReasons.map(
+      (reason) => reason.code,
+    ) ?? [];
+    const withoutBeautyThemeReasonCodes = withoutBeautyThemePatternDecision?.scoreReasons.map(
+      (reason) => reason.code,
+    ) ?? [];
 
-    expect(withBeautyTheme.trace.ritualPatterns).toEqual(["candle_light_focus"]);
-    expect(withBeautyTheme.trace.ritualPatterns).not.toEqual(
-      withoutBeautyTheme.trace.ritualPatterns,
+    expect(withBeautyTheme.trace.ritualPatterns).toHaveLength(1);
+    expect(approvedPatternKeys.has(withBeautyTheme.trace.ritualPatterns[0] ?? "")).toBe(true);
+    expect(withBeautyThemeSelectedPattern?.capacityModes).toContain("low");
+    expect(withBeautyTheme.trace.profileSignalKeys).toEqual([
+      "profile_theme.person_b.private_profile.beauty_warmth",
+      "natal_theme.person_b.private_profile.beauty_warmth",
+    ]);
+    expect(withBeautyThemeReasonCodes).toContain("profile_theme_match");
+    expect(withBeautyThemePatternDecision?.scoreReasons).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          code: "profile_theme_match",
+          detail: expect.stringContaining("beauty_warmth"),
+        }),
+      ]),
+    );
+    expect(withoutBeautyThemeReasonCodes).toContain("profile_theme_match");
+    expect(withoutBeautyThemePatternDecision?.scoreReasons).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          code: "profile_theme_match",
+          detail: expect.stringContaining("practical_tending"),
+        }),
+      ]),
     );
   });
 

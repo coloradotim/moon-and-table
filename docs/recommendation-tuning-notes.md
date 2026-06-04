@@ -79,6 +79,25 @@ tone preferences. Internal `toneGuidance`, safety blockers, burden constraints,
 and practical avoid flags remain available for curation, eligibility, and
 review.
 
+## Metaphysical Integrity
+
+Moon & Table should treat magical practice as meaningful on its own terms.
+Safety should constrain recommendations; it should not rewrite the metaphysics
+of the practice. Future content packets, especially for material practices such
+as moon water, threshold charms, candle work, kitchen magic, plant magic, and
+household rites, should check that source and safety boundaries are handled
+quietly without flattening the practice into a wellness metaphor, decorative
+prop, or safety disclaimer.
+
+## Issue 165: Runtime-Sensitive Test Stabilization
+
+Tests should keep catching real recommendation regressions without freezing
+runtime-sensitive output. Exact selected pattern or timing-label assertions are
+appropriate only when the fixture fully controls the competing inputs and the
+product requirement demands that specific value. Otherwise, tests should assert
+approved selection, capacity fit, safety boundaries, profile/timing traceability,
+and human-readable explanation shape.
+
 ## Issue 129: Check-in Practice Choice Diagnostics
 
 The check-in practice step now has explicit diagnostics in the recommendation decision record and content reachability report.

@@ -177,6 +177,8 @@ Moon & Table has a house voice. Runtime tone preferences and broad avoid-style p
 
 Internal safety blockers, practical avoid flags, capacity/burden constraints, and `toneGuidance` on ritual patterns still exist. `toneGuidance` is editorial metadata for curation and review, not a user setting.
 
+Safety and source fields should constrain eligibility and presentation without rewriting a practice's meaning. A ritual pattern can carry meaningful magical context while still avoiding unsupported claims, unsafe defaults, private data, copied source text, or overpromising. Content packets should add a metaphysical-integrity check before new ritual materials or household rites become eligible.
+
 Legacy assumptions and advanced taxonomy are not part of the normal profile editor. The default UI should not expose ingredient lists, herb lists, broad avoid-style controls, raw internal taxonomy groups, raw placement records, birth data, emails, private schedules, or source text.
 
 For local UI testing after sign-in, `?view=profile` or `#profile` opens Profile settings directly instead of starting the pre-brief check-in flow.
