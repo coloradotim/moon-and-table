@@ -2,7 +2,7 @@
 
 This audit reviews the source-controlled Moon & Table content library after the first source, symbolic card, ritual pattern, timing, and generator passes. It only covers repository content. It does not inspect private Firestore data, local private seed files, birth data, raw natal placements, relationship details, schedules, or private source text.
 
-The current library is strong enough to keep producing privacy-safe weekly recommendations from approved cards, approved timing rules, approved ritual patterns, capacity, preferences, and private profile theme signals. The main product risk is not lack of structure. The main risk is uneven depth: lunar, numerology, seasonal anchors, astrology grammar, and home-tending have usable MVP coverage, while candle/color symbolism, ingredient breadth, plant/herb breadth, source-location precision, and reachability diagnostics need follow-up.
+The current library is strong enough to keep producing privacy-safe weekly recommendations from approved cards, approved timing rules, approved ritual patterns, capacity, preferences, and private profile theme signals. The main product risk is not lack of structure. The main risk is uneven depth: lunar, numerology, seasonal anchors, astrology grammar, home-tending, candle/color, and ordinary kitchen ingredients have usable MVP coverage, while plant/herb breadth, source-location precision, and deeper reachability diagnostics need follow-up.
 
 ## Audit Baseline
 
@@ -31,10 +31,10 @@ Current inventory:
 
 | Content area | Count |
 | --- | ---: |
-| SourceReview entries | 27 |
-| SourceNote entries | 81 |
-| SymbolicCard entries | 58 |
-| RitualPattern entries | 24 |
+| SourceReview entries | 32 |
+| SourceNote entries | 89 |
+| SymbolicCard entries | 63 |
+| RitualPattern entries | 28 |
 | TimingInterpretationRule entries | 115 |
 | Eligible timing rules | 111 |
 
@@ -58,8 +58,8 @@ Reference integrity checks from the current data:
 | Astrology timing | Ready with follow-up | Sun through Saturn, all signs, major aspects, retrograde, and selected combinations are usable. Source-note location precision and combination breadth need future work. |
 | Private profile themes | Ready for runtime use | Repo cards are generic placeholders; runtime profile data can influence scoring and explanation without exposing raw placements by default. |
 | Home-tending patterns | Ready | Pattern set is useful, approved, bounded, and safety-filtered. |
-| Kitchen, plant, light patterns | Ready with follow-up | Core patterns exist, but source synthesis names additional safe ingredients/herbs and candle/color sources not yet represented. |
-| Candle/color symbolism | Thin | Candle flame pattern exists and live flame is allowed with safety flags, but reviewed color/candle source batch is not built out. |
+| Kitchen, plant, light patterns | Ready with follow-up | Core patterns and ordinary bread/oats/apple/cooking cues exist; plant/herb breadth still needs future pet/allergy-specific expansion. |
+| Candle/color symbolism | Ready with follow-up | Candle flame, optional color accents, and safety sources are traceable; deeper color/candle mechanics should remain optional and non-deterministic. |
 | Safety model | Ready | Blocks deterministic claims, medical claims, smoke defaults, essential oil ingestion, crystal elixirs, control rituals, and undeclared candle work. |
 | Generator content use | Ready | Generator selects approved cards and approved ritual patterns, records decisions, hides raw trace by default, and keeps schedule assumptions inert. |
 | Reachability diagnostics | Ready with follow-up | `npm run diagnose:content` reports selected, evaluated, rejected, and gap coverage across representative privacy-safe scenarios. Some approved patterns remain healthy rare alternates or need future taxonomy hooks. |
@@ -78,8 +78,8 @@ Strong coverage:
 
 Gaps and follow-up needs:
 
-- Candle/color source family is underrepresented compared with the synthesis. Madame Pamita, Sandra Kynes, USFA, CPSC, and Candle Association are named in research guidance but are not first-class source reviews yet.
-- Kitchen ingredient breadth is still narrow. The synthesis explicitly allows ordinary-use tea, soup, lemon, salt, rosemary, bread, oats, apples, and ordinary cooking; the current implementation covers tea/warm drink, soup/warm food, kitchen reset, salt, lemon, rosemary, and related patterns, but not bread, oats, apples, or broader ordinary cooking.
+- Candle/color source family now has a reviewed MVP batch: Madame Pamita, Sandra Kynes as context, USFA, CPSC, Candle Association, and NFPA safety coverage.
+- Kitchen ingredient breadth now covers ordinary-use tea, soup/warm drink, lemon, salt, rosemary, bread, oats, apples, ordinary cooking, kitchen reset, and related patterns. Future expansion should stay ordinary-use and safety-gated.
 - Plant/herb breadth is narrow. The synthesis names rosemary, basil, mint, thyme, sage, lavender, and generic houseplant with pet/allergy review. The current implementation has generic plant tending and rosemary but not the other herbs.
 - Astrology deferred/context sources are intentionally not implemented. Swiss Ephemeris is documented as deferred, and Chani Nicholas, Robert Hand, Demetra George, Yasmin Boland, Diane Ahlquist, Llewellyn Moon Sign Book, and JPL Horizons are not represented as current source reviews. This is acceptable for MVP, but future astrology/moon expansion should make the deferrals explicit in the registry or a follow-up source review batch.
 - Safety references could be more specific for candle/light work. NFPA exists, but USFA, CPSC, and Candle Association are not represented separately.
@@ -153,8 +153,8 @@ Ready:
 
 Gaps and cautions:
 
-- Candle/light currently has one main candle flame pattern and light-focused seasonal patterns. Color/candle mechanics are not source-backed enough for a deeper layer yet.
-- Kitchen patterns avoid recipes, which is correct. A future ingredient batch should keep the same ordinary-use boundary.
+- Candle/light now has a real candle flame pattern, light-focused seasonal patterns, reviewed candle/color notes, and an optional color-accent card. Color remains an accent, not a rule.
+- Kitchen patterns avoid recipes, which is correct. Bread, oats, apples, and ordinary cooking are represented as small normal-use cues rather than recipe assignments.
 - Plant/herb patterns need stronger pet/allergy metadata before adding more herbs.
 - There are no rejected/draft ritual patterns in the starter set. Tests exercise safety rejection, but real curation examples would make the workflow clearer.
 - User-facing ritual copy is intentionally concise. The pattern data can support more explanation, but the app should continue avoiding long scripts.
@@ -195,9 +195,8 @@ Strong protections:
 
 Needed improvements:
 
-- Candle safety should use richer source coverage so the product can be practical without sounding timid.
 - Pet and allergy handling should become more specific before expanding herbs or plants.
-- Content linting could scan the whole source-controlled library for deterministic claims, private-data markers, copied-looking long quoted text, and unsupported safety-sensitive phrases.
+- Content linting should continue expanding as new safety-sensitive content families are added.
 
 ## Generator Readiness
 
@@ -256,15 +255,15 @@ Acceptance criteria:
 - No source prose is copied.
 - `npm run check` passes.
 
-### 2. Build reviewed candle and color source batch
+### 2. Deepen reviewed candle and color layer
 
-Goal: Make candle/light content richer and less generic while keeping real candle flame available as an opt-in practice.
+Goal: Keep the new candle/color layer practical and source-backed while leaving real candle flame available as an opt-in practice.
 
 Tasks:
 
-- Add SourceReview entries for Madame Pamita, Sandra Kynes as cross-check, USFA, CPSC, and Candle Association if appropriate.
-- Add transformed SourceNotes for candle mechanics, candle focus, color as optional symbolic accent, and ordinary candle safety.
-- Add or strengthen SymbolicCards for candle and simple color/light accents.
+- Add only source-backed candle/color details that improve brief fit or source transparency.
+- Keep color as an optional accent rather than a correspondence database.
+- Keep candle mechanics short, practical, and ordinary-use.
 - Keep live flame allowed when explicitly selected and safely flagged.
 - Do not add copied spells, chants, prayers, recipes, or elaborate ceremony.
 
@@ -275,13 +274,13 @@ Acceptance criteria:
 - Color symbolism is optional and non-deterministic.
 - No smoke, oils, outcome claims, or copied source text are introduced.
 
-### 3. Expand ordinary kitchen ingredient layer
+### 3. Expand ordinary kitchen ingredient layer beyond MVP
 
-Goal: Add useful kitchen symbolism beyond the current starter set.
+Goal: Add useful kitchen symbolism beyond tea, lemon, salt, rosemary, bread, oats, apples, and ordinary cooking only when it stays ordinary-use and safe.
 
 Tasks:
 
-- Add source-backed notes/cards/patterns for bread, oats, apples, and ordinary cooking where safe.
+- Consider additional ordinary ingredients only with source notes, source refs, and safety flags.
 - Keep all food/drink use normal household use only.
 - Do not add recipes, medicinal claims, essential oils, supplements, or unfamiliar ingredient requirements.
 - Add FDA/CDC/Poison Control safety references where relevant.

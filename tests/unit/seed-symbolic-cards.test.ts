@@ -21,12 +21,17 @@ const expectedSeedKeys = [
   "numerology_8",
   "numerology_9",
   "candle",
+  "color_accent",
   "kitchen_clearing",
   "plant_tending",
   "salt",
   "rosemary",
   "honey",
   "lemon",
+  "bread",
+  "oats",
+  "apple",
+  "ordinary_cooking",
   "tea",
   "astrology_body_sun",
   "astrology_body_moon",
@@ -91,7 +96,12 @@ describe("seedSymbolicCards", () => {
       "rosemary",
       "plant_tending",
       "candle",
+      "color_accent",
       "kitchen_clearing",
+      "bread",
+      "oats",
+      "apple",
+      "ordinary_cooking",
     ];
     const starterCards = seedSymbolicCards.filter((card) =>
       starterKeys.includes(card.key),
@@ -118,7 +128,14 @@ describe("seedSymbolicCards", () => {
       starterCards.find((card) => card.key === "candle")?.safety_flags?.fire,
     ).toBe("live_flame");
     expect(
+      starterCards.find((card) => card.key === "color_accent")?.safety_flags?.fire,
+    ).not.toBe("live_flame");
+    expect(
       starterCards.find((card) => card.key === "tea")?.safety_flags?.ingestion,
+    ).toBe("normal_food_use_only");
+    expect(
+      starterCards.find((card) => card.key === "ordinary_cooking")?.safety_flags
+        ?.ingestion,
     ).toBe("normal_food_use_only");
     expect(
       starterCards.find((card) => card.key === "rosemary")?.safety_flags

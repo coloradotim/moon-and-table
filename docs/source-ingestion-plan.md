@@ -236,8 +236,13 @@ Older bootstrap values such as `candle`, `home_care`, `kitchen_clearing`, `shopp
 - lemon
 - salt
 - rosemary
+- bread
+- oats
+- apples
+- ordinary cooking cue
 - plant tending
 - candle/light
+- color accent
 - kitchen reset
 
 **Acceptance criteria:**
