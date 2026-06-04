@@ -365,6 +365,64 @@ describe("generateWeeklyBrief", () => {
     );
   });
 
+  it("carries current check-in context through decision and trace without scoring claims", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-06-03T12:00:00.000Z",
+      capacityMode: "high",
+      currentRitualCheckIn: {
+        timeScope: "best_moment_this_week",
+        energyCapacity: "room_for_something_deeper",
+        capacityMode: "high",
+        audience: "both_of_us",
+        practiceTypeHints: ["seasonal"],
+        ritualFocusKey: "marking_a_threshold",
+        timingWindowCandidateIds: ["timing_window.fake.safe_key"],
+      },
+    });
+
+    expect(brief.decision.inputs.currentRitualCheckIn).toEqual({
+      timeScope: "best_moment_this_week",
+      energyCapacity: "room_for_something_deeper",
+      capacityMode: "high",
+      audience: "both_of_us",
+      practiceTypeHints: ["seasonal"],
+      ritualFocusKey: "marking_a_threshold",
+      timingWindowCandidateIds: ["timing_window.fake.safe_key"],
+    });
+    expect(brief.trace.currentRitualCheckIn).toEqual(
+      brief.decision.inputs.currentRitualCheckIn,
+    );
+    expect(JSON.stringify(brief.explanation)).not.toContain(
+      "best_moment_this_week",
+    );
+    expect(JSON.stringify(brief.explanation)).not.toContain(
+      "marking_a_threshold",
+    );
+  });
+
+  it("can reuse the same current check-in context when trying another approved option", () => {
+    const currentRitualCheckIn = {
+      timeScope: "today" as const,
+      energyCapacity: "a_little" as const,
+      capacityMode: "low" as const,
+      practiceTypeHints: ["plant_tending"],
+    };
+    const firstBrief = generateWeeklyBrief({
+      capacityMode: currentRitualCheckIn.capacityMode,
+      currentRitualCheckIn,
+    });
+    const nextBrief = generateWeeklyBrief({
+      capacityMode: currentRitualCheckIn.capacityMode,
+      currentRitualCheckIn,
+      excludedRitualPatternKeys: firstBrief.trace.ritualPatterns,
+    });
+
+    expect(nextBrief.trace.currentRitualCheckIn).toEqual(currentRitualCheckIn);
+    expect(nextBrief.trace.ritualPatterns[0]).not.toBe(
+      firstBrief.trace.ritualPatterns[0],
+    );
+  });
+
   it("does not treat shopping guardrail prose as a shopping requirement", () => {
     const brief = generateWeeklyBrief({
       currentDate: "2026-06-03T12:00:00.000Z",

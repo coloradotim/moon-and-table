@@ -99,11 +99,20 @@ The app should ask only questions it can use.
 
 Selected focus should guide recommendation scoring when it is wired in. Timing should shape the form of the ritual, not veto the selected focus. For example, `Making a beginning` under waning or dark timing can become a quieter preparatory beginning rather than disappearing.
 
+## Current Implementation
+
+The pre-brief check-in stores answers in a `CurrentRitualCheckIn` object for the current session. It is passed into the generation path and appears in developer-only decision output.
+
+`Try something else` reuses the same check-in answers and private profile context. `Start over` clears the current check-in and returns to the first question.
+
+The current implementation uses the check-in capacity and audience through existing generator inputs. Deeper scoring for practice type and ritual focus belongs to the next recommendation-integration issue.
+
 ## Boundaries
 
 The selection model should not add:
 
-- pre-brief UI until the issue explicitly requests it
+- extra pre-brief questions that are not represented as structured context
+- persistent check-in answers unless a later issue explicitly requests it
 - timing look-ahead without a real timing implementation
 - free-text interpretation
 - user-facing natal placement explanations

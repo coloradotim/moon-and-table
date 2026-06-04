@@ -16,6 +16,7 @@ import type {
   PrivateAudience,
   PrivateNatalProfile,
 } from "./private-data-schema";
+import type { CurrentRitualCheckIn } from "./current-ritual-check-in";
 import {
   getNatalContactsForTimingFacts,
   type NatalContact,
@@ -136,6 +137,7 @@ export type WeeklyBriefTrace = {
   privateNatalDiagnostics: PrivateNatalDiagnostics;
   selectedNatalContacts: NatalContactSummary[];
   profilePreferenceKeys: string[];
+  currentRitualCheckIn?: CurrentRitualCheckIn;
   capacityMode: CapacityMode;
   audience: PrivateAudience;
   scheduleAssumptions: ScheduleAssumptionKey[];
@@ -197,6 +199,7 @@ export type RecommendationDecision = {
     privateNatalProfileCount: number;
     natalPlacementCounts: Partial<Record<"person_a" | "person_b", number>>;
     natalContactsComputed: number;
+    currentRitualCheckIn?: CurrentRitualCheckIn;
   };
   candidates: {
     symbolicCards: EvaluatedSymbolicCard[];
@@ -316,6 +319,7 @@ export type GenerateWeeklyBriefInput = {
   astrologyVisibility?: AstrologyVisibility;
   audience?: PrivateAudience;
   excludedRitualPatternKeys?: string[];
+  currentRitualCheckIn?: CurrentRitualCheckIn;
 };
 
 type ResolvedGenerateWeeklyBriefInput = {
@@ -340,6 +344,7 @@ type ResolvedGenerateWeeklyBriefInput = {
   astrologyVisibility: AstrologyVisibility;
   audience: PrivateAudience;
   excludedRitualPatternKeys: string[];
+  currentRitualCheckIn?: CurrentRitualCheckIn;
 };
 
 type PatternCandidate = {
@@ -2317,6 +2322,9 @@ function getRecommendationDecision({
       privateNatalProfileCount: input.natalDiagnostics.privateNatalProfileCount,
       natalPlacementCounts: input.natalDiagnostics.natalPlacementCounts,
       natalContactsComputed: input.natalDiagnostics.natalContactsComputed,
+      ...(input.currentRitualCheckIn
+        ? { currentRitualCheckIn: input.currentRitualCheckIn }
+        : {}),
     },
     candidates: {
       symbolicCards: getEvaluatedSymbolicCards(selectedCards, input),
@@ -2435,6 +2443,7 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
     astrologyVisibility,
     audience,
     excludedRitualPatternKeys: input.excludedRitualPatternKeys ?? [],
+    currentRitualCheckIn: input.currentRitualCheckIn,
   };
 }
 
@@ -2606,6 +2615,9 @@ export function generateWeeklyBrief(
         ...resolvedInput.preferredRitualStyles,
         ...resolvedInput.avoidedRitualStyles,
       ],
+      ...(resolvedInput.currentRitualCheckIn
+        ? { currentRitualCheckIn: resolvedInput.currentRitualCheckIn }
+        : {}),
       capacityMode: resolvedInput.capacityMode,
       audience: resolvedInput.audience,
       scheduleAssumptions: getScheduleAssumptions(

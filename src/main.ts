@@ -17,6 +17,22 @@ import {
   type WeeklyBrief,
 } from "./lib/generate-weekly-brief";
 import {
+  createInitialRitualCheckInDraft,
+  getCapacityModeForEnergy,
+  getNextStepAfterAudience,
+  getNextStepAfterEnergy,
+  getNextStepAfterPractice,
+  getPracticeOptionsForEnergy,
+  isCheckInAudience,
+  isEnergyCapacity,
+  isRitualFocusOptionKey,
+  isTimeScope,
+  sanitizeRitualFocusText,
+  type CurrentRitualCheckIn,
+  type RitualCheckInDraft,
+} from "./lib/current-ritual-check-in";
+import { getTimingWindowCandidates } from "./lib/timing-window-candidates";
+import {
   isBriefFeedbackType,
   saveBriefFeedback,
   type BriefFeedbackType,
@@ -30,9 +46,12 @@ import {
 import {
   renderAppShell,
   renderPrivateDataLoadingShell,
+  renderRitualCheckInLoadingShell,
+  renderRitualCheckInShell,
   renderSignedInShell,
   type SignedInView,
 } from "./ui/app-shell";
+import { ritualFocusOptions } from "./data/ritual-focus-options";
 import "./styles.css";
 
 const app = document.querySelector<HTMLElement>("#app");
@@ -50,7 +69,19 @@ let activeBrief: WeeklyBrief | null = null;
 let activeSignedInView: SignedInView = "this_week";
 let activeCapacityModeOverride: CapacityMode | null = null;
 let activeCapacityPickerOpen = false;
+let activeCheckInDraft: RitualCheckInDraft = createInitialRitualCheckInDraft();
+let activeCurrentRitualCheckIn: CurrentRitualCheckIn | null = null;
+let checkInLoadingTimeout: number | null = null;
 const showDebugTrace = new URLSearchParams(window.location.search).get("debug") === "true";
+
+function clearCheckInLoadingTimeout(): void {
+  if (!checkInLoadingTimeout) {
+    return;
+  }
+
+  window.clearTimeout(checkInLoadingTimeout);
+  checkInLoadingTimeout = null;
+}
 
 function render(state: AppAuthState): void {
   appRoot.innerHTML = renderAppShell(state);
@@ -65,6 +96,15 @@ function getActiveBriefInput(
 
   return {
     ...activePrivateBriefData.input,
+    ...(activeCurrentRitualCheckIn
+      ? {
+          currentRitualCheckIn: activeCurrentRitualCheckIn,
+          capacityMode: activeCurrentRitualCheckIn.capacityMode,
+          audience: activeCurrentRitualCheckIn.audience === "both_of_us"
+            ? "together"
+            : activePrivateBriefData.input.audience,
+        }
+      : {}),
     ...(activeCapacityModeOverride
       ? { capacityMode: activeCapacityModeOverride }
       : {}),
@@ -72,6 +112,17 @@ function getActiveBriefInput(
       ? { excludedRitualPatternKeys }
       : {}),
   };
+}
+
+function renderActiveCheckInShell(): void {
+  if (!activeSignedInState) {
+    return;
+  }
+
+  appRoot.innerHTML = renderRitualCheckInShell({
+    draft: activeCheckInDraft,
+    displayName: activeSignedInState.user.displayName,
+  });
 }
 
 function renderActiveSignedInShell(options: {
@@ -134,8 +185,10 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         }
 
         activePrivateBriefData = privateBriefData;
-        activeBrief = generateWeeklyBrief(getActiveBriefInput());
-        renderActiveSignedInShell();
+        activeBrief = null;
+        activeCurrentRitualCheckIn = null;
+        activeCheckInDraft = createInitialRitualCheckInDraft();
+        renderActiveCheckInShell();
       }
     })
     .catch(() => {
@@ -146,6 +199,8 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activeSignedInView = "this_week";
         activeCapacityModeOverride = null;
         activeCapacityPickerOpen = false;
+        activeCurrentRitualCheckIn = null;
+        activeCheckInDraft = createInitialRitualCheckInDraft();
         appRoot.innerHTML = renderAppShell({
           status: "unauthorized",
           configReady: true,
@@ -170,6 +225,179 @@ function renderActiveBriefStatus(
     selectedFeedbackType,
     savingFeedbackType,
   });
+}
+
+function completeCheckIn(checkIn: CurrentRitualCheckIn): void {
+  activeCurrentRitualCheckIn = checkIn;
+  activeCapacityModeOverride = null;
+  activeCapacityPickerOpen = false;
+  activeSignedInView = "this_week";
+  activeBrief = generateWeeklyBrief(getActiveBriefInput());
+  renderActiveSignedInShell();
+}
+
+function showCheckInLoadingThenComplete(checkIn: CurrentRitualCheckIn): void {
+  appRoot.innerHTML = renderRitualCheckInLoadingShell();
+  clearCheckInLoadingTimeout();
+
+  checkInLoadingTimeout = window.setTimeout(() => {
+    checkInLoadingTimeout = null;
+    completeCheckIn(checkIn);
+  }, 1400);
+}
+
+function addTimingWindowCandidateIds(
+  checkIn: CurrentRitualCheckIn,
+): CurrentRitualCheckIn {
+  if (checkIn.timeScope !== "best_moment_this_week") {
+    return checkIn;
+  }
+
+  const candidates = getTimingWindowCandidates({
+    startDate: new Date(),
+    privateNatalProfiles: activePrivateBriefData?.natalProfiles ?? [],
+    astrologyVisibility: activePrivateBriefData?.input.astrologyVisibility,
+    options: { maxCandidates: 4 },
+  });
+
+  return {
+    ...checkIn,
+    timingWindowCandidateIds: candidates.map((candidate) => candidate.id),
+  };
+}
+
+function maybeCompleteCheckIn(
+  draft: RitualCheckInDraft,
+): CurrentRitualCheckIn | null {
+  if (
+    !draft.timeScope ||
+    !draft.energyCapacity ||
+    !draft.capacityMode ||
+    !draft.audience
+  ) {
+    return null;
+  }
+
+  return addTimingWindowCandidateIds({
+    timeScope: draft.timeScope,
+    energyCapacity: draft.energyCapacity,
+    capacityMode: draft.capacityMode,
+    ...(draft.audience ? { audience: draft.audience } : {}),
+    ...(draft.practiceTypeHints ? { practiceTypeHints: draft.practiceTypeHints } : {}),
+    ...(draft.practiceTypeLabel ? { practiceTypeLabel: draft.practiceTypeLabel } : {}),
+    ...(draft.ritualFocusKey ? { ritualFocusKey: draft.ritualFocusKey } : {}),
+    ...(draft.ritualFocusLabel ? { ritualFocusLabel: draft.ritualFocusLabel } : {}),
+    ...(draft.ritualFocusText ? { ritualFocusText: draft.ritualFocusText } : {}),
+  });
+}
+
+function handleCheckInAction(action: string, value: string): void {
+  if (action === "time_scope" && isTimeScope(value)) {
+    activeCheckInDraft = {
+      ...activeCheckInDraft,
+      timeScope: value,
+      step: "energy_capacity",
+    };
+    renderActiveCheckInShell();
+    return;
+  }
+
+  if (action === "energy_capacity" && isEnergyCapacity(value)) {
+    const capacityMode = getCapacityModeForEnergy(value);
+    const nextDraft: RitualCheckInDraft = {
+      ...activeCheckInDraft,
+      energyCapacity: value,
+      capacityMode,
+      step: getNextStepAfterEnergy(value),
+    };
+
+    activeCheckInDraft = nextDraft;
+    renderActiveCheckInShell();
+    return;
+  }
+
+  if (action === "audience" && isCheckInAudience(value)) {
+    if (!activeCheckInDraft.energyCapacity) {
+      return;
+    }
+
+    activeCheckInDraft = {
+      ...activeCheckInDraft,
+      audience: value,
+      step: getNextStepAfterAudience(activeCheckInDraft.energyCapacity),
+    };
+    renderActiveCheckInShell();
+    return;
+  }
+
+  if (action === "practice_type" && activeCheckInDraft.energyCapacity) {
+    const option = getPracticeOptionsForEnergy(
+      activeCheckInDraft.energyCapacity,
+    ).find((candidate) => candidate.key === value);
+
+    if (!option) {
+      return;
+    }
+
+    const nextDraft: RitualCheckInDraft = {
+      ...activeCheckInDraft,
+      practiceTypeHints: option.practiceTypeHints,
+      practiceTypeLabel: option.label,
+      step: getNextStepAfterPractice(activeCheckInDraft.energyCapacity),
+    };
+
+    activeCheckInDraft = nextDraft;
+    renderActiveCheckInShell();
+    return;
+  }
+
+  if (action === "ritual_focus" && isRitualFocusOptionKey(value)) {
+    if (value === "something_else") {
+      activeCheckInDraft = {
+        ...activeCheckInDraft,
+        ritualFocusKey: value,
+        step: "ritual_focus_text",
+      };
+      renderActiveCheckInShell();
+      return;
+    }
+
+    const option = ritualFocusOptions.find((candidate) => candidate.key === value);
+    activeCheckInDraft = {
+      ...activeCheckInDraft,
+      ritualFocusKey: value,
+      ...(option ? { ritualFocusLabel: option.label } : {}),
+      step: "review",
+    };
+    renderActiveCheckInShell();
+    return;
+  }
+
+  if (action === "confirm_review" && value === "confirm") {
+    const completed = maybeCompleteCheckIn(activeCheckInDraft);
+
+    if (completed) {
+      showCheckInLoadingThenComplete(completed);
+    }
+  }
+}
+
+function handleCheckInTextSubmit(form: HTMLFormElement): void {
+  const formData = new FormData(form);
+  const ritualFocusText = sanitizeRitualFocusText(
+    String(formData.get("ritualFocusText") ?? ""),
+  );
+  activeCheckInDraft = {
+    ...activeCheckInDraft,
+    ritualFocusText,
+    step: "ritual_focus_text",
+  };
+
+  activeCheckInDraft = {
+    ...activeCheckInDraft,
+    step: "review",
+  };
+  renderActiveCheckInShell();
 }
 
 function isCapacityMode(value: FormDataEntryValue | null): value is CapacityMode {
@@ -370,6 +598,17 @@ function applyCapacityOverride(capacityMode: CapacityMode): void {
   renderActiveSignedInShell();
 }
 
+function startCheckInOver(): void {
+  clearCheckInLoadingTimeout();
+  activeBrief = null;
+  activeCurrentRitualCheckIn = null;
+  activeCheckInDraft = createInitialRitualCheckInDraft();
+  activeCapacityModeOverride = null;
+  activeCapacityPickerOpen = false;
+  activeSignedInView = "this_week";
+  renderActiveCheckInShell();
+}
+
 render({ status: "loading" });
 
 appRoot.addEventListener("click", (event) => {
@@ -396,10 +635,23 @@ appRoot.addEventListener("click", (event) => {
   const menuAction = menuActionTarget?.dataset.menuAction;
   const feedbackType = target.dataset.feedbackType;
   const capacityMode = target.dataset.capacityMode;
+  const checkInActionTarget = target.closest<HTMLElement>("[data-check-in-action]");
+  const checkInAction = checkInActionTarget?.dataset.checkInAction;
+  const checkInValue = checkInActionTarget?.dataset.checkInValue;
+
+  if (target.closest("[data-check-in-start-over='true']")) {
+    startCheckInOver();
+    return;
+  }
 
   if (target.closest("[data-capacity-toggle='true']")) {
     activeCapacityPickerOpen = !activeCapacityPickerOpen;
     renderActiveSignedInShell();
+    return;
+  }
+
+  if (checkInAction && typeof checkInValue === "string") {
+    handleCheckInAction(checkInAction, checkInValue);
     return;
   }
 
@@ -456,9 +708,12 @@ appRoot.addEventListener("click", (event) => {
   }
 
   if (action === "sign-out") {
+    clearCheckInLoadingTimeout();
     target.closest("details[data-app-menu='true']")?.removeAttribute("open");
     activeCapacityModeOverride = null;
     activeCapacityPickerOpen = false;
+    activeCurrentRitualCheckIn = null;
+    activeCheckInDraft = createInitialRitualCheckInDraft();
     void signOutOfFirebase(firebaseServices);
   }
 });
@@ -516,6 +771,9 @@ subscribeToAuthState(firebaseServices, (state) => {
   activeSignedInView = "this_week";
   activeCapacityModeOverride = null;
   activeCapacityPickerOpen = false;
+  activeCurrentRitualCheckIn = null;
+  activeCheckInDraft = createInitialRitualCheckInDraft();
+  clearCheckInLoadingTimeout();
   privateDataRequestId += 1;
   render(state);
 });
@@ -530,5 +788,10 @@ appRoot.addEventListener("submit", (event) => {
   if (target.matches("[data-profile-tuning-form='true']")) {
     event.preventDefault();
     void handleProfileTuningSubmit(target);
+  }
+
+  if (target.matches("[data-check-in-text-form='true']")) {
+    event.preventDefault();
+    handleCheckInTextSubmit(target);
   }
 });

@@ -17,6 +17,8 @@ Future check-in context can add a selected `RitualFocusOption` to this flow. Tha
 
 Future `Best moment this week` context can use `TimingWindowCandidate` records from `src/lib/timing-window-candidates.ts`. Those records are inspectable timing candidates, not final recommendations. The current generator does not consume them yet.
 
+The pre-brief check-in passes `CurrentRitualCheckIn` into `generateWeeklyBrief()`. In the current implementation, capacity and audience can use existing generator inputs, while practice type, ritual focus, free-text focus, and timing-window candidate ids are carried through the trace and developer decision record for #127 to use. The normal UI should not claim those fields are deeply scoring the recommendation yet.
+
 ## Decision Record
 
 `generateWeeklyBrief()` returns a `decision` object beside the user-facing brief fields. The decision record includes:
