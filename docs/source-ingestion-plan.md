@@ -227,7 +227,7 @@ Older bootstrap values such as `candle`, `home_care`, `kitchen_clearing`, `shopp
 
 **Purpose:** Add practical domestic magic texture with strong safety guardrails.
 
-**Sources:** Laurel Woodward, Rachel Patterson, Scott Cunningham as cross-check, Arin Murphy-Hiscock, FDA/CDC/Poison Control/ASPCA/NFPA safety overrides.
+**Sources:** Laurel Woodward, Rachel Patterson, Scott Cunningham as cross-check, Arin Murphy-Hiscock, FDA/CDC/Poison Control/ASPCA/VCA/NFPA safety overrides.
 
 **Create cards/patterns:**
 
@@ -236,6 +236,12 @@ Older bootstrap values such as `candle`, `home_care`, `kitchen_clearing`, `shopp
 - lemon
 - salt
 - rosemary
+- basil
+- mint
+- thyme
+- sage
+- lavender
+- generic houseplant cue
 - bread
 - oats
 - apples
