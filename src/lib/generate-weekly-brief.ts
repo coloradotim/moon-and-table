@@ -364,6 +364,7 @@ export type GenerateWeeklyBriefInput = {
   scheduleConstraints?: Partial<ManualScheduleConstraints>;
   preferredRitualStyles?: string[];
   avoidedRitualStyles?: string[];
+  tonePreferences?: string[];
   profileInputs?: PrivateProfileSignalInput[];
   natalProfiles?: PrivateNatalProfile[];
   astrologyVisibility?: AstrologyVisibility;
@@ -384,6 +385,7 @@ type ResolvedGenerateWeeklyBriefInput = {
   scheduleConstraints: ManualScheduleConstraints;
   preferredRitualStyles: string[];
   avoidedRitualStyles: string[];
+  tonePreferences: string[];
   profileInputs: PrivateProfileSignalInput[];
   selectedProfileInputs: PrivateProfileSignalInput[];
   profileSignals: PrivateProfileSignal[];
@@ -733,6 +735,14 @@ function getProfileAvoidedStyles(
 ): string[] {
   return normalizeStyleList(
     profileInputs.flatMap((profile) => profile.avoidedRitualStyles ?? []),
+  );
+}
+
+function getProfileTonePreferences(
+  profileInputs: PrivateProfileSignalInput[],
+): string[] {
+  return normalizeStyleList(
+    profileInputs.flatMap((profile) => profile.tonePreferences ?? []),
   );
 }
 
@@ -1581,12 +1591,37 @@ function selectPattern(
 function getRecommendedRitual(
   pattern: RitualPattern,
   capacityMode: CapacityMode,
+  tonePreferences: string[],
 ): string {
+  const toneClosing = getToneClosing(tonePreferences);
+  const closing = toneClosing ? ` ${toneClosing}` : "";
+
   if (capacityMode === "pause") {
-    return `No required ritual. ${pattern.steps.join(" ")}`;
+    return `No required ritual. ${pattern.steps.join(" ")}${closing}`;
   }
 
-  return pattern.steps.join(" ");
+  return `${pattern.steps.join(" ")}${closing}`;
+}
+
+function getToneClosing(tonePreferences: string[]): string {
+  const selectedTone = tonePreferences[0];
+
+  switch (selectedTone) {
+    case "practical":
+      return "Keep it simple and useful.";
+    case "warm":
+      return "Keep it gentle.";
+    case "direct":
+      return "Stop there.";
+    case "symbolic":
+      return "Let the action mark the moment.";
+    case "playful":
+      return "No need to make it fancy.";
+    case "romantic":
+      return "Keep it soft.";
+    default:
+      return "";
+  }
 }
 
 function getOptionalAddOn(
@@ -2581,7 +2616,6 @@ function getWhyThis(
       ? `A few options were set aside because they did not fit current capacity, preferences, or practical constraints.`
       : "";
   const capacityReason = getCapacityReason(input.capacityMode, durationMinutes);
-
   return `${getTimingReason(timingCard, input.timingFactDetails[0])} ${getCheckInReason(input)} ${pattern.title} was chosen as one small approved home practice for that theme. ${getFitReason(privateProfileCard, preferenceMatches, input.avoidedRitualStyles, profileSignalMatches, natalContactMatches, input.astrologyVisibility, input.audience)} ${capacityReason} ${fitReason}`.replace(/\s+/g, " ").trim();
 }
 
@@ -3402,6 +3436,10 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
     ...normalizeStyleList(input.avoidedRitualStyles),
     ...getProfileAvoidedStyles(selectedProfileInputs),
   ]);
+  const tonePreferences = uniqueValues([
+    ...normalizeStyleList(input.tonePreferences),
+    ...getProfileTonePreferences(selectedProfileInputs),
+  ]);
 
   return {
     currentDate,
@@ -3414,6 +3452,7 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
     scheduleConstraints,
     preferredRitualStyles,
     avoidedRitualStyles,
+    tonePreferences,
     profileInputs,
     selectedProfileInputs,
     profileSignals,
@@ -3523,6 +3562,7 @@ export function generateWeeklyBrief(
     recommendedRitual: getRecommendedRitual(
       pattern,
       resolvedInput.capacityMode,
+      resolvedInput.tonePreferences,
     ),
     optionalAddOn: getOptionalAddOn(
       pattern,

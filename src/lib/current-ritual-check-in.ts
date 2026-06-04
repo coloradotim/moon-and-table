@@ -104,9 +104,9 @@ const lightPracticeOptions: RitualCheckInOption[] = [
 ];
 
 const steadyPracticeOptions: RitualCheckInOption[] = [
-  { key: "home_tending", label: "Home tending", practiceTypeHints: ["home_tending"] },
+  { key: "home", label: "Home", practiceTypeHints: ["home_tending"] },
   { key: "kitchen", label: "Kitchen", practiceTypeHints: ["kitchen"] },
-  { key: "plants", label: "Plants", practiceTypeHints: ["plant", "plant_tending"] },
+  { key: "plant", label: "Plant", practiceTypeHints: ["plant", "plant_tending"] },
   { key: "candle_or_light", label: "Candle or light", practiceTypeHints: ["candle_or_light", "light_focus"] },
   { key: "conversation", label: "Conversation", practiceTypeHints: ["conversation"] },
   { key: "reflection", label: "Reflection", practiceTypeHints: ["reflection"] },

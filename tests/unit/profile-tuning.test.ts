@@ -92,6 +92,7 @@ describe("profile tuning helpers", () => {
         maxRitualDurationMinutes: 20,
         preferredRitualStyles: ["plant_tending", "candle"],
         avoidedRitualStyles: ["shopping", "vague_mush"],
+        tonePreferences: ["warm"],
         astrologyVisibility: "subtle",
         assumptionValues: {
           "assumption.low_overwhelm": false,
@@ -105,6 +106,7 @@ describe("profile tuning helpers", () => {
       defaultAudience: "together",
       preferredRitualStyles: ["plant_tending", "candle_or_light"],
       avoidedRitualStyles: ["shopping_required", "avoid_vague_mush"],
+      tonePreferences: ["warm"],
       astrologyVisibility: "subtle",
       updatedAtIso: "2026-02-01T00:00:00.000Z",
     });
@@ -128,5 +130,24 @@ describe("profile tuning helpers", () => {
       defaultCapacityMode: "steady",
       maxRitualDurationMinutes: 20,
     });
+  });
+
+  it("does not rewrite assumptions when the profile form does not submit them", () => {
+    const update = buildProfileTuningUpdate(
+      currentSettings,
+      {
+        defaultAudience: "either",
+        defaultCapacityMode: "low",
+        maxRitualDurationMinutes: 5,
+        preferredRitualStyles: ["home_tending"],
+        avoidedRitualStyles: ["shopping_required"],
+        tonePreferences: ["direct"],
+        astrologyVisibility: "balanced",
+        assumptionValues: {},
+      },
+      "2026-02-01T00:00:00.000Z",
+    );
+
+    expect(update.profile.assumptions).toEqual(currentSettings.assumptions);
   });
 });

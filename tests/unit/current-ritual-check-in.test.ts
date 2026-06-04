@@ -63,9 +63,9 @@ describe("current ritual check-in", () => {
     expect(
       getPracticeOptionsForEnergy("enough_to_engage").map((option) => option.label),
     ).toEqual([
-      "Home tending",
+      "Home",
       "Kitchen",
-      "Plants",
+      "Plant",
       "Candle or light",
       "Conversation",
       "Reflection",
@@ -76,9 +76,9 @@ describe("current ritual check-in", () => {
         (option) => option.label,
       ),
     ).toEqual([
-      "Home tending",
+      "Home",
       "Kitchen",
-      "Plants",
+      "Plant",
       "Candle or light",
       "Conversation",
       "Reflection",
