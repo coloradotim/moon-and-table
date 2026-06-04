@@ -16,12 +16,15 @@ import {
   type HouseholdDocument,
   type PrivateAstrologyProfile,
   type PrivateAudience,
+  type PrivateNatalPlacement,
+  type NatalPoint,
   type PrivateProfileAssumption,
   type PrivateProfileDocument,
   type PrivateProfileThemeKey,
   type ProfileEmailLinkDocument,
   type ScheduleConstraintsDocument,
 } from "./private-data-schema";
+import type { ZodiacSign } from "./timing-facts";
 import {
   buildProfileTuningUpdate,
   type ProfileTuningFormInput,
@@ -98,6 +101,33 @@ const ASTROLOGY_VISIBILITY_VALUES: AstrologyVisibility[] = [
   "subtle",
   "balanced",
   "explicit",
+];
+const NATAL_POINTS: NatalPoint[] = [
+  "sun",
+  "moon",
+  "mercury",
+  "venus",
+  "mars",
+  "jupiter",
+  "saturn",
+  "ascendant",
+  "midheaven",
+  "node",
+  "chiron",
+];
+const ZODIAC_SIGNS: ZodiacSign[] = [
+  "aries",
+  "taurus",
+  "gemini",
+  "cancer",
+  "leo",
+  "virgo",
+  "libra",
+  "scorpio",
+  "sagittarius",
+  "capricorn",
+  "aquarius",
+  "pisces",
 ];
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -260,6 +290,51 @@ function sanitizeAssumptions(value: unknown): PrivateProfileAssumption[] {
   });
 }
 
+function sanitizeNatalPlacements(value: unknown): PrivateNatalPlacement[] | undefined {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  if (!Array.isArray(value)) {
+    return undefined;
+  }
+
+  return value.flatMap((item): PrivateNatalPlacement[] => {
+    if (
+      !isRecord(item) ||
+      typeof item.bodyOrPoint !== "string" ||
+      !NATAL_POINTS.includes(item.bodyOrPoint as NatalPoint) ||
+      typeof item.sign !== "string" ||
+      !ZODIAC_SIGNS.includes(item.sign as ZodiacSign)
+    ) {
+      return [];
+    }
+
+    if (
+      item.degree !== undefined &&
+      (
+        typeof item.degree !== "number" ||
+        !Number.isFinite(item.degree) ||
+        item.degree < 0 ||
+        item.degree >= 30
+      )
+    ) {
+      return [];
+    }
+
+    if (item.themeKeys !== undefined && !isStringArray(item.themeKeys)) {
+      return [];
+    }
+
+    return [{
+      bodyOrPoint: item.bodyOrPoint as NatalPoint,
+      sign: item.sign as ZodiacSign,
+      degree: item.degree,
+      themeKeys: item.themeKeys,
+    }];
+  });
+}
+
 function sanitizeAstrologyProfile(
   value: unknown,
 ): PrivateAstrologyProfile | undefined {
@@ -279,11 +354,13 @@ function sanitizeAstrologyProfile(
   }
 
   const profileThemeKeys = sanitizeProfileKeys(value.profileThemeKeys);
+  const placements = sanitizeNatalPlacements(value.placements);
 
   return {
     source: value.source as PrivateAstrologyProfile["source"],
     confidence: value.confidence as PrivateAstrologyProfile["confidence"],
     placementKeys: value.placementKeys,
+    ...(placements ? { placements } : {}),
     profileThemeKeys,
     updatedAtIso: value.updatedAtIso,
   };

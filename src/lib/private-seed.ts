@@ -1,9 +1,12 @@
 import { CAPACITY_MODES, type CapacityMode } from "./generate-weekly-brief";
 import type {
+  NatalPoint,
   PrivateAstrologyProfile,
+  PrivateNatalPlacement,
   PrivateProfileAssumption,
   PrivateProfileThemeKey,
 } from "./private-data-schema";
+import type { ZodiacSign } from "./timing-facts";
 
 export type AstrologyVisibility = "private" | "placeholder_keys_only";
 
@@ -70,6 +73,33 @@ const ASTROLOGY_SOURCES: PrivateAstrologyProfile["source"][] = [
 const ASTROLOGY_VISIBILITY_VALUES: AstrologyVisibility[] = [
   "private",
   "placeholder_keys_only",
+];
+const NATAL_POINTS: NatalPoint[] = [
+  "sun",
+  "moon",
+  "mercury",
+  "venus",
+  "mars",
+  "jupiter",
+  "saturn",
+  "ascendant",
+  "midheaven",
+  "node",
+  "chiron",
+];
+const ZODIAC_SIGNS: ZodiacSign[] = [
+  "aries",
+  "taurus",
+  "gemini",
+  "cancer",
+  "leo",
+  "virgo",
+  "libra",
+  "scorpio",
+  "sagittarius",
+  "capricorn",
+  "aquarius",
+  "pisces",
 ];
 
 const DEFAULT_SEED_SCHEDULE: PrivateHouseholdSeedSchedule = {
@@ -369,6 +399,11 @@ function parseAstrologyProfile(
     `${path}.profileThemeKeys`,
     errors,
   );
+  const placements = parseNatalPlacements(
+    value.placements,
+    `${path}.placements`,
+    errors,
+  );
 
   if (
     typeof value.source !== "string" ||
@@ -394,9 +429,86 @@ function parseAstrologyProfile(
       ? (value.confidence as PrivateAstrologyProfile["confidence"])
       : "low",
     placementKeys,
+    ...(placements ? { placements } : {}),
     profileThemeKeys,
     updatedAtIso: normalizeUpdatedAtIso(value.updatedAtIso),
   };
+}
+
+function parseNatalPlacements(
+  value: unknown,
+  path: string,
+  errors: string[],
+): PrivateNatalPlacement[] | undefined {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  if (!Array.isArray(value)) {
+    errors.push(`${path} must be an array when provided`);
+    return undefined;
+  }
+
+  return value.flatMap((item, index): PrivateNatalPlacement[] => {
+    const itemPath = `${path}[${index}]`;
+
+    if (!isRecord(item)) {
+      errors.push(`${itemPath} must be an object`);
+      return [];
+    }
+
+    const bodyOrPointSupported =
+      typeof item.bodyOrPoint === "string" &&
+      NATAL_POINTS.includes(item.bodyOrPoint as NatalPoint);
+    const signSupported =
+      typeof item.sign === "string" &&
+      ZODIAC_SIGNS.includes(item.sign as ZodiacSign);
+    const degreeSupported =
+      item.degree === undefined ||
+      (
+        typeof item.degree === "number" &&
+        Number.isFinite(item.degree) &&
+        item.degree >= 0 &&
+        item.degree < 30
+      );
+    const themeKeysSupported =
+      item.themeKeys === undefined || isStringArray(item.themeKeys);
+
+    if (!bodyOrPointSupported) {
+      errors.push(`${itemPath}.bodyOrPoint is not supported`);
+    }
+
+    if (!signSupported) {
+      errors.push(`${itemPath}.sign is not supported`);
+    }
+
+    if (!degreeSupported) {
+      errors.push(`${itemPath}.degree must be a number from 0 up to 30`);
+    }
+
+    if (!themeKeysSupported) {
+      errors.push(`${itemPath}.themeKeys must be an array of strings when provided`);
+    }
+
+    if (
+      !bodyOrPointSupported ||
+      !signSupported ||
+      !degreeSupported ||
+      !themeKeysSupported
+    ) {
+      return [];
+    }
+
+    const degree = typeof item.degree === "number" ? item.degree : undefined;
+    const themeKeys = isStringArray(item.themeKeys) ? item.themeKeys : undefined;
+
+    return [{
+      bodyOrPoint: item.bodyOrPoint as NatalPoint,
+      sign: item.sign as ZodiacSign,
+      degree,
+      themeKeys,
+    }];
+  });
 }
 
 function parseSchedule(

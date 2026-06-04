@@ -1,4 +1,5 @@
 import type { CapacityMode, ManualScheduleConstraints } from "./generate-weekly-brief";
+import type { ZodiacSign } from "./timing-facts";
 
 export const FIRESTORE_COLLECTIONS = [
   "households",
@@ -29,13 +30,42 @@ export type PrivateProfileAssumption = {
 };
 
 export type PrivateAudience = "person_a" | "person_b" | "together" | "either";
+export type PrivatePersonKey = Extract<PrivateAudience, "person_a" | "person_b">;
 
 export type AstrologyVisibility = "subtle" | "balanced" | "explicit";
+
+export type NatalPoint =
+  | "sun"
+  | "moon"
+  | "mercury"
+  | "venus"
+  | "mars"
+  | "jupiter"
+  | "saturn"
+  | "ascendant"
+  | "midheaven"
+  | "node"
+  | "chiron";
+
+export type PrivateNatalPlacement = {
+  bodyOrPoint: NatalPoint;
+  sign: ZodiacSign;
+  degree?: number;
+  themeKeys?: string[];
+};
+
+export type PrivateNatalProfile = {
+  personKey: PrivatePersonKey;
+  placements: PrivateNatalPlacement[];
+  profileThemeKeys?: string[];
+  astrologyVisibility?: AstrologyVisibility;
+};
 
 export type PrivateAstrologyProfile = {
   source: "user_provided_chart" | "astro_material" | "manual_entry";
   confidence: "low" | "medium" | "high";
   placementKeys: string[];
+  placements?: PrivateNatalPlacement[];
   profileThemeKeys: PrivateProfileThemeKey[];
   updatedAtIso: string;
 };

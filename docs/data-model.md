@@ -33,7 +33,7 @@ These objects live in Firestore. Source-controlled examples use placeholders onl
 | `CapacitySettings` | Stores default capacity mode and maximum ritual duration. |
 | `ScheduleConstraints` | Legacy/deferred private shape for future schedule awareness. Current generated briefs do not use hard-coded or fallback schedule windows in user-facing output. |
 | `PrivateProfileAssumption` | Stores editable or non-editable profile assumptions with source, confidence, and timestamp metadata. |
-| `PrivateAstrologyProfile` | Stores abstract astrology metadata such as placeholder placement keys and profile theme keys; no real birth data belongs in the repo. |
+| `PrivateAstrologyProfile` | Stores abstract astrology metadata such as placeholder placement keys, optional private placement records, and profile theme keys; no real birth data belongs in the repo. |
 
 Profile assumptions can move from starter or seeded assumptions to user-confirmed assumptions when edited. The app preserves assumption metadata and stores edited boolean assumptions as user-confirmed.
 
@@ -101,6 +101,14 @@ Timing facts are computed and testable. Interpretation belongs in SymbolicCards,
 The broader timing fact API lives in `src/lib/timing-facts.ts` and currently computes lunar phase, lunations, moon sign, sun sign, seasonal markers, planetary signs, retrograde status, major aspects, and universal numerology date facts. Universal numerology facts come from `src/lib/numerology-timing.ts`, which computes universal year, month, and day numbers by reducing date sums to 1-9; master numbers are reduced for MVP. The first rule layer lives in `src/lib/timing-interpretation-rules.ts`; approved rules cover lunar phase cards, numerology cards, four solstice/equinox seasonal anchors, MVP astrology cards for Sun through Saturn, all 12 signs, five major aspects, and a conservative retrograde cue. Weather-aware seasonal interpretation, local ecology, cross-quarter days, and outer-planet interpretation remain deferred until reviewed source cards exist.
 
 Astronomy Engine is the MVP timing direction. Swiss Ephemeris remains deferred until precision, houses, natal charts, or personal transit needs justify it.
+
+## Private Natal Contacts
+
+`src/lib/private-natal-contacts.ts` computes private contacts between current timing facts and private natal profile placements. It supports same-sign resonance, near conjunctions, and major aspect geometry with a conservative 3 degree orb when degrees are available.
+
+Natal contacts return structured theme keys and contact metadata only. They do not create user-facing explanations, scoring changes, predictions, identity claims, houses, synastry, or compatibility.
+
+Source-controlled tests use fake placeholder profiles only. Real private placement values belong in Firestore or local gitignored files, not the repository.
 
 ## Brief Output
 

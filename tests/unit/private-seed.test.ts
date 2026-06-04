@@ -114,6 +114,14 @@ describe("private household seed validation", () => {
             source: "manual_entry",
             confidence: "low",
             placementKeys: ["placement.sun.placeholder"],
+            placements: [
+              {
+                bodyOrPoint: "moon",
+                sign: "virgo",
+                degree: 12,
+                themeKeys: ["practical_care"],
+              },
+            ],
             profileThemeKeys: ["private_profile.practical_tending"],
           },
         },
@@ -140,6 +148,14 @@ describe("private household seed validation", () => {
     expect(parsedSeed.profiles[0]?.astrologyProfile.updatedAtIso).toEqual(
       expect.any(String),
     );
+    expect(parsedSeed.profiles[0]?.astrologyProfile.placements).toEqual([
+      {
+        bodyOrPoint: "moon",
+        sign: "virgo",
+        degree: 12,
+        themeKeys: ["practical_care"],
+      },
+    ]);
   });
 
   it("normalizes pasted markdown mailto email values", () => {
