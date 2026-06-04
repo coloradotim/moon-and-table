@@ -2,6 +2,8 @@
 
 Moon & Table keeps recommendation decisions inspectable without making the weekly brief feel technical.
 
+Inspection is not the same as quality. The decision record can explain what happened, but `docs/recommendation-quality-model.md` defines whether the resulting ritual feels coherent, authored, and worthy of the private household grimoire.
+
 The generator flow is:
 
 ```text
@@ -112,6 +114,16 @@ The developer view also shows check-in practice diagnostics and numerology diagn
 Debug output should stay privacy-safe. Use generic ids, keys, and labels. Do not render private notes, birth data, real schedules, raw natal placements, private source text, service credentials, or Firestore internals.
 
 Timing-window diagnostics should follow the same rule: show safe timing fact labels, signal keys, score reasons, and safe natal theme/contact keys; do not show raw private placement details by default.
+
+## Diagnostics And Quality
+
+Decision and debug records support inspection. They are necessary because they show which inputs were used, which candidates were evaluated, which candidates were rejected, and why the selected pattern won.
+
+They are not sufficient for recommendation quality.
+
+A recommendation can have a valid score trail and still feel generic, contradictory, repetitive, or mechanically assembled. Diagnostics can show that a plant check-in was set aside, that numerology was selected as an accent, or that a timing window was strongest. They cannot prove that the title, ritual body, intention, carry prompt, optional accent, explanation, and closing became one coherent ritual.
+
+Recommendation quality requires scenario review and human judgment. Future output-changing work should use privacy-safe `RecommendationQualityScenario` reviews as described in `docs/recommendation-quality-model.md`.
 
 ## Golden Tests
 

@@ -47,6 +47,7 @@ Real personalization belongs only in Firebase/Firestore for the hosted app, priv
 
 - One recommendation is better than ten options.
 - Rituals should feel like support, not homework.
+- Moon & Table chooses one ritual from our private household grimoire, then explains how the moment gives it shape.
 - Schedule and capacity constraints override symbolic timing.
 - The app should avoid deterministic claims.
 - Symbolic meaning should come from reviewed, traceable, approved cards.
@@ -54,6 +55,24 @@ Real personalization belongs only in Firebase/Firestore for the hosted app, priv
 - Do not scrape sources casually.
 - Do not copy large passages from copyrighted sources.
 - Keep examples calm, practical, domestic, and privacy-safe.
+
+## Recommendation quality bar
+
+Follow `docs/recommendation-quality-model.md` when changing recommendation output, ritual language, explanations, presentation fields, scoring behavior, or content that can appear in a brief.
+
+Moon & Table should feel like a private household grimoire with a recommendation engine underneath. A recommendation should feel authored, specific, and coherent, not mechanically assembled from a title, steps, timing phrase, and generic explanation.
+
+Before opening a PR that can affect recommendation output, check:
+
+- ritual coherence: title, timing reason, ritual body, intention, carry prompt, optional accent, and closing feel like one ritual
+- generic filler: no repeated filler closings or vague wellness language standing in for meaning
+- optional candle misuse: no generic `light a candle` add-on when the ritual is already candle/light-based or when the accent is not contextual
+- timing/focus contradictions: selected focus is bridged, not vetoed or contradicted by raw timing fallback
+- privacy/source boundaries: no private data, raw trace keys, or source-compliance machinery leaks into user-facing copy
+- no copied source text: source-derived language is transformed, short, and traceable
+- no private data: no real names, emails, birth data, natal placements tied to people, relationship details, private schedules, or private source text
+
+Diagnostics and passing tests are necessary, but they do not prove recommendation quality. Use privacy-safe quality scenarios and human judgment for user-facing ritual output.
 
 ## Curation model
 
