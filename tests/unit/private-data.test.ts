@@ -3,8 +3,10 @@ import { describe, expect, it } from "vitest";
 import { generateWeeklyBrief } from "../../src/lib/generate-weekly-brief";
 import {
   hasLoadedPrivateData,
+  markPrivateFirstLoginWelcomeSeen,
   resolvePrivateBriefData,
   shouldLoadPrivateData,
+  shouldShowPrivateFirstLoginWelcome,
 } from "../../src/lib/private-data";
 import { getPrivateEmailDocumentId } from "../../src/lib/private-data-schema";
 
@@ -276,6 +278,95 @@ describe("private Firestore data resolution", () => {
         avoidedRitualStyles: ["shopping_required"],
         tonePreferences: ["warm"],
       }),
+    ]);
+  });
+
+  it("shows the one-time private welcome only for an enabled private profile", () => {
+    const privateBriefData = resolvePrivateBriefData(
+      {
+        profile: {
+          firstLoginWelcome: {
+            enabled: true,
+          },
+          profileThemeKeys: ["private_profile.beauty_warmth"],
+        },
+      },
+      {
+        profileId: "profile_person_b",
+      },
+    );
+
+    expect(privateBriefData.firstLoginWelcome).toMatchObject({
+      profileId: "profile_person_b",
+      enabled: true,
+      hasSeenFirstLoginWelcome: false,
+    });
+    expect(shouldShowPrivateFirstLoginWelcome(privateBriefData)).toBe(true);
+  });
+
+  it("does not show the one-time private welcome after dismissal", () => {
+    const privateBriefData = resolvePrivateBriefData(
+      {
+        profile: {
+          firstLoginWelcome: {
+            enabled: true,
+            hasSeenFirstLoginWelcome: true,
+            firstLoginWelcomeSeenAt: "2026-01-02T00:00:00.000Z",
+          },
+          profileThemeKeys: ["private_profile.beauty_warmth"],
+        },
+      },
+      {
+        profileId: "profile_person_b",
+      },
+    );
+
+    expect(shouldShowPrivateFirstLoginWelcome(privateBriefData)).toBe(false);
+  });
+
+  it("does not show the one-time private welcome for profiles without the private flag", () => {
+    const privateBriefData = resolvePrivateBriefData(
+      {
+        profile: {
+          profileThemeKeys: ["private_profile.practical_tending"],
+        },
+      },
+      {
+        profileId: "profile_person_a",
+      },
+    );
+
+    expect(privateBriefData.firstLoginWelcome).toBeNull();
+    expect(shouldShowPrivateFirstLoginWelcome(privateBriefData)).toBe(false);
+  });
+
+  it("marks the one-time private welcome seen without changing normal brief input", () => {
+    const privateBriefData = resolvePrivateBriefData(
+      {
+        profile: {
+          firstLoginWelcome: {
+            enabled: true,
+          },
+          profileThemeKeys: ["private_profile.beauty_warmth"],
+        },
+      },
+      {
+        profileId: "profile_person_b",
+      },
+    );
+    const seenData = markPrivateFirstLoginWelcomeSeen(
+      privateBriefData,
+      "2026-01-02T00:00:00.000Z",
+    );
+
+    expect(shouldShowPrivateFirstLoginWelcome(seenData)).toBe(false);
+    expect(seenData.firstLoginWelcome).toMatchObject({
+      enabled: true,
+      hasSeenFirstLoginWelcome: true,
+      firstLoginWelcomeSeenAt: "2026-01-02T00:00:00.000Z",
+    });
+    expect(seenData.input.privateProfileKeys).toEqual([
+      "private_profile.beauty_warmth",
     ]);
   });
 

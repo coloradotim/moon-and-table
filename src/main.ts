@@ -6,8 +6,10 @@ import {
 } from "./lib/auth";
 import { getFirebaseServices } from "./lib/firebase";
 import {
+  dismissPrivateFirstLoginWelcome,
   hasLoadedPrivateData,
   loadPrivateBriefData,
+  shouldShowPrivateFirstLoginWelcome,
   updatePrivateProfileTuning,
   type PrivateBriefData,
 } from "./lib/private-data";
@@ -46,6 +48,7 @@ import {
 } from "./lib/profile-tuning";
 import {
   renderAppShell,
+  renderPrivateFirstLoginWelcomeShell,
   renderPrivateDataLoadingShell,
   renderRitualCheckInLoadingShell,
   renderRitualCheckInShell,
@@ -126,6 +129,15 @@ function renderActiveCheckInShell(): void {
   });
 }
 
+function renderPrivateWelcomeOrCheckIn(): void {
+  if (activePrivateBriefData && shouldShowPrivateFirstLoginWelcome(activePrivateBriefData)) {
+    appRoot.innerHTML = renderPrivateFirstLoginWelcomeShell();
+    return;
+  }
+
+  renderActiveCheckInShell();
+}
+
 function renderActiveSignedInShell(options: {
   feedbackStatus?: string;
   tryAgainStatus?: string;
@@ -189,7 +201,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activeBrief = null;
         activeCurrentRitualCheckIn = null;
         activeCheckInDraft = createInitialRitualCheckInDraft();
-        renderActiveCheckInShell();
+        renderPrivateWelcomeOrCheckIn();
       }
     })
     .catch(() => {
@@ -208,6 +220,23 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         });
       }
     });
+}
+
+async function handlePrivateWelcomeDismiss(): Promise<void> {
+  if (!firebaseServices || !activePrivateBriefData) {
+    return;
+  }
+
+  try {
+    activePrivateBriefData = await dismissPrivateFirstLoginWelcome(
+      firebaseServices.db,
+      activePrivateBriefData,
+    );
+  } catch {
+    return;
+  }
+
+  renderActiveCheckInShell();
 }
 
 function renderActiveBriefStatus(
@@ -674,6 +703,11 @@ appRoot.addEventListener("click", (event) => {
   const checkInActionTarget = target.closest<HTMLElement>("[data-check-in-action]");
   const checkInAction = checkInActionTarget?.dataset.checkInAction;
   const checkInValue = checkInActionTarget?.dataset.checkInValue;
+
+  if (target.closest("[data-private-welcome-action='dismiss']")) {
+    void handlePrivateWelcomeDismiss();
+    return;
+  }
 
   if (target.closest("[data-check-in-start-over='true']")) {
     startCheckInOver();

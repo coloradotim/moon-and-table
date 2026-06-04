@@ -1,243 +1,141 @@
 # How Moon & Table Works
 
-Moon & Table turns timing, symbolism, and household magic into one small ritual for the week.
+My love -- Moon & Table is a tool I made just for us.
 
-It is not trying to be a horoscope feed, spell database, task manager, or productivity system. It is a private household tool that helps translate lunar phases, planetary movement, seasonal rhythms, numerology, saved profile themes, current capacity, and reviewed source material into one grounded practice: something to tend, clear, warm, notice, bless, begin, release, or make room for.
+I started building it while thinking about what it means for us to come together into a shared home: not just furniture and routines, but little ways of marking time, tending the space, and remembering that our life can have magic in it.
 
-The point is not to explain everything in the sky. The point is to notice what feels meaningful now and choose one small act of magic that fits real life.
+Part of the story is us meeting on 8/8, the day before a full moon. Part of it is being welcomed into your home with candle magic. Part of it is me realizing that the more I understand the things you care about, the more deeply I understand you.
 
-## The short version
+Moon & Table is one way of leaning into that. It is meant to help us choose one ritual that fits the moment.
 
-Moon & Table works like this:
+## The basic idea
+
+The app starts with a simple question: are we wanting something for today, or looking across the week?
+
+Then it asks what is true right now. How much energy is there? Is this for one of us or both of us? What kind of practice feels welcome? What should the ritual hold?
+
+The answer might be small: water a plant, light a candle, clear one surface, make tea, say one thing clearly, or let the evening close. The point is not to make every moment profound. The point is to choose one act that feels timed, personal, and doable.
+
+Try Again uses the same check-in context. Feedback helps the app learn what feels useful over time.
+
+## What happens under the hood
+
+Moon & Table has three jobs:
 
 ```text
-computed timing facts
-→ selected symbolic signals
-→ reviewed cards and ritual patterns
-→ private profile, capacity, and schedule context
-→ safety and practicality checks
-→ one weekly ritual recommendation
-→ feedback that helps future recommendations fit better
+calculate facts
+-> interpret meaning
+-> choose an action
 ```
 
-The app uses timing and symbolism as guidance, not commands. It offers a direction for attention: begin, tend, clarify, release, rest, repair, warm, bless, or make room.
+First, it calculates timing facts: moon phase, lunations, moon sign, sun sign, seasonal markers, planetary signs, retrogrades, aspects, and universal numerology values.
 
-## What the app calculates
+Then it interprets only the facts that have reviewed symbolic support. A computed fact is not meaning by itself.
 
-Moon & Table separates facts from interpretation.
+Finally, it chooses one approved ritual pattern using the current check-in, private profile context, preferences, capacity, prior feedback, and private natal contacts when they matter.
 
-Computed timing facts are the sky-and-date information the app can calculate directly. These may include:
+It also keeps a few quiet hard stops in the background: no unsafe ingestion, no medical or emergency advice, no smoke by default, no required live flame, and no practices aimed at controlling someone else.
 
-- lunar phase
-- exact lunations, such as new moon or full moon timing
-- moon sign
-- sun sign or solar season
-- solstices and equinoxes
-- planetary signs
-- planetary retrograde status
-- major planetary aspects
-- universal numerology year, month, and day values
+## How timing becomes meaning
 
-These facts do not automatically become recommendations. A fact is only raw timing. Moon & Table still has to ask: does this timing matter for this week, this household, this capacity, and the available approved ritual patterns?
+Timing can be for today or for the next several days.
 
-That is why the app does not show every computed fact. It chooses only the signals that actually influence the recommendation.
+For today, the app uses the current timing. For Across the week, it looks ahead and asks whether any timing window stands out more strongly.
 
-## How lunar timing is used
+The timing layer can include lunar phase, exact lunations, moon sign, sun sign, seasonal markers, planetary signs, retrogrades, major aspects, and numerology.
 
-Lunar timing is the backbone of the first version of Moon & Table.
+Some timing may matter more because it resonates with us, with the relationship, or with the kind of ritual we are asking for. That is where private natal contacts come in. The app can notice when the current sky touches saved private natal profiles and shared themes, then use that as private fit context.
 
-The app uses a four-phase lunar model for weekly recommendations:
+It does not say the chart commands anything. It does not predict. It does not turn astrology into compatibility claims. It uses timing as symbolic weather: something to notice and work with gently.
 
-- **New Moon**: beginning, reset, making room, one modest intention
-- **Waxing Moon**: tending, support, small progress, follow-through
-- **Full Moon**: clarity, visibility, gratitude, what is ready to be acknowledged
-- **Waning Moon**: release, clearing, integration, rest
+## Where the symbolic library comes from
 
-The moon phase does not force a ritual. It helps set the direction. A New Moon might point toward one small beginning. A Waning Moon might point toward clearing one surface or letting the evening close gently. The app keeps this practical and low-pressure.
+The app does not free-associate from the internet.
 
-## How astrology is used
-
-Astrology helps Moon & Table read the quality of the moment.
-
-Planetary and lunar signals can point toward different kinds of magic: beauty, courage, affection, clarity, repair, structure, communication, rest, tending, or useful friction. A Venus signal might point toward beauty, care, affection, or what feels worth tending. A Mars signal might point toward courage, directness, movement, or useful action. A square may point toward adjustment or creative friction, not crisis.
-
-Moon & Table does not treat astrology as a command. It does not say what must happen. It uses astrological timing as symbolic weather: something to notice, work with, or gently respond to.
-
-The app can compute astrology facts, but facts are not meaning. Planetary facts only become visible signals when an approved symbolic rule supports them. If a planetary placement or aspect is computed but there is no reviewed interpretation rule for it, the app should keep that fact internal rather than turning it into unsupported advice.
-
-## How natal-chart themes are used
-
-Moon & Table can use saved natal-chart themes as private profile context. When private placements are available, it can also compare current timing with saved chart placements and turn selected matches into theme language.
-
-Those themes help the app understand what kinds of magic may feel resonant for each person and for the household. For example, one profile may lean toward practical tending, direct action, beauty, conversation, depth, warmth, or structure. Another may lean toward reflection, care, plants, candlelight, home rhythms, or grounded effort.
-
-The app treats these themes as living context, not fixed labels. A chart theme can help shape the kind of ritual offered, but it should not define a person or explain them away. Depending on the saved visibility setting, the app can keep this subtle, describe the theme plainly, or name the private timing match more explicitly after sign-in.
-
-Private profile data belongs in Firestore or local gitignored seed files. It should not be committed to the repository.
-
-## How numerology is used
-
-Numerology adds a number-current to the week.
-
-It is a small symbolic undertone that can shape the flavor of a ritual or question. A 6 signal might point toward home, care, harmony, repair, or tending. A 4 signal might point toward structure, usefulness, stability, or making one thing easier.
-
-Numerology is usually an accent. It can support the main lunar, seasonal, astrological, capacity, or household signal, but it should not take over the recommendation by itself.
-
-Moon & Table does not use numerology for destiny claims, compatibility claims, or personality certainty. It uses it as a small symbolic current: one more way to notice the shape of the week.
-
-## How seasonal timing is used
-
-Seasonal timing helps Moon & Table behave more like an almanac for home.
-
-Solstices, equinoxes, and seasonal shifts can point toward practices around light, warmth, rest, freshening, harvest, gratitude, storing, transition, threshold, or protection of attention.
-
-The app keeps factual seasonal markers separate from symbolic interpretation. A solstice date is a computed or factual timing event. What the household does with that timing comes from reviewed symbolic cards, source notes, ritual patterns, capacity, and safety guidance.
-
-## Where the symbolic knowledge comes from
-
-The magic in Moon & Table comes from a reviewed symbolic library, not random internet scraping.
-
-Sources are reviewed and turned into structured material before they can influence recommendations. The curation path is:
+The curation path is:
 
 ```text
 source review
-→ short transformed source note
-→ symbolic card or ritual pattern
-→ safety review
-→ approval
-→ use in recommendations
+-> transformed source note
+-> symbolic card or ritual pattern
+-> approval
+-> use in recommendations
 ```
 
-A source may inform a lunar card, a kitchen practice, an astrology interpretation rule, a numerology accent, a seasonal rhythm, a plant-tending pattern, or a safety guardrail.
+Sources can support lunar timing, astrology, numerology, seasonal timing, candle and light work, kitchen magic, plant tending, and home-tending rituals.
 
-The app should not copy book passages, rituals, prayers, chants, recipes, correspondence tables, or distinctive source phrasing. Source material is transformed into short notes, cards, rules, and patterns that fit Moon & Table’s voice and safety boundaries.
+The app does not copy book passages, rituals, spells, prayers, chants, recipes, correspondence tables, or distinctive source phrasing. Source material is transformed into short notes, cards, rules, and patterns that fit Moon & Table's voice.
 
-## What kinds of sources are used
+## How current context changes the answer
 
-Moon & Table uses several kinds of sources, each for a different purpose.
+Capacity is current context, not a judgment.
 
-**Astronomy and timing tools** are used for computed facts: moon phase, planetary positions, seasons, and related timing.
+- **Barely any**: almost weightless; a pause, a noticing, or one tiny act
+- **A little**: five minutes or less
+- **Enough to engage**: a simple ritual with some attention
+- **Room for something deeper**: more time, reflection, conversation, or ritual shape
 
-**Astrology sources** are used to build symbolic interpretation rules for planets, signs, aspects, and timing signals. These rules help translate timing into invitations for ritual and attention.
+When capacity is low, the app should ask fewer questions and keep the ritual small. When there is more room, it can ask more: audience, practice type, and ritual focus.
 
-**Lunar sources** help shape the four moon phase cards and keep the lunar layer gentle, useful, and non-pressuring.
+Ritual focus can include getting grounded, making a beginning, clearing something out, resting, saying something clearly, tending us, tending the home, or marking a threshold.
 
-**Numerology sources** help shape the 1-9 symbolic layer and keep number meanings simple, grounded, and secondary.
+Timing can shape the form, but it should not veto the intention.
 
-**Kitchen, plant, candle, and home sources** help create practical ritual patterns for ordinary domestic life.
+## How it chooses one ritual
 
-**Safety sources** override symbolic correspondences when needed. Safety comes before magic.
+The app compares approved ritual patterns against:
 
-## How a recommendation is created
-
-A weekly recommendation starts with timing.
-
-The app gathers relevant timing facts for the selected date or week. It may know the lunar phase, a seasonal marker, astrology timing, and numerology values. Then it selects a small number of signals that actually matter.
-
-Next, the app checks the reviewed symbolic library. It looks for approved cards and ritual patterns that match the selected signals.
-
-Then it applies private household context:
-
-- who the recommendation is for
+- the time scope: today or across the week
+- the selected timing window, if one is strong enough
+- the ritual focus
+- private natal contacts
 - current capacity
-- default capacity
-- max ritual time
-- preferred ritual styles
-- avoided ritual styles
-- tone preferences
-- schedule constraints
-- profile themes
-- prior feedback, when available
+- audience
+- practice preferences
+- avoided styles
+- prior feedback
 
-Then it applies safety and practicality checks. If a ritual would require too much cleanup, live flame, smoke, special shopping, heavy emotional processing, or unsafe use of herbs/oils/ingredients, the app should avoid it or choose a safer version.
+Then it chooses one ritual.
 
-Finally, Moon & Table offers one ritual. Not five options. Not a feed. One small thing that seems to fit the week.
+The decision record is inspectable for debugging, but it is not the normal experience. The normal experience should feel like: here is one thing that fits, and here is why.
 
-## How capacity shapes the ritual
+## What shows up in the ritual brief
 
-Capacity matters.
+The ritual brief shows:
 
-A ritual that is beautiful in theory can be wrong for a hard week. Moon & Table uses capacity to decide how much effort a recommendation should ask for.
-
-Capacity might mean:
-
-- **Pause**: no required ritual; noticing, resting, or letting something be enough
-- **Low**: one tiny action, usually five minutes or less
-- **Steady**: a practical ritual that can take a little more attention
-- **High**: a larger but still bounded practice
-
-Capacity is not a judgment. It is a way of letting the app meet the household where it actually is.
-
-## How safety works
-
-Safety comes before symbolism.
-
-Moon & Table should avoid recommending risky practices just because they have symbolic meaning. It should avoid essential oil ingestion, smoke defaults, live flame requirements, crystal elixirs, medical claims, fertility or pregnancy claims, pet-toxic casual recommendations, and rituals aimed at controlling another person.
-
-For candle or light work, the safe default is LED, natural light, or an optional flame only when appropriate. For kitchen and plant work, suggestions should stay within normal household use and include caution around allergies, pets, children, and capacity.
-
-A good ritual should leave the household better held, not overloaded.
-
-## How feedback works
-
-Feedback helps Moon & Table learn what fits.
-
-A user might say:
-
-- this was good
-- make it simpler
-- the tone was off
-- not this style
-- more like this
-- I skipped it
-- try something else
-
-Feedback should help future recommendations shift gradually. It can help the app learn which ritual styles, capacities, tones, and patterns feel useful. It should not overreact to one click or turn the app into a survey.
-
-The feedback loop exists so the app can become more personal through use.
-
-## What the app shows and what it keeps behind the scenes
-
-Moon & Table may calculate more than it shows.
-
-The brief should usually show only:
-
-- the selected ritual
-- the best window
-- the current capacity
-- a question to carry
-- the few signals that mattered
+- one ritual
+- an intention or question to carry, when useful
+- a best window or timing note
 - why this ritual fits
-- sources used, tucked away for people who want to look deeper
+- selected signals, tucked away when the detail helps
+- sources used, tucked away for deeper review
+- Try Again
+- feedback
 
-Behind the scenes, the app may keep trace data: timing facts, symbolic cards, ritual patterns, source notes, safety filters, and preference matches. That trace helps with debugging and source transparency, but raw IDs and internal file paths should not be the normal user experience.
+If we asked for Across the week, the brief should say when the selected timing window is. If we said Barely any, the ritual should stay almost weightless. If we asked for Tending us or Marking a threshold, the shape and explanation should reflect that.
 
-## What Moon & Table does not do
+## How it learns and stays private
 
-Moon & Table does not predict the future.
+Feedback tunes the app over time.
 
-It does not tell anyone who they are.
+Try Again should not start from scratch. It should keep the same check-in, profile context, and timing scope, then look for another approved fit.
 
-It does not treat astrology, numerology, or magic as commands.
+Private natal data, profile notes, preferences, and real household context live in private storage or local gitignored seed files. They do not belong in the repository.
 
-It does not give medical, legal, financial, emergency, or safety advice.
+The app can be personal without exposing everything personal.
 
-It does not copy rituals from books or scrape the internet into recommendations.
+## How we can shape it together
 
-It does not expose private profile data in the repository.
+Moon & Table is meant to become more ours through use.
 
-It does not try to make every week profound.
+We can notice what feels good, what feels too much, what feels cheesy, what should happen again, and what kind of magic actually helps the house feel like ours.
 
-Some weeks, the right magic is just watering a plant, clearing one surface, lighting a safe little light, making tea, or letting the evening close.
+It should stay small enough to live with. It should trust us. It should make ordinary moments feel a little more chosen.
 
-## The spirit of the app
+## To Us
 
-Moon & Table is built around a simple belief:
+This is not meant to replace intuition. It is meant to give us a shared place to listen for it.
 
-Timing, symbols, home, and ritual can matter.
+One small ritual, for us, built with love and chosen with care.
 
-The app’s job is to make that meaning small enough to live with. It gathers the week’s signals, listens to the household’s capacity, checks the reviewed symbolic library, and offers one grounded practice.
-
-Not a command. Not a prediction. Not a performance.
-
-Just one piece of household magic for the week.
+I love you.

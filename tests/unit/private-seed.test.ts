@@ -24,6 +24,9 @@ describe("private household seed validation", () => {
     expect(seed.profiles[0]?.astrologyProfile.placementKeys).toEqual([
       "placement.sun.placeholder",
     ]);
+    expect(seed.profiles[1]?.firstLoginWelcome).toEqual({
+      enabled: true,
+    });
   });
 
   it("rejects unsupported capacity modes before seeding", () => {
@@ -102,6 +105,9 @@ describe("private household seed validation", () => {
           personKey: "person_a",
           email: "person_a@example.com",
           profileThemeKeys: ["private_profile.practical_tending"],
+          firstLoginWelcome: {
+            enabled: true,
+          },
           assumptions: [
             {
               key: "assumption.low_overwhelm",
@@ -156,6 +162,32 @@ describe("private household seed validation", () => {
         themeKeys: ["practical_care"],
       },
     ]);
+    expect(parsedSeed.profiles[0]?.firstLoginWelcome).toEqual({
+      enabled: true,
+    });
+  });
+
+  it("rejects malformed first-login welcome settings", () => {
+    const seed = loadExampleSeed();
+
+    if (
+      typeof seed !== "object" ||
+      seed === null ||
+      !("profiles" in seed) ||
+      !Array.isArray(seed.profiles) ||
+      typeof seed.profiles[0] !== "object" ||
+      seed.profiles[0] === null
+    ) {
+      throw new Error("Example seed shape changed");
+    }
+
+    seed.profiles[0].firstLoginWelcome = {
+      enabled: false,
+    };
+
+    expect(() => parsePrivateHouseholdSeed(seed)).toThrow(
+      "profiles[0].firstLoginWelcome.enabled must be true when provided",
+    );
   });
 
   it("normalizes pasted markdown mailto email values", () => {

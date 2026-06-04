@@ -77,95 +77,66 @@ type HowItWorksSection = {
 
 const howItWorksSections: HowItWorksSection[] = [
   {
-    title: "What Moon & Table is",
+    title: "The basic idea",
     body: [
-      "Moon & Table turns timing, symbolism, and household magic into one small ritual for the week.",
-      "It is not a horoscope feed, spell database, task manager, or productivity system. It offers one grounded practice that fits real life.",
+      "Moon & Table helps choose one ritual that fits the moment.",
+      "You can ask for something today, or ask it to look across the week for a stronger timing fit. The check-in tells it how much energy is available, who the ritual is for, and what kind of intention should be held.",
     ],
   },
   {
-    title: "Recommendation pipeline",
+    title: "What happens under the hood",
     body: [
-      "The app gathers computed timing facts, selects symbolic signals, checks reviewed cards and ritual patterns, applies private household context, filters for safety and practicality, and returns one weekly recommendation.",
+      "The app has three jobs: calculate facts, interpret meaning, and choose an action.",
+      "It weighs timing, symbolic cards, approved ritual patterns, current capacity, audience, practice choices, private profile themes, feedback, and private natal contacts when they matter.",
     ],
   },
   {
-    title: "What it calculates",
+    title: "How timing becomes meaning",
     body: [
       "Moon & Table can calculate lunar phase, lunations, moon sign, sun sign, seasonal markers, planetary signs, retrogrades, major aspects, and numerology date values.",
-      "A calculated fact is not automatically a recommendation. It only becomes visible when it actually helps choose the ritual.",
+      "Facts are not automatically meaning. They become selected signals only when reviewed symbolic rules can turn them into a useful invitation. Private natal contacts can make some timing more relevant without becoming predictions or identity claims.",
     ],
   },
   {
-    title: "Lunar timing",
+    title: "Where the symbolic library comes from",
     body: [
-      "The first version uses four lunar phases: new moon for a small beginning, waxing moon for steady support, full moon for clarity or gratitude, and waning moon for release, clearing, integration, or rest.",
-    ],
-  },
-  {
-    title: "Astrology",
-    body: [
-      "Astrology is treated as symbolic weather, not a command. Planetary and lunar signals can point toward beauty, courage, communication, care, structure, repair, or useful adjustment.",
-      "Computed astrology facts stay internal unless an approved interpretation rule supports a user-facing signal.",
-    ],
-  },
-  {
-    title: "Natal-chart themes",
-    body: [
-      "Saved chart themes are private profile context. They can shape ritual fit, tone, and audience without exposing raw placements in the weekly brief.",
-      "The app uses theme language such as practical tending, warmth, beauty, care, structure, or grounded effort.",
-    ],
-  },
-  {
-    title: "Numerology",
-    body: [
-      "Numerology is a small accent. It can add a home, care, structure, or transition undertone, but it should not take over the recommendation by itself.",
-    ],
-  },
-  {
-    title: "Seasonal timing",
-    body: [
-      "Seasonal markers can support practices around light, warmth, rest, freshening, harvest, thresholds, and transitions.",
-    ],
-  },
-  {
-    title: "Sources",
-    body: [
-      "The symbolic library comes from reviewed sources, transformed source notes, approved cards, ritual patterns, and safety guardrails.",
+      "The symbolic library comes from reviewed sources, transformed source notes, approved cards, and approved ritual patterns.",
       "Moon & Table does not copy passages, rituals, prayers, chants, recipes, correspondence tables, or distinctive source phrasing.",
     ],
   },
   {
-    title: "Recommendation creation",
+    title: "How current context changes the answer",
     body: [
-      "After timing and symbolic signals are selected, the app checks who the ritual is for, current capacity, max ritual time, preferences, avoided styles, profile themes, and prior feedback where available. Schedule awareness is deferred until it has a real design.",
-      "Then it offers one ritual, not a feed of competing options.",
+      "The check-in uses four energy labels: Barely any, A little, Enough to engage, and Room for something deeper.",
+      "When capacity is low, the app asks less and keeps the ritual light. When there is more room, it can ask about audience, practice type, and focus. Timing can shape the form, but it should not veto the intention.",
     ],
   },
   {
-    title: "Capacity",
+    title: "How it chooses one ritual",
     body: [
-      "Capacity decides how much effort the ritual should ask for: pause, low, steady, or high.",
-      "Capacity is not a judgment. It helps the app meet the household where it actually is.",
+      "The recommendation engine compares approved ritual patterns against the selected time scope, timing window, ritual focus, natal contacts, capacity, audience, preferences, and prior feedback.",
+      "It keeps a decision record for inspection, but the normal experience should feel like one clear recommendation, not an oracle or debug panel.",
     ],
   },
   {
-    title: "Safety",
+    title: "What shows up in the ritual brief",
     body: [
-      "Safety comes before symbolism. Fire, smoke, plants, food, allergies, pets, children, cleanup burden, and emotional intensity can reshape or block a ritual.",
-      "A good ritual should leave the household better held, not overloaded.",
+      "The ritual brief shows one ritual, an intention or question to carry when useful, the timing window, why this fits, and a tucked-away detail section for selected signals and sources.",
+      "Try something else reuses the same check-in context. Start over clears the current check-in.",
     ],
   },
   {
-    title: "Feedback",
+    title: "How it learns and stays private",
     body: [
-      "Feedback helps future recommendations shift gradually. It can teach the app which styles, tones, capacities, and patterns feel useful without turning the experience into a survey.",
+      "Feedback helps future recommendations shift gradually without turning the experience into a survey.",
+      "Private profile data, natal placements, and saved preferences live in private storage, not the repository. The app can be personal without exposing everything personal.",
     ],
   },
   {
-    title: "What it does not do",
+    title: "How we can shape it together",
     body: [
-      "Moon & Table does not predict the future, tell anyone who they are, give medical, legal, financial, emergency, or safety advice, copy rituals from books, or expose private profile data in the repository.",
+      "The system is meant to be shaped by use: what felt good, what felt off, what was too much, what should happen again.",
+      "A few quiet hard stops stay in the background: no unsafe ingestion, no medical or emergency advice, no smoke by default, no required live flame, and no practices aimed at controlling someone else.",
     ],
   },
 ];
@@ -369,7 +340,7 @@ function renderBriefReasoning(brief: WeeklyBrief): string {
       ? timingSignals.map((signal) => signal.label).join(" and ")
       : undefined;
   const fitNotes = explanation.filtersApplied.filter((note) =>
-    ["Capacity", "Preferences", "Profile themes", "Private timing resonance", "Safety and fit"].includes(note.label),
+    ["Capacity", "Preferences", "Profile themes", "Private timing resonance", "Practical fit"].includes(note.label),
   );
   const concreteReasons = [
     ["Timing window", getTimingWindowWhyLine(brief)],
@@ -421,7 +392,7 @@ function getSourceKindLabel(kind: BriefSourceSummary["kind"]): string {
     case "ritual_pattern":
       return "Ritual pattern";
     case "safety_guardrail":
-      return "Safety";
+      return "Practical fit";
     case "timing_fact":
       return "Timing fact";
   }
@@ -1032,7 +1003,7 @@ function renderHowItWorksSection(): string {
       <header class="how-it-works__header">
         <p class="label">How it works</p>
         <h2>One small ritual, chosen with care.</h2>
-        <p>Moon &amp; Table uses timing, symbolism, and household magic to choose one grounded practice for the week.</p>
+        <p>Moon &amp; Table uses timing, symbolism, and household magic to choose one grounded ritual that fits the moment.</p>
       </header>
 
       <div class="how-it-works__sections">
@@ -1152,6 +1123,43 @@ export function renderUnauthorizedShell(): string {
     body: "Use an invited Google account to continue.",
     action: '<button class="primary-action entry-action" type="button" data-auth-action="sign-out">Sign out</button>',
   });
+}
+
+export function renderPrivateFirstLoginWelcomeShell(): string {
+  return `
+    <section class="shell shell--welcome" aria-labelledby="private-welcome-title">
+      <article class="private-welcome" aria-label="Welcome">
+        <div class="private-welcome__visual" aria-hidden="true">
+          <svg viewBox="0 0 220 180" role="img" focusable="false">
+            <defs>
+              <radialGradient id="welcome-candle-glow" cx="50%" cy="58%" r="58%">
+                <stop offset="0%" stop-color="#f7dca7" stop-opacity="0.9" />
+                <stop offset="54%" stop-color="#f7dca7" stop-opacity="0.22" />
+                <stop offset="100%" stop-color="#f7dca7" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+            <circle cx="110" cy="104" r="78" fill="url(#welcome-candle-glow)" />
+            <circle cx="82" cy="52" r="26" fill="#fffdf7" stroke="#26312c" stroke-width="3" />
+            <circle cx="92" cy="48" r="27" fill="#f5f1e9" />
+            <path d="M111 124c0-17 12-28 12-28s12 11 12 28c0 8-5 14-12 14s-12-6-12-14Z" fill="#d49646" />
+            <path d="M119 124c0-8 4-14 4-14s4 6 4 14c0 3-2 5-4 5s-4-2-4-5Z" fill="#fff3cf" />
+            <rect x="105" y="136" width="36" height="42" rx="6" fill="#fffdf7" stroke="#26312c" stroke-width="3" />
+            <path d="M96 178h52" stroke="#26312c" stroke-linecap="round" stroke-width="3" />
+          </svg>
+        </div>
+        <div class="private-welcome__copy">
+          <h1 id="private-welcome-title">Welcome, my love.</h1>
+          <p>I built this for us &mdash;<br />a small space for ritual, timing, home,<br />and the quiet ways we keep choosing each other.</p>
+          <p>I hope it helps bring us closer together,<br />while we are apart and when we are home.</p>
+        </div>
+        <button
+          class="primary-action private-welcome__action"
+          type="button"
+          data-private-welcome-action="dismiss"
+        >Get Started</button>
+      </article>
+    </section>
+  `;
 }
 
 function renderCheckInOptionButton({
