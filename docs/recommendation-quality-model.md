@@ -75,17 +75,19 @@ Examples:
 
 Timing shapes ritual form, but it should not manufacture unreviewed practice. A selected focus should be bridged, not vetoed. Capacity should shape the ritual's size and manner without making the output feel like a task-management rule.
 
-## Planned Model Concepts
+## Model Concepts
 
-These concepts are planned. They are not implemented by this document.
+These concepts define the quality model. Some are implemented now and some remain planned.
 
 `RitualPresentation`
 
 Authored user-facing ritual language attached to an approved pattern. This is where title variants, body copy, intention language, carry prompts, closing language, and optional accents can become cared-for instead of mechanically assembled from pattern fields.
 
+The first implementation attaches presentation fields to a focused set of approved ritual patterns. Generated briefs prefer that presentation for the ritual body, intention, carry prompt, and closing language when available, while keeping `RitualPattern.steps` for validation, safety review, source traceability, and fallback behavior.
+
 `RitualMeaningBridge`
 
-A reviewed bridge between timing, focus, practice, audience, or capacity tensions. A bridge explains how one input reshapes another without inventing meaning. For example, beginning plus waning timing can become preparation or clearing room.
+A planned reviewed bridge between timing, focus, practice, audience, or capacity tensions. A bridge explains how one input reshapes another without inventing meaning. For example, beginning plus waning timing can become preparation or clearing room.
 
 `RecommendationQualityScenario`
 
@@ -93,7 +95,7 @@ A privacy-safe scenario used to judge output quality. It is not just a unit test
 
 `ContentPacket`
 
-A human-reviewed packet for adding new source-backed content in batches. A packet can include source reviews, transformed notes, cards, patterns, presentation language, meaning bridges, quality scenarios, and follow-up notes.
+A planned human-reviewed packet for adding new source-backed content in batches. A packet can include source reviews, transformed notes, cards, patterns, presentation language, meaning bridges, quality scenarios, and follow-up notes.
 
 ## Recommendation Quality Scenarios
 

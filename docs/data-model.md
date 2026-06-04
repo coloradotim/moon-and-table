@@ -80,6 +80,7 @@ Copyrighted source material should be transformed into short SourceNotes, not in
 | --- | --- |
 | `SymbolicCard` | Describes approved symbolic meaning: summary, themes, good-for uses, ritual styles, ritual ideas, avoid-saying guardrails, safety notes, source references, confidence, and approval status. |
 | `RitualPattern` | Describes what to do: duration, capacity modes, materials, steps, safety flags, avoid-if notes, source references, and approval status. |
+| `RitualPresentation` | Authored user-facing language attached to approved ritual patterns: invitation, why the practice exists, approach, ritual body, carry prompt, closing, and small capacity/audience/material variants. |
 | `RitualFocusOption` | Controlled current-moment focus vocabulary for check-ins. Each scoring option carries theme keys plus generator-usable metadata such as ritual style hints, timing affinities, or symbolic card links. |
 | `RitualSafetyFlags` | Encodes safety constraints such as ingestion, oils, smoke, fire, pets, children, pregnancy, allergies, medical claims, emotional intensity, and cleanup burden. |
 | Approval status | Determines whether content is eligible for recommendation. Only approved cards and approved patterns should be used. |
@@ -87,6 +88,8 @@ Copyrighted source material should be transformed into short SourceNotes, not in
 SymbolicCards describe meaning. RitualPatterns describe practice. The generator should not turn symbolic meaning directly into unreviewed actions.
 
 `RitualPattern.steps` are not enough for final user-facing ritual quality. Steps can say what to do, but a grimoire-quality recommendation also needs authored presentation: why this ritual now, how to hold it, what to carry afterward, and how to close.
+
+`RitualPresentation` is the first implemented grimoire-quality layer. It does not replace `RitualPattern.steps`; those remain useful for validation, safety review, source traceability, diagnostics, and fallback behavior. When presentation is present, generated user-facing ritual copy should prefer it. When presentation is absent, the generator falls back to the existing pattern fields.
 
 RitualFocusOptions describe what the user says the current ritual should focus on. They are source-controlled controlled vocabulary, not open-ended interpretation. The vocabulary lives in `src/data/ritual-focus-options.ts`; selected focus can influence recommendation scoring through ritual style hints, timing affinities, symbolic card links, and conservative free-text aliases.
 
@@ -96,11 +99,10 @@ Lifecycle examples may exist as separate fixture data for curation training and 
 
 ## Planned Recommendation Quality Data
 
-These objects are planned concepts. They are not implemented by the current data model.
+These objects support the recommendation quality model. `RitualPresentation` is now implemented on selected approved patterns; the other objects remain planned concepts.
 
 | Object | Responsibility |
 | --- | --- |
-| `RitualPresentation` | Authored user-facing ritual language attached to an approved pattern: title variants, body copy, intention, optional accents, carry prompts, and closing language. |
 | `RitualMeaningBridge` | Reviewed bridge between timing, focus, practice, audience, or capacity tensions so the output can reshape a ritual without inventing meaning. |
 | `RecommendationQualityScenario` | Privacy-safe scenario used to judge whether generated output feels coherent, specific, and cared-for, not merely explainable. |
 | `ContentPacket` | Human-reviewed batch for adding source-backed content such as source reviews, notes, cards, patterns, presentations, meaning bridges, and quality scenarios. |
