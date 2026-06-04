@@ -124,6 +124,8 @@ A privacy-safe scenario used to judge output quality. It is not just a unit test
 
 A planned human-reviewed packet for adding new source-backed content in batches. A packet can include source reviews, transformed notes, cards, patterns, presentation language, meaning bridges, quality scenarios, and follow-up notes.
 
+Folk household magic packets should follow `docs/folk-household-magic-taxonomy.md` before adding active content. That taxonomy keeps visible practice routes simple while organizing deeper source-backed material forms, magical functions, timing affinities, activation modes, closure modes, and metaphysical integrity checks.
+
 ## Recommendation Quality Scenarios
 
 A decision record explains what happened. It does not prove the recommendation was good.
@@ -179,6 +181,8 @@ Future content packets should include a metaphysical integrity check:
 - Did we accidentally reduce it to a wellness metaphor, visual prop, or safety disclaimer?
 - Are claims bounded without condescension?
 - Are safety constraints handled quietly and practically?
+
+For folk household magic packets, use `docs/folk-household-magic-taxonomy.md` as the planning source before implementing moon water, threshold charms, salt/boundary practices, sweetening work, written charms, or container/object rites.
 
 ## Enforcement
 

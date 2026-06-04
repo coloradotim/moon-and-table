@@ -89,6 +89,11 @@ household rites, should check that source and safety boundaries are handled
 quietly without flattening the practice into a wellness metaphor, decorative
 prop, or safety disclaimer.
 
+`docs/folk-household-magic-taxonomy.md` is the planning source for future folk
+household magic packets. It keeps materials such as water, cinnamon, salt,
+honey, keys, coins, jars, bowls, and paper as vehicles underneath existing
+visible routes rather than top-level categories.
+
 ## Issue 165: Runtime-Sensitive Test Stabilization
 
 Tests should keep catching real recommendation regressions without freezing

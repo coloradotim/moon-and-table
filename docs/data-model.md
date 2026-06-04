@@ -107,6 +107,8 @@ These objects support the recommendation quality model. `RitualPresentation` is 
 | `RecommendationQualityScenario` | Privacy-safe scenario used to judge whether generated output feels coherent, specific, and cared-for, not merely explainable. |
 | `ContentPacket` | Human-reviewed batch for adding source-backed content such as source reviews, notes, cards, patterns, presentations, meaning bridges, and quality scenarios. |
 
+The folk household magic taxonomy in `docs/folk-household-magic-taxonomy.md` defines planning axes for future folk content packets. These axes are not active model fields yet. They should guide packet review for material forms, magical functions, timing affinities, activation modes, duration/closure, claims boundaries, and safety eligibility before any SourceNotes, cards, patterns, or bridges are implemented.
+
 These concepts belong to the private household grimoire model described in `docs/recommendation-quality-model.md`. They should not include private names, birth data, raw natal placements, relationship details, private schedules, copied source text, or private source passages.
 
 ## Timing Data
