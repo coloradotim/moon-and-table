@@ -13,6 +13,8 @@ timing facts + approved cards + approved ritual patterns + capacity + preference
 -> calm user-facing brief copy
 ```
 
+Future check-in context can add a selected `RitualFocusOption` to this flow. That vocabulary is controlled data, not open-ended interpretation, and is documented in `docs/ritual-selection-model.md`. It is not part of current scoring until generator inputs explicitly accept it.
+
 ## Decision Record
 
 `generateWeeklyBrief()` returns a `decision` object beside the user-facing brief fields. The decision record includes:
