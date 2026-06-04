@@ -190,7 +190,7 @@ export function getRecommendationQualityWarnings(args: {
     );
   }
 
-  if (/^optional:\s*light a candle if that feels supportive\.?$/i.test(copy.optionalAddOn.trim())) {
+  if (/^(?:optional:\s*)?light a candle if that feels supportive\.?$/i.test(copy.optionalAddOn.trim())) {
     warnings.push(
       warning(
         "generic_optional_candle",

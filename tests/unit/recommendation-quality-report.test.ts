@@ -118,6 +118,52 @@ describe("recommendation quality report", () => {
     );
   });
 
+  it("flags generic candle add-ons with or without the optional prefix", () => {
+    const base = {
+      scenario: {
+        currentRitualCheckIn: {
+          timeScope: "today" as const,
+          energyCapacity: "a_little" as const,
+          capacityMode: "low" as const,
+          audience: "me" as const,
+          ritualFocusKey: "resting" as const,
+          ritualFocusLabel: "Resting",
+        },
+      },
+      selectedRitualPatternKey: "close_the_evening",
+      selectedRitualPatternStyles: ["home_tending"],
+      selectedTimingWindow: { isStrong: false, reasonLabels: [] },
+      copy: {
+        theme: "Let the evening close gently.",
+        recommendedRitual: "Put one thing away and let that be enough.",
+        intention: "Let the day end without extra effort.",
+        bestWindow: "When you have five quiet minutes.",
+        optionalAddOn: "",
+        reflectionPrompt: "What can be complete enough for tonight?",
+        whyThisFits: "This keeps the ritual small and practical.",
+        howThisWasChosen: [],
+      },
+    };
+
+    const withPrefix = getRecommendationQualityWarnings({
+      ...base,
+      copy: {
+        ...base.copy,
+        optionalAddOn: "Optional: light a candle if that feels supportive.",
+      },
+    }).map((warning) => warning.id);
+    const withoutPrefix = getRecommendationQualityWarnings({
+      ...base,
+      copy: {
+        ...base.copy,
+        optionalAddOn: "Light a candle if that feels supportive.",
+      },
+    }).map((warning) => warning.id);
+
+    expect(withPrefix).toContain("generic_optional_candle");
+    expect(withoutPrefix).toContain("generic_optional_candle");
+  });
+
   it("does not emit raw private details in report normal copy fields", () => {
     const normalCopy = normalCopyFieldsFromReport().toLowerCase();
 
