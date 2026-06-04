@@ -346,6 +346,7 @@ Deliverables:
 * clean ritual closing patterns
 * Moon & Table house voice instead of user-facing writing-style knobs
 * content packet workflow for reviewed source-backed batches
+* folk household magic taxonomy for material forms, functions, timing affinities, activation modes, and closure modes
 * deeper candle and light magic content
 * deeper home / threshold / table / arrival ritual content
 * deeper kitchen warmth and ordinary nourishment content
@@ -361,6 +362,7 @@ This phase should prevent:
 * pattern summaries stitched together without ritual coherence
 * safety becoming a prominent product layer instead of quiet hard guardrails
 * profile settings becoming a prompt-style or tone-style mixer
+* folk household magic becoming a pile of isolated material categories instead of source-backed practice structures under existing routes
 
 Success means a generated recommendation feels authored, coherent, specific, private, and sourced, not merely explainable by the debug record.
 

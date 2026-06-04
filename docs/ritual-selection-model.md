@@ -14,6 +14,8 @@ Moon & Table has a house voice. User settings can shape what kind of ritual fits
 
 Safety should constrain recommendations; it should not rewrite the metaphysics of the practice. The engine may set aside unsafe, unsupported, or privacy-risky ritual forms, but it should not turn magical practice into a wellness metaphor or decorative prop to make it feel safer.
 
+Folk household magic uses the planning taxonomy in `docs/folk-household-magic-taxonomy.md`. That layer overlays the existing visible practice categories; it does not add a visible Folk magic, Moon water, Charms, Spells, Prosperity, or Protection route.
+
 ## Product Split
 
 | Layer | Responsibility |
