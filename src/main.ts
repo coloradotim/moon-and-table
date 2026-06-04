@@ -578,11 +578,6 @@ function getProfileTuningFormInput(
       formData,
       "preferredRitualStyles",
     ),
-    avoidedRitualStyles: getStringListFormValues(
-      formData,
-      "avoidedRitualStyles",
-    ),
-    tonePreferences: getStringListFormValues(formData, "tonePreference"),
     astrologyVisibility,
     assumptionValues: {},
   };

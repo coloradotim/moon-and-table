@@ -344,6 +344,7 @@ Deliverables:
 * reviewed meaning bridges for timing/focus/practice/capacity tensions
 * contextual optional accents and carry prompts
 * clean ritual closing patterns
+* Moon & Table house voice instead of user-facing writing-style knobs
 * content packet workflow for reviewed source-backed batches
 * deeper candle and light magic content
 * deeper home / threshold / table / arrival ritual content
@@ -359,6 +360,7 @@ This phase should prevent:
 * score/debug language in user-facing copy
 * pattern summaries stitched together without ritual coherence
 * safety becoming a prominent product layer instead of quiet hard guardrails
+* profile settings becoming a prompt-style or tone-style mixer
 
 Success means a generated recommendation feels authored, coherent, specific, private, and sourced, not merely explainable by the debug record.
 

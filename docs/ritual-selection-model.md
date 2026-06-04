@@ -10,6 +10,8 @@ Moon & Table chooses one ritual from our private household grimoire, then explai
 
 The recommendation engine chooses from approved grimoire content. It should not assemble a generic ritual from loose timing fragments, pattern summaries, and fallback prompts.
 
+Moon & Table has a house voice. User settings can shape what kind of ritual fits, how much capacity it should require, and how visible astrology should be, but they should not remix the writing style of the ritual itself.
+
 ## Product Split
 
 | Layer | Responsibility |
@@ -33,12 +35,12 @@ The main editor should stay calm and durable:
 - maximum ritual size
 - astrology visibility
 - broad long-term fit preferences
-- broad long-term avoid preferences
-- tone preferences
 - private astrology profile status
 - a simple private astrology loaded/not-loaded note
 
 Specific action-pattern tags, ingredient-level preferences, herb/color/candle specifics, raw-ish diagnostics, and legacy assumptions should not appear in the normal editor. The default view should not expose the whole internal preference taxonomy.
+
+Broad avoid-style controls and prose tone controls should not appear in the normal editor. Internal avoid flags, safety blockers, burden constraints, and `toneGuidance` metadata still exist, but they are not profile knobs.
 
 The profile editor may show private runtime display labels and private loaded/not-loaded status after sign-in, but source-controlled code and tests must continue to use placeholders only. It should not show raw natal placements, birth data, real emails, relationship details, private schedules, or private source text.
 

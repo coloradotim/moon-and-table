@@ -550,7 +550,6 @@ export function resolvePrivateBriefData(
           astrologyProfileThemeKeys: astrologyProfile?.profileThemeKeys ?? [],
           preferredRitualStyles,
           avoidedRitualStyles,
-          tonePreferences,
           defaultAudience,
         },
       ),
@@ -640,7 +639,6 @@ function buildGeneratorProfileInputs(
     astrologyProfileThemeKeys: PrivateProfileThemeKey[];
     preferredRitualStyles: string[];
     avoidedRitualStyles: string[];
-    tonePreferences: string[];
     defaultAudience: PrivateAudience;
   },
 ): PrivateProfileSignalInput[] {
@@ -656,7 +654,6 @@ function buildGeneratorProfileInputs(
     astrologyProfileThemeKeys: current.astrologyProfileThemeKeys,
     preferredRitualStyles: current.preferredRitualStyles,
     avoidedRitualStyles: current.avoidedRitualStyles,
-    tonePreferences: current.tonePreferences,
   };
   const householdProfileInputs = tuningProfiles.map((profile) => ({
     audience: profile.settings.personKey ?? profile.settings.defaultAudience,
@@ -665,7 +662,6 @@ function buildGeneratorProfileInputs(
     astrologyProfileThemeKeys: profile.settings.astrologyProfileThemeKeys ?? [],
     preferredRitualStyles: profile.settings.preferredRitualStyles,
     avoidedRitualStyles: profile.settings.avoidedRitualStyles,
-    tonePreferences: profile.settings.tonePreferences ?? [],
   }));
 
   return [

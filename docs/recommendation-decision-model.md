@@ -56,6 +56,8 @@ The weekly brief has three explanation layers:
 
 When the selected approved pattern has `RitualPresentation`, the user-facing theme phrase, ritual body, intention, carry prompt, closing, and ritual-fit explanation should use that authored presentation. Pattern steps remain available for fallback, diagnostics, and safety/source review. Legacy runtime tone closings are fallback-only for patterns without presentation.
 
+Moon & Table has a house voice. User-facing profile settings should not remix the recommendation into a different writing style. If legacy `tonePreferences` data exists, it is backward-compatible data, not a normal active profile knob.
+
 Mismatch language should be honest. If a check-in answer did not directly match the selected ritual, the expanded explanation should say what was held as a tone, what matched, and what was set aside. For example, a `Making a beginning` focus during waning timing can become preparation for a first step; a `Tending us` focus during low capacity can become a smaller shared ritual rather than a long conversation.
 
 Across-week timing should say why a selected date or window stood out. If no timing window is strong enough, the explanation should say that plainly and invite the ritual whenever capacity allows. This is timing look-ahead, not schedule awareness.

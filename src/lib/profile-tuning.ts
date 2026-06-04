@@ -58,8 +58,7 @@ export type ProfileTuningFormInput = {
   defaultCapacityMode: CapacityMode;
   maxRitualDurationMinutes: number;
   preferredRitualStyles: string[];
-  avoidedRitualStyles: string[];
-  tonePreferences: string[];
+  avoidedRitualStyles?: string[];
   astrologyVisibility: AstrologyVisibility;
   assumptionValues: Record<string, boolean>;
 };
@@ -69,7 +68,6 @@ export type ProfileTuningUpdate = {
     defaultAudience: PrivateAudience;
     preferredRitualStyles: string[];
     avoidedRitualStyles: string[];
-    tonePreferences: string[];
     astrologyVisibility: AstrologyVisibility;
     assumptions: PrivateProfileAssumption[];
     updatedAtIso: string;
@@ -115,9 +113,8 @@ export function buildProfileTuningUpdate(
         input.preferredRitualStyles,
       ),
       avoidedRitualStyles: normalizeProfilePreferenceValues(
-        input.avoidedRitualStyles,
+        input.avoidedRitualStyles ?? currentSettings.avoidedRitualStyles,
       ),
-      tonePreferences: normalizeProfilePreferenceValues(input.tonePreferences),
       astrologyVisibility: input.astrologyVisibility,
       assumptions: currentSettings.assumptions.map((assumption) => {
         if (!assumption.editable || typeof assumption.value !== "boolean") {

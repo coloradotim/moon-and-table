@@ -171,11 +171,13 @@ The main profile editor uses broad durable fields:
 - maximum ritual size
 - astrology visibility
 - long-term fit preferences
-- long-term avoid preferences
-- tone preferences
 - private astrology loaded/not-loaded status
 
-Legacy assumptions and advanced taxonomy are not part of the normal profile editor. The default UI should not expose ingredient lists, herb lists, raw internal taxonomy groups, raw placement records, birth data, emails, private schedules, or source text.
+Moon & Table has a house voice. Runtime tone preferences and broad avoid-style prose controls are legacy/private data only, not normal profile knobs. Old private profile documents may still contain `tonePreferences` or avoid-style fields, and loading them should not crash, but normal profile saves should not expose or actively update tone selectors.
+
+Internal safety blockers, practical avoid flags, capacity/burden constraints, and `toneGuidance` on ritual patterns still exist. `toneGuidance` is editorial metadata for curation and review, not a user setting.
+
+Legacy assumptions and advanced taxonomy are not part of the normal profile editor. The default UI should not expose ingredient lists, herb lists, broad avoid-style controls, raw internal taxonomy groups, raw placement records, birth data, emails, private schedules, or source text.
 
 For local UI testing after sign-in, `?view=profile` or `#profile` opens Profile settings directly instead of starting the pre-brief check-in flow.
 
