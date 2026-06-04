@@ -27,8 +27,15 @@ It should not feel like:
 - a task checklist
 - a debug console
 - a source-compliance interface
+- user-tuned prose output
 
 The recommendation engine can be technical underneath. The ritual itself should not feel technical. A person should feel that one ritual was chosen with care from a private household body of practice, then shaped by timing, check-in context, capacity, profile themes, and source-backed symbolic meaning.
+
+Moon & Table has a house voice. User settings may constrain intensity, visibility, capacity, and practice fit, but they should not remix the ritual into a different writing style.
+
+The house voice should be private, adult, warm, intentional, grounded, specific, magical without overclaiming, practical without becoming productivity software, loving without becoming sentimental filler, and low-overwhelm without sounding fragile-person-coded.
+
+The normal product should not expose tone selectors, writing-style pickers, broad avoid-language controls, or prompt-style mixers. `toneGuidance` on ritual patterns is editorial metadata for curation and review, not a user setting.
 
 ## Recommendation Quality Bar
 

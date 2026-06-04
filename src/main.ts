@@ -578,11 +578,6 @@ function getProfileTuningFormInput(
       formData,
       "preferredRitualStyles",
     ),
-    avoidedRitualStyles: getStringListFormValues(
-      formData,
-      "avoidedRitualStyles",
-    ),
-    tonePreferences: getStringListFormValues(formData, "tonePreference"),
     astrologyVisibility,
     assumptionValues: {},
   };
@@ -681,7 +676,7 @@ async function handleTryAgainClick(): Promise<void> {
     ) {
       renderActiveBriefStatus(
         "Saved.",
-        "I do not have another safe option yet. Try changing capacity or style preferences.",
+        "I do not have another safe option yet. Try changing capacity or practice preferences.",
         "try_again",
       );
       return;

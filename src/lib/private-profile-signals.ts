@@ -2,7 +2,6 @@ import type {
   PrivateAudience,
   PrivateProfileThemeKey,
 } from "./private-data-schema";
-import { normalizeProfilePreferenceValues } from "./profile-preference-taxonomy";
 
 export type PrivateProfileSignalSource =
   | "private_profile"
@@ -118,10 +117,7 @@ function makeSignal(
     themeKey,
     themes: definition.themes,
     ritualStyleHints: definition.ritualStyleHints,
-    toneHints: uniqueValues([
-      ...definition.toneHints,
-      ...normalizeProfilePreferenceValues(profile.tonePreferences ?? []),
-    ]),
+    toneHints: definition.toneHints,
     weight: Math.max(1, definition.weight + overlapBoost + togetherSoftening + natalThemeBoost),
     source,
   };

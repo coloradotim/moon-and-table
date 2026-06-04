@@ -67,6 +67,21 @@ describe("private profile signals", () => {
     );
   });
 
+  it("does not turn legacy tone preferences into profile signal hints", () => {
+    const signals = mapPrivateProfileThemesToSignals([
+      {
+        audience: "person_a",
+        profileThemeKeys: ["private_profile.practical_tending"],
+        preferredRitualStyles: ["plant"],
+        tonePreferences: ["romantic", "playful"],
+      },
+    ], "person_a");
+
+    expect(signals[0]?.ritualStyleHints).not.toContain("romantic");
+    expect(signals[0]?.ritualStyleHints).not.toContain("playful");
+    expect(signals[0]?.toneHints).toEqual(["practical", "direct", "low_woo"]);
+  });
+
   it("keeps signal content generic and free of raw private placement language", () => {
     const serializedSignals = JSON.stringify(
       mapPrivateProfileThemesToSignals(profileInputs, "together"),
@@ -79,4 +94,3 @@ describe("private profile signals", () => {
     expect(serializedSignals).not.toContain("chart says");
   });
 });
-

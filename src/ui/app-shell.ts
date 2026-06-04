@@ -35,9 +35,9 @@ import {
 const feedbackLabels: Record<BriefFeedbackType, string> = {
   good: "Save this",
   too_much: "Simpler, please",
-  too_generic: "Tone is off",
+  too_generic: "This feels off",
   more_like_this: "More like this",
-  not_this_style: "Not this style",
+  not_this_style: "Not this kind of ritual",
   skipped: "I skipped it",
   try_again: "Try something else",
 };
@@ -80,23 +80,6 @@ const profileWorksOptions = [
   { value: "candle_or_light", label: "Candle or light" },
   { value: "reflection", label: "Reflection" },
   { value: "seasonal", label: "Seasonal" },
-];
-const profileAvoidOptions = [
-  { value: "shopping_required", label: "Shopping required" },
-  { value: "heavy_cleanup", label: "Heavy cleanup" },
-  { value: "long_journaling", label: "Long journaling" },
-  { value: "elaborate_setup", label: "Elaborate setup" },
-  { value: "emotionally_heavy", label: "Emotionally heavy" },
-  { value: "live_flame", label: "Live flame" },
-  { value: "smoke", label: "Smoke" },
-];
-const profileToneOptions = [
-  { value: "practical", label: "Practical", description: "Plain, useful, low-fuss." },
-  { value: "warm", label: "Warm", description: "Gentle and encouraging." },
-  { value: "direct", label: "Direct", description: "Clear, brief, not precious." },
-  { value: "symbolic", label: "Symbolic", description: "A little more magical." },
-  { value: "playful", label: "Playful", description: "Lighter and less solemn." },
-  { value: "romantic", label: "Tender", description: "Soft, affectionate, intimate." },
 ];
 
 export type SignedInView = "this_week" | "profile_settings" | "how_it_works";
@@ -657,7 +640,7 @@ function renderSelectOptions(
 }
 
 function renderChoiceOptions(
-  name: "preferredRitualStyles" | "avoidedRitualStyles",
+  name: "preferredRitualStyles",
   selectedValues: string[],
   options: Array<{ value: string; label: string; description?: string }>,
 ): string {
@@ -677,32 +660,6 @@ function renderChoiceOptions(
           <span>
             <strong>${escapeHtml(option.label)}</strong>
             ${option.description ? `<small>${escapeHtml(option.description)}</small>` : ""}
-          </span>
-        </label>
-      `;
-    })
-    .join("");
-}
-
-function renderLanguageOptions(selectedValues: string[]): string {
-  const selectedTone = selectedValues.find((value) =>
-    profileToneOptions.some((option) => option.value === value),
-  ) ?? "practical";
-
-  return profileToneOptions
-    .map((option) => {
-      const checkedAttribute = option.value === selectedTone ? " checked" : "";
-
-      return `
-        <label class="profile-option">
-          <input
-            type="radio"
-            name="tonePreference"
-            value="${escapeHtml(option.value)}"${checkedAttribute}
-          />
-          <span>
-            <strong>${escapeHtml(option.label)}</strong>
-            <small>${escapeHtml(option.description)}</small>
           </span>
         </label>
       `;
@@ -848,26 +805,9 @@ function renderProfileSettingsForm(profile: ProfileTuningProfile): string {
       <section class="profile-settings-block">
         <h3>Long-term fit</h3>
         <fieldset>
-          <legend>What usually works</legend>
+          <legend>What kinds of practices usually fit?</legend>
           <div class="profile-option-list">
             ${renderChoiceOptions("preferredRitualStyles", settings.preferredRitualStyles, profileWorksOptions)}
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>Avoid by default</legend>
-          <div class="profile-option-list">
-            ${renderChoiceOptions("avoidedRitualStyles", settings.avoidedRitualStyles, profileAvoidOptions)}
-          </div>
-        </fieldset>
-      </section>
-
-      <section class="profile-settings-block">
-        <h3>Language</h3>
-        <fieldset>
-          <legend>How should the recommendation sound?</legend>
-          <div class="profile-option-list">
-            ${renderLanguageOptions(settings.tonePreferences ?? [])}
           </div>
         </fieldset>
       </section>
