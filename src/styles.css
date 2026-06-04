@@ -582,6 +582,21 @@ h2 {
   gap: 5px;
 }
 
+.brief__chart-fit {
+  display: grid;
+  max-width: 720px;
+  gap: 5px;
+  padding-left: 14px;
+  border-left: 3px solid rgba(102, 123, 92, 0.36);
+}
+
+.brief__chart-fit p {
+  margin: 0;
+  color: #58675f;
+  font-size: var(--text-small);
+  line-height: 1.52;
+}
+
 .why-this {
   display: grid;
   gap: 9px;

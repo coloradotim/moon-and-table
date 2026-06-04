@@ -215,6 +215,63 @@ function renderBriefReasoning(explanation: BriefExplanation): string {
   `;
 }
 
+function labelFromSnake(value: string | undefined): string {
+  if (!value) {
+    return "";
+  }
+
+  return value
+    .split("_")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function getContactThemeLabel(
+  contact: WeeklyBrief["decision"]["selected"]["natalContacts"][number],
+): string {
+  const themeKey = contact.themeKeys.find(
+    (candidate) => candidate !== "private_natal_contact",
+  );
+
+  return themeKey ? themeKey.replaceAll("_", " ") : "private timing";
+}
+
+function getPrivateChartFitSummary(brief: WeeklyBrief): string {
+  const profileCount = brief.decision.inputs.privateNatalProfileCount;
+  const contactCount = brief.decision.inputs.natalContactsComputed;
+  const selectedContact = brief.decision.selected.natalContacts[0];
+
+  if (profileCount === 0) {
+    return "No saved natal placements were loaded for this brief.";
+  }
+
+  if (!selectedContact) {
+    if (contactCount > 0) {
+      return `${profileCount} saved natal profile${profileCount === 1 ? "" : "s"} loaded. Current timing was checked, but it did not affect this ritual choice.`;
+    }
+
+    return `${profileCount} saved natal profile${profileCount === 1 ? "" : "s"} loaded. No current timing match was selected for this ritual.`;
+  }
+
+  if (brief.decision.inputs.astrologyVisibility === "explicit") {
+    const transit = `${labelFromSnake(selectedContact.transitingBody)}${selectedContact.transitSign ? ` in ${labelFromSnake(selectedContact.transitSign)}` : ""}`;
+    const natal = `saved natal ${labelFromSnake(selectedContact.natalBodyOrPoint)}${selectedContact.natalSign ? ` in ${labelFromSnake(selectedContact.natalSign)}` : ""}`;
+
+    return `Used this week: ${transit} resonated with ${natal} and helped shape the ritual fit.`;
+  }
+
+  return `Used this week: current timing matched a saved chart theme around ${getContactThemeLabel(selectedContact)} and helped shape the ritual fit.`;
+}
+
+function renderPrivateChartFit(brief: WeeklyBrief): string {
+  return `
+    <section class="brief__chart-fit" aria-label="Private chart fit">
+      <p class="brief__section-label">Private chart fit</p>
+      <p>${escapeHtml(getPrivateChartFitSummary(brief))}</p>
+    </section>
+  `;
+}
+
 function getSourceKindLabel(kind: BriefSourceSummary["kind"]): string {
   switch (kind) {
     case "source_review":
@@ -250,11 +307,27 @@ function renderBriefSources(explanation: BriefExplanation): string {
   `;
 }
 
+function renderBriefFilterNotes(explanation: BriefExplanation): string {
+  if (explanation.filtersApplied.length === 0) {
+    return "";
+  }
+
+  return `
+    <section class="brief__filter-notes" aria-label="Fit notes">
+      <h3>Fit notes</h3>
+      ${explanation.filtersApplied.map((note) => `
+        <p><strong>${escapeHtml(note.label)}:</strong> ${escapeHtml(note.summary)}</p>
+      `).join("")}
+    </section>
+  `;
+}
+
 function renderBriefChoiceDetails(explanation: BriefExplanation): string {
   const signals = renderBriefSignals(explanation);
+  const filterNotes = renderBriefFilterNotes(explanation);
   const sources = renderBriefSources(explanation);
 
-  if (!signals && !sources) {
+  if (!signals && !filterNotes && !sources) {
     return "";
   }
 
@@ -263,6 +336,7 @@ function renderBriefChoiceDetails(explanation: BriefExplanation): string {
       <summary>How this was chosen</summary>
       <div class="brief__choice-details-body">
         ${signals}
+        ${filterNotes}
         ${sources}
       </div>
     </details>
@@ -825,6 +899,7 @@ export function renderSignedInShell(
 
       <section class="brief__depth" aria-label="Brief explanation">
         ${renderBriefReasoning(brief.explanation)}
+        ${renderPrivateChartFit(brief)}
         <section class="brief__question" aria-label="Question to carry">
           <p class="brief__section-label">Question to carry</p>
           <p class="prompt">${escapeHtml(brief.reflectionPrompt)}</p>
