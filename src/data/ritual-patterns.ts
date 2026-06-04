@@ -16,6 +16,28 @@ export const RITUAL_PATTERN_APPROVAL_STATUSES = [
 export type RitualPatternApprovalStatus =
   (typeof RITUAL_PATTERN_APPROVAL_STATUSES)[number];
 
+export type RitualPresentationVariant = {
+  invitation: string;
+  whyThisPractice: string;
+  approach: string[];
+  steps: string[];
+  carry: string;
+  closing: string;
+};
+
+export type RitualPresentation = RitualPresentationVariant & {
+  variants?: Partial<
+    Record<
+      | CapacityMode
+      | "solo"
+      | "together"
+      | "candleFree"
+      | "evening",
+      Partial<RitualPresentationVariant>
+    >
+  >;
+};
+
 export type RitualPattern = {
   id: string;
   key: string;
@@ -26,6 +48,7 @@ export type RitualPattern = {
   defaultDurationMinutes: number;
   materials: string[];
   steps: string[];
+  presentation?: RitualPresentation;
   safetyFlags: RitualSafetyFlags;
   safetyNotes: string[];
   avoidIf: string[];
@@ -49,6 +72,8 @@ export type RitualPatternValidationResult = {
 const CAPACITY_MODES: CapacityMode[] = ["pause", "low", "steady", "high"];
 const MAX_PATTERN_STEPS = 5;
 const MAX_STEP_LENGTH = 180;
+const MAX_PRESENTATION_LIST_ITEMS = 4;
+const MAX_PRESENTATION_FIELD_LENGTH = 260;
 
 export const starterRitualPatterns: RitualPattern[] = [
   {
@@ -65,6 +90,20 @@ export const starterRitualPatterns: RitualPattern[] = [
       "Remove trash, dishes, or items that already have a place.",
       "Pause when the chosen surface is clearer, even if the rest of the room is not.",
     ],
+    presentation: {
+      invitation: "Let one small surface breathe.",
+      whyThisPractice: "A single cleared place can make room without asking the whole home to change.",
+      approach: [
+        "Choose the surface before you begin, and keep the boundary small.",
+        "Treat this as making room, not catching up.",
+      ],
+      steps: [
+        "Clear only what obviously belongs somewhere else.",
+        "Leave the surface when it has a little more space around it.",
+      ],
+      carry: "What becomes easier to notice when one surface is no longer asking for attention?",
+      closing: "Close the practice by turning away before it becomes the next surface.",
+    },
     safetyFlags: withSafetyOverrides({
       cleanupBurden: "low",
     }),
@@ -109,6 +148,21 @@ export const starterRitualPatterns: RitualPattern[] = [
       "Check the soil or leaves before doing anything.",
       "Water, trim a dead leaf, or simply notice what kind of care is actually needed.",
     ],
+    presentation: {
+      invitation: "Tend one living thing.",
+      whyThisPractice: "A plant makes care visible: attention first, action only if it is actually needed.",
+      approach: [
+        "Let the plant set the size of the ritual.",
+        "Look before helping; not every kind of care is an action.",
+      ],
+      steps: [
+        "Choose one plant already living in this home.",
+        "Check soil, leaves, light, and access before acting.",
+        "Offer one useful care action, or simply notice what care is not needed today.",
+      ],
+      carry: "What kind of care is this home asking for only after you look closely?",
+      closing: "Close by leaving the plant settled and letting the rest of the room wait.",
+    },
     safetyFlags: withSafetyOverrides({
       pets: "review_required",
       children: "supervision",
@@ -162,6 +216,31 @@ export const starterRitualPatterns: RitualPattern[] = [
       "Let the flame mark one small focus for this short pause.",
       "Blow it out when you are done.",
     ],
+    presentation: {
+      invitation: "Let the flame hold one small focus.",
+      whyThisPractice: "Candlelight can mark the edge of attention: begin, stay briefly, close cleanly.",
+      approach: [
+        "Keep the focus small enough to fit the flame.",
+        "Let the candle mark attention, not urgency.",
+      ],
+      steps: [
+        "Light the candle and name one focus for this short pause.",
+        "Stay with the flame for a few breaths.",
+        "Blow it out before the focus turns into a plan.",
+      ],
+      carry: "What can be held by a small light instead of by effort?",
+      closing: "Close the practice when the flame is out and the focus has been named.",
+      variants: {
+        pause: {
+          steps: [
+            "Light the candle only if that is already easy.",
+            "Let one breath near the flame be the whole ritual.",
+          ],
+          carry: "What is small enough to hold for one breath?",
+          closing: "Blow out the candle before this becomes something to finish.",
+        },
+      },
+    },
     safetyFlags: withSafetyOverrides({
       fire: "live_flame",
       cleanupBurden: "tiny",
@@ -206,6 +285,27 @@ export const starterRitualPatterns: RitualPattern[] = [
       "Wipe it only if the supplies are already nearby.",
       "Place back what supports the next ordinary use and leave the rest for later.",
     ],
+    presentation: {
+      invitation: "Make the table easier to return to.",
+      whyThisPractice: "The table can become a small household altar by becoming usable again.",
+      approach: [
+        "Stay with the table itself; do not follow the mess into another room.",
+        "Let ordinary use be enough of a blessing.",
+      ],
+      steps: [
+        "Clear what does not belong on the table right now.",
+        "Wipe only if what you need is already nearby.",
+        "Put back one thing that helps the table welcome its next use.",
+      ],
+      carry: "What does this table want to hold less of, and what can it hold more clearly?",
+      closing: "Close by leaving the table ready for ordinary life, not perfect.",
+      variants: {
+        together: {
+          carry: "What can the table hold for both of you without becoming a discussion?",
+          closing: "Close by letting the table hold the rest for now.",
+        },
+      },
+    },
     safetyFlags: withSafetyOverrides({
       cleanupBurden: "medium",
     }),
@@ -251,6 +351,21 @@ export const starterRitualPatterns: RitualPattern[] = [
       "Remove one thing that does not belong there.",
       "Name one quality the household wants when crossing that threshold.",
     ],
+    presentation: {
+      invitation: "Give the threshold one clear welcome.",
+      whyThisPractice: "A threshold marks the shift between outside and inside, leaving and returning.",
+      approach: [
+        "Work with the edge of the home, not the whole entryway.",
+        "Keep the quality plain enough to cross through.",
+      ],
+      steps: [
+        "Choose one doorway, entry shelf, or landing spot.",
+        "Move one thing that does not belong there.",
+        "Name the quality this threshold should quietly remind the home to carry.",
+      ],
+      carry: "What should this threshold help you remember as you cross it?",
+      closing: "Close by crossing the threshold once and letting the cue stand.",
+    },
     safetyFlags: withSafetyOverrides({
       cleanupBurden: "low",
     }),
@@ -342,6 +457,30 @@ export const starterRitualPatterns: RitualPattern[] = [
       "Choose one tiny closing action, such as putting one item away.",
       "Say, silently or aloud, that this is enough for tonight.",
     ],
+    presentation: {
+      invitation: "Let the evening close gently.",
+      whyThisPractice: "The end of the day sometimes needs a boundary more than another useful act.",
+      approach: [
+        "Let stopping be the point.",
+        "Choose a closing cue only if it lowers the intensity.",
+      ],
+      steps: [
+        "Notice one thing asking for less attention.",
+        "If one tiny action would help, do only that.",
+      ],
+      carry: "What can be complete enough for tonight?",
+      closing: "Close by saying, in plain words, that the day does not need more from you.",
+      variants: {
+        pause: {
+          steps: [
+            "Let the ritual be only a pause.",
+            "Notice the one thing asking for less attention, then stop there.",
+          ],
+          carry: "What can be left alone until tomorrow?",
+          closing: "Close by letting the pause be the practice.",
+        },
+      },
+    },
     safetyFlags: lowRiskRitualSafetyFlags,
     safetyNotes: [
       "Keep this as permission to stop, not a list of tasks.",
@@ -434,6 +573,21 @@ export const starterRitualPatterns: RitualPattern[] = [
       "Hold the cup for a short pause before doing the next thing.",
       "Name one thing that can be softened tonight.",
     ],
+    presentation: {
+      invitation: "Let the cup make a warm pause.",
+      whyThisPractice: "An ordinary drink can mark care without turning the kitchen into a project.",
+      approach: [
+        "Use what already belongs in this home.",
+        "Let warmth be a cue, not a recipe.",
+      ],
+      steps: [
+        "Make or pour a drink already ordinary and safe here.",
+        "Hold the cup before moving on.",
+        "Name one thing that can soften without being solved.",
+      ],
+      carry: "What feels a little easier when warmth is allowed to be simple?",
+      closing: "Close by setting the cup down and letting the kitchen stay ordinary.",
+    },
     safetyFlags: withSafetyOverrides({
       ingestion: "normal_food_use_only",
       allergies: ["use only foods or drinks already known to fit the household"],
@@ -747,6 +901,21 @@ export const starterRitualPatterns: RitualPattern[] = [
       "Wipe only if the safe supplies are already nearby.",
       "Stop before it becomes a full kitchen cleanup.",
     ],
+    presentation: {
+      invitation: "Quiet one kitchen corner.",
+      whyThisPractice: "A small kitchen reset can make care easier without asking for a whole cleanup.",
+      approach: [
+        "Choose one zone and keep the ritual there.",
+        "Let freshness mean less noise, not more work.",
+      ],
+      steps: [
+        "Choose one counter, sink edge, or table section.",
+        "Put away or discard one obvious thing.",
+        "Wipe only if the supplies are already there.",
+      ],
+      carry: "What kind of care becomes easier when this one kitchen place is quieter?",
+      closing: "Close by leaving the rest of the kitchen outside the ritual.",
+    },
     safetyFlags: withSafetyOverrides({
       cleanupBurden: "low",
     }),
@@ -905,6 +1074,30 @@ export const starterRitualPatterns: RitualPattern[] = [
       "Smooth a blanket, move one item away, or place the pillow where it belongs.",
       "Say that rest is allowed to be simple.",
     ],
+    presentation: {
+      invitation: "Let one rest cue become easier.",
+      whyThisPractice: "A bed, blanket, or pillow can remind the body that the home has a place to land.",
+      approach: [
+        "Keep the action close to the rest spot.",
+        "Do not turn rest into something to earn.",
+      ],
+      steps: [
+        "Choose one blanket, pillow, or resting place.",
+        "Make one small adjustment that makes it easier to use.",
+      ],
+      carry: "What would help rest feel less like another thing to manage?",
+      closing: "Close by leaving the rest spot ready and walking away from any extra fixing.",
+      variants: {
+        pause: {
+          steps: [
+            "Let the ritual be noticing the rest spot.",
+            "Change nothing unless one small adjustment would genuinely ease it.",
+          ],
+          carry: "Where can the body land without earning it?",
+          closing: "Close by letting the rest cue stay simple.",
+        },
+      },
+    },
     safetyFlags: lowRiskRitualSafetyFlags,
     safetyNotes: ["Do not move heavy furniture or make sleep, health, or recovery claims."],
     avoidIf: ["avoid if the prompt would make rest feel like a performance"],
@@ -1049,6 +1242,21 @@ export const starterRitualPatterns: RitualPattern[] = [
       "Clear or place one ordinary object that already belongs in the home.",
       "Name the seasonal shift in plain words, then stop before adding decor or tasks.",
     ],
+    presentation: {
+      invitation: "Let the season touch one ordinary place.",
+      whyThisPractice: "A seasonal shift can be marked by one small change inside the home, not a whole display.",
+      approach: [
+        "Use what already belongs here.",
+        "Let the season be noticed, not performed.",
+      ],
+      steps: [
+        "Choose one table, shelf, threshold, or small home spot.",
+        "Clear or place one ordinary object that fits the season in plain words.",
+        "Name the shift and stop before it becomes decorating.",
+      ],
+      carry: "What is this season asking this home to make room for?",
+      closing: "Close by letting one ordinary place carry the seasonal note.",
+    },
     safetyFlags: withSafetyOverrides({ cleanupBurden: "low" }),
     safetyNotes: [
       "Use only ordinary items already safe and available.",
@@ -1100,6 +1308,31 @@ export const starterRitualPatterns: RitualPattern[] = [
       "Let the light mark one small focus for the day.",
       "Move on without adding another step.",
     ],
+    presentation: {
+      invitation: "Let ordinary light mark the next small thing.",
+      whyThisPractice: "Light can give attention a shape without requiring flame, setup, or a long pause.",
+      approach: [
+        "Use the light already available.",
+        "Keep the focus small enough to leave with you.",
+      ],
+      steps: [
+        "Stand or sit near natural light, or turn on one ordinary light.",
+        "Name the one thing the light can help you notice.",
+        "Move on before this becomes a plan.",
+      ],
+      carry: "What can the light clarify without asking you to solve it now?",
+      closing: "Close by turning away from the light and carrying only the focus.",
+      variants: {
+        pause: {
+          steps: [
+            "Let ordinary light be enough.",
+            "Notice one small focus, then move on.",
+          ],
+          carry: "What is clear enough for one breath?",
+          closing: "Close by leaving the light as it is.",
+        },
+      },
+    },
     safetyFlags: withSafetyOverrides({ fire: "led_or_no_flame", cleanupBurden: "tiny" }),
     safetyNotes: ["No live flame, smoke, oils, or sun-exposure claims are required."],
     avoidIf: ["avoid if light sensitivity or privacy makes this a poor fit"],
@@ -1682,6 +1915,124 @@ function hasAllowedCapacityMode(value: CapacityMode): boolean {
   return CAPACITY_MODES.includes(value);
 }
 
+function validatePresentationPart({
+  patternId,
+  label,
+  value,
+  errors,
+}: {
+  patternId: string;
+  label: string;
+  value: string | undefined;
+  errors: string[];
+}): void {
+  if (!value || !hasRequiredString(value)) {
+    errors.push(`${patternId}: presentation ${label} is required`);
+    return;
+  }
+
+  if (value.length > MAX_PRESENTATION_FIELD_LENGTH) {
+    errors.push(`${patternId}: presentation ${label} must stay concise`);
+  }
+}
+
+function validatePresentationList({
+  patternId,
+  label,
+  values,
+  errors,
+}: {
+  patternId: string;
+  label: string;
+  values: string[] | undefined;
+  errors: string[];
+}): void {
+  if (!values || values.length === 0) {
+    errors.push(`${patternId}: presentation ${label} is required`);
+    return;
+  }
+
+  if (values.length > MAX_PRESENTATION_LIST_ITEMS) {
+    errors.push(`${patternId}: presentation ${label} has too many items`);
+  }
+
+  for (const value of values) {
+    validatePresentationPart({ patternId, label, value, errors });
+  }
+}
+
+function validatePresentation(
+  pattern: RitualPattern,
+  errors: string[],
+): void {
+  const presentation = pattern.presentation;
+
+  if (!presentation) {
+    return;
+  }
+
+  validatePresentationPart({
+    patternId: pattern.id,
+    label: "invitation",
+    value: presentation.invitation,
+    errors,
+  });
+  validatePresentationPart({
+    patternId: pattern.id,
+    label: "whyThisPractice",
+    value: presentation.whyThisPractice,
+    errors,
+  });
+  validatePresentationList({
+    patternId: pattern.id,
+    label: "approach",
+    values: presentation.approach,
+    errors,
+  });
+  validatePresentationList({
+    patternId: pattern.id,
+    label: "steps",
+    values: presentation.steps,
+    errors,
+  });
+  validatePresentationPart({
+    patternId: pattern.id,
+    label: "carry",
+    value: presentation.carry,
+    errors,
+  });
+  validatePresentationPart({
+    patternId: pattern.id,
+    label: "closing",
+    value: presentation.closing,
+    errors,
+  });
+
+  const instructions = [
+    presentation.invitation,
+    presentation.whyThisPractice,
+    ...presentation.approach,
+    ...presentation.steps,
+    presentation.carry,
+    presentation.closing,
+    ...Object.values(presentation.variants ?? {}).flatMap((variant) => [
+      variant.invitation,
+      variant.whyThisPractice,
+      ...(variant.approach ?? []),
+      ...(variant.steps ?? []),
+      variant.carry,
+      variant.closing,
+    ]),
+  ].filter((value): value is string => typeof value === "string");
+  const safetyResult = validateRitualSafety(pattern.safetyFlags, instructions);
+
+  if (!safetyResult.allowed) {
+    errors.push(
+      ...safetyResult.blocks.map((block) => `${pattern.id}: presentation ${block}`),
+    );
+  }
+}
+
 export function validateRitualPattern(
   pattern: RitualPattern,
 ): RitualPatternValidationResult {
@@ -1745,6 +2096,8 @@ export function validateRitualPattern(
   if (!safetyResult.allowed) {
     errors.push(...safetyResult.blocks.map((block) => `${pattern.id}: ${block}`));
   }
+
+  validatePresentation(pattern, errors);
 
   warnings.push(...safetyResult.warnings.map((warning) => `${pattern.id}: ${warning}`));
 

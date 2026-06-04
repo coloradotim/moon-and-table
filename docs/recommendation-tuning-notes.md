@@ -27,6 +27,43 @@ copy, or generic filler phrases. A recommendation still needs human review for
 whether it feels authored, coherent, specific, and worthy of the private
 household grimoire.
 
+## Issue 153: Grimoire Presentation Fields
+
+Selected approved ritual patterns now carry authored `RitualPresentation`
+fields. These fields give the generator better user-facing ritual material:
+invitation, why the practice exists, approach, ritual body, carry prompt, and
+closing.
+
+This is the first implemented layer of the private household grimoire quality
+model. It does not change scoring and it does not add new sources or ritual
+categories. Existing `RitualPattern.steps` remain in place for validation,
+safety review, source traceability, diagnostics, and fallback behavior.
+
+The first presentation pass focuses on high-use home, plant, kitchen, light,
+table, threshold, rest, evening, and seasonal patterns. The goal is to reduce
+assembled step-list output and give rituals a clearer manner, carry, and close.
+Meaning bridges and broader optional-accent cleanup remain separate work.
+
+When a selected pattern has presentation, its presentation closing is the final
+authored close. Runtime tone closings such as `Keep it simple and useful` are
+legacy fallback behavior only for patterns without presentation. Theme/title
+language also prefers the effective presentation invitation where available.
+
+Recommendation quality report warning counts moved this way in the first pass:
+
+| Warning | Before | After | Notes |
+| --- | ---: | ---: | --- |
+| `pause_with_imperative_steps` | 2 | 0 | Improved by pause variants that make stopping the ritual. |
+| `generic_optional_candle` | 17 | 17 | Deferred to contextual optional-accent work. |
+| `candle_ritual_with_candle_addon` | 0 | 0 | No regression. |
+| `focus_timing_unbridged` | 1 | 1 | Deferred to meaning-bridge work. |
+| `raw_score_language_in_user_copy` | 0 | 0 | No regression. |
+| `debug_key_in_user_copy` | 0 | 0 | No regression. |
+| `generic_closing_repeated` | 0 | 0 | No regression. |
+| `carry_prompt_contradicts_focus` | 2 | 0 | Improved where presentation carry prompts are available. |
+| `best_window_reason_too_thin` | 0 | 0 | No regression. |
+| `source_id_visible_in_normal_copy` | 0 | 0 | No regression. |
+
 ## Issue 129: Check-in Practice Choice Diagnostics
 
 The check-in practice step now has explicit diagnostics in the recommendation decision record and content reachability report.

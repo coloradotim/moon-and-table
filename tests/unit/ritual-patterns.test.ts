@@ -414,6 +414,57 @@ describe("ritual patterns", () => {
     }
   });
 
+  it("accepts grimoire presentation fields on focused approved patterns", () => {
+    const presentationKeys = [
+      "close_the_evening",
+      "morning_light_pause",
+      "candle_light_focus",
+      "tend_one_plant",
+      "clear_one_surface",
+      "threshold_reset",
+      "tea_ritual",
+      "kitchen_reset",
+      "table_reset",
+      "bed_blanket_rest_cue",
+      "seasonal_table_home_reset",
+    ];
+    const patternByKey = new Map(
+      getApprovedRitualPatterns().map((pattern) => [pattern.key, pattern]),
+    );
+
+    for (const key of presentationKeys) {
+      const pattern = patternByKey.get(key);
+
+      expect(pattern, key).toBeDefined();
+      expect(pattern?.presentation?.invitation).toBeTruthy();
+      expect(pattern?.presentation?.whyThisPractice).toBeTruthy();
+      expect(pattern?.presentation?.approach.length).toBeGreaterThan(0);
+      expect(pattern?.presentation?.steps.length).toBeGreaterThan(0);
+      expect(pattern?.presentation?.carry).toBeTruthy();
+      expect(pattern?.presentation?.closing).toBeTruthy();
+      expect(validateRitualPattern(pattern!)).toMatchObject({ valid: true });
+    }
+  });
+
+  it("keeps grimoire presentation copy privacy-safe and source-safe", () => {
+    const presentationText = JSON.stringify(
+      starterRitualPatterns.map((pattern) => pattern.presentation).filter(Boolean),
+    ).toLowerCase();
+
+    expect(presentationText).not.toContain("birth data");
+    expect(presentationText).not.toContain("birth date");
+    expect(presentationText).not.toContain("birth time");
+    expect(presentationText).not.toContain("birth place");
+    expect(presentationText).not.toContain("natal placement");
+    expect(presentationText).not.toContain("relationship details");
+    expect(presentationText).not.toContain("private source text");
+    expect(presentationText).not.toContain("copied source");
+    expect(presentationText).not.toContain("copied ritual");
+    expect(presentationText).not.toContain("guarantee");
+    expect(presentationText).not.toContain("keep it simple and useful");
+    expect(presentationText).not.toContain("if that feels supportive");
+  });
+
   it("keeps source-controlled patterns privacy-safe and source-safe", () => {
     const serialized = JSON.stringify(starterRitualPatterns).toLowerCase();
 

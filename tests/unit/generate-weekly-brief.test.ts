@@ -38,6 +38,7 @@ const approvedPatternKeys = new Set(
     .filter((pattern) => pattern.approvalStatus === "approved")
     .map((pattern) => pattern.key),
 );
+const approvedPatternKeyList = [...approvedPatternKeys];
 
 const fakeTimingBase = {
   exactIso: "2026-01-01T00:00:00.000Z",
@@ -178,13 +179,26 @@ describe("generateWeeklyBrief", () => {
     }
   });
 
-  it("uses saved language tone as controlled recommendation copy", () => {
+  it("uses saved language tone only as legacy fallback copy", () => {
     const brief = generateWeeklyBrief({
-      preferredRitualStyles: ["home_tending"],
+      preferredRitualStyles: ["naming", "conversation"],
       tonePreferences: ["direct"],
       capacityMode: "low",
+      excludedRitualPatternKeys: approvedPatternKeyList.filter(
+        (key) => key !== "one_clear_sentence",
+      ),
+      currentRitualCheckIn: {
+        timeScope: "today",
+        energyCapacity: "a_little",
+        capacityMode: "low",
+        audience: "me",
+        practiceTypeHints: ["reflection"],
+        practiceTypeLabel: "Reflection",
+        ritualFocusKey: "saying_something_clearly",
+      },
     });
 
+    expect(brief.trace.ritualPatterns).toEqual(["one_clear_sentence"]);
     expect(brief.recommendedRitual).toContain("Stop there.");
     expect(brief.recommendedRitual).not.toContain("Plain, useful");
   });
@@ -227,12 +241,146 @@ describe("generateWeeklyBrief", () => {
     expect(brief.recommendedRitual).not.toContain("2.");
   });
 
-  it("pause produces no required ritual", () => {
+  it("pause produces an intentionally minimal ritual", () => {
     const brief = generateWeeklyBrief({ capacityMode: "pause" });
 
     expect(brief.bestWindow).toBe("No timing needed.");
-    expect(brief.recommendedRitual).toContain("No required ritual");
+    expect(brief.recommendedRitual).not.toContain("No required ritual");
     expect(brief.whyThis).toContain("pause week");
+  });
+
+  it("uses grimoire presentation copy for updated ritual patterns", () => {
+    const brief = generateWeeklyBrief({
+      capacityMode: "low",
+      preferredRitualStyles: ["plant_tending", "plant"],
+      currentRitualCheckIn: {
+        timeScope: "today",
+        energyCapacity: "a_little",
+        capacityMode: "low",
+        audience: "me",
+        practiceTypeHints: ["plant", "plant_tending"],
+        practiceTypeLabel: "Plant",
+        ritualFocusKey: "tending_the_home",
+      },
+    });
+
+    expect(brief.trace.ritualPatterns).toEqual(["tend_one_plant"]);
+    expect(brief.theme).toBe("Clear one small thing. Tend one living thing.");
+    expect(brief.intention).toBe("Tend one living thing.");
+    expect(brief.recommendedRitual).toContain("Let the plant set the size of the ritual.");
+    expect(brief.recommendedRitual).toContain("leaving the plant settled");
+    expect(brief.reflectionPrompt).toBe(
+      "What kind of care is this home asking for only after you look closely?",
+    );
+    expect(brief.explanation.howThisWasChosen).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          kind: "ritual_fit",
+          body: expect.stringContaining("A plant makes care visible"),
+        }),
+      ]),
+    );
+  });
+
+  it("falls back to legacy steps for patterns without presentation", () => {
+    const brief = generateWeeklyBrief({
+      capacityMode: "low",
+      preferredRitualStyles: ["naming", "conversation"],
+      excludedRitualPatternKeys: approvedPatternKeyList.filter(
+        (key) => key !== "one_clear_sentence",
+      ),
+      currentRitualCheckIn: {
+        timeScope: "today",
+        energyCapacity: "a_little",
+        capacityMode: "low",
+        audience: "me",
+        practiceTypeHints: ["reflection"],
+        practiceTypeLabel: "Reflection",
+        ritualFocusKey: "saying_something_clearly",
+      },
+    });
+
+    expect(brief.trace.ritualPatterns).toEqual(["one_clear_sentence"]);
+    expect(brief.recommendedRitual).toContain(
+      "Choose one sentence that brings a little clarity to the household.",
+    );
+    expect(brief.recommendedRitual).not.toContain("Close by");
+  });
+
+  it("uses pause presentation without no-required-ritual task-list shape", () => {
+    const brief = generateWeeklyBrief({
+      capacityMode: "pause",
+      preferredRitualStyles: ["close_the_evening", "home_tending"],
+    });
+
+    expect(brief.trace.ritualPatterns).toEqual(["close_the_evening"]);
+    expect(brief.recommendedRitual).not.toContain("No required ritual");
+    expect(brief.recommendedRitual).toContain("Let the ritual be only a pause.");
+    expect(brief.recommendedRitual).toContain("Close by letting the pause be the practice.");
+    expect(brief.reflectionPrompt).toBe("What can be left alone until tomorrow?");
+  });
+
+  it("does not add a generic candle add-on to presented candle or light rituals", () => {
+    const brief = generateWeeklyBrief({
+      capacityMode: "low",
+      preferredRitualStyles: ["light_focus", "candle_or_light"],
+      excludedRitualPatternKeys: approvedPatternKeyList.filter(
+        (key) => key !== "morning_light_pause",
+      ),
+    });
+
+    expect(brief.trace.ritualPatterns).toEqual(["morning_light_pause"]);
+    expect(brief.optionalAddOn).toBe("No add-on needed.");
+    expect(brief.recommendedRitual).toContain("Use the light already available.");
+  });
+
+  it("does not append practical tone closing to a presented ritual", () => {
+    const brief = generateWeeklyBrief({
+      capacityMode: "low",
+      preferredRitualStyles: ["plant_tending", "plant"],
+      tonePreferences: ["practical"],
+      currentRitualCheckIn: {
+        timeScope: "today",
+        energyCapacity: "a_little",
+        capacityMode: "low",
+        audience: "me",
+        practiceTypeHints: ["plant", "plant_tending"],
+        practiceTypeLabel: "Plant",
+        ritualFocusKey: "tending_the_home",
+      },
+    });
+
+    expect(brief.trace.ritualPatterns).toEqual(["tend_one_plant"]);
+    expect(brief.recommendedRitual).toContain(
+      "Close by leaving the plant settled and letting the rest of the room wait.",
+    );
+    expect(brief.recommendedRitual).not.toContain("Keep it simple and useful.");
+  });
+
+  it("uses authored presentation closing instead of legacy tone preferences", () => {
+    const brief = generateWeeklyBrief({
+      capacityMode: "low",
+      preferredRitualStyles: ["plant_tending", "plant"],
+      tonePreferences: ["warm", "direct", "symbolic", "romantic"],
+      currentRitualCheckIn: {
+        timeScope: "today",
+        energyCapacity: "a_little",
+        capacityMode: "low",
+        audience: "me",
+        practiceTypeHints: ["plant", "plant_tending"],
+        practiceTypeLabel: "Plant",
+        ritualFocusKey: "tending_the_home",
+      },
+    });
+
+    expect(brief.trace.ritualPatterns).toEqual(["tend_one_plant"]);
+    expect(brief.recommendedRitual).toContain(
+      "Close by leaving the plant settled and letting the rest of the room wait.",
+    );
+    expect(brief.recommendedRitual).not.toContain("Keep it gentle.");
+    expect(brief.recommendedRitual).not.toContain("Stop there.");
+    expect(brief.recommendedRitual).not.toContain("Let the action mark the moment.");
+    expect(brief.recommendedRitual).not.toContain("Keep it soft.");
   });
 
   it("low produces a five-minute-or-less recommendation with no setup burden", () => {
