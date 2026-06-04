@@ -309,7 +309,28 @@ export type BriefSourceSummary = {
   summary?: string;
 };
 
+export type ExplanationSectionKind =
+  | "timing_choice"
+  | "check_in_fit"
+  | "ritual_focus"
+  | "ritual_fit"
+  | "profile_fit"
+  | "natal_fit"
+  | "capacity_boundary"
+  | "tradeoff_or_alternative"
+  | "sources";
+
+export type ExplanationSection = {
+  kind: ExplanationSectionKind;
+  title: string;
+  body: string;
+  visibility?: "default" | "expanded" | "debug";
+  sourceLabels?: string[];
+};
+
 export type BriefExplanation = {
+  whyThisFits: string;
+  howThisWasChosen: ExplanationSection[];
   signals: BriefSignal[];
   reasoning: BriefReason[];
   filtersApplied: BriefFilterNote[];
@@ -1898,6 +1919,448 @@ function getProfileThemeReason(
   return `This also fits the saved profile theme for ${labels[0]}.`;
 }
 
+function getAudienceLabel(audience: PrivateAudience): string {
+  switch (audience) {
+    case "person_a":
+      return "one saved profile";
+    case "person_b":
+      return "one saved profile";
+    case "together":
+      return "both profiles together";
+    case "either":
+      return "at least one saved profile";
+  }
+}
+
+function getCheckInAudienceLabel(
+  audience: CurrentRitualCheckIn["audience"],
+): string | undefined {
+  if (audience === "both_of_us") {
+    return "both of you";
+  }
+
+  if (audience === "me") {
+    return "you";
+  }
+
+  return undefined;
+}
+
+function getEnergyCapacityLabel(
+  energyCapacity: CurrentRitualCheckIn["energyCapacity"],
+): string {
+  switch (energyCapacity) {
+    case "barely_any":
+      return "Barely any";
+    case "a_little":
+      return "A little";
+    case "enough_to_engage":
+      return "Enough to engage";
+    case "room_for_something_deeper":
+      return "Room for something deeper";
+  }
+}
+
+function getPatternTitle(pattern: RitualPattern): string {
+  return pattern.title;
+}
+
+function getReadableStyleList(values: string[], limit = 2): string {
+  return values
+    .slice(0, limit)
+    .map((value) => getProfilePreferenceLabel(value).toLowerCase())
+    .join(" and ");
+}
+
+function getPracticeFit(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+): {
+  label?: string;
+  matched: boolean;
+  matches: string[];
+} {
+  const checkIn = input.currentRitualCheckIn;
+  const hints = checkIn?.practiceTypeHints ?? [];
+  const matches = getPatternStyleMatches(pattern, hints);
+
+  return {
+    label: checkIn?.practiceTypeLabel,
+    matched: hints.length === 0 || matches.length > 0,
+    matches,
+  };
+}
+
+function getFocusFit(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+): {
+  label?: string;
+  matched: boolean;
+  matches: string[];
+} {
+  const checkIn = input.currentRitualCheckIn;
+  const focus = input.selectedRitualFocus;
+  const focusStyleHints = focus?.drivesScoringByDefault === false
+    ? getCheckInTextStyleHints(checkIn?.ritualFocusText)
+    : [
+        ...(focus?.ritualStyleHints ?? []),
+        ...getCheckInTextStyleHints(checkIn?.ritualFocusText),
+      ];
+  const matches = getPatternStyleMatches(pattern, focusStyleHints);
+
+  return {
+    label: focus?.label ?? checkIn?.ritualFocusLabel ?? checkIn?.ritualFocusText,
+    matched: focusStyleHints.length === 0 || matches.length > 0,
+    matches,
+  };
+}
+
+function getPrimaryTimingPhrase(
+  timingCard: SymbolicCard,
+  input: ResolvedGenerateWeeklyBriefInput,
+  selectedTimingSignals: TimingSignal[],
+): string {
+  const signal = selectedTimingSignals
+    .map((candidate) => ({
+      label: candidate.signalLabel,
+      type: getSignalType(candidate),
+    }))
+    .find((candidate) => ["moon", "planetary", "seasonal"].includes(candidate.type));
+
+  if (input.timeScope === "best_moment_this_week") {
+    if (isStrongTimingWindow(input.selectedTimingWindow)) {
+      return `${formatTimingWindowDate(input.selectedTimingWindow.startsAtIso)} stood out as the strongest timing window this week.`;
+    }
+
+    return "No single timing window stood out strongly this week.";
+  }
+
+  if (signal) {
+    return `${signal.label} shaped the timing tone.`;
+  }
+
+  return `${timingCard.title} shaped the timing tone.`;
+}
+
+function getWhyThisFits(
+  timingCard: SymbolicCard,
+  pattern: RitualPattern,
+  input: ResolvedGenerateWeeklyBriefInput,
+  preferenceMatches: string[],
+  profileSignalMatches: PrivateProfileSignal[],
+  natalContactMatches: NatalContact[],
+  selectedTimingSignals: TimingSignal[],
+): string {
+  const practiceFit = getPracticeFit(input, pattern);
+  const focusFit = getFocusFit(input, pattern);
+  const driverParts: string[] = [];
+
+  driverParts.push(getPrimaryTimingPhrase(timingCard, input, selectedTimingSignals));
+
+  if (practiceFit.label && practiceFit.matched) {
+    driverParts.push(`Your ${practiceFit.label.toLowerCase()} choice helped point toward ${getPatternTitle(pattern)}.`);
+  } else if (focusFit.label && focusFit.matched) {
+    driverParts.push(`Your focus on ${focusFit.label.toLowerCase()} helped point toward ${getPatternTitle(pattern)}.`);
+  } else {
+    driverParts.push(`${getPatternTitle(pattern)} gave the timing a practical household shape.`);
+  }
+
+  if (preferenceMatches.length > 0) {
+    driverParts.push(`It also fits saved preferences for ${getReadableStyleList(preferenceMatches)}.`);
+  } else if (profileSignalMatches.length > 0) {
+    driverParts.push(getProfileThemeReason(profileSignalMatches, input.audience));
+  } else if (natalContactMatches.length > 0) {
+    driverParts.push("Private timing contacts added a small thematic fit note without making a certain claim.");
+  }
+
+  driverParts.push(getCapacityReason(
+    input.capacityMode,
+    getEffectiveDurationMinutes(input.capacityMode, input.scheduleConstraints),
+  ));
+
+  return driverParts.slice(0, 3).join(" ").replace(/\s+/g, " ").trim();
+}
+
+function getTimingChoiceSection(
+  timingCard: SymbolicCard,
+  input: ResolvedGenerateWeeklyBriefInput,
+  selectedTimingSignals: TimingSignal[],
+): ExplanationSection {
+  if (input.timeScope === "best_moment_this_week") {
+    if (isStrongTimingWindow(input.selectedTimingWindow)) {
+      return {
+        kind: "timing_choice",
+        title: "Timing",
+        body: `${formatTimingWindowDate(input.selectedTimingWindow.startsAtIso)} was the strongest timing window in the next several days. ${getTimingWindowReason(input.selectedTimingWindow)}`,
+      };
+    }
+
+    return {
+      kind: "timing_choice",
+      title: "Timing",
+      body: "No single timing window stood out strongly this week, so the recommendation stays close to your check-in and current capacity. You can do it whenever it feels workable.",
+    };
+  }
+
+  const primarySignal =
+    selectedTimingSignals.find((signal) =>
+      ["moon_phase", "lunation", "planet_sign", "planetary_aspect", "solar_season"].includes(signal.timingFactType),
+    );
+
+  return {
+    kind: "timing_choice",
+    title: "Timing",
+    body: primarySignal
+      ? `${primarySignal.signalLabel} was the main timing signal used here: ${ensureSentence(primarySignal.signalSummary)}`
+      : `${timingCard.title} shaped the timing theme: ${ensureSentence(timingCard.summary)}`,
+  };
+}
+
+function getCheckInFitSection(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+): ExplanationSection | undefined {
+  const checkIn = input.currentRitualCheckIn;
+
+  if (!checkIn) {
+    return undefined;
+  }
+
+  const parts: string[] = [];
+  const practiceFit = getPracticeFit(input, pattern);
+  const audienceLabel = getCheckInAudienceLabel(checkIn.audience);
+
+  parts.push(
+    checkIn.timeScope === "best_moment_this_week"
+      ? "You asked to look across the week."
+      : "You asked for something for today.",
+  );
+  parts.push(`You chose ${getEnergyCapacityLabel(checkIn.energyCapacity).toLowerCase()} capacity.`);
+
+  if (audienceLabel) {
+    parts.push(`This is for ${audienceLabel}.`);
+  }
+
+  if (practiceFit.label) {
+    parts.push(
+      practiceFit.matched
+        ? `Your ${practiceFit.label.toLowerCase()} choice matched ${getPatternTitle(pattern)}.`
+        : `You leaned toward ${practiceFit.label.toLowerCase()}, but ${getPatternTitle(pattern)} was a stronger fit for the rest of the check-in.`,
+    );
+  }
+
+  return {
+    kind: "check_in_fit",
+    title: "Your check-in",
+    body: parts.join(" "),
+  };
+}
+
+function getRitualFocusSection(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+): ExplanationSection | undefined {
+  const focus = input.selectedRitualFocus;
+  const focusLabel =
+    focus?.label ??
+    input.currentRitualCheckIn?.ritualFocusLabel ??
+    input.currentRitualCheckIn?.ritualFocusText;
+
+  if (!focusLabel) {
+    return undefined;
+  }
+
+  const focusFit = getFocusFit(input, pattern);
+  const primaryMoonFact = getPrimaryMoonTimingFact(input.timingFacts);
+  let body: string;
+
+  if (
+    focus?.key === "making_a_beginning" &&
+    (primaryMoonFact === "moon.waning" || primaryMoonFact === "moon.new")
+  ) {
+    body = `You chose ${focusLabel.toLowerCase()}, and the timing was better for preparation than a big launch. The recommendation keeps the beginning focus by making room for a first step.`;
+  } else if (focus?.key === "tending_us" && input.capacityMode !== "high") {
+    body = `You chose ${focusLabel.toLowerCase()}, but current capacity called for a smaller shared ritual rather than a long conversation or heavy emotional process.`;
+  } else if (focusFit.matched) {
+    body = `Your focus on ${focusLabel.toLowerCase()} matched the selected ritual shape.`;
+  } else {
+    body = `Your focus was ${focusLabel.toLowerCase()}, but ${getPatternTitle(pattern)} was chosen as the closest approved ritual that still fit capacity and safety.`;
+  }
+
+  return {
+    kind: "ritual_focus",
+    title: "Ritual focus",
+    body,
+  };
+}
+
+function getRitualFitSection(
+  pattern: RitualPattern,
+  preferenceMatches: string[],
+): ExplanationSection {
+  const styleText =
+    preferenceMatches.length > 0
+      ? ` It also matched ${getReadableStyleList(preferenceMatches, 3)}.`
+      : "";
+
+  return {
+    kind: "ritual_fit",
+    title: "Ritual fit",
+    body: `${pattern.title} was selected as the approved ritual container. It takes about ${pattern.defaultDurationMinutes} minute${pattern.defaultDurationMinutes === 1 ? "" : "s"} and keeps the action concrete: ${ensureSentence(pattern.summary)}${styleText}`,
+  };
+}
+
+function getProfileFitSection(
+  input: ResolvedGenerateWeeklyBriefInput,
+  profileSignalMatches: PrivateProfileSignal[],
+  preferenceMatches: string[],
+): ExplanationSection | undefined {
+  if (profileSignalMatches.length > 0) {
+    return {
+      kind: "profile_fit",
+      title: "Profile fit",
+      body: `${getProfileThemeReason(profileSignalMatches, input.audience)} This is used as fit context for ${getAudienceLabel(input.audience)}, not as a prediction.`,
+    };
+  }
+
+  if (preferenceMatches.length > 0) {
+    return {
+      kind: "profile_fit",
+      title: "Profile fit",
+      body: `Saved preferences gave extra weight to ${getReadableStyleList(preferenceMatches, 3)}.`,
+    };
+  }
+
+  return undefined;
+}
+
+function getNatalContactSection(
+  contacts: NatalContact[],
+  visibility: AstrologyVisibility,
+): ExplanationSection | undefined {
+  if (contacts.length === 0) {
+    return undefined;
+  }
+
+  const themeLabels = uniqueValues(
+    contacts.map((contact) => getNatalContactThemeLabel(contact)),
+  ).slice(0, 2);
+  const defaultBody = `Private timing contacts added weight to ${themeLabels.join(" and ")}. The recommendation uses those contacts as symbolic fit context, not as a prediction.`;
+
+  if (visibility !== "explicit") {
+    return {
+      kind: "natal_fit",
+      title: "Private timing fit",
+      body: defaultBody,
+    };
+  }
+
+  const contact = contacts[0];
+  const contactLabel = [
+    labelFromSnake(contact.transitingBody),
+    contact.aspectType ? labelFromSnake(contact.aspectType) : labelFromSnake(contact.contactType),
+    "private natal",
+    labelFromSnake(contact.natalBodyOrPoint),
+  ].filter(Boolean).join(" ");
+
+  return {
+    kind: "natal_fit",
+    title: "Private timing fit",
+    body: `${contactLabel} added weight to ${themeLabels[0] ?? "private fit"}. This stays symbolic and does not turn the chart contact into an instruction.`,
+  };
+}
+
+function getCapacityBoundarySection(
+  input: ResolvedGenerateWeeklyBriefInput,
+): ExplanationSection {
+  const durationMinutes = getEffectiveDurationMinutes(
+    input.capacityMode,
+    input.scheduleConstraints,
+  );
+
+  return {
+    kind: "capacity_boundary",
+    title: "Capacity boundary",
+    body: getCapacityReason(input.capacityMode, durationMinutes),
+  };
+}
+
+function getTradeoffSection(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+  excludedPatternKeys: string[],
+  safetyNotes: string[],
+): ExplanationSection | undefined {
+  const practiceFit = getPracticeFit(input, pattern);
+  const focusFit = getFocusFit(input, pattern);
+  const mismatchParts: string[] = [];
+
+  if (practiceFit.label && !practiceFit.matched) {
+    mismatchParts.push(`The practice answer leaned toward ${practiceFit.label.toLowerCase()}, but the selected ritual fit capacity, timing, and profile context better.`);
+  }
+
+  if (focusFit.label && !focusFit.matched) {
+    mismatchParts.push(`The focus answer was ${focusFit.label.toLowerCase()}, so the selected ritual kept that as a tone rather than forcing an exact pattern match.`);
+  }
+
+  if (excludedPatternKeys.length > 0 || safetyNotes.length > 0) {
+    mismatchParts.push("Some approved options were set aside because they did not fit current capacity, safety, preferences, or practical household constraints.");
+  }
+
+  if (mismatchParts.length === 0) {
+    return undefined;
+  }
+
+  return {
+    kind: "tradeoff_or_alternative",
+    title: "Tradeoff",
+    body: mismatchParts.join(" "),
+  };
+}
+
+function getSourcesSection(
+  sourcesUsed: BriefSourceSummary[],
+): ExplanationSection | undefined {
+  if (sourcesUsed.length === 0) {
+    return undefined;
+  }
+
+  const labels = sourcesUsed.slice(0, 4).map((source) => source.label);
+
+  return {
+    kind: "sources",
+    title: "Sources",
+    body: `This drew from ${labels.join("; ")}.`,
+    sourceLabels: labels,
+  };
+}
+
+function getHowThisWasChosen(
+  timingCard: SymbolicCard,
+  pattern: RitualPattern,
+  input: ResolvedGenerateWeeklyBriefInput,
+  preferenceMatches: string[],
+  profileSignalMatches: PrivateProfileSignal[],
+  natalContactMatches: NatalContact[],
+  excludedPatternKeys: string[],
+  safetyNotes: string[],
+  selectedTimingSignals: TimingSignal[],
+  sourcesUsed: BriefSourceSummary[],
+): ExplanationSection[] {
+  return [
+    getTimingChoiceSection(timingCard, input, selectedTimingSignals),
+    getCheckInFitSection(input, pattern),
+    getRitualFocusSection(input, pattern),
+    getRitualFitSection(pattern, preferenceMatches),
+    getProfileFitSection(input, profileSignalMatches, preferenceMatches),
+    getNatalContactSection(natalContactMatches, input.astrologyVisibility),
+    getCapacityBoundarySection(input),
+    getTradeoffSection(input, pattern, excludedPatternKeys, safetyNotes),
+    getSourcesSection(sourcesUsed),
+  ].filter((section): section is ExplanationSection => section !== undefined);
+}
+
 function labelFromSnake(value: string | undefined): string {
   if (!value) {
     return "";
@@ -2520,7 +2983,35 @@ function getExplanation(
   whyThis: string,
   selectedTimingSignals: TimingSignal[],
 ): BriefExplanation {
+  const sourcesUsed = getSourceSummaries(
+    timingCard,
+    pattern,
+    selectedTimingSignals,
+    safetyNotes,
+  );
+
   return {
+    whyThisFits: getWhyThisFits(
+      timingCard,
+      pattern,
+      input,
+      preferenceMatches,
+      profileSignalMatches,
+      natalContactMatches,
+      selectedTimingSignals,
+    ),
+    howThisWasChosen: getHowThisWasChosen(
+      timingCard,
+      pattern,
+      input,
+      preferenceMatches,
+      profileSignalMatches,
+      natalContactMatches,
+      excludedPatternKeys,
+      safetyNotes,
+      selectedTimingSignals,
+      sourcesUsed,
+    ),
     signals: getBriefSignals(
       input,
       privateProfileCard,
@@ -2537,12 +3028,7 @@ function getExplanation(
       excludedPatternKeys,
       safetyNotes,
     ),
-    sourcesUsed: getSourceSummaries(
-      timingCard,
-      pattern,
-      selectedTimingSignals,
-      safetyNotes,
-    ),
+    sourcesUsed,
   };
 }
 

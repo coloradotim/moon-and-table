@@ -107,6 +107,10 @@ The pre-brief check-in stores answers in a `CurrentRitualCheckIn` object for the
 
 The current implementation uses check-in capacity, audience, practice type, ritual focus, conservative free-text aliases, and selected timing-window candidates in recommendation scoring. The decision record names which check-in fields influenced the selected pattern.
 
+The user-facing explanation has two normal layers. `Why this fits` is the short card-level reason. `How this was chosen` is collapsed by default and can show timing choice, check-in fit, ritual focus, ritual fit, profile or private timing fit, capacity boundaries, tradeoffs, and sources. Debug remains separate for raw score reasons, ids, candidate lists, and exact private contact keys.
+
+The explanation should not pretend every answer matched. If the selected ritual is an honest adaptation, it should say so. `Making a beginning` during quieter waning timing can be shaped as preparation rather than launch. `Tending us` with low capacity can stay relational through a small shared ritual rather than a heavy conversation.
+
 ## Boundaries
 
 The selection model should not add:

@@ -137,6 +137,22 @@ describe("generateWeeklyBrief", () => {
     expect(brief.whyThis.length).toBeGreaterThan(0);
     expect(brief.sourceSummary).toContain("Sources:");
     expect(brief.explanation.signals.length).toBeGreaterThan(0);
+    expect(brief.explanation.whyThisFits).toEqual(expect.any(String));
+    expect(brief.explanation.whyThisFits.length).toBeGreaterThan(0);
+    expect(brief.explanation.howThisWasChosen).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          kind: "timing_choice",
+          title: "Timing",
+          body: expect.any(String),
+        }),
+        expect.objectContaining({
+          kind: "ritual_fit",
+          title: "Ritual fit",
+          body: expect.any(String),
+        }),
+      ]),
+    );
     expect(brief.explanation.reasoning[0]).toMatchObject({
       label: "Why this ritual",
       summary: expect.any(String),
@@ -510,6 +526,17 @@ describe("generateWeeklyBrief", () => {
     expect(brief.whyThis).toContain(
       "because of a stronger match with saved household themes",
     );
+    expect(brief.explanation.whyThisFits).toContain(
+      "Friday, June 5 afternoon stood out as the strongest timing window this week.",
+    );
+    expect(brief.explanation.howThisWasChosen).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          kind: "timing_choice",
+          body: expect.stringContaining("Friday, June 5 afternoon was the strongest timing window"),
+        }),
+      ]),
+    );
     expect(JSON.stringify(brief.explanation)).not.toContain(
       "timing_window.fake.venus_leo",
     );
@@ -562,9 +589,76 @@ describe("generateWeeklyBrief", () => {
       "No strong timing window stood out this week. When you have five quiet minutes.",
     );
     expect(brief.whyThis).toContain("no timing window stood out strongly enough");
+    expect(brief.explanation.whyThisFits).toContain(
+      "No single timing window stood out strongly this week.",
+    );
+    expect(brief.explanation.howThisWasChosen).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          kind: "timing_choice",
+          body: expect.stringContaining("whenever it feels workable"),
+        }),
+      ]),
+    );
     expect(brief.decision.inputs.checkInInfluences).not.toContain("timing_window");
     expect(selectedPattern?.scoreReasons.map((reason) => reason.code)).not.toContain(
       "checkin_timing_window_match",
+    );
+  });
+
+  it("shapes making-a-beginning focus during waning timing instead of pretending it fully aligns", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-06-03T12:00:00.000Z",
+      timingFacts: ["moon.waning"],
+      capacityMode: "low",
+      currentRitualCheckIn: {
+        timeScope: "today",
+        energyCapacity: "a_little",
+        capacityMode: "low",
+        audience: "me",
+        practiceTypeHints: ["home_tending"],
+        practiceTypeLabel: "Home",
+        ritualFocusKey: "making_a_beginning",
+      },
+    });
+
+    expect(brief.explanation.howThisWasChosen).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          kind: "ritual_focus",
+          body: expect.stringContaining("better for preparation than a big launch"),
+        }),
+      ]),
+    );
+    expect(brief.explanation.whyThisFits).not.toContain("Everything aligned");
+  });
+
+  it("explains a smaller relational ritual when tending-us focus meets low capacity", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-06-03T12:00:00.000Z",
+      capacityMode: "low",
+      currentRitualCheckIn: {
+        timeScope: "today",
+        energyCapacity: "a_little",
+        capacityMode: "low",
+        audience: "both_of_us",
+        practiceTypeHints: ["conversation"],
+        practiceTypeLabel: "Conversation",
+        ritualFocusKey: "tending_us",
+      },
+    });
+
+    expect(brief.explanation.howThisWasChosen).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          kind: "ritual_focus",
+          body: expect.stringContaining("smaller shared ritual"),
+        }),
+        expect.objectContaining({
+          kind: "capacity_boundary",
+          body: expect.stringContaining("stays small"),
+        }),
+      ]),
     );
   });
 
@@ -738,7 +832,7 @@ describe("generateWeeklyBrief", () => {
         }),
       ]),
     );
-    expect(serializedExplanation).not.toContain("source.");
+    expect(serializedExplanation).not.toContain("\"source.");
     expect(serializedExplanation).not.toContain("docs/source-");
     expect(serializedExplanation).not.toContain("private_profile.");
   });
@@ -864,6 +958,15 @@ describe("generateWeeklyBrief", () => {
     expect(brief.whyThis).toContain(
       "Private-profile scoring added a small fit note for visible warmth",
     );
+    expect(brief.explanation.whyThisFits).not.toContain("natal Venus");
+    expect(brief.explanation.howThisWasChosen).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          kind: "natal_fit",
+          body: expect.stringContaining("Private timing contacts added weight"),
+        }),
+      ]),
+    );
     expect(brief.whyThis).not.toContain("Your chart says");
     expect(brief.whyThis).not.toContain("will bring");
   });
@@ -964,6 +1067,7 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.whyThis).toContain("small fit note for visible warmth");
     expect(brief.whyThis).toContain("exact chart contacts stay in debug");
+    expect(brief.explanation.whyThisFits).not.toContain("natal Venus");
     expect(brief.whyThis).not.toContain("Venus in Leo");
     expect(brief.whyThis).not.toContain("natal Venus");
   });
@@ -988,6 +1092,14 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.whyThis).toContain("small fit note for visible warmth");
     expect(brief.whyThis).toContain("exact chart contacts stay in debug");
+    expect(brief.explanation.howThisWasChosen).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          kind: "natal_fit",
+          body: expect.stringContaining("private natal Venus"),
+        }),
+      ]),
+    );
     expect(brief.whyThis).not.toContain("Venus in Leo");
     expect(brief.whyThis).not.toContain("private natal Venus");
     expect(brief.whyThis).not.toContain("chart says");
@@ -1140,6 +1252,7 @@ describe("generateWeeklyBrief", () => {
       "profile_theme.person_a.private_profile.practical_tending",
     ]);
     expect(brief.whyThis).toContain("practical home-tending magic");
+    expect(brief.explanation.whyThisFits).toContain("practical home-tending magic");
     expect(brief.whyThis).not.toContain("warmth, beauty, and affection");
   });
 
@@ -1167,6 +1280,7 @@ describe("generateWeeklyBrief", () => {
     ]);
     expect(brief.whyThis).toContain("warmth, beauty, and affection");
     expect(brief.whyThis).toContain("Saved natal-chart themes");
+    expect(brief.explanation.whyThisFits).toContain("warmth, beauty, and affection");
     expect(brief.whyThis).not.toContain("placement");
     expect(brief.whyThis).not.toContain("chart says");
   });
