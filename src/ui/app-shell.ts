@@ -214,7 +214,143 @@ function renderBriefSignals(explanation: BriefExplanation): string {
   `;
 }
 
-function renderBriefReasoning(explanation: BriefExplanation): string {
+function getReasonLead(summary: string): string {
+  const sentences = summary.match(/[^.!?]+[.!?]+/g)?.map((sentence) => sentence.trim()) ?? [];
+
+  if (sentences.length === 0) {
+    return summary;
+  }
+
+  return sentences.slice(0, 2).join(" ");
+}
+
+function sentenceCase(value: string): string {
+  const trimmed = value.trim();
+
+  if (!trimmed) {
+    return trimmed;
+  }
+
+  return `${trimmed.charAt(0).toUpperCase()}${trimmed.slice(1)}`;
+}
+
+function getReasonDetail(
+  reasons: Array<{ code: string; label: string; points: number; detail?: string }>,
+  code: string,
+): string | undefined {
+  return reasons.find((reason) => reason.code === code)?.detail;
+}
+
+function getCheckInWhyLine(brief: WeeklyBrief): string | undefined {
+  const selectedPattern = brief.decision.candidates.ritualPatterns.find(
+    (candidate) => candidate.key === brief.decision.selected.ritualPatternKey,
+  );
+  const reasons = selectedPattern?.scoreReasons ?? [];
+  const parts: string[] = [];
+  const practiceMatch = getReasonDetail(reasons, "checkin_practice_type_match");
+  const intentionMatch = getReasonDetail(reasons, "checkin_ritual_focus_match");
+  const audienceMatch = getReasonDetail(reasons, "checkin_audience_match");
+
+  if (practiceMatch) {
+    parts.push(`your practice choice matched ${practiceMatch.replaceAll("_", " ")}`);
+  }
+
+  if (intentionMatch) {
+    parts.push(`your intention was ${intentionMatch.toLowerCase()}`);
+  }
+
+  if (audienceMatch) {
+    parts.push(audienceMatch === "both_of_us" ? "it fit a shared recommendation" : "it fit a solo recommendation");
+  }
+
+  return parts.length > 0
+    ? sentenceCase(`${parts.join("; ")}.`)
+    : undefined;
+}
+
+function getTimingWindowWhyLine(brief: WeeklyBrief): string | undefined {
+  const timingWindow = brief.decision.inputs.selectedTimingWindow;
+
+  if (!timingWindow) {
+    return undefined;
+  }
+
+  if (!timingWindow.isStrong) {
+    return "No timing window was strong enough to shape the recommendation, so the ritual can happen whenever capacity allows.";
+  }
+
+  const readableReasons = timingWindow.scoreReasons
+    .filter((reason) => reason.points > 0)
+    .map((reason) => {
+      if (reason.label === "Private timing contact present") {
+        return "safe private chart contacts were present";
+      }
+
+      if (reason.label === "Shared private timing contact") {
+        return "both profiles had relevant timing contacts";
+      }
+
+      if (reason.label === "Multiple contacts share a theme") {
+        return "several contacts shared the same household themes";
+      }
+
+      return reason.detail
+        ? `${reason.label.toLowerCase()} (${reason.detail})`
+        : reason.label.toLowerCase();
+    })
+    .slice(0, 3);
+
+  return `${timingWindow.userWindow} stood out because ${readableReasons.join("; ")}.`;
+}
+
+function getPatternWhyLine(brief: WeeklyBrief): string | undefined {
+  const selectedPattern = brief.decision.candidates.ritualPatterns.find(
+    (candidate) => candidate.key === brief.decision.selected.ritualPatternKey,
+  );
+
+  if (!selectedPattern) {
+    return undefined;
+  }
+
+  const duration = getReasonDetail(selectedPattern.scoreReasons, "duration_fit");
+  const styleMatches = selectedPattern.scoreReasons
+    .filter((reason) =>
+      [
+        "preferred_style_match",
+        "symbolic_card_style_match",
+        "timing_signal_style_match",
+      ].includes(reason.code),
+    )
+    .map((reason) => reason.detail?.replaceAll("_", " "))
+    .filter((detail): detail is string => detail !== undefined);
+  const styles = [...new Set(styleMatches)].slice(0, 3);
+
+  return `${selectedPattern.title} fit because it was ${duration ?? "within the current duration limit"}${styles.length > 0 ? ` and matched ${styles.join(", ")}` : ""}.`;
+}
+
+function getAlternativeWhyLine(brief: WeeklyBrief): string | undefined {
+  const selectedPattern = brief.decision.candidates.ritualPatterns.find(
+    (candidate) => candidate.key === brief.decision.selected.ritualPatternKey,
+  );
+  const closestAlternative = brief.decision.candidates.ritualPatterns.find(
+    (candidate) => candidate.key !== brief.decision.selected.ritualPatternKey,
+  );
+
+  if (!selectedPattern || !closestAlternative) {
+    return undefined;
+  }
+
+  const scoreGap = selectedPattern.score - closestAlternative.score;
+
+  if (scoreGap <= 0 || scoreGap > 4) {
+    return undefined;
+  }
+
+  return `${closestAlternative.title} was close, but ${selectedPattern.title} scored ${scoreGap} point${scoreGap === 1 ? "" : "s"} higher for this check-in.`;
+}
+
+function renderBriefReasoning(brief: WeeklyBrief): string {
+  const explanation = brief.explanation;
   const primaryReason =
     explanation.reasoning.find((reason) => reason.label === "Why this ritual") ??
     explanation.reasoning[0];
@@ -222,11 +358,56 @@ function renderBriefReasoning(explanation: BriefExplanation): string {
   if (!primaryReason) {
     return "";
   }
+  const timingSignals = explanation.signals.filter((signal) =>
+    ["moon", "planetary", "seasonal", "numerology"].includes(signal.type),
+  );
+  const profileSignals = explanation.signals.filter(
+    (signal) => signal.type === "profile",
+  );
+  const timingSummary =
+    timingSignals.length > 0
+      ? timingSignals.map((signal) => signal.label).join(" and ")
+      : undefined;
+  const fitNotes = explanation.filtersApplied.filter((note) =>
+    ["Capacity", "Preferences", "Profile themes", "Private timing resonance", "Safety and fit"].includes(note.label),
+  );
+  const concreteReasons = [
+    ["Timing window", getTimingWindowWhyLine(brief)],
+    ["Check-in match", getCheckInWhyLine(brief)],
+    ["Ritual fit", getPatternWhyLine(brief)],
+    ["Close alternative", getAlternativeWhyLine(brief)],
+  ].filter((entry): entry is [string, string] => entry[1] !== undefined);
 
   return `
     <section class="why-this" aria-label="Why this ritual">
       <h3>Why this ritual</h3>
-      <p>${escapeHtml(primaryReason.summary)}</p>
+      <p>${escapeHtml(getReasonLead(primaryReason.summary))}</p>
+      <dl class="why-this__reasons">
+        ${concreteReasons.map(([label, summary]) => `
+          <div>
+            <dt>${escapeHtml(label)}</dt>
+            <dd>${escapeHtml(summary)}</dd>
+          </div>
+        `).join("")}
+        ${timingSummary ? `
+          <div>
+            <dt>Timing</dt>
+            <dd>${escapeHtml(timingSummary)}</dd>
+          </div>
+        ` : ""}
+        ${profileSignals.length > 0 ? `
+          <div>
+            <dt>Profile fit</dt>
+            <dd>${escapeHtml(profileSignals.map((signal) => signal.label).join(" and "))}</dd>
+          </div>
+        ` : ""}
+        ${fitNotes.slice(0, 3).map((note) => `
+          <div>
+            <dt>${escapeHtml(note.label)}</dt>
+            <dd>${escapeHtml(note.summary)}</dd>
+          </div>
+        `).join("")}
+      </dl>
     </section>
   `;
 }
@@ -318,6 +499,130 @@ function renderScoreReasons(
   `).join("");
 }
 
+function getMeaningfulScoreReasons(
+  reasons: Array<{ code: string; label: string; points: number; detail?: string }>,
+): Array<{ code: string; label: string; points: number; detail?: string }> {
+  const lowSignalCodes = new Set([
+    "approved_pattern",
+    "capacity_fit",
+    "duration_fit",
+  ]);
+
+  return reasons
+    .filter((reason) => !lowSignalCodes.has(reason.code))
+    .sort((a, b) => {
+      if (b.points !== a.points) {
+        return b.points - a.points;
+      }
+
+      return a.label.localeCompare(b.label);
+    });
+}
+
+function renderTopReasonCodes(
+  reasons: Array<{ code: string; label: string; points: number; detail?: string }>,
+): string {
+  const meaningfulReasons = getMeaningfulScoreReasons(reasons).slice(0, 4);
+  const renderedReasons =
+    meaningfulReasons.length > 0
+      ? meaningfulReasons
+      : reasons.slice(0, 3);
+
+  return renderedReasons
+    .map((reason) =>
+      reason.points > 0
+        ? `${reason.label} (+${reason.points})`
+        : reason.label,
+    )
+    .join(" · ");
+}
+
+function getOptionLabel(
+  options: readonly { key: string; label: string }[],
+  value: string | undefined,
+): string | undefined {
+  if (!value) {
+    return undefined;
+  }
+
+  return options.find((option) => option.key === value)?.label ?? value;
+}
+
+function renderCheckInDebug(brief: WeeklyBrief): string {
+  const checkIn = brief.decision.inputs.currentRitualCheckIn;
+
+  if (!checkIn) {
+    return "<p><strong>Check-in:</strong> none</p>";
+  }
+
+  const practiceOptions = getPracticeOptionsForEnergy(checkIn.energyCapacity);
+  const practiceLabel =
+    checkIn.practiceTypeLabel ??
+    (checkIn.practiceTypeHints && checkIn.practiceTypeHints.length > 0
+      ? checkIn.practiceTypeHints.join(" · ")
+      : undefined);
+  const focusLabel =
+    checkIn.ritualFocusLabel ??
+    ritualFocusOptions.find((option) => option.key === checkIn.ritualFocusKey)?.label ??
+    checkIn.ritualFocusText;
+  const selectedPattern = brief.decision.candidates.ritualPatterns.find(
+    (candidate) => candidate.key === brief.decision.selected.ritualPatternKey,
+  );
+  const checkInReasons =
+    selectedPattern?.scoreReasons.filter((reason) =>
+      reason.code.startsWith("checkin_"),
+    ) ?? [];
+  const checkInPoints = checkInReasons.reduce(
+    (total, reason) => total + reason.points,
+    0,
+  );
+
+  return `
+    <div class="decision-debug__check-in">
+      <p><strong>Check-in choices</strong></p>
+      <ul>
+        <li><strong>Timing:</strong> ${escapeHtml(getOptionLabel(timeScopeOptions, checkIn.timeScope) ?? checkIn.timeScope)}</li>
+        <li><strong>Capacity:</strong> ${escapeHtml(getOptionLabel(energyCapacityOptions, checkIn.energyCapacity) ?? checkIn.energyCapacity)}</li>
+        <li><strong>Audience:</strong> ${escapeHtml(getOptionLabel(audienceOptions, checkIn.audience) ?? checkIn.audience ?? "none")}</li>
+        <li><strong>Practice:</strong> ${escapeHtml(practiceLabel ?? getOptionLabel(practiceOptions, checkIn.practiceTypeHints?.[0]) ?? "none")}</li>
+        <li><strong>Intention:</strong> ${escapeHtml(focusLabel ?? "none")}</li>
+      </ul>
+      <p><strong>Check-in contribution:</strong> ${escapeHtml(
+        checkInReasons.length > 0
+          ? `+${checkInPoints} from ${checkInReasons.map((reason) => reason.label.toLowerCase()).join(", ")}`
+          : "none recorded on the selected pattern",
+      )}</p>
+      <p><strong>Check-in influence:</strong> ${escapeHtml(brief.decision.inputs.checkInInfluences.join(" · ") || "none")}</p>
+    </div>
+  `;
+}
+
+function renderTimingWindowDebug(brief: WeeklyBrief): string {
+  const timingWindow = brief.decision.inputs.selectedTimingWindow;
+
+  if (!timingWindow) {
+    return "<p><strong>Timing window:</strong> none</p>";
+  }
+
+  const scoreReasonText = timingWindow.scoreReasons
+    .map((reason) =>
+      reason.detail
+        ? `${reason.label} (+${reason.points}, ${reason.detail})`
+        : `${reason.label} (+${reason.points})`,
+    )
+    .join(" · ");
+
+  return `
+    <div class="decision-debug__timing-window">
+      <p><strong>Timing window:</strong> ${escapeHtml(timingWindow.label)} (${escapeHtml(`${timingWindow.score}`)} points)</p>
+      <p><strong>User window:</strong> ${escapeHtml(timingWindow.isStrong ? timingWindow.userWindow : "No strong timing window stood out; go whenever capacity allows.")}</p>
+      <p><strong>Starts:</strong> ${escapeHtml(timingWindow.startsAtIso)}</p>
+      <p><strong>Strength:</strong> ${escapeHtml(`${timingWindow.strength}${timingWindow.isStrong ? " / strong enough" : " / not strong enough"}`)}</p>
+      <p><strong>Why this window:</strong> ${escapeHtml(scoreReasonText || timingWindow.reasonLabels.join(" · ") || "no score reasons recorded")}</p>
+    </div>
+  `;
+}
+
 function renderNatalContactDebug(
   contacts: WeeklyBrief["decision"]["selected"]["natalContacts"],
 ): string {
@@ -382,16 +687,8 @@ function renderDeveloperDecision(brief: WeeklyBrief): string {
           <p><strong>Audience:</strong> ${escapeHtml(brief.decision.inputs.audience)}</p>
           <p><strong>Preferred:</strong> ${escapeHtml(brief.decision.inputs.preferredRitualStyles.join(" · ") || "none")}</p>
           <p><strong>Avoided:</strong> ${escapeHtml(brief.decision.inputs.avoidedRitualStyles.join(" · ") || "none")}</p>
-          <p><strong>Check-in:</strong> ${escapeHtml(
-            brief.decision.inputs.currentRitualCheckIn
-              ? [
-                  brief.decision.inputs.currentRitualCheckIn.timeScope,
-                  brief.decision.inputs.currentRitualCheckIn.energyCapacity,
-                  brief.decision.inputs.currentRitualCheckIn.audience,
-                  brief.decision.inputs.currentRitualCheckIn.ritualFocusKey,
-                ].filter(Boolean).join(" · ")
-              : "none",
-          )}</p>
+          ${renderCheckInDebug(brief)}
+          ${renderTimingWindowDebug(brief)}
           <p><strong>Natal profiles:</strong> ${escapeHtml(`${brief.decision.inputs.privateNatalProfileCount}`)} loaded</p>
           <p><strong>Natal contacts:</strong> ${escapeHtml(`${brief.decision.inputs.natalContactsComputed}`)} computed</p>
           <p><strong>Private chart status:</strong> ${escapeHtml(renderNatalDebugStatus(brief))}</p>
@@ -410,7 +707,7 @@ function renderDeveloperDecision(brief: WeeklyBrief): string {
             <li>
               <strong>${escapeHtml(candidate.key)}</strong>
               <span>${escapeHtml(`${candidate.score}`)} points</span>
-              <small>${escapeHtml(candidate.scoreReasons.slice(0, 3).map((reason) => reason.code).join(", "))}</small>
+              <small>${escapeHtml(renderTopReasonCodes(candidate.scoreReasons) || "no meaningful score reasons")}</small>
             </li>
           `).join("")}
         </ol>
@@ -1028,6 +1325,21 @@ function renderCheckInQuestion(draft: RitualCheckInDraft): string {
   return "";
 }
 
+function renderCheckInBackControl(draft: RitualCheckInDraft): string {
+  if (draft.step === "time_scope") {
+    return "";
+  }
+
+  return `
+    <button
+      class="check-in__back"
+      type="button"
+      data-check-in-action="go_back"
+      data-check-in-value="previous"
+    >&larr; Go back</button>
+  `;
+}
+
 function lowercaseFirst(value: string): string {
   return value.charAt(0).toLowerCase() + value.slice(1);
 }
@@ -1111,6 +1423,7 @@ export function renderRitualCheckInShell({
 
       <article class="check-in" aria-label="Ritual check-in">
         ${intro}
+        ${renderCheckInBackControl(draft)}
         ${renderCheckInAcknowledgement(draft)}
 
         ${draft.step === "review" ? renderCheckInReview(draft) : renderCheckInQuestion(draft)}
@@ -1165,7 +1478,7 @@ export function renderSignedInShell(
       </section>
 
       <section class="brief__depth" aria-label="Brief explanation">
-        ${renderBriefReasoning(brief.explanation)}
+        ${renderBriefReasoning(brief)}
         <section class="brief__question" aria-label="Question to carry">
           <p class="brief__section-label">Question to carry</p>
           <p class="prompt">${escapeHtml(brief.reflectionPrompt)}</p>

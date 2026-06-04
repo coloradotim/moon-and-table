@@ -46,6 +46,14 @@ import {
   selectTimingSignals,
   type TimingSignal,
 } from "./timing-interpretation-rules";
+import {
+  getTimingWindowCandidates,
+  type TimingWindowCandidate,
+} from "./timing-window-candidates";
+import {
+  getRitualFocusOptionByKey,
+  type RitualFocusOption,
+} from "../data/ritual-focus-options";
 
 export const CAPACITY_MODES = ["pause", "low", "steady", "high"] as const;
 
@@ -138,6 +146,7 @@ export type WeeklyBriefTrace = {
   selectedNatalContacts: NatalContactSummary[];
   profilePreferenceKeys: string[];
   currentRitualCheckIn?: CurrentRitualCheckIn;
+  selectedTimingWindow?: SelectedTimingWindowSummary;
   capacityMode: CapacityMode;
   audience: PrivateAudience;
   scheduleAssumptions: ScheduleAssumptionKey[];
@@ -199,6 +208,9 @@ export type RecommendationDecision = {
     privateNatalProfileCount: number;
     natalPlacementCounts: Partial<Record<"person_a" | "person_b", number>>;
     natalContactsComputed: number;
+    timeScope: "today" | "best_moment_this_week";
+    selectedTimingWindow?: SelectedTimingWindowSummary;
+    checkInInfluences: string[];
     currentRitualCheckIn?: CurrentRitualCheckIn;
   };
   candidates: {
@@ -221,6 +233,23 @@ export type RecommendationDecision = {
     safetySummary: string;
     noAlternateAvailable: boolean;
   };
+};
+
+export type SelectedTimingWindowSummary = {
+  id: string;
+  label: string;
+  userWindow: string;
+  startsAtIso: string;
+  endsAtIso?: string;
+  score: number;
+  strength: TimingSignal["strength"];
+  isStrong: boolean;
+  reasonLabels: string[];
+  scoreReasons: Array<{
+    label: string;
+    points: number;
+    detail?: string;
+  }>;
 };
 
 export type NatalContactSummary = {
@@ -320,6 +349,7 @@ export type GenerateWeeklyBriefInput = {
   audience?: PrivateAudience;
   excludedRitualPatternKeys?: string[];
   currentRitualCheckIn?: CurrentRitualCheckIn;
+  timingWindowCandidates?: TimingWindowCandidate[];
 };
 
 type ResolvedGenerateWeeklyBriefInput = {
@@ -345,6 +375,10 @@ type ResolvedGenerateWeeklyBriefInput = {
   audience: PrivateAudience;
   excludedRitualPatternKeys: string[];
   currentRitualCheckIn?: CurrentRitualCheckIn;
+  timeScope: "today" | "best_moment_this_week";
+  timingWindowCandidates: TimingWindowCandidate[];
+  selectedTimingWindow?: TimingWindowCandidate;
+  selectedRitualFocus?: RitualFocusOption;
 };
 
 type PatternCandidate = {
@@ -567,8 +601,59 @@ function getEffectiveDurationMinutes(
   );
 }
 
+function getPartOfDay(date: Date): string {
+  const hour = date.getUTCHours();
+
+  if (hour < 5) {
+    return "overnight";
+  }
+
+  if (hour < 12) {
+    return "morning";
+  }
+
+  if (hour < 17) {
+    return "afternoon";
+  }
+
+  if (hour < 21) {
+    return "evening";
+  }
+
+  return "late evening";
+}
+
+function formatTimingWindowDate(iso: string): string {
+  const date = new Date(iso);
+  const dayLabel = new Intl.DateTimeFormat("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC",
+  }).format(date);
+  const hasSpecificTime =
+    date.getUTCHours() !== 0 ||
+    date.getUTCMinutes() !== 0 ||
+    date.getUTCSeconds() !== 0;
+
+  return hasSpecificTime
+    ? `${dayLabel} ${getPartOfDay(date)}`
+    : dayLabel;
+}
+
+function isStrongTimingWindow(
+  candidate: TimingWindowCandidate | undefined,
+): candidate is TimingWindowCandidate {
+  return candidate !== undefined && candidate.strength !== "accent" && candidate.score >= 10;
+}
+
+function getTimingWindowUserWindow(candidate: TimingWindowCandidate): string {
+  return `Around ${formatTimingWindowDate(candidate.startsAtIso)}.`;
+}
+
 function getBestWindow(
   capacityMode: CapacityMode,
+  input?: ResolvedGenerateWeeklyBriefInput,
 ): string {
   const labelByCapacity: Record<CapacityMode, string> = {
     pause: "No timing needed.",
@@ -576,8 +661,17 @@ function getBestWindow(
     steady: "When you have a little space this week.",
     high: "When you have room to linger this week.",
   };
+  const capacityWindow = labelByCapacity[capacityMode];
 
-  return labelByCapacity[capacityMode];
+  if (input?.timeScope === "best_moment_this_week") {
+    if (isStrongTimingWindow(input.selectedTimingWindow)) {
+      return `${getTimingWindowUserWindow(input.selectedTimingWindow)} ${capacityWindow}`;
+    }
+
+    return `No strong timing window stood out this week. ${capacityWindow}`;
+  }
+
+  return capacityWindow;
 }
 
 function getScheduleAssumptions(
@@ -987,6 +1081,170 @@ function toRejectedPattern(
   };
 }
 
+function getPatternStyleMatches(
+  pattern: RitualPattern,
+  styles: string[],
+): string[] {
+  return uniqueValues(
+    styles.filter((style) => pattern.key === style || pattern.ritualStyles.includes(style)),
+  );
+}
+
+function getCheckInTextStyleHints(text: string | undefined): string[] {
+  if (!text) {
+    return [];
+  }
+
+  const normalized = text.toLowerCase();
+  const hintsByToken: Array<[string, string[]]> = [
+    ["plant", ["plant", "plant_tending"]],
+    ["kitchen", ["kitchen", "ordinary_cooking"]],
+    ["table", ["table_reset"]],
+    ["candle", ["candle_or_light", "light_focus"]],
+    ["light", ["candle_or_light", "light_focus"]],
+    ["rest", ["rest", "closing"]],
+    ["ground", ["grounding", "home_tending"]],
+    ["clear", ["surface_reset", "threshold_reset"]],
+    ["begin", ["threshold_reset", "reflection"]],
+    ["start", ["threshold_reset", "reflection"]],
+    ["talk", ["conversation", "reflection"]],
+    ["speak", ["conversation", "reflection"]],
+    ["home", ["home_tending"]],
+  ];
+
+  return uniqueValues(
+    hintsByToken.flatMap(([token, hints]) =>
+      normalized.includes(token) ? hints : [],
+    ),
+  );
+}
+
+function selectedTimingWindowStyleHints(
+  candidate: TimingWindowCandidate,
+  input: ResolvedGenerateWeeklyBriefInput,
+): string[] {
+  const signalHints = getTimingSignalsForFacts(candidate.timingFacts)
+    .filter(
+      (signal) =>
+        candidate.signalKeys.length === 0 ||
+        candidate.signalKeys.includes(signal.ruleId),
+    )
+    .flatMap((signal) => signal.ritualStyleHints);
+  const natalHints = candidate.natalContactThemeKeys.flatMap(
+    (themeKey) => NATAL_CONTACT_THEME_STYLE_HINTS[themeKey] ?? [],
+  );
+  const focusHints = input.selectedRitualFocus?.timingSignalKeys?.some((key) =>
+    candidate.timingFacts.some((fact) => fact.id.includes(key) || fact.label.toLowerCase().includes(key.replaceAll("_", " "))),
+  )
+    ? input.selectedRitualFocus.ritualStyleHints
+    : [];
+
+  return uniqueValues([...signalHints, ...natalHints, ...focusHints]);
+}
+
+function getCheckInPatternScoreReasons(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+): ScoreReason[] {
+  const checkIn = input.currentRitualCheckIn;
+
+  if (!checkIn) {
+    return [];
+  }
+
+  const reasons: ScoreReason[] = [
+    scoreReason(
+      "checkin_capacity_answer",
+      "Check-in capacity answer",
+      1,
+      checkIn.energyCapacity,
+    ),
+  ];
+  const practiceMatches = getPatternStyleMatches(
+    pattern,
+    checkIn.practiceTypeHints ?? [],
+  );
+
+  if (practiceMatches.length > 0) {
+    reasons.push(
+      scoreReason(
+        "checkin_practice_type_match",
+        "Check-in practice match",
+        4,
+        practiceMatches.join(", "),
+      ),
+    );
+  }
+
+  const focus = input.selectedRitualFocus;
+  const focusStyleHints = focus?.drivesScoringByDefault === false
+    ? getCheckInTextStyleHints(checkIn.ritualFocusText)
+    : [
+        ...(focus?.ritualStyleHints ?? []),
+        ...getCheckInTextStyleHints(checkIn.ritualFocusText),
+      ];
+  const focusMatches = getPatternStyleMatches(pattern, focusStyleHints);
+
+  if (focusMatches.length > 0) {
+    reasons.push(
+      scoreReason(
+        "checkin_ritual_focus_match",
+        "Check-in intention match",
+        5,
+        focus?.label ?? checkIn.ritualFocusText ?? focusMatches.join(", "),
+      ),
+    );
+  }
+
+  if (checkIn.audience === "both_of_us") {
+    const fitsTogether =
+      pattern.audienceFit?.includes("together") ||
+      pattern.ritualStyles.some((style) =>
+        ["shared_space", "conversation", "table_reset", "candle_or_light"].includes(style),
+      );
+
+    if (fitsTogether) {
+      reasons.push(
+        scoreReason(
+          "checkin_audience_match",
+          "Check-in audience match",
+          3,
+          "both_of_us",
+        ),
+      );
+    }
+  }
+
+  if (checkIn.audience === "me" && pattern.audienceFit?.includes("either")) {
+    reasons.push(
+      scoreReason(
+        "checkin_audience_match",
+        "Check-in audience match",
+        2,
+        "me",
+      ),
+    );
+  }
+
+  const timingWindowStyleHints = isStrongTimingWindow(input.selectedTimingWindow)
+    ? selectedTimingWindowStyleHints(input.selectedTimingWindow, input)
+    : [];
+  const timingWindowMatches = getPatternStyleMatches(pattern, timingWindowStyleHints);
+
+  if (timingWindowMatches.length > 0) {
+    reasons.push(
+      scoreReason(
+        "checkin_timing_window_match",
+        "Check-in timing window match",
+        2,
+        timingWindowMatches.join(", "),
+      ),
+    );
+  }
+
+  return reasons;
+}
+
 function getEligiblePatternCandidates(
   input: ResolvedGenerateWeeklyBriefInput,
   selectedCards: SymbolicCard[],
@@ -1198,6 +1456,7 @@ function getEligiblePatternCandidates(
       ),
       ...profileSignalReason,
       ...natalContactReasons,
+      ...getCheckInPatternScoreReasons(input, pattern),
       ...defaultPatternReason,
       ...highCapacityReason,
     );
@@ -1360,8 +1619,22 @@ function getSelectedTimingSignals(
       facts.findIndex((candidate) => candidate.id === fact.id) === index,
   );
   const signals = getTimingSignalsForFacts(computedFacts);
+  const selectedWindowSignals = isStrongTimingWindow(input.selectedTimingWindow)
+    ? getTimingSignalsForFacts(input.selectedTimingWindow.timingFacts).filter(
+        (signal) =>
+          input.selectedTimingWindow?.signalKeys.length === 0 ||
+          input.selectedTimingWindow?.signalKeys.includes(signal.ruleId),
+      )
+    : [];
+  const candidateFirstSignals = [
+    ...selectedWindowSignals,
+    ...signals,
+  ].filter(
+    (signal, index, allSignals) =>
+      allSignals.findIndex((candidate) => candidate.ruleId === signal.ruleId) === index,
+  );
 
-  return selectTimingSignals(signals, {
+  return selectTimingSignals(candidateFirstSignals, {
     maxSignals: 2,
     preferredRitualStyles: input.preferredRitualStyles,
     avoidedRitualStyles: input.avoidedRitualStyles,
@@ -1638,15 +1911,49 @@ function labelFromSnake(value: string | undefined): string {
 
 function getNatalContactThemeLabel(contact: NatalContact): string {
   const firstTheme = contact.themeKeys.find(
-    (themeKey) => themeKey !== "private_natal_contact",
+    (themeKey) =>
+      themeKey !== "private_natal_contact" &&
+      !themeKey.startsWith("private_profile."),
   );
 
-  return firstTheme ? firstTheme.replaceAll("_", " ") : "private timing";
+  if (firstTheme) {
+    return getHumanThemeLabel(firstTheme);
+  }
+
+  const privateProfileTheme = contact.themeKeys.find((themeKey) =>
+    themeKey.startsWith("private_profile."),
+  );
+
+  return privateProfileTheme
+    ? getHumanThemeLabel(privateProfileTheme)
+    : "private timing";
+}
+
+function getHumanThemeLabel(themeKey: string): string {
+  const knownLabels: Record<string, string> = {
+    "private_profile.practical_tending": "practical tending",
+    "private_profile.beauty_warmth": "warmth and beauty",
+    "private_profile.structured_action": "structured action",
+    practical_tending: "practical tending",
+    practical_care: "practical care",
+    beauty_warmth: "warmth and beauty",
+    visible_warmth: "visible warmth",
+    beauty_and_affection: "beauty and affection",
+    structure_and_repair: "structure and repair",
+    careful_words: "careful words",
+    soft_release: "soft release",
+    practical_adjustment: "practical adjustment",
+    focus_and_visibility: "focus and visibility",
+  };
+
+  return knownLabels[themeKey] ?? themeKey
+    .replace(/^private_profile\./, "")
+    .replaceAll("_", " ");
 }
 
 function getNatalContactReason(
   contacts: NatalContact[],
-  visibility: AstrologyVisibility,
+  _visibility: AstrologyVisibility,
 ): string {
   if (contacts.length === 0) {
     return "";
@@ -1655,24 +1962,45 @@ function getNatalContactReason(
   const primary = contacts[0];
   const themeLabel = getNatalContactThemeLabel(primary);
 
-  if (visibility === "explicit") {
-    const transit = `${labelFromSnake(primary.transitingBody)}${primary.transitSign ? ` in ${labelFromSnake(primary.transitSign)}` : ""}`;
-    const natal = `private natal ${labelFromSnake(primary.natalBodyOrPoint)}${primary.natalSign ? ` in ${labelFromSnake(primary.natalSign)}` : ""}`;
-    const aspect =
-      primary.contactType === "near_conjunction"
-        ? "resonates closely with"
-        : primary.aspectType
-          ? `forms a ${primary.aspectType.replaceAll("_", " ")} to`
-          : "resonates with";
+  return `Private-profile scoring added a small fit note for ${themeLabel}; exact chart contacts stay in debug.`;
+}
 
-    return `${transit} ${aspect} ${natal}; the brief uses that private contact as a ${themeLabel} emphasis, not a prediction.`;
+function getTimingWindowReason(candidate: TimingWindowCandidate): string {
+  const reasons = candidate.scoreReasons
+    .filter((reason) => reason.points > 0)
+    .sort((a, b) => b.points - a.points);
+  const primaryReason = reasons[0];
+  const hasNatalReason = reasons.some((reason) =>
+    [
+      "natal_contact_present",
+      "shared_natal_contact_match",
+      "multiple_natal_contacts_same_theme",
+    ].includes(reason.code),
+  );
+  const hasExactMoonReason = reasons.some((reason) =>
+    ["exact_full_moon", "exact_new_moon"].includes(reason.code),
+  );
+  const reasonParts: string[] = [];
+
+  if (primaryReason && ![
+    "natal_contact_present",
+    "shared_natal_contact_match",
+    "multiple_natal_contacts_same_theme",
+  ].includes(primaryReason.code)) {
+    reasonParts.push(primaryReason.label.toLowerCase());
   }
 
-  if (visibility === "balanced") {
-    return `Current timing lines up with a ${themeLabel} theme in the private profile, so the app lets that shape the ritual fit without making a chart claim.`;
+  if (hasNatalReason) {
+    reasonParts.push("a stronger match with saved household themes");
   }
 
-  return `This also fits a private timing pattern around ${themeLabel}, so the ritual stays grounded in a theme that is already marked as resonant.`;
+  if (hasExactMoonReason) {
+    reasonParts.push("exact lunar timing");
+  }
+
+  return reasonParts.length > 0
+    ? `The window stood out because of ${uniqueValues(reasonParts).join(" and ")}.`
+    : "The window stood out because its timing score was stronger than the other available options.";
 }
 
 function getFitReason(
@@ -1729,6 +2057,48 @@ function getFitReason(
   return "Your household settings keep the suggestion practical.";
 }
 
+function getCheckInReason(input: ResolvedGenerateWeeklyBriefInput): string {
+  const checkIn = input.currentRitualCheckIn;
+
+  if (!checkIn) {
+    return "";
+  }
+
+  const reasons: string[] = [];
+
+  if (checkIn.timeScope === "best_moment_this_week") {
+    if (isStrongTimingWindow(input.selectedTimingWindow)) {
+      reasons.push(
+        `You asked the app to look across the week, so it chose ${formatTimingWindowDate(input.selectedTimingWindow.startsAtIso)} as the strongest available timing window. ${getTimingWindowReason(input.selectedTimingWindow)}`,
+      );
+    } else {
+      reasons.push(
+        "You asked the app to look across the week, but no timing window stood out strongly enough; this can happen whenever you have the capacity for it.",
+      );
+    }
+  } else {
+    reasons.push("You asked for something for today, so the recommendation stays close to the current moment.");
+  }
+
+  if (checkIn.practiceTypeLabel) {
+    reasons.push(`Your practice choice, ${checkIn.practiceTypeLabel.toLowerCase()}, shaped which approved patterns scored well.`);
+  }
+
+  const focusLabel = input.selectedRitualFocus?.label ?? checkIn.ritualFocusText;
+
+  if (focusLabel) {
+    reasons.push(`Your intention around ${focusLabel.toLowerCase()} helped steer the fit.`);
+  }
+
+  if (checkIn.audience === "both_of_us") {
+    reasons.push("Because this is for both of you, shared household fit mattered.");
+  } else if (checkIn.audience === "me") {
+    reasons.push("Because this is for you, the app leaned on your saved profile fit.");
+  }
+
+  return reasons.join(" ");
+}
+
 function getWhyThis(
   timingCard: SymbolicCard,
   pattern: RitualPattern,
@@ -1749,7 +2119,7 @@ function getWhyThis(
       : "";
   const capacityReason = getCapacityReason(input.capacityMode, durationMinutes);
 
-  return `${getTimingReason(timingCard, input.timingFactDetails[0])} ${pattern.title} was chosen as one small approved home practice for that theme. ${getFitReason(privateProfileCard, preferenceMatches, input.avoidedRitualStyles, profileSignalMatches, natalContactMatches, input.astrologyVisibility, input.audience)} ${capacityReason} ${safetyReason}`.replace(/\s+/g, " ").trim();
+  return `${getTimingReason(timingCard, input.timingFactDetails[0])} ${getCheckInReason(input)} ${pattern.title} was chosen as one small approved home practice for that theme. ${getFitReason(privateProfileCard, preferenceMatches, input.avoidedRitualStyles, profileSignalMatches, natalContactMatches, input.astrologyVisibility, input.audience)} ${capacityReason} ${safetyReason}`.replace(/\s+/g, " ").trim();
 }
 
 function getReasoning(
@@ -2250,8 +2620,33 @@ function getDecisionScoreSummary(
     return `${pattern.title} was selected as the safe fallback.`;
   }
 
+  const priorityByCode: Record<string, number> = {
+    checkin_ritual_focus_match: 100,
+    checkin_practice_type_match: 95,
+    checkin_audience_match: 90,
+    checkin_timing_window_match: 85,
+    profile_theme_match: 80,
+    natal_contact_theme_match: 75,
+    shared_natal_contact_match: 70,
+    profile_timing_resonance: 65,
+    timing_signal_style_match: 60,
+    symbolic_card_style_match: 55,
+    preferred_style_match: 50,
+    capacity_fit: 30,
+    checkin_capacity_answer: 25,
+  };
   const positiveReasons = selectedPattern.scoreReasons
     .filter((reason) => reason.points > 0)
+    .sort((a, b) => {
+      const priorityDiff =
+        (priorityByCode[b.code] ?? 0) - (priorityByCode[a.code] ?? 0);
+
+      if (priorityDiff !== 0) {
+        return priorityDiff;
+      }
+
+      return b.points - a.points;
+    })
     .slice(0, 3)
     .map((reason) => reason.label.toLowerCase());
 
@@ -2279,6 +2674,26 @@ function getDecisionSafetySummary(
   }
 
   return "No hard safety exclusions affected the selected ritual.";
+}
+
+function getCheckInInfluences(input: ResolvedGenerateWeeklyBriefInput): string[] {
+  const checkIn = input.currentRitualCheckIn;
+
+  if (!checkIn) {
+    return [];
+  }
+
+  return [
+    "capacity",
+    ...(checkIn.audience ? ["audience"] : []),
+    ...(checkIn.practiceTypeHints && checkIn.practiceTypeHints.length > 0
+      ? ["practice_type"]
+      : []),
+    ...(checkIn.ritualFocusKey || checkIn.ritualFocusText
+      ? ["ritual_focus"]
+      : []),
+    ...(isStrongTimingWindow(input.selectedTimingWindow) ? ["timing_window"] : []),
+  ];
 }
 
 function getRecommendationDecision({
@@ -2322,6 +2737,11 @@ function getRecommendationDecision({
       privateNatalProfileCount: input.natalDiagnostics.privateNatalProfileCount,
       natalPlacementCounts: input.natalDiagnostics.natalPlacementCounts,
       natalContactsComputed: input.natalDiagnostics.natalContactsComputed,
+      timeScope: input.timeScope,
+      ...(input.selectedTimingWindow
+        ? { selectedTimingWindow: summarizeTimingWindow(input.selectedTimingWindow) }
+        : {}),
+      checkInInfluences: getCheckInInfluences(input),
       ...(input.currentRitualCheckIn
         ? { currentRitualCheckIn: input.currentRitualCheckIn }
         : {}),
@@ -2351,6 +2771,57 @@ function getRecommendationDecision({
   };
 }
 
+function selectTimingWindowCandidate(
+  candidates: TimingWindowCandidate[],
+  checkIn: CurrentRitualCheckIn | undefined,
+): TimingWindowCandidate | undefined {
+  if (candidates.length === 0) {
+    return undefined;
+  }
+
+  for (const candidateId of checkIn?.timingWindowCandidateIds ?? []) {
+    const match = candidates.find((candidate) => candidate.id === candidateId);
+
+    if (match) {
+      return match;
+    }
+  }
+
+  return candidates[0];
+}
+
+function summarizeTimingWindow(
+  candidate: TimingWindowCandidate | undefined,
+): SelectedTimingWindowSummary | undefined {
+  if (!candidate) {
+    return undefined;
+  }
+
+  return {
+    id: candidate.id,
+    label: candidate.label,
+    userWindow: getTimingWindowUserWindow(candidate),
+    startsAtIso: candidate.startsAtIso,
+    endsAtIso: candidate.endsAtIso,
+    score: candidate.score,
+    strength: candidate.strength,
+    isStrong: isStrongTimingWindow(candidate),
+    reasonLabels: candidate.scoreReasons.map((reason) => reason.label),
+    scoreReasons: candidate.scoreReasons.map((reason) => ({
+      label: reason.label,
+      points: reason.points,
+      detail: reason.detail,
+    })),
+  };
+}
+
+function mergeTimingFacts(facts: TimingFact[]): TimingFact[] {
+  return facts.filter(
+    (fact, index, allFacts) =>
+      allFacts.findIndex((candidate) => candidate.id === fact.id) === index,
+  );
+}
+
 function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBriefInput {
   const currentDate = resolveCurrentDate(input.currentDate);
   const scheduleConstraints = resolveScheduleConstraints(
@@ -2359,17 +2830,7 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
   const capacityMode =
     input.capacityMode ?? scheduleConstraints.defaultCapacityMode;
   const audience = input.audience ?? "either";
-  const lunarTimingFact = getLunarTimingFact(currentDate);
-  const timingFactDetails =
-    input.timingFactDetails ??
-    (input.timingFacts === undefined ? [lunarTimingFact] : []);
-  const timingFacts =
-    input.timingFacts ??
-    (timingFactDetails.length > 0
-      ? timingFactDetails.map((fact) => fact.key)
-      : [lunarTimingFact.key]);
-  const computedTimingFacts =
-    input.computedTimingFacts ?? getTimingFactsForDate(currentDate);
+  const timeScope = input.currentRitualCheckIn?.timeScope ?? "today";
   const fallbackPrivateProfileKeys =
     input.privateProfileKeys ?? DEFAULT_PRIVATE_PROFILE_KEYS;
   const profileInputs =
@@ -2401,6 +2862,41 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
     audience,
   );
   const astrologyVisibility = input.astrologyVisibility ?? "balanced";
+  const timingWindowCandidates =
+    timeScope === "best_moment_this_week"
+      ? input.timingWindowCandidates ??
+        getTimingWindowCandidates({
+          startDate: currentDate,
+          privateNatalProfiles: selectedNatalProfiles,
+          astrologyVisibility,
+          options: { maxCandidates: 8 },
+        })
+      : [];
+  const selectedTimingWindow = selectTimingWindowCandidate(
+    timingWindowCandidates,
+    input.currentRitualCheckIn,
+  );
+  const strongSelectedTimingWindow = isStrongTimingWindow(selectedTimingWindow)
+    ? selectedTimingWindow
+    : undefined;
+  const timingDate = strongSelectedTimingWindow
+    ? resolveCurrentDate(strongSelectedTimingWindow.startsAtIso)
+    : currentDate;
+  const lunarTimingFact = getLunarTimingFact(timingDate);
+  const timingFactDetails =
+    input.timingFactDetails ??
+    (input.timingFacts === undefined ? [lunarTimingFact] : []);
+  const timingFacts =
+    input.timingFacts ??
+    (timingFactDetails.length > 0
+      ? timingFactDetails.map((fact) => fact.key)
+      : [lunarTimingFact.key]);
+  const computedTimingFacts =
+    input.computedTimingFacts ??
+    mergeTimingFacts([
+      ...(strongSelectedTimingWindow?.timingFacts ?? []),
+      ...getTimingFactsForDate(timingDate),
+    ]);
   const natalContacts = getNatalContactsForTimingFacts({
     timingFacts: computedTimingFacts,
     natalProfiles,
@@ -2444,6 +2940,12 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
     audience,
     excludedRitualPatternKeys: input.excludedRitualPatternKeys ?? [],
     currentRitualCheckIn: input.currentRitualCheckIn,
+    timeScope,
+    timingWindowCandidates,
+    selectedTimingWindow,
+    selectedRitualFocus: input.currentRitualCheckIn?.ritualFocusKey
+      ? getRitualFocusOptionByKey(input.currentRitualCheckIn.ritualFocusKey)
+      : undefined,
   };
 }
 
@@ -2531,7 +3033,7 @@ export function generateWeeklyBrief(
     dateRange: resolvedInput.dateRange,
     theme: getTheme(timingCard, pattern),
     intention: getIntention(pattern, resolvedInput.capacityMode),
-    bestWindow: getBestWindow(resolvedInput.capacityMode),
+    bestWindow: getBestWindow(resolvedInput.capacityMode, resolvedInput),
     recommendedRitual: getRecommendedRitual(
       pattern,
       resolvedInput.capacityMode,
@@ -2617,6 +3119,9 @@ export function generateWeeklyBrief(
       ],
       ...(resolvedInput.currentRitualCheckIn
         ? { currentRitualCheckIn: resolvedInput.currentRitualCheckIn }
+        : {}),
+      ...(resolvedInput.selectedTimingWindow
+        ? { selectedTimingWindow: summarizeTimingWindow(resolvedInput.selectedTimingWindow) }
         : {}),
       capacityMode: resolvedInput.capacityMode,
       audience: resolvedInput.audience,

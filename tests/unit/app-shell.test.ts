@@ -27,6 +27,7 @@ describe("app shell rendering", () => {
     expect(html).toContain("Are you wanting something for today, or looking across the week?");
     expect(html).toContain("For today");
     expect(html).toContain("Across the week");
+    expect(html).not.toContain("Go back");
     expect(html).not.toContain("Use this moment and keep the ritual close at hand.");
     expect(html).not.toContain("Let the timing layer look for a stronger fit.");
     expect(html).not.toContain("data-testid=\"recommended-ritual\"");
@@ -51,6 +52,8 @@ describe("app shell rendering", () => {
     });
 
     expect(html).toContain("How much energy or capacity do you have?");
+    expect(html).toContain("Go back");
+    expect(html).toContain('data-check-in-action="go_back"');
     expect(html).not.toContain("Welcome back");
     expect(html).toContain("For today.");
     expect(html).toContain("Barely any");
@@ -134,9 +137,12 @@ describe("app shell rendering", () => {
     });
 
     expect(audienceHtml).toContain("Who is this for?");
+    expect(audienceHtml).toContain("Go back");
     expect(audienceHtml).toContain("Me");
     expect(audienceHtml).toContain("Both of us");
+    expect(practiceHtml).toContain("Go back");
     expect(practiceHtml).toContain("Seasonal");
+    expect(focusHtml).toContain("Go back");
     expect(focusHtml).toContain("What intention should this hold?");
     expect(focusHtml).toContain("Getting grounded");
     expect(focusHtml).toContain("Making a beginning");
@@ -382,6 +388,9 @@ describe("app shell rendering", () => {
     expect(html).not.toContain('class="brief__question-details"');
     expect(html).toContain('<section class="why-this" aria-label="Why this ritual">');
     expect(html).toContain("<h3>Why this ritual</h3>");
+    expect(html).toContain('class="why-this__reasons"');
+    expect(html).toContain("<dt>Timing</dt>");
+    expect(html).toContain("<dt>Capacity</dt>");
     expect(html).not.toContain('<details class="why-this"');
     expect(html).toContain('<details class="feedback" aria-label="Feedback">');
     expect(html).not.toContain('<details class="feedback" open');
@@ -561,7 +570,9 @@ describe("app shell rendering", () => {
         capacityMode: "high",
         audience: "both_of_us",
         practiceTypeHints: ["seasonal"],
+        practiceTypeLabel: "Seasonal",
         ritualFocusKey: "marking_a_threshold",
+        ritualFocusLabel: "Marking a threshold",
       },
     });
     const html = renderSignedInShell(resolvePrivateBriefData({}), {
@@ -576,13 +587,17 @@ describe("app shell rendering", () => {
     expect(html).toContain("Source references");
     expect(html).toContain("Selected");
     expect(html).toContain("Inputs");
-    expect(html).toContain("Check-in:");
-    expect(html).toContain("best_moment_this_week");
-    expect(html).toContain("room_for_something_deeper");
-    expect(html).toContain("marking_a_threshold");
+    expect(html).toContain("Check-in choices");
+    expect(html).toContain("Timing:</strong> Best moment this week");
+    expect(html).toContain("Capacity:</strong> Room for something deeper");
+    expect(html).toContain("Audience:</strong> Both of us");
+    expect(html).toContain("Practice:</strong> Seasonal");
+    expect(html).toContain("Intention:</strong> Marking a threshold");
+    expect(html).toContain("Check-in contribution:");
     expect(html).toContain("Private chart status:");
     expect(html).toContain("No placement records loaded.");
-    expect(html).toContain("capacity_fit");
+    expect(html).toContain("Check-in intention match");
+    expect(html).toContain("Private profile theme match");
     expect(html).toContain("private_profile.");
     expect(html).not.toContain("Developer trace");
   });

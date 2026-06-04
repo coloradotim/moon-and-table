@@ -365,7 +365,7 @@ describe("generateWeeklyBrief", () => {
     );
   });
 
-  it("carries current check-in context through decision and trace without scoring claims", () => {
+  it("uses current check-in practice, intention, and audience in pattern scoring", () => {
     const brief = generateWeeklyBrief({
       currentDate: "2026-06-03T12:00:00.000Z",
       capacityMode: "high",
@@ -375,10 +375,17 @@ describe("generateWeeklyBrief", () => {
         capacityMode: "high",
         audience: "both_of_us",
         practiceTypeHints: ["seasonal"],
+        practiceTypeLabel: "Seasonal",
         ritualFocusKey: "marking_a_threshold",
         timingWindowCandidateIds: ["timing_window.fake.safe_key"],
       },
     });
+    const selectedPattern = brief.decision.candidates.ritualPatterns.find(
+      (pattern) => pattern.key === brief.decision.selected.ritualPatternKey,
+    );
+    const selectedReasonCodes = selectedPattern?.scoreReasons.map(
+      (reason) => reason.code,
+    ) ?? [];
 
     expect(brief.decision.inputs.currentRitualCheckIn).toEqual({
       timeScope: "best_moment_this_week",
@@ -386,9 +393,15 @@ describe("generateWeeklyBrief", () => {
       capacityMode: "high",
       audience: "both_of_us",
       practiceTypeHints: ["seasonal"],
+      practiceTypeLabel: "Seasonal",
       ritualFocusKey: "marking_a_threshold",
       timingWindowCandidateIds: ["timing_window.fake.safe_key"],
     });
+    expect(brief.decision.inputs.checkInInfluences).toEqual(
+      expect.arrayContaining(["capacity", "audience", "practice_type", "ritual_focus"]),
+    );
+    expect(selectedReasonCodes).toContain("checkin_capacity_answer");
+    expect(selectedReasonCodes).toContain("checkin_ritual_focus_match");
     expect(brief.trace.currentRitualCheckIn).toEqual(
       brief.decision.inputs.currentRitualCheckIn,
     );
@@ -397,6 +410,141 @@ describe("generateWeeklyBrief", () => {
     );
     expect(JSON.stringify(brief.explanation)).not.toContain(
       "marking_a_threshold",
+    );
+  });
+
+  it("uses an across-the-week timing candidate in the decision record and scoring", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-06-03T12:00:00.000Z",
+      capacityMode: "low",
+      currentRitualCheckIn: {
+        timeScope: "best_moment_this_week",
+        energyCapacity: "a_little",
+        capacityMode: "low",
+        audience: "both_of_us",
+        practiceTypeHints: ["candle_or_light"],
+        practiceTypeLabel: "Light",
+        ritualFocusKey: "tending_us",
+        timingWindowCandidateIds: ["timing_window.fake.venus_leo"],
+      },
+      timingWindowCandidates: [
+        {
+          id: "timing_window.fake.venus_leo",
+          startsAtIso: "2026-06-05T12:00:00.000Z",
+          label: "Venus in Leo",
+          timingFacts: [
+            fakePlanetSignFact({
+              planet: "venus",
+              sign: "leo",
+              degree: 12,
+              longitude: 132,
+            }),
+          ],
+          signalKeys: [],
+          natalContactKeys: [],
+          natalContactThemeKeys: ["visible_warmth"],
+          strength: "supporting",
+          score: 99,
+          scoreReasons: [
+            {
+              code: "natal_contact_present",
+              label: "Private timing contact present",
+              points: 6,
+              detail: "1 safe contact computed",
+            },
+            {
+              code: "shared_natal_contact_match",
+              label: "Shared private timing contact",
+              points: 3,
+            },
+          ],
+        },
+      ],
+    });
+    const selectedPattern = brief.decision.candidates.ritualPatterns.find(
+      (pattern) => pattern.key === brief.decision.selected.ritualPatternKey,
+    );
+    const selectedReasonCodes = selectedPattern?.scoreReasons.map(
+      (reason) => reason.code,
+    ) ?? [];
+
+    expect(brief.decision.inputs.timeScope).toBe("best_moment_this_week");
+    expect(brief.decision.inputs.selectedTimingWindow).toMatchObject({
+      id: "timing_window.fake.venus_leo",
+      label: "Venus in Leo",
+      userWindow: "Around Friday, June 5 afternoon.",
+      isStrong: true,
+    });
+    expect(brief.trace.selectedTimingWindow).toMatchObject({
+      id: "timing_window.fake.venus_leo",
+      label: "Venus in Leo",
+      isStrong: true,
+    });
+    expect(brief.bestWindow).toContain("Around Friday, June 5 afternoon.");
+    expect(brief.decision.inputs.checkInInfluences).toContain("timing_window");
+    expect(brief.trace.computedTimingFacts.map((fact) => fact.id)).toContain(
+      "fake.timing.venus",
+    );
+    expect(selectedReasonCodes).toContain("checkin_timing_window_match");
+    expect(brief.whyThis).toContain("look across the week");
+    expect(brief.whyThis).toContain(
+      "because of a stronger match with saved household themes",
+    );
+    expect(JSON.stringify(brief.explanation)).not.toContain(
+      "timing_window.fake.venus_leo",
+    );
+  });
+
+  it("surfaces when across-the-week timing is not strong enough to shape the ritual", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-06-03T12:00:00.000Z",
+      capacityMode: "low",
+      currentRitualCheckIn: {
+        timeScope: "best_moment_this_week",
+        energyCapacity: "a_little",
+        capacityMode: "low",
+        audience: "me",
+        practiceTypeHints: ["plant_tending"],
+        practiceTypeLabel: "Plant",
+        ritualFocusKey: "tending_the_home",
+        timingWindowCandidateIds: ["timing_window.fake.weak"],
+      },
+      timingWindowCandidates: [
+        {
+          id: "timing_window.fake.weak",
+          startsAtIso: "2026-06-07T00:00:00.000Z",
+          label: "Universal day accent",
+          timingFacts: [],
+          signalKeys: [],
+          natalContactKeys: [],
+          natalContactThemeKeys: [],
+          strength: "accent",
+          score: 2,
+          scoreReasons: [
+            {
+              code: "weak_accent",
+              label: "Weak accent",
+              points: 2,
+            },
+          ],
+        },
+      ],
+    });
+    const selectedPattern = brief.decision.candidates.ritualPatterns.find(
+      (pattern) => pattern.key === brief.decision.selected.ritualPatternKey,
+    );
+
+    expect(brief.decision.inputs.selectedTimingWindow).toMatchObject({
+      id: "timing_window.fake.weak",
+      isStrong: false,
+    });
+    expect(brief.bestWindow).toBe(
+      "No strong timing window stood out this week. When you have five quiet minutes.",
+    );
+    expect(brief.whyThis).toContain("no timing window stood out strongly enough");
+    expect(brief.decision.inputs.checkInInfluences).not.toContain("timing_window");
+    expect(selectedPattern?.scoreReasons.map((reason) => reason.code)).not.toContain(
+      "checkin_timing_window_match",
     );
   });
 
@@ -693,7 +841,9 @@ describe("generateWeeklyBrief", () => {
     expect(brief.decision.selected.natalContactThemeKeys).toEqual(
       expect.arrayContaining(["visible_warmth", "private_natal_contact"]),
     );
-    expect(brief.whyThis).toContain("Current timing lines up with a visible warmth theme");
+    expect(brief.whyThis).toContain(
+      "Private-profile scoring added a small fit note for visible warmth",
+    );
     expect(brief.whyThis).not.toContain("Your chart says");
     expect(brief.whyThis).not.toContain("will bring");
   });
@@ -792,12 +942,13 @@ describe("generateWeeklyBrief", () => {
       astrologyVisibility: "subtle",
     });
 
-    expect(brief.whyThis).toContain("private timing pattern around visible warmth");
+    expect(brief.whyThis).toContain("small fit note for visible warmth");
+    expect(brief.whyThis).toContain("exact chart contacts stay in debug");
     expect(brief.whyThis).not.toContain("Venus in Leo");
     expect(brief.whyThis).not.toContain("natal Venus");
   });
 
-  it("uses explicit natal visibility without deterministic claims", () => {
+  it("keeps explicit natal visibility thematic in the default why text", () => {
     const brief = generateWeeklyBrief({
       currentDate: "2026-01-01T00:00:00.000Z",
       timingFacts: ["moon.full"],
@@ -815,9 +966,10 @@ describe("generateWeeklyBrief", () => {
       astrologyVisibility: "explicit",
     });
 
-    expect(brief.whyThis).toContain("Venus in Leo");
-    expect(brief.whyThis).toContain("private natal Venus in Leo");
-    expect(brief.whyThis).toContain("not a prediction");
+    expect(brief.whyThis).toContain("small fit note for visible warmth");
+    expect(brief.whyThis).toContain("exact chart contacts stay in debug");
+    expect(brief.whyThis).not.toContain("Venus in Leo");
+    expect(brief.whyThis).not.toContain("private natal Venus");
     expect(brief.whyThis).not.toContain("chart says");
     expect(brief.whyThis).not.toContain("will cause");
   });

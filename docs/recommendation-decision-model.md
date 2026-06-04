@@ -6,18 +6,18 @@ The generator flow is:
 
 ```text
 timing facts + approved cards + approved ritual patterns + capacity + preferences
-  + private profile themes + selected private timing contacts
+  + private profile themes + selected private timing contacts + current check-in context
 -> evaluated candidates
 -> selected card, timing signals, and ritual pattern
 -> recommendation decision record
 -> calm user-facing brief copy
 ```
 
-Future check-in context can add a selected `RitualFocusOption` to this flow. That vocabulary is controlled data, not open-ended interpretation, and is documented in `docs/ritual-selection-model.md`. It is not part of current scoring until generator inputs explicitly accept it.
+Current check-in context can add a selected `RitualFocusOption` to this flow. That vocabulary is controlled data, not open-ended interpretation, and is documented in `docs/ritual-selection-model.md`.
 
-Future `Best moment this week` context can use `TimingWindowCandidate` records from `src/lib/timing-window-candidates.ts`. Those records are inspectable timing candidates, not final recommendations. The current generator does not consume them yet.
+`Best moment this week` context can use `TimingWindowCandidate` records from `src/lib/timing-window-candidates.ts`. Those records are inspectable timing candidates, not final recommendations. The generator can select one timing candidate and use it to shape timing signals and ritual scoring.
 
-The pre-brief check-in passes `CurrentRitualCheckIn` into `generateWeeklyBrief()`. In the current implementation, capacity and audience can use existing generator inputs, while practice type, ritual focus, free-text focus, and timing-window candidate ids are carried through the trace and developer decision record for #127 to use. The normal UI should not claim those fields are deeply scoring the recommendation yet.
+The pre-brief check-in passes `CurrentRitualCheckIn` into `generateWeeklyBrief()`. Capacity, audience, practice type, ritual focus, conservative free-text aliases, and selected timing-window candidates can all affect scoring. The normal UI should explain this in human language and keep raw keys in developer-only output.
 
 ## Decision Record
 
@@ -28,6 +28,8 @@ The pre-brief check-in passes `CurrentRitualCheckIn` into `generateWeeklyBrief()
 - selected symbolic card keys
 - selected ritual pattern key
 - private natal profile counts and selected private timing contacts, when available
+- current check-in influence labels
+- selected timing window summary, when the user asked to look across the week
 - evaluated symbolic cards
 - evaluated ritual pattern candidates
 - rejected ritual patterns and rejection reasons
@@ -50,6 +52,11 @@ Current positive score reasons include:
 - `natal_contact_theme_match`: selected private timing contact matched the ritual style
 - `shared_natal_contact_match`: a together recommendation found overlap across private timing contacts
 - `profile_timing_resonance`: current timing fit a saved private natal-theme signal
+- `checkin_capacity_answer`: the current check-in capacity was used in scoring
+- `checkin_practice_type_match`: the selected practice type matched a pattern style
+- `checkin_ritual_focus_match`: the selected ritual focus or conservative text alias matched a pattern style
+- `checkin_audience_match`: the selected audience matched the pattern's audience fit
+- `checkin_timing_window_match`: the selected timing-window candidate matched the pattern style
 - `capacity_default_pattern`: pattern is the fallback default for the active capacity
 - `high_capacity_active_fit`: high-capacity pattern can be more active while staying bounded
 

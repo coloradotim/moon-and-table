@@ -17,12 +17,12 @@ Profiles hold durable defaults and private symbolic themes. Check-ins should cap
 
 ## Opening Copy
 
-When the app eventually adds a check-in flow, the opening should use the signed-in user's first name:
+The check-in flow uses simple, signed-in copy:
 
 ```text
-Hi, <first name>.
+Welcome back, <first name>.
 
-Let's choose a ritual that fits the moment.
+Are you wanting something for today, or looking across the week?
 ```
 
 The name comes from private runtime data. It must not be hard-coded in source-controlled code, docs examples, or tests.
@@ -38,7 +38,7 @@ Do you want something for today, or should I look for the best moment this week?
 Visible options:
 
 - `For today`
-- `Best moment this week`
+- `Across the week`
 
 `For today` uses current timing. `Best moment this week` requires real timing look-ahead. It must not use fake schedule assumptions, hard-coded weekdays, or placeholder windows.
 
@@ -93,11 +93,11 @@ The controlled vocabulary lives in `src/data/ritual-focus-options.ts`. Each scor
 
 The app should ask only questions it can use.
 
-- `Barely any` should ask no further questions.
-- `A little` should ask at most a simpler practice-type question.
-- `Enough to engage` and `Room for something deeper` may show the full ritual-focus question.
+- Time scope, capacity, and audience are always asked because they can affect generation.
+- Practice type and ritual focus are used when present, but the flow can stay shorter when capacity is very low.
+- The review screen should restate what will be held before the app recommends one ritual.
 
-Selected focus should guide recommendation scoring when it is wired in. Timing should shape the form of the ritual, not veto the selected focus. For example, `Making a beginning` under waning or dark timing can become a quieter preparatory beginning rather than disappearing.
+Selected focus guides recommendation scoring. Timing should shape the form of the ritual, not veto the selected focus. For example, `Making a beginning` under waning or dark timing can become a quieter preparatory beginning rather than disappearing.
 
 ## Current Implementation
 
@@ -105,7 +105,7 @@ The pre-brief check-in stores answers in a `CurrentRitualCheckIn` object for the
 
 `Try something else` reuses the same check-in answers and private profile context. `Start over` clears the current check-in and returns to the first question.
 
-The current implementation uses the check-in capacity and audience through existing generator inputs. Deeper scoring for practice type and ritual focus belongs to the next recommendation-integration issue.
+The current implementation uses check-in capacity, audience, practice type, ritual focus, conservative free-text aliases, and selected timing-window candidates in recommendation scoring. The decision record names which check-in fields influenced the selected pattern.
 
 ## Boundaries
 

@@ -78,13 +78,13 @@ Copyrighted source material should be transformed into short SourceNotes, not in
 | --- | --- |
 | `SymbolicCard` | Describes approved symbolic meaning: summary, themes, good-for uses, ritual styles, ritual ideas, avoid-saying guardrails, safety notes, source references, confidence, and approval status. |
 | `RitualPattern` | Describes what to do: duration, capacity modes, materials, steps, safety flags, avoid-if notes, source references, and approval status. |
-| `RitualFocusOption` | Controlled current-moment focus vocabulary for future check-ins. Each scoring option carries theme keys plus generator-usable metadata such as ritual style hints, timing affinities, or symbolic card links. |
+| `RitualFocusOption` | Controlled current-moment focus vocabulary for check-ins. Each scoring option carries theme keys plus generator-usable metadata such as ritual style hints, timing affinities, or symbolic card links. |
 | `RitualSafetyFlags` | Encodes safety constraints such as ingestion, oils, smoke, fire, pets, children, pregnancy, allergies, medical claims, emotional intensity, and cleanup burden. |
 | Approval status | Determines whether content is eligible for recommendation. Only approved cards and approved patterns should be used. |
 
 SymbolicCards describe meaning. RitualPatterns describe practice. The generator should not turn symbolic meaning directly into unreviewed actions.
 
-RitualFocusOptions describe what the user says the current ritual should focus on. They are source-controlled controlled vocabulary, not free-text interpretation. The initial vocabulary lives in `src/data/ritual-focus-options.ts`; it is not wired into scoring until the recommendation flow explicitly accepts current check-in context.
+RitualFocusOptions describe what the user says the current ritual should focus on. They are source-controlled controlled vocabulary, not open-ended interpretation. The vocabulary lives in `src/data/ritual-focus-options.ts`; selected focus can influence recommendation scoring through ritual style hints, timing affinities, symbolic card links, and conservative free-text aliases.
 
 Safety flags can block a pattern even when it matches timing, private profile context, or preferences.
 
@@ -104,7 +104,7 @@ Timing facts are computed and testable. Interpretation belongs in SymbolicCards,
 
 The broader timing fact API lives in `src/lib/timing-facts.ts` and currently computes lunar phase, lunations, moon sign, sun sign, seasonal markers, planetary signs, retrograde status, major aspects, and universal numerology date facts. Universal numerology facts come from `src/lib/numerology-timing.ts`, which computes universal year, month, and day numbers by reducing date sums to 1-9; master numbers are reduced for MVP. The first rule layer lives in `src/lib/timing-interpretation-rules.ts`; approved rules cover lunar phase cards, numerology cards, four solstice/equinox seasonal anchors, MVP astrology cards for Sun through Saturn, all 12 signs, five major aspects, and a conservative retrograde cue. Weather-aware seasonal interpretation, local ecology, cross-quarter days, and outer-planet interpretation remain deferred until reviewed source cards exist.
 
-Timing look-ahead lives in `src/lib/timing-window-candidates.ts`. It scans a default seven-day range and returns sorted timing-window candidates for the future `Best moment this week` flow. This is timing look-ahead, not schedule awareness: candidates do not use fake availability, hard-coded weekdays, or placeholder household windows.
+Timing look-ahead lives in `src/lib/timing-window-candidates.ts`. It scans a default seven-day range and returns sorted timing-window candidates for the `Across the week` check-in path. This is timing look-ahead, not schedule awareness: candidates do not use fake availability, hard-coded weekdays, or placeholder household windows.
 
 Astronomy Engine is the MVP timing direction. Swiss Ephemeris remains deferred until precision, houses, natal charts, or personal transit needs justify it.
 
@@ -137,6 +137,8 @@ User-facing explanations should not show raw trace keys, repo paths, Firestore d
 ## Current Check-In Data
 
 `CurrentRitualCheckIn` is current-view context for the pre-brief flow. It records time scope, current energy/capacity, optional audience, practice type hints, optional ritual focus key, optional short focus text, and safe timing-window candidate ids.
+
+The generator can use this context for capacity, audience fit, practice type matching, ritual focus matching, conservative free-text aliases, and across-week timing-window selection. `Try something else` should reuse the same check-in context while excluding the previous ritual pattern; `Start over` should clear it.
 
 It is not a long-term profile setting. It should stay in the current app session/current generated ritual flow unless a later issue explicitly adds persistence.
 
