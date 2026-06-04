@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 
+import { starterRitualPatterns } from "../../src/data/ritual-patterns";
+import { seedSymbolicCards } from "../../src/data/seed-symbolic-cards";
 import {
   getApprovedSourceReviews,
   SOURCE_NOTE_LOCATION_PRECISIONS,
@@ -12,6 +14,7 @@ import {
   validateSourceReview,
   type SourceNote,
 } from "../../src/data/source-registry";
+import { starterTimingInterpretationRules } from "../../src/lib/timing-interpretation-rules";
 
 describe("source registry", () => {
   it("supports the required source use decisions and review statuses", () => {
@@ -115,6 +118,88 @@ describe("source registry", () => {
           useDecision: "use_carefully",
         }),
       ]),
+    );
+  });
+
+  it("makes deferred and context source families explicit without approving them", () => {
+    const expectedDeferredOrContextSources = [
+      "source.swiss_ephemeris_deferred",
+      "source.sweph_swisseph_deferred",
+      "source.kerykeion_astrologer_api_deferred",
+      "source.astrology_api_family_context",
+      "source.jpl_horizons_context",
+      "source.chani_nicholas_context",
+      "source.robert_hand_deferred",
+      "source.demetra_george_deferred",
+      "source.popular_astrology_sites_context",
+      "source.yasmin_boland_moonology_context",
+      "source.diane_ahlquist_context",
+      "source.llewellyn_moon_sign_book_context",
+      "source.we_moon_oracle_context",
+      "source.juno_jordan_javane_lawrence_context",
+      "source.commercial_numerology_sites_avoid",
+      "source.rosemary_gladstar_context",
+    ];
+    const reviewsById = new Map(
+      starterSourceReviews.map((review) => [review.id, review]),
+    );
+    const approvedSourceIds = getApprovedSourceReviews().map(
+      (review) => review.id,
+    );
+
+    expect(starterSourceReviews.map((review) => review.id)).toEqual(
+      expect.arrayContaining(expectedDeferredOrContextSources),
+    );
+    expect(approvedSourceIds).not.toEqual(
+      expect.arrayContaining(expectedDeferredOrContextSources),
+    );
+
+    for (const id of expectedDeferredOrContextSources) {
+      const review = reviewsById.get(id);
+      const extractionNotes = review?.extractionNotes.join(" ") ?? "";
+
+      expect(review, id).toBeDefined();
+      expect(["context_only", "defer", "avoid"]).toContain(review?.useDecision);
+      expect(["candidate", "reviewed", "rejected"]).toContain(
+        review?.reviewStatus,
+      );
+      expect(extractionNotes, id).toMatch(/Before use|Do not use/);
+      expect(validateSourceReview(review!)).toEqual({
+        valid: true,
+        errors: [],
+      });
+    }
+  });
+
+  it("keeps deferred and context source families out of active content references", () => {
+    const inactiveSourceIds = [
+      "source.swiss_ephemeris_deferred",
+      "source.sweph_swisseph_deferred",
+      "source.kerykeion_astrologer_api_deferred",
+      "source.astrology_api_family_context",
+      "source.jpl_horizons_context",
+      "source.chani_nicholas_context",
+      "source.robert_hand_deferred",
+      "source.demetra_george_deferred",
+      "source.popular_astrology_sites_context",
+      "source.yasmin_boland_moonology_context",
+      "source.diane_ahlquist_context",
+      "source.llewellyn_moon_sign_book_context",
+      "source.we_moon_oracle_context",
+      "source.juno_jordan_javane_lawrence_context",
+      "source.commercial_numerology_sites_avoid",
+      "source.rosemary_gladstar_context",
+    ];
+    const activeSourceReferences = [
+      ...seedSymbolicCards.flatMap((card) => card.source_references),
+      ...starterRitualPatterns.flatMap((pattern) => pattern.sourceReferences),
+      ...starterTimingInterpretationRules.flatMap(
+        (rule) => rule.sourceReferences,
+      ),
+    ];
+
+    expect(activeSourceReferences).not.toEqual(
+      expect.arrayContaining(inactiveSourceIds),
     );
   });
 
