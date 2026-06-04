@@ -148,7 +148,9 @@ Visible v1 options:
 - `Seasonal`
 - `Surprise me`
 
-`Reflection` appears only when the selected capacity can support it. `Seasonal` appears only for the higher-capacity path. `Surprise me` means the practice type is intentionally open; it must not boost a hidden style or pretend it matched the selected ritual.
+`Reflection` appears only when the selected capacity can support it. `Seasonal` appears only for the higher-capacity path.
+
+`Surprise me` is an open selection in the UI, not a seventh practice category. Before recommendation, the generator resolves it to one real visible category based on the ritual focus and capacity context, then records `resolved_open_preference` in the decision diagnostics. The app should not pretend "Surprise me" itself matched the selected ritual.
 
 `Conversation` is intentionally not a visible practice-type option right now. Conversation-shaped ritual content can remain in the approved library for focus-based or future use, but it needs a dedicated source/content pass before it becomes a top-level check-in/profile preference.
 

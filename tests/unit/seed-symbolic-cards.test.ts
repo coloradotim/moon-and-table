@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { batchOneSymbolicCards } from "../../src/data/batch-1-ritual-library";
 import { starterRitualPatterns } from "../../src/data/ritual-patterns";
 import { seedSymbolicCards } from "../../src/data/seed-symbolic-cards";
 import {
@@ -81,7 +82,7 @@ const expectedSeedKeys = [
 describe("seedSymbolicCards", () => {
   it("keeps the initial approved seed set complete", () => {
     expect(seedSymbolicCards.map((card) => card.key).sort()).toEqual(
-      [...expectedSeedKeys].sort(),
+      [...expectedSeedKeys, ...batchOneSymbolicCards.map((card) => card.key)].sort(),
     );
   });
 
@@ -259,6 +260,7 @@ describe("seedSymbolicCards", () => {
 
     expect(seasonalCards.map((card) => card.key).sort()).toEqual([
       "seasonal_autumn_equinox",
+      "seasonal_bowl",
       "seasonal_harvest_gratitude_storing",
       "seasonal_opening_freshening",
       "seasonal_spring_equinox",
@@ -274,17 +276,27 @@ describe("seedSymbolicCards", () => {
       expect(card.signalSummary).toEqual(expect.any(String));
       expect(card.sourceNoteKeys?.length).toBeGreaterThan(0);
       expect(card.toneGuidance?.length).toBeGreaterThan(0);
-      expect(card.source_references).toEqual(
-        expect.arrayContaining([
-          "source.astronomy_engine",
-          "source.noaa_nws_seasonal_facts",
-          "source.temperance_alden_seasonal_practice",
-          "source.anna_franklin_seasonal_home",
-          "source.old_farmers_almanac_context",
-          "note.seasonal_facts_as_markers",
-          "note.almanac_context_not_authority",
-        ]),
-      );
+      if (card.key !== "seasonal_bowl") {
+        expect(card.source_references).toEqual(
+          expect.arrayContaining([
+            "source.astronomy_engine",
+            "source.noaa_nws_seasonal_facts",
+            "source.temperance_alden_seasonal_practice",
+            "source.anna_franklin_seasonal_home",
+            "source.old_farmers_almanac_context",
+            "note.seasonal_facts_as_markers",
+            "note.almanac_context_not_authority",
+          ]),
+        );
+      } else {
+        expect(card.source_references).toEqual(
+          expect.arrayContaining([
+            "source.source_review_kelley_book_of_halloween_seasonal_threshold",
+            "source.source_review_british_popular_customs_calendar_household",
+            "note.calendar_customs_as_household_thresholds",
+          ]),
+        );
+      }
       expect(card.avoid_saying.length).toBeGreaterThan(0);
       expect(card.safety_notes.length).toBeGreaterThan(0);
     }
@@ -312,6 +324,7 @@ describe("seedSymbolicCards", () => {
     for (const card of lunarCards) {
       expect(card.signalSummary).toEqual(expect.any(String));
       expect(card.signalSummary?.length).toBeGreaterThan(20);
+      expect(card.capacityGuidance).toBeDefined();
       expect(card.capacityGuidance).toBeDefined();
       expect(Object.keys(card.capacityGuidance ?? {}).length).toBeGreaterThanOrEqual(3);
       expect(card.toneGuidance?.length).toBeGreaterThan(0);

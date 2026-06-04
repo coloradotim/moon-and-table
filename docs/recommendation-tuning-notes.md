@@ -108,6 +108,103 @@ changes. Issues #171 through #176 should use this packet workflow before
 implementing moon water, threshold charms, boundary/clearing practices,
 sweetening/warmth work, written charms, or container/object rites.
 
+## Issue 180: Batch 1 Grimoire Ritual Library
+
+Batch 1 is a coverage-driven content implementation for the six real visible
+practice categories: Home, Plant, Kitchen, Candle or light, Reflection, and
+Seasonal. It uses only the approved source set named in issue #180.
+
+Added source reviews:
+
+- Carmina Gadelica, Volume I
+- NASA Science Moon Phases
+- The Folk-lore of Plants
+- Language of Flowers
+- Culpeper's Complete Herbal and English Physician, symbolic context only
+- The Magic of the Horse-shoe
+- Current Superstitions
+- The Fairy Mythology
+- The Homeric Hymns
+- The Book of Hallowe'en
+- British Popular Customs
+
+Added transformed SourceNotes for house light, house map, first moon sighting,
+observable lunar light, seed/water, grain/table rhythm, plant witness, plant
+growth and rest, flower-language private message, symbolic herbal limits,
+salt/threshold/key mechanics, domestic boundary action, quiet welcome,
+hearth first-and-last logic, autumn threshold, and calendar thresholds.
+
+Added symbolic support cards for hearth, banked light, first/full/waning light,
+dark moon support, threshold, key, bowl/vessel, cup, salt, clear water, grain,
+bread, honey/sweetness, seed, root, leaf, dormancy, folded word, first/last,
+quiet welcome, and seasonal bowl.
+
+Added or rebuilt active RitualPatterns:
+
+- `bank_the_house_light`
+- `first_light_at_the_threshold`
+- `house_from_root_to_roof`
+- `threshold_bowl`
+- `salt_clear_water_release`
+- `seed_waiting`
+- `plant_witness_to_growth`
+- `dead_leaf_release`
+- `dormant_green_rest`
+- `grain_bowl_beginning`
+- `warm_cup_between_us`
+- `full_light_on_the_table`
+- `folded_phrase_vessel`
+- `waning_phrase_release`
+- `two_words_at_the_table`
+- `seasonal_marker_bowl`
+- `quiet_welcome`
+- `honeyed_word`
+- `carried_key_word`
+- `seasonal_entry_bowl`
+- `bread_at_the_center`
+- `first_day_last_day`
+- `darkening_light`
+- `plant_phrase_under_the_pot`
+- `clear_the_threshold_bowl`
+- `last_word_first_word`
+
+Demoted older weak or overly task-like patterns:
+
+- `close_the_evening`
+- `room_reset`
+- `one_clear_sentence`
+- `simple_warm_drink`
+- `ordinary_cooking_care_cue`
+- `return_one_object`
+- `soften_one_corner`
+- `window_open_air_reset`
+- `shared_space_reset`
+- `small_repair`
+- `end_of_week_closing`
+- `prune_one_dead_leaf`
+- `rotate_plant_for_light`
+- `salt_boundary_bowl`
+- `houseplant_check_in`
+- `sage_clear_reflection_cue`
+
+The generic optional candle add-on is no longer emitted as recommendation
+filler. Candle/light appears when light is the ritual form, not as garnish.
+
+`Surprise me` now resolves to one real visible practice category before
+recommendation. The decision record marks this as `resolved_open_preference`
+so review can see that the user chose an open selection and what category was
+used for scoring.
+
+The recommendation quality report now includes content-health sections:
+approved count, RitualPresentation coverage, scenario selection diversity,
+Batch 1 source coverage, category coverage, must-support coverage,
+nice-to-have status, weak-pattern flags, demotion list, and timing-honesty
+warnings.
+
+Known review note: the scenario report is warning-free after Batch 1, but the
+selection suite still shows repeated selection of a few strong new patterns.
+That is a review signal, not a reason to weaken scoring or diagnostics.
+
 ## Issue 165: Runtime-Sensitive Test Stabilization
 
 Tests should keep catching real recommendation regressions without freezing

@@ -483,3 +483,47 @@ Explicit deferrals:
 - Conversation as a visible route or profile preference remains deferred until its own source/content work.
 
 The goal for #180 should be quality depth in already-approved content: more patterns should feel like rituals from the private household grimoire before the library adds moon water, cinnamon threshold rites, written charms, containers, or other new folk-magic families.
+
+## 10. Post-#180 Batch 1 Outcome
+
+Issue #180 was updated after this audit. The implemented direction became
+coverage-driven Batch 1 content rather than enriching a fixed numeric set of
+legacy patterns.
+
+The Batch 1 implementation uses only the source families approved in issue
+#180 and adds new source-backed grimoire patterns across Home, Plant, Kitchen,
+Candle or light, Reflection, and Seasonal. Weak legacy patterns were not
+preserved simply because they were approved.
+
+Demoted or replaced legacy patterns:
+
+- `close_the_evening`
+- `room_reset`
+- `one_clear_sentence`
+- `simple_warm_drink`
+- `ordinary_cooking_care_cue`
+- `return_one_object`
+- `soften_one_corner`
+- `window_open_air_reset`
+- `shared_space_reset`
+- `small_repair`
+- `end_of_week_closing`
+- `prune_one_dead_leaf`
+- `rotate_plant_for_light`
+- `salt_boundary_bowl`
+- `houseplant_check_in`
+- `sage_clear_reflection_cue`
+
+Representative replacements:
+
+- `bank_the_house_light` for evening/rest closure
+- `salt_clear_water_release` for clearing
+- `plant_witness_to_growth`, `dead_leaf_release`, and `dormant_green_rest` for Plant
+- `warm_cup_between_us`, `grain_bowl_beginning`, `quiet_welcome`, and `honeyed_word` for Kitchen
+- `first_light_at_the_threshold`, `full_light_on_the_table`, and `darkening_light` for Candle or light
+- `folded_phrase_vessel`, `waning_phrase_release`, `two_words_at_the_table`, and `last_word_first_word` for Reflection
+- `seasonal_marker_bowl`, `seasonal_entry_bowl`, and `clear_the_threshold_bowl` for Seasonal
+
+The recommendation quality report now tracks Batch 1 source coverage,
+RitualPresentation coverage, weak-pattern flags, must-support coverage,
+nice-to-have status, demotions, and timing-honesty warnings.

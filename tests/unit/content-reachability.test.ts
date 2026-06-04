@@ -55,26 +55,24 @@ describe("content reachability diagnostics", () => {
     )).toBe(true);
     expect(report.coverage.selectedRitualPatternKeys).toEqual(
       expect.arrayContaining([
+        "bank_the_house_light",
+        "bread_at_the_center",
+        "carried_key_word",
         "clear_one_surface",
-        "bread_enoughness_cue",
-        "candle_light_focus",
-        "close_the_evening",
-        "end_of_week_closing",
-        "houseplant_check_in",
+        "first_light_at_the_threshold",
+        "full_light_on_the_table",
+        "house_from_root_to_roof",
         "kitchen_reset",
-        "lavender_soft_rest_cue",
-        "ordinary_cooking_care_cue",
-        "prune_one_dead_leaf",
-        "return_one_object",
-        "room_reset",
-        "seasonal_table_home_reset",
+        "last_word_first_word",
+        "plant_witness_to_growth",
+        "salt_clear_water_release",
+        "seasonal_marker_bowl",
         "table_reset",
-        "tend_one_plant",
-        "threshold_reset",
+        "two_words_at_the_table",
       ]),
     );
     expect(report.gaps.approvedRitualPatternsNotSelected).toEqual(
-      expect.arrayContaining(["one_clear_sentence", "tea_ritual"]),
+      expect.arrayContaining(["tea_ritual", "tend_one_plant"]),
     );
     expect(report.gaps.approvedRitualPatternsNotSelected.length).toBeGreaterThan(0);
     expect(report.gaps.approvedRitualPatternsNotSelected.every((key) =>
@@ -86,7 +84,7 @@ describe("content reachability diagnostics", () => {
     );
     expect(report.coverage.rejectedRitualPatternKeys.length).toBeGreaterThan(0);
     expect(report.scenarioResults.some((result) =>
-      result.practiceChoiceStatus === "open_preference",
+      result.practiceChoiceStatus === "resolved_open_preference",
     )).toBe(true);
     expect(report.scenarioResults.some((result) =>
       result.practiceChoiceVisibleOptions.includes("Surprise me"),

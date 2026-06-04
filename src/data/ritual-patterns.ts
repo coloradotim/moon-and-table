@@ -5,6 +5,10 @@ import {
   withSafetyOverrides,
   type RitualSafetyFlags,
 } from "../lib/ritual-safety";
+import {
+  batchOneDemotedRitualPatternKeys,
+  batchOneRitualPatterns,
+} from "./batch-1-ritual-library";
 
 export const RITUAL_PATTERN_APPROVAL_STATUSES = [
   "draft",
@@ -75,7 +79,7 @@ const MAX_STEP_LENGTH = 180;
 const MAX_PRESENTATION_LIST_ITEMS = 4;
 const MAX_PRESENTATION_FIELD_LENGTH = 260;
 
-export const starterRitualPatterns: RitualPattern[] = [
+const baseStarterRitualPatterns: RitualPattern[] = [
   {
     id: "ritual_pattern_clear_one_surface",
     key: "clear_one_surface",
@@ -1905,6 +1909,30 @@ export const starterRitualPatterns: RitualPattern[] = [
     ],
     approvalStatus: "approved",
   },
+];
+
+const batchOneDemotedRitualPatternKeySet = new Set<string>(
+  batchOneDemotedRitualPatternKeys,
+);
+
+function demoteBatchOneReplacedPattern(pattern: RitualPattern): RitualPattern {
+  if (!batchOneDemotedRitualPatternKeySet.has(pattern.key)) {
+    return pattern;
+  }
+
+  return {
+    ...pattern,
+    approvalStatus: "reviewed",
+    generatorUseNotes: [
+      ...(pattern.generatorUseNotes ?? []),
+      "Demoted by Batch 1 because a source-backed grimoire ritual replaced this weak or overly task-like form.",
+    ],
+  };
+}
+
+export const starterRitualPatterns: RitualPattern[] = [
+  ...baseStarterRitualPatterns.map(demoteBatchOneReplacedPattern),
+  ...batchOneRitualPatterns,
 ];
 
 function hasRequiredString(value: string): boolean {

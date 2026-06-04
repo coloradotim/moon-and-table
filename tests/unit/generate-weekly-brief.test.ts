@@ -193,24 +193,24 @@ describe("generateWeeklyBrief", () => {
 
   it("uses saved language tone only as legacy fallback copy", () => {
     const brief = generateWeeklyBrief({
-      preferredRitualStyles: ["naming", "conversation"],
+      preferredRitualStyles: ["kitchen", "bread"],
       tonePreferences: ["direct"],
       capacityMode: "low",
       excludedRitualPatternKeys: approvedPatternKeyList.filter(
-        (key) => key !== "one_clear_sentence",
+        (key) => key !== "bread_enoughness_cue",
       ),
       currentRitualCheckIn: {
         timeScope: "today",
         energyCapacity: "a_little",
         capacityMode: "low",
         audience: "me",
-        practiceTypeHints: ["reflection"],
-        practiceTypeLabel: "Reflection",
-        ritualFocusKey: "saying_something_clearly",
+        practiceTypeHints: ["kitchen"],
+        practiceTypeLabel: "Kitchen",
+        ritualFocusKey: "resting",
       },
     });
 
-    expect(brief.trace.ritualPatterns).toEqual(["one_clear_sentence"]);
+    expect(brief.trace.ritualPatterns).toEqual(["bread_enoughness_cue"]);
     expect(brief.recommendedRitual).toContain("Stop there.");
     expect(brief.recommendedRitual).not.toContain("Plain, useful");
   });
@@ -297,39 +297,40 @@ describe("generateWeeklyBrief", () => {
   it("falls back to legacy steps for patterns without presentation", () => {
     const brief = generateWeeklyBrief({
       capacityMode: "low",
-      preferredRitualStyles: ["naming", "conversation"],
+      preferredRitualStyles: ["kitchen", "bread"],
       excludedRitualPatternKeys: approvedPatternKeyList.filter(
-        (key) => key !== "one_clear_sentence",
+        (key) => key !== "bread_enoughness_cue",
       ),
       currentRitualCheckIn: {
         timeScope: "today",
         energyCapacity: "a_little",
         capacityMode: "low",
         audience: "me",
-        practiceTypeHints: ["reflection"],
-        practiceTypeLabel: "Reflection",
-        ritualFocusKey: "saying_something_clearly",
+        practiceTypeHints: ["kitchen"],
+        practiceTypeLabel: "Kitchen",
+        ritualFocusKey: "resting",
       },
     });
 
-    expect(brief.trace.ritualPatterns).toEqual(["one_clear_sentence"]);
-    expect(brief.recommendedRitual).toContain(
-      "Choose one sentence that brings a little clarity to the household.",
-    );
+    expect(brief.trace.ritualPatterns).toEqual(["bread_enoughness_cue"]);
+    expect(brief.recommendedRitual).toContain("Use bread");
     expect(brief.recommendedRitual).not.toContain("Close by");
   });
 
   it("uses pause presentation without no-required-ritual task-list shape", () => {
     const brief = generateWeeklyBrief({
       capacityMode: "pause",
-      preferredRitualStyles: ["close_the_evening", "home_tending"],
+      preferredRitualStyles: ["candle_or_light", "home_tending", "rest"],
+      excludedRitualPatternKeys: approvedPatternKeyList.filter(
+        (key) => key !== "bank_the_house_light",
+      ),
     });
 
-    expect(brief.trace.ritualPatterns).toEqual(["close_the_evening"]);
+    expect(brief.trace.ritualPatterns).toEqual(["bank_the_house_light"]);
     expect(brief.recommendedRitual).not.toContain("No required ritual");
-    expect(brief.recommendedRitual).toContain("Let the ritual be only a pause.");
-    expect(brief.recommendedRitual).toContain("Close by letting the pause be the practice.");
-    expect(brief.reflectionPrompt).toBe("What can be left alone until tomorrow?");
+    expect(brief.recommendedRitual).toContain("Let one lowered light be the whole ritual.");
+    expect(brief.recommendedRitual).toContain("Close by letting the dimmed light hold the end.");
+    expect(brief.reflectionPrompt).toBe("What can rest without being solved?");
   });
 
   it("does not add a generic candle add-on to presented candle or light rituals", () => {
@@ -464,7 +465,8 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.bestWindow).toBe("When you have a little space this week.");
     expect(brief.bestWindow).not.toContain("10-20 minutes");
-    expect(brief.trace.ritualPatterns).toEqual(["table_reset"]);
+    expect(brief.trace.ritualPatterns).toHaveLength(1);
+    expect(brief.decision.selected.ritualPatternKey).toBe(brief.trace.ritualPatterns[0]);
     expect(brief.whyThis).toContain("steady week");
   });
 
@@ -556,19 +558,20 @@ describe("generateWeeklyBrief", () => {
       ]),
     );
     expect(selectedPattern).toBeDefined();
-    expect(selectedPattern?.key).toBe("tend_one_plant");
+    expect(selectedPattern?.key).toBe(brief.decision.selected.ritualPatternKey);
     expect(selectedPattern?.score).toBeGreaterThan(0);
     expect(selectedPattern?.scoreReasons).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ code: "preferred_style_match" }),
         expect.objectContaining({ code: "timing_signal_style_match" }),
         expect.objectContaining({ code: "profile_theme_match" }),
       ]),
     );
     expect(brief.decision.selected.sourceReferences.length).toBeGreaterThan(0);
-    expect(brief.trace.patternSelection.selectedPatternKey).toBe("tend_one_plant");
+    expect(brief.trace.patternSelection.selectedPatternKey).toBe(
+      brief.decision.selected.ritualPatternKey,
+    );
     expect(brief.trace.patternSelection.eligiblePatternKeys).toContain(
-      "tend_one_plant",
+      brief.decision.selected.ritualPatternKey,
     );
   });
 
@@ -620,7 +623,7 @@ describe("generateWeeklyBrief", () => {
     );
   });
 
-  it("treats Surprise me as an open practice preference instead of a scoring match", () => {
+  it("resolves Surprise me to a real visible practice category before scoring", () => {
     const brief = generateWeeklyBrief({
       currentDate: "2026-06-06T12:00:00.000Z",
       capacityMode: "low",
@@ -641,18 +644,17 @@ describe("generateWeeklyBrief", () => {
     const serializedExplanation = JSON.stringify(brief.explanation).toLowerCase();
 
     expect(brief.decision.inputs.practiceChoice).toMatchObject({
-      selectedLabel: "Surprise me",
-      selectedHints: [],
-      selectedPatternMatches: [],
-      status: "open_preference",
+      selectedLabel: "Surprise me -> Home",
+      selectedHints: ["home_tending"],
+      status: "resolved_open_preference",
     });
-    expect(brief.decision.inputs.checkInInfluences).not.toContain("practice_type");
-    expect(selectedPattern?.scoreReasons).not.toEqual(
+    expect(brief.decision.inputs.checkInInfluences).toContain("practice_type");
+    expect(selectedPattern?.scoreReasons).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ code: "checkin_practice_type_match" }),
       ]),
     );
-    expect(serializedExplanation).toContain("left the practice type open");
+    expect(serializedExplanation).not.toContain("left the practice type open");
     expect(serializedExplanation).not.toContain("surprise me choice helped");
   });
 

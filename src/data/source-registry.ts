@@ -1,3 +1,8 @@
+import {
+  batchOneSourceNotes,
+  batchOneSourceReviews,
+} from "./batch-1-ritual-library";
+
 export const SOURCE_USE_DECISIONS = [
   "use",
   "use_carefully",
@@ -102,7 +107,7 @@ const FORBIDDEN_PRIVATE_TERMS = [
 ];
 const STARTER_SOURCE_REVIEWED_AT_ISO = "2026-06-03T00:00:00.000Z";
 
-export const starterSourceReviews: SourceReview[] = [
+const baseStarterSourceReviews: SourceReview[] = [
   {
     id: "source.astronomy_engine",
     title: "Astronomy Engine",
@@ -1398,6 +1403,11 @@ export const starterSourceReviews: SourceReview[] = [
     ],
     confidence: "low",
   },
+];
+
+export const starterSourceReviews: SourceReview[] = [
+  ...baseStarterSourceReviews,
+  ...batchOneSourceReviews,
 ];
 
 type SourceNoteSeed = Omit<SourceNote, "locationNote" | "category" | "copyrightNotes" | "verbatimAllowed"> & {
@@ -2759,8 +2769,10 @@ const starterSourceNoteSeeds: SourceNote[] = [
   },
 ];
 
-export const starterSourceNotes: SourceNote[] =
-  starterSourceNoteSeeds.map(addSourceNoteLocationMetadata);
+export const starterSourceNotes: SourceNote[] = [
+  ...starterSourceNoteSeeds.map(addSourceNoteLocationMetadata),
+  ...batchOneSourceNotes,
+];
 
 function hasRequiredString(value: string): boolean {
   return value.trim().length > 0;
