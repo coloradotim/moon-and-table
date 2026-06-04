@@ -2,6 +2,14 @@
 
 Moon & Table should help choose one ritual that fits the moment. It should not become a feed, a checklist, or a profile editor disguised as a check-in.
 
+The next-stage frame is:
+
+```text
+Moon & Table chooses one ritual from our private household grimoire, then explains how the moment gives it shape.
+```
+
+The recommendation engine chooses from approved grimoire content. It should not assemble a generic ritual from loose timing fragments, pattern summaries, and fallback prompts.
+
 ## Product Split
 
 | Layer | Responsibility |
@@ -11,7 +19,7 @@ Moon & Table should help choose one ritual that fits the moment. It should not b
 | Feedback | What the app learns over time from actual use. |
 | Timing engine | What is happening today or this week. |
 | Natal contacts | How current timing touches private natal profiles, stored and handled privately. |
-| Recommendation engine | Chooses one approved ritual using the available context. |
+| Recommendation engine | Chooses one approved ritual from the private household grimoire using the available context. |
 
 Profiles hold durable defaults and private symbolic themes. Check-ins should capture current context only. Feedback should tune future recommendations over time. Current-moment ritual selection work should not be moved into the profile page.
 
@@ -116,7 +124,9 @@ The app should ask only questions it can use.
 - Practice type and ritual focus are used when present, but the flow can stay shorter when capacity is very low.
 - The review screen should restate what will be held before the app recommends one ritual.
 
-Selected focus guides recommendation scoring. Timing should shape the form of the ritual, not veto the selected focus. For example, `Making a beginning` under waning or dark timing can become a quieter preparatory beginning rather than disappearing.
+Selected focus guides recommendation scoring. Timing should shape the form of the ritual, not veto the selected focus or manufacture unreviewed practice. For example, `Making a beginning` under waning or dark timing can become a quieter preparatory beginning rather than disappearing.
+
+When timing, focus, practice type, audience, or capacity are in tension, the output needs a meaning bridge. It should resolve into one coherent ritual, not a list of partially related reasons. Carry prompts should come from the resolved ritual meaning, not from a raw lunar fallback or whichever timing card happened to be first.
 
 ## Practice Type
 
@@ -147,6 +157,8 @@ The current implementation uses check-in capacity, audience, practice type, ritu
 The user-facing explanation has two normal layers. `Why this fits` is the short card-level reason. `How this was chosen` is collapsed by default and can show timing choice, check-in fit, ritual focus, ritual fit, profile or private timing fit, capacity boundaries, tradeoffs, and sources. Debug remains separate for raw score reasons, ids, candidate lists, and exact private contact keys.
 
 The explanation should not pretend every answer matched. If the selected ritual is an honest adaptation, it should say so. `Making a beginning` during quieter waning timing can be shaped as preparation rather than launch. `Tending us` with low capacity can stay relational through a small shared ritual rather than a heavy conversation.
+
+Recommendation quality is defined in `docs/recommendation-quality-model.md`. Selection is only one part of the product. The final output also needs authored ritual presentation, a clean carrying prompt, and a clean closing.
 
 ## Boundaries
 

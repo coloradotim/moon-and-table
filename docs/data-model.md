@@ -86,11 +86,26 @@ Copyrighted source material should be transformed into short SourceNotes, not in
 
 SymbolicCards describe meaning. RitualPatterns describe practice. The generator should not turn symbolic meaning directly into unreviewed actions.
 
+`RitualPattern.steps` are not enough for final user-facing ritual quality. Steps can say what to do, but a grimoire-quality recommendation also needs authored presentation: why this ritual now, how to hold it, what to carry afterward, and how to close.
+
 RitualFocusOptions describe what the user says the current ritual should focus on. They are source-controlled controlled vocabulary, not open-ended interpretation. The vocabulary lives in `src/data/ritual-focus-options.ts`; selected focus can influence recommendation scoring through ritual style hints, timing affinities, symbolic card links, and conservative free-text aliases.
 
 Safety flags can block a pattern even when it matches timing, private profile context, or preferences.
 
 Lifecycle examples may exist as separate fixture data for curation training and tests. They must stay out of active seed arrays and generated briefs unless their status is changed through review.
+
+## Planned Recommendation Quality Data
+
+These objects are planned concepts. They are not implemented by the current data model.
+
+| Object | Responsibility |
+| --- | --- |
+| `RitualPresentation` | Authored user-facing ritual language attached to an approved pattern: title variants, body copy, intention, optional accents, carry prompts, and closing language. |
+| `RitualMeaningBridge` | Reviewed bridge between timing, focus, practice, audience, or capacity tensions so the output can reshape a ritual without inventing meaning. |
+| `RecommendationQualityScenario` | Privacy-safe scenario used to judge whether generated output feels coherent, specific, and cared-for, not merely explainable. |
+| `ContentPacket` | Human-reviewed batch for adding source-backed content such as source reviews, notes, cards, patterns, presentations, meaning bridges, and quality scenarios. |
+
+These concepts belong to the private household grimoire model described in `docs/recommendation-quality-model.md`. They should not include private names, birth data, raw natal placements, relationship details, private schedules, copied source text, or private source passages.
 
 ## Timing Data
 

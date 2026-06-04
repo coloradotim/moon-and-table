@@ -325,7 +325,44 @@ Practice feedback should eventually become one of the strongest personalization 
 
 Success means the app learns from actual use, not just from generic symbolic sources, while keeping real private data outside the repository.
 
-## Phase 10 — Curation workbench
+## Phase 10 — Recommendation Quality and Content Depth
+
+Treat Moon & Table as a private household grimoire with a recommendation engine underneath.
+
+The next-stage product frame is:
+
+```text
+Moon & Table chooses one ritual from our private household grimoire, then explains how the moment gives it shape.
+```
+
+This phase should happen before Conversation becomes a mainline visible practice preference. The goal is to fix generic recommendation quality and deepen existing practice areas before adding major new categories.
+
+Deliverables:
+
+* privacy-safe recommendation quality scenarios
+* grimoire presentation fields for approved ritual patterns
+* reviewed meaning bridges for timing/focus/practice/capacity tensions
+* contextual optional accents and carry prompts
+* clean ritual closing patterns
+* content packet workflow for reviewed source-backed batches
+* deeper candle and light magic content
+* deeper home / threshold / table / arrival ritual content
+* deeper kitchen warmth and ordinary nourishment content
+* deeper plant tending and seasonal companionship content
+* deeper ritual closure, carrying, and after-practice content
+
+This phase should prevent:
+
+* generic optional candle add-ons
+* raw timing fallback prompts that contradict selected focus
+* `No required ritual` followed by imperative steps
+* score/debug language in user-facing copy
+* pattern summaries stitched together without ritual coherence
+* safety becoming a prominent product layer instead of quiet hard guardrails
+
+Success means a generated recommendation feels authored, coherent, specific, private, and sourced, not merely explainable by the debug record.
+
+## Phase 11 — Curation workbench
 
 Add admin tools for managing source material and symbolic cards.
 
@@ -349,7 +386,7 @@ This is not a web scraper. It is a tool for disciplined human-reviewed curation.
 
 Success means source-derived knowledge can be added and refined without editing raw files by hand or committing private source text.
 
-## Phase 11 — Calendar integration
+## Phase 12 — Calendar integration
 
 Add calendar integration after schedule awareness is designed.
 
