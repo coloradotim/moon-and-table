@@ -339,7 +339,7 @@ function renderNatalDebugStatus(brief: WeeklyBrief): string {
     return `${placementCount} placement record${placementCount === 1 ? "" : "s"} loaded and checked; none affected the selected ritual.`;
   }
 
-  return `${placementCount} placement record${placementCount === 1 ? "" : "s"} loaded; ${selectedContactCount} private timing contact${selectedContactCount === 1 ? "" : "s"} affected the selected ritual.`;
+  return `${placementCount} placement record${placementCount === 1 ? "" : "s"} loaded; ${selectedContactCount} ranked private timing contact${selectedContactCount === 1 ? "" : "s"} affected the selected ritual.`;
 }
 
 function renderDeveloperDecision(brief: WeeklyBrief): string {

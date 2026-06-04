@@ -423,6 +423,9 @@ const DEFAULT_PATTERN_BY_CAPACITY: Record<CapacityMode, string> = {
   high: "room_reset",
 };
 
+const MAX_PROFILE_THEME_SCORE = 8;
+const MAX_SELECTED_NATAL_CONTACTS = 3;
+
 const NATAL_CONTACT_THEME_STYLE_HINTS: Record<string, string[]> = {
   practical_care: ["plant", "plant_tending", "home_tending", "surface_reset", "small_repair"],
   home_and_belonging: ["home_tending", "kitchen", "table_reset", "threshold_reset"],
@@ -698,6 +701,69 @@ function getNatalContactMatches(
   });
 }
 
+function getNatalContactRank(
+  contact: NatalContact,
+  pattern: RitualPattern,
+): number {
+  const contactTypeScore: Record<NatalContact["contactType"], number> = {
+    near_conjunction: 8,
+    major_aspect: 6,
+    same_sign: 2,
+    elemental_resonance: 1,
+    modality_resonance: 1,
+  };
+  const strengthScore: Record<NatalContact["strength"], number> = {
+    primary: 4,
+    supporting: 2,
+    accent: 1,
+  };
+  const styleMatchCount = getNatalContactStyleHints(contact).filter(
+    (hint) => hint === pattern.key || pattern.ritualStyles.includes(hint),
+  ).length;
+  const orbScore =
+    contact.orbDegrees === undefined
+      ? 0
+      : Math.max(0, 3 - contact.orbDegrees);
+
+  return contactTypeScore[contact.contactType] +
+    strengthScore[contact.strength] +
+    styleMatchCount * 2 +
+    orbScore;
+}
+
+function selectNatalContactMatches(
+  natalContacts: NatalContact[],
+  pattern: RitualPattern,
+): NatalContact[] {
+  const selected: NatalContact[] = [];
+  const perPersonCount = new Map<NatalContact["personKey"], number>();
+  const matches = [...getNatalContactMatches(natalContacts, pattern)].sort(
+    (a, b) =>
+      getNatalContactRank(b, pattern) - getNatalContactRank(a, pattern) ||
+      getContactKey(a).localeCompare(getContactKey(b)),
+  );
+
+  for (const contact of matches) {
+    const personCount = perPersonCount.get(contact.personKey) ?? 0;
+
+    if (
+      personCount >= 2 &&
+      selected.length < MAX_SELECTED_NATAL_CONTACTS - 1
+    ) {
+      continue;
+    }
+
+    selected.push(contact);
+    perPersonCount.set(contact.personKey, personCount + 1);
+
+    if (selected.length >= MAX_SELECTED_NATAL_CONTACTS) {
+      break;
+    }
+  }
+
+  return selected;
+}
+
 function getSharedNatalThemeKeys(
   contacts: NatalContact[],
 ): string[] {
@@ -731,8 +797,8 @@ function getNatalContactScoreReasons(
     scoreReason(
       "natal_contact_theme_match",
       "Private natal contact theme match",
-      Math.min(3, contacts.length),
-      contactKeys.slice(0, 4).join(", "),
+      Math.min(2, contacts.length),
+      contactKeys.slice(0, MAX_SELECTED_NATAL_CONTACTS).join(", "),
     ),
   ];
   const sharedThemeKeys = getSharedNatalThemeKeys(contacts);
@@ -793,6 +859,24 @@ function summarizeNatalContact(contact: NatalContact): NatalContactSummary {
 
 function getNatalContactThemeKeys(contacts: NatalContact[]): string[] {
   return uniqueValues(contacts.flatMap((contact) => contact.themeKeys));
+}
+
+function getProfileSignalScore(
+  profileSignalMatches: PrivateProfileSignal[],
+): number {
+  const bestWeightByTheme = new Map<string, number>();
+
+  for (const signal of profileSignalMatches) {
+    bestWeightByTheme.set(
+      signal.themeKey,
+      Math.max(bestWeightByTheme.get(signal.themeKey) ?? 0, signal.weight),
+    );
+  }
+
+  return Math.min(
+    MAX_PROFILE_THEME_SCORE,
+    [...bestWeightByTheme.values()].reduce((total, weight) => total + weight, 0),
+  );
 }
 
 function getCleanupAvoidanceMatches(
@@ -1045,14 +1129,11 @@ function getEligiblePatternCandidates(
       input.profileSignals,
       pattern,
     );
-    const natalContactMatches = getNatalContactMatches(
+    const natalContactMatches = selectNatalContactMatches(
       input.selectedNatalContacts,
       pattern,
     );
-    const profileSignalBoost = profileSignalMatches.reduce(
-      (total, signal) => total + signal.weight,
-      0,
-    );
+    const profileSignalBoost = getProfileSignalScore(profileSignalMatches);
     const profileSignalReason =
       profileSignalBoost > 0
         ? [
@@ -1060,7 +1141,7 @@ function getEligiblePatternCandidates(
               "profile_theme_match",
               "Private profile theme match",
               profileSignalBoost,
-              profileSignalMatches.map((signal) => signal.key).join(", "),
+              profileSignalMatches.map((signal) => signal.key).slice(0, 6).join(", "),
             ),
           ]
         : [];

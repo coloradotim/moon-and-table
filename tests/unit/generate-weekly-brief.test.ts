@@ -94,6 +94,27 @@ const fakeVenusWarmthProfile: PrivateNatalProfile = {
   profileThemeKeys: [],
 };
 
+const fakeManyContactProfiles: PrivateNatalProfile[] = [
+  {
+    personKey: "person_a",
+    placements: [
+      { bodyOrPoint: "sun", sign: "leo", degree: 13, themeKeys: ["visible_warmth"] },
+      { bodyOrPoint: "moon", sign: "taurus", degree: 10, themeKeys: ["practical_care"] },
+      { bodyOrPoint: "saturn", sign: "scorpio", degree: 13, themeKeys: ["structure_and_repair"] },
+    ],
+    profileThemeKeys: ["private_profile.practical_tending"],
+  },
+  {
+    personKey: "person_b",
+    placements: [
+      { bodyOrPoint: "venus", sign: "leo", degree: 13, themeKeys: ["visible_warmth"] },
+      { bodyOrPoint: "mars", sign: "taurus", degree: 10, themeKeys: ["direct_action"] },
+      { bodyOrPoint: "saturn", sign: "scorpio", degree: 13, themeKeys: ["structure_and_repair"] },
+    ],
+    profileThemeKeys: ["private_profile.beauty_warmth"],
+  },
+];
+
 describe("generateWeeklyBrief", () => {
   it("returns the required weekly brief shape", () => {
     const brief = generateWeeklyBrief({ currentDate: "2026-06-03T12:00:00.000Z" });
@@ -610,12 +631,89 @@ describe("generateWeeklyBrief", () => {
       ]),
     );
     expect(brief.decision.selected.natalContacts.length).toBeGreaterThan(0);
+    expect(brief.decision.selected.natalContacts.length).toBeLessThanOrEqual(3);
     expect(brief.decision.selected.natalContactThemeKeys).toEqual(
       expect.arrayContaining(["visible_warmth", "private_natal_contact"]),
     );
     expect(brief.whyThis).toContain("Current timing lines up with a visible warmth theme");
     expect(brief.whyThis).not.toContain("Your chart says");
     expect(brief.whyThis).not.toContain("will bring");
+  });
+
+  it("caps selected natal contacts and private profile theme scoring", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-01-01T00:00:00.000Z",
+      timingFacts: ["moon.full"],
+      computedTimingFacts: [
+        fakePlanetSignFact({
+          planet: "venus",
+          sign: "leo",
+          degree: 13,
+          longitude: 133,
+        }),
+        fakePlanetSignFact({
+          planet: "mars",
+          sign: "taurus",
+          degree: 10,
+          longitude: 40,
+        }),
+        fakePlanetSignFact({
+          planet: "moon",
+          sign: "scorpio",
+          degree: 13,
+          longitude: 223,
+        }),
+      ],
+      capacityMode: "steady",
+      audience: "either",
+      profileInputs: [
+        {
+          audience: "person_a",
+          label: "Person A",
+          profileThemeKeys: [
+            "private_profile.practical_tending",
+            "private_profile.beauty_warmth",
+            "private_profile.structured_action",
+          ],
+          astrologyProfileThemeKeys: [
+            "private_profile.practical_tending",
+            "private_profile.beauty_warmth",
+            "private_profile.structured_action",
+          ],
+        },
+        {
+          audience: "person_b",
+          label: "Person B",
+          profileThemeKeys: [
+            "private_profile.practical_tending",
+            "private_profile.beauty_warmth",
+            "private_profile.structured_action",
+          ],
+          astrologyProfileThemeKeys: [
+            "private_profile.practical_tending",
+            "private_profile.beauty_warmth",
+            "private_profile.structured_action",
+          ],
+        },
+      ],
+      natalProfiles: fakeManyContactProfiles,
+      astrologyVisibility: "balanced",
+    });
+    const selectedPattern = brief.decision.candidates.ritualPatterns.find(
+      (pattern) => pattern.key === brief.decision.selected.ritualPatternKey,
+    );
+    const profileThemeReason = selectedPattern?.scoreReasons.find(
+      (reason) => reason.code === "profile_theme_match",
+    );
+    const natalContactReason = selectedPattern?.scoreReasons.find(
+      (reason) => reason.code === "natal_contact_theme_match",
+    );
+
+    expect(brief.decision.inputs.natalContactsComputed).toBeGreaterThan(3);
+    expect(brief.decision.selected.natalContacts.length).toBeLessThanOrEqual(3);
+    expect(brief.trace.selectedNatalContacts.length).toBeLessThanOrEqual(3);
+    expect(profileThemeReason?.points).toBeLessThanOrEqual(8);
+    expect(natalContactReason?.points).toBeLessThanOrEqual(2);
   });
 
   it("uses subtle natal visibility as theme language only", () => {

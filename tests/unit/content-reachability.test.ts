@@ -58,12 +58,15 @@ describe("content reachability diagnostics", () => {
         "clear_one_surface",
         "bread_enoughness_cue",
         "candle_light_focus",
-        "apple_fresh_choice_cue",
         "close_the_evening",
         "kitchen_reset",
         "oats_steady_care_cue",
         "ordinary_cooking_care_cue",
         "prune_one_dead_leaf",
+        "table_reset",
+        "tea_ritual",
+        "tend_one_plant",
+        "threshold_reset",
       ]),
     );
     expect(report.gaps.approvedRitualPatternsNotSelected.length).toBeGreaterThan(0);
