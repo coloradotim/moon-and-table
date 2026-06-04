@@ -64,6 +64,21 @@ Recommendation quality report warning counts moved this way in the first pass:
 | `best_window_reason_too_thin` | 0 | 0 | No regression. |
 | `source_id_visible_in_normal_copy` | 0 | 0 | No regression. |
 
+## Issue 166: House Voice Over Runtime Tone Knobs
+
+Moon & Table now treats house voice as part of the product, not as a user-facing
+runtime writing-style setting. Normal profile settings no longer expose language
+or broad avoid-style controls. The profile page keeps durable practical settings:
+usual capacity, maximum ritual size, astrology visibility, broad practice-fit
+preferences, and chart context.
+
+Old private profile data may still contain `tonePreferences` or avoid-style
+fields. Loading that data remains safe. Normal profile saves preserve existing
+avoid values when no avoid controls are submitted, and do not actively write
+tone preferences. Internal `toneGuidance`, safety blockers, burden constraints,
+and practical avoid flags remain available for curation, eligibility, and
+review.
+
 ## Issue 129: Check-in Practice Choice Diagnostics
 
 The check-in practice step now has explicit diagnostics in the recommendation decision record and content reachability report.

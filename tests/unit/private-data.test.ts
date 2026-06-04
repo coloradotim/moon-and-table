@@ -276,8 +276,10 @@ describe("private Firestore data resolution", () => {
         astrologyProfileThemeKeys: ["private_profile.structured_action"],
         preferredRitualStyles: ["candle"],
         avoidedRitualStyles: ["shopping_required"],
-        tonePreferences: ["warm"],
       }),
+    ]);
+    expect(privateBriefData.tuningProfiles[1]?.settings.tonePreferences).toEqual([
+      "warm",
     ]);
   });
 
