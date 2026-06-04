@@ -6,6 +6,7 @@ The generator flow is:
 
 ```text
 timing facts + approved cards + approved ritual patterns + capacity + preferences
+  + private profile themes + selected private timing contacts
 -> evaluated candidates
 -> selected card, timing signals, and ritual pattern
 -> recommendation decision record
@@ -20,6 +21,7 @@ timing facts + approved cards + approved ritual patterns + capacity + preference
 - selected timing signal labels
 - selected symbolic card keys
 - selected ritual pattern key
+- private natal profile counts and selected private timing contacts, when available
 - evaluated symbolic cards
 - evaluated ritual pattern candidates
 - rejected ritual patterns and rejection reasons
@@ -39,6 +41,9 @@ Current positive score reasons include:
 - `symbolic_card_style_match`: selected symbolic card style matched
 - `timing_signal_style_match`: selected timing signal style matched
 - `profile_theme_match`: saved generic profile or natal-theme signal matched
+- `natal_contact_theme_match`: selected private timing contact matched the ritual style
+- `shared_natal_contact_match`: a together recommendation found overlap across private timing contacts
+- `profile_timing_resonance`: current timing fit a saved private natal-theme signal
 - `capacity_default_pattern`: pattern is the fallback default for the active capacity
 - `high_capacity_active_fit`: high-capacity pattern can be more active while staying bounded
 
@@ -61,7 +66,7 @@ The app renders the decision record only when debug mode is enabled:
 ?debug=true
 ```
 
-The developer view shows selected cards and pattern, normalized inputs, selected score reasons, evaluated candidate scores, rejected candidates, and source references.
+The developer view shows selected cards and pattern, normalized inputs, selected score reasons, evaluated candidate scores, rejected candidates, source references, and count/detail summaries for selected private timing contacts.
 
 Debug output should stay privacy-safe. Use generic ids, keys, and labels. Do not render private notes, birth data, real schedules, raw natal placements, private source text, service credentials, or Firestore internals.
 

@@ -1,6 +1,6 @@
 # Natal Contact Model
 
-Moon & Table can compute private contacts between current timing facts and private natal profile placements. This model is computation-only. It does not create user-facing explanations, recommendation scoring, predictions, identity claims, houses, synastry, or compatibility.
+Moon & Table can compute private contacts between current timing facts and private natal profile placements. The contact model returns structured records; the weekly brief generator may use selected records as bounded scoring signals and visibility-aware explanation context. It does not create predictions, identity claims, houses, synastry, or compatibility.
 
 ## Privacy Boundary
 
@@ -72,12 +72,11 @@ Contacts output compact theme keys rather than interpretive prose. Examples incl
 - `structure_and_repair`
 - `quiet_integration`
 
-These keys are private computation hints for later scoring and explanation work. They should not be treated as final user-facing copy.
+These keys are private computation hints for scoring and explanation. They should not be treated as final user-facing copy.
 
 ## Deferred
 
-- user-facing natal explanations
-- recommendation scoring changes
+- richer user-facing natal explanation controls
 - houses
 - synastry or compatibility
 - personal transit predictions
@@ -86,4 +85,4 @@ These keys are private computation hints for later scoring and explanation work.
 - elemental and modality resonance
 - user-facing editing or import UI for detailed placements
 
-Future issues can connect these contacts to scoring and explanation once privacy, consent, and display rules are explicit.
+Future issues can deepen the scoring weights and explanation controls once privacy, consent, and display rules mature.

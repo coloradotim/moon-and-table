@@ -285,6 +285,29 @@ function renderScoreReasons(
   `).join("");
 }
 
+function renderNatalContactDebug(
+  contacts: WeeklyBrief["decision"]["selected"]["natalContacts"],
+): string {
+  if (contacts.length === 0) {
+    return "<p>No selected natal contacts affected this recommendation.</p>";
+  }
+
+  return `<ol>${contacts.map((contact) => `
+    <li>
+      <strong>${escapeHtml(contact.key)}</strong>
+      <small>${escapeHtml([
+        contact.personKey,
+        contact.transitingBody,
+        contact.contactType,
+        contact.aspectType,
+        contact.natalBodyOrPoint,
+        contact.orbDegrees !== undefined ? `${contact.orbDegrees}° orb` : undefined,
+      ].filter(Boolean).join(" · "))}</small>
+      <small>${escapeHtml(contact.themeKeys.join(" · "))}</small>
+    </li>
+  `).join("")}</ol>`;
+}
+
 function renderDeveloperDecision(brief: WeeklyBrief): string {
   const selectedPattern = brief.decision.candidates.ritualPatterns.find(
     (candidate) => candidate.key === brief.decision.selected.ritualPatternKey,
@@ -309,6 +332,8 @@ function renderDeveloperDecision(brief: WeeklyBrief): string {
           <p><strong>Audience:</strong> ${escapeHtml(brief.decision.inputs.audience)}</p>
           <p><strong>Preferred:</strong> ${escapeHtml(brief.decision.inputs.preferredRitualStyles.join(" · ") || "none")}</p>
           <p><strong>Avoided:</strong> ${escapeHtml(brief.decision.inputs.avoidedRitualStyles.join(" · ") || "none")}</p>
+          <p><strong>Natal profiles:</strong> ${escapeHtml(`${brief.decision.inputs.privateNatalProfileCount}`)} loaded</p>
+          <p><strong>Natal contacts:</strong> ${escapeHtml(`${brief.decision.inputs.natalContactsComputed}`)} computed</p>
         </section>
       </div>
       ${selectedPattern ? `
@@ -340,6 +365,10 @@ function renderDeveloperDecision(brief: WeeklyBrief): string {
             `).join("")}</ol>`
           : "<p>No rejected ritual patterns recorded.</p>"
         }
+      </section>
+      <section class="decision-debug__section">
+        <h3>Selected natal contacts</h3>
+        ${renderNatalContactDebug(brief.decision.selected.natalContacts)}
       </section>
       <section class="decision-debug__section">
         <h3>Source references</h3>

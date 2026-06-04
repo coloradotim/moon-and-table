@@ -133,12 +133,11 @@ Implemented as a private computation layer:
 - opposition, square, trine, and sextile contacts with a conservative 3 degree orb when both degrees are available
 - structured theme-key output for later scoring and explanation work
 
-This layer lives in `src/lib/private-natal-contacts.ts`. It does not interpret contacts into user-facing meaning, change brief scoring, add houses, add synastry, add compatibility, predict events, or make identity claims. Real private chart values must stay in Firestore or local gitignored files, not source control.
+This layer lives in `src/lib/private-natal-contacts.ts`. The contact engine itself returns structured records; the brief generator may use selected records as bounded scoring signals and visibility-aware explanation context. It does not add houses, synastry, compatibility, predictions, or identity claims. Real private chart values must stay in Firestore or local gitignored files, not source control.
 
 Still deferred:
 
-- user-facing private natal explanations
-- recommendation scoring from natal contacts
+- richer user-facing private natal explanation controls
 - houses
 - synastry or compatibility
 - body-specific orbs
@@ -234,7 +233,7 @@ Future tests should add:
 - second-source ephemeris comparisons for planetary facts
 - station-boundary retrograde cases
 - exact aspect search cases if the app moves beyond simple daily facts
-- runtime integration tests for private natal contacts once contacts influence scoring
+- runtime integration tests for private natal contact behavior in the signed-in app shell
 - timezone-aware week selection if the app later supports household timezones beyond labels
 - seasonal marker behavior around year boundaries
 

@@ -17,6 +17,7 @@ import {
   type PrivateAstrologyProfile,
   type PrivateAudience,
   type PrivateNatalPlacement,
+  type PrivateNatalProfile,
   type NatalPoint,
   type PrivateProfileAssumption,
   type PrivateProfileDocument,
@@ -56,6 +57,7 @@ export type PrivateBriefData = {
   householdId?: string;
   assumptions: PrivateProfileAssumption[];
   astrologyProfile?: PrivateAstrologyProfile;
+  natalProfiles: PrivateNatalProfile[];
   tuning: ProfileTuningSettings | null;
   tuningProfiles: ProfileTuningProfile[];
   documentRefs: PrivateDocumentRefs;
@@ -366,6 +368,30 @@ function sanitizeAstrologyProfile(
   };
 }
 
+function buildPrivateNatalProfile(
+  profile: Partial<PrivateProfileDocument> | null | undefined,
+  astrologyProfile: PrivateAstrologyProfile | undefined,
+): PrivateNatalProfile | undefined {
+  if (
+    !isAudience(profile?.personKey) ||
+    profile.personKey === "together" ||
+    profile.personKey === "either" ||
+    !astrologyProfile?.placements ||
+    astrologyProfile.placements.length === 0
+  ) {
+    return undefined;
+  }
+
+  return {
+    personKey: profile.personKey,
+    placements: astrologyProfile.placements,
+    profileThemeKeys: astrologyProfile.profileThemeKeys,
+    astrologyVisibility: isAstrologyVisibility(profile?.astrologyVisibility)
+      ? profile.astrologyVisibility
+      : "balanced",
+  };
+}
+
 function resolveScheduleConstraints(
   scheduleDoc: Partial<ScheduleConstraintsDocument> | null | undefined,
   fallbackSchedule: ManualScheduleConstraints,
@@ -426,6 +452,10 @@ export function resolvePrivateBriefData(
   const astrologyProfile = sanitizeAstrologyProfile(
     documents.profile?.astrologyProfile,
   );
+  const currentNatalProfile = buildPrivateNatalProfile(
+    documents.profile,
+    astrologyProfile,
+  );
   const defaultAudience = isAudience(documents.profile?.defaultAudience)
     ? documents.profile.defaultAudience
     : "either";
@@ -458,6 +488,7 @@ export function resolvePrivateBriefData(
           avoidedRitualStyles,
           profileThemeKeys: privateProfileKeys,
           astrologyProfileThemeKeys: astrologyProfile?.profileThemeKeys ?? [],
+          natalProfile: currentNatalProfile,
           tonePreferences,
           astrologyVisibility: isAstrologyVisibility(
             documents.profile?.astrologyVisibility,
@@ -492,11 +523,19 @@ export function resolvePrivateBriefData(
           defaultAudience,
         },
       ),
+      natalProfiles: buildGeneratorNatalProfiles(
+        currentNatalProfile,
+        tuningProfiles,
+      ),
+      astrologyVisibility: isAstrologyVisibility(documents.profile?.astrologyVisibility)
+        ? documents.profile.astrologyVisibility
+        : "balanced",
       audience: defaultAudience,
     },
     householdId,
     assumptions,
     astrologyProfile,
+    natalProfiles: buildGeneratorNatalProfiles(currentNatalProfile, tuningProfiles),
     tuning,
     tuningProfiles:
       tuning && documentRefs.profileId && documentRefs.capacitySettingsId && documentRefs.scheduleConstraintsId
@@ -516,6 +555,21 @@ export function resolvePrivateBriefData(
         : tuningProfiles,
     documentRefs,
   };
+}
+
+function buildGeneratorNatalProfiles(
+  currentNatalProfile: PrivateNatalProfile | undefined,
+  tuningProfiles: ProfileTuningProfile[],
+): PrivateNatalProfile[] {
+  return [
+    ...(currentNatalProfile ? [currentNatalProfile] : []),
+    ...tuningProfiles.flatMap((profile) =>
+      profile.settings.natalProfile ? [profile.settings.natalProfile] : [],
+    ),
+  ].filter(
+    (profile, index, profiles) =>
+      profiles.findIndex((candidate) => candidate.personKey === profile.personKey) === index,
+  );
 }
 
 function buildGeneratorProfileInputs(

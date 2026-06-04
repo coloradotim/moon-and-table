@@ -7,6 +7,8 @@ import {
   generateWeeklyBrief,
 } from "../../src/lib/generate-weekly-brief";
 import { getLunarTimingFact } from "../../src/lib/lunar-timing";
+import type { PrivateNatalProfile } from "../../src/lib/private-data-schema";
+import type { TimingFact, ZodiacSign } from "../../src/lib/timing-facts";
 
 const supersededCapacityModes = [
   "tiny",
@@ -36,6 +38,61 @@ const approvedPatternKeys = new Set(
     .filter((pattern) => pattern.approvalStatus === "approved")
     .map((pattern) => pattern.key),
 );
+
+const fakeTimingBase = {
+  exactIso: "2026-01-01T00:00:00.000Z",
+  timezone: "UTC",
+  computedBy: "manual" as const,
+  confidence: "manual" as const,
+};
+
+function fakePlanetSignFact({
+  planet,
+  sign,
+  degree,
+  longitude,
+}: {
+  planet: "moon" | "venus" | "mars";
+  sign: ZodiacSign;
+  degree: number;
+  longitude: number;
+}): TimingFact {
+  if (planet === "moon") {
+    return {
+      ...fakeTimingBase,
+      id: "fake.timing.moon",
+      type: "moon_sign",
+      label: "Moon fake position",
+      sign,
+      degree,
+      eclipticLongitudeDegrees: longitude,
+    };
+  }
+
+  return {
+    ...fakeTimingBase,
+    id: `fake.timing.${planet}`,
+    type: "planet_sign",
+    label: `${planet} fake position`,
+    planet,
+    sign,
+    degree,
+    eclipticLongitudeDegrees: longitude,
+  };
+}
+
+const fakeVenusWarmthProfile: PrivateNatalProfile = {
+  personKey: "person_b",
+  placements: [
+    {
+      bodyOrPoint: "venus",
+      sign: "leo",
+      degree: 13,
+      themeKeys: ["visible_warmth"],
+    },
+  ],
+  profileThemeKeys: [],
+};
 
 describe("generateWeeklyBrief", () => {
   it("returns the required weekly brief shape", () => {
@@ -483,10 +540,168 @@ describe("generateWeeklyBrief", () => {
     ).toBe(true);
     expect(brief.explanation.signals.some((signal) => signal.type === "planetary")).toBe(true);
     expect(serializedBrief).not.toContain("birth");
-    expect(serializedBrief).not.toContain("natal");
+    expect(brief.decision.inputs.privateNatalProfilesLoaded).toBe(false);
+    expect(brief.decision.selected.natalContacts).toEqual([]);
     expect(serializedBrief).not.toContain("synastry");
     expect(serializedBrief).not.toContain("compatibility");
     expect(serializedBrief).not.toContain("your chart");
+  });
+
+  it("computes private natal contacts from generator inputs and records count-only diagnostics", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-01-01T00:00:00.000Z",
+      timingFacts: ["moon.full"],
+      computedTimingFacts: [
+        fakePlanetSignFact({
+          planet: "venus",
+          sign: "leo",
+          degree: 13,
+          longitude: 133,
+        }),
+      ],
+      capacityMode: "low",
+      audience: "person_b",
+      natalProfiles: [fakeVenusWarmthProfile],
+      astrologyVisibility: "balanced",
+    });
+
+    expect(brief.trace.privateNatalDiagnostics).toEqual({
+      privateNatalProfilesLoaded: true,
+      privateNatalProfileCount: 1,
+      natalPlacementCounts: { person_b: 1 },
+      natalContactsComputed: 2,
+    });
+    expect(brief.decision.inputs).toMatchObject({
+      privateNatalProfilesLoaded: true,
+      privateNatalProfileCount: 1,
+      natalPlacementCounts: { person_b: 1 },
+      natalContactsComputed: 2,
+    });
+    expect(brief.trace.selectedNatalContacts.length).toBeGreaterThan(0);
+    expect(JSON.stringify(brief.trace.privateNatalDiagnostics)).not.toContain("leo");
+    expect(JSON.stringify(brief.trace.privateNatalDiagnostics)).not.toContain("venus");
+  });
+
+  it("uses natal contacts as bounded score reasons for eligible ritual candidates", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-01-01T00:00:00.000Z",
+      timingFacts: ["moon.full"],
+      computedTimingFacts: [
+        fakePlanetSignFact({
+          planet: "venus",
+          sign: "leo",
+          degree: 13,
+          longitude: 133,
+        }),
+      ],
+      capacityMode: "low",
+      audience: "person_b",
+      natalProfiles: [fakeVenusWarmthProfile],
+      astrologyVisibility: "balanced",
+    });
+    const selectedPattern = brief.decision.candidates.ritualPatterns.find(
+      (pattern) => pattern.key === brief.decision.selected.ritualPatternKey,
+    );
+
+    expect(selectedPattern?.scoreReasons).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ code: "natal_contact_theme_match" }),
+        expect.objectContaining({ code: "profile_timing_resonance" }),
+      ]),
+    );
+    expect(brief.decision.selected.natalContacts.length).toBeGreaterThan(0);
+    expect(brief.decision.selected.natalContactThemeKeys).toEqual(
+      expect.arrayContaining(["visible_warmth", "private_natal_contact"]),
+    );
+    expect(brief.whyThis).toContain("Current timing lines up with a visible warmth theme");
+    expect(brief.whyThis).not.toContain("Your chart says");
+    expect(brief.whyThis).not.toContain("will bring");
+  });
+
+  it("uses subtle natal visibility as theme language only", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-01-01T00:00:00.000Z",
+      timingFacts: ["moon.full"],
+      computedTimingFacts: [
+        fakePlanetSignFact({
+          planet: "venus",
+          sign: "leo",
+          degree: 13,
+          longitude: 133,
+        }),
+      ],
+      capacityMode: "low",
+      audience: "person_b",
+      natalProfiles: [fakeVenusWarmthProfile],
+      astrologyVisibility: "subtle",
+    });
+
+    expect(brief.whyThis).toContain("private timing pattern around visible warmth");
+    expect(brief.whyThis).not.toContain("Venus in Leo");
+    expect(brief.whyThis).not.toContain("natal Venus");
+  });
+
+  it("uses explicit natal visibility without deterministic claims", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-01-01T00:00:00.000Z",
+      timingFacts: ["moon.full"],
+      computedTimingFacts: [
+        fakePlanetSignFact({
+          planet: "venus",
+          sign: "leo",
+          degree: 13,
+          longitude: 133,
+        }),
+      ],
+      capacityMode: "low",
+      audience: "person_b",
+      natalProfiles: [fakeVenusWarmthProfile],
+      astrologyVisibility: "explicit",
+    });
+
+    expect(brief.whyThis).toContain("Venus in Leo");
+    expect(brief.whyThis).toContain("private natal Venus in Leo");
+    expect(brief.whyThis).toContain("not a prediction");
+    expect(brief.whyThis).not.toContain("chart says");
+    expect(brief.whyThis).not.toContain("will cause");
+  });
+
+  it("does not let natal contacts override capacity or avoided-style exclusions", () => {
+    const brief = generateWeeklyBrief({
+      currentDate: "2026-01-01T00:00:00.000Z",
+      timingFacts: ["moon.full"],
+      computedTimingFacts: [
+        fakePlanetSignFact({
+          planet: "venus",
+          sign: "leo",
+          degree: 13,
+          longitude: 133,
+        }),
+      ],
+      capacityMode: "pause",
+      audience: "person_b",
+      avoidedRitualStyles: ["live_flame"],
+      natalProfiles: [fakeVenusWarmthProfile],
+      astrologyVisibility: "explicit",
+    });
+
+    expect(brief.decision.rejected.ritualPatterns).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          key: "candle_light_focus",
+          reasons: expect.arrayContaining([
+            expect.objectContaining({ code: "avoided_style_conflict" }),
+          ]),
+        }),
+        expect.objectContaining({
+          key: "tend_one_plant",
+          reasons: expect.arrayContaining([
+            expect.objectContaining({ code: "capacity_mode_mismatch" }),
+          ]),
+        }),
+      ]),
+    );
+    expect(brief.trace.ritualPatterns).not.toEqual(["candle_light_focus"]);
   });
 
   it("can consume a lunar timing fact object from the timing helper", () => {
@@ -735,8 +950,9 @@ describe("generateWeeklyBrief", () => {
 
     expect(serializedBrief).toContain("private_profile.practical_tending");
     expect(serializedBrief).not.toContain("birth");
-    expect(serializedBrief).not.toContain("natal");
     expect(serializedBrief).not.toContain("relationship details");
     expect(serializedBrief).not.toContain("private source text");
+    expect(serializedBrief).not.toContain("jessica");
+    expect(serializedBrief).not.toMatch(/\btim\b/);
   });
 });

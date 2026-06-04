@@ -330,8 +330,9 @@ describe("private Firestore data resolution", () => {
     ).toLowerCase();
 
     expect(serialized).not.toContain("birth");
-    expect(serialized).not.toContain("natal");
     expect(serialized).not.toContain("relationship details");
     expect(serialized).not.toContain("private source text");
+    expect(serialized).not.toContain("jessica");
+    expect(serialized).not.toContain("tim");
   });
 });

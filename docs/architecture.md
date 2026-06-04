@@ -20,7 +20,8 @@ User opens deployed app
 -> Google Auth sign-in
 -> app checks for readable UID-linked or pending email-linked Firestore private data
 -> app loads household/profile/capacity/schedule data
--> generator creates a weekly brief from private data, timing facts, approved cards, and approved ritual patterns
+-> generator creates private timing contacts from saved natal placements when available
+-> generator creates a weekly brief from private data, timing facts, approved cards, approved ritual patterns, and selected private timing contacts
 -> UI renders the brief, try-again, feedback, profile settings, and human-readable explanations
 ```
 
@@ -85,6 +86,8 @@ SourceReview
 
 Timing facts are deterministic facts, not interpretations. The broader timing fact API lives in `src/lib/timing-facts.ts`; the first interpretation rule layer lives in `src/lib/timing-interpretation-rules.ts`. The generator currently remains lunar-first while future signal selection can draw from the broader fact list. It combines timing facts, approved cards, approved patterns, private profile placeholders, capacity, schedule constraints, and feedback exclusions to produce one brief.
 
+When private natal placements are present, `src/lib/private-natal-contacts.ts` can compare current timing facts with private profile placements. The generator may use selected contacts as bounded fit signals and visibility-aware explanation context. The default UI uses theme language; raw placements remain private runtime data and developer-only diagnostic details.
+
 The generator also returns a structured recommendation decision record with evaluated candidate scores, rejection reasons, selected cards/patterns, and source references. See `docs/recommendation-decision-model.md`. The normal UI stays simple; the developer decision view appears only under `?debug=true`.
 
 ## Deployment Model
@@ -115,7 +118,7 @@ Do not put Firebase Admin credentials, seed JSON, private files, or real allowed
 | Ritual safety | Implemented starter | Hard exclusions and safety flags are enforced. |
 | Ritual patterns | Implemented starter | Approved capacity-aware ritual patterns are eligible for briefs. |
 | Timing facts | Implemented starter | Lunar timing feeds the current brief; broader lunar, solar, planetary, seasonal, and numerology facts are available for later signal selection. |
-| Weekly brief generator | Implemented | Produces one approved recommendation, intention, explanation, trace, and feedback hooks. |
+| Weekly brief generator | Implemented | Produces one approved recommendation, intention, explanation, trace, feedback hooks, and bounded private timing fit when saved natal placements exist. |
 | Feedback / try-again | Implemented starter | Feedback stores trace references; try-again selects another approved pattern. |
 | Ritual notebook/history | Planned | Private Firestore history is not built yet. |
 | Curation workbench | Planned | Manual reviewed curation remains file-based for now. |

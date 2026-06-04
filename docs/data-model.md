@@ -106,7 +106,7 @@ Astronomy Engine is the MVP timing direction. Swiss Ephemeris remains deferred u
 
 `src/lib/private-natal-contacts.ts` computes private contacts between current timing facts and private natal profile placements. It supports same-sign resonance, near conjunctions, and major aspect geometry with a conservative 3 degree orb when degrees are available.
 
-Natal contacts return structured theme keys and contact metadata only. They do not create user-facing explanations, scoring changes, predictions, identity claims, houses, synastry, or compatibility.
+Natal contacts return structured theme keys and contact metadata. The weekly brief generator can use selected contacts as bounded scoring signals and visibility-aware explanation context. They do not create predictions, identity claims, houses, synastry, compatibility, or raw chart displays in the default UI.
 
 Source-controlled tests use fake placeholder profiles only. Real private placement values belong in Firestore or local gitignored files, not the repository.
 
