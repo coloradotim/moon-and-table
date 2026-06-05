@@ -14,6 +14,7 @@
     "seed:private": "tsx scripts/seed-private-household.ts",
     "diagnose:content": "tsx scripts/content-reachability.ts",
     "recommendation:quality": "tsx scripts/recommendation-quality-report.ts",
+    "recommendation:quality:delta": "tsx scripts/recommendation-quality-delta.ts",
     "lint:content": "tsx scripts/content-lint.ts",
     "build": "vite build",
     "preview": "vite preview",

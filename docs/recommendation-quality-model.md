@@ -216,6 +216,66 @@ Examples:
 
 Timing shapes ritual form, but it should not manufacture unreviewed practice. A selected focus should be bridged, not vetoed. Capacity should shape the ritual's size and manner without making the output feel like a task-management rule.
 
+## Quality Delta For PRs
+
+Any PR that changes recommendation selection, timing, content, presentation,
+composer output, source summaries, diagnostics, or Today’s shape should include a
+quality delta. Quality improvement must be visible: do not claim the
+recommendation experience improved unless the before/after quality summary shows
+it.
+
+Generate a current summary with:
+
+```bash
+npm run recommendation:quality:delta -- --write-current tmp/current-quality-summary.json
+```
+
+Compare a baseline and current summary with:
+
+```bash
+npm run recommendation:quality:delta -- --baseline tmp/main-quality-summary.json --current tmp/current-quality-summary.json
+```
+
+Use this PR section:
+
+```markdown
+## Quality delta
+
+Baseline: <main SHA/report path>
+Current: <PR SHA/report path>
+
+### Summary
+- Total scenarios: before → after
+- Contract request changes: before → after
+- Authored request changes: before → after
+- Review required: before → after
+- High-capacity depth warnings: before → after
+- Audience-only warnings: before → after
+- Coverage-gap hidden warnings: before → after
+- Option-menu warnings: before → after
+- Distinct selected patterns: before → after
+
+### Improved scenarios
+- ...
+
+### Worsened scenarios
+- ...
+
+### Changed selected patterns
+- ...
+
+### Remaining blockers
+- ...
+
+### Diagnostic integrity
+- Confirm no warnings were removed by weakening checks rather than improving output.
+```
+
+Diagnostic integrity is mandatory. A falling warning count is good only when the
+underlying output improved. It is not good if warning rules were weakened,
+warnings were hidden, scenarios were removed, or diagnostics stopped observing
+the problem.
+
 ## Model Concepts
 
 These concepts define the quality model. Some are implemented now and some remain planned.

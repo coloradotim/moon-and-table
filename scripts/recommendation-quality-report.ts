@@ -198,6 +198,80 @@ export type RecommendationQualityContentHealth = {
   }>;
 };
 
+export type RecommendationQualityVerdict = "pass" | "review_required" | "request_changes";
+
+export type RecommendationQualityVerdictCounts = Record<RecommendationQualityVerdict, number>;
+
+export type RecommendationQualityScenarioTrend = {
+  id: string;
+  selectedPatternKey: string;
+  warningIds: RecommendationQualityWarningId[];
+  contractVerdict?: RecommendationQualityVerdict;
+  authoredOutputVerdict?: RecommendationQualityVerdict;
+};
+
+export type RecommendationQualitySummary = {
+  generatedAtIso: string;
+  scenarioCounts: {
+    total: number;
+    contract: number;
+    authoredOutput: number;
+    highCapacity: number;
+    bothOfUs: number;
+    openPreferenceOrResolvedCategory: number;
+  };
+  warningCounts: Record<RecommendationQualityWarningId, number>;
+  verdictCounts: {
+    contract: RecommendationQualityVerdictCounts;
+    authoredOutput: RecommendationQualityVerdictCounts;
+  };
+  selectionDistribution: {
+    distinctSelectedPatternCount: number;
+    topSelectedPatterns: Array<{ key: string; count: number }>;
+    selectedCategoryDistribution: Array<{ key: string; count: number }>;
+    selectedRitualFormFamilyDistribution: Array<{ key: string; count: number }>;
+    concentrationWarnings: string[];
+  };
+  scenarios: RecommendationQualityScenarioTrend[];
+};
+
+export type RecommendationQualityDelta = {
+  baseline: RecommendationQualitySummary;
+  current: RecommendationQualitySummary;
+  changedSelectedPatterns: Array<{
+    id: string;
+    before: string;
+    after: string;
+  }>;
+  changedWarnings: Array<{
+    id: string;
+    before: RecommendationQualityWarningId[];
+    after: RecommendationQualityWarningId[];
+  }>;
+  changedContractStatus: Array<{
+    id: string;
+    before?: RecommendationQualityVerdict;
+    after?: RecommendationQualityVerdict;
+  }>;
+  changedAuthoredOutputStatus: Array<{
+    id: string;
+    before?: RecommendationQualityVerdict;
+    after?: RecommendationQualityVerdict;
+  }>;
+  improvedScenarios: string[];
+  worsenedScenarios: string[];
+  newWarnings: Array<{
+    id: RecommendationQualityWarningId;
+    before: number;
+    after: number;
+  }>;
+  resolvedWarnings: Array<{
+    id: RecommendationQualityWarningId;
+    before: number;
+    after: number;
+  }>;
+};
+
 const IMPERATIVE_STARTERS = [
   "choose",
   "clear",
@@ -1336,8 +1410,344 @@ function formatList(values: string[], emptyLabel = "none"): string {
   return values.length > 0 ? values.join(", ") : emptyLabel;
 }
 
+function emptyVerdictCounts(): RecommendationQualityVerdictCounts {
+  return {
+    pass: 0,
+    review_required: 0,
+    request_changes: 0,
+  };
+}
+
+function selectedCategoryForResult(result: RecommendationQualityScenarioResult): string {
+  const practiceLabel =
+    result.brief.decision.inputs.practiceChoice?.selectedLabel ??
+    result.scenario.currentRitualCheckIn.practiceTypeLabel;
+
+  if (!practiceLabel) {
+    return "not_asked";
+  }
+
+  return practiceLabel.replace(/^Surprise me ->\s*/, "");
+}
+
+function scenarioTrend(result: RecommendationQualityScenarioResult): RecommendationQualityScenarioTrend {
+  return {
+    id: result.scenario.id,
+    selectedPatternKey: result.selectedRitualPattern.key,
+    warningIds: result.warnings.map((warningItem) => warningItem.id).sort(),
+    contractVerdict: result.contractStatus?.reviewVerdict as RecommendationQualityVerdict | undefined,
+    authoredOutputVerdict: result.authoredOutputStatus?.verdict as RecommendationQualityVerdict | undefined,
+  };
+}
+
+function trendSeverity(result: RecommendationQualityScenarioTrend): number {
+  const verdictSeverity: Record<RecommendationQualityVerdict, number> = {
+    pass: 0,
+    review_required: 2,
+    request_changes: 4,
+  };
+
+  return [
+    result.contractVerdict ? verdictSeverity[result.contractVerdict] : 0,
+    result.authoredOutputVerdict ? verdictSeverity[result.authoredOutputVerdict] : 0,
+    result.warningIds.length,
+  ].reduce((total, value) => total + value, 0);
+}
+
+function warningSetChanged(
+  before: RecommendationQualityWarningId[],
+  after: RecommendationQualityWarningId[],
+): boolean {
+  return before.join("\0") !== after.join("\0");
+}
+
+export function createRecommendationQualitySummary(
+  report: RecommendationQualityReport,
+  options: { generatedAtIso?: string } = {},
+): RecommendationQualitySummary {
+  const contractVerdicts = emptyVerdictCounts();
+  const authoredOutputVerdicts = emptyVerdictCounts();
+
+  for (const result of report.scenarioResults) {
+    if (result.contractStatus) {
+      contractVerdicts[result.contractStatus.reviewVerdict as RecommendationQualityVerdict] += 1;
+    }
+
+    if (result.authoredOutputStatus) {
+      authoredOutputVerdicts[result.authoredOutputStatus.verdict as RecommendationQualityVerdict] += 1;
+    }
+  }
+
+  const selectedFamilyCounts = countBy(
+    report.scenarioResults.flatMap((result) => result.selectedRitualFormFamilies),
+  );
+  const scenarioCount = report.scenarioResults.length;
+  const familyConcentrationWarnings = selectedFamilyCounts
+    .filter((item) => item.count >= Math.max(8, Math.ceil(scenarioCount * 0.15)))
+    .map((item) => `${item.key}: ${item.count}`);
+
+  return {
+    generatedAtIso: options.generatedAtIso ?? new Date().toISOString(),
+    scenarioCounts: {
+      total: report.scenarioCount,
+      contract: report.scenarioResults.filter((result) => result.contractStatus).length,
+      authoredOutput: report.scenarioResults.filter((result) => result.authoredOutputStatus).length,
+      highCapacity: report.scenarioResults.filter(
+        (result) => result.scenario.currentRitualCheckIn.capacityMode === "high",
+      ).length,
+      bothOfUs: report.scenarioResults.filter(
+        (result) => result.scenario.currentRitualCheckIn.audience === "both_of_us",
+      ).length,
+      openPreferenceOrResolvedCategory: report.scenarioResults.filter(
+        (result) =>
+          result.scenario.contract?.categorySelectionMode === "surprise_me_open_preference" ||
+          result.practiceChoiceStatus === "open_preference" ||
+          result.practiceChoiceStatus === "resolved_open_preference",
+      ).length,
+    },
+    warningCounts: report.warningCounts,
+    verdictCounts: {
+      contract: contractVerdicts,
+      authoredOutput: authoredOutputVerdicts,
+    },
+    selectionDistribution: {
+      distinctSelectedPatternCount: report.contentHealth.distinctSelectedPatternCount,
+      topSelectedPatterns: report.contentHealth.selectedPatternCounts.slice(0, 12),
+      selectedCategoryDistribution: countBy(
+        report.scenarioResults.map(selectedCategoryForResult),
+      ),
+      selectedRitualFormFamilyDistribution: selectedFamilyCounts,
+      concentrationWarnings: [
+        ...report.contentHealth.concentratedSelectedPatterns.map(
+          (item) => `selected pattern ${item.key}: ${item.count}`,
+        ),
+        ...familyConcentrationWarnings.map((item) => `ritual form family ${item}`),
+      ],
+    },
+    scenarios: report.scenarioResults.map(scenarioTrend),
+  };
+}
+
+export function createRecommendationQualityDelta({
+  baseline,
+  current,
+}: {
+  baseline: RecommendationQualitySummary;
+  current: RecommendationQualitySummary;
+}): RecommendationQualityDelta {
+  const baselineById = new Map(baseline.scenarios.map((scenario) => [scenario.id, scenario]));
+  const currentById = new Map(current.scenarios.map((scenario) => [scenario.id, scenario]));
+  const sharedIds = [...currentById.keys()].filter((id) => baselineById.has(id)).sort();
+  const changedSelectedPatterns: RecommendationQualityDelta["changedSelectedPatterns"] = [];
+  const changedWarnings: RecommendationQualityDelta["changedWarnings"] = [];
+  const changedContractStatus: RecommendationQualityDelta["changedContractStatus"] = [];
+  const changedAuthoredOutputStatus: RecommendationQualityDelta["changedAuthoredOutputStatus"] = [];
+  const improvedScenarios: string[] = [];
+  const worsenedScenarios: string[] = [];
+
+  for (const id of sharedIds) {
+    const before = baselineById.get(id)!;
+    const after = currentById.get(id)!;
+
+    if (before.selectedPatternKey !== after.selectedPatternKey) {
+      changedSelectedPatterns.push({
+        id,
+        before: before.selectedPatternKey,
+        after: after.selectedPatternKey,
+      });
+    }
+
+    if (warningSetChanged(before.warningIds, after.warningIds)) {
+      changedWarnings.push({
+        id,
+        before: before.warningIds,
+        after: after.warningIds,
+      });
+    }
+
+    if (before.contractVerdict !== after.contractVerdict) {
+      changedContractStatus.push({
+        id,
+        before: before.contractVerdict,
+        after: after.contractVerdict,
+      });
+    }
+
+    if (before.authoredOutputVerdict !== after.authoredOutputVerdict) {
+      changedAuthoredOutputStatus.push({
+        id,
+        before: before.authoredOutputVerdict,
+        after: after.authoredOutputVerdict,
+      });
+    }
+
+    const beforeSeverity = trendSeverity(before);
+    const afterSeverity = trendSeverity(after);
+
+    if (afterSeverity < beforeSeverity) {
+      improvedScenarios.push(id);
+    } else if (afterSeverity > beforeSeverity) {
+      worsenedScenarios.push(id);
+    }
+  }
+
+  return {
+    baseline,
+    current,
+    changedSelectedPatterns,
+    changedWarnings,
+    changedContractStatus,
+    changedAuthoredOutputStatus,
+    improvedScenarios,
+    worsenedScenarios,
+    newWarnings: RECOMMENDATION_QUALITY_WARNING_IDS
+      .filter((id) => current.warningCounts[id] > baseline.warningCounts[id])
+      .map((id) => ({
+        id,
+        before: baseline.warningCounts[id],
+        after: current.warningCounts[id],
+      })),
+    resolvedWarnings: RECOMMENDATION_QUALITY_WARNING_IDS
+      .filter((id) => current.warningCounts[id] < baseline.warningCounts[id])
+      .map((id) => ({
+        id,
+        before: baseline.warningCounts[id],
+        after: current.warningCounts[id],
+      })),
+  };
+}
+
 function formatScoreReason(reason: ScoreReason): string {
   return `${reason.points > 0 ? "+" : ""}${reason.points} ${reason.label}${reason.detail ? ` (${reason.detail})` : ""}`;
+}
+
+function deltaValue(before: number, after: number): string {
+  return `${before} → ${after}`;
+}
+
+function formatDeltaScenarioList(
+  values: string[],
+  emptyLabel = "none",
+): string[] {
+  return values.length > 0 ? values.map((value) => `- ${value}`) : [`- ${emptyLabel}`];
+}
+
+function formatChangedPatternList(
+  values: RecommendationQualityDelta["changedSelectedPatterns"],
+): string[] {
+  return values.length > 0
+    ? values.map((value) => `- ${value.id}: ${value.before} → ${value.after}`)
+    : ["- none"];
+}
+
+function countAuthoredRequestChanges(summary: RecommendationQualitySummary): number {
+  return summary.verdictCounts.authoredOutput.request_changes;
+}
+
+export function formatRecommendationQualitySummary(
+  summary: RecommendationQualitySummary,
+): string {
+  return [
+    "# Recommendation Quality Summary",
+    "",
+    `Generated: ${summary.generatedAtIso}`,
+    "",
+    "## Scenario Counts",
+    "",
+    `- Total scenarios: ${summary.scenarioCounts.total}`,
+    `- Contract scenarios: ${summary.scenarioCounts.contract}`,
+    `- Authored-output scenarios: ${summary.scenarioCounts.authoredOutput}`,
+    `- High-capacity scenarios: ${summary.scenarioCounts.highCapacity}`,
+    `- Both-of-us scenarios: ${summary.scenarioCounts.bothOfUs}`,
+    `- Open-preference / resolved-category scenarios: ${summary.scenarioCounts.openPreferenceOrResolvedCategory}`,
+    "",
+    "## Verdict Counts",
+    "",
+    `- Contract pass: ${summary.verdictCounts.contract.pass}`,
+    `- Contract review_required: ${summary.verdictCounts.contract.review_required}`,
+    `- Contract request_changes: ${summary.verdictCounts.contract.request_changes}`,
+    `- Authored pass: ${summary.verdictCounts.authoredOutput.pass}`,
+    `- Authored review_required: ${summary.verdictCounts.authoredOutput.review_required}`,
+    `- Authored request_changes: ${summary.verdictCounts.authoredOutput.request_changes}`,
+    "",
+    "## Required Warning Counts",
+    "",
+    ...[
+      "contract_request_changes",
+      "fragmentary_option_menu_body",
+      "audience_only_pronoun_change",
+      "high_capacity_no_deeper_ritual_shape",
+      "closest_match_overclaims_fit",
+      "coverage_gap_not_disclosed_in_expanded_explanation",
+      "coverage_gap_category_focus_capacity",
+      "closest_compatible_pattern_selected",
+      "recommendation_confidence_limited",
+      "timing_overrode_explicit_contract",
+      "resolved_surprise_category_not_preserved",
+    ].map((id) => `- ${id}: ${summary.warningCounts[id as RecommendationQualityWarningId]}`),
+    "",
+    "## Selection Distribution",
+    "",
+    `- Distinct selected patterns: ${summary.selectionDistribution.distinctSelectedPatternCount}`,
+    `- Top selected patterns: ${summary.selectionDistribution.topSelectedPatterns.map((item) => `${item.key} (${item.count})`).join(", ") || "none"}`,
+    `- Concentration warnings: ${summary.selectionDistribution.concentrationWarnings.join(", ") || "none"}`,
+    "",
+  ].join("\n");
+}
+
+export function formatRecommendationQualityDelta(
+  delta: RecommendationQualityDelta,
+): string {
+  const { baseline, current } = delta;
+
+  return [
+    "## Quality delta",
+    "",
+    `Baseline: ${baseline.generatedAtIso}`,
+    `Current: ${current.generatedAtIso}`,
+    "",
+    "### Summary",
+    `- Total scenarios: ${deltaValue(baseline.scenarioCounts.total, current.scenarioCounts.total)}`,
+    `- Contract request changes: ${deltaValue(baseline.warningCounts.contract_request_changes, current.warningCounts.contract_request_changes)}`,
+    `- Authored request changes: ${deltaValue(countAuthoredRequestChanges(baseline), countAuthoredRequestChanges(current))}`,
+    `- Review required: ${deltaValue(
+      baseline.verdictCounts.contract.review_required + baseline.verdictCounts.authoredOutput.review_required,
+      current.verdictCounts.contract.review_required + current.verdictCounts.authoredOutput.review_required,
+    )}`,
+    `- High-capacity depth warnings: ${deltaValue(baseline.warningCounts.high_capacity_no_deeper_ritual_shape, current.warningCounts.high_capacity_no_deeper_ritual_shape)}`,
+    `- Audience-only warnings: ${deltaValue(baseline.warningCounts.audience_only_pronoun_change, current.warningCounts.audience_only_pronoun_change)}`,
+    `- Coverage-gap hidden warnings: ${deltaValue(baseline.warningCounts.coverage_gap_not_disclosed_in_expanded_explanation, current.warningCounts.coverage_gap_not_disclosed_in_expanded_explanation)}`,
+    `- Option-menu warnings: ${deltaValue(baseline.warningCounts.fragmentary_option_menu_body, current.warningCounts.fragmentary_option_menu_body)}`,
+    `- Distinct selected patterns: ${deltaValue(baseline.selectionDistribution.distinctSelectedPatternCount, current.selectionDistribution.distinctSelectedPatternCount)}`,
+    "",
+    "### Improved scenarios",
+    ...formatDeltaScenarioList(delta.improvedScenarios),
+    "",
+    "### Worsened scenarios",
+    ...formatDeltaScenarioList(delta.worsenedScenarios),
+    "",
+    "### Changed selected patterns",
+    ...formatChangedPatternList(delta.changedSelectedPatterns),
+    "",
+    "### New warnings",
+    ...(delta.newWarnings.length > 0
+      ? delta.newWarnings.map((item) => `- ${item.id}: ${item.before} → ${item.after}`)
+      : ["- none"]),
+    "",
+    "### Resolved warnings",
+    ...(delta.resolvedWarnings.length > 0
+      ? delta.resolvedWarnings.map((item) => `- ${item.id}: ${item.before} → ${item.after}`)
+      : ["- none"]),
+    "",
+    "### Remaining blockers",
+    `- Contract request changes: ${current.warningCounts.contract_request_changes}`,
+    `- Authored request changes: ${current.verdictCounts.authoredOutput.request_changes}`,
+    `- Review required: ${current.verdictCounts.contract.review_required + current.verdictCounts.authoredOutput.review_required}`,
+    "",
+    "### Diagnostic integrity",
+    "- Confirm no warnings were removed by weakening checks rather than improving output.",
+    "",
+  ].join("\n");
 }
 
 function markdownEscape(value: string): string {
