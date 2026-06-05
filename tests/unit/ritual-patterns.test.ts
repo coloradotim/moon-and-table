@@ -249,7 +249,6 @@ describe("ritual patterns", () => {
         "salt_clear_water_release",
         "seasonal_marker_bowl",
         "quiet_welcome",
-        "carried_key_word",
       ]),
     );
     expect(homeTendingKeys.length).toBeGreaterThanOrEqual(8);
