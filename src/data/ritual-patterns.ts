@@ -41,6 +41,7 @@ export type RitualPresentation = RitualPresentationVariant & {
       | "tendingUs"
       | "fullTiming"
       | "waningTiming"
+      | "beginningFocus"
       | "resting"
       | "thresholdReflection"
       | "homeLowCapacity"
@@ -63,6 +64,12 @@ export type RitualPattern = {
   materials: string[];
   steps: string[];
   presentation?: RitualPresentation;
+  /** Optional low-burden accent that deepens this ritual without adding a second ritual. */
+  optionalAccent?: string;
+  /** Optional accent used when live flame is avoided; lamp/window/light forms may still be used. */
+  candleFreeOptionalAccent?: string;
+  /** Human-readable source lineage for user-facing source summaries; never a raw source id. */
+  sourceLineageLabel?: string;
   safetyFlags: RitualSafetyFlags;
   safetyNotes: string[];
   avoidIf: string[];

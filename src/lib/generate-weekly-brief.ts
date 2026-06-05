@@ -1908,6 +1908,10 @@ function getPresentationVariantKeys(
     keys.push("tendingUs");
   }
 
+  if (focusKey === "making_a_beginning") {
+    keys.push("beginningFocus");
+  }
+
   if (focusKey === "resting") {
     keys.push("resting");
   }
@@ -1962,10 +1966,61 @@ function getToneClosing(tonePreferences: string[]): string {
 }
 
 function getOptionalAddOn(
-  _pattern: RitualPattern,
-  _avoidedRitualStyles: string[],
+  pattern: RitualPattern,
+  avoidedRitualStyles: string[],
+  context?: RitualPresentationContext,
 ): string {
+  const patternAccent = getPatternOptionalAccent(pattern, avoidedRitualStyles);
+
+  if (patternAccent) {
+    return patternAccent;
+  }
+
+  const focusAccent = getFocusOptionalAccent(pattern, context);
+
+  if (focusAccent) {
+    return focusAccent;
+  }
+
   return "No add-on needed.";
+}
+
+function getPatternOptionalAccent(
+  pattern: RitualPattern,
+  avoidedRitualStyles: string[],
+): string | undefined {
+  const avoidsLiveFlame = avoidedRitualStyles.includes("live_flame");
+  const isLightPattern =
+    pattern.ritualStyles.includes("candle_or_light") ||
+    pattern.ritualStyles.includes("light_focus");
+
+  if (isLightPattern && !avoidsLiveFlame) {
+    return undefined;
+  }
+
+  if (isLightPattern && avoidsLiveFlame) {
+    return pattern.candleFreeOptionalAccent;
+  }
+
+  return pattern.optionalAccent;
+}
+
+function getFocusOptionalAccent(
+  pattern: RitualPattern,
+  context?: RitualPresentationContext,
+): string | undefined {
+  if (context?.currentRitualCheckIn?.capacityMode === "pause") {
+    return undefined;
+  }
+
+  if (
+    context?.currentRitualCheckIn?.ritualFocusKey === "making_a_beginning" &&
+    pattern.ritualStyles.some((style) => ["beginning", "seed", "grain"].includes(style))
+  ) {
+    return "Let the beginning stay small enough to wait.";
+  }
+
+  return undefined;
 }
 
 function getTimingReason(card: SymbolicCard, timingFact?: LunarTimingFact): string {
@@ -2855,17 +2910,20 @@ function getTradeoffSection(
 
 function getSourcesSection(
   sourcesUsed: BriefSourceSummary[],
+  pattern: RitualPattern,
 ): ExplanationSection | undefined {
   if (sourcesUsed.length === 0) {
     return undefined;
   }
 
   const labels = sourcesUsed.slice(0, 4).map((source) => source.label);
+  const lineage = getPatternLineageSummary(pattern);
+  const lineageText = lineage ? `${lineage}; ` : "";
 
   return {
     kind: "sources",
     title: "Sources",
-    body: `This drew from ${labels.join("; ")}.`,
+    body: `This drew from ${lineageText}${labels.join("; ")}.`,
     sourceLabels: labels,
   };
 }
@@ -2892,7 +2950,7 @@ function getHowThisWasChosen(
     getNatalContactSection(natalContactMatches, input.astrologyVisibility),
     getCapacityBoundarySection(input),
     getTradeoffSection(input, pattern, excludedPatternKeys, safetyNotes),
-    getSourcesSection(sourcesUsed),
+    getSourcesSection(sourcesUsed, pattern),
   ].filter((section): section is ExplanationSection => section !== undefined);
 }
 
@@ -3262,11 +3320,7 @@ function getTheme(
   const patternPhrase =
     presentation?.invitation ?? patternPhraseByKey[pattern.key] ?? pattern.summary;
 
-  if (
-    presentation &&
-    (pattern.key === "two_words_at_the_table" ||
-      pattern.key === "full_light_on_the_table")
-  ) {
+  if (presentation) {
     return presentation.invitation;
   }
 
@@ -3342,8 +3396,12 @@ function getSourceSummary(
 ): string {
   const fitSummary =
     safetyNotes.length > 0 ? ", practical guardrails" : "";
+  const lineage = getPatternLineageSummary(pattern);
+  const patternSource = lineage
+    ? `${lineage}, ${pattern.title.toLowerCase()} pattern`
+    : `${pattern.title.toLowerCase()} pattern`;
 
-  return `Sources: ${timingCard.title.toLowerCase()} card, ${pattern.title.toLowerCase()} pattern${fitSummary}.`;
+  return `Sources: ${timingCard.title.toLowerCase()} card, ${patternSource}${fitSummary}.`;
 }
 
 function getHumanSourceLabel(reference: string): string | undefined {
@@ -3494,14 +3552,20 @@ function getSymbolicCardSourceSummary(card: SymbolicCard): string {
     .join("; ")}`;
 }
 
+function getPatternLineageSummary(pattern: RitualPattern): string | undefined {
+  return pattern.sourceLineageLabel;
+}
+
 function getPatternSourceSummary(pattern: RitualPattern): string {
   const firstStep = pattern.steps[0] ? ` Action: ${pattern.steps[0]}` : "";
+  const lineage = getPatternLineageSummary(pattern);
+  const lineageText = lineage ? `${lineage} shaped ` : "";
   const whyHelpful = `${pattern.summary} It fit ${pattern.defaultDurationMinutes} minutes and ${pattern.ritualStyles
     .slice(0, 3)
     .map(getHumanStyleLabel)
     .join(", ")}.`;
 
-  return `Used here: ${pattern.title.toLowerCase()} as the actual ritual container.${firstStep} Why helpful: ${whyHelpful}`;
+  return `Used here: ${lineageText}${pattern.title.toLowerCase()} as the actual ritual container.${firstStep} Why helpful: ${whyHelpful}`;
 }
 
 function getSourceSummaries(
@@ -4174,6 +4238,10 @@ export function generateWeeklyBrief(
     optionalAddOn: getOptionalAddOn(
       pattern,
       resolvedInput.avoidedRitualStyles,
+      {
+        currentRitualCheckIn: resolvedInput.currentRitualCheckIn,
+        timingFact: getPrimaryMoonTimingFact(resolvedInput.timingFacts),
+      },
     ),
     reflectionPrompt: getReflectionPrompt(
       pattern,

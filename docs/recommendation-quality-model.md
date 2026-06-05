@@ -93,6 +93,10 @@ The title, timing reason, ritual body, intention, optional accent, carry prompt,
 
 If timing, focus, practice type, audience, or capacity are in tension, the app needs a meaning bridge. It should not drop one input silently, pretend everything matched, or fall back to raw timing language.
 
+Carry prompts and optional accents should come from the selected ritual's actual material and action whenever possible. A cup ritual should carry cup, warmth, hand, table, or setting-down language. A salt/water ritual should carry salt, water, bowl, pouring, rinsing, or emptying language. A seed ritual should carry seed, grain, bowl, waiting, or patience language. Generic lunar questions are fallback only.
+
+Optional accents should deepen the selected ritual without becoming a second ritual. `No add-on needed` is a valid product answer when the selected ritual is already complete. When a Batch 1 ritual pattern materially shapes the recommendation, source summaries should name the lineage lightly, such as household fire-banking customs, hearth/table first-and-last logic, flower-language traditions, salt and boundary folklore, quiet household welcome forms, seed/water beginning logic, or grain/table household rhythm.
+
 Examples:
 
 - `Making a beginning` during waning timing should become preparation, clearing room, naming the first step, or reclaiming attention. It should not become wrong timing, and it should not fall back to a generic waning-release prompt.

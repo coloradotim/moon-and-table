@@ -134,6 +134,10 @@ Selected focus guides recommendation scoring. Timing should shape the form of th
 
 When timing, focus, practice type, audience, or capacity are in tension, the output needs a meaning bridge. It should resolve into one coherent ritual, not a list of partially related reasons. Carry prompts should come from the resolved ritual meaning, not from a raw lunar fallback or whichever timing card happened to be first.
 
+Carry prompts and optional accents should stay inside the selected ritual form. The generator should prefer the selected pattern's `RitualPresentation`, then focus-aware or material-aware copy, before falling back to timing. Optional accents are not a required second action. They should name the same material, vessel, threshold, light, leaf, cup, key, bowl, or phrase already present in the selected ritual, or else stay absent.
+
+When a Batch 1 pattern is selected, source summaries should make the practical lineage readable without exposing raw source IDs. Use short labels like `salt and boundary folklore`, `quiet household welcome forms`, `seed/water beginning logic`, or `hearth/table first-and-last logic` only when that lineage actually shaped the selected pattern.
+
 ## Practice Type
 
 The practice-type question asks what feels welcome right now. It should only show options the generator can trace and diagnose.

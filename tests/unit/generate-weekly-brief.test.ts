@@ -290,7 +290,7 @@ describe("generateWeeklyBrief", () => {
     });
 
     expect(brief.trace.ritualPatterns).toEqual(["plant_witness_to_growth"]);
-    expect(brief.theme).toBe("Clear one small thing. Let a plant witness the growth.");
+    expect(brief.theme).toBe("Let a plant witness the growth.");
     expect(brief.intention).toBe("Let a plant witness the growth.");
     expect(brief.recommendedRitual).toContain("Let the plant hold attention without becoming a task.");
     expect(brief.recommendedRitual).toContain("leaving the plant untouched");
@@ -343,7 +343,7 @@ describe("generateWeeklyBrief", () => {
     expect(brief.recommendedRitual).not.toContain("No required ritual");
     expect(brief.recommendedRitual).toContain("Let one lowered light be the whole ritual.");
     expect(brief.recommendedRitual).toContain("Close by letting the dimmed light hold the end.");
-    expect(brief.reflectionPrompt).toBe("What can rest without being solved?");
+    expect(brief.reflectionPrompt).toBe("What can rest in the lowered light?");
   });
 
   it("does not add a generic candle add-on to presented candle or light rituals", () => {
@@ -358,6 +358,111 @@ describe("generateWeeklyBrief", () => {
     expect(brief.trace.ritualPatterns).toEqual(["morning_light_pause"]);
     expect(brief.optionalAddOn).toBe("No add-on needed.");
     expect(brief.recommendedRitual).toContain("Use the light already available.");
+  });
+
+  it("uses contextual optional accents without generic candle filler", () => {
+    const plantBrief = generateWeeklyBrief(
+      qualityScenarioInput("batch1.plant.dead_leaf_release"),
+    );
+    const seedBrief = generateWeeklyBrief(
+      qualityScenarioInput("issue183.plant.beginning.seed"),
+    );
+    const lightBrief = generateWeeklyBrief(
+      qualityScenarioInput("issue183.candle.full_saying_clearly"),
+    );
+    const noFlameBrief = generateWeeklyBrief(
+      qualityScenarioInput("candle.live_flame_avoided"),
+    );
+
+    expect(plantBrief.decision.selected.ritualPatternKey).toBe("dead_leaf_release");
+    expect(plantBrief.optionalAddOn).toBe(
+      "Let the plant remain untouched after the spent leaf is gone.",
+    );
+    expect(seedBrief.decision.selected.ritualPatternKey).toBe("seed_waiting");
+    expect(seedBrief.optionalAddOn).toBe(
+      "Leave the seed, grain, or pot where waiting can be seen once, then stop checking it.",
+    );
+    expect(lightBrief.decision.selected.ritualPatternKey).toBe("full_light_on_the_table");
+    expect(lightBrief.optionalAddOn).toBe("No add-on needed.");
+    expect(noFlameBrief.optionalAddOn.toLowerCase()).not.toContain("candle");
+    expect(noFlameBrief.optionalAddOn.toLowerCase()).not.toContain("flame");
+  });
+
+  it("keeps carry prompts tied to selected ritual materials and actions", () => {
+    const cases = [
+      {
+        scenarioId: "batch1.plant.dead_leaf_release",
+        patternKey: "dead_leaf_release",
+        expectedPrompt: "What is as complete as the spent leaf?",
+      },
+      {
+        scenarioId: "issue183.plant.beginning.seed",
+        patternKey: "seed_waiting",
+        expectedPrompt: "What beginning can wait like a seed or grain?",
+      },
+      {
+        scenarioId: "batch1.kitchen.grain_beginning",
+        patternKey: "grain_bowl_beginning",
+        expectedPrompt: "What beginning can be held before it is acted on?",
+      },
+      {
+        scenarioId: "batch1.home.salt_water_clearing",
+        patternKey: "salt_clear_water_release",
+        expectedPrompt: "What feels cleaner when it has somewhere ordinary to go?",
+      },
+      {
+        scenarioId: "batch1.reflection.folded_phrase",
+        patternKey: "carried_key_word",
+        expectedPrompt: "What word can cross the threshold with you?",
+      },
+      {
+        scenarioId: "batch1.seasonal.marker_bowl",
+        patternKey: "seasonal_marker_bowl",
+        expectedPrompt: "What season is this home actually in?",
+      },
+      {
+        scenarioId: "batch1.quiet_welcome",
+        patternKey: "honeyed_word",
+        expectedPrompt: "What word can the sweetness cue hold and then release?",
+      },
+    ];
+
+    for (const { scenarioId, patternKey, expectedPrompt } of cases) {
+      const brief = generateWeeklyBrief(qualityScenarioInput(scenarioId));
+
+      expect(brief.decision.selected.ritualPatternKey).toBe(patternKey);
+      expect(brief.reflectionPrompt).toBe(expectedPrompt);
+      expect(brief.reflectionPrompt.toLowerCase()).not.toContain("private_profile");
+      expect(brief.reflectionPrompt.toLowerCase()).not.toContain("source.");
+    }
+
+    const foldedPhrasePattern = starterRitualPatterns.find(
+      (pattern) => pattern.key === "folded_phrase_vessel",
+    );
+
+    expect(foldedPhrasePattern?.presentation?.carry).toBe(
+      "What changes when the phrase has a place to be held?",
+    );
+  });
+
+  it("surfaces Batch 1 lineage in source summaries without raw ids", () => {
+    const saltBrief = generateWeeklyBrief(
+      qualityScenarioInput("batch1.home.salt_water_clearing"),
+    );
+    const grainBrief = generateWeeklyBrief(
+      qualityScenarioInput("batch1.kitchen.grain_beginning"),
+    );
+
+    expect(saltBrief.sourceSummary).toContain("salt and boundary folklore");
+    expect(grainBrief.sourceSummary).toContain("grain/table household rhythm");
+    expect(JSON.stringify(saltBrief.explanation.sourcesUsed)).toContain(
+      "salt and boundary folklore",
+    );
+    expect(JSON.stringify(grainBrief.explanation.howThisWasChosen)).toContain(
+      "grain/table household rhythm",
+    );
+    expect(saltBrief.sourceSummary).not.toContain("source.");
+    expect(grainBrief.sourceSummary).not.toContain("note.");
   });
 
   it("does not append practical tone closing to a presented ritual", () => {
