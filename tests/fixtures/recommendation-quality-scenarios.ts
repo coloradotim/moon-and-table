@@ -658,7 +658,17 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
       ritualFocusKey: "saying_something_clearly",
       ritualFocusLabel: "Saying something clearly",
     },
-    preferredRitualStyles: ["reflection", "naming", "folded_word"],
+    profilePlaceholders: [
+      {
+        audience: "person_a",
+        label: "Person A",
+        profileThemeKeys: ["private_profile.structured_action"],
+        astrologyProfileThemeKeys: ["private_profile.structured_action"],
+        preferredRitualStyles: ["reflection", "naming", "folded_phrase_vessel"],
+        avoidedRitualStyles: ["shopping_required", "heavy_cleanup"],
+      },
+    ],
+    preferredRitualStyles: ["reflection", "naming", "folded_phrase_vessel"],
     expectedQualities: ["one phrase", "folding or vessel activation", "clear closure"],
     disallowedOutcomes: ["journal prompt", "therapy homework"],
   }),

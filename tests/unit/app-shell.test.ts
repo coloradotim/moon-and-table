@@ -368,7 +368,7 @@ describe("app shell rendering", () => {
     expect(html).toMatch(
       new RegExp("Current phase:</strong> [A-Z][a-z]+(?: [a-z]+)* moon"),
     );
-    expect(html).toContain("Boundary");
+    expect(html).toContain("Kept bounded");
     expect(html).not.toContain("Schedule — realistic window");
     expect(html).toContain("Why this fits");
     expect(html).not.toContain("Private chart fit");

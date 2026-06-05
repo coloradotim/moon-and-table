@@ -410,8 +410,8 @@ describe("generateWeeklyBrief", () => {
       },
       {
         scenarioId: "batch1.reflection.folded_phrase",
-        patternKey: "carried_key_word",
-        expectedPrompt: "What word can cross the threshold with you?",
+        patternKey: "folded_phrase_vessel",
+        expectedPrompt: "What changes when the phrase has a place to be held?",
       },
       {
         scenarioId: "batch1.seasonal.marker_bowl",
@@ -641,7 +641,7 @@ describe("generateWeeklyBrief", () => {
         }),
       ]),
     );
-    expect(brief.whyThis).toContain("Boundary:");
+    expect(brief.whyThis).toContain("Kept bounded:");
     expect(brief.whyThis).not.toContain("filter");
     expect(brief.whyThis).not.toContain("pattern option");
   });
@@ -773,6 +773,7 @@ describe("generateWeeklyBrief", () => {
     );
     expect(serializedExplanation).not.toContain("left the practice type open");
     expect(serializedExplanation).not.toContain("surprise me choice helped");
+    expect(serializedExplanation).not.toContain("surprise me ->");
   });
 
   it("honors a visible practice answer when a matching ritual form exists", () => {
@@ -1103,8 +1104,8 @@ describe("generateWeeklyBrief", () => {
           body: expect.stringContaining("small and embodied"),
         }),
         expect.objectContaining({
-          title: "Boundary",
-          body: expect.stringContaining("no long talk"),
+          title: "Kept bounded",
+          body: expect.stringContaining("One word"),
         }),
       ]),
     );
@@ -1870,7 +1871,7 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.trace.ritualPatterns).not.toEqual(["candle_light_focus"]);
     expect(brief.trace.safety.excludedPatternKeys).toContain("candle_light_focus");
-    expect(brief.whyThis).toContain("Boundary:");
+    expect(brief.whyThis).toContain("Kept bounded:");
   });
 
   it("keeps generated output non-identifying", () => {

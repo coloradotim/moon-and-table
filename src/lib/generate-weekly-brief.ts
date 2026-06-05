@@ -2659,9 +2659,7 @@ function getChosenForPhrase(
   const checkIn = input.currentRitualCheckIn;
   const parts: string[] = [];
   const practiceFit = getPracticeFit(input, pattern);
-  const practiceLabel = practiceFit.openPreference
-    ? practiceFit.label?.replace(/^Surprise me ->\s*/, "")
-    : practiceFit.label;
+  const practiceLabel = practiceFit.label?.replace(/^Surprise me ->\s*/, "");
   const audienceLabel = checkIn?.audience === "both_of_us"
     ? "both of you"
     : input.audience === "together"
@@ -2802,20 +2800,20 @@ function getTimingBridgePhrase(
 
 function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeeklyBriefInput): string {
   const boundariesByPattern: Record<string, string> = {
-    dead_leaf_release: "no pruning living growth, no dramatic release",
-    seed_waiting: "no growth promise, no checking for proof",
-    grain_bowl_beginning: "no recipe, no prosperity claim, no launch pressure",
-    warm_cup_between_us: "no recipe, no health claim, no long talk",
-    quiet_welcome: "no literal spirit-feeding, no bargain, no performance",
-    honeyed_word: "no control claim, no apology work, no long talk",
-    carried_key_word: "no luck or protection claim, no misplaced key",
-    threshold_bowl: "no protection promise, no elaborate setup",
-    salt_clear_water_release: "no drinking the salt water, no protection promise",
-    bank_the_house_light: "no extra task, no forced brightness",
-    full_light_on_the_table: "no forced disclosure, no generic candle add-on",
-    folded_phrase_vessel: "no journaling assignment, no copied charm",
-    seasonal_marker_bowl: "no holiday feed, no shopping, no festival script",
-    first_day_last_day: "no calendar command, no named-day folklore",
+    dead_leaf_release: "one spent leaf, one release, then the plant is left alone",
+    seed_waiting: "one seed or grain, one beginning, then waiting without proof",
+    grain_bowl_beginning: "one grain, one sentence, one night of waiting",
+    warm_cup_between_us: "one cup, one warm phrase, then the cup is set down",
+    quiet_welcome: "one vessel, one welcome, then the vessel returns",
+    honeyed_word: "one word, one sweetness cue, then the cup is returned",
+    carried_key_word: "the key carries the word briefly, then returns",
+    threshold_bowl: "the bowl holds one threshold marker, then empties or returns",
+    salt_clear_water_release: "one pinch, one bowl, one clean release",
+    bank_the_house_light: "one lowered light, one ending, then no more work",
+    full_light_on_the_table: "one light, one line, then the light changes",
+    folded_phrase_vessel: "one phrase, one fold, one holding place",
+    seasonal_marker_bowl: "the bowl holds one marker until its ordinary return",
+    first_day_last_day: "one threshold action, one clean close",
   };
   const base = boundariesByPattern[pattern.key];
 
@@ -2824,7 +2822,7 @@ function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeekly
   }
 
   if (input.capacityMode === "low" || input.capacityMode === "pause") {
-    return "small action, no extra setup";
+    return "one small action, no extra setup";
   }
 
   return "one primary ritual, no task list";
@@ -3101,7 +3099,7 @@ function getCapacityBoundarySection(
 
   return {
     kind: "capacity_boundary",
-    title: "Boundary",
+    title: "Kept bounded",
     body: getCapacityReason(input.capacityMode, durationMinutes),
   };
 }
@@ -3138,7 +3136,7 @@ function getTradeoffSection(
 
   return {
     kind: "tradeoff_or_alternative",
-    title: "Boundary",
+    title: "Kept bounded",
     body: mismatchParts.join(" "),
   };
 }
@@ -3185,7 +3183,7 @@ function getHowThisWasChosen(
     getTradeoffSection(input, pattern, excludedPatternKeys, safetyNotes) ??
       {
         kind: "capacity_boundary" as const,
-        title: "Boundary",
+        title: "Kept bounded",
         body: getBoundaryPhrase(pattern, input),
       },
     getProfileFitSection(input, profileSignalMatches, preferenceMatches),
@@ -3456,7 +3454,7 @@ function getWhyThis(
   );
   const fitReason =
     excludedPatternKeys.length > 0
-      ? ` Boundary: ${getBoundaryPhrase(pattern, input)}.`
+      ? ` Kept bounded: ${getBoundaryPhrase(pattern, input)}.`
       : "";
 
   return [
@@ -3649,7 +3647,7 @@ function getSourceSummary(
   safetyNotes: string[],
 ): string {
   const lineage = getCompressedLineage(pattern);
-  const guardrail = safetyNotes.length > 0 ? " Boundary reviewed." : "";
+  const guardrail = safetyNotes.length > 0 ? " Form kept contained." : "";
 
   return lineage
     ? `Source lineage: ${lineage}.${guardrail}`

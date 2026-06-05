@@ -164,6 +164,7 @@ describe("recommendation quality report", () => {
       ["batch1.home.salt_water_clearing", "salt_clear_water_release"],
       ["issue183.candle.rest_dark", "bank_the_house_light"],
       ["issue183.candle.full_saying_clearly", "full_light_on_the_table"],
+      ["batch1.reflection.folded_phrase", "folded_phrase_vessel"],
       ["batch1.seasonal.marker_bowl", "seasonal_marker_bowl"],
     ]);
     const requiredScenarioIds = [
@@ -183,10 +184,21 @@ describe("recommendation quality report", () => {
       "allowed in as a small accent",
       "about twenty minutes or less",
       "primary timing signal",
+      "timing tone",
+      "score reason",
+      "raw score",
+      "exact pattern match",
+      "ritual form family matched",
+      "selected pattern",
+      "approved",
+      "safety",
+      "constraints",
+      "tradeoff",
       "source.",
       "note.",
       "private_profile",
       "surprise me,",
+      "surprise me ->",
     ];
 
     for (const [scenarioId, patternKey] of expectedPatterns) {
