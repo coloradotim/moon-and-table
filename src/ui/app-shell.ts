@@ -27,6 +27,10 @@ import {
 } from "../lib/moon-phase-glyph";
 import type { PrivateBriefData } from "../lib/private-data";
 import {
+  createTodaysShapeBrief,
+  type TodaysShapeBrief,
+} from "../lib/todays-shape-brief";
+import {
   PROFILE_TUNING_ASTROLOGY_VISIBILITY,
   type ProfileTuningProfile,
   type ProfileTuningSettings,
@@ -1188,6 +1192,51 @@ function renderCheckInQuestion(draft: RitualCheckInDraft): string {
   return "";
 }
 
+function renderTodaysShapeBrief(brief: TodaysShapeBrief): string {
+  const summaryParagraphValues = brief.summary
+    .split(/\n{2,}/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
+  const synthesisIndex = summaryParagraphValues.length - 1;
+  const summaryParagraphs = summaryParagraphValues
+    .map((paragraph, index) => `
+      <p class="${index === synthesisIndex ? "todays-shape__synthesis" : "todays-shape__fact"}">
+        ${escapeHtml(paragraph)}
+      </p>
+    `)
+    .join("");
+  const details = brief.majorEventPresent &&
+    brief.details &&
+    brief.details.some((detail) => detail.title !== "Moon")
+    ? `
+        <details class="todays-shape__details">
+          <summary>More</summary>
+          <div class="todays-shape__detail-list">
+            ${brief.details.filter((detail) => detail.title !== "Moon").map((detail) => `
+              <section class="todays-shape__detail" aria-label="${escapeHtml(detail.title)}">
+                <h3>${escapeHtml(detail.title)}</h3>
+                <p>${escapeHtml(detail.body)}</p>
+              </section>
+            `).join("")}
+          </div>
+        </details>
+      `
+    : "";
+
+  return `
+    <section
+      class="todays-shape"
+      aria-label="${escapeHtml(brief.title)}"
+      data-timing-authority="${escapeHtml(brief.timingAuthority)}"
+    >
+      <div class="todays-shape__body">
+        ${summaryParagraphs}
+      </div>
+      ${details}
+    </section>
+  `;
+}
+
 function renderCheckInBackControl(draft: RitualCheckInDraft): string {
   if (draft.step === "time_scope") {
     return "";
@@ -1265,10 +1314,12 @@ export function renderRitualCheckInShell({
   draft,
   displayName,
   introMode = "returning",
+  todaysShapeBrief,
 }: {
   draft: RitualCheckInDraft;
   displayName?: string | null;
   introMode?: "returning" | "first_login";
+  todaysShapeBrief?: TodaysShapeBrief | null;
 }): string {
   const intro = draft.step === "time_scope"
     ? `
@@ -1279,6 +1330,9 @@ export function renderRitualCheckInShell({
           }</p>
         </header>
       `
+    : "";
+  const todaysShape = draft.step === "time_scope"
+    ? renderTodaysShapeBrief(todaysShapeBrief ?? createTodaysShapeBrief())
     : "";
 
   return `
@@ -1291,6 +1345,7 @@ export function renderRitualCheckInShell({
 
       <article class="check-in" aria-label="Ritual check-in">
         ${intro}
+        ${todaysShape}
         ${renderCheckInBackControl(draft)}
         ${renderCheckInAcknowledgement(draft)}
 

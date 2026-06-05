@@ -35,6 +35,7 @@ import {
   type RitualCheckInStep,
 } from "./lib/current-ritual-check-in";
 import { getTimingWindowCandidates } from "./lib/timing-window-candidates";
+import { createTodaysShapeBrief } from "./lib/todays-shape-brief";
 import {
   isBriefFeedbackType,
   saveBriefFeedback,
@@ -144,6 +145,14 @@ function renderActiveCheckInShell(): void {
     draft: activeCheckInDraft,
     displayName: activeSignedInState.user.displayName,
     introMode: activeFirstLoginCheckIn ? "first_login" : "returning",
+    todaysShapeBrief: createTodaysShapeBrief({
+      currentDate: activePrivateBriefData?.input.currentDate,
+      timezone: activePrivateBriefData?.input.timezone,
+      computedTimingFacts: activePrivateBriefData?.input.computedTimingFacts,
+      timingWindowCandidates: activePrivateBriefData?.input.timingWindowCandidates,
+      privateNatalProfiles: activePrivateBriefData?.natalProfiles,
+      astrologyVisibility: activePrivateBriefData?.input.astrologyVisibility,
+    }),
   });
 }
 
