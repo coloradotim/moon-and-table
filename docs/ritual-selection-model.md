@@ -140,9 +140,9 @@ The app should ask only questions it can use.
 
 Selected focus guides recommendation scoring. Timing should shape the form of the ritual, not veto the selected focus or manufacture unreviewed practice. For example, `Making a beginning` under waning or dark timing can become a quieter preparatory beginning rather than disappearing.
 
-Explicit check-in answers form the recommendation contract. The engine should preserve visible category/practice type, ritual focus, audience, capacity, time scope, and hard avoid/preference constraints unless a real blocker is recorded. A real blocker can be safety, privacy, source eligibility, no approved pattern in that path, or an explicit avoid conflict. A stronger timing signal, brighter moon phase, numerology accent, private theme match, or more polished pattern is not by itself a blocker.
+Explicit check-in answers form the recommendation contract. The engine should preserve visible practice type, ritual focus, audience, capacity, time scope, and hard avoid/preference constraints unless a real blocker is recorded. A real blocker can be safety, privacy, source eligibility, no approved pattern in that path, or an explicit avoid conflict. A stronger timing signal, brighter moon phase, numerology accent, private theme match, or more polished pattern is not by itself a blocker.
 
-Selection order should stay conservative: hard eligibility first, then explicit or resolved category, focus, capacity/depth, audience action, time scope, timing shape, material/source strength, variety, and presentation. High capacity should deepen the selected category/focus; when no high-depth form exists, prefer a compatible steady form and surface the gap in review diagnostics rather than jumping categories. `Surprise me` must resolve to a real visible category before scoring and then preserve that resolved category.
+Selection order should stay conservative: hard eligibility first, then explicit practice or resolved practice, focus, capacity/depth, audience action, time scope, timing shape, material/source strength, variety, and presentation. High capacity should deepen the selected category/focus; when no high-depth form exists, prefer a compatible steady form and surface the gap in review diagnostics rather than jumping categories. `Surprise me` must resolve to a real visible practice before scoring and then preserve that resolved practice.
 
 Selection correctness is only the first gate. The selected ritual still needs an
 authored final presentation: one material/action path, clear activation and
@@ -172,13 +172,13 @@ Visible v1 options:
 
 `Reflection` appears only when the selected capacity can support it. `Seasonal` appears only for the higher-capacity path.
 
-`Surprise me` is an open selection in the UI, not a seventh practice category. Before recommendation, the generator resolves it to one real visible category based on the ritual focus and capacity context, then records `resolved_open_preference` in the decision diagnostics. The app should not pretend "Surprise me" itself matched the selected ritual.
+`Surprise me` is an open selection in the UI, not a visible practice. Before recommendation, the generator resolves it to one real visible practice based on the ritual focus and capacity context, then records `resolved_open_preference` in the decision diagnostics. The app should not pretend "Surprise me" itself matched the selected ritual.
 
 In recommendation-contract fixtures and diagnostics, use language such as
-`open_preference`, `categorySelectionMode: surprise_me`, `resolved category`,
+`open_preference`, `categorySelectionMode: surprise_me`, `resolved practice`,
 or `resolved_open_preference`. Do not use `Surprise me` as a ritual style,
 ritual-form family, source lineage, or selected practice category. Once the
-open preference resolves, the resolved real category is binding under the same
+open preference resolves, the resolved visible practice is binding under the same
 contract rules as an explicit category.
 
 `Conversation` is intentionally not a visible practice-type option right now. Conversation-shaped ritual content can remain in the approved library for focus-based or future use, but it needs a dedicated source/content pass before it becomes a top-level check-in/profile preference.

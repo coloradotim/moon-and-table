@@ -8,7 +8,7 @@ This packet defines the recommendation contract Moon & Table should test against
 
 User check-in answers are the recommendation contract. Explicit selections should not be set aside without a real blocker:
 
-- visible category / practice type
+- visible practice type
 - ritual focus
 - audience
 - capacity
@@ -18,7 +18,7 @@ User check-in answers are the recommendation contract. Explicit selections shoul
 Selection hierarchy:
 
 1. hard safety, privacy, source, and approval eligibility
-2. explicit visible category or resolved open-preference category
+2. explicit visible practice or resolved open-preference practice
 3. explicit ritual focus
 4. capacity and depth
 5. audience and action structure
@@ -43,13 +43,13 @@ Ordinary phase, general planet-sign facts, and ordinary numerology should shape 
 
 ## 3. Open Preference
 
-`Surprise me` is not a category. It is an open category-selection mode.
+`Surprise me` is not a category. It is an open-preference mode.
 
 Required behavior:
 
-- resolve exactly one real visible category before pattern scoring;
-- preserve that resolved category through selection and presentation;
-- expose original mode and resolved category in diagnostics;
+- resolve exactly one real visible practice before pattern scoring;
+- preserve that resolved practice through selection and presentation;
+- expose original mode and resolved practice in diagnostics;
 - never use `surprise_me` as a ritual style, form family, source lineage, or normal-copy category;
 - keep normal copy free of phrases like `Surprise me matched`, `Surprise me ritual`, or `Surprise me category`.
 
@@ -61,7 +61,7 @@ A coverage gap is better than a confident wrong answer.
 
 If exact category + focus + capacity coverage is thin, the engine should:
 
-1. preserve the explicit or resolved category/focus/audience/capacity contract;
+1. preserve the explicit practice or resolved practice/focus/audience/capacity contract;
 2. select the closest compatible approved pattern;
 3. surface diagnostics such as `coverage_gap_category_focus_capacity`, `closest_compatible_pattern_selected`, `high_capacity_depth_gap`, `stronger_wrong_category_rejected`, and `recommendation_confidence_limited`;
 4. avoid selecting a polished wrong-category ritual.
@@ -75,7 +75,7 @@ Executable recommendation-quality scenarios now include:
 - 107 total recommendation-quality scenarios
 - 26 explicit recommendation-contract scenarios
 - all six real visible categories
-- open category-selection mode with forced/resolved Plant, Kitchen, and Candle or light fixtures
+- open-preference mode with forced/resolved Plant, Kitchen, and Candle or light fixtures
 - pause, low, steady, and high capacity
 - me and both-of-us audience paths
 - shape-only, may-lead, and must-not-lead timing authority
@@ -124,8 +124,8 @@ Coverage gap diagnostics means:
 
 The executable contract block can define:
 
-- expected category-selection mode
-- expected explicit or resolved category
+- expected practice-selection mode
+- expected explicit practice or resolved practice
 - expected focus behavior
 - expected capacity behavior
 - expected audience behavior
@@ -155,7 +155,7 @@ The report warning vocabulary now includes the #224 contract diagnostics:
 - `major_timing_event_not_used_for_best_week`
 - `surprise_me_used_as_category_or_style`
 
-Existing warnings continue to cover explicit category/focus override, unresolved open preference, resolved category not preserved, high capacity selecting low-only patterns, and audience action not reflected.
+Existing warnings continue to cover explicit category/focus override, unresolved open preference, resolved practice not preserved, high capacity selecting low-only patterns, and audience action not reflected.
 
 The report now prints `Recommendation contract` and `Contract status` sections for contract scenarios. Contract status separately names whether category was preserved, acceptable families/patterns were used, blocked families/patterns were avoided, and required explanation terms were present.
 
@@ -165,7 +165,7 @@ The report now prints `Recommendation contract` and `Contract status` sections f
 - Request changes: Home + high tending under waning currently selects `first_light_at_the_threshold`; this is form-family compatible but too light/beginning-forward for Home + tending the home.
 - Request changes: Home + low tending under waning currently selects `first_light_at_the_threshold`; low-capacity Home tending should place, return, or arrange a home object rather than mark a light threshold.
 - Request changes: Reflection + high saying clearly under new moon selects `window_light_threshold`; this is phrase-compatible but too threshold/light-forward for Reflection + saying something clearly at high capacity.
-- Request changes: open preference + resting currently resolves to Candle/light and selects `waning_light_release`; the resolved category is preserved, but the action reads as release rather than rest.
+- Request changes: open preference + resting currently resolves to Candle/light and selects `waning_light_release`; the resolved practice is preserved, but the action reads as release rather than rest.
 - Coverage-gap diagnostics are report-level only. Normal copy remains coherent and does not apologize for coverage thinness.
 
 ## 10. Human Review Questions

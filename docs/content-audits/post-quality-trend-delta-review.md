@@ -42,7 +42,7 @@ Contract scenarios: 26
 Authored-output scenarios: 26
 High-capacity scenarios: 18
 Both-of-us scenarios: 29
-Open-preference / resolved-category scenarios: 11
+Open-preference / resolved-practice scenarios: 11
 Distinct selected patterns: 31
 ```
 

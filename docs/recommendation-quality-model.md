@@ -191,7 +191,7 @@ Timing, numerology, natal themes, private profile themes, source support, and ma
 The selection hierarchy is:
 
 1. hard safety, privacy, source, and approval eligibility
-2. explicit visible category or resolved `Surprise me` category
+2. explicit visible practice or resolved `Surprise me` practice
 3. explicit ritual focus
 4. capacity and depth
 5. audience and action structure
@@ -199,7 +199,7 @@ The selection hierarchy is:
 7. timing, lunar, numerology, and private timing shape
 8. material/source strength, variety, and presentation quality
 
-If an explicit category or focus cannot be served, the decision record should name the real blocker. Normal copy should not smooth over the miss with phrases like "held lightly," "stronger material form," or timing-overrode language. `Surprise me` resolves to one real visible category first, then that resolved category should be preserved through selection and presentation.
+If an explicit category or focus cannot be served, the decision record should name the real blocker. Normal copy should not smooth over the miss with phrases like "held lightly," "stronger material form," or timing-overrode language. `Surprise me` resolves to one real visible practice first, then that resolved practice should be preserved through selection and presentation.
 
 If timing, focus, practice type, audience, or capacity are in tension, the app needs a meaning bridge. It should not drop one input silently, pretend everything matched, or fall back to raw timing language.
 
@@ -320,7 +320,7 @@ Recommendation quality needs scenario review and human judgment. A privacy-safe 
 - human notes
 
 Contract scenarios add a stricter layer for recommendation integrity. They define
-the expected category-selection mode, expected explicit or resolved category,
+the expected practice-selection mode, expected explicit practice or resolved practice,
 focus behavior, capacity behavior, audience behavior, timing authority
 classification, acceptable and disallowed ritual form families, blocked
 normal-copy phrases, expected diagnostics, and the rationale before the current

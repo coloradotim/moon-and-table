@@ -387,6 +387,12 @@ function hasHighCapacityShape(value: string): boolean {
   );
 }
 
+function hasAudienceStructureInRitualBody(value: string): boolean {
+  return /\b(?:one of you|the other|each|both|together|between you|shared)\b/i.test(
+    value,
+  );
+}
+
 function hasCoverageGapDisclosure(copy: RecommendationQualityCopyFields): boolean {
   const expandedText = copy.howThisWasChosen
     .flatMap((section) => [section.title, section.body])
@@ -669,7 +675,7 @@ export function getRecommendationQualityWarnings(args: {
     warnings.push(
       warning(
         "surprise_me_unresolved",
-        "Surprise me did not resolve to one real visible category before recommendation.",
+        "Surprise me did not resolve to one real visible practice before recommendation.",
       ),
     );
   }
@@ -690,7 +696,7 @@ export function getRecommendationQualityWarnings(args: {
     warnings.push(
       warning(
         "resolved_surprise_category_not_preserved",
-        "Surprise me resolved to a real category, but the selected pattern did not preserve it.",
+        "Surprise me resolved to a visible practice, but the selected pattern did not preserve it.",
       ),
     );
   }
@@ -833,10 +839,7 @@ export function getRecommendationQualityWarnings(args: {
 
   if (
     scenario.currentRitualCheckIn.audience === "both_of_us" &&
-    /\b(?:both of you|for both of you)\b/i.test(allCopy) &&
-    !/\b(?:one of you|the other|each|both touch|together|between you|shared)\b/i.test(
-      copy.recommendedRitual,
-    )
+    !hasAudienceStructureInRitualBody(copy.recommendedRitual)
   ) {
     warnings.push(
       warning(
@@ -911,7 +914,7 @@ export function getRecommendationQualityWarnings(args: {
     warnings.push(
       warning(
         "surprise_me_used_as_category_or_style",
-        "Surprise me appeared as a category, style, source lineage, or normal-copy ritual family.",
+        "Surprise me appeared as a practice, style, source lineage, or normal-copy ritual family.",
       ),
     );
   }
@@ -1339,7 +1342,9 @@ export function createRecommendationQualityReport(
       scenario.currentRitualCheckIn,
       scenario.currentRitualCheckIn.practiceTypeHints ?? [],
     );
-    const howThisWasChosen = brief.explanation.howThisWasChosen.map((section) => ({
+    const howThisWasChosen = (
+      brief.explanation.diagnosticHowThisWasChosen ?? brief.explanation.howThisWasChosen
+    ).map((section) => ({
       title: section.title,
       body: section.body,
     }));
@@ -1659,7 +1664,7 @@ export function formatRecommendationQualitySummary(
     `- Authored-output scenarios: ${summary.scenarioCounts.authoredOutput}`,
     `- High-capacity scenarios: ${summary.scenarioCounts.highCapacity}`,
     `- Both-of-us scenarios: ${summary.scenarioCounts.bothOfUs}`,
-    `- Open-preference / resolved-category scenarios: ${summary.scenarioCounts.openPreferenceOrResolvedCategory}`,
+    `- Open-preference / resolved-practice scenarios: ${summary.scenarioCounts.openPreferenceOrResolvedCategory}`,
     "",
     "## Verdict Counts",
     "",
@@ -1885,9 +1890,9 @@ export function formatRecommendationQualityReport(
             "",
             "Recommendation contract:",
             "",
-            `- Category-selection mode: ${scenario.contract.categorySelectionMode}`,
+            `- Practice-selection mode: ${scenario.contract.categorySelectionMode}`,
             `- Expected category: ${scenario.contract.expectedCategory ?? "not pinned"}`,
-            `- Resolved category: ${scenario.contract.resolvedCategory ?? "not applicable"}`,
+            `- Resolved practice: ${scenario.contract.resolvedCategory ?? "not applicable"}`,
             `- Expected focus behavior: ${scenario.contract.expectedFocusBehavior}`,
             `- Expected capacity behavior: ${scenario.contract.expectedCapacityBehavior}`,
             `- Expected audience behavior: ${scenario.contract.expectedAudienceBehavior}`,

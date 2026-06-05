@@ -54,7 +54,7 @@ or review reports. It should not become apology in the main ritual body.
 
 #224 owns the recommendation contract:
 
-- explicit or resolved category
+- explicit practice or resolved practice
 - focus
 - capacity
 - audience
@@ -119,8 +119,8 @@ overclaims fit, it is `request_changes`.
 | `contract.home.high_threshold_full` | `window_light_threshold` | exact strong | review required | threshold/window edge has roles but is too slight for high capacity | high-capacity shape thin |
 | `contract.reflection.high_saying_new` | `window_light_threshold` | review gap | request changes | Reflection-first phrase work, not threshold-light default | high shape weak; contract request changes |
 | `contract.seasonal.high_month_turn_threshold` | `seasonal_marker_bowl` | closest compatible | review required | seasonal marker bowl with return | coverage-gap hidden |
-| `contract.surprise.high_preserves_resolved_category` | `window_light_threshold` | closest compatible | review required | resolved category preserved; disclose high-depth gap | coverage-gap hidden |
-| `contract.surprise.both_preserves_audience` | `warm_cup_between_us` | closest compatible | review required | resolved category and embodied shared warmth | coverage-gap hidden |
+| `contract.surprise.high_preserves_resolved_category` | `window_light_threshold` | closest compatible | review required | resolved practice preserved; disclose high-depth gap | coverage-gap hidden |
+| `contract.surprise.both_preserves_audience` | `warm_cup_between_us` | closest compatible | review required | resolved practice and embodied shared warmth | coverage-gap hidden |
 | `contract.best_week.month_turn_may_lead` | `first_day_last_day` | exact strong | request changes | one threshold path, not place/action menu | option menu; audience-only |
 | `contract.tending_us.both_low_embodied` | `quiet_welcome` | exact strong | request changes | shared Kitchen welcome with roles for both people | audience-only |
 | `contract.surprise.low_resolves_real_category` | `waning_light_release` | review gap | request changes | resting should not become release | closest match overclaims fit |
@@ -306,7 +306,7 @@ dumps are intentionally omitted.
 - Optional accent: No add-on needed.
 - Carry prompt: What warmth can be held between you, then left alone?
 - Why this fits: You chose Kitchen, both of you, tending us, high capacity. Full moon supports this form without making the timing a command. The cup holds warmth without asking it to become a conversation. For both of you, the fit leans toward practical home-tending magic and clear structure and bounded action.
-- How this was chosen: Chosen for Kitchen, both of you, tending us, high capacity. Current expanded copy hides closest-compatible resolved-category coverage.
+- How this was chosen: Chosen for Kitchen, both of you, tending us, high capacity. Current expanded copy hides closest-compatible resolved-practice coverage.
 - Source summary: Source lineage: quiet household welcome forms. Form kept contained.
 - Warnings: `coverage_gap_not_disclosed_in_expanded_explanation`, coverage-gap diagnostics
 

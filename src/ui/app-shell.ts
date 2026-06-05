@@ -455,6 +455,26 @@ function renderNatalDebugStatus(brief: WeeklyBrief): string {
   return `${placementCount} placement record${placementCount === 1 ? "" : "s"} loaded; ${selectedContactCount} ranked private timing contact${selectedContactCount === 1 ? "" : "s"} affected the selected ritual.`;
 }
 
+function renderDiagnosticExplanationDebug(brief: WeeklyBrief): string {
+  const sections = brief.explanation.diagnosticHowThisWasChosen;
+
+  if (!sections || sections.length === 0) {
+    return "<p>No diagnostic explanation sections recorded.</p>";
+  }
+
+  return `
+    <ol>
+      ${sections.map((section) => `
+        <li>
+          <strong>${escapeHtml(section.title)}</strong>
+          <small>${escapeHtml(section.kind)}</small>
+          <p>${escapeHtml(section.body)}</p>
+        </li>
+      `).join("")}
+    </ol>
+  `;
+}
+
 function renderDeveloperDecision(brief: WeeklyBrief): string {
   const selectedPattern = brief.decision.candidates.ritualPatterns.find(
     (candidate) => candidate.key === brief.decision.selected.ritualPatternKey,
@@ -488,11 +508,15 @@ function renderDeveloperDecision(brief: WeeklyBrief): string {
         </section>
       </div>
       ${selectedPattern ? `
-        <section class="decision-debug__section">
-          <h3>Selected score reasons</h3>
-          <ul>${renderScoreReasons(selectedPattern.scoreReasons)}</ul>
-        </section>
+      <section class="decision-debug__section">
+        <h3>Selected score reasons</h3>
+        <ul>${renderScoreReasons(selectedPattern.scoreReasons)}</ul>
+      </section>
       ` : ""}
+      <section class="decision-debug__section">
+        <h3>Diagnostic explanation</h3>
+        ${renderDiagnosticExplanationDebug(brief)}
+      </section>
       <section class="decision-debug__section">
         <h3>Evaluated ritual patterns</h3>
         <ol>
