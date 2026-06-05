@@ -166,6 +166,9 @@ describe("recommendation quality report", () => {
       ["issue183.candle.full_saying_clearly", "full_light_on_the_table"],
       ["batch1.reflection.folded_phrase", "folded_phrase_vessel"],
       ["batch1.seasonal.marker_bowl", "seasonal_marker_bowl"],
+      ["issue201.kitchen.bread_center_enoughness", "bread_at_the_center"],
+      ["issue201.home.bread_grain_table_center", "bread_at_the_center"],
+      ["issue201.seasonal.grain_continuity", "seasonal_marker_bowl"],
     ]);
     const requiredScenarioIds = [
       ...expectedPatterns.keys(),
