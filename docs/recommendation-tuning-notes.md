@@ -282,3 +282,28 @@ Deferred:
 - compatibility
 - additional numerology source batches
 - a numerology check-in step
+
+## Issue 183: Ritual Form Reachability
+
+Post-#180 content QA showed that clean warning counts were not enough. Strong
+Batch 1 rituals existed, but broad multi-category patterns could still win too
+many scenarios because scoring treated generic tag overlap as sufficient.
+
+The generator now scores ritual form families separately from broad style tags.
+Form-family fit asks whether the selected ritual material/action actually
+matches the current combination: visible practice category, focus, capacity,
+timing, and audience.
+
+Examples of form-family expectations:
+
+- Plant + clearing should reach plant release/removal.
+- Kitchen + beginning should reach grain, seed, or bowl.
+- Reflection + clear speech should reach written/folded/container forms.
+- Candle/light + rest should reach banked or darkening light, not full-light clarity.
+- Home + threshold should reach threshold, crossing, key, bowl, or first-light forms.
+
+The recommendation-quality report now shows selected ritual form family,
+expected ritual form family, and whether the family matched. It also highlights
+broad pattern concentration so `two_words_at_the_table` and
+`full_light_on_the_table` can remain available without becoming catch-all
+defaults.

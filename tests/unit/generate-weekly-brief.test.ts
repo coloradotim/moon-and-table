@@ -276,19 +276,19 @@ describe("generateWeeklyBrief", () => {
       },
     });
 
-    expect(brief.trace.ritualPatterns).toEqual(["tend_one_plant"]);
-    expect(brief.theme).toBe("Clear one small thing. Tend one living thing.");
-    expect(brief.intention).toBe("Tend one living thing.");
-    expect(brief.recommendedRitual).toContain("Let the plant set the size of the ritual.");
-    expect(brief.recommendedRitual).toContain("leaving the plant settled");
+    expect(brief.trace.ritualPatterns).toEqual(["plant_witness_to_growth"]);
+    expect(brief.theme).toBe("Clear one small thing. Let a plant witness the growth.");
+    expect(brief.intention).toBe("Let a plant witness the growth.");
+    expect(brief.recommendedRitual).toContain("Let the plant hold attention without becoming a task.");
+    expect(brief.recommendedRitual).toContain("leaving the plant untouched");
     expect(brief.reflectionPrompt).toBe(
-      "What kind of care is this home asking for only after you look closely?",
+      "What can keep growing without being handled today?",
     );
     expect(brief.explanation.howThisWasChosen).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           kind: "ritual_fit",
-          body: expect.stringContaining("A plant makes care visible"),
+          body: expect.stringContaining("Plant folklore and flower-language traditions"),
         }),
       ]),
     );
@@ -363,9 +363,9 @@ describe("generateWeeklyBrief", () => {
       },
     });
 
-    expect(brief.trace.ritualPatterns).toEqual(["tend_one_plant"]);
+    expect(brief.trace.ritualPatterns).toEqual(["plant_witness_to_growth"]);
     expect(brief.recommendedRitual).toContain(
-      "Close by leaving the plant settled and letting the rest of the room wait.",
+      "Close by thanking the witness in plain words and leaving the plant untouched.",
     );
     expect(brief.recommendedRitual).not.toContain("Keep it simple and useful.");
   });
@@ -386,9 +386,9 @@ describe("generateWeeklyBrief", () => {
       },
     });
 
-    expect(brief.trace.ritualPatterns).toEqual(["tend_one_plant"]);
+    expect(brief.trace.ritualPatterns).toEqual(["plant_witness_to_growth"]);
     expect(brief.recommendedRitual).toContain(
-      "Close by leaving the plant settled and letting the rest of the room wait.",
+      "Close by thanking the witness in plain words and leaving the plant untouched.",
     );
     expect(brief.recommendedRitual).not.toContain("Keep it gentle.");
     expect(brief.recommendedRitual).not.toContain("Stop there.");
@@ -658,7 +658,7 @@ describe("generateWeeklyBrief", () => {
     expect(serializedExplanation).not.toContain("surprise me choice helped");
   });
 
-  it("records when a visible practice answer is set aside by the selected ritual", () => {
+  it("honors a visible practice answer when a matching ritual form exists", () => {
     const brief = generateWeeklyBrief({
       currentDate: "2026-06-03T12:00:00.000Z",
       capacityMode: "low",
@@ -676,14 +676,14 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.decision.inputs.practiceChoice).toMatchObject({
       selectedLabel: "Plant",
-      status: "set_aside",
-      selectedPatternMatches: [],
+      status: "matched_selected_pattern",
+      selectedPatternMatches: ["plant"],
     });
     expect(brief.explanation.howThisWasChosen).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          kind: "tradeoff_or_alternative",
-          body: expect.stringContaining("practice answer leaned toward plant"),
+          kind: "check_in_fit",
+          body: expect.stringContaining("Your plant choice matched"),
         }),
       ]),
     );
