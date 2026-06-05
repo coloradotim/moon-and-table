@@ -4,10 +4,10 @@ This packet is for human review before merging issue #183. It asks whether speci
 
 ## 1. PR / Branch Summary
 
-- PR number and title: pending PR creation
+- PR number and title: #188, Improve ritual form reachability diagnostics
 - Branch name: `codex/issue-183-ritual-form-reachability`
 - Base branch: `main`
-- Commit SHA: `152ad938b8e9f6ae7b8f533017257ba4b7572847` before the review-packet commit; final PR head may advance after this packet is committed
+- Commit SHA: `012049ad199f15051f7b9d1c6260793708a9fed2` for the implementation and review-packet commit; this metadata update advances the final branch head
 - Issue addressed: #183
 
 Short implementation summary:
