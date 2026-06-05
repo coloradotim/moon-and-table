@@ -4,7 +4,33 @@ Generated from the #222 branch on 2026-06-05. This packet reviews normal user-fa
 
 ## Executive Readiness
 
-Overall verdict: show Jessica after #222 human review. The best paths feel magical, concrete, and household-specific. Avoid the weaker no-exact-timing and generic seasonal-today paths if the goal is enchantment.
+Overall verdict: show Jessica after #222/#223 human review. The best paths feel magical, concrete, and household-specific. The cleanup patch removes option-menu candle bodies and adds fuller steady/high candle arcs; avoid the weaker no-exact-timing and generic seasonal-today paths if the goal is enchantment.
+
+## Cleanup Patch Note
+
+- Fragmentary body fixed: the previous first-light body asked the user to choose "a lamp, window light, morning light, or supervised candle" and to turn/dim/let the window be. The current first-light body uses one doorway, one first household light, one crossing, and a clear close.
+- Higher capacity fixed: `Enough to engage` and `Room for something deeper` now render paper/light/bowl holding and return arcs instead of simply lengthening a five-minute rite.
+- Normal copy remains free of score/debug/source-key machinery; diagnostics remain available in reports.
+
+## High-Capacity Demo Evidence
+
+### Full moon + Both + Saying clearly + Room for something deeper
+- Selected pattern: candle_witness_one_phrase.
+- Best window: When you have room to linger this week.
+- Ritual body: Choose one phrase only. Let the close belong to the light. Set one table light between you or at the household center. Write one phrase and place it in the light. Let the phrase rest there through one quiet minute. Lower the light, fold the paper once, and place it under the light until tomorrow or the next return to the table. Close when the folded phrase is under the unlit or lowered light.
+- Human verdict: show Jessica.
+
+### New moon + Beginning + Room for something deeper
+- Selected pattern: first_light_for_the_beginning.
+- Best window: When you have room to linger this week.
+- Ritual body: Let the light make the beginning visible once. Stop before visibility becomes a plan. Set one first household light near the doorway. Write the beginning in one sentence and place the paper just inside the threshold. Step across once, touch the doorframe, and let the light hold the sentence until the next return to the room. Return later, lift the paper, and put it in an ordinary holding place. Close when the paper has been returned or put away.
+- Human verdict: show Jessica, especially on a real new-moon demo date.
+
+### Waning + Clearing + Room for something deeper
+- Selected pattern: waning_light_release.
+- Best window: When you have room to linger this week.
+- Ritual body: Use the light as the leaving path. Do not add a second removal ritual. Set one table light and one small paper at the table. Write one lessening phrase and place it in the light. Lower the light in three small steps, pausing after each lowering. Fold the paper once and place it under the lamp until tomorrow or the next return. Return later and put the paper away without adding another release. Close when the folded phrase has been put away.
+- Human verdict: show Jessica if she asks for clearing; this is more vivid than the no-strong-timing route.
 
 ## Twenty Demo Recommendations
 
@@ -13,7 +39,7 @@ Overall verdict: show Jessica after #222 human review. The best paths feel magic
 - Selected category: Candle or light, resting, low capacity
 - Selected pattern: full_light_on_the_table
 - Title/theme: Lower the light around one resting phrase.
-- Ritual body: Use the light only long enough to mark the pause. Let the close make the room quieter. Set one soft light at the table. Name one short resting phrase. Lower, turn from, or extinguish the light. Close when the room is dimmer.
+- Ritual body: Use the light only long enough to mark the pause. Let the close make the room quieter. Set one soft table light. Name one short resting phrase. Lower the light. Close when the room is dimmer.
 - Intention: Lower the light around one resting phrase.
 - Best window: When you have five quiet minutes.
 - Optional accent: No add-on needed.
@@ -49,7 +75,7 @@ Overall verdict: show Jessica after #222 human review. The best paths feel magic
 - Selected category: Candle or light, making a beginning, low capacity
 - Selected pattern: first_light_for_the_beginning
 - Title/theme: Open the beginning with one small light.
-- Ritual body: Let the light make the beginning visible once. Stop before visibility becomes a plan. Choose one first light: a lamp, window light, morning light, or supervised candle. Name the beginning in one plain sentence. Turn from the light, dim it, or let the window be after the sentence is spoken. Close when you turn from the light and add nothing else.
+- Ritual body: Let the light make the beginning visible once. Stop before visibility becomes a plan. Stand at the doorway with one first household light behind you. Name the beginning in one plain sentence. Step across once and leave the sentence behind the threshold. Close when both feet are inside and no plan has been added.
 - Intention: Open the beginning with one small light.
 - Best window: When you have five quiet minutes.
 - Optional accent: Let the beginning stay small enough to wait.
@@ -67,7 +93,7 @@ Overall verdict: show Jessica after #222 human review. The best paths feel magic
 - Selected category: Candle or light, both of you, saying something clearly, steady capacity
 - Selected pattern: full_light_on_the_table
 - Title/theme: Put one line where the light can hold it.
-- Ritual body: Use the light as witness. Let the ending be as deliberate as the saying. Set a lamp, window light, or supervised candle at the table. Put one spoken or written line where the light falls. Dim, turn away from, or extinguish the light to close. Close by changing the light.
+- Ritual body: Use the light as witness. Let the ending be as deliberate as the saying. Set one table light and one small paper at the table. Write one clear line and place it where the light falls. Read it once, lower the light, and leave the paper at the table until the next return. Close when the paper is left in the lowered light.
 - Intention: Put one line where the light can hold it.
 - Best window: Around Wednesday, June 3 morning. When you have a little space this week.
 - Optional accent: No add-on needed.
@@ -85,13 +111,13 @@ Overall verdict: show Jessica after #222 human review. The best paths feel magic
 - Selected category: Reflection, saying something clearly, low capacity
 - Selected pattern: window_light_threshold
 - Title/theme: Give the phrase a window threshold.
-- Ritual body: Use the window as the crossing place. Let turning away be the close. Stand or sit where window light reaches the room. Speak or place one written phrase at that edge. Turn away, step back, or close the curtain to end the crossing. Close when you turn from the window.
+- Ritual body: Use the window as the crossing place. Let closing the curtain be the close. Stand or sit where window light reaches the room. Speak or place one written phrase at that edge. Close the curtain to end the crossing. Close when the curtain is closed.
 - Intention: Give the phrase a window threshold.
 - Best window: When you have five quiet minutes.
 - Optional accent: No add-on needed.
 - Carry prompt: What phrase can meet the threshold and stop there?
 - Why this fits: You chose Reflection, saying something clearly, low capacity. The timing gives the phrase a clear place without turning it into a report. Window light gives the phrase an edge to meet and leave. Private context supports clear structure and bounded action in a small, contained rite.
-- How this was chosen: Chosen for: Reflection, saying something clearly, low capacity / Timing shaped it: The timing gives the phrase a clear place without turning it into a report. / Focus bridge: Saying something clearly stays inside the ritual action. / Ritual form: Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. / Material lineage: Source lineage: first-light threshold and lunar visible-light logic. / Kept bounded: One window edge, one phrase, then turning away. / Household fit: Private context supports clear structure and bounded action in a small, contained rite.
+- How this was chosen: Chosen for: Reflection, saying something clearly, low capacity / Timing shaped it: The timing gives the phrase a clear place without turning it into a report. / Focus bridge: Saying something clearly stays inside the ritual action. / Ritual form: Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. / Material lineage: Source lineage: first-light threshold and lunar visible-light logic. / Kept bounded: One window edge, one phrase, then the curtain closes. / Household fit: Private context supports clear structure and bounded action in a small, contained rite.
 - Source summary: Source lineage: first-light threshold and lunar visible-light logic. Form kept contained.
 - Warnings: none from generator quality warnings in this custom pass; see full recommendation-quality report for fixture warnings.
 - Human verdict: show Jessica.
@@ -103,13 +129,13 @@ Overall verdict: show Jessica after #222 human review. The best paths feel magic
 - Selected category: Home, marking a threshold, low capacity
 - Selected pattern: window_light_threshold
 - Title/theme: Give the phrase a window threshold.
-- Ritual body: Use the window as the crossing place. Let turning away be the close. Stand or sit where window light reaches the room. Speak or place one written phrase at that edge. Turn away, step back, or close the curtain to end the crossing. Close when you turn from the window.
+- Ritual body: Use the window as the crossing place. Let closing the curtain be the close. Stand or sit where window light reaches the room. Speak or place one written phrase at that edge. Close the curtain to end the crossing. Close when the curtain is closed.
 - Intention: Give the phrase a window threshold.
 - Best window: When you have five quiet minutes.
 - Optional accent: No add-on needed.
 - Carry prompt: What phrase can meet the threshold and stop there?
 - Why this fits: You chose Home, marking a threshold, low capacity. Waning moon supports this form without making the timing a command. Window light gives the phrase an edge to meet and leave. Private context supports clear structure and bounded action in a small, contained rite.
-- How this was chosen: Chosen for: Home, marking a threshold, low capacity / Timing shaped it: Waning moon supports this form without making the timing a command. / Focus bridge: Marking a threshold stays inside the ritual action. / Ritual form: Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. / Material lineage: Source lineage: first-light threshold and lunar visible-light logic. / Kept bounded: One window edge, one phrase, then turning away. / Household fit: Private context supports clear structure and bounded action in a small, contained rite. / Small accent: Numerology 7 stayed secondary to the ritual material and timing.
+- How this was chosen: Chosen for: Home, marking a threshold, low capacity / Timing shaped it: Waning moon supports this form without making the timing a command. / Focus bridge: Marking a threshold stays inside the ritual action. / Ritual form: Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. / Material lineage: Source lineage: first-light threshold and lunar visible-light logic. / Kept bounded: One window edge, one phrase, then the curtain closes. / Household fit: Private context supports clear structure and bounded action in a small, contained rite. / Small accent: Numerology 7 stayed secondary to the ritual material and timing.
 - Source summary: Source lineage: first-light threshold and lunar visible-light logic. Form kept contained.
 - Warnings: none from generator quality warnings in this custom pass; see full recommendation-quality report for fixture warnings.
 - Human verdict: acceptable.
@@ -175,13 +201,13 @@ Overall verdict: show Jessica after #222 human review. The best paths feel magic
 - Selected category: Reflection, saying something clearly, low capacity
 - Selected pattern: window_light_threshold
 - Title/theme: Give the phrase a window threshold.
-- Ritual body: Use the window as the crossing place. Let turning away be the close. Stand or sit where window light reaches the room. Speak or place one written phrase at that edge. Turn away, step back, or close the curtain to end the crossing. Close when you turn from the window.
+- Ritual body: Use the window as the crossing place. Let closing the curtain be the close. Stand or sit where window light reaches the room. Speak or place one written phrase at that edge. Close the curtain to end the crossing. Close when the curtain is closed.
 - Intention: Give the phrase a window threshold.
 - Best window: When you have five quiet minutes.
 - Optional accent: No add-on needed.
 - Carry prompt: What phrase can meet the threshold and stop there?
 - Why this fits: You chose Reflection, saying something clearly, low capacity. The timing gives the phrase a clear place without turning it into a report. Window light gives the phrase an edge to meet and leave. Private context supports clear structure and bounded action in a small, contained rite.
-- How this was chosen: Chosen for: Reflection, saying something clearly, low capacity / Timing shaped it: The timing gives the phrase a clear place without turning it into a report. / Focus bridge: Saying something clearly stays inside the ritual action. / Ritual form: Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. / Material lineage: Source lineage: first-light threshold and lunar visible-light logic. / Kept bounded: One window edge, one phrase, then turning away. / Household fit: Private context supports clear structure and bounded action in a small, contained rite. / Small accent: Numerology 7 stayed secondary to the ritual material and timing.
+- How this was chosen: Chosen for: Reflection, saying something clearly, low capacity / Timing shaped it: The timing gives the phrase a clear place without turning it into a report. / Focus bridge: Saying something clearly stays inside the ritual action. / Ritual form: Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. / Material lineage: Source lineage: first-light threshold and lunar visible-light logic. / Kept bounded: One window edge, one phrase, then the curtain closes. / Household fit: Private context supports clear structure and bounded action in a small, contained rite. / Small accent: Numerology 7 stayed secondary to the ritual material and timing.
 - Source summary: Source lineage: first-light threshold and lunar visible-light logic. Form kept contained.
 - Warnings: none from generator quality warnings in this custom pass; see full recommendation-quality report for fixture warnings.
 - Human verdict: show Jessica.
@@ -229,7 +255,7 @@ Overall verdict: show Jessica after #222 human review. The best paths feel magic
 - Selected category: Candle or light, saying something clearly, low capacity
 - Selected pattern: unlit_candle_witness
 - Title/theme: Let the unlit candle witness.
-- Ritual body: Keep the candle ordinary and unlit. Give it one word, then return it. Set an unlit candle, lamp, or window-light place near you. Give it one word or one short phrase to witness. Return the candle or turn away from the light. Close when the candle returns to ordinary use.
+- Ritual body: Keep the candle ordinary and unlit. Give it one word, then return it. Set one unlit candle near you. Give it one word or one short phrase to witness. Return the candle to ordinary use. Close when the candle returns to ordinary use.
 - Intention: Let the unlit candle witness.
 - Best window: When you have five quiet minutes.
 - Optional accent: The unlit candle is already the whole witness.
@@ -247,7 +273,7 @@ Overall verdict: show Jessica after #222 human review. The best paths feel magic
 - Selected category: Candle or light, resting, low capacity
 - Selected pattern: full_light_holding_bowl
 - Title/theme: Let full light hold rest in an empty bowl.
-- Ritual body: Use an empty bowl, not a charged object. Let holding be brief and ordinary. Set a small empty bowl where lamp, window, or supervised candle light falls. Name one thing that can be held there without being solved. Move the bowl back, leave it empty, or return it to its ordinary place. Close when the bowl is empty or back in its place.
+- Ritual body: Use an empty bowl, not a charged object. Let holding be brief and ordinary. Set a small empty bowl in the table light. Name one thing that can be held there without being solved. Return the empty bowl to its ordinary place. Close when the bowl is back in its ordinary place.
 - Intention: Let full light hold rest in an empty bowl.
 - Best window: When you have five quiet minutes.
 - Optional accent: No add-on needed.
@@ -283,7 +309,7 @@ Overall verdict: show Jessica after #222 human review. The best paths feel magic
 - Selected category: Candle or light, making a beginning, low capacity
 - Selected pattern: first_light_for_the_beginning
 - Title/theme: Open the beginning with one small light.
-- Ritual body: Let the light make the beginning visible once. Stop before visibility becomes a plan. Choose one first light: a lamp, window light, morning light, or supervised candle. Name the beginning in one plain sentence. Turn from the light, dim it, or let the window be after the sentence is spoken. Close when you turn from the light and add nothing else.
+- Ritual body: Let the light make the beginning visible once. Stop before visibility becomes a plan. Stand at the doorway with one first household light behind you. Name the beginning in one plain sentence. Step across once and leave the sentence behind the threshold. Close when both feet are inside and no plan has been added.
 - Intention: Open the beginning with one small light.
 - Best window: When you have five quiet minutes.
 - Optional accent: Let the beginning stay small enough to wait.
@@ -301,7 +327,7 @@ Overall verdict: show Jessica after #222 human review. The best paths feel magic
 - Selected category: Candle or light, clearing something out, low capacity
 - Selected pattern: waning_light_release
 - Title/theme: Let waning light lower the release.
-- Ritual body: Use the light as the leaving path. Do not add a second removal ritual. Choose one lamp, window shade, or supervised candle. Name one thing that can take up less room. Lower, cover, or turn away from the light until the room is slightly dimmer. Close when the light is lowered and nothing more is removed.
+- Ritual body: Use the light as the leaving path. Do not add a second removal ritual. Set one table lamp or supervised candle. Name one thing that can take up less room. Lower the light until the table is slightly dimmer. Close when the light is lowered and nothing more is removed.
 - Intention: Let waning light lower the release.
 - Best window: When you have five quiet minutes.
 - Optional accent: No add-on needed.
@@ -319,7 +345,7 @@ Overall verdict: show Jessica after #222 human review. The best paths feel magic
 - Selected category: Candle or light, resting, low capacity
 - Selected pattern: bank_the_house_light
 - Title/theme: Bank one house light.
-- Ritual body: Treat the light as the house's last small center. Close the day without turning closure into another task. Choose a lamp, window light, or supervised candle. Lower or extinguish it while naming what can be done enough. Leave one warm thing in place: a cup, blanket, or quiet table. Close by leaving the light lowered and the house unasked for more.
+- Ritual body: Treat the light as the house's last small center. Close the day without turning closure into another task. Set one table lamp or supervised candle as the house's small center. Name what can be done enough tonight. Lower the light and leave one warm thing beside it: a cup, blanket, or quiet table. Close by leaving the light lowered and the house unasked for more.
 - Intention: Bank one house light.
 - Best window: When you have five quiet minutes.
 - Optional accent: No add-on needed.
@@ -355,13 +381,13 @@ Overall verdict: show Jessica after #222 human review. The best paths feel magic
 - Selected category: Reflection, saying something clearly, low capacity
 - Selected pattern: window_light_threshold
 - Title/theme: Give the phrase a window threshold.
-- Ritual body: Use the window as the crossing place. Let turning away be the close. Stand or sit where window light reaches the room. Speak or place one written phrase at that edge. Turn away, step back, or close the curtain to end the crossing. Close when you turn from the window.
+- Ritual body: Use the window as the crossing place. Let closing the curtain be the close. Stand or sit where window light reaches the room. Speak or place one written phrase at that edge. Close the curtain to end the crossing. Close when the curtain is closed.
 - Intention: Give the phrase a window threshold.
 - Best window: When you have five quiet minutes.
 - Optional accent: No add-on needed.
 - Carry prompt: What phrase can meet the threshold and stop there?
 - Why this fits: You chose Reflection, saying something clearly, low capacity. The timing gives the phrase a clear place without turning it into a report. Window light gives the phrase an edge to meet and leave. Private context supports clear structure and bounded action in a small, contained rite.
-- How this was chosen: Chosen for: Reflection, saying something clearly, low capacity / Timing shaped it: The timing gives the phrase a clear place without turning it into a report. / Focus bridge: Saying something clearly stays inside the ritual action. / Ritual form: Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. / Material lineage: Source lineage: first-light threshold and lunar visible-light logic. / Kept bounded: One window edge, one phrase, then turning away. / Household fit: Private context supports clear structure and bounded action in a small, contained rite.
+- How this was chosen: Chosen for: Reflection, saying something clearly, low capacity / Timing shaped it: The timing gives the phrase a clear place without turning it into a report. / Focus bridge: Saying something clearly stays inside the ritual action. / Ritual form: Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. / Material lineage: Source lineage: first-light threshold and lunar visible-light logic. / Kept bounded: One window edge, one phrase, then the curtain closes. / Household fit: Private context supports clear structure and bounded action in a small, contained rite.
 - Source summary: Source lineage: first-light threshold and lunar visible-light logic. Form kept contained.
 - Warnings: none from generator quality warnings in this custom pass; see full recommendation-quality report for fixture warnings.
 - Human verdict: show Jessica.
@@ -389,12 +415,14 @@ Overall verdict: show Jessica after #222 human review. The best paths feel magic
 
 ## Must-Fix Items Before Showing Jessica
 
-- None blocking. Human review should still read the awkward-output notes in the #222 packet.
+- None blocking after the #223 cleanup patch. Human review should still read the awkward-output notes in the #222 packet.
 
 ## Validation Context
 
-- #222 branch validation passed: `npm run lint:content`, `npm run typecheck`, `npm run test`, `npm run test -- tests/unit/recommendation-quality-report.test.ts`, `npm run recommendation:quality`, `npm run diagnose:content`, and `npm run check`.
+- #223 cleanup validation passed: `npm run lint:content`, `npm run typecheck`, `npm run test`, `npm run test -- tests/unit/recommendation-quality-report.test.ts`, `npm run recommendation:quality`, `npm run diagnose:content`, and `npm run check`.
+- Recommendation quality sampled 81 scenarios with all warning buckets at 0. Broad concentration remains acceptable: `full_light_on_the_table` at 6.
+- Full check passed build, unit tests, and 2 Playwright e2e tests. Vite still reports the existing large-chunk warning.
 
 ## Merge Recommendation For #222
 
-Hold for human review, then merge if full validation passes and Tim/ChatGPT agree the highlighted weaker paths are acceptable for demo management.
+Hold for human review. Merge if Tim/ChatGPT accept the remaining noted risk that first-light beginning uses doorway light rather than a pure table-light beginning.

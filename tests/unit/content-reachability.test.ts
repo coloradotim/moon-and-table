@@ -66,14 +66,13 @@ describe("content reachability diagnostics", () => {
         "plant_witness_to_growth",
         "seasonal_entry_bowl",
         "seasonal_marker_bowl",
-        "table_reset",
         "two_words_at_the_table",
         "unlit_candle_witness",
         "waning_light_release",
       ]),
     );
     expect(report.gaps.approvedRitualPatternsNotSelected).toEqual(
-      expect.arrayContaining(["tea_ritual", "tend_one_plant"]),
+      expect.arrayContaining(["table_reset", "tea_ritual", "tend_one_plant"]),
     );
     expect(report.gaps.approvedRitualPatternsNotSelected.length).toBeGreaterThan(0);
     expect(report.gaps.approvedRitualPatternsNotSelected.every((key) =>

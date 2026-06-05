@@ -183,6 +183,11 @@ describe("recommendation quality report", () => {
       ["issue222.reflection.mercury_saying_clearly", "window_light_threshold"],
       ["issue222.candle.best_week_lunation_window", "full_light_on_the_table"],
       ["issue222.surprise.candle_real_fit", "window_light_threshold"],
+      ["issue223.candle.high.full_both_saying", "candle_witness_one_phrase"],
+      ["issue223.candle.high.new_beginning", "first_light_for_the_beginning"],
+      ["issue223.candle.high.waning_clearing", "waning_light_release"],
+      ["issue223.candle.steady.resting", "full_light_holding_bowl"],
+      ["issue223.candle.high.best_week", "candle_witness_one_phrase"],
     ]);
     const issue202LossPatterns = new Map([
       ["issue202.generic.low_not_threshold", ["carried_key_word", "threshold_bowl", "seasonal_entry_bowl", "last_word_first_word"]],
@@ -221,6 +226,11 @@ describe("recommendation quality report", () => {
       "issue222.candle.venus_warmth_tending_us",
       "issue222.candle.saturn_boundary_rest",
       "issue222.candle.no_strong_timing",
+      "issue223.candle.high.full_both_saying",
+      "issue223.candle.high.new_beginning",
+      "issue223.candle.high.waning_clearing",
+      "issue223.candle.steady.resting",
+      "issue223.candle.high.best_week",
       "issue183.kitchen.clearing_salt",
       "issue183.reflection.waning_release",
       "kitchen.warmth.together",
@@ -342,6 +352,17 @@ describe("recommendation quality report", () => {
     expect(["last_word_first_word", "first_day_last_day"]).toContain(
       resultById.get("issue205.seasonal.first_last_words")?.selectedRitualPattern.key,
     );
+    for (const scenarioId of [
+      "issue223.candle.high.full_both_saying",
+      "issue223.candle.high.new_beginning",
+      "issue223.candle.high.waning_clearing",
+      "issue223.candle.steady.resting",
+      "issue223.candle.high.best_week",
+    ]) {
+      expect(resultById.get(scenarioId)?.brief.bestWindow.toLowerCase(), scenarioId).not.toContain(
+        "five quiet minutes",
+      );
+    }
 
     expect(["warm_cup_between_us", "quiet_welcome"]).toContain(
       resultById.get("kitchen.warmth.together")?.selectedRitualPattern.key,

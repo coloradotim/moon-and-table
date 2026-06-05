@@ -1894,8 +1894,8 @@ function getEffectivePresentation(
   const merged = {
     ...presentation,
     ...audienceVariant,
-    ...capacityVariant,
     ...Object.assign({}, ...contextVariants),
+    ...capacityVariant,
   };
 
   return {
@@ -2773,7 +2773,7 @@ function getTimingBridgePhrase(
     }
 
     if (primaryMoonFact === "moon.waning" && focusKey === "clearing_something_out") {
-      return "Waning light turns clearing into lowering, covering, or turning away.";
+      return "Waning light turns clearing into lowering the light and stopping there.";
     }
 
     if (focusKey === "resting" && pattern.ritualStyles.some((style) => ["dark", "rest", "no_live_flame"].includes(style))) {
@@ -2844,7 +2844,7 @@ function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeekly
     first_light_for_the_beginning: "one first light, one sentence, then no plan",
     candle_witness_one_phrase: "one phrase, one witness, then the light changes",
     unlit_candle_witness: "one unlit candle, one word, then ordinary return",
-    window_light_threshold: "one window edge, one phrase, then turning away",
+    window_light_threshold: "one window edge, one phrase, then the curtain closes",
     waning_light_release: "one lowered light, one lessening phrase, then stop",
     full_light_holding_bowl: "one empty bowl, one held thing, then return",
     full_light_on_the_table: "one light, one line, then the light changes",
