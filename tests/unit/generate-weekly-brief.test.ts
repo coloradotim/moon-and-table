@@ -411,7 +411,7 @@ describe("generateWeeklyBrief", () => {
       {
         scenarioId: "batch1.reflection.folded_phrase",
         patternKey: "folded_phrase_vessel",
-        expectedPrompt: "What changes when the phrase has a place to be held?",
+        expectedPrompt: "What is clearer after it has been folded once?",
       },
       {
         scenarioId: "batch1.seasonal.marker_bowl",
@@ -444,7 +444,7 @@ describe("generateWeeklyBrief", () => {
     );
 
     expect(foldedPhrasePattern?.presentation?.carry).toBe(
-      "What changes when the phrase has a place to be held?",
+      "What changes when the phrase has a place to rest?",
     );
   });
 

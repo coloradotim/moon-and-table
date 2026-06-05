@@ -195,11 +195,20 @@ describe("recommendation quality report", () => {
       ["issue204.clearing.not_honey", ["honeyed_word"]],
       ["issue204.threshold.not_honey", ["honeyed_word"]],
     ]);
+    const issue205LossPatterns = new Map([
+      ["issue205.kitchen.warmth.not_phrase", ["folded_phrase_vessel", "waning_phrase_release", "carried_key_word", "last_word_first_word", "plant_phrase_under_the_pot"]],
+    ]);
     const requiredScenarioIds = [
       ...expectedPatterns.keys(),
       ...issue202LossPatterns.keys(),
       ...issue203SaltWaterLossPatterns.keys(),
       ...issue204HoneyLossPatterns.keys(),
+      ...issue205LossPatterns.keys(),
+      "issue205.reflection.folded_word_body",
+      "issue205.reflection.waning_phrase_return",
+      "issue205.home.carried_word_return",
+      "issue205.plant.placed_phrase",
+      "issue205.seasonal.first_last_words",
       "issue183.kitchen.clearing_salt",
       "issue183.reflection.waning_release",
       "kitchen.warmth.together",
@@ -253,6 +262,15 @@ describe("recommendation quality report", () => {
       "apology",
       "persuasion",
       "control",
+      "hohman",
+      "pow-wows",
+      "long lost friend",
+      "charm wording",
+      "copied charm",
+      "prayer formula",
+      "spell database",
+      "petition",
+      "affirmation",
     ];
 
     for (const [scenarioId, patternKey] of expectedPatterns) {
@@ -277,11 +295,32 @@ describe("recommendation quality report", () => {
       );
     }
 
+    for (const [scenarioId, blockedPatternKeys] of issue205LossPatterns) {
+      expect(blockedPatternKeys, scenarioId).not.toContain(
+        resultById.get(scenarioId)?.selectedRitualPattern.key,
+      );
+    }
+
     expect(resultById.get("issue183.kitchen.clearing_salt")?.selectedRitualPattern.key).toBe(
       "salt_clear_water_release",
     );
     expect(resultById.get("issue183.reflection.waning_release")?.selectedRitualPattern.key).toBe(
       "waning_phrase_release",
+    );
+    expect(resultById.get("issue205.reflection.folded_word_body")?.selectedRitualPattern.key).toBe(
+      "folded_phrase_vessel",
+    );
+    expect(resultById.get("issue205.reflection.waning_phrase_return")?.selectedRitualPattern.key).toBe(
+      "waning_phrase_release",
+    );
+    expect(resultById.get("issue205.home.carried_word_return")?.selectedRitualPattern.key).toBe(
+      "carried_key_word",
+    );
+    expect(resultById.get("issue205.plant.placed_phrase")?.selectedRitualPattern.key).toBe(
+      "plant_phrase_under_the_pot",
+    );
+    expect(["last_word_first_word", "first_day_last_day"]).toContain(
+      resultById.get("issue205.seasonal.first_last_words")?.selectedRitualPattern.key,
     );
 
     expect(["warm_cup_between_us", "quiet_welcome"]).toContain(
