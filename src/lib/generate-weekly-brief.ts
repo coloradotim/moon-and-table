@@ -2690,15 +2690,17 @@ function getPatternMaterialPhrase(pattern: RitualPattern): string {
     threshold_bowl:
       "The bowl gives arrival a small place to gather, cross, and end.",
     salt_clear_water_release:
-      "Salt and clear water give the release a vessel and a clean way out.",
+      "Salt and clear water belong to explicit release: the named thing leaves, then the bowl returns.",
+    clear_the_threshold_bowl:
+      "The vessel closes by emptying what it held and becoming ordinary again.",
     bank_the_house_light:
       "Lowered light lets rest become visible without asking for more action.",
     full_light_on_the_table:
       "Light gives the line a place to be witnessed and then ended.",
     folded_phrase_vessel:
-      "The fold turns the phrase into a held object instead of a long explanation.",
+      "The fold turns the phrase into a held object with a place and a later return.",
     seasonal_marker_bowl:
-      "The bowl gives seasonal change one household marker, and grain or bread can hold continuity without display.",
+      "The bowl gives seasonal change one household marker to hold, then return.",
     first_day_last_day:
       "The first-and-last form gives the threshold one action and one close.",
     seasonal_entry_bowl:
@@ -2797,10 +2799,11 @@ function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeekly
     honeyed_word: "one word, one sweetness cue, then the cup is returned",
     carried_key_word: "one word, one crossing, then the key returns",
     threshold_bowl: "one object crosses in, then returns or the bowl moves",
-    salt_clear_water_release: "one pinch, one bowl, one clean release",
+    salt_clear_water_release: "one named release, one emptied bowl, then ordinary return",
+    clear_the_threshold_bowl: "one held marker, one emptying, then the vessel returns",
     bank_the_house_light: "one lowered light, one ending, then no more work",
     full_light_on_the_table: "one light, one line, then the light changes",
-    folded_phrase_vessel: "one phrase, one fold, one holding place",
+    folded_phrase_vessel: "one phrase, one fold, one holding place, then later return",
     seasonal_marker_bowl: "the bowl holds one marker until its ordinary return",
     first_day_last_day: "one threshold action, one clean close",
     seasonal_entry_bowl: "one entry marker, one crossing, then the bowl rests",
@@ -2827,11 +2830,12 @@ function getCompressedLineage(pattern: RitualPattern): string | undefined {
     warm_cup_between_us: "quiet household welcome forms",
     quiet_welcome: "quiet household welcome forms",
     honeyed_word: "quiet welcome and household sweetness forms",
-    salt_clear_water_release: "salt and boundary folklore",
+    salt_clear_water_release: "salt-water clearing and rinsed-vessel logic",
+    clear_the_threshold_bowl: "emptying, returning, and household threshold-vessel logic",
     carried_key_word: "key, threshold, return, and household marker folklore",
     threshold_bowl: "threshold crossing and bowl-vessel household logic",
-    folded_phrase_vessel: "folded-word and household container logic",
-    seasonal_marker_bowl: "seasonal bowl, household-threshold, and bread/grain table logic",
+    folded_phrase_vessel: "folded-word and household container-return logic",
+    seasonal_marker_bowl: "seasonal marker and vessel-return logic",
     full_light_on_the_table: "hearth/table first-and-last logic",
     bank_the_house_light: "household fire-banking customs",
     seasonal_entry_bowl: "seasonal threshold and first-crossing household logic",

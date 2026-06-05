@@ -172,6 +172,7 @@ describe("recommendation quality report", () => {
       ["issue202.reflection.returnable_key", "carried_key_word"],
       ["issue202.reflection.last_first_word", "last_word_first_word"],
       ["issue202.seasonal.entry_first_crossing", "seasonal_entry_bowl"],
+      ["issue203.seasonal.end_empty_return", "clear_the_threshold_bowl"],
     ]);
     const issue202LossPatterns = new Map([
       ["issue202.generic.low_not_threshold", ["carried_key_word", "threshold_bowl", "seasonal_entry_bowl", "last_word_first_word"]],
@@ -180,9 +181,18 @@ describe("recommendation quality report", () => {
       ["issue202.plant.not_threshold", ["carried_key_word", "threshold_bowl", "seasonal_entry_bowl", "last_word_first_word"]],
       ["batch1.surprise_me.resolves_visible_category", ["carried_key_word", "threshold_bowl", "seasonal_entry_bowl", "last_word_first_word"]],
     ]);
+    const issue203SaltWaterLossPatterns = new Map([
+      ["home.threshold.arrival", ["salt_clear_water_release"]],
+      ["issue183.home.tending_steady", ["salt_clear_water_release"]],
+      ["batch1.seasonal.marker_bowl", ["salt_clear_water_release"]],
+      ["batch1.surprise_me.resolves_visible_category", ["salt_clear_water_release"]],
+    ]);
     const requiredScenarioIds = [
       ...expectedPatterns.keys(),
       ...issue202LossPatterns.keys(),
+      ...issue203SaltWaterLossPatterns.keys(),
+      "issue183.kitchen.clearing_salt",
+      "issue183.reflection.waning_release",
       "kitchen.warmth.together",
       "batch1.reflection.folded_phrase",
       "batch1.surprise_me.resolves_visible_category",
@@ -225,6 +235,11 @@ describe("recommendation quality report", () => {
       "prosperity",
       "bad luck",
       "first-foot",
+      "purification",
+      "purify",
+      "danger-removal",
+      "danger removal",
+      "medical claim",
     ];
 
     for (const [scenarioId, patternKey] of expectedPatterns) {
@@ -236,6 +251,19 @@ describe("recommendation quality report", () => {
         resultById.get(scenarioId)?.selectedRitualPattern.key,
       );
     }
+
+    for (const [scenarioId, blockedPatternKeys] of issue203SaltWaterLossPatterns) {
+      expect(blockedPatternKeys, scenarioId).not.toContain(
+        resultById.get(scenarioId)?.selectedRitualPattern.key,
+      );
+    }
+
+    expect(resultById.get("issue183.kitchen.clearing_salt")?.selectedRitualPattern.key).toBe(
+      "salt_clear_water_release",
+    );
+    expect(resultById.get("issue183.reflection.waning_release")?.selectedRitualPattern.key).toBe(
+      "waning_phrase_release",
+    );
 
     expect(["warm_cup_between_us", "quiet_welcome"]).toContain(
       resultById.get("kitchen.warmth.together")?.selectedRitualPattern.key,

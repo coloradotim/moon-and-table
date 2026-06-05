@@ -17,6 +17,7 @@ export const RITUAL_FORM_FAMILIES = [
   "honey_sweetening",
   "threshold_crossing_bowl_key",
   "salt_water_release",
+  "vessel_empty_return",
   "house_map",
   "written_folded_container",
   "spoken_table_phrase",
@@ -44,6 +45,7 @@ const FORM_FAMILY_LABELS: Record<RitualFormFamily, string> = {
   honey_sweetening: "honey/sweetening",
   threshold_crossing_bowl_key: "threshold/crossing/bowl/key",
   salt_water_release: "salt/water release",
+  vessel_empty_return: "vessel emptying/return",
   house_map: "house map",
   written_folded_container: "written/folded/container",
   spoken_table_phrase: "spoken/table phrase",
@@ -69,14 +71,14 @@ const FORM_FAMILIES_BY_PATTERN_KEY: Record<string, RitualFormFamily[]> = {
   bread_at_the_center: ["bread_grain_center", "welcome_offering_vessel"],
   honeyed_word: ["honey_sweetening", "welcome_offering_vessel"],
   threshold_bowl: ["threshold_crossing_bowl_key"],
-  clear_the_threshold_bowl: ["threshold_crossing_bowl_key", "salt_water_release"],
-  salt_clear_water_release: ["salt_water_release"],
+  clear_the_threshold_bowl: ["threshold_crossing_bowl_key", "vessel_empty_return", "seasonal_marker"],
+  salt_clear_water_release: ["salt_water_release", "vessel_empty_return"],
   house_from_root_to_roof: ["house_map", "threshold_crossing_bowl_key"],
-  folded_phrase_vessel: ["written_folded_container"],
+  folded_phrase_vessel: ["written_folded_container", "vessel_empty_return"],
   two_words_at_the_table: ["spoken_table_phrase"],
   waning_phrase_release: ["waning_phrase_release", "written_folded_container"],
   carried_key_word: ["carried_phrase", "threshold_crossing_bowl_key"],
-  seasonal_marker_bowl: ["seasonal_marker", "welcome_offering_vessel"],
+  seasonal_marker_bowl: ["seasonal_marker", "welcome_offering_vessel", "vessel_empty_return"],
   seasonal_entry_bowl: ["seasonal_marker", "threshold_crossing_bowl_key"],
   first_day_last_day: ["first_last_threshold", "seasonal_marker"],
   last_word_first_word: ["first_last_threshold", "written_folded_container"],
@@ -95,6 +97,10 @@ const FORM_FAMILIES_BY_STYLE: Record<string, RitualFormFamily[]> = {
   welcome: ["welcome_offering_vessel"],
   honey: ["honey_sweetening", "welcome_offering_vessel"],
   salt: ["salt_water_release"],
+  vessel: ["vessel_empty_return"],
+  emptying: ["vessel_empty_return"],
+  return: ["vessel_empty_return"],
+  rinsing: ["vessel_empty_return"],
   folded_word: ["written_folded_container"],
   carrying: ["carried_phrase", "written_folded_container"],
   seasonal: ["seasonal_marker"],
@@ -138,6 +144,15 @@ function hasPractice(checkIn: CurrentRitualCheckIn | undefined, label: string, s
   const hints = practiceHints(checkIn);
 
   return lowerLabel === label || styles.some((style) => hints.includes(style));
+}
+
+function hasVesselEmptyReturnSignal(focus: string | undefined, hintSet: Set<string>): boolean {
+  return (
+    focus === "clearing_something_out" ||
+    ["emptying", "return", "rinsing", "bowl", "vessel", "closing"].some(
+      (style) => hintSet.has(style),
+    )
+  );
 }
 
 export function getExplicitPracticeCategory(checkIn?: CurrentRitualCheckIn): string | undefined {
@@ -233,7 +248,7 @@ export function getExpectedRitualFormFamilies(
     if (focus === "marking_a_threshold") {
       expected.push("threshold_crossing_bowl_key", "first_light_threshold", "first_last_threshold");
     } else if (focus === "clearing_something_out") {
-      expected.push("salt_water_release", "threshold_crossing_bowl_key");
+      expected.push("salt_water_release", "vessel_empty_return", "threshold_crossing_bowl_key");
     } else if (focus === "tending_the_home" || focus === "getting_grounded") {
       expected.push("house_map", "threshold_crossing_bowl_key", "bread_grain_center");
     }
@@ -265,13 +280,16 @@ export function getExpectedRitualFormFamilies(
 
   if (category === "Seasonal") {
     expected.push("seasonal_marker", "first_last_threshold", "threshold_crossing_bowl_key");
+    if (hasVesselEmptyReturnSignal(focus, hintSet)) {
+      expected.push("vessel_empty_return");
+    }
   }
 
   if (
     focus === "clearing_something_out" &&
     category !== "Reflection"
   ) {
-    expected.push("salt_water_release", "plant_release_removal", "waning_phrase_release");
+    expected.push("salt_water_release", "vessel_empty_return", "plant_release_removal", "waning_phrase_release");
   }
 
   if (focus === "marking_a_threshold") {
