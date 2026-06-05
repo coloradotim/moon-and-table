@@ -43,6 +43,19 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("generated");
   });
 
+  it("renders first-login check-in copy without a welcome-back greeting", () => {
+    const html = renderRitualCheckInShell({
+      draft: { step: "time_scope" },
+      displayName: "Morgan Example",
+      introMode: "first_login",
+    });
+
+    expect(html).toContain("Let&rsquo;s choose your first ritual.");
+    expect(html).not.toContain("Welcome back");
+    expect(html).not.toContain("Morgan");
+    expect(html).toContain("Are you wanting something for today, or looking across the week?");
+  });
+
   it("renders exact energy labels and no follow-up content before energy is chosen", () => {
     const html = renderRitualCheckInShell({
       draft: {
@@ -477,7 +490,10 @@ describe("app shell rendering", () => {
     const html = renderPrivateFirstLoginWelcomeShell();
 
     expect(html).toContain("Welcome, my love.");
-    expect(html).toContain("I built this for us");
+    expect(html).toContain("I built this just for us");
+    expect(html).toContain("and the quiet ways we keep choosing each other.");
+    expect(html).toContain("and brings us together in our new home.");
+    expect(html).toContain("/assets/private-first-login-moon-candle.svg");
     expect(html).toContain("Get Started");
     expect(html).toContain('data-private-welcome-action="dismiss"');
     expect(html).toContain('aria-hidden="true"');

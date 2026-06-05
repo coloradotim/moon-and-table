@@ -274,9 +274,9 @@ h2 {
 
 .private-welcome {
   display: grid;
-  gap: 24px;
+  gap: 46px;
   justify-items: center;
-  padding: clamp(28px, 6vw, 52px);
+  padding: clamp(42px, 7vw, 72px);
   border: 1px solid rgba(200, 190, 173, 0.6);
   border-radius: 8px;
   background:
@@ -287,23 +287,29 @@ h2 {
 }
 
 .private-welcome__visual {
-  width: min(220px, 72vw);
-  margin-bottom: -4px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 6px;
 }
 
-.private-welcome__visual svg {
+.private-welcome__visual img {
   display: block;
-  width: 100%;
+  width: min(420px, 92vw);
   height: auto;
+  margin-inline: auto;
+  mix-blend-mode: multiply;
+  transform: translateY(20px);
 }
 
 .private-welcome__copy {
   display: grid;
   max-width: 520px;
-  gap: 18px;
+  gap: 34px;
 }
 
 .private-welcome h1 {
+  margin-bottom: 8px;
   font-size: clamp(2.3rem, 7vw, 3.6rem);
   line-height: 1;
 }
@@ -315,7 +321,9 @@ h2 {
   line-height: 1.55;
 }
 
-.private-welcome__action {
+.private-welcome .private-welcome__action {
+  justify-self: center;
+  margin-top: 4px;
   min-width: 180px;
   justify-content: center;
 }
