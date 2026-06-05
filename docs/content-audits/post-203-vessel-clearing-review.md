@@ -4,10 +4,11 @@ Status: hold for human review
 
 ## PR / Branch Summary
 
-- PR number and title: TBD after PR creation - Strengthen vessel emptying and clearing forms
+- PR number and title: #216 - Strengthen vessel emptying and clearing forms
 - Branch: `codex/issue-203-vessel-clearing-forms`
 - Base branch: `main`
 - Base commit at branch start: `f28acc8b7062962db8965e6f106d3637d91521d3`
+- Implementation commit: `519daf1`
 - Issue addressed: #203
 - Implementation summary: strengthened vessel, emptying, rinsing, and return language without adding sources, active SourceNotes, visible categories, or a new ritual pattern. Salt/water remains selected for explicit clearing/release; vessel emptying now has clearer presentation and diagnostics.
 
