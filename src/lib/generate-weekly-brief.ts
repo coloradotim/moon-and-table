@@ -2684,7 +2684,7 @@ function getPatternMaterialPhrase(pattern: RitualPattern): string {
     quiet_welcome:
       "A cup or bowl makes welcome visible without making it a performance.",
     honeyed_word:
-      "A tiny sweetness cue lets one word soften and then return to ordinary use.",
+      "A tiny sweetness cue gives one bounded word material form, then returns to ordinary use.",
     carried_key_word:
       "The key gives the threshold one word to carry briefly, then return.",
     threshold_bowl:
@@ -2796,7 +2796,7 @@ function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeekly
     bread_at_the_center: "one table marker, one enoughness phrase, then ordinary return",
     warm_cup_between_us: "one cup, one warm phrase, then the cup is set down",
     quiet_welcome: "one vessel, one welcome, then the vessel returns",
-    honeyed_word: "one word, one sweetness cue, then the cup is returned",
+    honeyed_word: "one bounded word, one sweetness cue, then the cup is returned",
     carried_key_word: "one word, one crossing, then the key returns",
     threshold_bowl: "one object crosses in, then returns or the bowl moves",
     salt_clear_water_release: "one named release, one emptied bowl, then ordinary return",

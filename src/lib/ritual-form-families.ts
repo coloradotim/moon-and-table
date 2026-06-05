@@ -96,6 +96,8 @@ const FORM_FAMILIES_BY_STYLE: Record<string, RitualFormFamily[]> = {
   warm: ["warm_cup_bowl"],
   welcome: ["welcome_offering_vessel"],
   honey: ["honey_sweetening", "welcome_offering_vessel"],
+  sweetness: ["honey_sweetening"],
+  bounded_speech: ["honey_sweetening", "spoken_table_phrase"],
   salt: ["salt_water_release"],
   vessel: ["vessel_empty_return"],
   emptying: ["vessel_empty_return"],
@@ -152,6 +154,12 @@ function hasVesselEmptyReturnSignal(focus: string | undefined, hintSet: Set<stri
     ["emptying", "return", "rinsing", "bowl", "vessel", "closing"].some(
       (style) => hintSet.has(style),
     )
+  );
+}
+
+function hasHoneySweeteningSignal(hintSet: Set<string>): boolean {
+  return ["honey", "sweetness", "bounded_speech"].some((style) =>
+    hintSet.has(style),
   );
 }
 
@@ -216,6 +224,10 @@ export function getExpectedRitualFormFamilies(
     expected.push("warm_cup_bowl");
   }
 
+  if (hasHoneySweeteningSignal(hintSet)) {
+    expected.push("honey_sweetening");
+  }
+
   if (category === "Plant") {
     if (focus === "clearing_something_out") {
       expected.push("plant_release_removal");
@@ -238,7 +250,10 @@ export function getExpectedRitualFormFamilies(
     } else if (focus === "clearing_something_out") {
       expected.push("salt_water_release");
     } else if (focus === "tending_us") {
-      expected.push("warm_cup_bowl", "welcome_offering_vessel", "bread_grain_center", "honey_sweetening");
+      expected.push("warm_cup_bowl", "welcome_offering_vessel", "bread_grain_center");
+      if (hasHoneySweeteningSignal(hintSet)) {
+        expected.push("honey_sweetening");
+      }
     } else {
       expected.push("warm_cup_bowl", "grain_seed_bowl", "welcome_offering_vessel");
     }
@@ -297,7 +312,10 @@ export function getExpectedRitualFormFamilies(
   }
 
   if (focus === "tending_us" && category !== "Candle or light") {
-    expected.push("warm_cup_bowl", "welcome_offering_vessel", "bread_grain_center", "honey_sweetening");
+    expected.push("warm_cup_bowl", "welcome_offering_vessel", "bread_grain_center");
+    if (hasHoneySweeteningSignal(hintSet)) {
+      expected.push("honey_sweetening");
+    }
   }
 
   return uniqueFamilies(expected);

@@ -420,6 +420,11 @@ describe("generateWeeklyBrief", () => {
       },
       {
         scenarioId: "batch1.quiet_welcome",
+        patternKey: "quiet_welcome",
+        expectedPrompt: "What welcome can the shared vessel hold for both of you?",
+      },
+      {
+        scenarioId: "issue204.kitchen.bounded_sweetness",
         patternKey: "honeyed_word",
         expectedPrompt: "What word can the sweetness cue hold and then release?",
       },
@@ -1109,7 +1114,7 @@ describe("generateWeeklyBrief", () => {
         }),
         expect.objectContaining({
           title: "Kept bounded",
-          body: expect.stringContaining("One word"),
+          body: expect.stringContaining("One cup"),
         }),
       ]),
     );
