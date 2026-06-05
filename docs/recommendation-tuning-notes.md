@@ -79,6 +79,44 @@ tone preferences. Internal `toneGuidance`, safety blockers, burden constraints,
 and practical avoid flags remain available for curation, eligibility, and
 review.
 
+## Issue 155: Contextual Accents, Carry Prompts, and Source Lineage
+
+Optional accents now prefer the selected ritual's material and form instead of
+defaulting to a generic candle add-on. The generator may add a small accent for
+the same leaf, seed, bowl, cup, sweetness cue, key, folded phrase, threshold, or
+seasonal vessel already present in the ritual. If an accent would become a
+second ritual, the brief can still return `No add-on needed`.
+
+Carry prompts now continue to prefer `RitualPresentation`, with presentation
+variants used for focus-specific tensions such as making a beginning. New tests
+cover material-specific carry prompts for dead leaf release, seed waiting, grain
+bowl beginning, salt/water clearing, folded phrase vessel, seasonal marker bowl,
+and honeyed word. Candle/light rituals still avoid generic candle add-ons, and
+live-flame-avoided contexts use lamp/window-light language instead.
+
+Batch 1 source summaries now name the source lineage lightly when a Batch 1
+pattern materially shaped the ritual. Examples include household fire-banking
+customs, hearth/table first-and-last logic, flower-language traditions, salt and
+boundary folklore, quiet household welcome forms, seed/water beginning logic,
+and grain/table household rhythm. These labels are user-facing summaries, not
+raw source IDs.
+
+Pattern-specific optional accents and Batch 1 lineage labels live on
+`RitualPattern` data. The generator should read `optionalAccent`,
+`candleFreeOptionalAccent`, and `sourceLineageLabel` rather than keeping Batch 1
+pattern-key tables. `candleFreeOptionalAccent` means the live-flame-avoided form
+of the accent; lamp, window, or light language can still be appropriate.
+
+Recommendation quality report warning counts after this pass:
+
+| Warning | After |
+| --- | ---: |
+| `generic_optional_candle` | 0 |
+| `candle_ritual_with_candle_addon` | 0 |
+| `carry_prompt_contradicts_focus` | 0 |
+| `source_id_visible_in_normal_copy` | 0 |
+| `raw_score_language_in_user_copy` | 0 |
+
 ## Metaphysical Integrity
 
 Moon & Table should treat magical practice as meaningful on its own terms.

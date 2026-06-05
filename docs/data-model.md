@@ -91,6 +91,8 @@ SymbolicCards describe meaning. RitualPatterns describe practice. The generator 
 
 `RitualPresentation` is the first implemented grimoire-quality layer. It does not replace `RitualPattern.steps`; those remain useful for validation, safety review, source traceability, diagnostics, and fallback behavior. When presentation is present, generated user-facing ritual copy should prefer it. When presentation is absent, the generator falls back to the existing pattern fields.
 
+Pattern-specific optional accents and Batch 1 lineage labels live on `RitualPattern`, not in the brief generator. `optionalAccent` should deepen the selected ritual without adding a second ritual. `candleFreeOptionalAccent` is used when live flame is avoided; it may still use lamp, window, or light language. `sourceLineageLabel` is a human-readable lineage phrase for source summaries, never a raw source id.
+
 RitualFocusOptions describe what the user says the current ritual should focus on. They are source-controlled controlled vocabulary, not open-ended interpretation. The vocabulary lives in `src/data/ritual-focus-options.ts`; selected focus can influence recommendation scoring through ritual style hints, timing affinities, symbolic card links, and conservative free-text aliases.
 
 Safety flags can block a pattern even when it matches timing, private profile context, or preferences.

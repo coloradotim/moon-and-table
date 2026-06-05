@@ -969,6 +969,8 @@ export const batchOneRitualPatterns: RitualPattern[] = [
     defaultDurationMinutes: 3,
     materials: ["lamp, window light, or supervised candle"],
     steps: ["Choose one household light.", "Lower, cover, or extinguish it.", "Say what can stay warm without more effort."],
+    candleFreeOptionalAccent: "Let lamp or window light be the whole accent.",
+    sourceLineageLabel: "household fire-banking customs",
     presentation: {
       invitation: "Bank one house light.",
       whyThisPractice: "Fire-banking customs give evening closure a form: lower the light, keep the warmth, and stop adding fuel.",
@@ -979,11 +981,11 @@ export const batchOneRitualPatterns: RitualPattern[] = [
       variants: {
         pause: {
           steps: ["Let one lowered light be the whole ritual.", "Name, silently if needed, what does not need more from you."],
-          carry: "What can rest without being solved?",
+          carry: "What can rest in the lowered light?",
           closing: "Close by letting the dimmed light hold the end.",
         },
         together: {
-          carry: "What can be warm enough for both of you without becoming a discussion?",
+          carry: "What warmth can the lowered light keep between you?",
         },
       },
     },
@@ -1010,6 +1012,9 @@ export const batchOneRitualPatterns: RitualPattern[] = [
     defaultDurationMinutes: 5,
     materials: ["doorway, window, table, lamp, or morning light"],
     steps: ["Choose a threshold.", "Let one light mark the first step.", "Cross or turn away after naming the beginning."],
+    optionalAccent: "Let the doorway, window, or table be the only marker.",
+    candleFreeOptionalAccent: "Let lamp or window light be the whole accent.",
+    sourceLineageLabel: "household fire-kindling and first-light logic",
     presentation: {
       invitation: "Let first light mark the threshold.",
       whyThisPractice: "Kindling and first-sighting traditions make a beginning visible before it becomes a project.",
@@ -1115,6 +1120,8 @@ export const batchOneRitualPatterns: RitualPattern[] = [
     defaultDurationMinutes: 5,
     materials: ["small bowl", "clear water", "pinch of salt"],
     steps: ["Place salt in water.", "Name what is leaving.", "Pour it away and rinse the bowl."],
+    optionalAccent: "Let the empty bowl sit for one breath before putting it away.",
+    sourceLineageLabel: "salt and boundary folklore",
     presentation: {
       invitation: "Let salt and clear water carry one release.",
       whyThisPractice: "Salt and water give clearing a vessel and an outward direction without making danger the story.",
@@ -1145,13 +1152,15 @@ export const batchOneRitualPatterns: RitualPattern[] = [
     capacityModes: ["low", "steady"],
     defaultDurationMinutes: 5,
     materials: ["seed, grain, or small plant pot", "water"],
-    steps: ["Place seed or grain in a small vessel.", "Add a little water or name water.", "Name what can begin by waiting."],
-    presentation: {
-      invitation: "Let the seed wait.",
-      whyThisPractice: "Seed and water make a beginning material without demanding immediate growth.",
-      approach: ["Treat waiting as part of the ritual.", "Use seed, grain, or a plant pot already available."],
-      steps: ["Place one seed, grain, or plant pot where it can hold the beginning.", "Add a little water only if that is actually appropriate.", "Name the beginning that can wait before it grows."],
-      carry: "What beginning needs patience more than force?",
+      steps: ["Place seed or grain in a small vessel.", "Add a little water or name water.", "Name what can begin by waiting."],
+      optionalAccent: "Leave the seed, grain, or pot where waiting can be seen once, then stop checking it.",
+      sourceLineageLabel: "seed/water beginning logic",
+      presentation: {
+        invitation: "Let the seed wait.",
+        whyThisPractice: "Seed and water make a beginning material without demanding immediate growth.",
+        approach: ["Treat waiting as part of the ritual.", "Use seed, grain, or a plant pot already available."],
+        steps: ["Place one seed, grain, or plant pot where it can hold the beginning.", "Add a little water only if that is actually appropriate.", "Name the beginning that can wait before it grows."],
+      carry: "What beginning can wait like a seed or grain?",
       closing: "Close by leaving the seed or pot in place and not checking for proof.",
     },
     safetyFlags: withSafetyOverrides({ pets: "review_required", allergies: ["use only household-safe seed, grain, or plant material"], cleanupBurden: "tiny" }),
@@ -1218,12 +1227,14 @@ export const batchOneRitualPatterns: RitualPattern[] = [
     defaultDurationMinutes: 5,
     materials: ["one plant with an already dead leaf, or fallen leaf"],
     steps: ["Find only a dead or fallen leaf.", "Remove or pick it up.", "Name what is complete and discard it."],
+    optionalAccent: "Let the plant remain untouched after the spent leaf is gone.",
+    sourceLineageLabel: "plant growth and rest traditions",
     presentation: {
       invitation: "Release only the dead leaf.",
       whyThisPractice: "A spent leaf gives release a precise edge: remove what is already finished, not what is alive.",
       approach: ["Look before touching.", "Do not make release larger than the leaf."],
       steps: ["Choose one already dead or fallen leaf.", "Remove only that spent matter, or choose observation if none is ready.", "Name what is complete and place the leaf in trash, compost, or outside if appropriate."],
-      carry: "What is already complete enough to stop feeding?",
+      carry: "What is as complete as the spent leaf?",
       closing: "Close when the leaf has left your hand.",
     },
     safetyFlags: withSafetyOverrides({ pets: "review_required", children: "supervision", allergies: ["avoid contact if plant safety is uncertain"], cleanupBurden: "tiny" }),
@@ -1280,6 +1291,8 @@ export const batchOneRitualPatterns: RitualPattern[] = [
     defaultDurationMinutes: 5,
     materials: ["small bowl", "grain, rice, oats, bean, or seed"],
     steps: ["Place grain in a bowl.", "Name what is beginning.", "Leave or return the grain cleanly."],
+    optionalAccent: "Let the bowl stay in place until the beginning has been named.",
+    sourceLineageLabel: "grain/table household rhythm",
     presentation: {
       invitation: "Give the beginning a grain bowl.",
       whyThisPractice: "Grain and seed give a beginning weight, rhythm, and table presence without turning it into work.",
@@ -1311,20 +1324,23 @@ export const batchOneRitualPatterns: RitualPattern[] = [
     defaultDurationMinutes: 5,
     materials: ["one or two cups", "warm drink or warm water if already safe"],
     steps: ["Place a warm cup at the table.", "Name one welcome or rest phrase.", "Set the cup down to close."],
+    optionalAccent: "Set the cup down with both hands to close the warmth.",
+    sourceLineageLabel: "quiet household welcome forms",
     presentation: {
       invitation: "Let the cup hold the warmth.",
       whyThisPractice: "A cup is a small vessel for welcome: it can hold warmth without asking for a conversation.",
       approach: ["Use what is already ordinary here.", "Let the cup do the holding."],
       steps: ["Place one warm cup, or two cups if this is for both of you, at the table or counter.", "Name one thing the home can welcome gently.", "Hold the cup briefly, then set it down."],
-      carry: "What can be welcomed without being talked through?",
+      carry: "What warmth can the cup hold after it is set down?",
       closing: "Close when the cup is set down.",
       variants: {
         together: {
-          steps: ["Place two cups, or one cup between you, at the table.", "Each offer one word for what is welcome here.", "Set the cup or cups down without opening a discussion."],
-          carry: "What can be warm between you without becoming a task?",
+          steps: ["Place two cups, or one cup between you, at the table.", "Each offer one word for what is welcome here.", "Set the cup or cups down to close the warmth."],
+          carry: "What warmth can remain on the shared surface?",
         },
         pause: {
           steps: ["Touch or hold a cup already nearby.", "Let warmth or the idea of warmth be enough."],
+          carry: "What can the cup hold for this pause?",
           closing: "Close by setting the cup down.",
         },
       },
@@ -1352,6 +1368,8 @@ export const batchOneRitualPatterns: RitualPattern[] = [
     defaultDurationMinutes: 5,
     materials: ["table or counter", "lamp, window light, or supervised candle"],
     steps: ["Set one light at the table.", "Say one clear line.", "End the light or turn away."],
+    candleFreeOptionalAccent: "Let lamp or window light be the whole accent.",
+    sourceLineageLabel: "hearth/table first-and-last logic",
     presentation: {
       invitation: "Put one clear line in the light.",
       whyThisPractice: "A table light gives one phrase a visible place and a clean ending.",
@@ -1432,6 +1450,8 @@ export const batchOneRitualPatterns: RitualPattern[] = [
     defaultDurationMinutes: 5,
     materials: ["paper", "pencil", "bowl, book, pocket, or plant pot"],
     steps: ["Write one phrase.", "Fold it once.", "Place it in a holding place."],
+    optionalAccent: "Choose where the folded phrase will rest before you write it.",
+    sourceLineageLabel: "flower-language traditions and household container logic",
     presentation: {
       invitation: "Give the words a fold.",
       whyThisPractice: "A written phrase becomes a ritual object when it is folded and placed, not expanded into journaling.",
@@ -1463,6 +1483,7 @@ export const batchOneRitualPatterns: RitualPattern[] = [
     defaultDurationMinutes: 5,
     materials: ["paper and pencil", "trash, sink, or closed book"],
     steps: ["Write or speak one completion phrase.", "Remove, dissolve, tear, or place it away.", "Close with empty hands."],
+    sourceLineageLabel: "waning-light and household removal logic",
     presentation: {
       invitation: "Let the waning phrase leave.",
       whyThisPractice: "Waning light supports lessening when the phrase has a real way out.",
@@ -1494,6 +1515,7 @@ export const batchOneRitualPatterns: RitualPattern[] = [
     defaultDurationMinutes: 5,
     materials: ["table, counter, or shared surface"],
     steps: ["Stand or sit at the table.", "Each person offers one word, or one word is chosen for the household.", "Stop after the words."],
+    sourceLineageLabel: "hearth/table first-and-last logic",
     presentation: {
       invitation: "Let the table hold two words.",
       whyThisPractice: "A shared surface can turn brief speech into a placed household object.",
@@ -1576,6 +1598,8 @@ export const batchOneRitualPatterns: RitualPattern[] = [
     defaultDurationMinutes: 5,
     materials: ["small bowl", "grain, leaf, key, bread, or ordinary seasonal object"],
     steps: ["Place one material in a bowl.", "Name the season's job in the home.", "Leave, return, or empty the bowl."],
+    optionalAccent: "Choose when the bowl will be emptied or returned.",
+    sourceLineageLabel: "seasonal bowl and household-threshold customs",
     presentation: {
       invitation: "Let one bowl mark the season.",
       whyThisPractice: "A seasonal bowl gives calendar change a private household form instead of a public festival script.",
@@ -1607,16 +1631,18 @@ export const batchOneRitualPatterns: RitualPattern[] = [
     defaultDurationMinutes: 5,
     materials: ["bowl, cup, bread, grain, honey, water, or warm drink"],
     steps: ["Place one welcome material.", "Name what is welcome.", "Return or clean up the material."],
+    optionalAccent: "Clear or return the welcome vessel after it has done its work.",
+    sourceLineageLabel: "quiet household welcome forms",
     presentation: {
       invitation: "Set out a quiet welcome.",
       whyThisPractice: "A modest bowl, cup, bread, or sweetness can make hospitality visible without demanding belief.",
       approach: ["Welcome is the ritual form, not a performance.", "Use only what is already ordinary here."],
       steps: ["Place one cup, bowl, bread piece, grain pinch, honey touch, or water glass at the table or counter.", "Name what is welcome in this home today.", "Return, drink, wash, or clear the material when finished."],
-      carry: "What kind of welcome can this home offer without overextending?",
+      carry: "What welcome should be visible until the vessel is cleared?",
       closing: "Close by returning the material to ordinary use.",
       variants: {
         together: {
-          carry: "What welcome can be shared without becoming an obligation?",
+          carry: "What welcome can the shared vessel hold for both of you?",
         },
       },
     },
@@ -1643,13 +1669,21 @@ export const batchOneRitualPatterns: RitualPattern[] = [
     defaultDurationMinutes: 3,
     materials: ["honey, sugar substitute, warm drink, bread, or empty cup"],
     steps: ["Place a sweetness cue.", "Say or write one softened word.", "Return the material to ordinary use."],
+    optionalAccent: "Return or wash the sweetness cue before adding more words.",
+    sourceLineageLabel: "quiet welcome and household sweetness forms",
     presentation: {
       invitation: "Give one word a little sweetness.",
       whyThisPractice: "Sweetness and welcome can soften speech when the phrase stays bounded and ordinary.",
       approach: ["Use a tiny material cue or imagine one if food is not a fit.", "Do not turn this into advice or apology work."],
       steps: ["Place a drop of honey, sugar substitute, warm cup, bread piece, or empty cup as the sweetness cue.", "Say or write one word that can soften the home.", "Return or wash the material."],
-      carry: "What word can be made softer without being made false?",
+      carry: "What word can the sweetness cue hold and then release?",
       closing: "Close when the sweetness cue is returned or washed away.",
+      variants: {
+        beginningFocus: {
+          whyThisPractice: "Sweetness can hold the first word of a beginning when the beginning is not ready to become action.",
+          carry: "What first word can the sweetness cue hold before anything else begins?",
+        },
+      },
     },
     safetyFlags: withSafetyOverrides({ ingestion: "normal_food_use_only", allergies: ["use only sweet material already safe for the household"], cleanupBurden: "tiny" }),
     safetyNotes: ["Normal food use only; no love, control, or health claims."],
@@ -1674,6 +1708,8 @@ export const batchOneRitualPatterns: RitualPattern[] = [
     defaultDurationMinutes: 5,
     materials: ["ordinary key or safe small object", "optional folded phrase"],
     steps: ["Hold a key or small object.", "Give it one word.", "Carry or return it."],
+    optionalAccent: "Return the key to its ordinary place when the word has crossed.",
+    sourceLineageLabel: "key, threshold, and household marker folklore",
     presentation: {
       invitation: "Let the key carry one word.",
       whyThisPractice: "A key can mark threshold and return without promising luck or protection.",
