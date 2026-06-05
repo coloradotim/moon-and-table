@@ -2676,7 +2676,9 @@ function getPatternMaterialPhrase(pattern: RitualPattern): string {
     seed_waiting:
       "Seed or grain gives the beginning a body, and waiting is part of the rite.",
     grain_bowl_beginning:
-      "Grain gives the beginning weight; the bowl gives it a place to rest.",
+      "Grain gives the beginning table-weight; the bowl gives it a place to wait.",
+    bread_at_the_center:
+      "Bread or grain gives enoughness a table center, not a promise to prove.",
     warm_cup_between_us:
       "The cup holds warmth without asking it to become a conversation.",
     quiet_welcome:
@@ -2696,7 +2698,7 @@ function getPatternMaterialPhrase(pattern: RitualPattern): string {
     folded_phrase_vessel:
       "The fold turns the phrase into a held object instead of a long explanation.",
     seasonal_marker_bowl:
-      "The bowl gives seasonal change a private household marker.",
+      "The bowl gives seasonal change one household marker, and grain or bread can hold continuity without display.",
     first_day_last_day:
       "The first-and-last form gives the threshold one action and one close.",
   };
@@ -2785,6 +2787,7 @@ function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeekly
     dead_leaf_release: "one spent leaf, one release, then the plant is left alone",
     seed_waiting: "one seed or grain, one beginning, then waiting without proof",
     grain_bowl_beginning: "one grain, one sentence, one night of waiting",
+    bread_at_the_center: "one table marker, one enoughness phrase, then ordinary return",
     warm_cup_between_us: "one cup, one warm phrase, then the cup is set down",
     quiet_welcome: "one vessel, one welcome, then the vessel returns",
     honeyed_word: "one word, one sweetness cue, then the cup is returned",
@@ -2812,7 +2815,8 @@ function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeekly
 
 function getCompressedLineage(pattern: RitualPattern): string | undefined {
   const lineageByPattern: Record<string, string> = {
-    grain_bowl_beginning: "grain/table household rhythm and seed-water beginning logic",
+    grain_bowl_beginning: "bread/grain table-center and seed-water beginning logic",
+    bread_at_the_center: "bread/grain table-center and welcome logic",
     seed_waiting: "seed-water beginning logic",
     warm_cup_between_us: "quiet household welcome forms",
     quiet_welcome: "quiet household welcome forms",
@@ -2821,7 +2825,7 @@ function getCompressedLineage(pattern: RitualPattern): string | undefined {
     carried_key_word: "key, threshold, and household marker folklore",
     threshold_bowl: "threshold and bowl-vessel household logic",
     folded_phrase_vessel: "folded-word and household container logic",
-    seasonal_marker_bowl: "seasonal bowl and household-threshold customs",
+    seasonal_marker_bowl: "seasonal bowl, household-threshold, and bread/grain table logic",
     full_light_on_the_table: "hearth/table first-and-last logic",
     bank_the_house_light: "household fire-banking customs",
   };

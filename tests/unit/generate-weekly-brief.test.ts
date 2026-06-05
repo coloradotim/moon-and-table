@@ -452,12 +452,14 @@ describe("generateWeeklyBrief", () => {
     );
 
     expect(saltBrief.sourceSummary).toContain("salt and boundary folklore");
-    expect(grainBrief.sourceSummary).toContain("grain/table household rhythm");
+    expect(grainBrief.sourceSummary).toContain(
+      "bread/grain table-center and seed-water beginning logic",
+    );
     expect(JSON.stringify(saltBrief.explanation.sourcesUsed)).toContain(
       "salt and boundary folklore",
     );
     expect(JSON.stringify(grainBrief.explanation.howThisWasChosen)).toContain(
-      "grain/table household rhythm",
+      "bread/grain table-center and seed-water beginning logic",
     );
     expect(saltBrief.sourceSummary).not.toContain("source.");
     expect(grainBrief.sourceSummary).not.toContain("note.");
