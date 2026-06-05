@@ -176,6 +176,8 @@ The explanation should not pretend every answer matched. If the selected ritual 
 
 Recommendation quality is defined in `docs/recommendation-quality-model.md`. Selection is only one part of the product. The final output also needs authored ritual presentation, a clean carrying prompt, and a clean closing.
 
+Recommendation-contract tests should be written from product expectations before tuning the engine. Do not bless current output just because it passes scoring diagnostics.
+
 ## Boundaries
 
 The selection model should not add:

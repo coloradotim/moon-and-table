@@ -121,3 +121,11 @@ Validation after contract patch:
 - `npm run recommendation:quality`: pass; 93 scenarios; all warning buckets 0.
 - `npm run diagnose:content`: pass; 97 scenarios sampled.
 - `npm run check`: pass, including build and 2 Playwright e2e tests. Vite still reports the existing large-chunk warning.
+
+## Final Gate UI Notes
+
+- No UI layout changes were needed for the final gate patch.
+- The recommendation card remains the normal-copy surface; debug/report output remains separate.
+- `How this was chosen` remains collapsed by default.
+- Recommendation-quality warnings now include duplicate explanation section headings, so a repeated normal section label such as duplicate fit headings is caught in review.
+- Final gate verdict: no UI blockers before showing Jessica, assuming the demo avoids the noted threshold-forward first-demo paths.

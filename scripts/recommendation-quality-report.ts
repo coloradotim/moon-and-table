@@ -47,6 +47,7 @@ export const RECOMMENDATION_QUALITY_WARNING_IDS = [
   "audience_not_reflected_in_action",
   "normal_copy_rationalizes_set_aside",
   "resolved_surprise_category_not_preserved",
+  "duplicate_explanation_section_headings",
 ] as const;
 
 export type RecommendationQualityWarningId =
@@ -529,6 +530,19 @@ export function getRecommendationQualityWarnings(args: {
       warning(
         "normal_copy_rationalizes_set_aside",
         "Normal copy appears to smooth over an ignored explicit selection.",
+      ),
+    );
+  }
+
+  const duplicateSectionTitles = copy.howThisWasChosen
+    .map((section) => section.title.trim().toLowerCase())
+    .filter((title, index, titles) => title && titles.indexOf(title) !== index);
+
+  if (duplicateSectionTitles.length > 0) {
+    warnings.push(
+      warning(
+        "duplicate_explanation_section_headings",
+        "How this was chosen contains duplicate normal-copy section headings.",
       ),
     );
   }

@@ -472,3 +472,14 @@ Validation after contract patch:
 - `npm run recommendation:quality`: pass; 93 scenarios; all warning buckets 0; distinct selected patterns 31; broad concentration remains `full_light_on_the_table` at 6.
 - `npm run diagnose:content`: pass; 97 scenarios sampled.
 - `npm run check`: pass, including build and 2 Playwright e2e tests. Vite still reports the existing large-chunk warning.
+
+## Final Gate Verdict Summary
+
+Full normal outputs for the live failure and risky-path matrix are in `docs/content-audits/post-demo-candle-moon-sprint-review.md`.
+
+- Show Jessica: corrected Plant witness, Kitchen warm cup, Reflection window phrase, Surprise me to Reflection, Surprise me to Kitchen, Plant dormancy/rest, month-turn first/last threshold.
+- Acceptable but not first-demo: Home + tending the home + high + waning, Candle/light + beginning + high + new moon.
+- Patch before demo: none.
+- Do not show: none.
+
+Readiness judgment: demo-ready after human review. Do not lead with threshold-forward Home+tending or Candle/beginning examples; lead with the stronger full/new/waning candle, Reflection phrase/window, Kitchen warmth, Plant witness, or month-turn threshold paths.

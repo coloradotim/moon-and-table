@@ -569,6 +569,10 @@ describe("recommendation quality report", () => {
             title: "Debug",
             body: "candidate close_the_evening was rejected by score.",
           },
+          {
+            title: "Debug",
+            body: "duplicate heading should be caught.",
+          },
         ],
       },
     }).map((warning) => warning.id);
@@ -583,6 +587,7 @@ describe("recommendation quality report", () => {
         "generic_closing_repeated",
         "carry_prompt_contradicts_focus",
         "source_id_visible_in_normal_copy",
+        "duplicate_explanation_section_headings",
       ]),
     );
   });

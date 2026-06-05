@@ -155,3 +155,4 @@ Generator tests protect a few core scenarios:
 - max duration can reject patterns that are too long for current capacity
 
 These tests are meant to make product behavior explicit as the symbolic library grows.
+When adding recommendation-quality scenarios, write the expected category/focus/capacity/audience behavior first. If the current engine violates that contract, update selection or presentation behavior rather than making expectations follow the current selected pattern.

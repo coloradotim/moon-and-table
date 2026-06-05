@@ -192,6 +192,8 @@ Recommendation quality needs scenario review and human judgment. A privacy-safe 
 
 Good scenarios should catch output that technically uses the right inputs but still feels generic, contradictory, overassembled, or thin.
 
+Tests must define expected product behavior before engine behavior is adjusted. Do not update expected patterns, warning counts, or scenario verdicts merely to match current output. If current output violates the recommendation contract, change selection/coherence behavior or document a real blocker.
+
 The current scenario bench lives in `tests/fixtures/recommendation-quality-scenarios.ts`.
 Run it with:
 

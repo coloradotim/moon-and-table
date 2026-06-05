@@ -293,6 +293,198 @@ Base branch: main.
 - `npm run diagnose:content`: pass; 97 scenarios sampled; diagnostics/report output remains available.
 - `npm run check`: pass, including build and 2 Playwright e2e tests. Vite still reports the existing large-chunk warning.
 
+## Final Demo Gate Review
+
+This gate re-ran the live failure and the highest-risk contract paths as normal user-facing output, not score dumps. Verdict labels are blunt because this is demo-readiness review.
+
+### contract.plant.both_high_tending_waning
+
+- Check-in inputs: today; Plant; both of us; Tending the home; room for something deeper / high; waning gibbous timing.
+- Selected visible category: Plant.
+- Selected pattern: `plant_witness_to_growth`.
+- Selected ritual-form family: plant witness/growth.
+- Title/theme: Let the plant witness the household tending.
+- Ritual body: Let the plant hold attention without becoming a task. Speak softly or silently. Set one plant, leaf, seed, or plant image where both of you can see it. One of you names what in the home is still living; the other names what can be left undisturbed. Let the plant witness both words through one quiet minute. Return the plant or image to its ordinary place without adding a task. Close when the plant is back in its ordinary place and no new task has been added.
+- Intention: Let the plant witness the household tending.
+- Best window: When you have room to linger this week.
+- Optional accent: No add-on needed.
+- Carry prompt: What in the home can be tended by being witnessed and left steady?
+- Why this fits: You chose Plant, both of you, tending the home, high capacity. Waning moon supports this form without making the timing a command. Let a plant witness one thing that is growing without turning it into processing. For both of you, the fit leans toward practical home-tending magic and warmth, beauty, and affection.
+- How this was chosen: Chosen for: Plant, both of you, tending the home, high capacity / Timing shaped it: Waning moon supports this form without making the timing a command. / Focus bridge: Tending the home stays inside the ritual action. / Ritual form: Plant folklore and flower-language traditions can make a living thing a witness, not a prop. / Material lineage: Source lineage: Waning Moon card. / Kept bounded: One primary ritual, no task list. / Private timing fit: For both of you, the fit leans toward practical home-tending magic and warmth, beauty, and affection. / Small accent: Numerology 7 stayed secondary to the ritual material and timing.
+- Source summary: Source lineage: waning moon card and plant witness to growth pattern. Form kept contained.
+- Warnings: none.
+- Human verdict: show Jessica.
+- Reason for verdict: This corrects the live failure. Plant stays material, two-person action is embodied, high capacity adds a witness/return arc, and waning only quiets the form.
+- Authored-output review: Authored, respectful, clear, coherent, capacity-aware, audience-aware, and not therapy/productivity/compliance copy. Source lineage is acceptable but less material-specific than ideal.
+
+### contract.home.high_tending_waning
+
+- Check-in inputs: today; Home; me; Tending the home; room for something deeper / high; waning timing.
+- Selected visible category: Home.
+- Selected pattern: `first_light_at_the_threshold`.
+- Selected ritual-form family: first light / threshold; threshold/crossing/bowl/key.
+- Title/theme: Let first light mark the threshold.
+- Ritual body: Use light as the first mark, not as pressure. Let the doorway hold the beginning. Stand at the doorway with first household light behind you or beside you. Name the first step in one plain phrase. Step across the threshold once to close the opening. Close when both feet are inside and no plan has been added.
+- Intention: Let first light mark the threshold.
+- Best window: When you have room to linger this week.
+- Optional accent: No add-on needed.
+- Carry prompt: What is the first step small enough to cross with?
+- Why this fits: You chose Home, tending the home, high capacity. Waning moon supports this form without making the timing a command. Use first light at the doorway to mark a beginning. Private context supports keeping this practical and contained.
+- How this was chosen: Chosen for: Home, tending the home, high capacity / Timing shaped it: Waning moon supports this form without making the timing a command. / Focus bridge: Tending the home stays inside the ritual action. / Ritual form: Kindling and first-sighting traditions make a beginning visible before it becomes a project. / Material lineage: Source lineage: household fire-kindling and first-light logic. / Kept bounded: One primary ritual, no task list. / Private timing fit: Private context supports keeping this practical and contained. / Small accent: Numerology 7 stayed secondary to the ritual material and timing.
+- Source summary: Source lineage: household fire-kindling and first-light logic. Form kept contained.
+- Warnings: none.
+- Human verdict: acceptable but not first-demo.
+- Reason for verdict: Category and focus are preserved and clearing/release is blocked, but the output is threshold-forward for generic home tending.
+- Authored-output review: Authored and clear. Timing shapes without replacing the check-in. Not a first demo because the Home/tending route could eventually use a stronger house-map/table/vessel form.
+
+### contract.kitchen.high_tending_full
+
+- Check-in inputs: today; Kitchen; both of us; Tending us; room for something deeper / high; full moon timing.
+- Selected visible category: Kitchen.
+- Selected pattern: `warm_cup_between_us`.
+- Selected ritual-form family: warm cup/bowl.
+- Title/theme: Let the cup hold the warmth.
+- Ritual body: Use what is already ordinary here. Let the cup do the holding. Place two cups, or one cup between you, at the table. Each offer one word for what warmth can stay here. Let the cup or cups rest between you through one quiet minute. Set the cup or cups down and leave them until the next ordinary return. Close when the cup or cups are set down and the shared surface is left quiet.
+- Intention: Let the cup hold the warmth.
+- Best window: When you have room to linger this week.
+- Optional accent: No add-on needed.
+- Carry prompt: What warmth can be held between you, then left alone?
+- Why this fits: You chose Kitchen, both of you, tending us, high capacity. Full moon supports this form without making the timing a command. The cup holds warmth without asking it to become a conversation. For both of you, the fit leans toward practical home-tending magic and clear structure and bounded action.
+- How this was chosen: Chosen for: Kitchen, both of you, tending us, high capacity / Timing shaped it: Full moon supports this form without making the timing a command. / Focus bridge: Tending us stays inside the ritual action. / Ritual form: A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. / Material lineage: Source lineage: quiet household welcome forms. / Kept bounded: One cup, one warm phrase, then the cup is set down. / Private timing fit: For both of you, the fit leans toward practical home-tending magic and clear structure and bounded action. / Small accent: Numerology 7 stayed secondary to the ritual material and timing.
+- Source summary: Source lineage: quiet household welcome forms. Form kept contained.
+- Warnings: none.
+- Human verdict: show Jessica.
+- Reason for verdict: Warm cup/table action is coherent, shared, and fuller without becoming relationship processing.
+- Authored-output review: Authored, respectful, clear to do, materially coherent, and demo-safe.
+
+### contract.reflection.high_saying_new
+
+- Check-in inputs: today; Reflection; me; Saying something clearly; room for something deeper / high; new moon timing.
+- Selected visible category: Reflection.
+- Selected pattern: `window_light_threshold`.
+- Selected ritual-form family: first light / threshold; threshold/crossing/bowl/key; written/folded/container; first/last threshold.
+- Title/theme: Give the phrase a window threshold.
+- Ritual body: Use the window as the crossing place. Let closing the curtain be the close. Stand or sit where window light reaches the room. Speak or place one written phrase at that edge. Close the curtain to end the crossing. Close when the curtain is closed.
+- Intention: Give the phrase a window threshold.
+- Best window: When you have room to linger this week.
+- Optional accent: No add-on needed.
+- Carry prompt: What phrase can meet the threshold and stop there?
+- Why this fits: You chose Reflection, saying something clearly, high capacity. The timing gives the phrase a clear place without turning it into a report. Window light gives the phrase an edge to meet and leave. Private context supports clear structure and bounded action in a small, contained rite.
+- How this was chosen: Chosen for: Reflection, saying something clearly, high capacity / Timing shaped it: The timing gives the phrase a clear place without turning it into a report. / Focus bridge: Saying something clearly stays inside the ritual action. / Ritual form: Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. / Material lineage: Source lineage: first-light threshold and lunar visible-light logic. / Kept bounded: One window edge, one phrase, then the curtain closes. / Private timing fit: Private context supports clear structure and bounded action in a small, contained rite. / Small accent: Numerology 7 stayed secondary to the ritual material and timing.
+- Source summary: Source lineage: first-light threshold and lunar visible-light logic. Form kept contained.
+- Warnings: none.
+- Human verdict: show Jessica.
+- Reason for verdict: Reflection and saying clearly stay in a phrase/window threshold form; timing shapes the edge without replacing the focus.
+- Authored-output review: Authored, coherent, clear, and free of therapy/productivity/system-report voice.
+
+### contract.candle.high_beginning
+
+- Check-in inputs: today; Candle or light; me; Making a beginning; room for something deeper / high; new moon timing.
+- Selected visible category: Candle or light.
+- Selected pattern: `first_light_at_the_threshold`.
+- Selected ritual-form family: first light / threshold; threshold/crossing/bowl/key.
+- Title/theme: Let first light mark the threshold.
+- Ritual body: Use light as the first mark, not as pressure. Let the doorway hold the beginning. Stand at the doorway with first household light behind you or beside you. Name the first step in one plain phrase. Step across the threshold once to close the opening. Close when both feet are inside and no plan has been added.
+- Intention: Let first light mark the threshold.
+- Best window: When you have room to linger this week.
+- Optional accent: Let the beginning stay small enough to wait.
+- Carry prompt: What is the first step small enough to cross with?
+- Why this fits: You chose Candle or light, making a beginning, high capacity. New-moon darkness makes the first light small: it opens the beginning, then stops before proof. Use first light at the doorway to mark a beginning. Private context supports keeping this practical and contained.
+- How this was chosen: Chosen for: Candle or light, making a beginning, high capacity / Timing shaped it: New-moon darkness makes the first light small: it opens the beginning, then stops before proof. / Focus bridge: You chose making a beginning, and the timing makes the beginning a held preparation rather than a launch. / Ritual form: Kindling and first-sighting traditions make a beginning visible before it becomes a project. / Material lineage: Source lineage: household fire-kindling and first-light logic. / Kept bounded: One primary ritual, no task list. / Private timing fit: Private context supports keeping this practical and contained. / Small accent: Numerology 7 stayed secondary to the ritual material and timing.
+- Source summary: Source lineage: household fire-kindling and first-light logic. Form kept contained.
+- Warnings: none.
+- Human verdict: acceptable but not first-demo.
+- Reason for verdict: Candle/light beginning is coherent, but doorway threshold language is prominent enough to avoid as the first demo.
+- Authored-output review: Authored and coherent. Timing shapes the beginning instead of replacing it. Use later in the demo, not first.
+
+### contract.surprise.high_preserves_resolved_category
+
+- Check-in inputs: today; Surprise me; me; Saying something clearly; room for something deeper / high; full moon timing.
+- Selected visible category: Reflection, resolved from Surprise me.
+- Selected pattern: `window_light_threshold`.
+- Selected ritual-form family: first light / threshold; threshold/crossing/bowl/key; written/folded/container; first/last threshold.
+- Title/theme: Give the phrase a window threshold.
+- Ritual body: Use the window as the crossing place. Let closing the curtain be the close. Stand or sit where window light reaches the room. Speak or place one written phrase at that edge. Close the curtain to end the crossing. Close when the curtain is closed.
+- Intention: Give the phrase a window threshold.
+- Best window: When you have room to linger this week.
+- Optional accent: No add-on needed.
+- Carry prompt: What phrase can meet the threshold and stop there?
+- Why this fits: You chose Reflection, saying something clearly, high capacity. Full light lets the phrase be witnessed once, then closed by changing the light. Window light gives the phrase an edge to meet and leave. Private context supports clear structure and bounded action in a small, contained rite.
+- How this was chosen: Chosen for: Reflection, saying something clearly, high capacity / Timing shaped it: Full light lets the phrase be witnessed once, then closed by changing the light. / Focus bridge: Saying something clearly stays inside the ritual action. / Ritual form: Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. / Material lineage: Source lineage: first-light threshold and lunar visible-light logic. / Kept bounded: One window edge, one phrase, then the curtain closes. / Private timing fit: Private context supports clear structure and bounded action in a small, contained rite. / Small accent: Numerology 7 stayed secondary to the ritual material and timing.
+- Source summary: Source lineage: first-light threshold and lunar visible-light logic. Form kept contained.
+- Warnings: none.
+- Human verdict: show Jessica.
+- Reason for verdict: Surprise resolves to Reflection and preserves the phrase/window action.
+- Authored-output review: Authored, clear, and not a generic safe short ritual.
+
+### contract.surprise.both_preserves_audience
+
+- Check-in inputs: today; Surprise me; both of us; Tending us; room for something deeper / high; full moon timing.
+- Selected visible category: Kitchen, resolved from Surprise me.
+- Selected pattern: `warm_cup_between_us`.
+- Selected ritual-form family: warm cup/bowl.
+- Title/theme: Let the cup hold the warmth.
+- Ritual body: Use what is already ordinary here. Let the cup do the holding. Place two cups, or one cup between you, at the table. Each offer one word for what warmth can stay here. Let the cup or cups rest between you through one quiet minute. Set the cup or cups down and leave them until the next ordinary return. Close when the cup or cups are set down and the shared surface is left quiet.
+- Intention: Let the cup hold the warmth.
+- Best window: When you have room to linger this week.
+- Optional accent: No add-on needed.
+- Carry prompt: What warmth can be held between you, then left alone?
+- Why this fits: You chose Kitchen, both of you, tending us, high capacity. Full moon supports this form without making the timing a command. The cup holds warmth without asking it to become a conversation. For both of you, the fit leans toward practical home-tending magic and clear structure and bounded action.
+- How this was chosen: Chosen for: Kitchen, both of you, tending us, high capacity / Timing shaped it: Full moon supports this form without making the timing a command. / Focus bridge: Tending us stays inside the ritual action. / Ritual form: A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. / Material lineage: Source lineage: quiet household welcome forms. / Kept bounded: One cup, one warm phrase, then the cup is set down. / Private timing fit: For both of you, the fit leans toward practical home-tending magic and clear structure and bounded action. / Small accent: Numerology 7 stayed secondary to the ritual material and timing.
+- Source summary: Source lineage: quiet household welcome forms. Form kept contained.
+- Warnings: none.
+- Human verdict: show Jessica.
+- Reason for verdict: Surprise resolves to Kitchen and the action is explicitly shared between two people.
+- Authored-output review: Authored, clear, materially coherent, and audience-aware.
+
+### contract.plant.high_rest_companionship
+
+- Check-in inputs: today; Plant; me; Resting; room for something deeper / high; dark/new timing.
+- Selected visible category: Plant.
+- Selected pattern: `dormant_green_rest`.
+- Selected ritual-form family: plant rest/dormancy; seasonal marker.
+- Title/theme: Let the green thing keep a deeper rest.
+- Ritual body: Use the plant as a rest teacher, not a task. Do not water, prune, or fix unless care is truly needed. Place one plant, seed, leaf, or plant image where it can be seen. Name one household thing that does not need to grow today. Let the green thing hold the rest through three slow breaths. Return the plant or image to its ordinary place and leave it untouched until the next ordinary care moment. Close when the plant is back in place and nothing has been fixed.
+- Intention: Let the green thing keep a deeper rest.
+- Best window: When you have room to linger this week.
+- Optional accent: No add-on needed.
+- Carry prompt: What becomes more alive when it is not asked to grow tonight?
+- Why this fits: You chose Plant, resting, high capacity. Darker or quieter timing lets the ritual lower the room instead of sharpening attention. Use plant dormancy as a rest rite for what does not need to grow today. Private context supports keeping this practical and contained.
+- How this was chosen: Chosen for: Plant, resting, high capacity / Timing shaped it: Darker or quieter timing lets the ritual lower the room instead of sharpening attention. / Focus bridge: Resting stays inside the ritual action. / Ritual form: Plant life includes dormancy; not every living thing is always growing visibly. / Material lineage: Source lineage: New Moon card. / Kept bounded: One primary ritual, no task list. / Private timing fit: Private context supports keeping this practical and contained. / Small accent: Numerology 7 stayed secondary to the ritual material and timing.
+- Source summary: Source lineage: new moon card and dormant green rest pattern. Form kept contained.
+- Warnings: none.
+- Human verdict: show Jessica.
+- Reason for verdict: Plant rest uses dormancy as real material logic with return/doing-nothing closure.
+- Authored-output review: Authored, respectful, clear, materially coherent, and demo-safe.
+
+### calendar.month_turn.best_week
+
+- Check-in inputs: best moment this week; Home; both of us; Marking a threshold; enough to engage / steady; month-turn timing.
+- Selected visible category: Home.
+- Selected pattern: `first_day_last_day`.
+- Selected ritual-form family: first/last threshold; seasonal marker; threshold/crossing/bowl/key; written/folded/container.
+- Title/theme: Give the threshold a first word and a last word.
+- Ritual body: Keep the words plain. Let the threshold hold the change. Name one last word for what is ending. Name one first word for what is beginning. Speak or place both at a doorway, table, or bowl. Close by crossing once or folding the words away.
+- Intention: Give the threshold a first word and a last word.
+- Best window: Around Monday, August 31. When you have a little space this week.
+- Optional accent: No add-on needed.
+- Carry prompt: What word closes, and what word opens?
+- Why this fits: You chose Home, both of you, marking a threshold, steady capacity. Monday, August 31 stood out this week. The window stood out because of calendar threshold. The month turn gives this a clean threshold without turning the calendar into a command. The first-and-last form gives the threshold one action and one close.
+- How this was chosen: Chosen for: Home, both of you, marking a threshold, steady capacity / Timing shaped it: Monday, August 31 stood out this week. The window stood out because of calendar threshold. The month turn gives this a clean threshold without turning the calendar into a command. / Focus bridge: Marking a threshold stays inside the ritual action. / Ritual form: Calendar customs can become private first-and-last markers without becoming a holiday feed. / Material lineage: Source lineage: first-and-last calendar threshold logic. / Kept bounded: One threshold action, one clean close. / Private timing fit: For both of you, the fit leans toward clear structure and bounded action and warmth, beauty, and affection. / Small accent: Numerology 9 stayed secondary to the ritual material and timing.
+- Source summary: Source lineage: first-and-last calendar threshold logic. Form kept contained.
+- Warnings: none.
+- Human verdict: show Jessica.
+- Reason for verdict: Month-turn timing shapes a real threshold/first-last form and gives a concrete week window.
+- Authored-output review: Authored, clear, capacity-appropriate, audience-aware, and free of public holiday/feed language.
+
+### Final Gate Verdict
+
+- Show Jessica: corrected Plant witness, Kitchen warm cup, Reflection window phrase, Surprise me to Reflection, Surprise me to Kitchen, Plant dormancy/rest, month-turn first/last threshold.
+- Acceptable but not first-demo: Home + tending the home + high + waning, Candle/light + beginning + high + new moon.
+- Patch before demo: none.
+- Do not show: none.
+- Remaining demo-avoid path: do not lead with the threshold-forward Home+tending or Candle/beginning examples; they are coherent, but the first demo should favor full/new/waning candle, Reflection phrase/window, Kitchen warmth, Plant witness, or month-turn threshold.
+
 ## PR Notes Draft
 
 - Added a demo-ready candle/moon batch using approved Carmina household fire/light, NASA lunar visible-light timing, Source Packet 4 direction, and existing vessel/threshold/table/folded-word mechanics.
