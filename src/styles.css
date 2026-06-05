@@ -69,7 +69,7 @@ button:disabled {
   display: grid;
   align-content: start;
   width: min(100%, 680px);
-  gap: 26px;
+  gap: 16px;
   padding-block: var(--opening-shell-padding-block);
 }
 

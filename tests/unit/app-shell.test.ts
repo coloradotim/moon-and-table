@@ -26,6 +26,7 @@ describe("app shell rendering", () => {
 
     expect(entryRule).toContain("align-content: start");
     expect(entryRule).toContain("width: min(100%, 680px)");
+    expect(entryRule).toContain("gap: 16px");
     expect(entryRule).toContain("padding-block: var(--opening-shell-padding-block)");
     expect(checkInRule).toContain("align-content: start");
     expect(checkInRule).toContain("width: min(100%, 680px)");
