@@ -2397,42 +2397,24 @@ function getProfileThemeReason(
   audience: PrivateAudience,
 ): string {
   const labels = getProfileThemeLabels(profileSignalMatches, audience);
-  const natalSignals = profileSignalMatches.filter(
-    (signal) => signal.source === "natal_theme",
-  );
 
   if (labels.length === 0) {
-    return "Saved profile themes helped shape the fit without exposing private chart details.";
-  }
-
-  if (natalSignals.length > 0) {
-    const people = getProfileLabels(natalSignals);
-    const themeText = labels.join(" and ");
-
-    if (audience === "together" && labels.length > 1) {
-      return `For a together recommendation, saved profile and natal-chart themes for ${people.join(" and ")} balance ${labels[0]} with ${labels[1]}.`;
-    }
-
-    if (audience === "either") {
-      return `Saved profile and natal-chart themes for ${people.join(" and ")} fit at least one profile around ${labels[0]} without conflicting with household avoid flags.`;
-    }
-
-    if (people.length > 1) {
-      return `Saved natal-chart themes for ${people.join(" and ")} point toward ${themeText}; the brief uses that as private fit context, not a prediction.`;
-    }
-
-    return `Saved natal-chart themes for ${people[0]} point toward ${themeText}; the brief uses that as private fit context, not a prediction.`;
+    return "Private household context supports keeping this practical and contained.";
   }
 
   if (audience === "together" && labels.length > 1) {
-    return `For a together recommendation, this balances ${labels[0]} with ${labels[1]}.`;
+    return `For both of you, the fit leans toward ${labels[0]} and ${labels[1]}.`;
   }
 
   if (audience === "either") {
-    return `This fits at least one saved profile theme around ${labels[0]} without conflicting with household avoid flags.`;
+    if (labels[0]?.includes("practical")) {
+      return "Private context supports keeping this practical and contained.";
+    }
+
+    return `Private context supports ${labels[0]} in a small, contained rite.`;
   }
 
-  return `This also fits the saved profile theme for ${labels[0]}.`;
+  return `The household context leans toward ${labels[0]} in a small, concrete rite.`;
 }
 
 function getAudienceLabel(audience: PrivateAudience): string {

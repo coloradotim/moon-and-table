@@ -293,7 +293,7 @@ Debug/report output still includes score reasons, selected timing windows, sourc
 
 - Some non-lunar timing bridges remain conservative, especially broad seasonal/current-sky phrasing. They avoid score language, but Tim should still review whether they feel specific enough.
 - `kitchen.warmth.together` currently selects `quiet_welcome` in the quality bench. This is accepted as an equivalent warm welcome vessel, but if Tim wants warm-cup specificity, that should be a later scoring/content-tuning issue.
-- `Household fit` can still be a little explanatory when both profile and natal-theme placeholders are present. It avoids raw private data, but it is not as grimoire-like as the ritual body.
+- `Household fit` is now warmer and less diagnostic, but it can still be more explanatory than the ritual body when several private context signals are present.
 - The composer still includes several compact `How this was chosen` sections when many influences are present. They are no longer trace dumps, but human review should decide whether the default collapsed detail is still too much.
 
 ## 8. Human Review Questions
@@ -348,7 +348,7 @@ What is as complete as the spent leaf?
 
 **Why This Fits**
 
-You chose Plant, clearing something out, low capacity. Waning moon supports this form without making the timing a command. The spent leaf gives release a precise edge: only what is already finished is removed. This fits at least one saved profile theme around practical home-tending magic without conflicting with household avoid flags.
+You chose Plant, clearing something out, low capacity. Waning moon supports this form without making the timing a command. The spent leaf gives release a precise edge: only what is already finished is removed. Private context supports keeping this practical and contained.
 
 **How This Was Chosen**
 
@@ -358,7 +358,7 @@ You chose Plant, clearing something out, low capacity. Waning moon supports this
 - Ritual form: A spent leaf gives release a precise edge: remove what is already finished, not what is alive.
 - Material lineage: Source lineage: plant growth and rest traditions.
 - Kept bounded: One spent leaf, one release, then the plant is left alone.
-- Household fit: This fits at least one saved profile theme around practical home-tending magic without conflicting with household avoid flags.
+- Household fit: Private context supports keeping this practical and contained.
 - Small accent: Numerology 7 stayed secondary to the ritual material and timing.
 
 **Source Summary**
@@ -396,7 +396,7 @@ What beginning can wait like a seed or grain?
 
 **Why This Fits**
 
-You chose Plant, making a beginning, low capacity. Seasonal timing asks for a small marker, not a public calendar performance. Seed or grain gives the beginning a body, and waiting is part of the rite. This fits at least one saved profile theme around practical home-tending magic without conflicting with household avoid flags.
+You chose Plant, making a beginning, low capacity. Seasonal timing asks for a small marker, not a public calendar performance. Seed or grain gives the beginning a body, and waiting is part of the rite. Private context supports keeping this practical and contained.
 
 **How This Was Chosen**
 
@@ -406,7 +406,7 @@ You chose Plant, making a beginning, low capacity. Seasonal timing asks for a sm
 - Ritual form: Seed and water make a beginning material without demanding immediate growth.
 - Material lineage: Source lineage: seed-water beginning logic.
 - Kept bounded: One seed or grain, one beginning, then waiting without proof.
-- Household fit: This fits at least one saved profile theme around practical home-tending magic without conflicting with household avoid flags.
+- Household fit: Private context supports keeping this practical and contained.
 - Small accent: Numerology 7 stayed secondary to the ritual material and timing.
 
 **Source Summary**
@@ -444,7 +444,7 @@ What beginning can be held between you before it becomes work?
 
 **Why This Fits**
 
-You chose Kitchen, both of you, making a beginning, steady capacity. Waning timing turns the beginning toward preparation rather than launch. Grain gives the beginning weight; the bowl gives it a place to rest. For a together recommendation, saved profile and natal-chart themes for Person A and Person B balance practical home-tending magic with clear structure and bounded action.
+You chose Kitchen, both of you, making a beginning, steady capacity. Waning timing turns the beginning toward preparation rather than launch. Grain gives the beginning weight; the bowl gives it a place to rest. For both of you, the fit leans toward practical home-tending magic and clear structure and bounded action.
 
 **How This Was Chosen**
 
@@ -454,7 +454,7 @@ You chose Kitchen, both of you, making a beginning, steady capacity. Waning timi
 - Ritual form: Waning timing makes this a beginning held in reserve rather than launched.
 - Material lineage: Source lineage: grain/table household rhythm and seed-water beginning logic.
 - Kept bounded: One grain, one sentence, one night of waiting.
-- Household fit: For a together recommendation, saved profile and natal-chart themes for Person A and Person B balance practical home-tending magic with clear structure and bounded action.
+- Household fit: For both of you, the fit leans toward practical home-tending magic and clear structure and bounded action.
 - Small accent: Numerology 7 stayed secondary to the ritual material and timing.
 
 **Source Summary**
@@ -492,7 +492,7 @@ What welcome can the shared vessel hold for both of you?
 
 **Why This Fits**
 
-You chose Kitchen, both of you, tending us, steady capacity. Seasonal timing asks for a small marker, not a public calendar performance. A cup or bowl makes welcome visible without making it a performance. For a together recommendation, saved profile and natal-chart themes for Person A and Person B balance practical home-tending magic with clear structure and bounded action.
+You chose Kitchen, both of you, tending us, steady capacity. Seasonal timing asks for a small marker, not a public calendar performance. A cup or bowl makes welcome visible without making it a performance. For both of you, the fit leans toward practical home-tending magic and clear structure and bounded action.
 
 **How This Was Chosen**
 
@@ -502,7 +502,7 @@ You chose Kitchen, both of you, tending us, steady capacity. Seasonal timing ask
 - Ritual form: A modest bowl, cup, bread, or sweetness can make hospitality visible without demanding belief.
 - Material lineage: Source lineage: quiet household welcome forms.
 - Kept bounded: One vessel, one welcome, then the vessel returns.
-- Household fit: For a together recommendation, saved profile and natal-chart themes for Person A and Person B balance practical home-tending magic with clear structure and bounded action.
+- Household fit: For both of you, the fit leans toward practical home-tending magic and clear structure and bounded action.
 - Small accent: Numerology 4 stayed secondary to the ritual material and timing.
 
 **Source Summary**
@@ -540,7 +540,7 @@ What word can the sweetness cue hold and then release?
 
 **Why This Fits**
 
-You chose Kitchen, both of you, tending us, low capacity. Waxing moon supports this form without making the timing a command. A tiny sweetness cue lets one word soften and then return to ordinary use. For a together recommendation, saved profile and natal-chart themes for Person B balance practical home-tending magic with warmth, beauty, and affection.
+You chose Kitchen, both of you, tending us, low capacity. Waxing moon supports this form without making the timing a command. A tiny sweetness cue lets one word soften and then return to ordinary use. For both of you, the fit leans toward practical home-tending magic and warmth, beauty, and affection.
 
 **How This Was Chosen**
 
@@ -550,7 +550,7 @@ You chose Kitchen, both of you, tending us, low capacity. Waxing moon supports t
 - Ritual form: Sweetness and welcome can soften speech when the phrase stays bounded and ordinary.
 - Material lineage: Source lineage: quiet welcome and household sweetness forms.
 - Kept bounded: One word, one sweetness cue, then the cup is returned.
-- Household fit: For a together recommendation, saved profile and natal-chart themes for Person B balance practical home-tending magic with warmth, beauty, and affection.
+- Household fit: For both of you, the fit leans toward practical home-tending magic and warmth, beauty, and affection.
 
 **Source Summary**
 
@@ -587,7 +587,7 @@ What word can cross the threshold with you?
 
 **Why This Fits**
 
-You chose Home, marking a threshold, steady capacity. Waxing moon supports this form without making the timing a command. The key gives the threshold something ordinary to carry and return. Saved profile and natal-chart themes for Person A and Person B fit at least one profile around practical home-tending magic without conflicting with household avoid flags.
+You chose Home, marking a threshold, steady capacity. Waxing moon supports this form without making the timing a command. The key gives the threshold something ordinary to carry and return. Private context supports keeping this practical and contained.
 
 **How This Was Chosen**
 
@@ -597,7 +597,7 @@ You chose Home, marking a threshold, steady capacity. Waxing moon supports this 
 - Ritual form: A key can mark threshold and return without promising luck or protection.
 - Material lineage: Source lineage: key, threshold, and household marker folklore.
 - Kept bounded: The key carries the word briefly, then returns.
-- Household fit: Saved profile and natal-chart themes for Person A and Person B fit at least one profile around practical home-tending magic without conflicting with household avoid flags.
+- Household fit: Private context supports keeping this practical and contained.
 
 **Source Summary**
 
@@ -634,7 +634,7 @@ What feels cleaner when it has somewhere ordinary to go?
 
 **Why This Fits**
 
-You chose Home, clearing something out, low capacity. Waning moon supports this form without making the timing a command. Salt and clear water give the release a vessel and a clean way out. Saved profile and natal-chart themes for Person A and Person B fit at least one profile around practical home-tending magic without conflicting with household avoid flags.
+You chose Home, clearing something out, low capacity. Waning moon supports this form without making the timing a command. Salt and clear water give the release a vessel and a clean way out. Private context supports keeping this practical and contained.
 
 **How This Was Chosen**
 
@@ -644,7 +644,7 @@ You chose Home, clearing something out, low capacity. Waning moon supports this 
 - Ritual form: Salt and water give clearing a vessel and an outward direction without making danger the story.
 - Material lineage: Source lineage: salt and boundary folklore.
 - Kept bounded: One pinch, one bowl, one clean release.
-- Household fit: Saved profile and natal-chart themes for Person A and Person B fit at least one profile around practical home-tending magic without conflicting with household avoid flags.
+- Household fit: Private context supports keeping this practical and contained.
 - Small accent: Numerology 7 stayed secondary to the ritual material and timing.
 
 **Source Summary**
@@ -682,7 +682,7 @@ What can stay warm here without being worked on tonight?
 
 **Why This Fits**
 
-You chose Candle or light, resting, low capacity. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. Lowered light lets rest become visible without asking for more action. Saved profile and natal-chart themes for Person B fit at least one profile around practical home-tending magic without conflicting with household avoid flags.
+You chose Candle or light, resting, low capacity. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. Lowered light lets rest become visible without asking for more action. Private context supports keeping this practical and contained.
 
 **How This Was Chosen**
 
@@ -692,7 +692,7 @@ You chose Candle or light, resting, low capacity. The last day of the month make
 - Ritual form: Fire-banking customs give evening closure a form: lower the light, keep the warmth, and stop adding fuel.
 - Material lineage: Source lineage: household fire-banking customs.
 - Kept bounded: One lowered light, one ending, then no more work.
-- Household fit: Saved profile and natal-chart themes for Person B fit at least one profile around practical home-tending magic without conflicting with household avoid flags.
+- Household fit: Private context supports keeping this practical and contained.
 - Small accent: Numerology 6 stayed secondary to the ritual material and timing.
 
 **Source Summary**
@@ -730,7 +730,7 @@ What line is ready to be witnessed once?
 
 **Why This Fits**
 
-You chose Candle or light, saying something clearly, low capacity. Full timing supports naming what is already visible once, then closing the light. Light gives the line a place to be witnessed and then ended. Saved profile and natal-chart themes for Person A and Person B fit at least one profile around practical home-tending magic without conflicting with household avoid flags.
+You chose Candle or light, saying something clearly, low capacity. Full timing supports naming what is already visible once, then closing the light. Light gives the line a place to be witnessed and then ended. Private context supports keeping this practical and contained.
 
 **How This Was Chosen**
 
@@ -740,7 +740,7 @@ You chose Candle or light, saying something clearly, low capacity. Full timing s
 - Ritual form: Full timing and a light practice can make the ritual simple: a line is placed, witnessed, and closed.
 - Material lineage: Source lineage: hearth/table first-and-last logic.
 - Kept bounded: One light, one line, then the light changes.
-- Household fit: Saved profile and natal-chart themes for Person A and Person B fit at least one profile around practical home-tending magic without conflicting with household avoid flags.
+- Household fit: Private context supports keeping this practical and contained.
 - Small accent: Numerology 7 stayed secondary to the ritual material and timing.
 
 **Source Summary**
@@ -778,7 +778,7 @@ What changes when the phrase has a place to be held?
 
 **Why This Fits**
 
-You chose Reflection, saying something clearly, low capacity. The timing gives the phrase a clear place without turning it into a report. The fold turns the phrase into a held object instead of a long explanation. Saved profile and natal-chart themes for Person A fit at least one profile around clear structure and bounded action without conflicting with household avoid flags.
+You chose Reflection, saying something clearly, low capacity. The timing gives the phrase a clear place without turning it into a report. The fold turns the phrase into a held object instead of a long explanation. Private context supports clear structure and bounded action in a small, contained rite.
 
 **How This Was Chosen**
 
@@ -788,7 +788,7 @@ You chose Reflection, saying something clearly, low capacity. The timing gives t
 - Ritual form: A written phrase becomes a ritual object when it is folded and placed, not expanded into journaling.
 - Material lineage: Source lineage: folded-word and household container logic.
 - Kept bounded: One phrase, one fold, one holding place.
-- Household fit: Saved profile and natal-chart themes for Person A fit at least one profile around clear structure and bounded action without conflicting with household avoid flags.
+- Household fit: Private context supports clear structure and bounded action in a small, contained rite.
 - Small accent: Numerology 7 stayed secondary to the ritual material and timing.
 
 **Source Summary**
@@ -826,7 +826,7 @@ What season is this home actually in?
 
 **Why This Fits**
 
-You chose Seasonal, both of you, marking a threshold, low capacity. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. The bowl gives seasonal change a private household marker. For a together recommendation, saved profile and natal-chart themes for Person A and Person B balance practical home-tending magic with clear structure and bounded action.
+You chose Seasonal, both of you, marking a threshold, low capacity. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. The bowl gives seasonal change a private household marker. For both of you, the fit leans toward practical home-tending magic and clear structure and bounded action.
 
 **How This Was Chosen**
 
@@ -836,7 +836,7 @@ You chose Seasonal, both of you, marking a threshold, low capacity. The last day
 - Ritual form: A seasonal bowl gives calendar change a private household form instead of a public festival script.
 - Material lineage: Source lineage: seasonal bowl and household-threshold customs.
 - Kept bounded: The bowl holds one marker until its ordinary return.
-- Household fit: For a together recommendation, saved profile and natal-chart themes for Person A and Person B balance practical home-tending magic with clear structure and bounded action.
+- Household fit: For both of you, the fit leans toward practical home-tending magic and clear structure and bounded action.
 - Small accent: Numerology 6 stayed secondary to the ritual material and timing.
 
 **Source Summary**
@@ -874,7 +874,7 @@ What word can cross the threshold with you?
 
 **Why This Fits**
 
-You chose Reflection, saying something clearly, steady capacity. The timing gives the phrase a clear place without turning it into a report. The key gives the threshold something ordinary to carry and return. Saved profile and natal-chart themes for Person A and Person B fit at least one profile around practical home-tending magic without conflicting with household avoid flags.
+You chose Reflection, saying something clearly, steady capacity. The timing gives the phrase a clear place without turning it into a report. The key gives the threshold something ordinary to carry and return. Private context supports keeping this practical and contained.
 
 **How This Was Chosen**
 
@@ -884,7 +884,7 @@ You chose Reflection, saying something clearly, steady capacity. The timing give
 - Ritual form: A key can mark threshold and return without promising luck or protection.
 - Material lineage: Source lineage: key, threshold, and household marker folklore.
 - Kept bounded: The key carries the word briefly, then returns.
-- Household fit: Saved profile and natal-chart themes for Person A and Person B fit at least one profile around practical home-tending magic without conflicting with household avoid flags.
+- Household fit: Private context supports keeping this practical and contained.
 
 **Source Summary**
 

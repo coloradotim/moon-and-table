@@ -197,6 +197,11 @@ describe("recommendation quality report", () => {
       "source.",
       "note.",
       "private_profile",
+      "person a",
+      "person b",
+      "natal-chart themes",
+      "avoid flags",
+      "conflicting with household avoid flags",
       "surprise me,",
       "surprise me ->",
     ];

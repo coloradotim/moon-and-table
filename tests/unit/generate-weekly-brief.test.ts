@@ -1298,7 +1298,7 @@ describe("generateWeeklyBrief", () => {
     const explanationText = JSON.stringify(brief.explanation);
 
     expect(explanationText).toContain("Capacity");
-    expect(explanationText).toContain("saved profile theme");
+    expect(explanationText).toContain("Private context supports");
     expect(explanationText).not.toContain("Schedule");
     expect(explanationText).not.toContain("Saturday morning");
     expect(explanationText).not.toContain("Thursday evening");
@@ -1736,7 +1736,7 @@ describe("generateWeeklyBrief", () => {
       "natal_theme.person_b.private_profile.beauty_warmth",
     ]);
     expect(brief.whyThis).toContain("warmth, beauty, and affection");
-    expect(brief.whyThis).toContain("Saved natal-chart themes");
+    expect(brief.whyThis).toContain("The household context leans toward");
     expect(brief.explanation.whyThisFits).toContain("warmth, beauty, and affection");
     expect(brief.whyThis).not.toContain("placement");
     expect(brief.whyThis).not.toContain("chart says");
@@ -1765,10 +1765,7 @@ describe("generateWeeklyBrief", () => {
       "natal_theme.person_b.private_profile.beauty_warmth",
     ]);
     expect(brief.whyThis).toContain(
-      "saved profile and natal-chart themes",
-    );
-    expect(brief.whyThis).toContain(
-      "practical home-tending magic with warmth, beauty, and affection",
+      "For both of you, the fit leans toward practical home-tending magic and warmth, beauty, and affection",
     );
     expect(brief.trace.ritualPatterns).toHaveLength(1);
   });
@@ -1793,7 +1790,8 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.trace.ritualPatterns).not.toEqual(["candle_light_focus"]);
     expect(brief.trace.safety.excludedPatternKeys).toContain("candle_light_focus");
-    expect(brief.whyThis).toContain("without conflicting with household avoid flags");
+    expect(brief.whyThis).toContain("Private context supports");
+    expect(brief.whyThis).toContain("keeping this practical and contained");
   });
 
   it("lets profile themes influence scoring when multiple patterns are eligible", () => {
