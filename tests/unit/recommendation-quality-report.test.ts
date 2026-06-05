@@ -64,9 +64,60 @@ describe("recommendation quality report", () => {
     expect(formatted).toContain("## Warning Counts");
     expect(formatted).toContain("### pause.permission.enough");
     expect(formatted).toContain("Selected ritual pattern:");
+    expect(formatted).toContain("Selected ritual form family:");
+    expect(formatted).toContain("Expected ritual form family:");
+    expect(formatted).toContain("Ritual form family matched:");
+    expect(formatted).toContain("### Broad Pattern Concentration");
+    expect(formatted).toContain("### Strong Patterns Not Selected");
     expect(formatted).toContain("How this was chosen:");
     expect(formatted).toContain("Top rejected near alternatives:");
     expect(formatted).toContain("Human review notes:");
+  });
+
+  it("surfaces Batch 1 ritual-form reachability in named scenarios", () => {
+    const report = createRecommendationQualityReport();
+    const resultById = new Map(
+      report.scenarioResults.map((result) => [result.scenario.id, result]),
+    );
+
+    expect(resultById.get("batch1.plant.dead_leaf_release")).toMatchObject({
+      selectedRitualPattern: { key: "dead_leaf_release" },
+      ritualFormFamilyMatched: true,
+      selectedRitualFormFamilies: expect.arrayContaining(["plant release/removal"]),
+    });
+    expect(resultById.get("batch1.kitchen.grain_beginning")).toMatchObject({
+      selectedRitualPattern: { key: "grain_bowl_beginning" },
+      ritualFormFamilyMatched: true,
+      selectedRitualFormFamilies: expect.arrayContaining(["grain/seed/bowl"]),
+    });
+    expect(resultById.get("batch1.reflection.folded_phrase")).toMatchObject({
+      ritualFormFamilyMatched: true,
+      selectedRitualFormFamilies: expect.arrayContaining(["written/folded/container"]),
+    });
+    expect(resultById.get("batch1.quiet_welcome")).toMatchObject({
+      ritualFormFamilyMatched: true,
+      selectedRitualFormFamilies: expect.arrayContaining(["welcome/offering/vessel"]),
+    });
+    expect(resultById.get("home.threshold.arrival")).toMatchObject({
+      ritualFormFamilyMatched: true,
+      selectedRitualFormFamilies: expect.arrayContaining(["threshold/crossing/bowl/key"]),
+    });
+    expect(resultById.get("issue183.plant.beginning.seed")).toMatchObject({
+      ritualFormFamilyMatched: true,
+      selectedRitualFormFamilies: expect.arrayContaining(["plant seed/beginning"]),
+    });
+    expect(resultById.get("issue183.plant.rest.dormancy")).toMatchObject({
+      ritualFormFamilyMatched: true,
+      selectedRitualFormFamilies: expect.arrayContaining(["plant rest/dormancy"]),
+    });
+    expect(resultById.get("issue183.reflection.waning_release")).toMatchObject({
+      ritualFormFamilyMatched: true,
+      selectedRitualFormFamilies: expect.arrayContaining(["waning phrase/release"]),
+    });
+    expect(resultById.get("issue183.candle.rest_dark")).toMatchObject({
+      ritualFormFamilyMatched: true,
+      selectedRitualFormFamilies: expect.arrayContaining(["banked/darkening light"]),
+    });
   });
 
   it("flags known bad sample-like output", () => {

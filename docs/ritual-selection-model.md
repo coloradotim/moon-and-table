@@ -160,7 +160,7 @@ The pre-brief check-in stores answers in a `CurrentRitualCheckIn` object for the
 
 `Try something else` reuses the same check-in answers and private profile context. `Start over` clears the current check-in and returns to the first question.
 
-The current implementation uses check-in capacity, audience, practice type, ritual focus, conservative free-text aliases, and selected timing-window candidates in recommendation scoring. The decision record names which check-in fields influenced the selected pattern and records a practice-choice diagnostic so visible choices can be audited as matched, set aside, skipped, or intentionally open.
+The current implementation uses check-in capacity, audience, practice type, ritual focus, conservative free-text aliases, selected timing-window candidates, and ritual form-family fit in recommendation scoring. Form-family fit is stricter than broad tag overlap: Plant + clearing should reach plant release/removal, Kitchen + beginning should reach grain/seed/bowl, Reflection + clear speech should reach written/folded/container, and Candle/light + rest should reach banked or darkening light. The decision record names which check-in fields influenced the selected pattern and records a practice-choice diagnostic so visible choices can be audited as matched, set aside, skipped, or intentionally open.
 
 The user-facing explanation has two normal layers. `Why this fits` is the short card-level reason. `How this was chosen` is collapsed by default and can show timing choice, check-in fit, ritual focus, ritual fit, profile or private timing fit, capacity boundaries, tradeoffs, and sources. Debug remains separate for raw score reasons, ids, candidate lists, and exact private contact keys.
 

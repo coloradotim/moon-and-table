@@ -55,6 +55,13 @@ import {
   type TimingWindowCandidate,
 } from "./timing-window-candidates";
 import {
+  getExpectedRitualFormFamilies,
+  getExplicitPracticeCategory,
+  getRitualFormFamiliesForPattern,
+  getRitualFormFamilyLabels,
+  ritualFormFamiliesMatch,
+} from "./ritual-form-families";
+import {
   getRitualFocusOptionByKey,
   type RitualFocusOption,
 } from "../data/ritual-focus-options";
@@ -1163,7 +1170,7 @@ function getBurdenAvoidanceMatches(
 
   if (
     avoidedStyles.includes("long_journaling") &&
-    (avoidText.includes("journal") || pattern.steps.join(" ").toLowerCase().includes("write"))
+    avoidText.includes("journal")
   ) {
     matches.push("long_journaling");
   }
@@ -1399,6 +1406,91 @@ function getCheckInPatternScoreReasons(
   return reasons;
 }
 
+const BROAD_MULTI_CATEGORY_PATTERN_KEYS = new Set([
+  "two_words_at_the_table",
+  "full_light_on_the_table",
+]);
+
+function getRitualFormScoreReasons(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+): ScoreReason[] {
+  const checkIn = input.currentRitualCheckIn;
+  const expectedFamilies = getExpectedRitualFormFamilies(
+    checkIn,
+    checkIn?.practiceTypeHints ?? [],
+  );
+  const patternFamilies = getRitualFormFamiliesForPattern(pattern);
+  const matchedFamilies = patternFamilies.filter((family) =>
+    expectedFamilies.includes(family),
+  );
+  const explicitCategory = getExplicitPracticeCategory(checkIn);
+  const categoryMatches = getPatternStyleMatches(
+    pattern,
+    checkIn?.practiceTypeHints ?? [],
+  );
+  const reasons: ScoreReason[] = [];
+
+  if (matchedFamilies.length > 0) {
+    reasons.push(
+      scoreReason(
+        "ritual_form_family_match",
+        "Ritual form match",
+        explicitCategory ? 12 : 7,
+        getRitualFormFamilyLabels(matchedFamilies).join(", "),
+      ),
+    );
+  }
+
+  if (
+    explicitCategory &&
+    expectedFamilies.length > 0 &&
+    categoryMatches.length === 0
+  ) {
+    reasons.push(
+      scoreReason(
+        "explicit_category_mismatch",
+        "Explicit category mismatch",
+        -10,
+        `${explicitCategory}; expected ${getRitualFormFamilyLabels(expectedFamilies).join(", ")}`,
+      ),
+    );
+  }
+
+  if (
+    explicitCategory &&
+    categoryMatches.length > 0 &&
+    expectedFamilies.length > 0 &&
+    matchedFamilies.length === 0
+  ) {
+    reasons.push(
+      scoreReason(
+        "ritual_form_family_mismatch",
+        "Ritual form mismatch",
+        -8,
+        `${explicitCategory}; expected ${getRitualFormFamilyLabels(expectedFamilies).join(", ")}`,
+      ),
+    );
+  }
+
+  if (
+    BROAD_MULTI_CATEGORY_PATTERN_KEYS.has(pattern.key) &&
+    expectedFamilies.length > 0 &&
+    !ritualFormFamiliesMatch(patternFamilies, expectedFamilies)
+  ) {
+    reasons.push(
+      scoreReason(
+        "broad_pattern_damped",
+        "Broad pattern damped",
+        -6,
+        `${pattern.key} does not match ${getRitualFormFamilyLabels(expectedFamilies).join(", ")}`,
+      ),
+    );
+  }
+
+  return reasons;
+}
+
 function getEligiblePatternCandidates(
   input: ResolvedGenerateWeeklyBriefInput,
   selectedCards: SymbolicCard[],
@@ -1611,6 +1703,7 @@ function getEligiblePatternCandidates(
       ...profileSignalReason,
       ...natalContactReasons,
       ...getCheckInPatternScoreReasons(input, pattern),
+      ...getRitualFormScoreReasons(input, pattern),
       ...defaultPatternReason,
       ...highCapacityReason,
     );

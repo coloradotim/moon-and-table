@@ -19,6 +19,12 @@ import {
   type ScoreReason,
   type WeeklyBrief,
 } from "../src/lib/generate-weekly-brief";
+import {
+  getExpectedRitualFormFamilies,
+  getRitualFormFamiliesForPattern,
+  getRitualFormFamilyLabels,
+  ritualFormFamiliesMatch,
+} from "../src/lib/ritual-form-families";
 
 export const RECOMMENDATION_QUALITY_WARNING_IDS = [
   "pause_with_imperative_steps",
@@ -62,6 +68,9 @@ export type RecommendationQualityScenarioResult = {
     key: string;
     title: string;
   };
+  selectedRitualFormFamilies: string[];
+  expectedRitualFormFamilies: string[];
+  ritualFormFamilyMatched: boolean;
   howThisWasChosen: Array<{ title: string; body: string }>;
   selectedTimingSignals: string[];
   selectedTimingWindow?: {
@@ -96,6 +105,8 @@ export type RecommendationQualityContentHealth = {
   batchOneSourceNoteIds: string[];
   selectedPatternCounts: Array<{ key: string; count: number }>;
   distinctSelectedPatternCount: number;
+  overusedBroadPatterns: Array<{ key: string; count: number }>;
+  strongUnselectedPatternKeys: string[];
   sourceCoverage: Array<{
     patternKey: string;
     sourceReviewIds: string[];
@@ -488,11 +499,16 @@ function getContentHealth(
 ): RecommendationQualityContentHealth {
   const approvedPatterns = getApprovedRitualPatterns();
   const approvedPatternKeys = approvedPatterns.map((pattern) => pattern.key);
+  const selectedPatternKeys = scenarioResults.map(
+    (result) => result.selectedRitualPattern.key,
+  );
+  const selectedPatternKeySet = new Set(selectedPatternKeys);
   const selectedPatternCounts = countBy(
-    scenarioResults.map((result) => result.selectedRitualPattern.key),
+    selectedPatternKeys,
   );
   const batchDemotionKeySet = new Set<string>(batchOneDemotedRitualPatternKeys);
   const batchTaskDressedKeySet = new Set<string>(batchOneTaskDressedPatternKeys);
+  const broadPatternKeys = new Set(["two_words_at_the_table", "full_light_on_the_table"]);
 
   return {
     approvedPatternCount: approvedPatterns.length,
@@ -508,6 +524,15 @@ function getContentHealth(
     batchOneSourceNoteIds: batchOneSourceNotes.map((note) => note.id),
     selectedPatternCounts,
     distinctSelectedPatternCount: selectedPatternCounts.length,
+    overusedBroadPatterns: selectedPatternCounts.filter(
+      (item) => broadPatternKeys.has(item.key) && item.count > 3,
+    ),
+    strongUnselectedPatternKeys: approvedPatterns
+      .filter((pattern) => pattern.presentation)
+      .filter((pattern) => getRitualFormFamiliesForPattern(pattern).length > 0)
+      .filter((pattern) => !selectedPatternKeySet.has(pattern.key))
+      .map((pattern) => pattern.key)
+      .sort(),
     sourceCoverage: getSourceCoverage(),
     categoryCoverage: getCategoryCoverage(),
     weakPatternFlags: [
@@ -554,6 +579,13 @@ export function createRecommendationQualityReport(
   const scenarioResults = scenarios.map((scenario) => {
     const brief = generateWeeklyBrief(scenario.input);
     const selectedPattern = getSelectedPattern(brief);
+    const selectedRitualFormFamilies = selectedPattern
+      ? getRitualFormFamiliesForPattern(selectedPattern)
+      : [];
+    const expectedRitualFormFamilies = getExpectedRitualFormFamilies(
+      scenario.currentRitualCheckIn,
+      scenario.currentRitualCheckIn.practiceTypeHints ?? [],
+    );
     const howThisWasChosen = brief.explanation.howThisWasChosen.map((section) => ({
       title: section.title,
       body: section.body,
@@ -574,6 +606,12 @@ export function createRecommendationQualityReport(
         key: brief.decision.selected.ritualPatternKey,
         title: selectedPattern?.title ?? brief.decision.selected.ritualPatternKey,
       },
+      selectedRitualFormFamilies: getRitualFormFamilyLabels(selectedRitualFormFamilies),
+      expectedRitualFormFamilies: getRitualFormFamilyLabels(expectedRitualFormFamilies),
+      ritualFormFamilyMatched: ritualFormFamiliesMatch(
+        selectedRitualFormFamilies,
+        expectedRitualFormFamilies,
+      ),
       howThisWasChosen,
       selectedTimingSignals: brief.decision.selected.timingSignalLabels,
       selectedTimingWindow: brief.decision.inputs.selectedTimingWindow
@@ -654,6 +692,18 @@ export function formatRecommendationQualityReport(
       (item) => `- ${item.key}: ${item.count}`,
     ),
     "",
+    "### Broad Pattern Concentration",
+    "",
+    ...(report.contentHealth.overusedBroadPatterns.length > 0
+      ? report.contentHealth.overusedBroadPatterns.map(
+          (item) => `- ${item.key}: ${item.count}`,
+        )
+      : ["- none"]),
+    "",
+    "### Strong Patterns Not Selected",
+    "",
+    `- ${formatList(report.contentHealth.strongUnselectedPatternKeys)}`,
+    "",
     "### Batch 1 Source Coverage",
     "",
     `- SourceReviews: ${formatList(report.contentHealth.batchOneSourceReviewIds)}`,
@@ -728,6 +778,9 @@ export function formatRecommendationQualityReport(
       "Generated recommendation:",
       "",
       `- Selected ritual pattern: ${result.selectedRitualPattern.key} / ${result.selectedRitualPattern.title}`,
+      `- Selected ritual form family: ${formatList(result.selectedRitualFormFamilies)}`,
+      `- Expected ritual form family: ${formatList(result.expectedRitualFormFamilies)}`,
+      `- Ritual form family matched: ${result.ritualFormFamilyMatched ? "yes" : "no"}`,
       `- Theme/title: ${brief.theme}`,
       `- Recommended ritual: ${brief.recommendedRitual}`,
       `- Intention: ${brief.intention}`,
