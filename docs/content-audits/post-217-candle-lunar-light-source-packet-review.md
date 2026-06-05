@@ -41,19 +41,15 @@ Expected answer for active content/scoring/UI is `no`, and that is what this bra
 
 ## 2. Validation Commands
 
-The GitHub connector created docs-only files and cannot run repository-local validation commands in this environment.
-
-Commands that should be run before merge:
-
 | Command | Status | Notes |
 | --- | --- | --- |
-| `npm run lint:content` | Not run here | Docs/content validation should confirm packet formatting. |
-| `npm run typecheck` | Not run here | Should be unaffected by docs-only changes. |
-| `npm run test -- tests/unit/source-registry.test.ts` | Not run here | Should be unaffected; useful guard that no active source registry changed. |
-| `npm run diagnose:content` | Not run here | Should be unaffected; confirms no content reachability issue introduced. |
-| `npm run check` | Not run here | Run before merge if feasible. |
+| `npm run lint:content` | Passed | Content lint passed with no findings. |
+| `npm run typecheck` | Passed | TypeScript typecheck passed. |
+| `npm run test -- tests/unit/source-registry.test.ts` | Passed | 1 test file, 18 tests passed. |
+| `npm run diagnose:content` | Passed | Content reachability diagnostics completed; diagnostics/report output remains available. |
+| `npm run check` | Passed | Included content lint, typecheck, build, 26 unit test files / 298 tests, and 2 Playwright tests. |
 
-No validation pass is claimed by this review packet.
+Validation was run locally on the rebased PR branch after #205 and #220 were merged into `main`.
 
 ## 3. Source Review Summary Table
 
@@ -194,7 +190,11 @@ Explicit non-implementation notes:
 
 Validation:
 
-- Not run in this environment. Before merge, run `npm run lint:content`, `npm run typecheck`, `npm run test -- tests/unit/source-registry.test.ts`, `npm run diagnose:content`, and `npm run check` if feasible.
+- `npm run lint:content` passed.
+- `npm run typecheck` passed.
+- `npm run test -- tests/unit/source-registry.test.ts` passed.
+- `npm run diagnose:content` passed.
+- `npm run check` passed.
 
 Human review:
 

@@ -397,7 +397,12 @@ No-active-content confirmation:
 
 Validation:
 
-- Docs-only change. Local validation should run before merge: `npm run lint:content`, `npm run typecheck`, `npm run test -- tests/unit/source-registry.test.ts`, `npm run diagnose:content`, and `npm run check`.
+- Docs-only change. Local validation passed:
+  - `npm run lint:content`
+  - `npm run typecheck`
+  - `npm run test -- tests/unit/source-registry.test.ts`
+  - `npm run diagnose:content`
+  - `npm run check`
 
 Human review:
 
