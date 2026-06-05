@@ -853,6 +853,7 @@ describe("generateWeeklyBrief", () => {
   it("uses an across-the-week timing candidate in the decision record and scoring", () => {
     const brief = generateWeeklyBrief({
       currentDate: "2026-06-03T12:00:00.000Z",
+      timezone: "America/Denver",
       capacityMode: "low",
       currentRitualCheckIn: {
         timeScope: "best_moment_this_week",
