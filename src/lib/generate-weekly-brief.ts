@@ -2691,6 +2691,8 @@ function getPatternMaterialPhrase(pattern: RitualPattern): string {
       "The bowl gives arrival a small place to gather, cross, and end.",
     salt_clear_water_release:
       "Salt and clear water belong to explicit release: the named thing leaves, then the bowl returns.",
+    waning_phrase_release:
+      "The phrase leaves through one chosen close: removal, water, tearing, or being placed away.",
     clear_the_threshold_bowl:
       "The vessel closes by emptying what it held and becoming ordinary again.",
     bank_the_house_light:
@@ -2707,6 +2709,8 @@ function getPatternMaterialPhrase(pattern: RitualPattern): string {
       "The entry bowl marks one seasonal crossing without turning the season into display.",
     last_word_first_word:
       "The last word and first word give a crossing a clean hinge.",
+    plant_phrase_under_the_pot:
+      "The folded phrase rests near the plant without turning the plant into a task.",
   };
 
   return phrases[pattern.key] ?? ensureSentence(pattern.summary);
@@ -2800,6 +2804,7 @@ function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeekly
     carried_key_word: "one word, one crossing, then the key returns",
     threshold_bowl: "one object crosses in, then returns or the bowl moves",
     salt_clear_water_release: "one named release, one emptied bowl, then ordinary return",
+    waning_phrase_release: "one phrase, one removal path, then empty hands",
     clear_the_threshold_bowl: "one held marker, one emptying, then the vessel returns",
     bank_the_house_light: "one lowered light, one ending, then no more work",
     full_light_on_the_table: "one light, one line, then the light changes",
@@ -2808,6 +2813,7 @@ function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeekly
     first_day_last_day: "one threshold action, one clean close",
     seasonal_entry_bowl: "one entry marker, one crossing, then the bowl rests",
     last_word_first_word: "one last word, one crossing, one first word",
+    plant_phrase_under_the_pot: "one folded phrase, one plant-side place, then later return",
   };
   const base = boundariesByPattern[pattern.key];
 
@@ -2835,7 +2841,9 @@ function getCompressedLineage(pattern: RitualPattern): string | undefined {
     carried_key_word: "key, threshold, return, and household marker folklore",
     threshold_bowl: "threshold crossing and bowl-vessel household logic",
     folded_phrase_vessel: "folded-word and household container-return logic",
+    plant_phrase_under_the_pot: "plant-message and folded-phrase placement logic",
     seasonal_marker_bowl: "seasonal marker and vessel-return logic",
+    first_day_last_day: "first-and-last calendar threshold logic",
     full_light_on_the_table: "hearth/table first-and-last logic",
     bank_the_house_light: "household fire-banking customs",
     seasonal_entry_bowl: "seasonal threshold and first-crossing household logic",

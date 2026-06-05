@@ -104,7 +104,11 @@ const FORM_FAMILIES_BY_STYLE: Record<string, RitualFormFamily[]> = {
   return: ["vessel_empty_return"],
   rinsing: ["vessel_empty_return"],
   folded_word: ["written_folded_container"],
+  placed_phrase: ["written_folded_container"],
+  carried_phrase: ["carried_phrase", "written_folded_container"],
   carrying: ["carried_phrase", "written_folded_container"],
+  first_last: ["first_last_threshold"],
+  crossing: ["threshold_crossing_bowl_key", "first_last_threshold"],
   seasonal: ["seasonal_marker"],
 };
 
@@ -210,6 +214,18 @@ export function getExpectedRitualFormFamilies(
 
   if (hintSet.has("folded_word")) {
     expected.push("written_folded_container");
+  }
+
+  if (hintSet.has("carried_phrase") || hintSet.has("carrying")) {
+    expected.push("carried_phrase", "written_folded_container");
+  }
+
+  if (hintSet.has("placed_phrase")) {
+    expected.push("written_folded_container");
+  }
+
+  if (hintSet.has("first_last")) {
+    expected.push("first_last_threshold");
   }
 
   if (hintSet.has("grain") || hintSet.has("seed")) {
