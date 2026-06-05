@@ -4,9 +4,10 @@ Status: hold for human review
 
 ## 1. PR / Branch Summary
 
-- PR number and title: TBD after PR creation - Issue #202 threshold, key, and return forms
+- PR number and title: #215 - Strengthen threshold, key, and return forms
 - Branch: `codex/issue-202-threshold-return-forms`
 - Base branch: `main`
+- Implementation commit SHA: `a7593e0f118df04d51440d609eac1a99060ea7de`
 - Base commit at branch start: `4280ec366c7a72f42966aa8c8019f6a0cf341839`
 - Issue addressed: #202
 - Implementation summary: tightened threshold/key/return presentation, added source-backed threshold cards from existing approved notes, narrowed threshold eligibility, removed threshold as the generic low-capacity default, and added win/loss quality scenarios.
