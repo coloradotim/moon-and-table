@@ -150,6 +150,88 @@ describe("recommendation quality report", () => {
     );
   });
 
+  it("covers issue 207 golden house-voice scenarios without diagnostic normal copy", () => {
+    const report = createRecommendationQualityReport();
+    const resultById = new Map(
+      report.scenarioResults.map((result) => [result.scenario.id, result]),
+    );
+    const expectedPatterns = new Map([
+      ["batch1.plant.dead_leaf_release", "dead_leaf_release"],
+      ["issue183.plant.beginning.seed", "seed_waiting"],
+      ["batch1.kitchen.grain_beginning", "grain_bowl_beginning"],
+      ["batch1.quiet_welcome", "honeyed_word"],
+      ["home.threshold.arrival", "carried_key_word"],
+      ["batch1.home.salt_water_clearing", "salt_clear_water_release"],
+      ["issue183.candle.rest_dark", "bank_the_house_light"],
+      ["issue183.candle.full_saying_clearly", "full_light_on_the_table"],
+      ["batch1.seasonal.marker_bowl", "seasonal_marker_bowl"],
+    ]);
+    const requiredScenarioIds = [
+      ...expectedPatterns.keys(),
+      "kitchen.warmth.together",
+      "batch1.reflection.folded_phrase",
+      "batch1.surprise_me.resolves_visible_category",
+    ];
+    const blockedPhrases = [
+      "approved ritual container",
+      "selected ritual context",
+      "symbolic fit context",
+      "not as a prediction",
+      "some approved options were set aside",
+      "practical household constraints",
+      "matched the selected ritual",
+      "allowed in as a small accent",
+      "about twenty minutes or less",
+      "primary timing signal",
+      "source.",
+      "note.",
+      "private_profile",
+      "surprise me,",
+    ];
+
+    for (const [scenarioId, patternKey] of expectedPatterns) {
+      expect(resultById.get(scenarioId)?.selectedRitualPattern.key).toBe(patternKey);
+    }
+
+    expect(["warm_cup_between_us", "quiet_welcome"]).toContain(
+      resultById.get("kitchen.warmth.together")?.selectedRitualPattern.key,
+    );
+    expect(resultById.get("batch1.reflection.folded_phrase")).toMatchObject({
+      ritualFormFamilyMatched: true,
+      selectedRitualFormFamilies: expect.arrayContaining(["written/folded/container"]),
+    });
+    expect(resultById.get("batch1.surprise_me.resolves_visible_category")).toMatchObject({
+      practiceChoiceStatus: "resolved_open_preference",
+      ritualFormFamilyMatched: true,
+    });
+
+    for (const scenarioId of requiredScenarioIds) {
+      const result = resultById.get(scenarioId);
+
+      expect(result, scenarioId).toBeDefined();
+      expect(result?.warnings, scenarioId).toEqual([]);
+
+      const normalCopy = [
+        result?.brief.theme,
+        result?.brief.recommendedRitual,
+        result?.brief.intention,
+        result?.brief.bestWindow,
+        result?.brief.optionalAddOn,
+        result?.brief.reflectionPrompt,
+        result?.brief.explanation.whyThisFits,
+        result?.brief.sourceSummary,
+        ...(result?.howThisWasChosen.flatMap((section) => [
+          section.title,
+          section.body,
+        ]) ?? []),
+      ].join("\n").toLowerCase();
+
+      for (const phrase of blockedPhrases) {
+        expect(normalCopy, `${scenarioId} leaked ${phrase}`).not.toContain(phrase);
+      }
+    }
+  });
+
   it("surfaces calendar threshold timing in recommendation quality scenarios", () => {
     const report = createRecommendationQualityReport();
     const resultById = new Map(
@@ -171,7 +253,7 @@ describe("recommendation quality report", () => {
     expect(firstDay?.howThisWasChosen).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          title: "Timing",
+          title: "Timing shaped it",
           body: expect.stringContaining("The first day of the month makes this an opening threshold"),
         }),
       ]),
@@ -197,7 +279,7 @@ describe("recommendation quality report", () => {
       expect.arrayContaining(["Month turn — crossing between months"]),
     );
     expect(monthTurn?.brief.explanation.whyThisFits).toContain(
-      "stood out as a household calendar threshold",
+      "stood out this week",
     );
     expect(monthTurn?.brief.explanation.whyThisFits).toContain(
       "The month turn gives this a clean threshold",

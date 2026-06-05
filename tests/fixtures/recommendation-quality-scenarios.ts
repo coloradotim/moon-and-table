@@ -609,7 +609,7 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
     id: "batch1.kitchen.grain_beginning",
     title: "Kitchen grain bowl beginning",
     purpose: "Checks kitchen beginning as grain/seed vessel, not recipe work.",
-    currentDate: "2026-06-18T12:00:00.000Z",
+    currentDate: "2026-06-04T12:00:00.000Z",
     currentRitualCheckIn: {
       timeScope: "today",
       energyCapacity: "enough_to_engage",
