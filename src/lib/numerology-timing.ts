@@ -39,6 +39,14 @@ const SCOPE_LABELS: Record<NumerologyTimingScope, string> = {
   universal_day: "Universal day",
 };
 
+type LocalDateParts = {
+  year: number;
+  month: number;
+  day: number;
+};
+
+const LOCAL_DATE_PART_FORMATTERS = new Map<string, Intl.DateTimeFormat>();
+
 function resolveNumerologyDate(value: Date | string): Date {
   const date = value instanceof Date ? new Date(value) : new Date(value);
 
@@ -47,6 +55,53 @@ function resolveNumerologyDate(value: Date | string): Date {
   }
 
   return date;
+}
+
+function getDefaultNumerologyTimezone(): string {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone ?? "UTC";
+}
+
+function getLocalDatePartFormatter(timezone: string): Intl.DateTimeFormat {
+  const existing = LOCAL_DATE_PART_FORMATTERS.get(timezone);
+
+  if (existing) {
+    return existing;
+  }
+
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    calendar: "gregory",
+    numberingSystem: "latn",
+    timeZone: timezone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+
+  LOCAL_DATE_PART_FORMATTERS.set(timezone, formatter);
+
+  return formatter;
+}
+
+function getLocalDateParts(date: Date, timezone: string): LocalDateParts {
+  const parts = getLocalDatePartFormatter(timezone).formatToParts(date);
+  const valueByType = new Map(parts.map((part) => [part.type, part.value]));
+  const year = Number(valueByType.get("year"));
+  const month = Number(valueByType.get("month"));
+  const day = Number(valueByType.get("day"));
+
+  if (!year || !month || !day) {
+    throw new Error(`Unable to resolve numerology date parts for timezone ${timezone}.`);
+  }
+
+  return { year, month, day };
+}
+
+function formatDateIso({ year, month, day }: LocalDateParts): string {
+  return [
+    year,
+    String(month).padStart(2, "0"),
+    String(day).padStart(2, "0"),
+  ].join("-");
 }
 
 export function reduceNumerology(value: number): NumerologyNumber {
@@ -63,11 +118,10 @@ export function reduceNumerology(value: number): NumerologyNumber {
 
 export function getUniversalNumerologyNumbers(
   value: Date | string,
+  timezone = getDefaultNumerologyTimezone(),
 ): UniversalNumerologyNumbers {
   const date = resolveNumerologyDate(value);
-  const year = date.getUTCFullYear();
-  const month = date.getUTCMonth() + 1;
-  const day = date.getUTCDate();
+  const { year, month, day } = getLocalDateParts(date, timezone);
   const universalYear = reduceNumerology(year);
   const universalMonth = reduceNumerology(universalYear + month);
 
@@ -80,11 +134,11 @@ export function getUniversalNumerologyNumbers(
 
 export function getNumerologyTimingFacts(
   value: Date | string,
-  timezone = "UTC",
+  timezone = getDefaultNumerologyTimezone(),
 ): NumerologyTimingFact[] {
   const date = resolveNumerologyDate(value);
-  const dateIso = date.toISOString().slice(0, 10);
-  const numbers = getUniversalNumerologyNumbers(date);
+  const dateIso = formatDateIso(getLocalDateParts(date, timezone));
+  const numbers = getUniversalNumerologyNumbers(date, timezone);
 
   return NUMEROLOGY_SCOPES.map((scope) => {
     const number = numbers[scope];

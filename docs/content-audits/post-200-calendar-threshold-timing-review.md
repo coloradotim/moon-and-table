@@ -12,6 +12,8 @@ This packet reviews PR #208 / issue #200. It is meant for Tim and ChatGPT human 
 
 Short implementation summary: #200 adds app-computed first-day, last-day, and month-turn timing facts, approved timing interpretation rules for those facts, week look-ahead support, recommendation-quality scenarios, content diagnostics coverage, and docs. Calendar timing can now shape existing threshold and first/last ritual forms without adding new active content.
 
+Pre-merge cleanup patch: calendar thresholds and other date-derived timing facts now respect the supplied timing timezone, or the runtime local timezone by default. Calendar-threshold language now surfaces in `Why this fits` and the expanded Timing explanation when a first-day, last-day, or month-turn signal materially shapes the recommendation.
+
 Files changed by purpose:
 
 - Timing logic: `src/lib/timing-facts.ts`, `src/lib/timing-interpretation-rules.ts`, `src/lib/timing-window-candidates.ts`
@@ -41,18 +43,18 @@ The system now computes `calendar_threshold` timing facts in `src/lib/timing-fac
 
 Detection behavior:
 
-- First day of calendar month: emitted when the UTC day-of-month is `1`.
-- Last day of calendar month: emitted when the UTC day-of-month equals the computed last UTC date of that month.
-- Month turn / month boundary: emitted on both the first and last UTC day of a month.
+- First day of calendar month: emitted when the local day-of-month in the supplied timing timezone is `1`.
+- Last day of calendar month: emitted when the local day-of-month equals the computed last local date of that month.
+- Month turn / month boundary: emitted on both the first and last local day of a month.
 - First/last day of week: deferred. The existing timing model does not need this yet, and #200 did not add week-boundary facts.
 - Seasonal entry / seasonal boundary: existing solstice/equinox support remains. #200 did not add new seasonal boundary logic or cross-quarter dates.
 
 Timezone and boundaries:
 
-- Facts use UTC-stable date boundaries for MVP.
-- Each calendar threshold fact has start/end/exact ISO fields at the UTC day boundary.
-- Local household timezone support remains future work. No private schedule or availability is inferred.
-- Leap-year February is handled by native UTC month-end calculation.
+- Facts use household-local date boundaries for MVP.
+- Each calendar threshold fact has start/end/exact ISO fields for the local day boundary represented as UTC instants.
+- The app uses the supplied timing timezone when present, otherwise the runtime local timezone. No private schedule or availability is inferred.
+- Leap-year February is handled by local calendar month-end calculation.
 - December 31 and January 1 are handled as ordinary month boundaries; no New Year folklore or holiday feed is added.
 
 Where signals apply:
@@ -66,7 +68,7 @@ Product boundary: calendar timing shapes the ritual; it is not the ritual.
 
 - `npm run lint:content`: pass. Content lint passed with no findings.
 - `npm run typecheck`: pass. TypeScript completed with no errors.
-- `npm run test`: pass. 26 test files, 293 tests.
+- `npm run test`: pass. 26 test files, 296 tests.
 - `npm run test -- tests/unit/recommendation-quality-report.test.ts`: pass. 1 test file, 8 tests.
 - `npm run recommendation:quality`: pass. Report generated; scenario count is 42.
 - `npm run diagnose:content`: pass. Computed timing fact coverage now includes `calendar_threshold`.
@@ -88,10 +90,12 @@ No validation command is currently failing.
 | December 31 | `2026-12-31T12:00:00.000Z` | last_day_of_month + month_turn | last_day_of_month (Last day of December); month_turn (Month turn out of December) | pass |
 | January 1 | `2027-01-01T12:00:00.000Z` | first_day_of_month + month_turn | first_day_of_month (First day of January); month_turn (Month turn into January) | pass |
 | Middle-of-month ordinary day | `2026-07-15T12:00:00.000Z` | none | none | pass |
-| UTC midnight boundary before July | `2026-06-30T23:59:59.000Z` | last_day_of_month + month_turn | last_day_of_month (Last day of June); month_turn (Month turn out of June) | pass |
-| UTC midnight boundary after July starts | `2026-07-01T00:00:00.000Z` | first_day_of_month + month_turn | first_day_of_month (First day of July); month_turn (Month turn into July) | pass |
+| Denver local boundary before July | `2026-07-01T01:00:00.000Z` with `America/Denver` | last_day_of_month + month_turn for June 30 | last_day_of_month (Last day of June); month_turn (Month turn out of June); no First day of July | pass |
+| Denver local boundary after July starts | `2026-07-01T06:00:00.000Z` with `America/Denver` | first_day_of_month + month_turn for July 1 | first_day_of_month (First day of July); month_turn (Month turn into July) | pass |
+| Denver local last day after UTC crossed August | `2026-08-01T01:00:00.000Z` with `America/Denver` | last_day_of_month + month_turn for July 31 | last_day_of_month (Last day of July); month_turn (Month turn out of July); no First day of August | pass |
+| Denver local month-turn timing window | `2026-07-31T00:00:00.000Z` with `America/Denver` | month-turn candidate starts at Denver local midnight | Month turn out of July starts at `2026-07-31T06:00:00.000Z` | pass |
 
-Note: the local midnight boundary case is represented as UTC boundary behavior. Household-local timezone interpretation is deferred.
+Note: UTC instants are still used for storage and exact event comparison, but date-derived facts are evaluated against the household-local calendar date.
 
 ## 5. Before / After Recommendation-Quality Comparison
 
@@ -806,6 +810,7 @@ Raw debug/source keys:
 | Does timing shape without taking over? | Mostly yes. | Today scenarios still use capacity, practice, and focus. Calendar threshold appears as a selected signal, but the ritual remains an existing pattern. |
 | Does this avoid horoscope/calendar-feed behavior? | Yes on the implementation surface. | No named holidays, feast days, public festival customs, or `folklore says` copy were added. |
 | Does this help future first/last/threshold rituals? | Yes. | `first_day_last_day`, `clear_the_threshold_bowl`, `first_light_at_the_threshold`, and other existing threshold families now receive calendar threshold support. |
+| Does it respect local household time? | Yes after cleanup. | `getCalendarThresholdFacts`, `getTimingFactsForDate`, numerology date facts, timing-window look-ahead, and timing-window labels use the supplied timezone or the runtime local timezone by default. |
 | Any regressions? | One watch item. | `issue183.seasonal.entry_release` changed from `seasonal_marker_bowl` to `clear_the_threshold_bowl`. This may be better for clearing/closing, but needs human review. |
 
 Blunt assessment: this is a timing support PR, not a content-quality PR. It gives the engine a useful household calendar threshold signal without becoming a date-lore feed. The weakest remaining piece is not detection; it is whether the existing first/last and threshold presentations are good enough when they win more often.
@@ -819,7 +824,7 @@ Blunt assessment: this is a timing support PR, not a content-quality PR. It give
 | Consider future `month_turn_bowl` / `first_crossing_bowl` | Existing patterns work, but future material-specific forms may be better. | Human content packet review |
 | Seasonal/Kitchen material selection | Kitchen + month turn can support grain/bowl when focus fits; more nuanced material selection needs future content work. | Future content packet, no new category |
 | Calendar timing over-selection diagnostics | If calendar thresholds start dominating, add concentration/over-selection diagnostics. | More scenario history after #200 |
-| Household-local timezone support | Current facts are UTC-stable; hosted household timing may eventually need private timezone context. | Product decision and privacy-safe storage |
+| Explicit hosted household timezone setting | Current code uses supplied timezone or runtime local timezone by default; hosted household timing may eventually need a stored private timezone if browser/runtime defaults are not enough. | Product decision and privacy-safe storage |
 
 ## 11. PR Notes Draft
 
@@ -836,7 +841,7 @@ Validation:
 
 - `npm run lint:content`: pass
 - `npm run typecheck`: pass
-- `npm run test`: pass, 26 files / 293 tests
+- `npm run test`: pass, 26 files / 296 tests
 - `npm run test -- tests/unit/recommendation-quality-report.test.ts`: pass, 8 tests
 - `npm run recommendation:quality`: pass
 - `npm run diagnose:content`: pass

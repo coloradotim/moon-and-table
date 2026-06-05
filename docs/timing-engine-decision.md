@@ -117,11 +117,11 @@ Implemented in app code without astrology libraries:
 
 Numerology remains a light accent. It should not outrank primary lunar, seasonal, ritual-fit, capacity, or profile signals.
 
-The current calculation reduces ordinary digit sums to 1-9:
+The current calculation reduces ordinary digit sums to 1-9. It uses the supplied timing timezone, or the runtime local timezone by default, so date-derived numerology follows the household-local calendar date rather than UTC midnight:
 
-- universal year: reduce the UTC year digits
-- universal month: reduce universal year number plus UTC month number
-- universal day: reduce universal year number plus UTC month number plus UTC day number
+- universal year: reduce the local calendar year digits
+- universal month: reduce universal year number plus local calendar month number
+- universal day: reduce universal year number plus local calendar month number plus local calendar day number
 
 Master numbers 11 and 22 are reduced for MVP. Life path numbers, names, compatibility, and personal numerology are deferred.
 
@@ -135,7 +135,7 @@ Implemented in app code without a holiday or folklore feed:
 - last day of the calendar month
 - month turn / month boundary
 
-These facts are UTC-stable calendar boundaries. They support the product idea that the household is crossing from one named stretch of time into another. They do not say that a date requires a ritual, and they do not import named holidays, feast days, public festival customs, luck/protection/prosperity claims, or date trivia.
+These facts are household-local calendar boundaries. They use the supplied timing timezone, or the runtime local timezone by default, because first day, last day, and month turn are local household-date concepts. They support the product idea that the household is crossing from one named stretch of time into another. They do not say that a date requires a ritual, and they do not import named holidays, feast days, public festival customs, luck/protection/prosperity claims, or date trivia.
 
 Approved timing interpretation rules can use these facts as supporting signals for existing threshold, first-and-last, seasonal bowl, folded-word, and home-tending forms. Calendar timing shapes the ritual; it is not the ritual.
 
@@ -269,14 +269,16 @@ Implemented tests cover:
 - major aspect detection within the configured orb
 - universal year/month/day numerology examples
 - first-day, last-day, and month-turn calendar threshold examples
+- household-local timezone behavior for date-derived timing facts
 - invalid date handling
-- UTC week boundary behavior
+- astronomical week-boundary behavior for lunar phase facts
 - timing rule eligibility and signal selection
 - draft zodiac/planetary rules remaining ineligible
 - seven-day timing window candidate generation
 - known exact new and full moon timing windows
 - known solstice/equinox timing windows
 - month-turn look-ahead as a household threshold timing candidate
+- local-day look-ahead for timing window candidates
 - universal day numerology as an accent timing candidate
 - numerology selection diagnostics showing whether computed date numbers were eligible, matched the ritual context, selected as an accent, or left hidden
 - private natal-contact boosts using fake profiles only
@@ -288,7 +290,7 @@ Future tests should add:
 - station-boundary retrograde cases
 - exact aspect search cases if the app moves beyond simple daily facts
 - runtime integration tests for private natal contact behavior in the signed-in app shell
-- timezone-aware week selection if the app later supports household timezones beyond labels
+- explicit hosted household timezone configuration if the app needs a stored timezone instead of the runtime local default
 - seasonal marker behavior around year boundaries
 - generator integration for the future `Best moment this week` check-in path
 

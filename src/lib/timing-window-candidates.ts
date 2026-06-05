@@ -7,6 +7,7 @@ import {
   type NatalContact,
 } from "./private-natal-contacts";
 import {
+  getDefaultTimingTimezone,
   getTimingFactsForDate,
   type LunationFact,
   type PlanetaryAspectFact,
@@ -76,28 +77,109 @@ function resolveDate(value: Date | string): Date {
   return date;
 }
 
-function addUtcDays(date: Date, days: number): Date {
-  const next = new Date(date);
+type LocalDateParts = {
+  year: number;
+  month: number;
+  day: number;
+};
 
-  next.setUTCDate(next.getUTCDate() + days);
+const LOCAL_DATE_PART_FORMATTERS = new Map<string, Intl.DateTimeFormat>();
 
-  return next;
+function getLocalDatePartFormatter(timezone: string): Intl.DateTimeFormat {
+  const existing = LOCAL_DATE_PART_FORMATTERS.get(timezone);
+
+  if (existing) {
+    return existing;
+  }
+
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    calendar: "gregory",
+    numberingSystem: "latn",
+    timeZone: timezone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+
+  LOCAL_DATE_PART_FORMATTERS.set(timezone, formatter);
+
+  return formatter;
 }
 
-function startOfUtcDay(date: Date): Date {
-  const next = new Date(date);
+function getLocalDateParts(date: Date, timezone: string): LocalDateParts {
+  const parts = getLocalDatePartFormatter(timezone).formatToParts(date);
+  const valueByType = new Map(parts.map((part) => [part.type, part.value]));
+  const year = Number(valueByType.get("year"));
+  const month = Number(valueByType.get("month"));
+  const day = Number(valueByType.get("day"));
 
-  next.setUTCHours(0, 0, 0, 0);
+  if (!year || !month || !day) {
+    throw new Error(`Unable to resolve timing window date parts for timezone ${timezone}.`);
+  }
 
-  return next;
+  return { year, month, day };
 }
 
-function endOfLookahead(start: Date, daysAhead: number): Date {
-  const end = new Date(start);
+function getTimeZoneOffsetMs(date: Date, timezone: string): number {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    calendar: "gregory",
+    numberingSystem: "latn",
+    timeZone: timezone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(date);
+  const valueByType = new Map(parts.map((part) => [part.type, part.value]));
+  const asUtc = Date.UTC(
+    Number(valueByType.get("year")),
+    Number(valueByType.get("month")) - 1,
+    Number(valueByType.get("day")),
+    Number(valueByType.get("hour")),
+    Number(valueByType.get("minute")),
+    Number(valueByType.get("second")),
+  );
 
-  end.setUTCDate(end.getUTCDate() + daysAhead);
+  return asUtc - date.getTime();
+}
 
-  return end;
+function getUtcInstantForLocalMidnight(
+  parts: LocalDateParts,
+  timezone: string,
+): Date {
+  const utcGuess = new Date(Date.UTC(parts.year, parts.month - 1, parts.day));
+  let resolved = new Date(
+    utcGuess.getTime() - getTimeZoneOffsetMs(utcGuess, timezone),
+  );
+  const correctedOffset = getTimeZoneOffsetMs(resolved, timezone);
+
+  resolved = new Date(utcGuess.getTime() - correctedOffset);
+
+  return resolved;
+}
+
+function addLocalDays(parts: LocalDateParts, days: number): LocalDateParts {
+  const next = new Date(Date.UTC(parts.year, parts.month - 1, parts.day + days));
+
+  return {
+    year: next.getUTCFullYear(),
+    month: next.getUTCMonth() + 1,
+    day: next.getUTCDate(),
+  };
+}
+
+function startOfLocalDay(date: Date, timezone: string): Date {
+  return getUtcInstantForLocalMidnight(getLocalDateParts(date, timezone), timezone);
+}
+
+function addLocalCalendarDays(date: Date, days: number, timezone: string): Date {
+  return getUtcInstantForLocalMidnight(
+    addLocalDays(getLocalDateParts(date, timezone), days),
+    timezone,
+  );
 }
 
 function isWithinRange(iso: string, start: Date, end: Date): boolean {
@@ -125,7 +207,12 @@ function getFactEndIso(fact: TimingFact, sampleDate: Date): string | undefined {
     fact.type === "numerology_date" ||
     fact.type === "calendar_threshold"
   ) {
-    return addUtcDays(sampleDate, 1).toISOString();
+    return fact.endIso ??
+      addLocalCalendarDays(
+        sampleDate,
+        1,
+        fact.timezone ?? getDefaultTimingTimezone(),
+      ).toISOString();
   }
 
   return fact.endIso;
@@ -464,19 +551,19 @@ function dedupeCandidates(
 export function getTimingWindowCandidates({
   startDate,
   daysAhead = DEFAULT_DAYS_AHEAD,
-  timezone = "UTC",
+  timezone = getDefaultTimingTimezone(),
   privateNatalProfiles = [],
   astrologyVisibility = "balanced",
   options = {},
 }: TimingWindowCandidateInput): TimingWindowCandidate[] {
   const start = resolveDate(startDate);
-  const scanStart = startOfUtcDay(start);
-  const scanEnd = endOfLookahead(scanStart, daysAhead);
+  const scanStart = startOfLocalDay(start, timezone);
+  const scanEnd = addLocalCalendarDays(scanStart, daysAhead, timezone);
   const maxCandidates = options.maxCandidates ?? DEFAULT_MAX_CANDIDATES;
   const candidates: TimingWindowCandidate[] = [];
 
   for (let dayOffset = 0; dayOffset < daysAhead; dayOffset += 1) {
-    const sampleDate = addUtcDays(scanStart, dayOffset);
+    const sampleDate = addLocalCalendarDays(scanStart, dayOffset, timezone);
     const facts = getTimingFactsForDate(sampleDate, {
       timezone,
       aspectOrbDegrees: options.aspectOrbDegrees,

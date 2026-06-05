@@ -98,7 +98,7 @@ function getUtcWeekBounds(date: Date): { dateStart: string; dateEnd: string } {
 
 export function getLunarTimingFact(
   value: Date | string,
-  timezone = "UTC",
+  timezone = Intl.DateTimeFormat().resolvedOptions().timeZone ?? "UTC",
 ): LunarTimingFact {
   const date = resolveDate(value);
   const phaseAngleDegrees = MoonPhase(date);

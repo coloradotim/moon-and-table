@@ -263,6 +263,10 @@ function resolveDate(value: Date | string): Date {
   return date;
 }
 
+export function getDefaultTimingTimezone(): string {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone ?? "UTC";
+}
+
 function normalizeDegrees(value: number): number {
   return ((value % 360) + 360) % 360;
 }
@@ -441,26 +445,126 @@ function buildSeasonalMarkerFacts(
     }));
 }
 
-function startOfUtcDay(date: Date): Date {
-  const start = new Date(date);
+type CalendarDateParts = {
+  year: number;
+  month: number;
+  day: number;
+};
 
-  start.setUTCHours(0, 0, 0, 0);
+const LOCAL_DATE_PART_FORMATTERS = new Map<string, Intl.DateTimeFormat>();
 
-  return start;
+function getLocalDatePartFormatter(timezone: string): Intl.DateTimeFormat {
+  const existing = LOCAL_DATE_PART_FORMATTERS.get(timezone);
+
+  if (existing) {
+    return existing;
+  }
+
+  const formatter = new Intl.DateTimeFormat("en-US", {
+    calendar: "gregory",
+    numberingSystem: "latn",
+    timeZone: timezone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+
+  LOCAL_DATE_PART_FORMATTERS.set(timezone, formatter);
+
+  return formatter;
 }
 
-function endOfUtcDay(date: Date): Date {
-  const end = new Date(date);
+function getLocalCalendarDateParts(date: Date, timezone: string): CalendarDateParts {
+  const parts = getLocalDatePartFormatter(timezone).formatToParts(date);
+  const valueByType = new Map(
+    parts.map((part) => [part.type, part.value]),
+  );
+  const year = Number(valueByType.get("year"));
+  const month = Number(valueByType.get("month"));
+  const day = Number(valueByType.get("day"));
 
-  end.setUTCHours(23, 59, 59, 999);
+  if (!year || !month || !day) {
+    throw new Error(`Unable to resolve calendar date parts for timezone ${timezone}.`);
+  }
 
-  return end;
+  return { year, month, day };
 }
 
-function lastUtcDateOfMonth(date: Date): number {
-  return new Date(
-    Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + 1, 0),
-  ).getUTCDate();
+function getTimeZoneOffsetMs(date: Date, timezone: string): number {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    calendar: "gregory",
+    numberingSystem: "latn",
+    timeZone: timezone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(date);
+  const valueByType = new Map(
+    parts.map((part) => [part.type, part.value]),
+  );
+  const asUtc = Date.UTC(
+    Number(valueByType.get("year")),
+    Number(valueByType.get("month")) - 1,
+    Number(valueByType.get("day")),
+    Number(valueByType.get("hour")),
+    Number(valueByType.get("minute")),
+    Number(valueByType.get("second")),
+  );
+
+  return asUtc - date.getTime();
+}
+
+function getUtcInstantForLocalTime({
+  year,
+  month,
+  day,
+  hour = 0,
+  minute = 0,
+  second = 0,
+  millisecond = 0,
+  timezone,
+}: CalendarDateParts & {
+  hour?: number;
+  minute?: number;
+  second?: number;
+  millisecond?: number;
+  timezone: string;
+}): Date {
+  const utcGuess = new Date(Date.UTC(
+    year,
+    month - 1,
+    day,
+    hour,
+    minute,
+    second,
+    millisecond,
+  ));
+  let resolved = new Date(
+    utcGuess.getTime() - getTimeZoneOffsetMs(utcGuess, timezone),
+  );
+  const correctedOffset = getTimeZoneOffsetMs(resolved, timezone);
+
+  resolved = new Date(utcGuess.getTime() - correctedOffset);
+
+  return resolved;
+}
+
+function addLocalDays(parts: CalendarDateParts, days: number): CalendarDateParts {
+  const next = new Date(Date.UTC(parts.year, parts.month - 1, parts.day + days));
+
+  return {
+    year: next.getUTCFullYear(),
+    month: next.getUTCMonth() + 1,
+    day: next.getUTCDate(),
+  };
+}
+
+function lastDateOfMonth(parts: CalendarDateParts): number {
+  return new Date(Date.UTC(parts.year, parts.month, 0)).getUTCDate();
 }
 
 function monthNameFor(year: number, monthIndex: number): string {
@@ -470,24 +574,33 @@ function monthNameFor(year: number, monthIndex: number): string {
 }
 
 function buildCalendarThresholdFact({
-  date,
+  localDate,
   timezone,
   threshold,
   label,
   previousMonthName,
   nextMonthName,
 }: {
-  date: Date;
+  localDate: CalendarDateParts;
   timezone: string;
   threshold: CalendarThreshold;
   label: string;
   previousMonthName?: string;
   nextMonthName?: string;
 }): CalendarThresholdFact {
-  const dayStart = startOfUtcDay(date);
-  const dayEnd = endOfUtcDay(date);
-  const dateIso = dayStart.toISOString().slice(0, 10);
-  const monthName = monthNameFor(date.getUTCFullYear(), date.getUTCMonth());
+  const dayStart = getUtcInstantForLocalTime({ ...localDate, timezone });
+  const nextLocalDate = addLocalDays(localDate, 1);
+  const nextDayStart = getUtcInstantForLocalTime({
+    ...nextLocalDate,
+    timezone,
+  });
+  const dayEnd = new Date(nextDayStart.getTime() - 1);
+  const dateIso = [
+    localDate.year,
+    String(localDate.month).padStart(2, "0"),
+    String(localDate.day).padStart(2, "0"),
+  ].join("-");
+  const monthName = monthNameFor(localDate.year, localDate.month - 1);
 
   return {
     id: `timing.calendar_threshold.${threshold}.${dateIso}`,
@@ -510,29 +623,28 @@ function buildCalendarThresholdFact({
 
 export function getCalendarThresholdFacts(
   value: Date | string,
-  timezone = "UTC",
+  timezone = getDefaultTimingTimezone(),
 ): CalendarThresholdFact[] {
   const date = resolveDate(value);
-  const dayOfMonth = date.getUTCDate();
-  const lastDay = lastUtcDateOfMonth(date);
-  const year = date.getUTCFullYear();
-  const monthIndex = date.getUTCMonth();
-  const monthName = monthNameFor(year, monthIndex);
-  const previousMonthName = monthNameFor(year, monthIndex - 1);
-  const nextMonthName = monthNameFor(year, monthIndex + 1);
+  const localDate = getLocalCalendarDateParts(date, timezone);
+  const dayOfMonth = localDate.day;
+  const lastDay = lastDateOfMonth(localDate);
+  const monthName = monthNameFor(localDate.year, localDate.month - 1);
+  const previousMonthName = monthNameFor(localDate.year, localDate.month - 2);
+  const nextMonthName = monthNameFor(localDate.year, localDate.month);
   const facts: CalendarThresholdFact[] = [];
 
   if (dayOfMonth === 1) {
     facts.push(
       buildCalendarThresholdFact({
-        date,
+        localDate,
         timezone,
         threshold: "first_day_of_month",
         label: `First day of ${monthName}`,
         previousMonthName,
       }),
       buildCalendarThresholdFact({
-        date,
+        localDate,
         timezone,
         threshold: "month_turn",
         label: `Month turn into ${monthName}`,
@@ -544,14 +656,14 @@ export function getCalendarThresholdFacts(
   if (dayOfMonth === lastDay) {
     facts.push(
       buildCalendarThresholdFact({
-        date,
+        localDate,
         timezone,
         threshold: "last_day_of_month",
         label: `Last day of ${monthName}`,
         nextMonthName,
       }),
       buildCalendarThresholdFact({
-        date,
+        localDate,
         timezone,
         threshold: "month_turn",
         label: `Month turn out of ${monthName}`,
@@ -701,7 +813,7 @@ export function getTimingFactsForDate(
   options: TimingFactOptions = {},
 ): TimingFact[] {
   const date = resolveDate(value);
-  const timezone = options.timezone ?? "UTC";
+  const timezone = options.timezone ?? getDefaultTimingTimezone();
   const includeRetrogrades = options.includeRetrogrades ?? true;
   const includePlanetaryAspects = options.includePlanetaryAspects ?? true;
   const aspectOrbDegrees = options.aspectOrbDegrees ?? 3;

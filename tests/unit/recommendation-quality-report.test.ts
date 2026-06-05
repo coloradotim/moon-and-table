@@ -165,10 +165,24 @@ describe("recommendation quality report", () => {
         "First day of the month — threshold and first word",
       ]),
     );
+    expect(firstDay?.brief.explanation.whyThisFits).toContain(
+      "The first day of the month makes this an opening threshold",
+    );
+    expect(firstDay?.howThisWasChosen).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          title: "Timing",
+          body: expect.stringContaining("The first day of the month makes this an opening threshold"),
+        }),
+      ]),
+    );
     expect(lastDay?.selectedTimingSignals).toEqual(
       expect.arrayContaining([
         "Last day of the month — closing and return",
       ]),
+    );
+    expect(lastDay?.brief.explanation.whyThisFits).toContain(
+      "The last day of the month makes this a closing rite",
     );
     expect(monthTurn).toMatchObject({
       selectedRitualPattern: { key: "first_day_last_day" },
@@ -181,6 +195,12 @@ describe("recommendation quality report", () => {
     });
     expect(monthTurn?.selectedTimingSignals).toEqual(
       expect.arrayContaining(["Month turn — crossing between months"]),
+    );
+    expect(monthTurn?.brief.explanation.whyThisFits).toContain(
+      "stood out as a household calendar threshold",
+    );
+    expect(monthTurn?.brief.explanation.whyThisFits).toContain(
+      "The month turn gives this a clean threshold",
     );
     expect(formatted).toContain("Calendar threshold");
     expect(formatted).toContain("Month turn — crossing between months");
