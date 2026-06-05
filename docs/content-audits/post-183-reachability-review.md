@@ -4,10 +4,10 @@ This packet is for human review before merging issue #183. It asks whether speci
 
 ## 1. PR / Branch Summary
 
-- PR number and title: #188, Improve ritual form reachability diagnostics
+- PR number and title: pending PR creation
 - Branch name: `codex/issue-183-ritual-form-reachability`
 - Base branch: `main`
-- Commit SHA: `012049ad199f15051f7b9d1c6260793708a9fed2` for the implementation and review-packet commit; this metadata update advances the final branch head
+- Commit SHA: `3cb4f490d56b481744f218d700c3bf90bc80ff13` before the review-packet commit; final PR head may advance after this packet is committed
 - Issue addressed: #183
 
 Short implementation summary:
@@ -65,23 +65,25 @@ Changed files observed before final commit:
 - tests/fixtures/recommendation-quality-scenarios.ts
 - tests/unit/generate-weekly-brief.test.ts
 - tests/unit/recommendation-quality-report.test.ts
+- scripts/recommendation-quality-report.ts
+- src/lib/ritual-form-families.ts
+- tests/unit/recommendation-quality-report.test.ts
 
 ## 2. Validation Commands
 
-These commands were run after the review packet was generated.
+These commands were run during #183 implementation. Final validation should be updated after the PR number is known and this packet is committed.
 
 | Command | Result |
 |---|---|
-| `npm run lint:content` | Passed: content lint had no findings. |
-| `npm run typecheck` | Passed: `tsc --noEmit`. |
-| `npm run test` | Passed: 26 files, 280 tests. |
-| `npm run test -- tests/unit/recommendation-quality-report.test.ts` | Passed: 1 file, 7 tests. |
-| `npm run recommendation:quality` | Passed; latest report written to `/tmp/issue-183-final-report.md` with 39 scenarios. |
-| `npm run diagnose:content` | Passed; still reports separate sampler gaps and 3 visible practice choices set aside. See remaining issues. |
-| `npm run check` | Passed: lint, typecheck, build, unit tests, and 2 Playwright tests. |
-| `git diff --check` | Passed. |
+| `npm run lint:content` | pending final rerun |
+| `npm run typecheck` | pending final rerun |
+| `npm run test` | pending final rerun |
+| `npm run test -- tests/unit/recommendation-quality-report.test.ts` | Passed after latest scenario additions: 7 tests |
+| `npm run recommendation:quality` | Passed; latest report at `/tmp/issue-183-final-report.md` |
+| `npm run diagnose:content` | pending final rerun |
+| `npm run check` | pending final rerun |
 
-Build note: `npm run check` emitted the existing Vite large-chunk warning but did not fail. Playwright emitted the existing `NO_COLOR` / `FORCE_COLOR` warning but passed.
+Known build note from prior run: `npm run check` emitted the existing Vite large-chunk warning but did not fail.
 
 ## 3. Before / After Recommendation-Quality Comparison
 
@@ -90,7 +92,7 @@ Before data comes from `/tmp/issue-183-before-report.md`, generated from main af
 - Before scenario count: 30
 - After scenario count: 39
 - Before distinct selected patterns: 9
-- After distinct selected patterns: 18
+- After distinct selected patterns: 19
 
 A higher distinct-pattern count is not automatically better. In this case, the increased diversity is meaningful only where it corresponds to better ritual-form fit. It also creates a new review question: `honeyed_word` and `salt_clear_water_release` are now frequent.
 
@@ -123,16 +125,16 @@ A higher distinct-pattern count is not automatically better. In this case, the i
 | folded_phrase_vessel | 0 | 0 |  |
 | quiet_welcome | 1 | 1 |  |
 | threshold_bowl | 0 | 0 |  |
-| first_light_at_the_threshold | 2 | 3 |  |
+| first_light_at_the_threshold | 2 | 4 |  |
 | bank_the_house_light | 0 | 2 |  |
 | darkening_light | 0 | 0 |  |
 | warm_cup_between_us | 2 | 2 |  |
 | seed_waiting | 0 | 2 |  |
 | dormant_green_rest | 0 | 1 |  |
 | plant_phrase_under_the_pot | 0 | 1 |  |
-| bread_at_the_center | 0 | 0 |  |
-| honeyed_word | 0 | 5 | Now frequent; review for new default behavior. |
-| carried_key_word | 0 | 2 |  |
+| bread_at_the_center | 0 | 1 |  |
+| honeyed_word | 0 | 4 | Now frequent; review for new default behavior. |
+| carried_key_word | 0 | 4 |  |
 | last_word_first_word | 0 | 0 |  |
 
 ### Scenarios Where Selection Changed
@@ -142,16 +144,15 @@ A higher distinct-pattern count is not automatically better. In this case, the i
 | waning.beginning.preparation_bridge | two_words_at_the_table / Two Words at the Table | honeyed_word / Honeyed Word | honey/sweetening, welcome/offering/vessel, warm cup/bowl |
 | waning.beginning.plant_bridge | two_words_at_the_table / Two Words at the Table | seed_waiting / Seed Waiting | plant seed/beginning, seasonal marker, grain/seed/bowl |
 | candle.no_generic_addon | full_light_on_the_table / Full Light on the Table | bank_the_house_light / Bank the House Light | banked/darkening light |
-| candle.live_flame_avoided | first_light_at_the_threshold / First Light at the Threshold | honeyed_word / Honeyed Word | honey/sweetening, welcome/offering/vessel, warm cup/bowl |
 | plant.set_aside.tradeoff_visible | full_light_on_the_table / Full Light on the Table | plant_phrase_under_the_pot / Plant Phrase Under the Pot | plant phrase, written/folded/container, carried phrase |
 | kitchen.tea.ordinary_care | full_light_on_the_table / Full Light on the Table | honeyed_word / Honeyed Word | honey/sweetening, welcome/offering/vessel, warm cup/bowl |
 | kitchen.warmth.together | full_light_on_the_table / Full Light on the Table | quiet_welcome / Quiet Welcome | welcome/offering/vessel, warm cup/bowl, seasonal marker |
 | tending_us.low.bounded | two_words_at_the_table / Two Words at the Table | honeyed_word / Honeyed Word | honey/sweetening, welcome/offering/vessel, warm cup/bowl |
-| best_week.no_strong_signal_honesty | two_words_at_the_table / Two Words at the Table | seasonal_marker_bowl / Seasonal Marker Bowl | seasonal marker, welcome/offering/vessel, threshold/crossing/bowl/key |
+| best_week.no_strong_signal_honesty | two_words_at_the_table / Two Words at the Table | bread_at_the_center / Bread at the Center | bread/grain center, welcome/offering/vessel, seasonal marker |
 | numerology.accent.secondary | two_words_at_the_table / Two Words at the Table | first_light_at_the_threshold / First Light at the Threshold | first light / threshold, threshold/crossing/bowl/key |
 | source_debug.no_raw_keys | two_words_at_the_table / Two Words at the Table | first_light_at_the_threshold / First Light at the Threshold | first light / threshold, threshold/crossing/bowl/key |
-| repetition.no_generic_closing | two_words_at_the_table / Two Words at the Table | salt_clear_water_release / Salt and Clear Water Release | salt/water release, threshold/crossing/bowl/key |
-| home.threshold.arrival | two_words_at_the_table / Two Words at the Table | salt_clear_water_release / Salt and Clear Water Release | salt/water release, threshold/crossing/bowl/key |
+| repetition.no_generic_closing | two_words_at_the_table / Two Words at the Table | salt_clear_water_release / Salt and Clear Water Release | salt/water release |
+| home.threshold.arrival | two_words_at_the_table / Two Words at the Table | carried_key_word / Carried Key Word | carried phrase, threshold/crossing/bowl/key, written/folded/container |
 | plant.seasonal.companionship | quiet_welcome / Quiet Welcome | plant_witness_to_growth / Plant Witness to Growth | plant witness/growth |
 | batch1.plant.dead_leaf_release | two_words_at_the_table / Two Words at the Table | dead_leaf_release / Dead Leaf Release | plant release/removal |
 | batch1.kitchen.grain_beginning | full_light_on_the_table / Full Light on the Table | grain_bowl_beginning / Grain Bowl Beginning | grain/seed/bowl, seasonal marker, bread/grain center |
@@ -160,6 +161,18 @@ A higher distinct-pattern count is not automatically better. In this case, the i
 | batch1.surprise_me.resolves_visible_category | two_words_at_the_table / Two Words at the Table | carried_key_word / Carried Key Word | carried phrase, threshold/crossing/bowl/key, written/folded/container |
 
 ## 4. Critical Scenario Before / After Table
+
+### Cleanup Patch Before / After
+
+This cleanup patch was added before merge based on human review of the first
+#183 packet.
+
+| Scenario | Before cleanup | After cleanup | Result |
+|---|---|---|---|
+| `candle.live_flame_avoided` | `honeyed_word` | `first_light_at_the_threshold` | Candle/light stays honored with a no-flame-compatible light form. |
+| `home.threshold.arrival` | `salt_clear_water_release` | `carried_key_word` | Home threshold no longer defaults to salt/water clearing. |
+| `issue183.home.tending_steady` | `salt_clear_water_release` | `carried_key_word` | Home steady tending now uses a threshold/key form instead of clearing/release. |
+| Pattern concentration visibility | Only `two_words_at_the_table` / `full_light_on_the_table` were checked. | Any pattern at or above the review threshold appears in Pattern Concentration Review. | `honeyed_word` is now visible as a frequent pattern; `salt_clear_water_release` dropped below the threshold. |
 
 | Scenario id | Input summary | Before selected | After selected | Expected ritual-form family | After selected ritual-form family | Status | Notes |
 |---|---|---|---|---|---|---|---|
@@ -170,10 +183,10 @@ A higher distinct-pattern count is not automatically better. In this case, the i
 | kitchen.tea.ordinary_care | Kitchen + low + rest; category=Kitchen; capacity=a_little / low; focus=Resting; audience=me; scope=today; timing=Waxing moon, Autumn equinox — gratitude and storing, Jupiter in Leo — visible warmth | full_light_on_the_table / Full Light on the Table | honeyed_word / Honeyed Word | warm cup/bowl/kitchen material; warm_cup_between_us or equivalent | honey/sweetening, welcome/offering/vessel, warm cup/bowl | pass | Honeyed Word is becoming a frequent soft default and should be reviewed for overuse. |
 | batch1.kitchen.grain_beginning | Kitchen + steady + beginning; category=Kitchen; capacity=enough_to_engage / steady; focus=Making a beginning; audience=both_of_us; scope=today; timing=Waxing moon, Summer solstice — light and tending, Numerology 7 | full_light_on_the_table / Full Light on the Table | grain_bowl_beginning / Grain Bowl Beginning | grain/seed/bowl; grain_bowl_beginning or equivalent | grain/seed/bowl, seasonal marker, bread/grain center | pass | No obvious awkward part from diagnostics; still needs human voice/meaning review. |
 | kitchen.warmth.together | Kitchen + both + tending us; category=Kitchen; capacity=enough_to_engage / steady; focus=Tending us; audience=both_of_us; scope=today; timing=Full moon, Winter solstice — quiet and returning light, Numerology 4 | full_light_on_the_table / Full Light on the Table | quiet_welcome / Quiet Welcome | cup/bread/honey/welcome/table-material, not generic light | welcome/offering/vessel, warm cup/bowl, seasonal marker | pass | No obvious awkward part from diagnostics; still needs human voice/meaning review. |
-| issue183.kitchen.clearing_salt | Kitchen + clearing + waning; category=Kitchen; capacity=a_little / low; focus=Clearing something out; audience=me; scope=today; timing=Waning moon, Mercury in Cancer — careful words for home, Numerology 7 | new scenario | salt_clear_water_release / Salt and Clear Water Release | salt/water/clearing; salt_clear_water_release or equivalent | salt/water release, threshold/crossing/bowl/key | pass | Salt/Clear Water is now frequent and may be pulling threshold/home clearing broadly. |
-| home.threshold.arrival | Home + threshold + arrival; category=Home; capacity=enough_to_engage / steady; focus=Marking a threshold; audience=me; scope=today; timing=Waxing moon, Autumn equinox — gratitude and storing, Jupiter in Leo — visible warmth | two_words_at_the_table / Two Words at the Table | salt_clear_water_release / Salt and Clear Water Release | threshold/crossing/key/bowl/first-light form | salt/water release, threshold/crossing/bowl/key | pass | Threshold family matches, but the selected salt/water clearing form may be too clearing-weighted for arrival. |
-| batch1.home.salt_water_clearing | Home + clearing + waning; category=Home; capacity=a_little / low; focus=Clearing something out; audience=me; scope=today; timing=Waning moon, Mercury in Cancer — careful words for home, Numerology 7 | salt_clear_water_release / Salt and Clear Water Release | salt_clear_water_release / Salt and Clear Water Release | salt/water/removal/emptying form | salt/water release, threshold/crossing/bowl/key | pass | Salt/Clear Water is now frequent and may be pulling threshold/home clearing broadly. |
-| issue183.home.tending_steady | Home + tending home + steady; category=Home; capacity=enough_to_engage / steady; focus=Tending the home; audience=me; scope=today; timing=Waxing moon, Autumn equinox — gratitude and storing, Jupiter in Leo — visible warmth | new scenario | salt_clear_water_release / Salt and Clear Water Release | house map, threshold bowl, key, or seasonal entry form | salt/water release, threshold/crossing/bowl/key | pass | Salt/Clear Water is now frequent and may be pulling threshold/home clearing broadly. |
+| issue183.kitchen.clearing_salt | Kitchen + clearing + waning; category=Kitchen; capacity=a_little / low; focus=Clearing something out; audience=me; scope=today; timing=Waning moon, Mercury in Cancer — careful words for home, Numerology 7 | new scenario | salt_clear_water_release / Salt and Clear Water Release | salt/water/clearing; salt_clear_water_release or equivalent | salt/water release | pass | Salt/Clear Water is now frequent and may be pulling threshold/home clearing broadly. |
+| home.threshold.arrival | Home + threshold + arrival; category=Home; capacity=enough_to_engage / steady; focus=Marking a threshold; audience=me; scope=today; timing=Waxing moon, Autumn equinox — gratitude and storing, Jupiter in Leo — visible warmth | two_words_at_the_table / Two Words at the Table | carried_key_word / Carried Key Word | threshold/crossing/key/bowl/first-light form | carried phrase, threshold/crossing/bowl/key, written/folded/container | pass | Cleanup patch fixed the salt/water overmatch; this is now a threshold/key form. |
+| batch1.home.salt_water_clearing | Home + clearing + waning; category=Home; capacity=a_little / low; focus=Clearing something out; audience=me; scope=today; timing=Waning moon, Mercury in Cancer — careful words for home, Numerology 7 | salt_clear_water_release / Salt and Clear Water Release | salt_clear_water_release / Salt and Clear Water Release | salt/water/removal/emptying form | salt/water release | pass | Salt/Clear Water is now frequent and may be pulling threshold/home clearing broadly. |
+| issue183.home.tending_steady | Home + tending home + steady; category=Home; capacity=enough_to_engage / steady; focus=Tending the home; audience=me; scope=today; timing=Waxing moon, Autumn equinox — gratitude and storing, Jupiter in Leo — visible warmth | new scenario | carried_key_word / Carried Key Word | house map, threshold bowl, key, or seasonal entry form | carried phrase, threshold/crossing/bowl/key, written/folded/container | pass | No obvious awkward part from diagnostics; still needs human voice/meaning review. |
 | batch1.reflection.folded_phrase | Reflection + folded phrase; category=Reflection; capacity=a_little / low; focus=Saying something clearly; audience=me; scope=today; timing=Waxing moon, Summer solstice — light and tending, Numerology 7 | full_light_on_the_table / Full Light on the Table | carried_key_word / Carried Key Word | written/folded/container; folded_phrase_vessel or equivalent | carried phrase, threshold/crossing/bowl/key, written/folded/container | pass | Written/folded family matches, but exact Folded Phrase Vessel lost to Carried Key Word. |
 | issue183.reflection.waning_release | Reflection + waning release; category=Reflection; capacity=a_little / low; focus=Clearing something out; audience=me; scope=today; timing=Waning moon, Mercury in Cancer — careful words for home, Numerology 7 | new scenario | waning_phrase_release / Waning Phrase Release | written/spoken release/removal; waning_phrase_release or equivalent | waning phrase/release, written/folded/container | pass | No obvious awkward part from diagnostics; still needs human voice/meaning review. |
 | issue183.reflection.threshold | Reflection + threshold; category=Reflection; capacity=a_little / low; focus=Marking a threshold; audience=me; scope=today; timing=Waxing moon, Autumn equinox — gratitude and storing, Jupiter in Leo — visible warmth | new scenario | two_words_at_the_table / Two Words at the Table | first/last, carried key, folded phrase, or crossing form | spoken/table phrase | pass | Two Words remains appropriate only if spoken table phrase is truly the form. |
@@ -191,9 +204,9 @@ A higher distinct-pattern count is not automatically better. In this case, the i
 | ritual-form match | 39 |
 | ritual-form partial match | not separately tracked; equivalents are counted as matches |
 | ritual-form mismatch | 0 |
-| explicit category honored | 34 |
+| explicit category honored | 35 |
 | explicit category set aside with blocker | not separately tracked |
-| explicit category set aside without clear blocker | 1 |
+| explicit category set aside without clear blocker | 0 |
 | open category resolved | 2 |
 | broad pattern overselected | 0 |
 | clearing without release/removal form | not separately tracked as a warning |
@@ -209,7 +222,7 @@ A higher distinct-pattern count is not automatically better. In this case, the i
 | waning.beginning.preparation_bridge | honeyed_word | Home | honored | honey/sweetening, welcome/offering/vessel, warm cup/bowl | none | match | matched_selected_pattern |
 | waning.beginning.plant_bridge | seed_waiting | Plant | honored | plant seed/beginning, seasonal marker, grain/seed/bowl | plant seed/beginning | match | matched_selected_pattern |
 | candle.no_generic_addon | bank_the_house_light | Candle or light | honored | banked/darkening light | banked/darkening light | match | matched_selected_pattern |
-| candle.live_flame_avoided | honeyed_word | Candle or light | set aside | honey/sweetening, welcome/offering/vessel, warm cup/bowl | none | match | set_aside |
+| candle.live_flame_avoided | first_light_at_the_threshold | Candle or light | honored | first light / threshold, threshold/crossing/bowl/key | banked/darkening light, first light / threshold | match | matched_selected_pattern |
 | plant.low.honor_choice | plant_witness_to_growth | Plant | honored | plant witness/growth | plant witness/growth, plant seed/beginning, plant rest/dormancy | match | matched_selected_pattern |
 | plant.set_aside.tradeoff_visible | plant_phrase_under_the_pot | Plant | honored | plant phrase, written/folded/container, carried phrase | plant phrase | match | matched_selected_pattern |
 | kitchen.tea.ordinary_care | honeyed_word | Kitchen | honored | honey/sweetening, welcome/offering/vessel, warm cup/bowl | warm cup/bowl | match | matched_selected_pattern |
@@ -217,18 +230,18 @@ A higher distinct-pattern count is not automatically better. In this case, the i
 | tending_us.low.bounded | honeyed_word | Home | honored | honey/sweetening, welcome/offering/vessel, warm cup/bowl | warm cup/bowl, welcome/offering/vessel, bread/grain center, honey/sweetening | match | matched_selected_pattern |
 | tending_us.low.light | full_light_on_the_table | Candle or light | honored | full light / clarity | full light / clarity | match | matched_selected_pattern |
 | best_week.clear_reason | full_light_on_the_table | Candle or light | honored | full light / clarity | full light / clarity | match | matched_selected_pattern |
-| best_week.no_strong_signal_honesty | seasonal_marker_bowl | Surprise me | resolved open | seasonal marker, welcome/offering/vessel, threshold/crossing/bowl/key | none | match | resolved_open_preference |
-| numerology.accent.secondary | first_light_at_the_threshold | Home | honored | first light / threshold, threshold/crossing/bowl/key | house map, threshold/crossing/bowl/key | match | matched_selected_pattern |
+| best_week.no_strong_signal_honesty | bread_at_the_center | Surprise me | resolved open | bread/grain center, welcome/offering/vessel, seasonal marker | none | match | resolved_open_preference |
+| numerology.accent.secondary | first_light_at_the_threshold | Home | honored | first light / threshold, threshold/crossing/bowl/key | house map, threshold/crossing/bowl/key, bread/grain center | match | matched_selected_pattern |
 | numerology.not_carry_prompt | two_words_at_the_table | Reflection | honored | spoken/table phrase | written/folded/container, carried phrase, spoken/table phrase, threshold/crossing/bowl/key, first light / threshold, first/last threshold | match | matched_selected_pattern |
 | source_debug.no_raw_keys | first_light_at_the_threshold | Home | honored | first light / threshold, threshold/crossing/bowl/key | salt/water release, threshold/crossing/bowl/key, plant release/removal, waning phrase/release | match | matched_selected_pattern |
-| source_debug.how_chosen_human_labels | seasonal_marker_bowl | Seasonal | honored | seasonal marker, welcome/offering/vessel, threshold/crossing/bowl/key | seasonal marker, first/last threshold, threshold/crossing/bowl/key, first light / threshold | match | matched_selected_pattern |
-| repetition.no_generic_closing | salt_clear_water_release | Home | honored | salt/water release, threshold/crossing/bowl/key | salt/water release, threshold/crossing/bowl/key, plant release/removal, waning phrase/release | match | matched_selected_pattern |
+| source_debug.how_chosen_human_labels | seasonal_marker_bowl | Seasonal | honored | seasonal marker, welcome/offering/vessel | seasonal marker, first/last threshold, threshold/crossing/bowl/key, first light / threshold | match | matched_selected_pattern |
+| repetition.no_generic_closing | salt_clear_water_release | Home | honored | salt/water release | salt/water release, threshold/crossing/bowl/key, plant release/removal, waning phrase/release | match | matched_selected_pattern |
 | repetition.cross_scenario_watch | house_from_root_to_roof | Seasonal | honored | house map, threshold/crossing/bowl/key, seasonal marker | seasonal marker, first/last threshold, threshold/crossing/bowl/key, first light / threshold | match | matched_selected_pattern |
-| home.threshold.arrival | salt_clear_water_release | Home | honored | salt/water release, threshold/crossing/bowl/key | threshold/crossing/bowl/key, first light / threshold, first/last threshold | match | matched_selected_pattern |
+| home.threshold.arrival | carried_key_word | Home | honored | carried phrase, threshold/crossing/bowl/key, written/folded/container | threshold/crossing/bowl/key, first light / threshold, first/last threshold | match | matched_selected_pattern |
 | plant.seasonal.companionship | plant_witness_to_growth | Plant | honored | plant witness/growth | plant witness/growth, plant seed/beginning, plant rest/dormancy | match | matched_selected_pattern |
-| batch1.home.salt_water_clearing | salt_clear_water_release | Home | honored | salt/water release, threshold/crossing/bowl/key | salt/water release, threshold/crossing/bowl/key, plant release/removal, waning phrase/release | match | matched_selected_pattern |
-| issue183.kitchen.clearing_salt | salt_clear_water_release | Kitchen | honored | salt/water release, threshold/crossing/bowl/key | salt/water release, plant release/removal, waning phrase/release | match | matched_selected_pattern |
-| issue183.home.tending_steady | salt_clear_water_release | Home | honored | salt/water release, threshold/crossing/bowl/key | house map, threshold/crossing/bowl/key | match | matched_selected_pattern |
+| batch1.home.salt_water_clearing | salt_clear_water_release | Home | honored | salt/water release | salt/water release, threshold/crossing/bowl/key, plant release/removal, waning phrase/release | match | matched_selected_pattern |
+| issue183.kitchen.clearing_salt | salt_clear_water_release | Kitchen | honored | salt/water release | salt/water release, plant release/removal, waning phrase/release | match | matched_selected_pattern |
+| issue183.home.tending_steady | carried_key_word | Home | honored | carried phrase, threshold/crossing/bowl/key, written/folded/container | house map, threshold/crossing/bowl/key, bread/grain center | match | matched_selected_pattern |
 | batch1.plant.dead_leaf_release | dead_leaf_release | Plant | honored | plant release/removal | plant release/removal, salt/water release, waning phrase/release | match | matched_selected_pattern |
 | issue183.plant.beginning.seed | seed_waiting | Plant | honored | plant seed/beginning, seasonal marker, grain/seed/bowl | plant seed/beginning | match | matched_selected_pattern |
 | issue183.plant.rest.dormancy | dormant_green_rest | Plant | honored | plant rest/dormancy, seasonal marker | plant rest/dormancy | match | matched_selected_pattern |
@@ -239,12 +252,22 @@ A higher distinct-pattern count is not automatically better. In this case, the i
 | issue183.reflection.threshold | two_words_at_the_table | Reflection | honored | spoken/table phrase | written/folded/container, carried phrase, spoken/table phrase, threshold/crossing/bowl/key, first light / threshold, first/last threshold | match | matched_selected_pattern |
 | issue183.candle.rest_dark | bank_the_house_light | Candle or light | honored | banked/darkening light | banked/darkening light | match | matched_selected_pattern |
 | issue183.candle.full_saying_clearly | full_light_on_the_table | Candle or light | honored | full light / clarity | full light / clarity | match | matched_selected_pattern |
-| batch1.seasonal.marker_bowl | seasonal_marker_bowl | Seasonal | honored | seasonal marker, welcome/offering/vessel, threshold/crossing/bowl/key | seasonal marker, first/last threshold, threshold/crossing/bowl/key, first light / threshold | match | matched_selected_pattern |
-| issue183.seasonal.entry_release | seasonal_marker_bowl | Seasonal | honored | seasonal marker, welcome/offering/vessel, threshold/crossing/bowl/key | seasonal marker, first/last threshold, threshold/crossing/bowl/key, first light / threshold | match | matched_selected_pattern |
+| batch1.seasonal.marker_bowl | seasonal_marker_bowl | Seasonal | honored | seasonal marker, welcome/offering/vessel | seasonal marker, first/last threshold, threshold/crossing/bowl/key, first light / threshold | match | matched_selected_pattern |
+| issue183.seasonal.entry_release | seasonal_marker_bowl | Seasonal | honored | seasonal marker, welcome/offering/vessel | seasonal marker, first/last threshold, threshold/crossing/bowl/key, first light / threshold | match | matched_selected_pattern |
 | batch1.quiet_welcome | honeyed_word | Kitchen | honored | honey/sweetening, welcome/offering/vessel, warm cup/bowl | warm cup/bowl, welcome/offering/vessel, bread/grain center, honey/sweetening | match | matched_selected_pattern |
 | batch1.surprise_me.resolves_visible_category | carried_key_word | Surprise me | resolved open | carried phrase, threshold/crossing/bowl/key, written/folded/container | none | match | resolved_open_preference |
 
 ## 6. Broad-Pattern Concentration Check
+
+The report now has two concentration views:
+
+- Broad Pattern Concentration: only the original broad catch-alls,
+  `two_words_at_the_table` and `full_light_on_the_table`.
+- Pattern Concentration Review: any selected pattern at or above the review
+  threshold in the scenario suite. After cleanup this flags
+  `carried_key_word`, `first_light_at_the_threshold`, and `honeyed_word` at 4
+  selections each. `salt_clear_water_release` is no longer above the threshold,
+  but still appears 3 times and should stay watched.
 
 ### two_words_at_the_table
 
@@ -277,20 +300,20 @@ A higher distinct-pattern count is not automatically better. In this case, the i
 | plant_phrase_under_the_pot | yes | plant.set_aside.tradeoff_visible | yes | plant.set_aside.tradeoff_visible (plant phrase, written/folded/container, carried phrase) |
 | grain_bowl_beginning | yes | batch1.kitchen.grain_beginning | yes | batch1.kitchen.grain_beginning (grain/seed/bowl, seasonal marker, bread/grain center) |
 | warm_cup_between_us | yes | pause.permission.enough, pause.grounded.no_task_list | yes | pause.permission.enough (warm cup/bowl); pause.grounded.no_task_list (warm cup/bowl) |
-| salt_clear_water_release | yes | repetition.no_generic_closing, home.threshold.arrival, batch1.home.salt_water_clearing, issue183.kitchen.clearing_salt, issue183.home.tending_steady | yes | repetition.no_generic_closing (salt/water release, threshold/crossing/bowl/key); home.threshold.arrival (salt/water release, threshold/crossing/bowl/key); batch1.home.salt_water_clearing (salt/water release, threshold/crossing/bowl/key); issue183.kitchen.clearing_salt (salt/water release, threshold/crossing/bowl/key); issue183.home.tending_steady (salt/water release, threshold/crossing/bowl/key) |
+| salt_clear_water_release | yes | repetition.no_generic_closing, batch1.home.salt_water_clearing, issue183.kitchen.clearing_salt | yes | repetition.no_generic_closing (salt/water release); batch1.home.salt_water_clearing (salt/water release); issue183.kitchen.clearing_salt (salt/water release) |
 | quiet_welcome | yes | kitchen.warmth.together | yes | kitchen.warmth.together (welcome/offering/vessel, warm cup/bowl, seasonal marker) |
-| honeyed_word | yes | waning.beginning.preparation_bridge, candle.live_flame_avoided, kitchen.tea.ordinary_care, tending_us.low.bounded, batch1.quiet_welcome | yes | waning.beginning.preparation_bridge (honey/sweetening, welcome/offering/vessel, warm cup/bowl); candle.live_flame_avoided (honey/sweetening, welcome/offering/vessel, warm cup/bowl); kitchen.tea.ordinary_care (honey/sweetening, welcome/offering/vessel, warm cup/bowl); tending_us.low.bounded (honey/sweetening, welcome/offering/vessel, warm cup/bowl); batch1.quiet_welcome (honey/sweetening, welcome/offering/vessel, warm cup/bowl) |
-| bread_at_the_center | no | none | not proven | Not selected in this scenario suite. |
+| honeyed_word | yes | waning.beginning.preparation_bridge, kitchen.tea.ordinary_care, tending_us.low.bounded, batch1.quiet_welcome | yes | waning.beginning.preparation_bridge (honey/sweetening, welcome/offering/vessel, warm cup/bowl); kitchen.tea.ordinary_care (honey/sweetening, welcome/offering/vessel, warm cup/bowl); tending_us.low.bounded (honey/sweetening, welcome/offering/vessel, warm cup/bowl); batch1.quiet_welcome (honey/sweetening, welcome/offering/vessel, warm cup/bowl) |
+| bread_at_the_center | yes | best_week.no_strong_signal_honesty | yes | best_week.no_strong_signal_honesty (bread/grain center, welcome/offering/vessel, seasonal marker) |
 | folded_phrase_vessel | no | none | not proven | Not selected in this scenario suite. |
 | waning_phrase_release | yes | issue183.reflection.waning_release | yes | issue183.reflection.waning_release (waning phrase/release, written/folded/container) |
-| carried_key_word | yes | batch1.reflection.folded_phrase, batch1.surprise_me.resolves_visible_category | yes | batch1.reflection.folded_phrase (carried phrase, threshold/crossing/bowl/key, written/folded/container); batch1.surprise_me.resolves_visible_category (carried phrase, threshold/crossing/bowl/key, written/folded/container) |
+| carried_key_word | yes | home.threshold.arrival, issue183.home.tending_steady, batch1.reflection.folded_phrase, batch1.surprise_me.resolves_visible_category | yes | home.threshold.arrival (carried phrase, threshold/crossing/bowl/key, written/folded/container); issue183.home.tending_steady (carried phrase, threshold/crossing/bowl/key, written/folded/container); batch1.reflection.folded_phrase (carried phrase, threshold/crossing/bowl/key, written/folded/container); batch1.surprise_me.resolves_visible_category (carried phrase, threshold/crossing/bowl/key, written/folded/container) |
 | last_word_first_word | no | none | not proven | Not selected in this scenario suite. |
 | threshold_bowl | no | none | not proven | Not selected in this scenario suite. |
 | house_from_root_to_roof | yes | repetition.cross_scenario_watch | yes | repetition.cross_scenario_watch (house map, threshold/crossing/bowl/key, seasonal marker) |
-| first_light_at_the_threshold | yes | numerology.accent.secondary, source_debug.no_raw_keys, batch1.light.first_threshold | yes | numerology.accent.secondary (first light / threshold, threshold/crossing/bowl/key); source_debug.no_raw_keys (first light / threshold, threshold/crossing/bowl/key); batch1.light.first_threshold (first light / threshold, threshold/crossing/bowl/key) |
+| first_light_at_the_threshold | yes | candle.live_flame_avoided, numerology.accent.secondary, source_debug.no_raw_keys, batch1.light.first_threshold | yes | candle.live_flame_avoided (first light / threshold, threshold/crossing/bowl/key); numerology.accent.secondary (first light / threshold, threshold/crossing/bowl/key); source_debug.no_raw_keys (first light / threshold, threshold/crossing/bowl/key); batch1.light.first_threshold (first light / threshold, threshold/crossing/bowl/key) |
 | bank_the_house_light | yes | candle.no_generic_addon, issue183.candle.rest_dark | yes | candle.no_generic_addon (banked/darkening light); issue183.candle.rest_dark (banked/darkening light) |
 | darkening_light | no | none | not proven | Not selected in this scenario suite. |
-| seasonal_marker_bowl | yes | best_week.no_strong_signal_honesty, source_debug.how_chosen_human_labels, batch1.seasonal.marker_bowl, issue183.seasonal.entry_release | yes | best_week.no_strong_signal_honesty (seasonal marker, welcome/offering/vessel, threshold/crossing/bowl/key); source_debug.how_chosen_human_labels (seasonal marker, welcome/offering/vessel, threshold/crossing/bowl/key); batch1.seasonal.marker_bowl (seasonal marker, welcome/offering/vessel, threshold/crossing/bowl/key); issue183.seasonal.entry_release (seasonal marker, welcome/offering/vessel, threshold/crossing/bowl/key) |
+| seasonal_marker_bowl | yes | source_debug.how_chosen_human_labels, batch1.seasonal.marker_bowl, issue183.seasonal.entry_release | yes | source_debug.how_chosen_human_labels (seasonal marker, welcome/offering/vessel); batch1.seasonal.marker_bowl (seasonal marker, welcome/offering/vessel); issue183.seasonal.entry_release (seasonal marker, welcome/offering/vessel) |
 | seasonal_entry_bowl | no | none | not proven | Not selected in this scenario suite. |
 | clear_the_threshold_bowl | no | none | not proven | Not selected in this scenario suite. |
 
@@ -298,8 +321,8 @@ A higher distinct-pattern count is not automatically better. In this case, the i
 
 ### Home
 
-- Strongest selected patterns: honeyed_word, first_light_at_the_threshold, salt_clear_water_release
-- Weak or missing combinations: waning.beginning.preparation_bridge: honeyed_word (Honeyed Word is becoming a frequent soft default and should be reviewed for overuse.); tending_us.low.bounded: honeyed_word (Honeyed Word is becoming a frequent soft default and should be reviewed for overuse.); repetition.no_generic_closing: salt_clear_water_release (Salt/Clear Water is now frequent and may be pulling threshold/home clearing broadly.); batch1.home.salt_water_clearing: salt_clear_water_release (Salt/Clear Water is now frequent and may be pulling threshold/home clearing broadly.); issue183.home.tending_steady: salt_clear_water_release (Salt/Clear Water is now frequent and may be pulling threshold/home clearing broadly.)
+- Strongest selected patterns: honeyed_word, first_light_at_the_threshold, salt_clear_water_release, carried_key_word
+- Weak or missing combinations: waning.beginning.preparation_bridge: honeyed_word (Honeyed Word is becoming a frequent soft default and should be reviewed for overuse.); tending_us.low.bounded: honeyed_word (Honeyed Word is becoming a frequent soft default and should be reviewed for overuse.); repetition.no_generic_closing: salt_clear_water_release (Salt/Clear Water is now frequent and may be pulling threshold/home clearing broadly.); batch1.home.salt_water_clearing: salt_clear_water_release (Salt/Clear Water is now frequent and may be pulling threshold/home clearing broadly.)
 - Overused patterns: honeyed_word needs review
 
 ### Plant
@@ -316,9 +339,9 @@ A higher distinct-pattern count is not automatically better. In this case, the i
 
 ### Candle or light
 
-- Strongest selected patterns: bank_the_house_light, honeyed_word, full_light_on_the_table, first_light_at_the_threshold
-- Weak or missing combinations: candle.live_flame_avoided: honeyed_word (Honeyed Word is becoming a frequent soft default and should be reviewed for overuse.)
-- Overused patterns: honeyed_word needs review
+- Strongest selected patterns: bank_the_house_light, first_light_at_the_threshold, full_light_on_the_table
+- Weak or missing combinations: none obvious in this suite
+- Overused patterns: none obvious
 
 ### Reflection
 
@@ -334,7 +357,7 @@ A higher distinct-pattern count is not automatically better. In this case, the i
 
 ### Surprise me
 
-- Strongest selected patterns: seasonal_marker_bowl, carried_key_word
+- Strongest selected patterns: bread_at_the_center, carried_key_word
 - Weak or missing combinations: none obvious in this suite
 - Overused patterns: none obvious
 - Note: Surprise me is not a category; the report shows it resolving to a real selected pattern/category path.
@@ -386,21 +409,21 @@ How this was chosen:
 
 Decision/debug summary:
 
-- Summary: undefined
+- Summary: Dead Leaf Release scored 45 from check-in intention match, check-in practice match, check-in audience match.
 - Numerology diagnostic: matched_selected
 - Practice-choice diagnostic: matched_selected_pattern
 - Top positive score reasons:
-  - undefined Ritual form match (plant release/removal)
-  - undefined Check-in intention match (Clearing something out)
-  - undefined Check-in practice match (plant, plant_tending)
-  - undefined Private profile theme match (profile_theme.person_a.private_profile.practical_tending)
-  - undefined Preferred style match (plant)
+  - +12 Ritual form match (plant release/removal)
+  - +5 Check-in intention match (Clearing something out)
+  - +4 Check-in practice match (plant, plant_tending)
+  - +4 Private profile theme match (profile_theme.person_a.private_profile.practical_tending)
+  - +3 Preferred style match (plant)
 - Top rejected near alternatives:
-  - table_reset / Table Reset: undefined Too long for capacity (15 minutes exceeds the current 5-minute limit); undefined Avoided style conflict (heavy_cleanup)
-  - threshold_reset / Threshold Reset: undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - room_reset / Room Reset: undefined Not approved (approval status is reviewed); undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - close_the_evening / Close the Evening: undefined Not approved (approval status is reviewed)
-  - one_clear_sentence / One Clear Sentence: undefined Not approved (approval status is reviewed)
+  - table_reset / Table Reset: -10 Too long for capacity (15 minutes exceeds the current 5-minute limit); -20 Avoided style conflict (heavy_cleanup)
+  - threshold_reset / Threshold Reset: -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - room_reset / Room Reset: -99 Not approved (approval status is reviewed); -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - close_the_evening / Close the Evening: -99 Not approved (approval status is reviewed)
+  - one_clear_sentence / One Clear Sentence: -99 Not approved (approval status is reviewed)
 - Automatic warnings: none
 - Awkward parts to review: No obvious awkward part from diagnostics; still needs human voice/meaning review.
 
@@ -446,21 +469,21 @@ How this was chosen:
 
 Decision/debug summary:
 
-- Summary: undefined
+- Summary: Seed Waiting scored 40 from check-in practice match, check-in audience match, private profile theme match.
 - Numerology diagnostic: matched_selected
 - Practice-choice diagnostic: matched_selected_pattern
 - Top positive score reasons:
-  - undefined Ritual form match (plant seed/beginning)
-  - undefined Check-in practice match (plant, plant_tending)
-  - undefined Private profile theme match (profile_theme.person_a.private_profile.practical_tending)
-  - undefined Preferred style match (plant)
-  - undefined Preferred style match (plant_tending)
+  - +12 Ritual form match (plant seed/beginning)
+  - +4 Check-in practice match (plant, plant_tending)
+  - +4 Private profile theme match (profile_theme.person_a.private_profile.practical_tending)
+  - +3 Preferred style match (plant)
+  - +3 Preferred style match (plant_tending)
 - Top rejected near alternatives:
-  - table_reset / Table Reset: undefined Too long for capacity (15 minutes exceeds the current 5-minute limit); undefined Avoided style conflict (heavy_cleanup)
-  - threshold_reset / Threshold Reset: undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - room_reset / Room Reset: undefined Not approved (approval status is reviewed); undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - close_the_evening / Close the Evening: undefined Not approved (approval status is reviewed)
-  - one_clear_sentence / One Clear Sentence: undefined Not approved (approval status is reviewed)
+  - table_reset / Table Reset: -10 Too long for capacity (15 minutes exceeds the current 5-minute limit); -20 Avoided style conflict (heavy_cleanup)
+  - threshold_reset / Threshold Reset: -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - room_reset / Room Reset: -99 Not approved (approval status is reviewed); -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - close_the_evening / Close the Evening: -99 Not approved (approval status is reviewed)
+  - one_clear_sentence / One Clear Sentence: -99 Not approved (approval status is reviewed)
 - Automatic warnings: none
 - Awkward parts to review: No obvious awkward part from diagnostics; still needs human voice/meaning review.
 
@@ -506,21 +529,21 @@ How this was chosen:
 
 Decision/debug summary:
 
-- Summary: undefined
+- Summary: Dormant Green Rest scored 39 from check-in intention match, check-in practice match, check-in audience match.
 - Numerology diagnostic: matched_selected
 - Practice-choice diagnostic: matched_selected_pattern
 - Top positive score reasons:
-  - undefined Ritual form match (plant rest/dormancy)
-  - undefined Check-in intention match (Resting)
-  - undefined Check-in practice match (plant)
-  - undefined Private profile theme match (profile_theme.person_a.private_profile.practical_tending)
-  - undefined Preferred style match (plant)
+  - +12 Ritual form match (plant rest/dormancy)
+  - +5 Check-in intention match (Resting)
+  - +4 Check-in practice match (plant)
+  - +4 Private profile theme match (profile_theme.person_a.private_profile.practical_tending)
+  - +3 Preferred style match (plant)
 - Top rejected near alternatives:
-  - table_reset / Table Reset: undefined Too long for capacity (15 minutes exceeds the current 5-minute limit); undefined Avoided style conflict (heavy_cleanup)
-  - threshold_reset / Threshold Reset: undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - room_reset / Room Reset: undefined Not approved (approval status is reviewed); undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - close_the_evening / Close the Evening: undefined Not approved (approval status is reviewed)
-  - one_clear_sentence / One Clear Sentence: undefined Not approved (approval status is reviewed)
+  - table_reset / Table Reset: -10 Too long for capacity (15 minutes exceeds the current 5-minute limit); -20 Avoided style conflict (heavy_cleanup)
+  - threshold_reset / Threshold Reset: -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - room_reset / Room Reset: -99 Not approved (approval status is reviewed); -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - close_the_evening / Close the Evening: -99 Not approved (approval status is reviewed)
+  - one_clear_sentence / One Clear Sentence: -99 Not approved (approval status is reviewed)
 - Automatic warnings: none
 - Awkward parts to review: No obvious awkward part from diagnostics; still needs human voice/meaning review.
 
@@ -565,21 +588,21 @@ How this was chosen:
 
 Decision/debug summary:
 
-- Summary: undefined
+- Summary: Honeyed Word scored 56 from check-in intention match, check-in practice match, check-in audience match.
 - Numerology diagnostic: computed_unmatched
 - Practice-choice diagnostic: matched_selected_pattern
 - Top positive score reasons:
-  - undefined Ritual form match (warm cup/bowl)
-  - undefined Private profile theme match (profile_theme.person_a.private_profile.practical_tending, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
-  - undefined Check-in intention match (Resting)
-  - undefined Check-in practice match (kitchen)
-  - undefined Preferred style match (kitchen)
+  - +12 Ritual form match (warm cup/bowl)
+  - +8 Private profile theme match (profile_theme.person_a.private_profile.practical_tending, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
+  - +5 Check-in intention match (Resting)
+  - +4 Check-in practice match (kitchen)
+  - +3 Preferred style match (kitchen)
 - Top rejected near alternatives:
-  - table_reset / Table Reset: undefined Too long for capacity (15 minutes exceeds the current 5-minute limit); undefined Avoided style conflict (heavy_cleanup)
-  - threshold_reset / Threshold Reset: undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - room_reset / Room Reset: undefined Not approved (approval status is reviewed); undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - close_the_evening / Close the Evening: undefined Not approved (approval status is reviewed)
-  - one_clear_sentence / One Clear Sentence: undefined Not approved (approval status is reviewed)
+  - table_reset / Table Reset: -10 Too long for capacity (15 minutes exceeds the current 5-minute limit); -20 Avoided style conflict (heavy_cleanup)
+  - threshold_reset / Threshold Reset: -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - room_reset / Room Reset: -99 Not approved (approval status is reviewed); -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - close_the_evening / Close the Evening: -99 Not approved (approval status is reviewed)
+  - one_clear_sentence / One Clear Sentence: -99 Not approved (approval status is reviewed)
 - Automatic warnings: none
 - Awkward parts to review: Honeyed Word is becoming a frequent soft default and should be reviewed for overuse.
 
@@ -625,21 +648,21 @@ How this was chosen:
 
 Decision/debug summary:
 
-- Summary: undefined
+- Summary: Grain Bowl Beginning scored 43 from check-in practice match, check-in audience match, private profile theme match.
 - Numerology diagnostic: matched_selected
 - Practice-choice diagnostic: matched_selected_pattern
 - Top positive score reasons:
-  - undefined Ritual form match (grain/seed/bowl)
-  - undefined Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
-  - undefined Check-in practice match (kitchen)
-  - undefined Check-in audience match (both_of_us)
-  - undefined Preferred style match (kitchen)
+  - +12 Ritual form match (grain/seed/bowl)
+  - +8 Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
+  - +4 Check-in practice match (kitchen)
+  - +3 Check-in audience match (both_of_us)
+  - +3 Preferred style match (kitchen)
 - Top rejected near alternatives:
-  - table_reset / Table Reset: undefined Avoided style conflict (heavy_cleanup)
-  - room_reset / Room Reset: undefined Not approved (approval status is reviewed)
-  - close_the_evening / Close the Evening: undefined Not approved (approval status is reviewed); undefined Capacity mode mismatch (steady is not supported by this pattern)
-  - one_clear_sentence / One Clear Sentence: undefined Not approved (approval status is reviewed)
-  - simple_warm_drink / Simple Warm Drink: undefined Not approved (approval status is reviewed)
+  - table_reset / Table Reset: -20 Avoided style conflict (heavy_cleanup)
+  - room_reset / Room Reset: -99 Not approved (approval status is reviewed)
+  - close_the_evening / Close the Evening: -99 Not approved (approval status is reviewed); -20 Capacity mode mismatch (steady is not supported by this pattern)
+  - one_clear_sentence / One Clear Sentence: -99 Not approved (approval status is reviewed)
+  - simple_warm_drink / Simple Warm Drink: -99 Not approved (approval status is reviewed)
 - Automatic warnings: none
 - Awkward parts to review: No obvious awkward part from diagnostics; still needs human voice/meaning review.
 
@@ -684,21 +707,21 @@ How this was chosen:
 
 Decision/debug summary:
 
-- Summary: undefined
+- Summary: Honeyed Word scored 59 from check-in intention match, check-in practice match, check-in audience match.
 - Numerology diagnostic: computed_unmatched
 - Practice-choice diagnostic: matched_selected_pattern
 - Top positive score reasons:
-  - undefined Ritual form match (honey/sweetening, welcome/offering/vessel, warm cup/bowl)
-  - undefined Private profile theme match (profile_theme.person_a.private_profile.practical_tending, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
-  - undefined Check-in intention match (Tending us)
-  - undefined Check-in practice match (kitchen)
-  - undefined Check-in audience match (both_of_us)
+  - +12 Ritual form match (honey/sweetening, welcome/offering/vessel, warm cup/bowl)
+  - +7 Private profile theme match (profile_theme.person_a.private_profile.practical_tending, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
+  - +5 Check-in intention match (Tending us)
+  - +4 Check-in practice match (kitchen)
+  - +3 Check-in audience match (both_of_us)
 - Top rejected near alternatives:
-  - table_reset / Table Reset: undefined Too long for capacity (15 minutes exceeds the current 5-minute limit); undefined Avoided style conflict (heavy_cleanup)
-  - threshold_reset / Threshold Reset: undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - room_reset / Room Reset: undefined Not approved (approval status is reviewed); undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - close_the_evening / Close the Evening: undefined Not approved (approval status is reviewed)
-  - one_clear_sentence / One Clear Sentence: undefined Not approved (approval status is reviewed)
+  - table_reset / Table Reset: -10 Too long for capacity (15 minutes exceeds the current 5-minute limit); -20 Avoided style conflict (heavy_cleanup)
+  - threshold_reset / Threshold Reset: -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - room_reset / Room Reset: -99 Not approved (approval status is reviewed); -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - close_the_evening / Close the Evening: -99 Not approved (approval status is reviewed)
+  - one_clear_sentence / One Clear Sentence: -99 Not approved (approval status is reviewed)
 - Automatic warnings: none
 - Awkward parts to review: Welcome family matches, but exact Quiet Welcome lost to Honeyed Word.
 
@@ -717,49 +740,49 @@ Check-in inputs:
 
 Generated recommendation:
 
-- Selected pattern: salt_clear_water_release / Salt and Clear Water Release
-- Selected ritual-form family: salt/water release, threshold/crossing/bowl/key
+- Selected pattern: carried_key_word / Carried Key Word
+- Selected ritual-form family: carried phrase, threshold/crossing/bowl/key, written/folded/container
 - Expected ritual-form family: threshold/crossing/bowl/key, first light / threshold, first/last threshold
 - Form-family matched: yes
-- Source summary: This drew from Waxing Moon card; Salt and Clear Water Release pattern; Sarah Faith Gottesdiener — lunar reflection source; Rachel Patterson — lunar/domestic magic source.
-- Title/theme: Give one small thing support. Let salt and clear water carry one release.
-- Ritual body: Keep the release specific and small. Use the bowl to contain the clearing. Put clear water in a small bowl and add a pinch of salt. Name one spent thing that can leave this household field. Pour the water away and rinse the bowl. Close when the bowl is rinsed and empty.
-- Intention: Let salt and clear water carry one release.
+- Source summary: This drew from Waxing Moon card; Carried Key Word pattern; Sarah Faith Gottesdiener — lunar reflection source; Rachel Patterson — lunar/domestic magic source.
+- Title/theme: Give one small thing support. Let the key carry one word.
+- Ritual body: Use an ordinary object that can safely return to use. Keep the word portable. Hold a key or small household object. Say or write one word for what should cross with you. Carry it briefly or return it to its place. Close when the key is carried or returned.
+- Intention: Let the key carry one word.
 - Best window: When you have a little space this week.
 - Optional add-on/accent: No add-on needed.
-- Carry/reflection prompt: What feels cleaner when it has somewhere ordinary to go?
-- Why this fits: Waxing moon shaped the timing tone. Your home choice helped point toward Salt and Clear Water Release. It also fits saved preferences for kitchen and home tending.
+- Carry/reflection prompt: What word can cross the threshold with you?
+- Why this fits: Waxing moon shaped the timing tone. Your home choice helped point toward Carried Key Word. It also fits saved preferences for home tending and reflection.
 
 How this was chosen:
 
 - Timing: Waxing moon was the main timing signal used here: A steady support phase for tending what is already underway.
-- Your check-in: You asked for something for today. You chose enough to engage capacity. This is for you. Your home choice matched Salt and Clear Water Release.
+- Your check-in: You asked for something for today. You chose enough to engage capacity. This is for you. Your home choice matched Carried Key Word.
 - Ritual focus: Your focus on marking a threshold matched the selected ritual shape.
-- Ritual fit: Salt and Clear Water Release was selected as the approved ritual container. It takes about 5 minutes and keeps the action concrete: Salt and water give clearing a vessel and an outward direction without making danger the story. Close when the bowl is rinsed and empty. It also matched kitchen and home tending and threshold reset.
+- Ritual fit: Carried Key Word was selected as the approved ritual container. It takes about 5 minutes and keeps the action concrete: A key can mark threshold and return without promising luck or protection. Close when the key is carried or returned. It also matched home tending and reflection and threshold reset.
 - Profile fit: Saved profile and natal-chart themes for Person A and Person B fit at least one profile around practical home-tending magic without conflicting with household avoid flags. This is used as fit context for at least one saved profile, not as a prediction.
 - Capacity boundary: This fits a steady week by staying practical and about twenty minutes or less.
 - Tradeoff: Some approved options were set aside because they did not fit current capacity, safety, preferences, or practical household constraints.
-- Sources: This drew from Waxing Moon card; Salt and Clear Water Release pattern; Sarah Faith Gottesdiener — lunar reflection source; Rachel Patterson — lunar/domestic magic source.
+- Sources: This drew from Waxing Moon card; Carried Key Word pattern; Sarah Faith Gottesdiener — lunar reflection source; Rachel Patterson — lunar/domestic magic source.
 
 Decision/debug summary:
 
-- Summary: undefined
+- Summary: Carried Key Word scored 51 from check-in intention match, check-in practice match, check-in audience match.
 - Numerology diagnostic: computed_unmatched
 - Practice-choice diagnostic: matched_selected_pattern
 - Top positive score reasons:
-  - undefined Ritual form match (threshold/crossing/bowl/key)
-  - undefined Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
-  - undefined Check-in intention match (Marking a threshold)
-  - undefined Check-in practice match (home_tending)
-  - undefined Preferred style match (kitchen)
+  - +12 Ritual form match (threshold/crossing/bowl/key)
+  - +8 Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
+  - +5 Check-in intention match (Marking a threshold)
+  - +4 Check-in practice match (home_tending)
+  - +3 Preferred style match (home_tending)
 - Top rejected near alternatives:
-  - table_reset / Table Reset: undefined Avoided style conflict (heavy_cleanup)
-  - room_reset / Room Reset: undefined Not approved (approval status is reviewed)
-  - close_the_evening / Close the Evening: undefined Not approved (approval status is reviewed); undefined Capacity mode mismatch (steady is not supported by this pattern)
-  - one_clear_sentence / One Clear Sentence: undefined Not approved (approval status is reviewed)
-  - simple_warm_drink / Simple Warm Drink: undefined Not approved (approval status is reviewed)
+  - table_reset / Table Reset: -20 Avoided style conflict (heavy_cleanup)
+  - room_reset / Room Reset: -99 Not approved (approval status is reviewed)
+  - close_the_evening / Close the Evening: -99 Not approved (approval status is reviewed); -20 Capacity mode mismatch (steady is not supported by this pattern)
+  - one_clear_sentence / One Clear Sentence: -99 Not approved (approval status is reviewed)
+  - simple_warm_drink / Simple Warm Drink: -99 Not approved (approval status is reviewed)
 - Automatic warnings: none
-- Awkward parts to review: Threshold family matches, but the selected salt/water clearing form may be too clearing-weighted for arrival.
+- Awkward parts to review: Cleanup fixed the salt/water overmatch; review whether Carried Key Word feels threshold-specific enough for Home arrival.
 
 ### batch1.home.salt_water_clearing: Home clearing with salt and clear water
 
@@ -777,7 +800,7 @@ Check-in inputs:
 Generated recommendation:
 
 - Selected pattern: salt_clear_water_release / Salt and Clear Water Release
-- Selected ritual-form family: salt/water release, threshold/crossing/bowl/key
+- Selected ritual-form family: salt/water release
 - Expected ritual-form family: salt/water release, threshold/crossing/bowl/key, plant release/removal, waning phrase/release
 - Form-family matched: yes
 - Source summary: This drew from Waning Moon card; Salt and Clear Water Release pattern; Sarah Faith Gottesdiener — lunar reflection source; Rachel Patterson — lunar/domestic magic source.
@@ -803,23 +826,23 @@ How this was chosen:
 
 Decision/debug summary:
 
-- Summary: undefined
+- Summary: Salt and Clear Water Release scored 54 from check-in intention match, check-in practice match, check-in audience match.
 - Numerology diagnostic: matched_selected
 - Practice-choice diagnostic: matched_selected_pattern
 - Top positive score reasons:
-  - undefined Ritual form match (salt/water release, threshold/crossing/bowl/key)
-  - undefined Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
-  - undefined Check-in intention match (Clearing something out)
-  - undefined Check-in practice match (home_tending)
-  - undefined Preferred style match (kitchen)
+  - +12 Ritual form match (salt/water release)
+  - +8 Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
+  - +5 Check-in intention match (Clearing something out)
+  - +4 Check-in practice match (home_tending)
+  - +3 Preferred style match (kitchen)
 - Top rejected near alternatives:
-  - table_reset / Table Reset: undefined Too long for capacity (15 minutes exceeds the current 5-minute limit); undefined Avoided style conflict (heavy_cleanup)
-  - threshold_reset / Threshold Reset: undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - room_reset / Room Reset: undefined Not approved (approval status is reviewed); undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - close_the_evening / Close the Evening: undefined Not approved (approval status is reviewed)
-  - one_clear_sentence / One Clear Sentence: undefined Not approved (approval status is reviewed)
+  - table_reset / Table Reset: -10 Too long for capacity (15 minutes exceeds the current 5-minute limit); -20 Avoided style conflict (heavy_cleanup)
+  - threshold_reset / Threshold Reset: -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - room_reset / Room Reset: -99 Not approved (approval status is reviewed); -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - close_the_evening / Close the Evening: -99 Not approved (approval status is reviewed)
+  - one_clear_sentence / One Clear Sentence: -99 Not approved (approval status is reviewed)
 - Automatic warnings: none
-- Awkward parts to review: Salt/Clear Water is now frequent and may be pulling threshold/home clearing broadly.
+- Awkward parts to review: Salt/Clear Water is appropriate here because clearing is explicit; keep watching that it stays confined to clearing/release scenarios.
 
 ### issue183.home.tending_steady: Home tending steady uses house map or threshold form
 
@@ -836,49 +859,49 @@ Check-in inputs:
 
 Generated recommendation:
 
-- Selected pattern: salt_clear_water_release / Salt and Clear Water Release
-- Selected ritual-form family: salt/water release, threshold/crossing/bowl/key
-- Expected ritual-form family: house map, threshold/crossing/bowl/key
+- Selected pattern: carried_key_word / Carried Key Word
+- Selected ritual-form family: carried phrase, threshold/crossing/bowl/key, written/folded/container
+- Expected ritual-form family: house map, threshold/crossing/bowl/key, bread/grain center
 - Form-family matched: yes
-- Source summary: This drew from Waxing Moon card; Salt and Clear Water Release pattern; Sarah Faith Gottesdiener — lunar reflection source; Rachel Patterson — lunar/domestic magic source.
-- Title/theme: Give one small thing support. Let salt and clear water carry one release.
-- Ritual body: Keep the release specific and small. Use the bowl to contain the clearing. Put clear water in a small bowl and add a pinch of salt. Name one spent thing that can leave this household field. Pour the water away and rinse the bowl. Close when the bowl is rinsed and empty.
-- Intention: Let salt and clear water carry one release.
+- Source summary: This drew from Waxing Moon card; Carried Key Word pattern; Sarah Faith Gottesdiener — lunar reflection source; Rachel Patterson — lunar/domestic magic source.
+- Title/theme: Give one small thing support. Let the key carry one word.
+- Ritual body: Use an ordinary object that can safely return to use. Keep the word portable. Hold a key or small household object. Say or write one word for what should cross with you. Carry it briefly or return it to its place. Close when the key is carried or returned.
+- Intention: Let the key carry one word.
 - Best window: When you have a little space this week.
 - Optional add-on/accent: No add-on needed.
-- Carry/reflection prompt: What feels cleaner when it has somewhere ordinary to go?
-- Why this fits: Waxing moon shaped the timing tone. Your home choice helped point toward Salt and Clear Water Release. It also fits saved preferences for kitchen and home tending.
+- Carry/reflection prompt: What word can cross the threshold with you?
+- Why this fits: Waxing moon shaped the timing tone. Your home choice helped point toward Carried Key Word. It also fits saved preferences for home tending and reflection.
 
 How this was chosen:
 
 - Timing: Waxing moon was the main timing signal used here: A steady support phase for tending what is already underway.
-- Your check-in: You asked for something for today. You chose enough to engage capacity. This is for you. Your home choice matched Salt and Clear Water Release.
+- Your check-in: You asked for something for today. You chose enough to engage capacity. This is for you. Your home choice matched Carried Key Word.
 - Ritual focus: Your focus on tending the home matched the selected ritual shape.
-- Ritual fit: Salt and Clear Water Release was selected as the approved ritual container. It takes about 5 minutes and keeps the action concrete: Salt and water give clearing a vessel and an outward direction without making danger the story. Close when the bowl is rinsed and empty. It also matched kitchen and home tending and threshold reset.
+- Ritual fit: Carried Key Word was selected as the approved ritual container. It takes about 5 minutes and keeps the action concrete: A key can mark threshold and return without promising luck or protection. Close when the key is carried or returned. It also matched home tending and reflection and threshold reset.
 - Profile fit: Saved profile and natal-chart themes for Person A and Person B fit at least one profile around practical home-tending magic without conflicting with household avoid flags. This is used as fit context for at least one saved profile, not as a prediction.
 - Capacity boundary: This fits a steady week by staying practical and about twenty minutes or less.
 - Tradeoff: Some approved options were set aside because they did not fit current capacity, safety, preferences, or practical household constraints.
-- Sources: This drew from Waxing Moon card; Salt and Clear Water Release pattern; Sarah Faith Gottesdiener — lunar reflection source; Rachel Patterson — lunar/domestic magic source.
+- Sources: This drew from Waxing Moon card; Carried Key Word pattern; Sarah Faith Gottesdiener — lunar reflection source; Rachel Patterson — lunar/domestic magic source.
 
 Decision/debug summary:
 
-- Summary: undefined
+- Summary: Carried Key Word scored 51 from check-in intention match, check-in practice match, check-in audience match.
 - Numerology diagnostic: computed_unmatched
 - Practice-choice diagnostic: matched_selected_pattern
 - Top positive score reasons:
-  - undefined Ritual form match (threshold/crossing/bowl/key)
-  - undefined Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
-  - undefined Check-in intention match (Tending the home)
-  - undefined Check-in practice match (home_tending)
-  - undefined Preferred style match (kitchen)
+  - +12 Ritual form match (threshold/crossing/bowl/key)
+  - +8 Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
+  - +5 Check-in intention match (Tending the home)
+  - +4 Check-in practice match (home_tending)
+  - +3 Preferred style match (home_tending)
 - Top rejected near alternatives:
-  - table_reset / Table Reset: undefined Avoided style conflict (heavy_cleanup)
-  - room_reset / Room Reset: undefined Not approved (approval status is reviewed)
-  - close_the_evening / Close the Evening: undefined Not approved (approval status is reviewed); undefined Capacity mode mismatch (steady is not supported by this pattern)
-  - one_clear_sentence / One Clear Sentence: undefined Not approved (approval status is reviewed)
-  - simple_warm_drink / Simple Warm Drink: undefined Not approved (approval status is reviewed)
+  - table_reset / Table Reset: -20 Avoided style conflict (heavy_cleanup)
+  - room_reset / Room Reset: -99 Not approved (approval status is reviewed)
+  - close_the_evening / Close the Evening: -99 Not approved (approval status is reviewed); -20 Capacity mode mismatch (steady is not supported by this pattern)
+  - one_clear_sentence / One Clear Sentence: -99 Not approved (approval status is reviewed)
+  - simple_warm_drink / Simple Warm Drink: -99 Not approved (approval status is reviewed)
 - Automatic warnings: none
-- Awkward parts to review: Salt/Clear Water is now frequent and may be pulling threshold/home clearing broadly.
+- Awkward parts to review: No obvious awkward part from diagnostics; still needs human voice/meaning review.
 
 ### batch1.reflection.folded_phrase: Reflection folded phrase vessel
 
@@ -922,21 +945,21 @@ How this was chosen:
 
 Decision/debug summary:
 
-- Summary: undefined
+- Summary: Carried Key Word scored 51 from check-in intention match, check-in practice match, check-in audience match.
 - Numerology diagnostic: matched_selected
 - Practice-choice diagnostic: matched_selected_pattern
 - Top positive score reasons:
-  - undefined Ritual form match (written/folded/container)
-  - undefined Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
-  - undefined Check-in intention match (Saying something clearly)
-  - undefined Check-in practice match (reflection)
-  - undefined Preferred style match (home_tending)
+  - +12 Ritual form match (written/folded/container)
+  - +8 Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
+  - +5 Check-in intention match (Saying something clearly)
+  - +4 Check-in practice match (reflection)
+  - +3 Preferred style match (home_tending)
 - Top rejected near alternatives:
-  - table_reset / Table Reset: undefined Too long for capacity (15 minutes exceeds the current 5-minute limit); undefined Avoided style conflict (heavy_cleanup)
-  - threshold_reset / Threshold Reset: undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - room_reset / Room Reset: undefined Not approved (approval status is reviewed); undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - close_the_evening / Close the Evening: undefined Not approved (approval status is reviewed)
-  - one_clear_sentence / One Clear Sentence: undefined Not approved (approval status is reviewed)
+  - table_reset / Table Reset: -10 Too long for capacity (15 minutes exceeds the current 5-minute limit); -20 Avoided style conflict (heavy_cleanup)
+  - threshold_reset / Threshold Reset: -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - room_reset / Room Reset: -99 Not approved (approval status is reviewed); -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - close_the_evening / Close the Evening: -99 Not approved (approval status is reviewed)
+  - one_clear_sentence / One Clear Sentence: -99 Not approved (approval status is reviewed)
 - Automatic warnings: none
 - Awkward parts to review: Written/folded family matches, but exact Folded Phrase Vessel lost to Carried Key Word.
 
@@ -982,21 +1005,21 @@ How this was chosen:
 
 Decision/debug summary:
 
-- Summary: undefined
+- Summary: Waning Phrase Release scored 46 from check-in intention match, check-in practice match, check-in audience match.
 - Numerology diagnostic: matched_selected
 - Practice-choice diagnostic: matched_selected_pattern
 - Top positive score reasons:
-  - undefined Ritual form match (waning phrase/release)
-  - undefined Check-in intention match (Clearing something out)
-  - undefined Private profile theme match (profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
-  - undefined Check-in practice match (reflection)
-  - undefined Preferred style match (reflection)
+  - +12 Ritual form match (waning phrase/release)
+  - +5 Check-in intention match (Clearing something out)
+  - +5 Private profile theme match (profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
+  - +4 Check-in practice match (reflection)
+  - +3 Preferred style match (reflection)
 - Top rejected near alternatives:
-  - table_reset / Table Reset: undefined Too long for capacity (15 minutes exceeds the current 5-minute limit); undefined Avoided style conflict (heavy_cleanup)
-  - threshold_reset / Threshold Reset: undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - room_reset / Room Reset: undefined Not approved (approval status is reviewed); undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - close_the_evening / Close the Evening: undefined Not approved (approval status is reviewed)
-  - one_clear_sentence / One Clear Sentence: undefined Not approved (approval status is reviewed)
+  - table_reset / Table Reset: -10 Too long for capacity (15 minutes exceeds the current 5-minute limit); -20 Avoided style conflict (heavy_cleanup)
+  - threshold_reset / Threshold Reset: -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - room_reset / Room Reset: -99 Not approved (approval status is reviewed); -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - close_the_evening / Close the Evening: -99 Not approved (approval status is reviewed)
+  - one_clear_sentence / One Clear Sentence: -99 Not approved (approval status is reviewed)
 - Automatic warnings: none
 - Awkward parts to review: No obvious awkward part from diagnostics; still needs human voice/meaning review.
 
@@ -1041,21 +1064,21 @@ How this was chosen:
 
 Decision/debug summary:
 
-- Summary: undefined
+- Summary: Two Words at the Table scored 55 from check-in intention match, check-in practice match, check-in audience match.
 - Numerology diagnostic: computed_unmatched
 - Practice-choice diagnostic: matched_selected_pattern
 - Top positive score reasons:
-  - undefined Ritual form match (spoken/table phrase)
-  - undefined Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
-  - undefined Check-in intention match (Marking a threshold)
-  - undefined Check-in practice match (reflection)
-  - undefined Preferred style match (reflection)
+  - +12 Ritual form match (spoken/table phrase)
+  - +8 Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
+  - +5 Check-in intention match (Marking a threshold)
+  - +4 Check-in practice match (reflection)
+  - +3 Preferred style match (reflection)
 - Top rejected near alternatives:
-  - table_reset / Table Reset: undefined Too long for capacity (15 minutes exceeds the current 5-minute limit); undefined Avoided style conflict (heavy_cleanup)
-  - threshold_reset / Threshold Reset: undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - room_reset / Room Reset: undefined Not approved (approval status is reviewed); undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - close_the_evening / Close the Evening: undefined Not approved (approval status is reviewed)
-  - one_clear_sentence / One Clear Sentence: undefined Not approved (approval status is reviewed)
+  - table_reset / Table Reset: -10 Too long for capacity (15 minutes exceeds the current 5-minute limit); -20 Avoided style conflict (heavy_cleanup)
+  - threshold_reset / Threshold Reset: -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - room_reset / Room Reset: -99 Not approved (approval status is reviewed); -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - close_the_evening / Close the Evening: -99 Not approved (approval status is reviewed)
+  - one_clear_sentence / One Clear Sentence: -99 Not approved (approval status is reviewed)
 - Automatic warnings: none
 - Awkward parts to review: Two Words remains appropriate only if spoken table phrase is truly the form.
 
@@ -1101,21 +1124,21 @@ How this was chosen:
 
 Decision/debug summary:
 
-- Summary: undefined
+- Summary: Bank the House Light scored 55 from check-in intention match, check-in practice match, check-in audience match.
 - Numerology diagnostic: matched_selected
 - Practice-choice diagnostic: matched_selected_pattern
 - Top positive score reasons:
-  - undefined Ritual form match (banked/darkening light)
-  - undefined Private profile theme match (profile_theme.person_a.private_profile.practical_tending, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
-  - undefined Check-in intention match (Resting)
-  - undefined Check-in practice match (candle_or_light, light_focus)
-  - undefined Preferred style match (candle_or_light)
+  - +12 Ritual form match (banked/darkening light)
+  - +8 Private profile theme match (profile_theme.person_a.private_profile.practical_tending, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
+  - +5 Check-in intention match (Resting)
+  - +4 Check-in practice match (candle_or_light, light_focus)
+  - +3 Preferred style match (candle_or_light)
 - Top rejected near alternatives:
-  - table_reset / Table Reset: undefined Too long for capacity (15 minutes exceeds the current 5-minute limit); undefined Avoided style conflict (heavy_cleanup)
-  - threshold_reset / Threshold Reset: undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - room_reset / Room Reset: undefined Not approved (approval status is reviewed); undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - close_the_evening / Close the Evening: undefined Not approved (approval status is reviewed)
-  - one_clear_sentence / One Clear Sentence: undefined Not approved (approval status is reviewed)
+  - table_reset / Table Reset: -10 Too long for capacity (15 minutes exceeds the current 5-minute limit); -20 Avoided style conflict (heavy_cleanup)
+  - threshold_reset / Threshold Reset: -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - room_reset / Room Reset: -99 Not approved (approval status is reviewed); -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - close_the_evening / Close the Evening: -99 Not approved (approval status is reviewed)
+  - one_clear_sentence / One Clear Sentence: -99 Not approved (approval status is reviewed)
 - Automatic warnings: none
 - Awkward parts to review: No obvious awkward part from diagnostics; still needs human voice/meaning review.
 
@@ -1161,21 +1184,21 @@ How this was chosen:
 
 Decision/debug summary:
 
-- Summary: undefined
+- Summary: Full Light on the Table scored 59 from check-in intention match, check-in practice match, check-in audience match.
 - Numerology diagnostic: matched_selected
 - Practice-choice diagnostic: matched_selected_pattern
 - Top positive score reasons:
-  - undefined Ritual form match (full light / clarity)
-  - undefined Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
-  - undefined Check-in intention match (Saying something clearly)
-  - undefined Check-in practice match (candle_or_light, light_focus)
-  - undefined Preferred style match (candle_or_light)
+  - +12 Ritual form match (full light / clarity)
+  - +8 Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
+  - +5 Check-in intention match (Saying something clearly)
+  - +4 Check-in practice match (candle_or_light, light_focus)
+  - +3 Preferred style match (candle_or_light)
 - Top rejected near alternatives:
-  - table_reset / Table Reset: undefined Too long for capacity (15 minutes exceeds the current 5-minute limit); undefined Avoided style conflict (heavy_cleanup)
-  - threshold_reset / Threshold Reset: undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - room_reset / Room Reset: undefined Not approved (approval status is reviewed); undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - close_the_evening / Close the Evening: undefined Not approved (approval status is reviewed)
-  - one_clear_sentence / One Clear Sentence: undefined Not approved (approval status is reviewed)
+  - table_reset / Table Reset: -10 Too long for capacity (15 minutes exceeds the current 5-minute limit); -20 Avoided style conflict (heavy_cleanup)
+  - threshold_reset / Threshold Reset: -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - room_reset / Room Reset: -99 Not approved (approval status is reviewed); -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - close_the_evening / Close the Evening: -99 Not approved (approval status is reviewed)
+  - one_clear_sentence / One Clear Sentence: -99 Not approved (approval status is reviewed)
 - Automatic warnings: none
 - Awkward parts to review: Full Light remains appropriate only if light/clarity is central here.
 
@@ -1195,7 +1218,7 @@ Check-in inputs:
 Generated recommendation:
 
 - Selected pattern: seasonal_marker_bowl / Seasonal Marker Bowl
-- Selected ritual-form family: seasonal marker, welcome/offering/vessel, threshold/crossing/bowl/key
+- Selected ritual-form family: seasonal marker, welcome/offering/vessel
 - Expected ritual-form family: seasonal marker, first/last threshold, threshold/crossing/bowl/key, first light / threshold
 - Form-family matched: yes
 - Source summary: This drew from Waning Moon card; Seasonal Marker Bowl pattern; Sarah Faith Gottesdiener — lunar reflection source; Rachel Patterson — lunar/domestic magic source.
@@ -1221,21 +1244,21 @@ How this was chosen:
 
 Decision/debug summary:
 
-- Summary: undefined
+- Summary: Seasonal Marker Bowl scored 58 from check-in intention match, check-in practice match, check-in audience match.
 - Numerology diagnostic: matched_selected
 - Practice-choice diagnostic: matched_selected_pattern
 - Top positive score reasons:
-  - undefined Ritual form match (seasonal marker, threshold/crossing/bowl/key)
-  - undefined Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
-  - undefined Check-in intention match (Marking a threshold)
-  - undefined Check-in practice match (seasonal)
-  - undefined Check-in audience match (both_of_us)
+  - +12 Ritual form match (seasonal marker)
+  - +8 Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
+  - +5 Check-in intention match (Marking a threshold)
+  - +4 Check-in practice match (seasonal)
+  - +3 Check-in audience match (both_of_us)
 - Top rejected near alternatives:
-  - table_reset / Table Reset: undefined Too long for capacity (15 minutes exceeds the current 5-minute limit); undefined Avoided style conflict (heavy_cleanup)
-  - threshold_reset / Threshold Reset: undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - room_reset / Room Reset: undefined Not approved (approval status is reviewed); undefined Too long for capacity (10 minutes exceeds the current 5-minute limit)
-  - close_the_evening / Close the Evening: undefined Not approved (approval status is reviewed)
-  - one_clear_sentence / One Clear Sentence: undefined Not approved (approval status is reviewed)
+  - table_reset / Table Reset: -10 Too long for capacity (15 minutes exceeds the current 5-minute limit); -20 Avoided style conflict (heavy_cleanup)
+  - threshold_reset / Threshold Reset: -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - room_reset / Room Reset: -99 Not approved (approval status is reviewed); -10 Too long for capacity (10 minutes exceeds the current 5-minute limit)
+  - close_the_evening / Close the Evening: -99 Not approved (approval status is reviewed)
+  - one_clear_sentence / One Clear Sentence: -99 Not approved (approval status is reviewed)
 - Automatic warnings: none
 - Awkward parts to review: No obvious awkward part from diagnostics; still needs human voice/meaning review.
 
@@ -1255,7 +1278,7 @@ Check-in inputs:
 Generated recommendation:
 
 - Selected pattern: seasonal_marker_bowl / Seasonal Marker Bowl
-- Selected ritual-form family: seasonal marker, welcome/offering/vessel, threshold/crossing/bowl/key
+- Selected ritual-form family: seasonal marker, welcome/offering/vessel
 - Expected ritual-form family: seasonal marker, first/last threshold, threshold/crossing/bowl/key, first light / threshold
 - Form-family matched: yes
 - Source summary: This drew from Waning Moon card; Seasonal Marker Bowl pattern; Sarah Faith Gottesdiener — lunar reflection source; Rachel Patterson — lunar/domestic magic source.
@@ -1281,21 +1304,21 @@ How this was chosen:
 
 Decision/debug summary:
 
-- Summary: undefined
+- Summary: Seasonal Marker Bowl scored 55 from check-in intention match, check-in practice match, check-in audience match.
 - Numerology diagnostic: matched_selected
 - Practice-choice diagnostic: matched_selected_pattern
 - Top positive score reasons:
-  - undefined Ritual form match (seasonal marker, threshold/crossing/bowl/key)
-  - undefined Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
-  - undefined Check-in intention match (Marking a threshold)
-  - undefined Check-in practice match (seasonal)
-  - undefined Check-in audience match (both_of_us)
+  - +12 Ritual form match (seasonal marker)
+  - +8 Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
+  - +5 Check-in intention match (Marking a threshold)
+  - +4 Check-in practice match (seasonal)
+  - +3 Check-in audience match (both_of_us)
 - Top rejected near alternatives:
-  - table_reset / Table Reset: undefined Avoided style conflict (heavy_cleanup)
-  - room_reset / Room Reset: undefined Not approved (approval status is reviewed)
-  - close_the_evening / Close the Evening: undefined Not approved (approval status is reviewed); undefined Capacity mode mismatch (steady is not supported by this pattern)
-  - one_clear_sentence / One Clear Sentence: undefined Not approved (approval status is reviewed)
-  - simple_warm_drink / Simple Warm Drink: undefined Not approved (approval status is reviewed)
+  - table_reset / Table Reset: -20 Avoided style conflict (heavy_cleanup)
+  - room_reset / Room Reset: -99 Not approved (approval status is reviewed)
+  - close_the_evening / Close the Evening: -99 Not approved (approval status is reviewed); -20 Capacity mode mismatch (steady is not supported by this pattern)
+  - one_clear_sentence / One Clear Sentence: -99 Not approved (approval status is reviewed)
+  - simple_warm_drink / Simple Warm Drink: -99 Not approved (approval status is reviewed)
 - Automatic warnings: none
 - Awkward parts to review: No obvious awkward part from diagnostics; still needs human voice/meaning review.
 
@@ -1340,21 +1363,21 @@ How this was chosen:
 
 Decision/debug summary:
 
-- Summary: undefined
+- Summary: Carried Key Word scored 48 from check-in intention match, check-in practice match, check-in audience match.
 - Numerology diagnostic: computed_unmatched
 - Practice-choice diagnostic: resolved_open_preference
 - Top positive score reasons:
-  - undefined Ritual form match (written/folded/container)
-  - undefined Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
-  - undefined Check-in intention match (Saying something clearly)
-  - undefined Check-in practice match (reflection, naming)
-  - undefined Preferred style match (home_tending)
+  - +12 Ritual form match (written/folded/container)
+  - +8 Private profile theme match (profile_theme.person_a.private_profile.practical_tending, natal_theme.person_a.private_profile.structured_action, profile_theme.person_b.private_profile.beauty_warmth, natal_theme.person_b.private_profile.beauty_warmth)
+  - +5 Check-in intention match (Saying something clearly)
+  - +4 Check-in practice match (reflection, naming)
+  - +3 Preferred style match (home_tending)
 - Top rejected near alternatives:
-  - table_reset / Table Reset: undefined Avoided style conflict (heavy_cleanup)
-  - room_reset / Room Reset: undefined Not approved (approval status is reviewed)
-  - close_the_evening / Close the Evening: undefined Not approved (approval status is reviewed); undefined Capacity mode mismatch (steady is not supported by this pattern)
-  - one_clear_sentence / One Clear Sentence: undefined Not approved (approval status is reviewed)
-  - simple_warm_drink / Simple Warm Drink: undefined Not approved (approval status is reviewed)
+  - table_reset / Table Reset: -20 Avoided style conflict (heavy_cleanup)
+  - room_reset / Room Reset: -99 Not approved (approval status is reviewed)
+  - close_the_evening / Close the Evening: -99 Not approved (approval status is reviewed); -20 Capacity mode mismatch (steady is not supported by this pattern)
+  - one_clear_sentence / One Clear Sentence: -99 Not approved (approval status is reviewed)
+  - simple_warm_drink / Simple Warm Drink: -99 Not approved (approval status is reviewed)
 - Automatic warnings: none
 - Awkward parts to review: No obvious awkward part from diagnostics; still needs human voice/meaning review.
 
@@ -1375,10 +1398,10 @@ Source/content checks from the report:
 
 | Remaining issue | Evidence | Recommended next issue |
 |---|---|---|
-| Honeyed Word may become a new soft default | `honeyed_word` selected 5 scenarios, the highest count tied with `salt_clear_water_release`. | Add a concentration diagnostic for any non-broad pattern that wins too often, not just the two known broad catch-alls. |
-| Salt/Clear Water may be pulling Home threshold too broadly | `home.threshold.arrival` selected `salt_clear_water_release`, which matches threshold through salt/water but may be too clearing-weighted for arrival. | Tune threshold/arrival form priority or add a sharper threshold-specific scenario diagnostic. |
+| Honeyed Word may become a new soft default | `honeyed_word` selected 4 scenarios and now appears in Pattern Concentration Review. | Keep the new concentration diagnostic and review whether these wins are actually welcome/sweetening scenarios. |
+| Salt/Clear Water still needs watchful containment | `salt_clear_water_release` dropped from 5 to 3 selections after cleanup and no longer wins Home threshold/arrival or Home steady tending, but it remains a frequent clearing answer. | Keep salt/water strong for explicit clearing/release and watch that it does not creep back into generic Home threshold scenarios. |
 | Exact Batch 1 patterns still do not always win | `batch1.reflection.folded_phrase` selects `carried_key_word`, and `batch1.quiet_welcome` selects `honeyed_word`. | Decide whether equivalent form families are enough or whether scenarios need expected preferred pattern plus acceptable alternates. |
-| Strong patterns remain unselected | Report lists 11 strong patterns not selected, including bread_at_the_center, clear_the_threshold_bowl, darkening_light, first_day_last_day, folded_phrase_vessel, last_word_first_word. | Add targeted scenarios or demote/hide patterns that are strong on paper but not reachable in practice. |
+| Strong patterns remain unselected | Report lists 9 strong patterns not selected, including clear_the_threshold_bowl, darkening_light, first_day_last_day, folded_phrase_vessel, last_word_first_word, seasonal_entry_bowl. | Add targeted scenarios or demote/hide patterns that are strong on paper but not reachable in practice. |
 | Diagnostics still do not distinguish all wrong-form subtypes as warning IDs | Summary buckets like kitchen material missing and threshold form missing are inferred from form-family data, not emitted as dedicated warning IDs. | Add explicit wrong-form warning IDs only after Tim reviews whether these labels are understandable. |
 | Source summaries still lean generic | Samples still say they drew from moon cards and broad lunar/domestic sources even when Batch 1 lineage matters. | Continue #155-style presentation/source-summary alignment work. |
 | Clean warning counts can still hide product awkwardness | Warning counts are all zero while this packet still identifies awkward matches and over-selection concerns. | Keep human review packet as part of content QA, not only automated warnings. |
@@ -1416,7 +1439,7 @@ Source/content checks from the report:
 - `npm run test`: passed, 26 files and 280 tests.
 - `npm run test -- tests/unit/recommendation-quality-report.test.ts`: passed, 7 tests.
 - `npm run recommendation:quality`: passed, 39 scenarios.
-- `npm run diagnose:content`: passed, with remaining sampler gaps and set-aside practice diagnostics noted above.
+- `npm run diagnose:content`: passed, with remaining sampler gaps and 3 set-aside visible practice choices still reported.
 - `npm run check`: passed, including build and 2 Playwright tests.
 - `git diff --check`: passed.
 

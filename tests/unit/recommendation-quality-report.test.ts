@@ -68,10 +68,12 @@ describe("recommendation quality report", () => {
     expect(formatted).toContain("Expected ritual form family:");
     expect(formatted).toContain("Ritual form family matched:");
     expect(formatted).toContain("### Broad Pattern Concentration");
+    expect(formatted).toContain("### Pattern Concentration Review");
     expect(formatted).toContain("### Strong Patterns Not Selected");
     expect(formatted).toContain("How this was chosen:");
     expect(formatted).toContain("Top rejected near alternatives:");
     expect(formatted).toContain("Human review notes:");
+    expect(formatted).not.toContain("undefined");
   });
 
   it("surfaces Batch 1 ritual-form reachability in named scenarios", () => {
@@ -99,9 +101,29 @@ describe("recommendation quality report", () => {
       selectedRitualFormFamilies: expect.arrayContaining(["welcome/offering/vessel"]),
     });
     expect(resultById.get("home.threshold.arrival")).toMatchObject({
+      selectedRitualPattern: { key: "carried_key_word" },
       ritualFormFamilyMatched: true,
       selectedRitualFormFamilies: expect.arrayContaining(["threshold/crossing/bowl/key"]),
     });
+    expect(resultById.get("home.threshold.arrival")?.selectedRitualPattern.key).not.toBe(
+      "salt_clear_water_release",
+    );
+    expect(resultById.get("candle.live_flame_avoided")).toMatchObject({
+      selectedRitualPattern: { key: "first_light_at_the_threshold" },
+      ritualFormFamilyMatched: true,
+      selectedRitualFormFamilies: expect.arrayContaining(["first light / threshold"]),
+    });
+    expect(resultById.get("candle.live_flame_avoided")?.selectedRitualPattern.key).not.toBe(
+      "honeyed_word",
+    );
+    expect(resultById.get("issue183.home.tending_steady")).toMatchObject({
+      selectedRitualPattern: { key: "carried_key_word" },
+      ritualFormFamilyMatched: true,
+      selectedRitualFormFamilies: expect.arrayContaining(["threshold/crossing/bowl/key"]),
+    });
+    expect(resultById.get("issue183.home.tending_steady")?.selectedRitualPattern.key).not.toBe(
+      "salt_clear_water_release",
+    );
     expect(resultById.get("issue183.plant.beginning.seed")).toMatchObject({
       ritualFormFamilyMatched: true,
       selectedRitualFormFamilies: expect.arrayContaining(["plant seed/beginning"]),
@@ -118,6 +140,11 @@ describe("recommendation quality report", () => {
       ritualFormFamilyMatched: true,
       selectedRitualFormFamilies: expect.arrayContaining(["banked/darkening light"]),
     });
+    expect(report.contentHealth.concentratedSelectedPatterns).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ key: "honeyed_word" }),
+      ]),
+    );
   });
 
   it("flags known bad sample-like output", () => {

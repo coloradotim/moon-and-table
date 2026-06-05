@@ -94,9 +94,6 @@ const FORM_FAMILIES_BY_STYLE: Record<string, RitualFormFamily[]> = {
   warm: ["warm_cup_bowl"],
   welcome: ["welcome_offering_vessel"],
   honey: ["honey_sweetening", "welcome_offering_vessel"],
-  threshold_reset: ["threshold_crossing_bowl_key"],
-  bowl: ["threshold_crossing_bowl_key", "welcome_offering_vessel"],
-  boundary: ["threshold_crossing_bowl_key"],
   salt: ["salt_water_release"],
   folded_word: ["written_folded_container"],
   carrying: ["carried_phrase", "written_folded_container"],
@@ -238,7 +235,7 @@ export function getExpectedRitualFormFamilies(
     } else if (focus === "clearing_something_out") {
       expected.push("salt_water_release", "threshold_crossing_bowl_key");
     } else if (focus === "tending_the_home" || focus === "getting_grounded") {
-      expected.push("house_map", "threshold_crossing_bowl_key");
+      expected.push("house_map", "threshold_crossing_bowl_key", "bread_grain_center");
     }
   }
 
@@ -249,6 +246,8 @@ export function getExpectedRitualFormFamilies(
       expected.push("banked_or_darkening_light");
     } else if (focus === "saying_something_clearly" || focus === "tending_us") {
       expected.push("full_light_clarity");
+    } else {
+      expected.push("banked_or_darkening_light", "first_light_threshold");
     }
   }
 

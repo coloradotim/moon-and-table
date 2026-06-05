@@ -106,6 +106,7 @@ export type RecommendationQualityContentHealth = {
   selectedPatternCounts: Array<{ key: string; count: number }>;
   distinctSelectedPatternCount: number;
   overusedBroadPatterns: Array<{ key: string; count: number }>;
+  concentratedSelectedPatterns: Array<{ key: string; count: number }>;
   strongUnselectedPatternKeys: string[];
   sourceCoverage: Array<{
     patternKey: string;
@@ -509,6 +510,7 @@ function getContentHealth(
   const batchDemotionKeySet = new Set<string>(batchOneDemotedRitualPatternKeys);
   const batchTaskDressedKeySet = new Set<string>(batchOneTaskDressedPatternKeys);
   const broadPatternKeys = new Set(["two_words_at_the_table", "full_light_on_the_table"]);
+  const concentrationReviewThreshold = 4;
 
   return {
     approvedPatternCount: approvedPatterns.length,
@@ -526,6 +528,9 @@ function getContentHealth(
     distinctSelectedPatternCount: selectedPatternCounts.length,
     overusedBroadPatterns: selectedPatternCounts.filter(
       (item) => broadPatternKeys.has(item.key) && item.count > 3,
+    ),
+    concentratedSelectedPatterns: selectedPatternCounts.filter(
+      (item) => item.count >= concentrationReviewThreshold,
     ),
     strongUnselectedPatternKeys: approvedPatterns
       .filter((pattern) => pattern.presentation)
@@ -696,6 +701,14 @@ export function formatRecommendationQualityReport(
     "",
     ...(report.contentHealth.overusedBroadPatterns.length > 0
       ? report.contentHealth.overusedBroadPatterns.map(
+          (item) => `- ${item.key}: ${item.count}`,
+        )
+      : ["- none"]),
+    "",
+    "### Pattern Concentration Review",
+    "",
+    ...(report.contentHealth.concentratedSelectedPatterns.length > 0
+      ? report.contentHealth.concentratedSelectedPatterns.map(
           (item) => `- ${item.key}: ${item.count}`,
         )
       : ["- none"]),
