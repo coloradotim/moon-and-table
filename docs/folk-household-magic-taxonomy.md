@@ -10,6 +10,16 @@ Safety should constrain recommendations; it should not rewrite the metaphysics o
 
 This means source, privacy, and practical boundaries can shape eligibility, variants, and wording. They can cause a risky or unsupported form to be set aside. They should not flatten the practice into something less magical in order to make it feel safer.
 
+Source-backed does not mean scientifically proven. In this taxonomy, source-backed means reviewed lineage, ritual technology, material/action logic, symbolic tradition, timing support, or an approved curation basis. It does not require hard evidence of external efficacy.
+
+Do not reject folk household magic content only because it is magical, wooey, or not scientifically testable. Review whether its lineage, material/action logic, activation, closure, and claims boundaries are strong enough for Moon & Table.
+
+Moon & Table may treat presence, attention, embodiment, timing, material action, placing, folding, carrying, returning, washing, extinguishing, sweetening, emptying, threshold crossing, vessel holding, and spoken or written words as real ritual mechanisms.
+
+Avoid guarantees, not magic. Bounded magical language is allowed: a bowl can hold a beginning, a key can carry one word across a threshold, water can give release a way out, a sweetness cue can soften one word, light can witness a line once and close, and grain can give a beginning weight.
+
+Do not demystify these forms into "just symbolic" language, wellness metaphor, psychology explanation, productivity framing, decorative prop language, or safety disclaimer language.
+
 ## Core Rules
 
 - Preserve ritual meaning while bounding claims.
@@ -19,6 +29,7 @@ This means source, privacy, and practical boundaries can shape eligibility, vari
 - Practical boundaries should be quiet and mostly internal.
 - Do not copy distinctive rituals, spells, prayers, chants, recipes, correspondence tables, or private source text.
 - Materials are vehicles, not top-level categories.
+- Do not require scientific proof before treating a magical mechanism as meaningful.
 
 ## Three Layers
 

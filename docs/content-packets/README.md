@@ -30,6 +30,10 @@ Reviewed sources become short transformed SourceNotes. They do not become copied
 
 Do not copy private source text. Do not put private source documents in the repository.
 
+Source-backed does not mean scientifically proven. In content packets, source support can mean reviewed lineage, ritual technology, material/action logic, symbolic tradition, timing support, or an approved curation basis. A packet does not need hard evidence of external efficacy before proposing a meaningful magical practice.
+
+Do not reject a packet idea only because it is magical, wooey, or not scientifically testable. Review it for source lineage, privacy, copyright, practical fit, cultural sensitivity, material/action logic, claims boundaries, activation, and closure.
+
 ## Metaphysical Integrity
 
 Safety should constrain recommendations; it should not rewrite the metaphysics of the practice.
@@ -41,8 +45,20 @@ Each packet should check:
 - Are claims bounded without condescension?
 - Are practical constraints handled quietly?
 - Does the packet avoid telling the practitioner what to believe?
+- Does the packet preserve magical mechanisms such as presence, attention, embodiment, timing, material action, placing, folding, carrying, returning, washing, extinguishing, sweetening, emptying, threshold crossing, vessel holding, or spoken/written words?
 
 If a ritual form creates source, privacy, or practical eligibility risk, choose an approved form that fits, quietly constrain eligibility, or set the pattern aside. Do not explain away the practice.
+
+Avoid guarantees, not magic. A packet may use bounded magical language such as:
+
+- "A vessel gives the work a place to rest."
+- "A threshold receives one crossing."
+- "A folded word becomes a held object."
+- "A cup can carry warmth and close the rite."
+- "The water gives release a way out."
+- "The grain gives the beginning weight."
+
+Do not translate the practice into "just symbolic" language, wellness metaphor, psychology explanation, productivity framing, decorative prop language, or safety disclaimer language.
 
 ## House Voice
 
