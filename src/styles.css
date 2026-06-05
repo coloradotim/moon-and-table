@@ -385,8 +385,10 @@ h2 {
 }
 
 .shell--check-in {
+  display: grid;
+  align-content: center;
   width: min(100%, 680px);
-  padding-top: 34px;
+  padding-block: clamp(28px, 8vh, 72px);
 }
 
 .check-in {
