@@ -305,7 +305,7 @@ describe("app shell rendering", () => {
     const questionIndex = html.indexOf("Question to carry");
     const howIndex = html.indexOf("How this was chosen");
     const whyIndex = html.indexOf("Why this fits");
-    const sourcesIndex = html.indexOf("<h3>Sources</h3>");
+    const sourcesIndex = html.indexOf("<h3>Material lineage</h3>");
     const rightIndex = html.indexOf("This feels right.");
     const tryAgainIndex = html.indexOf("Give me another option");
     const checkInAgainIndex = html.indexOf("I want to check in again");
@@ -368,20 +368,20 @@ describe("app shell rendering", () => {
     expect(html).toMatch(
       new RegExp("Current phase:</strong> [A-Z][a-z]+(?: [a-z]+)* moon"),
     );
-    expect(html).toContain("Capacity boundary");
+    expect(html).toContain("Kept bounded");
     expect(html).not.toContain("Schedule — realistic window");
     expect(html).toContain("Why this fits");
     expect(html).not.toContain("Private chart fit");
     expect(html).not.toContain("No saved natal placements were loaded for this brief.");
     expect(html).toContain("How this was chosen");
-    expect(html).toContain("Ritual fit");
-    expect(html).toContain("Profile fit");
+    expect(html).toContain("Ritual form");
+    expect(html).toContain("Household fit");
     expect(html).not.toContain("Safety and fit");
     expect(html).not.toContain("Household safety guardrails");
     expect(html).not.toContain("Safety filters applied");
     expect(html).toContain('<details class="brief__choice-details" aria-label="How this was chosen">');
     expect(html).not.toContain('<details class="brief__choice-details" aria-label="How this was chosen" open');
-    expect(html).toContain('class="brief__chosen-section" aria-label="Sources"');
+    expect(html).toContain('class="brief__chosen-section" aria-label="Material lineage"');
     expect(html).not.toContain('<section class="brief__sources" aria-label="Sources used">');
     expect(html).toContain("When you have five quiet minutes.");
     expect(html).not.toContain("Thursday evening");
@@ -434,7 +434,6 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("Private weekly ritual brief");
     expect(html).not.toContain("Using your household settings.");
     expect(html).not.toContain("Using starter settings until your private settings are ready.");
-    expect(html).not.toContain("low capacity");
     expect(html).not.toContain("This week&#39;s ritual");
     expect(html).not.toContain("Optional add-on");
     expect(html).not.toContain("Reflection prompt");

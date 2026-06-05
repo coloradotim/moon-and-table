@@ -161,7 +161,7 @@ describe("generateWeeklyBrief", () => {
       trace: expect.any(Object),
     });
     expect(brief.whyThis.length).toBeGreaterThan(0);
-    expect(brief.sourceSummary).toContain("Sources:");
+    expect(brief.sourceSummary).toContain("Source lineage:");
     expect(brief.explanation.signals.length).toBeGreaterThan(0);
     expect(brief.explanation.whyThisFits).toEqual(expect.any(String));
     expect(brief.explanation.whyThisFits.length).toBeGreaterThan(0);
@@ -169,12 +169,12 @@ describe("generateWeeklyBrief", () => {
       expect.arrayContaining([
         expect.objectContaining({
           kind: "timing_choice",
-          title: "Timing",
+          title: "Timing shaped it",
           body: expect.any(String),
         }),
         expect.objectContaining({
           kind: "ritual_fit",
-          title: "Ritual fit",
+          title: "Ritual form",
           body: expect.any(String),
         }),
       ]),
@@ -271,7 +271,7 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.bestWindow).toBe("No timing needed.");
     expect(brief.recommendedRitual).not.toContain("No required ritual");
-    expect(brief.whyThis).toContain("pause week");
+    expect(brief.whyThis).toContain("pause capacity");
   });
 
   it("uses grimoire presentation copy for updated ritual patterns", () => {
@@ -379,9 +379,7 @@ describe("generateWeeklyBrief", () => {
       "Let the plant remain untouched after the spent leaf is gone.",
     );
     expect(seedBrief.decision.selected.ritualPatternKey).toBe("seed_waiting");
-    expect(seedBrief.optionalAddOn).toBe(
-      "Leave the seed, grain, or pot where waiting can be seen once, then stop checking it.",
-    );
+    expect(seedBrief.optionalAddOn).toBe("No add-on needed.");
     expect(lightBrief.decision.selected.ritualPatternKey).toBe("full_light_on_the_table");
     expect(lightBrief.optionalAddOn).toBe("No add-on needed.");
     expect(noFlameBrief.optionalAddOn.toLowerCase()).not.toContain("candle");
@@ -403,7 +401,7 @@ describe("generateWeeklyBrief", () => {
       {
         scenarioId: "batch1.kitchen.grain_beginning",
         patternKey: "grain_bowl_beginning",
-        expectedPrompt: "What beginning can be held before it is acted on?",
+        expectedPrompt: "What beginning can be held between you before it becomes work?",
       },
       {
         scenarioId: "batch1.home.salt_water_clearing",
@@ -412,8 +410,8 @@ describe("generateWeeklyBrief", () => {
       },
       {
         scenarioId: "batch1.reflection.folded_phrase",
-        patternKey: "carried_key_word",
-        expectedPrompt: "What word can cross the threshold with you?",
+        patternKey: "folded_phrase_vessel",
+        expectedPrompt: "What changes when the phrase has a place to be held?",
       },
       {
         scenarioId: "batch1.seasonal.marker_bowl",
@@ -519,7 +517,7 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.bestWindow).toBe("When you have five quiet minutes.");
     expect(brief.bestWindow).not.toContain("0-5 minutes");
-    expect(brief.whyThis).toContain("stays small");
+    expect(brief.whyThis).toContain("low capacity");
     expect(brief.decision.inputs.capacityLimitMinutes).toBe(5);
     expect(brief.decision.candidates.ritualPatterns.find(
       (pattern) => pattern.key === brief.trace.ritualPatterns[0],
@@ -586,7 +584,7 @@ describe("generateWeeklyBrief", () => {
     expect(brief.bestWindow).not.toContain("10-20 minutes");
     expect(brief.trace.ritualPatterns).toHaveLength(1);
     expect(brief.decision.selected.ritualPatternKey).toBe(brief.trace.ritualPatterns[0]);
-    expect(brief.whyThis).toContain("steady week");
+    expect(brief.whyThis).toContain("steady capacity");
   });
 
   it("high produces an active recommendation without creating a task list", () => {
@@ -643,7 +641,7 @@ describe("generateWeeklyBrief", () => {
         }),
       ]),
     );
-    expect(brief.whyThis).toContain("A few options were set aside");
+    expect(brief.whyThis).toContain("Kept bounded:");
     expect(brief.whyThis).not.toContain("filter");
     expect(brief.whyThis).not.toContain("pattern option");
   });
@@ -775,6 +773,7 @@ describe("generateWeeklyBrief", () => {
     );
     expect(serializedExplanation).not.toContain("left the practice type open");
     expect(serializedExplanation).not.toContain("surprise me choice helped");
+    expect(serializedExplanation).not.toContain("surprise me ->");
   });
 
   it("honors a visible practice answer when a matching ritual form exists", () => {
@@ -802,7 +801,8 @@ describe("generateWeeklyBrief", () => {
       expect.arrayContaining([
         expect.objectContaining({
           kind: "check_in_fit",
-          body: expect.stringContaining("Your plant choice matched"),
+          title: "Chosen for",
+          body: expect.stringContaining("Plant"),
         }),
       ]),
     );
@@ -836,7 +836,8 @@ describe("generateWeeklyBrief", () => {
       expect.arrayContaining([
         expect.objectContaining({
           kind: "numerology_accent",
-          body: expect.stringContaining("small accent"),
+          title: "Small accent",
+          body: expect.stringContaining("stayed secondary"),
         }),
       ]),
     );
@@ -924,18 +925,14 @@ describe("generateWeeklyBrief", () => {
       "fake.timing.venus",
     );
     expect(selectedReasonCodes).toContain("checkin_timing_window_match");
-    expect(brief.whyThis).toContain("look across the week");
-    expect(brief.whyThis).toContain(
-      "because of a stronger match with saved household themes",
-    );
-    expect(brief.explanation.whyThisFits).toContain(
-      "Friday, June 5 morning stood out as the strongest timing window this week.",
-    );
+    expect(brief.whyThis).toContain("Friday, June 5 morning stood out");
+    expect(brief.whyThis).toContain("stronger match with saved household themes");
+    expect(brief.explanation.whyThisFits).toContain("Friday, June 5 morning stood out");
     expect(brief.explanation.howThisWasChosen).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           kind: "timing_choice",
-          body: expect.stringContaining("Friday, June 5 morning was the strongest timing window"),
+          body: expect.stringContaining("Friday, June 5 morning stood out"),
         }),
       ]),
     );
@@ -1042,10 +1039,8 @@ describe("generateWeeklyBrief", () => {
     expect(brief.bestWindow).toBe(
       "No strong timing window stood out this week. When you have five quiet minutes.",
     );
-    expect(brief.whyThis).toContain("no timing window stood out strongly enough");
-    expect(brief.explanation.whyThisFits).toContain(
-      "No single timing window stood out strongly this week.",
-    );
+    expect(brief.whyThis).toContain("No single timing window stood out strongly this week");
+    expect(brief.explanation.whyThisFits).toContain("No single timing window stood out strongly this week");
     expect(brief.explanation.howThisWasChosen).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -1080,7 +1075,7 @@ describe("generateWeeklyBrief", () => {
       expect.arrayContaining([
         expect.objectContaining({
           kind: "ritual_focus",
-          body: expect.stringContaining("better for preparation than a big launch"),
+          body: expect.stringContaining("held preparation rather than a launch"),
         }),
       ]),
     );
@@ -1106,11 +1101,11 @@ describe("generateWeeklyBrief", () => {
       expect.arrayContaining([
         expect.objectContaining({
           kind: "ritual_focus",
-          body: expect.stringContaining("smaller shared ritual"),
+          body: expect.stringContaining("small and embodied"),
         }),
         expect.objectContaining({
-          kind: "capacity_boundary",
-          body: expect.stringContaining("stays small"),
+          title: "Kept bounded",
+          body: expect.stringContaining("One word"),
         }),
       ]),
     );
@@ -1303,7 +1298,7 @@ describe("generateWeeklyBrief", () => {
     const explanationText = JSON.stringify(brief.explanation);
 
     expect(explanationText).toContain("Capacity");
-    expect(explanationText).toContain("saved profile theme");
+    expect(explanationText).toContain("Private context supports");
     expect(explanationText).not.toContain("Schedule");
     expect(explanationText).not.toContain("Saturday morning");
     expect(explanationText).not.toContain("Thursday evening");
@@ -1410,14 +1405,14 @@ describe("generateWeeklyBrief", () => {
       expect.arrayContaining(["visible_warmth", "private_natal_contact"]),
     );
     expect(brief.whyThis).toContain(
-      "Private-profile scoring added a small fit note for visible warmth",
+      "Private timing fit added a quiet note for visible warmth",
     );
     expect(brief.explanation.whyThisFits).not.toContain("natal Venus");
     expect(brief.explanation.howThisWasChosen).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           kind: "natal_fit",
-          body: expect.stringContaining("Private timing contacts added weight"),
+          body: expect.stringContaining("Private timing fit added a quiet note"),
         }),
       ]),
     );
@@ -1519,7 +1514,7 @@ describe("generateWeeklyBrief", () => {
       astrologyVisibility: "subtle",
     });
 
-    expect(brief.whyThis).toContain("small fit note for visible warmth");
+    expect(brief.whyThis).toContain("quiet note for visible warmth");
     expect(brief.whyThis).toContain("exact chart contacts stay in debug");
     expect(brief.explanation.whyThisFits).not.toContain("natal Venus");
     expect(brief.whyThis).not.toContain("Venus in Leo");
@@ -1544,7 +1539,7 @@ describe("generateWeeklyBrief", () => {
       astrologyVisibility: "explicit",
     });
 
-    expect(brief.whyThis).toContain("small fit note for visible warmth");
+    expect(brief.whyThis).toContain("quiet note for visible warmth");
     expect(brief.whyThis).toContain("exact chart contacts stay in debug");
     expect(brief.explanation.howThisWasChosen).toEqual(
       expect.arrayContaining([
@@ -1614,7 +1609,7 @@ describe("generateWeeklyBrief", () => {
         computedBy: "astronomy_engine",
       }),
     ]);
-    expect(brief.whyThis).toContain("The new moon points toward");
+    expect(brief.whyThis).toContain("New moon supports this form");
   });
 
   it("can produce an alternate approved pattern when the current pattern is excluded", () => {
@@ -1741,7 +1736,7 @@ describe("generateWeeklyBrief", () => {
       "natal_theme.person_b.private_profile.beauty_warmth",
     ]);
     expect(brief.whyThis).toContain("warmth, beauty, and affection");
-    expect(brief.whyThis).toContain("Saved natal-chart themes");
+    expect(brief.whyThis).toContain("The household context leans toward");
     expect(brief.explanation.whyThisFits).toContain("warmth, beauty, and affection");
     expect(brief.whyThis).not.toContain("placement");
     expect(brief.whyThis).not.toContain("chart says");
@@ -1770,10 +1765,7 @@ describe("generateWeeklyBrief", () => {
       "natal_theme.person_b.private_profile.beauty_warmth",
     ]);
     expect(brief.whyThis).toContain(
-      "saved profile and natal-chart themes",
-    );
-    expect(brief.whyThis).toContain(
-      "practical home-tending magic with warmth, beauty, and affection",
+      "For both of you, the fit leans toward practical home-tending magic and warmth, beauty, and affection",
     );
     expect(brief.trace.ritualPatterns).toHaveLength(1);
   });
@@ -1798,7 +1790,8 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.trace.ritualPatterns).not.toEqual(["candle_light_focus"]);
     expect(brief.trace.safety.excludedPatternKeys).toContain("candle_light_focus");
-    expect(brief.whyThis).toContain("without conflicting with household avoid flags");
+    expect(brief.whyThis).toContain("Private context supports");
+    expect(brief.whyThis).toContain("keeping this practical and contained");
   });
 
   it("lets profile themes influence scoring when multiple patterns are eligible", () => {
@@ -1876,7 +1869,7 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.trace.ritualPatterns).not.toEqual(["candle_light_focus"]);
     expect(brief.trace.safety.excludedPatternKeys).toContain("candle_light_focus");
-    expect(brief.whyThis).toContain("A few options were set aside");
+    expect(brief.whyThis).toContain("Kept bounded:");
   });
 
   it("keeps generated output non-identifying", () => {

@@ -609,7 +609,7 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
     id: "batch1.kitchen.grain_beginning",
     title: "Kitchen grain bowl beginning",
     purpose: "Checks kitchen beginning as grain/seed vessel, not recipe work.",
-    currentDate: "2026-06-18T12:00:00.000Z",
+    currentDate: "2026-06-04T12:00:00.000Z",
     currentRitualCheckIn: {
       timeScope: "today",
       energyCapacity: "enough_to_engage",
@@ -658,7 +658,17 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
       ritualFocusKey: "saying_something_clearly",
       ritualFocusLabel: "Saying something clearly",
     },
-    preferredRitualStyles: ["reflection", "naming", "folded_word"],
+    profilePlaceholders: [
+      {
+        audience: "person_a",
+        label: "Person A",
+        profileThemeKeys: ["private_profile.structured_action"],
+        astrologyProfileThemeKeys: ["private_profile.structured_action"],
+        preferredRitualStyles: ["reflection", "naming", "folded_phrase_vessel"],
+        avoidedRitualStyles: ["shopping_required", "heavy_cleanup"],
+      },
+    ],
+    preferredRitualStyles: ["reflection", "naming", "folded_phrase_vessel"],
     expectedQualities: ["one phrase", "folding or vessel activation", "clear closure"],
     disallowedOutcomes: ["journal prompt", "therapy homework"],
   }),
