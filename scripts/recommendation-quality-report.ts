@@ -1352,6 +1352,8 @@ export function formatRecommendationQualityReport(
     "",
     "This report is a review bench. Warnings are prompts for human review, not proof that a recommendation is bad.",
     "",
+    "Authored-output warnings are product review findings, not acceptable baselines. A scenario can be contract-correct and still not be product-ready. In authored-output scenarios, `pass` means good enough to show, not merely coherent.",
+    "",
     `Scenarios sampled: ${report.scenarioCount}`,
     "",
     "## Warning Counts",

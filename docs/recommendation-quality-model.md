@@ -135,6 +135,22 @@ Authored output requires:
 - embodied both-of-us action when the audience is shared
 - light, specific source lineage without raw ids, author lists, or academic tone
 
+In authored-output review, `pass` means good enough to show in the product. It
+does not mean "technically coherent" or "not obviously broken." A
+contract-correct recommendation can still require review or changes when high
+capacity stays shallow, both-of-us action is only present in explanation, or a
+closest-compatible match is hidden.
+
+High capacity should require deeper ritual architecture when the selected path
+can support it: staged action, a material/place relationship, a held/resting or
+return arc, meaningful closure, and enough ritual duration or shape to feel
+deeper than a low-capacity rite. High capacity should not be a one-minute pause
+with extra explanation or a later return pasted on.
+
+For `both_of_us`, the ritual body should embody two people unless shared
+stillness or an object held between the two is explicitly the mechanism. Pronoun
+changes, private-fit language, and carry prompts are not enough by themselves.
+
 Closest-compatible recommendations must remain complete and dignified, but they
 must not overclaim. Coverage-gap honesty belongs in collapsed `How this was
 chosen`, diagnostics, or review reports. It should not become apology or

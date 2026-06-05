@@ -29,6 +29,24 @@ Authored output requires:
 - light, specific source lineage
 - honest closest-compatible language when coverage is thin
 
+`pass` means good enough to show in the product, not merely coherent. A
+contract-correct recommendation can still be `review_required` or
+`request_changes` if the final copy is shallow, too small for capacity,
+pronoun-only for a shared audience, or hiding an imperfect match.
+
+Authored-output warnings are product review findings. Warning counts are not
+acceptable baselines.
+
+High capacity should require deeper ritual architecture where appropriate:
+staged action, a material/place relationship, a held/resting/return arc,
+meaningful closure, and enough ritual shape to feel like more than low/steady
+copy with a later return pasted on.
+
+For `both_of_us`, audience must be embodied unless shared stillness or an
+object held between the two is explicitly the mechanism. Merely saying `both of
+you` in `Why this fits`, the carry prompt, or private-context language is not
+enough.
+
 Coverage-gap honesty belongs in collapsed `How this was chosen`, diagnostics,
 or review reports. It should not become apology in the main ritual body.
 
@@ -48,6 +66,11 @@ or review reports. It should not become apology in the main ritual body.
 recommendation can be contract-correct and still fail #225 because the body is
 an option menu, the audience only changes pronouns, high capacity stays tiny, or
 the explanation hides a closest-compatible match.
+
+Any scenario marked closest-compatible or coverage-gap must disclose that in
+collapsed `How this was chosen` or report/review output. If expanded explanation
+hides the gap, the scenario is at least `review_required`; if the copy also
+overclaims fit, it is `request_changes`.
 
 ## 3. Output-Quality Dimensions
 
@@ -86,14 +109,14 @@ the explanation hides a closest-compatible match.
 
 | Scenario | Selected pattern | Match type | Authored verdict | Key expected quality | Current warnings |
 | --- | --- | --- | --- | --- | --- |
-| `contract.candle.high_beginning` | `first_light_at_the_threshold` | exact strong | pass | first-light beginning with threshold closure | none |
-| `contract.candle.high_resting` | `full_light_holding_bowl` | exact strong | pass | full-light holding/resting bowl with return | none |
+| `contract.candle.high_beginning` | `first_light_at_the_threshold` | exact strong | review required | first-light beginning needs deeper high-capacity architecture | high-capacity shape thin |
+| `contract.candle.high_resting` | `full_light_holding_bowl` | exact strong | review required | full-light holding/resting bowl needs a more substantial high-capacity arc | high-capacity shape thin |
 | `contract.plant.both_high_tending_waning` | `plant_witness_to_growth` | closest compatible | review required | plant witness with two roles; disclose Plant high-depth gap | coverage-gap hidden |
 | `contract.plant.high_rest_companionship` | `dormant_green_rest` | closest compatible | review required | plant dormancy/rest, not candle darkness | coverage-gap hidden |
-| `contract.kitchen.high_tending_full` | `warm_cup_between_us` | exact strong | pass | cup/table warmth with both-person roles | none |
-| `contract.kitchen.high_beginning_waning` | `grain_bowl_beginning` | exact strong | pass | grain beginning held before launch | none |
+| `contract.kitchen.high_tending_full` | `warm_cup_between_us` | exact strong | review required | cup/table warmth needs a deeper high-capacity shared arc | high-capacity shape thin |
+| `contract.kitchen.high_beginning_waning` | `grain_bowl_beginning` | exact strong | review required | grain beginning held before launch, but high depth still feels thin | high-capacity shape thin |
 | `contract.home.high_tending_waning` | `first_light_at_the_threshold` | review gap | request changes | Home tending should not become light-threshold beginning | coverage-gap hidden; high shape weak; contract request changes |
-| `contract.home.high_threshold_full` | `window_light_threshold` | exact strong | pass | threshold/window edge with shared roles | none |
+| `contract.home.high_threshold_full` | `window_light_threshold` | exact strong | review required | threshold/window edge has roles but is too slight for high capacity | high-capacity shape thin |
 | `contract.reflection.high_saying_new` | `window_light_threshold` | review gap | request changes | Reflection-first phrase work, not threshold-light default | high shape weak; contract request changes |
 | `contract.seasonal.high_month_turn_threshold` | `seasonal_marker_bowl` | closest compatible | review required | seasonal marker bowl with return | coverage-gap hidden |
 | `contract.surprise.high_preserves_resolved_category` | `window_light_threshold` | closest compatible | review required | resolved category preserved; disclose high-depth gap | coverage-gap hidden |
@@ -120,7 +143,7 @@ dumps are intentionally omitted.
 - Why this fits: You chose Candle or light, making a beginning, high capacity. New-moon darkness makes the first light small: it opens the beginning, then stops before proof. Use first light at the doorway to mark a beginning. Private context supports keeping this practical and contained.
 - How this was chosen: Chosen for Candle or light, making a beginning, high capacity. Timing shaped it through new-moon darkness and first light. Ritual form uses household fire-kindling and first-light logic.
 - Source summary: Source lineage: household fire-kindling and first-light logic. Form kept contained.
-- Warnings: none
+- Warnings: `high_capacity_no_deeper_ritual_shape`
 
 ### contract.candle.high_resting
 
@@ -135,7 +158,7 @@ dumps are intentionally omitted.
 - Why this fits: You chose Candle or light, resting, high capacity. Full light lets what is present be acknowledged before the room lowers. The bowl gives full light a place to hold what is named, then return. Private context supports warmth, beauty, and affection in a small, contained rite.
 - How this was chosen: Chosen for Candle or light, resting, high capacity. Full light holds what is present before the room lowers. The bowl gives it a place to rest and return.
 - Source summary: Source lineage: full lunar light, hearth light, and vessel-holding logic. Form kept contained.
-- Warnings: none
+- Warnings: `high_capacity_no_deeper_ritual_shape`
 
 ### contract.plant.both_high_tending_waning
 
@@ -180,7 +203,7 @@ dumps are intentionally omitted.
 - Why this fits: You chose Kitchen, both of you, tending us, high capacity. Full moon supports this form without making the timing a command. The cup holds warmth without asking it to become a conversation. For both of you, the fit leans toward practical home-tending magic and clear structure and bounded action.
 - How this was chosen: Chosen for Kitchen, both of you, tending us, high capacity. The cup is the vessel for warmth and closure.
 - Source summary: Source lineage: quiet household welcome forms. Form kept contained.
-- Warnings: none
+- Warnings: `high_capacity_no_deeper_ritual_shape`
 
 ### contract.kitchen.high_beginning_waning
 
@@ -195,7 +218,7 @@ dumps are intentionally omitted.
 - Why this fits: You chose Kitchen, making a beginning, high capacity. Waning timing turns the beginning toward preparation rather than launch. Grain gives the beginning table-weight; the bowl gives it a place to wait. Private context supports keeping this practical and contained.
 - How this was chosen: Chosen for Kitchen, making a beginning, high capacity. Waning makes the beginning a held preparation rather than a launch.
 - Source summary: Source lineage: bread/grain table-center and seed-water beginning logic. Form kept contained.
-- Warnings: none
+- Warnings: `high_capacity_no_deeper_ritual_shape`
 
 ### contract.home.high_tending_waning
 
@@ -225,7 +248,7 @@ dumps are intentionally omitted.
 - Why this fits: You chose Home, both of you, marking a threshold, high capacity. Full moon supports this form without making the timing a command. Window light gives the phrase an edge to meet and leave. For both of you, the fit leans toward clear structure and bounded action and warmth, beauty, and affection.
 - How this was chosen: Chosen for Home, both of you, marking a threshold, high capacity. The window is the threshold and the curtain is closure.
 - Source summary: Source lineage: first-light threshold and lunar visible-light logic. Form kept contained.
-- Warnings: none
+- Warnings: `high_capacity_no_deeper_ritual_shape`
 
 ### contract.reflection.high_saying_new
 
@@ -434,7 +457,7 @@ Latest local recommendation-quality snapshot while creating this packet:
 - Authored-output expectation scenarios: 26
 - `fragmentary_option_menu_body`: 3
 - `audience_only_pronoun_change`: 12
-- `high_capacity_no_deeper_ritual_shape`: 2
+- `high_capacity_no_deeper_ritual_shape`: 7
 - `closest_match_overclaims_fit`: 1
 - `normal_copy_rationalizes_mismatch`: 0
 - `coverage_gap_not_disclosed_in_expanded_explanation`: 8
