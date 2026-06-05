@@ -386,7 +386,7 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("No saved natal placements were loaded for this brief.");
     expect(html).toContain("How this was chosen");
     expect(html).toContain("Ritual form");
-    expect(html).toContain("Household fit");
+    expect(html).toContain("Private timing fit");
     expect(html).not.toContain("Safety and fit");
     expect(html).not.toContain("Household safety guardrails");
     expect(html).not.toContain("Safety filters applied");

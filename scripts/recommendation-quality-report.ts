@@ -40,6 +40,13 @@ export const RECOMMENDATION_QUALITY_WARNING_IDS = [
   "missing_presentation_selected",
   "task_dressed_pattern_selected",
   "surprise_me_unresolved",
+  "explicit_category_overridden_without_blocker",
+  "explicit_focus_overridden_by_timing",
+  "explicit_focus_overridden_without_bridge",
+  "high_capacity_selected_low_depth_pattern",
+  "audience_not_reflected_in_action",
+  "normal_copy_rationalizes_set_aside",
+  "resolved_surprise_category_not_preserved",
 ] as const;
 
 export type RecommendationQualityWarningId =
@@ -245,6 +252,26 @@ export function getRecommendationQualityWarnings(args: {
     args.brief?.trace.selectedTimingSignals.some((signal) =>
       signal.signalLabel.toLowerCase().includes("waning"),
     );
+  const selectedPattern = args.brief
+    ? getApprovedRitualPatterns().find(
+        (pattern) => pattern.key === args.brief?.decision.selected.ritualPatternKey,
+      )
+    : undefined;
+  const selectedPatternStyles = selectedPattern?.ritualStyles ?? args.selectedRitualPatternStyles ?? [];
+  const expectedFamilies =
+    args.brief && selectedPattern
+      ? getExpectedRitualFormFamilies(
+          scenario.currentRitualCheckIn,
+          scenario.currentRitualCheckIn.practiceTypeHints ?? [],
+        )
+      : [];
+  const selectedFamilies = selectedPattern
+    ? getRitualFormFamiliesForPattern(selectedPattern)
+    : [];
+  const selectedFamilyMatches = ritualFormFamiliesMatch(
+    selectedFamilies,
+    expectedFamilies,
+  );
 
   if (
     isPause &&
@@ -411,6 +438,97 @@ export function getRecommendationQualityWarnings(args: {
       warning(
         "surprise_me_unresolved",
         "Surprise me did not resolve to one real visible category before recommendation.",
+      ),
+    );
+  }
+
+  if (args.brief?.decision.inputs.practiceChoice?.status === "set_aside") {
+    warnings.push(
+      warning(
+        "explicit_category_overridden_without_blocker",
+        "Explicit practice category was not preserved by the selected ritual.",
+      ),
+    );
+  }
+
+  if (
+    args.brief?.decision.inputs.practiceChoice?.status === "resolved_open_preference" &&
+    args.brief.decision.inputs.practiceChoice.selectedPatternMatches.length === 0
+  ) {
+    warnings.push(
+      warning(
+        "resolved_surprise_category_not_preserved",
+        "Surprise me resolved to a real category, but the selected pattern did not preserve it.",
+      ),
+    );
+  }
+
+  if (
+    scenario.currentRitualCheckIn.ritualFocusKey &&
+    expectedFamilies.length > 0 &&
+    !selectedFamilyMatches
+  ) {
+    warnings.push(
+      warning(
+        "explicit_focus_overridden_without_bridge",
+        "Explicit ritual focus was not preserved by the selected ritual form.",
+      ),
+    );
+
+    if (
+      args.brief?.trace.selectedTimingSignals.some((signal) =>
+        ["moon_phase", "lunation", "solar_season", "planet_sign", "planetary_aspect"].includes(
+          signal.timingFactType,
+        ),
+      )
+    ) {
+      warnings.push(
+        warning(
+          "explicit_focus_overridden_by_timing",
+          "Timing appears to have displaced the explicit ritual focus.",
+        ),
+      );
+    }
+  }
+
+  if (
+    scenario.currentRitualCheckIn.capacityMode === "high" &&
+    selectedPattern &&
+    !selectedPattern.capacityModes.includes("high") &&
+    !selectedPattern.capacityModes.includes("steady")
+  ) {
+    warnings.push(
+      warning(
+        "high_capacity_selected_low_depth_pattern",
+        "High capacity selected a pause/low-only pattern instead of a deeper or steady form.",
+      ),
+    );
+  }
+
+  if (
+    scenario.currentRitualCheckIn.audience === "both_of_us" &&
+    !/\b(both|together|each|between you|one of you|the other|shared|for both of you)\b/i.test(
+      copy.recommendedRitual,
+    ) &&
+    !selectedPatternStyles.some((style) => ["shared_space", "conversation", "table_reset"].includes(style))
+  ) {
+    warnings.push(
+      warning(
+        "audience_not_reflected_in_action",
+        "Both-of-us selection is not reflected in the ritual action.",
+      ),
+    );
+  }
+
+  if (
+    /\b(held lightly|stronger material form|better fit elsewhere|timing overrode|moon phase overrode|helped point toward)\b/i.test(
+      allCopy,
+    )
+  ) {
+    warnings.push(
+      warning(
+        "normal_copy_rationalizes_set_aside",
+        "Normal copy appears to smooth over an ignored explicit selection.",
       ),
     );
   }

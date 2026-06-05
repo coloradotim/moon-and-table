@@ -426,3 +426,49 @@ Overall verdict: show Jessica after #222/#223 human review. The best paths feel 
 ## Merge Recommendation For #222
 
 Hold for human review. Merge if Tim/ChatGPT accept the remaining noted risk that first-light beginning uses doorway light rather than a pure table-light beginning.
+
+## Contract Patch Readiness Addendum
+
+The post-review contract patch fixes the demo-blocking behavior where explicit check-in answers could be treated as weak hints. Jessica demo paths should now preserve the selected category, focus, audience, capacity, and time scope unless a real blocker is present.
+
+Demo-safe additions after this patch:
+
+- Plant + both of us + tending the home + high + waning now selects `plant_witness_to_growth`, not Candle/light release.
+- Kitchen + both of us + tending us + high + full moon selects `warm_cup_between_us`, not Candle/light just because full moon is strong.
+- Reflection + saying clearly + high + new moon selects `window_light_threshold`, preserving the phrase/window route.
+- Candle/light + resting + high now selects `full_light_holding_bowl`, not `full_light_on_the_table` clarity pressure.
+- Surprise me + high resolves to a real category first and preserves it in the generated copy.
+
+Full corrected Plant demo output:
+
+- Input summary: For today; Plant; both of us; tending the home; room for something deeper; waning moon.
+- Selected pattern: `plant_witness_to_growth`.
+- Title/theme: Let the plant witness the household tending.
+- Ritual body: Let the plant hold attention without becoming a task. Speak softly or silently. Set one plant, leaf, seed, or plant image where both of you can see it. One of you names what in the home is still living; the other names what can be left undisturbed. Let the plant witness both words through one quiet minute. Return the plant or image to its ordinary place without adding a task. Close when the plant is back in its ordinary place and no new task has been added.
+- Intention: Let the plant witness the household tending.
+- Best window: When you have room to linger this week.
+- Optional accent: No add-on needed.
+- Carry prompt: What in the home can be tended by being witnessed and left steady?
+- Why this fits: You chose Plant, both of you, tending the home, high capacity. Waning moon supports this form without making the timing a command. Let a plant witness one thing that is growing without turning it into processing. For both of you, the fit leans toward practical home-tending magic and warmth, beauty, and affection.
+- How this was chosen: Chosen for: Plant, both of you, tending the home, high capacity / Timing shaped it: Waning moon supports this form without making the timing a command. / Focus bridge: Tending the home stays inside the ritual action. / Ritual form: Plant folklore and flower-language traditions can make a living thing a witness, not a prop. / Material lineage: Source lineage: Waning Moon card. / Kept bounded: One primary ritual, no task list. / Private timing fit: For both of you, the fit leans toward practical home-tending magic and warmth, beauty, and affection.
+- Source summary: Source lineage: waning moon card and plant witness to growth pattern. Form kept contained.
+- Warnings: none.
+- Human verdict: show Jessica if she asks for Plant; not a top-10 candle/moon route.
+
+Revised demo guidance:
+
+- Top demo paths remain Candle/light full/new/waning, Reflection phrase/window, Kitchen warmth, live-flame-avoided, and full-light bowl.
+- Plant is now safe to try if Jessica chooses it explicitly.
+- Avoid using generic Home + tending the home + high as a headline demo path until the threshold-forward tendency is reviewed.
+
+Must-fix items before showing Jessica: none blocking after the contract patch, assuming full validation below stays green.
+
+Validation after contract patch:
+
+- `npm run lint:content`: pass.
+- `npm run typecheck`: pass.
+- `npm run test`: pass, 26 files / 298 tests.
+- `npm run test -- tests/unit/recommendation-quality-report.test.ts`: pass, 9 tests.
+- `npm run recommendation:quality`: pass; 93 scenarios; all warning buckets 0; distinct selected patterns 31; broad concentration remains `full_light_on_the_table` at 6.
+- `npm run diagnose:content`: pass; 97 scenarios sampled.
+- `npm run check`: pass, including build and 2 Playwright e2e tests. Vite still reports the existing large-chunk warning.

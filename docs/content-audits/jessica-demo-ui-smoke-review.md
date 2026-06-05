@@ -100,3 +100,24 @@ Verdict: no known viewport blocker. Non-blocking risk: signed-in recommendation 
 ## Merge Recommendation
 
 Hold for human review, then merge if validation stays green.
+
+## Contract Patch Smoke Addendum
+
+The PR review identified a product-level contract issue rather than a display issue: the recommendation card could show a polished answer to the wrong selected category/focus. The smoke expectation is now:
+
+- The check-in review and recommendation card must preserve explicit category/practice type, focus, audience, capacity, and time scope.
+- `Surprise me` must resolve to a real category before the card is displayed, and the card should not say Surprise me as though it were a ritual family.
+- `How this was chosen` can remain collapsed, but normal card copy must not rationalize ignored inputs with "held lightly," "stronger material form," or timing-overrode language.
+- The recommendation-quality report now covers 12 contract matrix scenarios in addition to the Candle/light demo routes.
+
+UI blocker status after contract patch: none known. This patch does not change UI layout or add new visible categories.
+
+Validation after contract patch:
+
+- `npm run lint:content`: pass.
+- `npm run typecheck`: pass.
+- `npm run test`: pass, 26 files / 298 tests.
+- `npm run test -- tests/unit/recommendation-quality-report.test.ts`: pass, 9 tests.
+- `npm run recommendation:quality`: pass; 93 scenarios; all warning buckets 0.
+- `npm run diagnose:content`: pass; 97 scenarios sampled.
+- `npm run check`: pass, including build and 2 Playwright e2e tests. Vite still reports the existing large-chunk warning.

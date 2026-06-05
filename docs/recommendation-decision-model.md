@@ -66,6 +66,10 @@ Moon & Table has a house voice. User-facing profile settings should not remix th
 
 Mismatch language should be honest. If a check-in answer did not directly match the selected ritual, the expanded explanation should say what was held as a tone, what matched, and what was set aside. For example, a `Making a beginning` focus during waning timing can become preparation for a first step; a `Tending us` focus during low capacity can become a smaller shared ritual rather than a long conversation.
 
+The recommendation contract is stricter than ordinary scoring. Explicit check-in category/practice type, ritual focus, audience, capacity, time scope, and hard avoid/preference constraints should be preserved unless a real blocker exists. Timing, lunar phase, numerology, private profile fit, natal themes, material strength, and presentation polish may shape the selected ritual, but they cannot override the contract on their own. If `Surprise me` is selected, the engine resolves one real visible category first and then treats that resolved category as the contract for selection and presentation.
+
+Normal copy should not rationalize ignored input. Phrases such as "held lightly," "stronger material form," "timing overrode," or "your choice helped point toward" are not acceptable when an explicit category or focus actually lost.
+
 Across-week timing should say why a selected date or window stood out. If no timing window is strong enough, the explanation should say that plainly and invite the ritual whenever capacity allows. This is timing look-ahead, not schedule awareness. First-day, last-day, and month-turn calendar thresholds may shape a threshold or first-and-last ritual when they are selected, but calendar timing is not the ritual and should not become named-day folklore or date trivia.
 
 Profile and natal language is visibility-aware. The default card should use theme language and avoid raw private placements or aspect details. Expanded explanation may become more explicit when astrology visibility allows it, but it should still stay symbolic, non-deterministic, and separate from debug.
@@ -89,6 +93,7 @@ Current positive score reasons include:
 - `checkin_capacity_answer`: the current check-in capacity was used in scoring
 - `checkin_practice_type_match`: the selected practice type matched a pattern style
 - `checkin_ritual_focus_match`: the selected ritual focus or conservative text alias matched a pattern style
+- `checkin_primary_focus_action_match`: the selected ritual focus matched the pattern's primary action family, not only a broad related hint
 - `checkin_audience_match`: the selected audience matched the pattern's audience fit
 - `checkin_timing_window_match`: the selected timing-window candidate matched the pattern style
 - `capacity_default_pattern`: pattern is the fallback default for the active capacity
@@ -102,8 +107,10 @@ Current rejection reasons include:
 - `capacity_mode_mismatch`
 - `too_long_for_capacity`
 - `avoided_style_conflict`
+- `recommendation_contract_category_mismatch`
+- `recommendation_contract_focus_mismatch`
 
-Safety, explicit avoid flags, approval status, capacity mode, and max duration can remove a pattern from eligibility. Preferences and symbolic fit can improve ranking, but they do not override hard exclusions.
+Safety, explicit avoid flags, approval status, capacity mode, max duration, and recommendation-contract mismatches can remove a pattern from eligibility. Preferences and symbolic fit can improve ranking, but they do not override hard exclusions.
 
 `Surprise me` is not a scoring style. It records that the person left practice type open, then lets timing, capacity, focus, saved profile context, and approved pattern fit do the work.
 

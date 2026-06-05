@@ -300,3 +300,86 @@ Base branch: main.
 - New forms: first-light beginning, candle witness phrase, unlit candle witness, window-light threshold, full-light holding bowl, waning-light release.
 - Validation: all required commands passed after the #223 cleanup patch.
 - Merge recommendation: hold for human review.
+
+## Recommendation Contract Cleanup Addendum
+
+PR review found a blocking contract failure: explicit Plant + both of us + tending the home + high capacity + waning timing could be overridden by a stronger Candle/light release route, then normal copy smoothed over the miss with "held lightly" and "stronger material form" language. This patch treats explicit check-in answers as a recommendation contract before final presentation.
+
+Implementation changes:
+
+- Added a recommendation-contract rejection gate for explicit category and explicit focus mismatches without a form-family bridge.
+- Added primary focus-action scoring so broad hints do not let generic light-focus satisfy `Resting` when a holding/lowering form exists.
+- Allowed high capacity to use compatible steady/low forms only as same-contract fallbacks; high-capacity variants were added to the active Plant/Kitchen/grain/cup presentations where the copy already supported deeper arcs.
+- Deduped normal `Household fit` sections when private profile and private timing context are both present.
+- Replaced normal-copy mismatch/debug language with bounded ritual language and blocked the smoothing phrases in tests.
+
+### Recommendation Contract Matrix
+
+| Scenario | Expected contract | Disallowed | Result |
+| --- | --- | --- | --- |
+| Plant + Tending the home + High + Waning | Plant/Home-compatible tending ritual | Candle/light release, salt/water clearing, category set-aside smoothing | `plant_witness_to_growth`, pass |
+| Plant + Tending the home + High + neutral timing | Plant/Home-compatible tending ritual | category drift | `plant_witness_to_growth`, pass |
+| Plant + Resting + High + dark/seasonal | Plant rest/dormancy/witness | Candle/light unless Plant remains real material | `dormant_green_rest`, pass |
+| Kitchen + Tending us + High + Full moon | Kitchen warmth/table/cup/bread/honey/vessel | Candle/light just because full moon is strong | `warm_cup_between_us`, pass |
+| Kitchen + Beginning + High + Waning | Kitchen grain/bowl/preparation beginning | generic release unless clearing selected | `grain_bowl_beginning`, pass |
+| Home + Tending the home + High + Waning | Home-tending/house map/threshold/table/vessel return | clearing/release unless clearing selected | `first_light_at_the_threshold`, pass but watch threshold-forward tendency |
+| Home + Marking threshold + High + Full moon | Home/threshold form shaped by light | pure Candle/light without threshold | `window_light_threshold`, pass |
+| Reflection + Saying clearly + High + New moon | Reflection phrase/written/folded/window form | generic beginning light | `window_light_threshold`, pass |
+| Candle/light + Beginning + High + New moon | Candle/light beginning | Home threshold without light/beginning | `first_light_at_the_threshold`, pass |
+| Candle/light + Resting + High + Full/dark | Candle/light rest/holding/lowering | clarity pressure/productivity | `full_light_holding_bowl`, pass |
+| Surprise me + High | resolve one real category first, preserve it | category drift after resolution | resolves to Reflection/window threshold, pass |
+| Both of us + High | action changes for two people | pronoun-only audience handling | warm cup uses two-person action, pass |
+
+Test expectations were written from the product contract above, not from whatever the engine happened to select.
+
+### Before / After: Blocking Plant Case
+
+Before review, the live app could answer Plant + both + tending the home + high + waning with a Candle/light release form and explain that the Plant answer was "held lightly" while the ritual stayed with the "stronger material form."
+
+After patch:
+
+- Selected pattern: `plant_witness_to_growth`
+- Warnings: none
+- Title/theme: Let the plant witness the household tending.
+- Ritual body: Let the plant hold attention without becoming a task. Speak softly or silently. Set one plant, leaf, seed, or plant image where both of you can see it. One of you names what in the home is still living; the other names what can be left undisturbed. Let the plant witness both words through one quiet minute. Return the plant or image to its ordinary place without adding a task. Close when the plant is back in its ordinary place and no new task has been added.
+- Intention: Let the plant witness the household tending.
+- Best window: When you have room to linger this week.
+- Optional accent: No add-on needed.
+- Carry prompt: What in the home can be tended by being witnessed and left steady?
+- Why this fits: You chose Plant, both of you, tending the home, high capacity. Waning moon supports this form without making the timing a command. Let a plant witness one thing that is growing without turning it into processing. For both of you, the fit leans toward practical home-tending magic and warmth, beauty, and affection.
+- How this was chosen: Chosen for: Plant, both of you, tending the home, high capacity / Timing shaped it: Waning moon supports this form without making the timing a command. / Focus bridge: Tending the home stays inside the ritual action. / Ritual form: Plant folklore and flower-language traditions can make a living thing a witness, not a prop. / Material lineage: Source lineage: Waning Moon card. / Kept bounded: One primary ritual, no task list. / Private timing fit: For both of you, the fit leans toward practical home-tending magic and warmth, beauty, and affection.
+- Source summary: Source lineage: waning moon card and plant witness to growth pattern. Form kept contained.
+
+### High-Capacity Cross-Category Evidence
+
+- Plant: `plant_witness_to_growth` now uses plant witness, two roles, one quiet minute, and ordinary return.
+- Kitchen: `warm_cup_between_us` now uses two cups or one shared cup, each person gives one word, the cup rests between them, then returns.
+- Home: `first_light_at_the_threshold` preserves Home/threshold and does not become clearing/release, though it remains threshold-forward for generic home-tending.
+- Reflection: `window_light_threshold` preserves the phrase/window edge and closes with the curtain rather than becoming generic new-moon beginning.
+- Candle/light: `full_light_holding_bowl` now wins Candle/light + high + resting over `full_light_on_the_table`, giving rest a bowl/holding/return arc.
+
+### New Diagnostics / Warnings
+
+- `explicit_category_overridden_without_blocker`
+- `explicit_focus_overridden_by_timing`
+- `explicit_focus_overridden_without_bridge`
+- `high_capacity_selected_low_depth_pattern`
+- `audience_not_reflected_in_action`
+- `normal_copy_rationalizes_set_aside`
+- `resolved_surprise_category_not_preserved`
+
+### Remaining Risks After Contract Patch
+
+- `contract.home.high_tending_waning` is correct on category/focus and not clearing/release, but still uses a threshold-forward first-light form. Human review should decide whether that is acceptable for generic Home tending or should move toward a stronger house-map/table/vessel return form in a future issue.
+- The Plant witness source summary still compresses partly through the waning-moon card instead of a more material-specific plant witness lineage. This is not a contract blocker, but it is less elegant than the best #207 house-voice summaries.
+- Contract diagnostics are now available in quality warnings and rejected-candidate reasons, but broader coverage should become a follow-up issue so future categories do not regress.
+
+### Validation After Contract Patch
+
+- `npm run lint:content`: pass.
+- `npm run typecheck`: pass.
+- `npm run test`: pass, 26 files / 298 tests.
+- `npm run test -- tests/unit/recommendation-quality-report.test.ts`: pass, 9 tests.
+- `npm run recommendation:quality`: pass; 93 scenarios; all warning buckets 0; distinct selected patterns 31; broad concentration remains `full_light_on_the_table` at 6.
+- `npm run diagnose:content`: pass; 97 scenarios sampled; diagnostics/report output remains available.
+- `npm run check`: pass, including build and 2 Playwright e2e tests. Vite still reports the existing large-chunk warning.

@@ -416,7 +416,7 @@ describe("generateWeeklyBrief", () => {
       {
         scenarioId: "batch1.seasonal.marker_bowl",
         patternKey: "seasonal_marker_bowl",
-        expectedPrompt: "What season is this home actually in?",
+        expectedPrompt: "What season can the bowl hold between you without becoming display?",
       },
       {
         scenarioId: "batch1.quiet_welcome",

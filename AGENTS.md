@@ -51,6 +51,7 @@ Real personalization belongs only in Firebase/Firestore for the hosted app, priv
 - Moon & Table has a house voice. User settings may constrain intensity, visibility, capacity, and practice fit, but they should not remix the ritual into a different writing style.
 - Safety should constrain recommendations; it should not rewrite the metaphysics of the practice.
 - Schedule and capacity constraints override symbolic timing.
+- Explicit check-in answers are recommendation contracts. Visible category/practice type, ritual focus, audience, capacity, time scope, and hard avoid/preference constraints may be shaped by timing and source support, but they should not be overridden without a real safety, source, privacy, or eligibility blocker.
 - The app should avoid deterministic claims.
 - Symbolic meaning should come from reviewed, traceable, approved cards.
 - Source-backed does not mean scientifically proven. It means reviewed lineage, ritual technology, material/action logic, symbolic tradition, timing support, or other approved curation basis.
@@ -75,6 +76,7 @@ Before opening a PR that can affect recommendation output, check:
 - generic filler: no repeated filler closings or vague wellness language standing in for meaning
 - optional candle misuse: no generic `light a candle` add-on when the ritual is already candle/light-based or when the accent is not contextual
 - timing/focus contradictions: selected focus is bridged, not vetoed or contradicted by raw timing fallback
+- recommendation contract: selected category, focus, audience, capacity, and time scope are preserved unless a real blocker is recorded in diagnostics; timing, numerology, natal themes, and source strength shape the selected path instead of replacing it
 - house voice: no user-facing tone selector, writing-style picker, or prompt-style mixer is introduced without a deliberate product decision
 - metaphysical integrity: magical practice is treated as meaningful on its own terms, without flattening it into wellness metaphor, decorative prop, or safety disclaimer
 - privacy/source boundaries: no private data, raw trace keys, or source-compliance machinery leaks into user-facing copy
