@@ -26,9 +26,14 @@ Each week should include:
 1. Theme
 2. Best ritual window
 3. One recommended ritual
-4. One relationship or journal prompt
+4. One reflection or carry prompt
 5. One optional add-on
 6. Short “why this” explanation
+
+The final copy should read as one authored household-grimoire entry. The theme,
+ritual body, intention, best window, carry prompt, optional add-on, and
+explanation should belong to the same ritual. The body should choose one primary
+material/action path and include clear activation and closure.
 
 ## Constraints
 
@@ -38,7 +43,7 @@ Each week should include:
 - For `pause`, offer no required ritual; use grounding, blessing, or permission to do nothing.
 - For `low`, keep the recommendation to five minutes or less with no shopping, setup, or cleanup.
 - For `steady`, keep the practical recommendation to about twenty minutes or less.
-- For `high`, allow a more active recommendation up to 30 minutes, but still keep one primary ritual.
+- For `high`, allow a more active recommendation up to 30 minutes, but still keep one primary ritual. High capacity should create deeper ritual architecture, not only longer explanation.
 - Avoid assigning multiple rituals across multiple days unless explicitly requested.
 - Use invitation language, not obligation language.
 - Capacity constraints should override symbolic timing.
@@ -66,19 +71,19 @@ Try-again should save `try_again` feedback and then select a different approved,
 ## Example
 
 Theme:
-Clear one small thing. Feed one living thing.
+Let one plant hold steady attention.
 
 Best window:
 When you have a little space this week.
 
 Recommended ritual:
-Tend one plant. Remove dead leaves or water it. Name one thing to stop feeding and one thing to nourish.
+Set one plant where it can be seen. Name one living thing in the home that does not need to be pushed today. Leave the plant untouched until its next ordinary care moment. Close by returning it to its place.
 
 Prompt:
-What part of this household needs less intensity and more tending?
+What living thing can be tended by being left steady?
 
 Optional:
-Optional: light a candle while doing it.
+No add-on needed.
 
 Why this:
-The waning moon supports clearing and release. The private profile prefers practical tending over abstract processing. Capacity suggests this should stay practical and home-based.
+You chose Plant and low capacity. The plant keeps the work material and small. Waning timing makes the tending quiet rather than forceful: one living thing receives attention, then returns to ordinary care.

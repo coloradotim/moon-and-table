@@ -19,12 +19,33 @@ function normalCopyFieldsFromReport(): string {
       result.brief.optionalAddOn,
       result.brief.reflectionPrompt,
       result.brief.explanation.whyThisFits,
+      result.brief.sourceSummary,
       ...result.howThisWasChosen.flatMap((section) => [
         section.title,
         section.body,
       ]),
     ])
     .join("\n");
+}
+
+function expectedWarningIdsForScenario(
+  scenario: (typeof recommendationQualityScenarios)[number],
+): string[] {
+  const warningIds = [
+    ...(scenario.contract?.expectedWarningIds ?? []),
+    ...(scenario.authoredOutput?.expectedWarningIds ?? []),
+  ];
+
+  if (
+    (scenario.contract?.coverageGapExpected ||
+      scenario.contract?.closestCompatiblePatternExpected ||
+      scenario.authoredOutput?.matchType === "closest_compatible_match") &&
+    !warningIds.includes("coverage_gap_not_disclosed_in_expanded_explanation")
+  ) {
+    warningIds.push("coverage_gap_not_disclosed_in_expanded_explanation");
+  }
+
+  return warningIds;
 }
 
 describe("recommendation quality report", () => {
@@ -99,6 +120,9 @@ describe("recommendation quality report", () => {
     const contractResults = report.scenarioResults.filter(
       (result) => result.scenario.contract,
     );
+    const authoredOutputResults = report.scenarioResults.filter(
+      (result) => result.scenario.authoredOutput,
+    );
     const timingAuthorityModes = new Set(
       contractResults.map((result) => result.scenario.contract?.timingAuthority),
     );
@@ -107,6 +131,7 @@ describe("recommendation quality report", () => {
     );
 
     expect(contractResults.length).toBeGreaterThanOrEqual(24);
+    expect(authoredOutputResults.length).toBeGreaterThanOrEqual(13);
     expect(timingAuthorityModes).toEqual(
       new Set(["shape_only", "may_lead", "must_not_lead"]),
     );
@@ -117,7 +142,7 @@ describe("recommendation quality report", () => {
 
     for (const result of contractResults) {
       const status = result.contractStatus;
-      const expectedWarningIds = result.scenario.contract?.expectedWarningIds ?? [];
+      const expectedWarningIds = expectedWarningIdsForScenario(result.scenario);
 
       expect(status, result.scenario.id).toBeDefined();
       expect(status?.categoryPreserved, result.scenario.id).toBe(true);
@@ -130,6 +155,19 @@ describe("recommendation quality report", () => {
         result.warnings.map((warning) => warning.id).sort(),
         result.scenario.id,
       ).toEqual([...expectedWarningIds].sort());
+    }
+
+    for (const result of authoredOutputResults) {
+      expect(result.authoredOutputStatus, result.scenario.id).toBeDefined();
+      expect(result.scenario.authoredOutput?.goodOutputShouldFeelLike).toBeTruthy();
+      expect(result.scenario.authoredOutput?.centralMaterialAction).toBeTruthy();
+      expect(result.scenario.authoredOutput?.ritualFunction).toBeTruthy();
+      expect(result.scenario.authoredOutput?.timingMayDo).toBeTruthy();
+      expect(result.scenario.authoredOutput?.capacityShouldChange).toBeTruthy();
+      expect(result.scenario.authoredOutput?.audienceShouldChange).toBeTruthy();
+      expect(result.scenario.authoredOutput?.disallowedCopyPatterns.length).toBeGreaterThan(
+        0,
+      );
     }
   });
 
@@ -459,7 +497,9 @@ describe("recommendation quality report", () => {
         ),
         `${scenarioId} selected ${result?.selectedRitualPattern.key} with families ${result?.selectedRitualFormFamilies.join(", ")}`,
       ).toBe(true);
-      const expectedWarningIds = result?.scenario.contract?.expectedWarningIds ?? [];
+      const expectedWarningIds = result
+        ? expectedWarningIdsForScenario(result.scenario)
+        : [];
       expect(
         result?.warnings.map((warning) => warning.id).sort(),
         scenarioId,
@@ -518,7 +558,9 @@ describe("recommendation quality report", () => {
       const result = resultById.get(scenarioId);
 
       expect(result, scenarioId).toBeDefined();
-      const expectedWarningIds = result?.scenario.contract?.expectedWarningIds ?? [];
+      const expectedWarningIds = result
+        ? expectedWarningIdsForScenario(result.scenario)
+        : [];
       expect(
         result?.warnings.map((warning) => warning.id).sort(),
         scenarioId,
@@ -629,6 +671,7 @@ describe("recommendation quality report", () => {
           "What can this household stop feeding with attention this week?",
         whyThisFits:
           "The score was 12 because source.rachel_patterson_moon matched private_profile.practical_tending.",
+        sourceSummary: "Source lineage: source.rachel_patterson_moon.",
         howThisWasChosen: [
           {
             title: "Debug",
@@ -680,6 +723,7 @@ describe("recommendation quality report", () => {
         optionalAddOn: "",
         reflectionPrompt: "What can be complete enough for tonight?",
         whyThisFits: "This keeps the ritual small and practical.",
+        sourceSummary: "Source lineage: reviewed household logic.",
         howThisWasChosen: [],
       },
     };
@@ -701,6 +745,104 @@ describe("recommendation quality report", () => {
 
     expect(withPrefix).toContain("generic_optional_candle");
     expect(withoutPrefix).toContain("generic_optional_candle");
+  });
+
+  it("flags authored-output failures that should never become baselines", () => {
+    const warnings = getRecommendationQualityWarnings({
+      scenario: {
+        currentRitualCheckIn: {
+          timeScope: "today",
+          energyCapacity: "room_for_something_deeper",
+          capacityMode: "high",
+          audience: "both_of_us",
+          practiceTypeLabel: "Candle or light",
+          practiceTypeHints: ["candle_or_light"],
+          ritualFocusKey: "making_a_beginning",
+          ritualFocusLabel: "Making a beginning",
+        },
+        contract: {
+          categorySelectionMode: "explicit_category",
+          expectedCategory: "Candle or light",
+          expectedFocusBehavior: "Beginning should stay a light beginning.",
+          expectedCapacityBehavior: "High capacity should deepen ritual shape.",
+          expectedAudienceBehavior: "Both people should have embodied roles.",
+          timingAuthority: "shape_only",
+          coverageGapExpected: true,
+          closestCompatiblePatternExpected: true,
+          rationale: "Synthetic bad-copy regression.",
+        },
+      },
+      selectedRitualPatternKey: "first_light_at_the_threshold",
+      selectedRitualPatternStyles: ["candle_or_light", "light_focus"],
+      selectedTimingWindow: { isStrong: false, reasonLabels: [] },
+      copy: {
+        theme: "Light at the start.",
+        recommendedRitual:
+          "Stand together at a doorway, window, or table. Name one first step. Cross or turn away together.",
+        intention: "Light at the start.",
+        bestWindow: "When you have five quiet minutes.",
+        optionalAddOn: "",
+        reflectionPrompt: "What starts now?",
+        whyThisFits:
+          "This is the ideal strong fit because the score reason matched the selected ritual context.",
+        sourceSummary: "Source lineage: NASA says full moon brightness.",
+        howThisWasChosen: [
+          {
+            title: "Ritual form family matched",
+            body: "candidate selected pattern had the exact pattern match.",
+          },
+        ],
+      },
+    }).map((warning) => warning.id);
+
+    expect(warnings).toEqual(
+      expect.arrayContaining([
+        "fragmentary_option_menu_body",
+        "why_this_fits_describes_matching_not_meaning",
+        "how_chosen_reads_like_system_report",
+        "source_lineage_too_raw_or_academic",
+        "high_capacity_no_deeper_ritual_shape",
+        "ritual_body_lacks_activation_or_closure",
+        "closest_match_overclaims_fit",
+      ]),
+    );
+  });
+
+  it("flags demystified ritual matter and broken-app coverage-gap apology", () => {
+    const warnings = getRecommendationQualityWarnings({
+      scenario: {
+        currentRitualCheckIn: {
+          timeScope: "today",
+          energyCapacity: "a_little",
+          capacityMode: "low",
+          audience: "me",
+          ritualFocusKey: "resting",
+          ritualFocusLabel: "Resting",
+        },
+      },
+      selectedRitualPatternKey: "bank_the_house_light",
+      selectedRitualPatternStyles: ["candle_or_light", "light_focus"],
+      selectedTimingWindow: { isStrong: false, reasonLabels: [] },
+      copy: {
+        theme: "Rest with a bowl.",
+        recommendedRitual:
+          "Place the bowl down. This is only symbolic, just a visual reminder. Sorry, content is limited.",
+        intention: "Rest with a bowl.",
+        bestWindow: "A quiet moment today.",
+        optionalAddOn: "",
+        reflectionPrompt: "What can rest?",
+        whyThisFits: "This works because psychology.",
+        sourceSummary: "Source lineage: reviewed household light logic.",
+        howThisWasChosen: [],
+      },
+    }).map((warning) => warning.id);
+
+    expect(warnings).toEqual(
+      expect.arrayContaining([
+        "material_used_as_prop_not_ritual_matter",
+        "coverage_gap_disclosed_as_broken_app_language",
+      ]),
+    );
   });
 
   it("does not emit raw private details in report normal copy fields", () => {
