@@ -12,20 +12,17 @@ export type MoonPhaseGlyphState =
 
 type MoonPhaseGlyphShape = {
   label: string;
-  lightCx: number;
-  darkCx: number;
-  darkOpacity: number;
 };
 
 const GLYPH_SHAPES: Record<MoonPhaseGlyphState, MoonPhaseGlyphShape> = {
-  new: { label: "New moon", lightCx: -32, darkCx: 12, darkOpacity: 1 },
-  waxing_crescent: { label: "Waxing crescent moon", lightCx: 12, darkCx: 7, darkOpacity: 1 },
-  first_quarter: { label: "First quarter moon", lightCx: 12, darkCx: 0, darkOpacity: 1 },
-  waxing_gibbous: { label: "Waxing gibbous moon", lightCx: 12, darkCx: -5, darkOpacity: 1 },
-  full: { label: "Full moon", lightCx: 12, darkCx: 42, darkOpacity: 0 },
-  waning_gibbous: { label: "Waning gibbous moon", lightCx: 12, darkCx: 17, darkOpacity: 1 },
-  last_quarter: { label: "Last quarter moon", lightCx: 12, darkCx: 24, darkOpacity: 1 },
-  waning_crescent: { label: "Waning crescent moon", lightCx: 12, darkCx: 29, darkOpacity: 1 },
+  new: { label: "New moon" },
+  waxing_crescent: { label: "Waxing crescent moon" },
+  first_quarter: { label: "First quarter moon" },
+  waxing_gibbous: { label: "Waxing gibbous moon" },
+  full: { label: "Full moon" },
+  waning_gibbous: { label: "Waning gibbous moon" },
+  last_quarter: { label: "Last quarter moon" },
+  waning_crescent: { label: "Waning crescent moon" },
 };
 
 type MoonPhaseMilestone = {
@@ -46,6 +43,53 @@ const NEXT_MILESTONES: Record<MoonPhaseGlyphState, MoonPhaseMilestone> = {
 
 function normalizePhaseAngle(angleDegrees: number): number {
   return ((angleDegrees % 360) + 360) % 360;
+}
+
+function roundToVisualStep(angleDegrees: number): number {
+  const normalized = normalizePhaseAngle(angleDegrees);
+  const visualStep = Math.round(normalized / 22.5) % 16;
+
+  return visualStep;
+}
+
+function formatSvgNumber(value: number): string {
+  return Number.isInteger(value) ? String(value) : value.toFixed(2);
+}
+
+function getLitSideForVisualStep(visualStep: number): "none" | "right" | "full" | "left" {
+  if (visualStep === 0) {
+    return "none";
+  }
+
+  if (visualStep === 8) {
+    return "full";
+  }
+
+  return visualStep < 8 ? "right" : "left";
+}
+
+function getLitMoonOverlay(visualStep: number): string {
+  const visualAngle = visualStep * 22.5;
+  const illumination = (1 - Math.cos((visualAngle * Math.PI) / 180)) / 2;
+
+  if (illumination <= 0.03) {
+    return "";
+  }
+
+  if (illumination >= 0.97) {
+    return '<circle cx="12" cy="12" r="9.25" fill="var(--moon-glyph-shadow, #f5f1e9)" />';
+  }
+
+  const litSide = getLitSideForVisualStep(visualStep);
+  const direction = litSide === "left" ? -1 : 1;
+  const offset = (1 - illumination) * 18;
+  const cx = 12 + direction * offset;
+
+  return `<circle cx="${formatSvgNumber(cx)}" cy="12" r="9.25" fill="var(--moon-glyph-shadow, #f5f1e9)" />`;
+}
+
+export function getMoonPhaseGlyphVisualStepForAngle(angleDegrees: number): number {
+  return roundToVisualStep(angleDegrees);
 }
 
 export function getMoonPhaseGlyphStateForAngle(
@@ -128,10 +172,9 @@ export function getNextMoonPhaseMilestoneForAngle(
 export function getMoonPhaseGlyphSvgForAngle(angleDegrees: number): string {
   const state = getMoonPhaseGlyphStateForAngle(angleDegrees);
   const shape = GLYPH_SHAPES[state];
-  const darkCircle =
-    shape.darkOpacity > 0
-      ? `<circle cx="${shape.darkCx}" cy="12" r="9.6" fill="var(--moon-glyph-shadow, #f5f1e9)" opacity="${shape.darkOpacity}" />`
-      : "";
+  const visualStep = getMoonPhaseGlyphVisualStepForAngle(angleDegrees);
+  const litSide = getLitSideForVisualStep(visualStep);
+  const litOverlay = getLitMoonOverlay(visualStep);
 
   return `
     <svg
@@ -143,14 +186,16 @@ export function getMoonPhaseGlyphSvgForAngle(angleDegrees: number): string {
       focusable="false"
       data-moon-phase-glyph="${state}"
       data-moon-phase-label="${shape.label}"
+      data-moon-phase-visual-step="${visualStep}"
+      data-moon-phase-lit-side="${litSide}"
     >
       <circle cx="12" cy="12" r="10" fill="var(--moon-glyph-shadow, #f5f1e9)" stroke="currentColor" stroke-width="1.65" />
       <clipPath id="moon-glyph-clip-${state}">
         <circle cx="12" cy="12" r="9.25" />
       </clipPath>
       <g clip-path="url(#moon-glyph-clip-${state})">
-        <circle cx="${shape.lightCx}" cy="12" r="9.25" fill="currentColor" />
-        ${darkCircle}
+        <circle cx="12" cy="12" r="9.25" fill="currentColor" />
+        ${litOverlay}
       </g>
     </svg>
   `;

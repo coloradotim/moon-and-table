@@ -5,6 +5,7 @@ import {
   type CapacityMode,
   type WeeklyBrief,
 } from "../lib/generate-weekly-brief";
+import { MoonPhase } from "astronomy-engine";
 import {
   audienceOptions,
   energyCapacityOptions,
@@ -553,17 +554,22 @@ function renderDeveloperDecision(brief: WeeklyBrief): string {
   `;
 }
 
-function renderMoonGlyph(brief: WeeklyBrief): string {
-  const lunarTiming = brief.trace.timingFactDetails[0];
-  const phaseAngle = lunarTiming?.phaseAngleDegrees ?? 0;
-  const phaseDate = lunarTiming?.exactIso ?? lunarTiming?.dateStart ?? new Date().toISOString();
+function renderMoonGlyph(
+  currentDate: Date | string = new Date(),
+  timezone = "UTC",
+): string {
+  const phaseDate = currentDate instanceof Date ? currentDate : new Date(currentDate);
+  const resolvedPhaseDate = Number.isNaN(phaseDate.getTime())
+    ? new Date()
+    : phaseDate;
+  const phaseAngle = MoonPhase(resolvedPhaseDate);
   const currentPhase = getMoonPhaseGlyphLabelForAngle(phaseAngle);
-  const nextMilestone = getNextMoonPhaseMilestoneForAngle(phaseAngle, phaseDate);
+  const nextMilestone = getNextMoonPhaseMilestoneForAngle(phaseAngle, resolvedPhaseDate);
   const nextMilestoneDate = new Intl.DateTimeFormat("en-US", {
     month: "long",
     day: "numeric",
     year: "numeric",
-    timeZone: lunarTiming?.timezone ?? "UTC",
+    timeZone: timezone,
   }).format(new Date(nextMilestone.exactIso));
   const tooltip = `Current phase: ${currentPhase}. Next lunar milestone: ${nextMilestone.label} on ${nextMilestoneDate}.`;
 
@@ -1481,7 +1487,7 @@ export function renderSignedInShell(
     <section class="shell" aria-labelledby="app-title">
       <header class="masthead masthead--with-session">
         <div class="masthead__nameplate">
-          ${renderMoonGlyph(brief)}
+          ${renderMoonGlyph(privateBriefData.input.currentDate, privateBriefData.input.timezone)}
           <button
             class="masthead__home"
             type="button"

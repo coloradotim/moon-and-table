@@ -5,6 +5,7 @@ import {
   getMoonPhaseGlyphStateForAngle,
   getMoonPhaseGlyphSvg,
   getMoonPhaseGlyphSvgForAngle,
+  getMoonPhaseGlyphVisualStepForAngle,
   getNextMoonPhaseMilestoneForAngle,
   getNextQuarterLabelForAngle,
 } from "../../src/lib/moon-phase-glyph";
@@ -38,6 +39,38 @@ describe("moon phase glyph", () => {
     expect(getNextQuarterLabelForAngle(180)).toBe("Last quarter moon");
     expect(getMoonPhaseGlyphLabelForAngle(45)).toBe("Waxing crescent moon");
     expect(getNextQuarterLabelForAngle(45)).toBe("First quarter moon");
+  });
+
+  it("renders waxing and waning gibbous glyphs with physical light-side orientation", () => {
+    const waxingGibbous = getMoonPhaseGlyphSvgForAngle(135);
+    const waningGibbous = getMoonPhaseGlyphSvgForAngle(225);
+
+    expect(waxingGibbous).toContain('data-moon-phase-glyph="waxing_gibbous"');
+    expect(waxingGibbous).toContain('data-moon-phase-lit-side="right"');
+    expect(waxingGibbous).toContain('data-moon-phase-visual-step="6"');
+    expect(waxingGibbous).toContain('cx="14.64"');
+    expect(waningGibbous).toContain('data-moon-phase-glyph="waning_gibbous"');
+    expect(waningGibbous).toContain('data-moon-phase-lit-side="left"');
+    expect(waningGibbous).toContain('data-moon-phase-visual-step="10"');
+    expect(waningGibbous).toContain('cx="9.36"');
+  });
+
+  it("uses sixteen visual steps for smoother phase rendering", () => {
+    expect(getMoonPhaseGlyphVisualStepForAngle(0)).toBe(0);
+    expect(getMoonPhaseGlyphVisualStepForAngle(11)).toBe(0);
+    expect(getMoonPhaseGlyphVisualStepForAngle(12)).toBe(1);
+    expect(getMoonPhaseGlyphVisualStepForAngle(135)).toBe(6);
+    expect(getMoonPhaseGlyphVisualStepForAngle(180)).toBe(8);
+    expect(getMoonPhaseGlyphVisualStepForAngle(225)).toBe(10);
+    expect(getMoonPhaseGlyphVisualStepForAngle(359)).toBe(0);
+  });
+
+  it("renders June 5, 2026 as a waning gibbous glyph with light on the left", () => {
+    const juneFifth = getMoonPhaseGlyphSvg("2026-06-05T12:00:00-06:00");
+
+    expect(juneFifth).toContain('data-moon-phase-glyph="waning_gibbous"');
+    expect(juneFifth).toContain('data-moon-phase-lit-side="left"');
+    expect(juneFifth).not.toContain('data-moon-phase-lit-side="none"');
   });
 
   it("finds the next lunar milestone date from astronomy calculations", () => {
