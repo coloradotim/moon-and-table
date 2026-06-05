@@ -174,6 +174,15 @@ describe("recommendation quality report", () => {
       ["issue202.reflection.last_first_word", "last_word_first_word"],
       ["issue202.seasonal.entry_first_crossing", "seasonal_entry_bowl"],
       ["issue203.seasonal.end_empty_return", "clear_the_threshold_bowl"],
+      ["issue222.candle.new_beginning_first_light", "first_light_for_the_beginning"],
+      ["issue222.candle.full_saying_both", "candle_witness_one_phrase"],
+      ["issue222.candle.full_rest", "full_light_holding_bowl"],
+      ["issue222.candle.waning_clearing_release", "waning_light_release"],
+      ["issue222.candle.dark_rest_low", "bank_the_house_light"],
+      ["issue222.candle.live_flame_avoided_unlit", "unlit_candle_witness"],
+      ["issue222.reflection.mercury_saying_clearly", "window_light_threshold"],
+      ["issue222.candle.best_week_lunation_window", "full_light_on_the_table"],
+      ["issue222.surprise.candle_real_fit", "window_light_threshold"],
     ]);
     const issue202LossPatterns = new Map([
       ["issue202.generic.low_not_threshold", ["carried_key_word", "threshold_bowl", "seasonal_entry_bowl", "last_word_first_word"]],
@@ -209,6 +218,9 @@ describe("recommendation quality report", () => {
       "issue205.home.carried_word_return",
       "issue205.plant.placed_phrase",
       "issue205.seasonal.first_last_words",
+      "issue222.candle.venus_warmth_tending_us",
+      "issue222.candle.saturn_boundary_rest",
+      "issue222.candle.no_strong_timing",
       "issue183.kitchen.clearing_salt",
       "issue183.reflection.waning_release",
       "kitchen.warmth.together",
@@ -271,6 +283,14 @@ describe("recommendation quality report", () => {
       "spell database",
       "petition",
       "affirmation",
+      "ambience",
+      "wellness",
+      "productivity",
+      "psychology",
+      "scientific proof",
+      "only symbolic",
+      "just symbolic",
+      "visual reminder",
     ];
 
     for (const [scenarioId, patternKey] of expectedPatterns) {

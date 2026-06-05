@@ -2697,6 +2697,18 @@ function getPatternMaterialPhrase(pattern: RitualPattern): string {
       "The vessel closes by emptying what it held and becoming ordinary again.",
     bank_the_house_light:
       "Lowered light lets rest become visible without asking for more action.",
+    first_light_for_the_beginning:
+      "First light gives the beginning a visible edge before it becomes work.",
+    candle_witness_one_phrase:
+      "The light witnesses one phrase, then changes so the phrase can end.",
+    unlit_candle_witness:
+      "The unlit candle holds witness without asking for flame.",
+    window_light_threshold:
+      "Window light gives the phrase an edge to meet and leave.",
+    waning_light_release:
+      "Lowered light gives release a way to lessen without drama.",
+    full_light_holding_bowl:
+      "The bowl gives full light a place to hold what is named, then return.",
     full_light_on_the_table:
       "Light gives the line a place to be witnessed and then ended.",
     folded_phrase_vessel:
@@ -2745,6 +2757,28 @@ function getTimingBridgePhrase(
 
   if (calendarSignal) {
     return getCalendarThresholdTimingPhrase(calendarSignal);
+  }
+
+  if (pattern.ritualStyles.includes("candle_or_light")) {
+    if (primaryMoonFact === "moon.new" && focusKey === "making_a_beginning") {
+      return "New-moon darkness makes the first light small: it opens the beginning, then stops before proof.";
+    }
+
+    if (primaryMoonFact === "moon.full" && focusKey === "saying_something_clearly") {
+      return "Full light lets the phrase be witnessed once, then closed by changing the light.";
+    }
+
+    if (primaryMoonFact === "moon.full" && focusKey === "resting") {
+      return "Full light lets what is present be acknowledged before the room lowers.";
+    }
+
+    if (primaryMoonFact === "moon.waning" && focusKey === "clearing_something_out") {
+      return "Waning light turns clearing into lowering, covering, or turning away.";
+    }
+
+    if (focusKey === "resting" && pattern.ritualStyles.some((style) => ["dark", "rest", "no_live_flame"].includes(style))) {
+      return "Dark or quiet timing lets the light do less and still hold the rite.";
+    }
   }
 
   if (
@@ -2807,6 +2841,12 @@ function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeekly
     waning_phrase_release: "one phrase, one removal path, then empty hands",
     clear_the_threshold_bowl: "one held marker, one emptying, then the vessel returns",
     bank_the_house_light: "one lowered light, one ending, then no more work",
+    first_light_for_the_beginning: "one first light, one sentence, then no plan",
+    candle_witness_one_phrase: "one phrase, one witness, then the light changes",
+    unlit_candle_witness: "one unlit candle, one word, then ordinary return",
+    window_light_threshold: "one window edge, one phrase, then turning away",
+    waning_light_release: "one lowered light, one lessening phrase, then stop",
+    full_light_holding_bowl: "one empty bowl, one held thing, then return",
     full_light_on_the_table: "one light, one line, then the light changes",
     folded_phrase_vessel: "one phrase, one fold, one holding place, then later return",
     seasonal_marker_bowl: "the bowl holds one marker until its ordinary return",
@@ -2845,6 +2885,12 @@ function getCompressedLineage(pattern: RitualPattern): string | undefined {
     seasonal_marker_bowl: "seasonal marker and vessel-return logic",
     first_day_last_day: "first-and-last calendar threshold logic",
     full_light_on_the_table: "hearth/table first-and-last logic",
+    first_light_for_the_beginning: "first-light and lunar visible-light logic",
+    candle_witness_one_phrase: "lunar visible-light and hearth/table witness logic",
+    unlit_candle_witness: "candle witness and no-flame household light logic",
+    window_light_threshold: "first-light threshold and lunar visible-light logic",
+    waning_light_release: "waning lunar visibility and household light-lowering logic",
+    full_light_holding_bowl: "full lunar light, hearth light, and vessel-holding logic",
     bank_the_house_light: "household fire-banking customs",
     seasonal_entry_bowl: "seasonal threshold and first-crossing household logic",
     last_word_first_word: "first-and-last threshold and household crossing logic",

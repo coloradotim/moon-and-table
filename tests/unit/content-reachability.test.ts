@@ -64,10 +64,12 @@ describe("content reachability diagnostics", () => {
         "house_from_root_to_roof",
         "kitchen_reset",
         "plant_witness_to_growth",
-        "salt_clear_water_release",
+        "seasonal_entry_bowl",
         "seasonal_marker_bowl",
         "table_reset",
         "two_words_at_the_table",
+        "unlit_candle_witness",
+        "waning_light_release",
       ]),
     );
     expect(report.gaps.approvedRitualPatternsNotSelected).toEqual(
