@@ -4219,7 +4219,7 @@ function getIntention(
   const presentation = getEffectivePresentation(pattern, capacityMode, audience, context);
 
   if (presentation) {
-    return presentation.invitation;
+    return getDistinctPresentationIntention(pattern, audience, context, presentation);
   }
 
   if (capacityMode === "pause") {
@@ -4240,6 +4240,145 @@ function getIntention(
   };
 
   return intentionByPattern[pattern.key] ?? "Let one useful act be enough.";
+}
+
+function getRitualMatterForIntention(pattern: RitualPattern): string {
+  const styles = new Set(pattern.ritualStyles);
+  const key = pattern.key;
+
+  if (key.includes("dead_leaf")) {
+    return "the spent leaf";
+  }
+
+  if (key.includes("seed")) {
+    return "the seed";
+  }
+
+  if (key.includes("plant")) {
+    return "the plant";
+  }
+
+  if (key.includes("grain")) {
+    return "the grain bowl";
+  }
+
+  if (key.includes("bread")) {
+    return "the bread at the center";
+  }
+
+  if (key.includes("cup") || key.includes("warm")) {
+    return "the warm cup";
+  }
+
+  if (key.includes("salt") || (styles.has("salt") && styles.has("water"))) {
+    return "salt and clear water";
+  }
+
+  if (key.includes("bowl") || key.includes("vessel") || styles.has("bowl")) {
+    return "the bowl";
+  }
+
+  if (key.includes("key")) {
+    return "the key";
+  }
+
+  if (key.includes("threshold") || key.includes("entry") || key.includes("doorway")) {
+    return "the threshold";
+  }
+
+  if (
+    key.includes("candle") ||
+    key.includes("light") ||
+    styles.has("candle_or_light") ||
+    styles.has("light_focus")
+  ) {
+    return "the light";
+  }
+
+  if (
+    key.includes("phrase") ||
+    key.includes("word") ||
+    styles.has("reflection") ||
+    styles.has("naming")
+  ) {
+    return "the phrase";
+  }
+
+  if (styles.has("table_reset") || key.includes("table")) {
+    return "the table";
+  }
+
+  return "the ritual matter";
+}
+
+function getDistinctPresentationIntention(
+  pattern: RitualPattern,
+  audience: PrivateAudience,
+  context: RitualPresentationContext | undefined,
+  presentation: Omit<RitualPresentation, "variants">,
+): string {
+  const matter = getRitualMatterForIntention(pattern);
+  const isShared =
+    audience === "together" ||
+    context?.currentRitualCheckIn?.audience === "both_of_us";
+  const sharedRest = isShared ? "between you" : "in the room";
+  const focusKey = context?.currentRitualCheckIn?.ritualFocusKey;
+  const byFocus: Partial<Record<NonNullable<CurrentRitualCheckIn["ritualFocusKey"]>, string>> = {
+    getting_grounded:
+      matter === "the light"
+        ? `Let ${matter} give attention a steady place to land.`
+        : `Let ${matter} bring attention back to one steady place.`,
+    making_a_beginning: `Let ${matter} hold the beginning before it becomes work.`,
+    clearing_something_out:
+      matter === "the spent leaf"
+        ? "Let what is already finished leave cleanly."
+        : `Let ${matter} give release an ordinary way out.`,
+    resting: `Let ${matter} hold rest without asking for more.`,
+    saying_something_clearly: `Let ${matter} hold one phrase clearly and briefly.`,
+    tending_us: `Let ${matter} give care a small shared form.`,
+    tending_the_home: `Let ${matter} give household care one concrete place to land.`,
+    marking_a_threshold: `Let ${matter} mark the crossing and return to ordinary use.`,
+    something_else: `Let ${matter} give the moment a clear, bounded form.`,
+  };
+  const composed = focusKey ? byFocus[focusKey] : undefined;
+  const fallback = isShared
+    ? `Let ${matter} hold one small change ${sharedRest}.`
+    : `Let ${matter} give the rite one clear inward aim.`;
+
+  return normalizeIntentionDistinctFromTitle(
+    composed ?? fallback,
+    presentation.invitation,
+    matter,
+    focusKey,
+  );
+}
+
+function normalizeIntentionDistinctFromTitle(
+  intention: string,
+  title: string,
+  matter: string,
+  focusKey?: CurrentRitualCheckIn["ritualFocusKey"],
+): string {
+  const normalizedTitle = stripTerminalPunctuation(title).trim().toLowerCase();
+  const normalizedIntention = stripTerminalPunctuation(intention).trim().toLowerCase();
+
+  if (normalizedTitle !== normalizedIntention) {
+    return intention;
+  }
+
+  if (focusKey === "clearing_something_out") {
+    return `Let ${matter} carry away only what is finished.`;
+  }
+
+  if (focusKey === "making_a_beginning") {
+    return `Let ${matter} keep the beginning small enough to hold.`;
+  }
+
+  if (focusKey === "resting") {
+    return `Let ${matter} make rest visible without making it work.`;
+  }
+
+  return `Let ${matter} give the rite one clear inward aim.`;
 }
 
 function getReflectionPrompt(
