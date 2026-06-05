@@ -9,6 +9,7 @@ import {
 import { getLunarTimingFact } from "../../src/lib/lunar-timing";
 import type { PrivateNatalProfile } from "../../src/lib/private-data-schema";
 import type { TimingFact, ZodiacSign } from "../../src/lib/timing-facts";
+import { recommendationQualityScenarios } from "../fixtures/recommendation-quality-scenarios";
 
 const supersededCapacityModes = [
   "tiny",
@@ -38,6 +39,18 @@ const approvedPatternKeys = new Set(
     .filter((pattern) => pattern.approvalStatus === "approved")
     .map((pattern) => pattern.key),
 );
+
+function qualityScenarioInput(id: string) {
+  const scenario = recommendationQualityScenarios.find(
+    (candidate) => candidate.id === id,
+  );
+
+  if (!scenario) {
+    throw new Error(`Missing recommendation quality scenario: ${id}`);
+  }
+
+  return scenario.input;
+}
 const approvedPatternKeyList = [...approvedPatternKeys];
 
 function getSelectedPattern(brief: ReturnType<typeof generateWeeklyBrief>) {
@@ -822,6 +835,58 @@ describe("generateWeeklyBrief", () => {
     expect(JSON.stringify(brief.explanation)).not.toContain(
       "timing_window.fake.venus_leo",
     );
+  });
+
+  it("uses pattern-native full-light presentation when full light correctly wins", () => {
+    const brief = generateWeeklyBrief(
+      qualityScenarioInput("issue183.candle.full_saying_clearly"),
+    );
+    const acrossWeekBrief = generateWeeklyBrief(
+      qualityScenarioInput("best_week.clear_reason"),
+    );
+
+    expect(brief.decision.selected.ritualPatternKey).toBe("full_light_on_the_table");
+    expect(brief.theme).toBe("Put one line where the light can hold it.");
+    expect(brief.intention).toBe("Put one line where the light can hold it.");
+    expect(brief.recommendedRitual).toContain("Use the light as witness.");
+    expect(brief.recommendedRitual).toContain("Put one spoken or written line where the light falls.");
+    expect(brief.recommendedRitual).toContain("Close by changing the light.");
+    expect(brief.reflectionPrompt).toBe("What line is ready to be witnessed once?");
+    expect(brief.theme).not.toContain("Notice what is already clear");
+    expect(brief.recommendedRitual).not.toContain("without being solved");
+    expect(brief.recommendedRitual).not.toContain("no explanation");
+    expect(acrossWeekBrief.decision.selected.ritualPatternKey).toBe("full_light_on_the_table");
+    expect(acrossWeekBrief.theme).toBe("Put one line where the light can hold it.");
+    const visibleAcrossWeekCopy = JSON.stringify([
+      acrossWeekBrief.theme,
+      acrossWeekBrief.recommendedRitual,
+      acrossWeekBrief.intention,
+      acrossWeekBrief.reflectionPrompt,
+      acrossWeekBrief.whyThis,
+      acrossWeekBrief.explanation.whyThisFits,
+      acrossWeekBrief.explanation.howThisWasChosen,
+    ]).toLowerCase();
+    expect(visibleAcrossWeekCopy).toContain(
+      "the timing signal matched the ritual shape",
+    );
+    expect(visibleAcrossWeekCopy).not.toContain("primary timing signal");
+    expect(visibleAcrossWeekCopy).not.toContain("timing score");
+  });
+
+  it("uses threshold-specific table-word presentation when two words correctly wins", () => {
+    const brief = generateWeeklyBrief(
+      qualityScenarioInput("issue183.reflection.threshold"),
+    );
+
+    expect(brief.decision.selected.ritualPatternKey).toBe("two_words_at_the_table");
+    expect(brief.theme).toBe("Put a threshold word on the table.");
+    expect(brief.intention).toBe("Put a threshold word on the table.");
+    expect(brief.recommendedRitual).toContain("Choose a word for the crossing.");
+    expect(brief.recommendedRitual).toContain("turn toward the next room or doorway.");
+    expect(brief.reflectionPrompt).toBe("What word belongs at the crossing?");
+    expect(brief.theme).not.toContain("Give one small thing support");
+    expect(brief.recommendedRitual).not.toContain("No explanation is required");
+    expect(brief.recommendedRitual).not.toContain("without discussion");
   });
 
   it("surfaces when across-the-week timing is not strong enough to shape the ritual", () => {

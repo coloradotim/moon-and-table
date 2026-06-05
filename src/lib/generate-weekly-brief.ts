@@ -1809,8 +1809,9 @@ function getRecommendedRitual(
   capacityMode: CapacityMode,
   tonePreferences: string[],
   audience: PrivateAudience,
+  context?: RitualPresentationContext,
 ): string {
-  const presentation = getEffectivePresentation(pattern, capacityMode, audience);
+  const presentation = getEffectivePresentation(pattern, capacityMode, audience, context);
 
   if (presentation) {
     return [
@@ -1834,6 +1835,7 @@ function getEffectivePresentation(
   pattern: RitualPattern,
   capacityMode: CapacityMode,
   audience: PrivateAudience,
+  context?: RitualPresentationContext,
 ): Omit<RitualPresentation, "variants"> | undefined {
   const presentation = pattern.presentation;
 
@@ -1844,10 +1846,16 @@ function getEffectivePresentation(
   const audienceVariant =
     audience === "together" ? presentation.variants?.together : undefined;
   const capacityVariant = presentation.variants?.[capacityMode];
+  const contextVariants = getPresentationVariantKeys(pattern, capacityMode, audience, context)
+    .map((key) => presentation.variants?.[key])
+    .filter((variant): variant is Partial<Omit<RitualPresentation, "variants">> =>
+      Boolean(variant),
+    );
   const merged = {
     ...presentation,
     ...audienceVariant,
     ...capacityVariant,
+    ...Object.assign({}, ...contextVariants),
   };
 
   return {
@@ -1858,6 +1866,78 @@ function getEffectivePresentation(
     carry: merged.carry ?? presentation.carry,
     closing: merged.closing ?? presentation.closing,
   };
+}
+
+type RitualPresentationContext = {
+  currentRitualCheckIn?: CurrentRitualCheckIn;
+  timingFact?: TimingFactKey;
+};
+
+function getPresentationVariantKeys(
+  pattern: RitualPattern,
+  capacityMode: CapacityMode,
+  audience: PrivateAudience,
+  context?: RitualPresentationContext,
+): Array<keyof NonNullable<RitualPresentation["variants"]>> {
+  const checkIn = context?.currentRitualCheckIn;
+  const keys: Array<keyof NonNullable<RitualPresentation["variants"]>> = [];
+  const focusKey = checkIn?.ritualFocusKey;
+  const practiceLabel = checkIn?.practiceTypeLabel;
+  const practiceHints = checkIn?.practiceTypeHints ?? [];
+  const isReflection =
+    practiceLabel === "Reflection" || practiceHints.includes("reflection");
+  const isHome = practiceLabel === "Home" || practiceHints.includes("home_tending");
+  const isCandleOrLight =
+    practiceLabel === "Candle or light" ||
+    practiceHints.includes("candle_or_light") ||
+    practiceHints.includes("light_focus");
+
+  if (context?.timingFact === "moon.full") {
+    keys.push("fullTiming");
+  }
+
+  if (context?.timingFact === "moon.waning") {
+    keys.push("waningTiming");
+  }
+
+  if (focusKey === "saying_something_clearly") {
+    keys.push("sayingClearly");
+  }
+
+  if (focusKey === "tending_us") {
+    keys.push("tendingUs");
+  }
+
+  if (focusKey === "resting") {
+    keys.push("resting");
+  }
+
+  if (focusKey === "marking_a_threshold" && isReflection) {
+    keys.push("thresholdReflection");
+  }
+
+  if (pattern.key === "two_words_at_the_table" && isHome && capacityMode === "low") {
+    keys.push("homeLowCapacity");
+  }
+
+  if (
+    pattern.key === "full_light_on_the_table" &&
+    isCandleOrLight &&
+    context?.timingFact === "moon.full" &&
+    focusKey === "saying_something_clearly"
+  ) {
+    keys.push("candleFullSayingClearly");
+  }
+
+  if (audience === "together" && focusKey === "tending_us") {
+    keys.push("togetherTendingUs");
+  }
+
+  if (audience !== "together" && isReflection) {
+    keys.push("soloReflection");
+  }
+
+  return keys;
 }
 
 function getToneClosing(tonePreferences: string[]): string {
@@ -2645,6 +2725,10 @@ function getRitualFitSection(
     pattern,
     input.capacityMode,
     input.audience,
+    {
+      currentRitualCheckIn: input.currentRitualCheckIn,
+      timingFact: getPrimaryMoonTimingFact(input.timingFacts),
+    },
   );
   const styleText =
     preferenceMatches.length > 0
@@ -2901,7 +2985,12 @@ function getTimingWindowReason(candidate: TimingWindowCandidate): string {
     "shared_natal_contact_match",
     "multiple_natal_contacts_same_theme",
   ].includes(primaryReason.code)) {
-    reasonParts.push(primaryReason.label.toLowerCase());
+    const primaryLabel = primaryReason.label.toLowerCase();
+    reasonParts.push(
+      primaryLabel === "primary timing signal"
+        ? "the timing signal matched the ritual shape"
+        : primaryLabel,
+    );
   }
 
   if (hasNatalReason) {
@@ -2912,9 +3001,25 @@ function getTimingWindowReason(candidate: TimingWindowCandidate): string {
     reasonParts.push("exact lunar timing");
   }
 
-  return reasonParts.length > 0
-    ? `The window stood out because of ${uniqueValues(reasonParts).join(" and ")}.`
-    : "The window stood out because its timing score was stronger than the other available options.";
+  const uniqueReasonParts = uniqueValues(reasonParts);
+  const timingSignalMatched = uniqueReasonParts.includes(
+    "the timing signal matched the ritual shape",
+  );
+  const otherReasonParts = uniqueReasonParts.filter(
+    (part) => part !== "the timing signal matched the ritual shape",
+  );
+
+  if (timingSignalMatched && otherReasonParts.length > 0) {
+    return `The window stood out because the timing signal matched the ritual shape and because of ${otherReasonParts.join(" and ")}.`;
+  }
+
+  if (timingSignalMatched) {
+    return "The window stood out because the timing signal matched the ritual shape.";
+  }
+
+  return otherReasonParts.length > 0
+    ? `The window stood out because of ${otherReasonParts.join(" and ")}.`
+    : "The window stood out because it fit the ritual better than the other available options.";
 }
 
 function getFitReason(
@@ -3130,6 +3235,7 @@ function getTheme(
   pattern: RitualPattern,
   capacityMode: CapacityMode,
   audience: PrivateAudience,
+  context?: RitualPresentationContext,
 ): string {
   const timingPhraseByKey: Partial<Record<TimingFactKey, string>> = {
     "moon.new": "Begin quietly.",
@@ -3152,9 +3258,17 @@ function getTheme(
   const timingPhrase =
     timingPhraseByKey[TRACE_KEY_BY_CARD_KEY[timingCard.key] as TimingFactKey] ??
     "Choose one useful household ritual.";
-  const presentation = getEffectivePresentation(pattern, capacityMode, audience);
+  const presentation = getEffectivePresentation(pattern, capacityMode, audience, context);
   const patternPhrase =
     presentation?.invitation ?? patternPhraseByKey[pattern.key] ?? pattern.summary;
+
+  if (
+    presentation &&
+    (pattern.key === "two_words_at_the_table" ||
+      pattern.key === "full_light_on_the_table")
+  ) {
+    return presentation.invitation;
+  }
 
   return `${timingPhrase} ${patternPhrase}`;
 }
@@ -3163,8 +3277,9 @@ function getIntention(
   pattern: RitualPattern,
   capacityMode: CapacityMode,
   audience: PrivateAudience,
+  context?: RitualPresentationContext,
 ): string {
-  const presentation = getEffectivePresentation(pattern, capacityMode, audience);
+  const presentation = getEffectivePresentation(pattern, capacityMode, audience, context);
 
   if (presentation) {
     return presentation.invitation;
@@ -3195,8 +3310,12 @@ function getReflectionPrompt(
   capacityMode: CapacityMode,
   audience: PrivateAudience,
   timingFact: TimingFactKey,
+  currentRitualCheckIn?: CurrentRitualCheckIn,
 ): string {
-  const presentation = getEffectivePresentation(pattern, capacityMode, audience);
+  const presentation = getEffectivePresentation(pattern, capacityMode, audience, {
+    currentRitualCheckIn,
+    timingFact,
+  });
 
   if (presentation) {
     return presentation.carry;
@@ -4027,11 +4146,19 @@ export function generateWeeklyBrief(
       pattern,
       resolvedInput.capacityMode,
       resolvedInput.audience,
+      {
+        currentRitualCheckIn: resolvedInput.currentRitualCheckIn,
+        timingFact: getPrimaryMoonTimingFact(resolvedInput.timingFacts),
+      },
     ),
     intention: getIntention(
       pattern,
       resolvedInput.capacityMode,
       resolvedInput.audience,
+      {
+        currentRitualCheckIn: resolvedInput.currentRitualCheckIn,
+        timingFact: getPrimaryMoonTimingFact(resolvedInput.timingFacts),
+      },
     ),
     bestWindow: getBestWindow(resolvedInput.capacityMode, resolvedInput),
     recommendedRitual: getRecommendedRitual(
@@ -4039,6 +4166,10 @@ export function generateWeeklyBrief(
       resolvedInput.capacityMode,
       resolvedInput.tonePreferences,
       resolvedInput.audience,
+      {
+        currentRitualCheckIn: resolvedInput.currentRitualCheckIn,
+        timingFact: getPrimaryMoonTimingFact(resolvedInput.timingFacts),
+      },
     ),
     optionalAddOn: getOptionalAddOn(
       pattern,
@@ -4049,6 +4180,7 @@ export function generateWeeklyBrief(
       resolvedInput.capacityMode,
       resolvedInput.audience,
       getPrimaryMoonTimingFact(resolvedInput.timingFacts),
+      resolvedInput.currentRitualCheckIn,
     ),
     whyThis,
     sourceSummary: getSourceSummary(timingCard, pattern, safetyNotes),

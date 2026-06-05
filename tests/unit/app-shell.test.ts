@@ -313,7 +313,7 @@ describe("app shell rendering", () => {
 
     expect(html).toContain('class="brief__core"');
     expect(html).toContain('class="brief__theme"');
-    expect(html).toContain('class="brief__theme-line"');
+    expect(html).toContain("<h2");
     expect(html).toContain('class="brief__depth"');
     expect(html).toContain('class="brief__actions"');
     expect(html).toContain('class="brief__control-group"');

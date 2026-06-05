@@ -36,7 +36,17 @@ export type RitualPresentation = RitualPresentationVariant & {
       | "solo"
       | "together"
       | "candleFree"
-      | "evening",
+      | "evening"
+      | "sayingClearly"
+      | "tendingUs"
+      | "fullTiming"
+      | "waningTiming"
+      | "resting"
+      | "thresholdReflection"
+      | "homeLowCapacity"
+      | "candleFullSayingClearly"
+      | "togetherTendingUs"
+      | "soloReflection",
       Partial<RitualPresentationVariant>
     >
   >;
