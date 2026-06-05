@@ -41,7 +41,22 @@ Moon & Table treats magical practice as meaningful on its own terms. Do not tell
 
 Safety should constrain recommendations; it should not rewrite the metaphysics of the practice. If a ritual form creates source, privacy, or practical eligibility risk, choose an approved form that fits, quietly constrain eligibility, or set the pattern aside. Practical boundaries should be mostly internal. They should not dominate user-facing copy or explain away the practice.
 
+Source-backed does not mean scientifically proven. For Moon & Table, source-backed means reviewed lineage, ritual technology, material/action logic, symbolic tradition, timing support, or an approved curation basis. It does not mean hard evidence of external efficacy, and content should not be rejected only because it is magical or wooey.
+
+Moon & Table may treat presence, attention, embodiment, timing, material action, placing, folding, carrying, returning, washing, extinguishing, sweetening, emptying, threshold crossing, vessel holding, and spoken or written words as real ritual mechanisms. The app does not need to prove that a ritual works in a scientific sense before allowing it to have meaning in the house voice.
+
 Preserve ritual meaning while avoiding unsupported claims. Do not promise healing, guaranteed outcomes, protection from danger, prosperity, love, medical effects, legal outcomes, or safety outcomes. Do not include unsafe default instructions.
+
+Avoid guarantees, not magic. Bounded magical language is welcome when the action and closure are clear:
+
+- "The bowl holds the beginning."
+- "The key carries one word across the threshold."
+- "The water gives release a way out."
+- "The sweetness cue softens one word."
+- "The light witnesses the line once, then closes."
+- "The grain gives the beginning weight."
+
+Do not demystify ritual language into wellness metaphor, psychology explanation, productivity framing, "just symbolic" language, decorative prop language, or safety disclaimer language.
 
 Bad:
 
@@ -50,12 +65,19 @@ Bad:
 - "Drink this to absorb lunar energy."
 - "This charm will bring money into the home."
 - "Do not believe this; it is only symbolic."
+- "The bowl is just a visual reminder."
+- "This works because psychology."
+- "This is a productivity reset."
 
 Better:
 
 - "Moon water belongs to lunar material practice and should be handled as a meaningful ritual material within source-backed boundaries."
 - "A threshold charm can mark welcome, intention, or monthly household attention without promising prosperity or protection."
 - "Practical constraints shape which version the app recommends; they do not explain away the practice."
+- "A vessel gives the work a place to rest."
+- "A threshold receives one crossing."
+- "A folded word becomes a held object."
+- "A cup can carry warmth and close the rite."
 
 ## Recommendation Quality Bar
 

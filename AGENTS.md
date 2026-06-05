@@ -53,6 +53,11 @@ Real personalization belongs only in Firebase/Firestore for the hosted app, priv
 - Schedule and capacity constraints override symbolic timing.
 - The app should avoid deterministic claims.
 - Symbolic meaning should come from reviewed, traceable, approved cards.
+- Source-backed does not mean scientifically proven. It means reviewed lineage, ritual technology, material/action logic, symbolic tradition, timing support, or other approved curation basis.
+- Do not reject content only because it is magical or wooey. Bound the claims, preserve the magic.
+- Magical mechanisms such as presence, attention, embodiment, timing, material action, placing, folding, carrying, returning, washing, extinguishing, sweetening, emptying, threshold crossing, vessel holding, and spoken or written words are valid ritual mechanisms for Moon & Table.
+- Avoid guarantees, not magic. A bowl may hold a beginning, a key may carry one word, water may give release a way out, sweetness may soften one word, light may witness a line, and grain may give a beginning weight.
+- Do not demystify ritual copy into wellness metaphor, psychology explanation, productivity framing, `just symbolic` language, decorative prop language, or safety disclaimer language.
 - Do not let AI free-associate from the internet.
 - Do not scrape sources casually.
 - Do not copy large passages from copyrighted sources.
