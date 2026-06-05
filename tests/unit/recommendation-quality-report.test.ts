@@ -346,6 +346,88 @@ describe("recommendation quality report", () => {
     }
   });
 
+  it("keeps issue #234 Candle/light outputs separate from Moon-specific material practice", () => {
+    const scenarioIds = [
+      "issue222.candle.full_rest",
+      "contract.candle.high_resting",
+      "issue223.candle.high.best_week",
+      "issue222.candle.best_week_lunation_window",
+      "issue222.candle.waning_clearing_release",
+      "issue222.candle.dark_rest_low",
+      "issue234.candle.rest_low_waning_banked",
+      "contract.surprise.low_resolves_real_category",
+    ];
+    const report = createRecommendationQualityReport(
+      recommendationQualityScenarios.filter((scenario) =>
+        scenarioIds.includes(scenario.id),
+      ),
+    );
+    const resultById = new Map(
+      report.scenarioResults.map((result) => [result.scenario.id, result]),
+    );
+    const moonSpecificPhrases = [
+      "full lunar light",
+      "lunar visible-light",
+      "full moon light window",
+      "moon-window",
+      "moonlit vessel",
+      "moon water",
+      "moon charging",
+      "crystal-elixir",
+    ];
+
+    for (const scenarioId of scenarioIds) {
+      const result = resultById.get(scenarioId);
+      expect(result, scenarioId).toBeDefined();
+      const normalCopy = [
+        result?.brief.theme,
+        result?.brief.recommendedRitual,
+        result?.brief.intention,
+        result?.brief.bestWindow,
+        result?.brief.optionalAddOn,
+        result?.brief.reflectionPrompt,
+        result?.brief.explanation.whyThisFits,
+        result?.brief.explanation.howThisWasChosen.map((section) => `${section.title} ${section.body}`).join(" "),
+        result?.brief.sourceSummary,
+      ].join(" ").toLowerCase();
+
+      for (const phrase of moonSpecificPhrases) {
+        expect(normalCopy, `${scenarioId} leaked ${phrase}`).not.toContain(phrase);
+      }
+    }
+
+    expect(resultById.get("issue222.candle.full_rest")?.brief.sourceSummary).toContain(
+      "table light and bounded vessel-holding logic",
+    );
+    expect(resultById.get("contract.candle.high_resting")?.brief.sourceSummary).toContain(
+      "table light and bounded vessel-holding logic",
+    );
+    expect(resultById.get("issue223.candle.high.best_week")?.brief.sourceSummary).toContain(
+      "observable full-light timing and hearth/table witness logic",
+    );
+    expect(resultById.get("issue222.candle.best_week_lunation_window")?.brief.sourceSummary).toContain(
+      "hearth/table first-and-last logic",
+    );
+
+    for (const scenarioId of [
+      "issue222.candle.dark_rest_low",
+      "issue234.candle.rest_low_waning_banked",
+      "contract.surprise.low_resolves_real_category",
+    ]) {
+      const body = resultById.get(scenarioId)?.brief.recommendedRitual.toLowerCase() ?? "";
+      expect(body, scenarioId).not.toContain("take up less room");
+      expect(body, scenarioId).not.toContain("release");
+      expect(body, scenarioId).not.toContain("nothing more is removed");
+    }
+
+    expect(
+      resultById.get("issue222.candle.waning_clearing_release")?.selectedRitualPattern.key,
+    ).toBe("waning_light_release");
+    expect(
+      resultById.get("contract.surprise.low_resolves_real_category")?.contractStatus?.reviewVerdict,
+    ).toBe("pass");
+  });
+
   it("surfaces Batch 1 ritual-form reachability in named scenarios", () => {
     const report = createRecommendationQualityReport();
     const resultById = new Map(

@@ -146,7 +146,11 @@ const authoredOutputExpectationsByScenarioId: Record<string, AuthoredOutputExpec
   "issue204.kitchen.bounded_sweetness": sharedKitchenAudienceGap("honeyed_word"),
   "issue205.kitchen.warmth.not_phrase": sharedKitchenAudienceGap("quiet_welcome"),
   "issue222.candle.venus_warmth_tending_us": sharedKitchenAudienceGap("full_light_on_the_table"),
-  "issue222.candle.best_week_lunation_window": sharedKitchenAudienceGap("full_light_on_the_table"),
+  "issue222.candle.best_week_lunation_window": {
+    ...sharedKitchenAudienceGap("full_light_on_the_table"),
+    timingMayDo: "full visible light timing may strengthen the witness while the material path remains table light",
+    disallowedCopyPatterns: ["moon-window contact", "moonlit vessel", "moon water", "moon charging"],
+  },
   "contract.surprise.forced_kitchen_preserved": sharedKitchenAudienceGap("quiet_welcome"),
   "issue205.seasonal.first_last_words": firstLastOptionMenuGap("first_day_last_day"),
   "calendar.month_turn.best_week": firstLastOptionMenuGap("first_day_last_day"),
@@ -1944,8 +1948,8 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
   }),
   scenario({
     id: "issue222.candle.best_week_lunation_window",
-    title: "Best moment this week can choose strong lunation light window",
-    purpose: "Checks best-week Candle/light can use a strong full-moon window with a light ritual.",
+    title: "Best moment this week can use full visible light timing",
+    purpose: "Checks best-week Candle/light can use strong observable full-light timing while the rite stays table-light witness, not Moon-specific window contact.",
     currentDate: "2026-06-01T12:00:00.000Z",
     currentRitualCheckIn: {
       timeScope: "best_moment_this_week",
@@ -1975,7 +1979,7 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
             phaseAngleDegrees: 180,
           },
         ],
-        label: "Full moon light window",
+        label: "Full visible light timing",
         signalKeys: [],
         natalContactKeys: [],
         natalContactThemeKeys: [],
@@ -1984,14 +1988,14 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
         scoreReasons: [
           {
             code: "fixture_full_moon",
-            label: "Full moon light window",
+            label: "Full visible light timing",
             points: 90,
           },
         ],
       },
     ],
-    expectedQualities: ["best-week window is human-readable", "lunation shapes light action", "not a timing command"],
-    disallowedOutcomes: ["calendar report", "score dump"],
+    expectedQualities: ["best-week window is human-readable", "observable light timing shapes witness", "table light remains the material path"],
+    disallowedOutcomes: ["calendar report", "score dump", "moon-window contact", "moonlit vessel", "moon water"],
   }),
   scenario({
     id: "issue222.candle.no_strong_timing",
@@ -2154,7 +2158,7 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
   scenario({
     id: "issue223.candle.high.best_week",
     title: "Best moment this week with room for deeper Candle/light",
-    purpose: "Checks high-capacity best-week Candle/light uses the strong lunation window and a deeper table-light arc.",
+    purpose: "Checks high-capacity best-week Candle/light uses strong observable full-light timing and a deeper table-light arc.",
     currentDate: "2026-06-01T12:00:00.000Z",
     currentRitualCheckIn: {
       timeScope: "best_moment_this_week",
@@ -2184,7 +2188,7 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
             phaseAngleDegrees: 180,
           },
         ],
-        label: "Full moon light window",
+        label: "Full visible light timing",
         signalKeys: [],
         natalContactKeys: [],
         natalContactThemeKeys: [],
@@ -2193,14 +2197,14 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
         scoreReasons: [
           {
             code: "fixture_full_moon",
-            label: "Full moon light window",
+            label: "Full visible light timing",
             points: 90,
           },
         ],
       },
     ],
-    expectedQualities: ["strong timing window", "room to linger", "fuller ritual sequence"],
-    disallowedOutcomes: ["five quiet minutes", "tiny low-capacity ritual", "score dump"],
+    expectedQualities: ["strong timing window", "room to linger", "fuller ritual sequence", "table light remains the material path"],
+    disallowedOutcomes: ["five quiet minutes", "tiny low-capacity ritual", "score dump", "moon-window contact", "moonlit vessel", "moon water"],
   }),
   scenario({
     id: "contract.plant.both_high_tending_waning",

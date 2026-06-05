@@ -90,6 +90,7 @@ Ritual form families added/revised:
 | `issue222.candle.live_flame_avoided_unlit` | Selected `unlit_candle_witness`; good but candle-specific. | Selects `unlit_or_electric_witness`; electric candle is first-class magical matter. | Better no-flame lane. |
 | `issue223.candle.high.new_beginning` | Selected `first_light_for_the_beginning`; beginning was already coherent but less source-specific. | Selects `first_light_beginning`; fuller first-light arc with held sentence and later return. | Better #227 first-light support. |
 | `contract.surprise.low_resolves_real_category` | Selected `bank_the_house_light` but was marked request_changes with `contract_request_changes` and `closest_match_overclaims_fit`. | Still selects a Candle/light rest form, now contract/authored pass with no warnings. | Warning resolved because the scenario contract now recognizes the resolved Candle/light rest output as acceptable. |
+| Cleanup patch | Some examples/source summaries used “full lunar light,” “lunar visible-light,” or “full moon light window.” | Candle/light outputs now use table light, observable full-light timing, and bounded vessel/witness logic. | Keeps Candle/light distinct from future Moon-specific material practice. |
 
 Before example:
 
@@ -113,9 +114,9 @@ After example:
 - Best window: When you have five quiet minutes.
 - Optional accent: No add-on needed.
 - Carry prompt: What can rest because it has been seen once?
-- Why this fits: Full light can acknowledge what is already present; the bowl gives it a place to rest and return. The action lets rest be held by material instead of explained into more work. Full light lets what is present be acknowledged before the room lowers. Low capacity keeps the rite to one material action and one close. Private context supports warmth, beauty, and affection in a small, contained rite.
-- How this was chosen: Material and ritual fit: Candle or light remains the material path. The action lets rest be held by material instead of explained into more work. Full light can acknowledge what is already present; the bowl gives it a place to rest and return. Source lineage: full lunar light, hearth light, and vessel-holding logic. Timing fit: Full light lets what is present be acknowledged before the room lowers. Capacity and audience fit: This stays small: one material action and a clean close. One empty bowl, one held thing, then return.
-- Source summary: Source lineage: full lunar light, hearth light, and vessel-holding logic. Form kept contained.
+- Why this fits: Table light can acknowledge what is already present; the empty bowl gives it a place to rest and return. The action lets rest be held by material instead of explained into more work. Full light lets what is present be acknowledged before the room lowers. Low capacity keeps the rite to one material action and one close. Private context supports warmth, beauty, and affection in a small, contained rite.
+- How this was chosen: Material and ritual fit: Candle or light remains the material path. The action lets rest be held by material instead of explained into more work. Table light can acknowledge what is already present; the empty bowl gives it a place to rest and return. Source lineage: table light and bounded vessel-holding logic. Timing fit: Full light lets what is present be acknowledged before the room lowers. Capacity and audience fit: This stays small: one material action and a clean close. One empty bowl, one held thing, then return.
+- Source summary: Source lineage: table light and bounded vessel-holding logic. Form kept contained.
 - Warnings: none
 
 ### `issue222.candle.waning_clearing_release`
@@ -233,9 +234,24 @@ After example:
 - Best window: Around Wednesday, June 3 morning. When you have room to linger this week.
 - Optional accent: No add-on needed.
 - Carry prompt: What line can be witnessed between you without becoming talk?
-- Why this fits: Full light makes the phrase visible enough to be witnessed once, then closed. The phrase receives one material action so the saying can end cleanly. Wednesday, June 3 morning stood out this week. The window stood out because of full moon light window. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
-- How this was chosen: Material and ritual fit: Candle or light remains the material path. The phrase receives one material action so the saying can end cleanly. Full light makes the phrase visible enough to be witnessed once, then closed. Source lineage: lunar visible-light and hearth/table witness logic. Timing fit: Full moon light window is the useful window; timing shapes the material without turning it into a command. Capacity and audience fit: The larger shape needs staged action, a held moment, and a real return. For both of you, the rite lives in one role each or one shared object between you. One phrase, one witness, then the light changes.
-- Source summary: Source lineage: lunar visible-light and hearth/table witness logic. Form kept contained.
+- Why this fits: Full visible light gives the phrase a clear witness, while the material path stays table light. The phrase receives one material action so the saying can end cleanly. Wednesday, June 3 morning stood out this week. The window stood out because of full visible light timing. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+- How this was chosen: Material and ritual fit: Candle or light remains the material path. The phrase receives one material action so the saying can end cleanly. Full visible light gives the phrase a clear witness, while the material path stays table light. Source lineage: observable full-light timing and hearth/table witness logic. Timing fit: Full visible light timing is the useful window; timing shapes the material without turning it into a command. Capacity and audience fit: The larger shape needs staged action, a held moment, and a real return. For both of you, the rite lives in one role each or one shared object between you. One phrase, one witness, then the light changes.
+- Source summary: Source lineage: observable full-light timing and hearth/table witness logic. Form kept contained.
+- Warnings: none
+
+### `issue222.candle.best_week_lunation_window`
+
+- Input: Candle or light + Saying something clearly + both of us + steady
+- Selected pattern: `full_light_on_the_table`
+- Title/theme: Let one light hold a line between you.
+- Ritual body: Use the light as witness; let the ending be as deliberate as the saying. Place one table light between you. Each offer one word or share one short line. Lower the light together. Close when the light is lowered between you.
+- Intention: Let the light hold one phrase clearly and briefly.
+- Best window: Around Wednesday, June 3 morning. When you have a little space this week.
+- Optional accent: No add-on needed.
+- Carry prompt: What can the shared light hold for both of you?
+- Why this fits: Full timing and a light practice can make the ritual simple: a line is placed, witnessed, and closed. The phrase receives one material action so the saying can end cleanly. Wednesday, June 3 morning stood out this week. The window stood out because of full visible light timing. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
+- How this was chosen: Material and ritual fit: Candle or light remains the material path. The phrase receives one material action so the saying can end cleanly. Full timing and a light practice can make the ritual simple: a line is placed, witnessed, and closed. Source lineage: hearth/table first-and-last logic. Timing fit: Full visible light timing is the useful window; timing shapes the material without turning it into a command. Capacity and audience fit: The material gets room to be placed, held, and returned. For both of you, the rite lives in one role each or one shared object between you. One light, one line, then the light changes.
+- Source summary: Source lineage: hearth/table first-and-last logic. Form kept contained.
 - Warnings: none
 
 ### `contract.candle.high_resting`
@@ -248,9 +264,9 @@ After example:
 - Best window: When you have room to linger this week.
 - Optional accent: No add-on needed.
 - Carry prompt: What can be held in full light without being solved?
-- Why this fits: Full light can acknowledge what is already present; the bowl gives it a place to rest and return. The action lets rest be held by material instead of explained into more work. Full light lets what is present be acknowledged before the room lowers. High capacity asks for a fuller arc: staged action, a held moment, and a return. Private context supports warmth, beauty, and affection in a small, contained rite.
-- How this was chosen: Material and ritual fit: Candle or light remains the material path. The action lets rest be held by material instead of explained into more work. Full light can acknowledge what is already present; the bowl gives it a place to rest and return. Source lineage: full lunar light, hearth light, and vessel-holding logic. Timing fit: Full light lets what is present be acknowledged before the room lowers. Capacity and audience fit: The larger shape needs staged action, a held moment, and a real return. One empty bowl, one held thing, then return.
-- Source summary: Source lineage: full lunar light, hearth light, and vessel-holding logic. Form kept contained.
+- Why this fits: Table light can acknowledge what is already present; the empty bowl gives it a place to rest and return. The action lets rest be held by material instead of explained into more work. Full light lets what is present be acknowledged before the room lowers. High capacity asks for a fuller arc: staged action, a held moment, and a return. Private context supports warmth, beauty, and affection in a small, contained rite.
+- How this was chosen: Material and ritual fit: Candle or light remains the material path. The action lets rest be held by material instead of explained into more work. Table light can acknowledge what is already present; the empty bowl gives it a place to rest and return. Source lineage: table light and bounded vessel-holding logic. Timing fit: Full light lets what is present be acknowledged before the room lowers. Capacity and audience fit: The larger shape needs staged action, a held moment, and a real return. One empty bowl, one held thing, then return.
+- Source summary: Source lineage: table light and bounded vessel-holding logic. Form kept contained.
 - Warnings: none
 
 ### `contract.surprise.low_resolves_real_category`
@@ -336,8 +352,8 @@ Diagnostic integrity:
 
 - `npm run lint:content`: passed
 - `npm run typecheck`: passed
-- `npm run test`: passed, 27 files / 322 tests
-- `npm run test -- tests/unit/recommendation-quality-report.test.ts`: passed
+- `npm run test`: passed, 27 files / 323 tests
+- `npm run test -- tests/unit/recommendation-quality-report.test.ts`: passed, 18 tests
 - `npm run recommendation:quality`: passed
 - `npm run recommendation:quality:delta -- --baseline /tmp/moon-234-baseline-summary.json --current /tmp/moon-234-current-summary.json`: passed
 - `npm run diagnose:content`: passed
