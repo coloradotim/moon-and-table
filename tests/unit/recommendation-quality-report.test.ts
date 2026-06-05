@@ -143,7 +143,7 @@ describe("recommendation quality report", () => {
       ritualFormFamilyMatched: true,
       selectedRitualFormFamilies: expect.arrayContaining(["banked/darkening light"]),
     });
-    expect(report.contentHealth.concentratedSelectedPatterns).toEqual(
+    expect(report.contentHealth.concentratedSelectedPatterns).not.toEqual(
       expect.arrayContaining([
         expect.objectContaining({ key: "honeyed_word" }),
       ]),
@@ -159,7 +159,8 @@ describe("recommendation quality report", () => {
       ["batch1.plant.dead_leaf_release", "dead_leaf_release"],
       ["issue183.plant.beginning.seed", "seed_waiting"],
       ["batch1.kitchen.grain_beginning", "grain_bowl_beginning"],
-      ["batch1.quiet_welcome", "honeyed_word"],
+      ["batch1.quiet_welcome", "quiet_welcome"],
+      ["issue204.kitchen.bounded_sweetness", "honeyed_word"],
       ["home.threshold.arrival", "threshold_bowl"],
       ["batch1.home.salt_water_clearing", "salt_clear_water_release"],
       ["issue183.candle.rest_dark", "bank_the_house_light"],
@@ -187,10 +188,18 @@ describe("recommendation quality report", () => {
       ["batch1.seasonal.marker_bowl", ["salt_clear_water_release"]],
       ["batch1.surprise_me.resolves_visible_category", ["salt_clear_water_release"]],
     ]);
+    const issue204HoneyLossPatterns = new Map([
+      ["candle.live_flame_avoided", ["honeyed_word"]],
+      ["issue204.home.beginning.not_honey", ["honeyed_word"]],
+      ["issue204.plant.not_honey", ["honeyed_word"]],
+      ["issue204.clearing.not_honey", ["honeyed_word"]],
+      ["issue204.threshold.not_honey", ["honeyed_word"]],
+    ]);
     const requiredScenarioIds = [
       ...expectedPatterns.keys(),
       ...issue202LossPatterns.keys(),
       ...issue203SaltWaterLossPatterns.keys(),
+      ...issue204HoneyLossPatterns.keys(),
       "issue183.kitchen.clearing_salt",
       "issue183.reflection.waning_release",
       "kitchen.warmth.together",
@@ -240,6 +249,10 @@ describe("recommendation quality report", () => {
       "danger-removal",
       "danger removal",
       "medical claim",
+      "relationship advice",
+      "apology",
+      "persuasion",
+      "control",
     ];
 
     for (const [scenarioId, patternKey] of expectedPatterns) {
@@ -253,6 +266,12 @@ describe("recommendation quality report", () => {
     }
 
     for (const [scenarioId, blockedPatternKeys] of issue203SaltWaterLossPatterns) {
+      expect(blockedPatternKeys, scenarioId).not.toContain(
+        resultById.get(scenarioId)?.selectedRitualPattern.key,
+      );
+    }
+
+    for (const [scenarioId, blockedPatternKeys] of issue204HoneyLossPatterns) {
       expect(blockedPatternKeys, scenarioId).not.toContain(
         resultById.get(scenarioId)?.selectedRitualPattern.key,
       );
