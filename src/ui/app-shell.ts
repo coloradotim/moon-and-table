@@ -1053,27 +1053,16 @@ export function renderPrivateFirstLoginWelcomeShell(): string {
     <section class="shell shell--welcome" aria-labelledby="private-welcome-title">
       <article class="private-welcome" aria-label="Welcome">
         <div class="private-welcome__visual" aria-hidden="true">
-          <svg viewBox="0 0 220 180" role="img" focusable="false">
-            <defs>
-              <radialGradient id="welcome-candle-glow" cx="50%" cy="58%" r="58%">
-                <stop offset="0%" stop-color="#f7dca7" stop-opacity="0.9" />
-                <stop offset="54%" stop-color="#f7dca7" stop-opacity="0.22" />
-                <stop offset="100%" stop-color="#f7dca7" stop-opacity="0" />
-              </radialGradient>
-            </defs>
-            <circle cx="110" cy="104" r="78" fill="url(#welcome-candle-glow)" />
-            <circle cx="82" cy="52" r="26" fill="#fffdf7" stroke="#26312c" stroke-width="3" />
-            <circle cx="92" cy="48" r="27" fill="#f5f1e9" />
-            <path d="M111 124c0-17 12-28 12-28s12 11 12 28c0 8-5 14-12 14s-12-6-12-14Z" fill="#d49646" />
-            <path d="M119 124c0-8 4-14 4-14s4 6 4 14c0 3-2 5-4 5s-4-2-4-5Z" fill="#fff3cf" />
-            <rect x="105" y="136" width="36" height="42" rx="6" fill="#fffdf7" stroke="#26312c" stroke-width="3" />
-            <path d="M96 178h52" stroke="#26312c" stroke-linecap="round" stroke-width="3" />
-          </svg>
+          <img
+            src="/assets/private-first-login-moon-candle.svg"
+            alt=""
+            aria-hidden="true"
+          />
         </div>
         <div class="private-welcome__copy">
           <h1 id="private-welcome-title">Welcome, my love.</h1>
-          <p>I built this for us &mdash;<br />a small space for ritual, timing, home,<br />and the quiet ways we keep choosing each other.</p>
-          <p>I hope it helps bring us closer together,<br />while we are apart and when we are home.</p>
+          <p>I built this just for us &mdash;<br />a small space for shared rituals<br />and the quiet ways we keep choosing each other.</p>
+          <p>I hope it helps keep us close while we are apart<br />and brings us together in our new home.</p>
         </div>
         <button
           class="primary-action private-welcome__action"
@@ -1332,14 +1321,19 @@ function renderCheckInReview(draft: RitualCheckInDraft): string {
 export function renderRitualCheckInShell({
   draft,
   displayName,
+  introMode = "returning",
 }: {
   draft: RitualCheckInDraft;
   displayName?: string | null;
+  introMode?: "returning" | "first_login";
 }): string {
   const intro = draft.step === "time_scope"
     ? `
         <header class="check-in__header">
-          <p>Welcome back, ${escapeHtml(getFirstName(displayName))}.</p>
+          <p>${introMode === "first_login"
+            ? "Let&rsquo;s choose your first ritual."
+            : `Welcome back, ${escapeHtml(getFirstName(displayName))}.`
+          }</p>
         </header>
       `
     : "";

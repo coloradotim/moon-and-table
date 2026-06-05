@@ -76,6 +76,7 @@ let activeCapacityModeOverride: CapacityMode | null = null;
 let activeCapacityPickerOpen = false;
 let activeCheckInDraft: RitualCheckInDraft = createInitialRitualCheckInDraft();
 let activeCurrentRitualCheckIn: CurrentRitualCheckIn | null = null;
+let activeFirstLoginCheckIn = false;
 let checkInLoadingTimeout: number | null = null;
 const showDebugTrace = new URLSearchParams(window.location.search).get("debug") === "true";
 
@@ -147,6 +148,7 @@ function renderActiveCheckInShell(): void {
   appRoot.innerHTML = renderRitualCheckInShell({
     draft: activeCheckInDraft,
     displayName: activeSignedInState.user.displayName,
+    introMode: activeFirstLoginCheckIn ? "first_login" : "returning",
   });
 }
 
@@ -222,6 +224,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
           activeProfileSettingsTabId = null;
           activeCapacityModeOverride = null;
           activeCapacityPickerOpen = false;
+          activeFirstLoginCheckIn = false;
           appRoot.innerHTML = renderAppShell({
             status: "unauthorized",
             configReady: true,
@@ -233,6 +236,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activeProfileSettingsTabId = null;
         activeBrief = null;
         activeCurrentRitualCheckIn = null;
+        activeFirstLoginCheckIn = false;
         activeCheckInDraft = createInitialRitualCheckInDraft();
         renderPrivateWelcomeOrCheckIn();
       }
@@ -247,6 +251,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activeCapacityModeOverride = null;
         activeCapacityPickerOpen = false;
         activeCurrentRitualCheckIn = null;
+        activeFirstLoginCheckIn = false;
         activeCheckInDraft = createInitialRitualCheckInDraft();
         appRoot.innerHTML = renderAppShell({
           status: "unauthorized",
@@ -266,6 +271,7 @@ async function handlePrivateWelcomeDismiss(): Promise<void> {
       firebaseServices.db,
       activePrivateBriefData,
     );
+    activeFirstLoginCheckIn = true;
   } catch {
     return;
   }
@@ -297,6 +303,7 @@ function completeCheckIn(checkIn: CurrentRitualCheckIn): void {
   activeCapacityPickerOpen = false;
   activeSignedInView = "this_week";
   activeProfileSettingsTabId = null;
+  activeFirstLoginCheckIn = false;
   activeBrief = generateWeeklyBrief(getActiveBriefInput());
   renderActiveSignedInShell();
 }
