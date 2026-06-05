@@ -106,7 +106,7 @@ Hold for human review, then merge if validation stays green.
 The PR review identified a product-level contract issue rather than a display issue: the recommendation card could show a polished answer to the wrong selected category/focus. The smoke expectation is now:
 
 - The check-in review and recommendation card must preserve explicit category/practice type, focus, audience, capacity, and time scope.
-- `Surprise me` must resolve to a real category before the card is displayed, and the card should not say Surprise me as though it were a ritual family.
+- `Surprise me` must resolve to a visible practice before the card is displayed, and the card should not say Surprise me as though it were a ritual family.
 - `How this was chosen` can remain collapsed, but normal card copy must not rationalize ignored inputs with "held lightly," "stronger material form," or timing-overrode language.
 - The recommendation-quality report now covers 12 contract matrix scenarios in addition to the Candle/light demo routes.
 

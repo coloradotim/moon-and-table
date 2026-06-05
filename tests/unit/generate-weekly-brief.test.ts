@@ -165,7 +165,12 @@ describe("generateWeeklyBrief", () => {
     expect(brief.explanation.signals.length).toBeGreaterThan(0);
     expect(brief.explanation.whyThisFits).toEqual(expect.any(String));
     expect(brief.explanation.whyThisFits.length).toBeGreaterThan(0);
-    expect(brief.explanation.howThisWasChosen).toEqual(
+    expect(brief.explanation.howThisWasChosen.map((section) => section.title)).toEqual([
+      "Material and ritual fit",
+      "Timing fit",
+      "Capacity and audience fit",
+    ]);
+    expect(brief.explanation.diagnosticHowThisWasChosen).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           kind: "timing_choice",
@@ -271,7 +276,7 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.bestWindow).toBe("No timing needed.");
     expect(brief.recommendedRitual).not.toContain("No required ritual");
-    expect(brief.whyThis).toContain("pause capacity");
+    expect(brief.whyThis).toContain("Pause capacity");
   });
 
   it("uses grimoire presentation copy for updated ritual patterns", () => {
@@ -292,12 +297,12 @@ describe("generateWeeklyBrief", () => {
     expect(brief.trace.ritualPatterns).toEqual(["plant_witness_to_growth"]);
     expect(brief.theme).toBe("Let a plant witness the growth.");
     expect(brief.intention).toBe("Let a plant witness the growth.");
-    expect(brief.recommendedRitual).toContain("Let the plant hold attention without becoming a task.");
+    expect(brief.recommendedRitual).toContain("Let the plant hold attention without becoming a task");
     expect(brief.recommendedRitual).toContain("leaving the plant untouched");
     expect(brief.reflectionPrompt).toBe(
       "What can keep growing without being handled today?",
     );
-    expect(brief.explanation.howThisWasChosen).toEqual(
+    expect(brief.explanation.diagnosticHowThisWasChosen).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           kind: "ritual_fit",
@@ -357,7 +362,7 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.trace.ritualPatterns).toEqual(["morning_light_pause"]);
     expect(brief.optionalAddOn).toBe("No add-on needed.");
-    expect(brief.recommendedRitual).toContain("Use the light already available.");
+    expect(brief.recommendedRitual).toContain("Use the light already available");
   });
 
   it("uses contextual optional accents without generic candle filler", () => {
@@ -426,7 +431,7 @@ describe("generateWeeklyBrief", () => {
       {
         scenarioId: "issue204.kitchen.bounded_sweetness",
         patternKey: "honeyed_word",
-        expectedPrompt: "What word can the sweetness cue hold and then release?",
+        expectedPrompt: "What word can be sweetened between you and then set down?",
       },
     ];
 
@@ -526,7 +531,7 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.bestWindow).toBe("When you have five quiet minutes.");
     expect(brief.bestWindow).not.toContain("0-5 minutes");
-    expect(brief.whyThis).toContain("low capacity");
+    expect(brief.whyThis).toContain("Low capacity");
     expect(brief.decision.inputs.capacityLimitMinutes).toBe(5);
     expect(brief.decision.candidates.ritualPatterns.find(
       (pattern) => pattern.key === brief.trace.ritualPatterns[0],
@@ -593,7 +598,7 @@ describe("generateWeeklyBrief", () => {
     expect(brief.bestWindow).not.toContain("10-20 minutes");
     expect(brief.trace.ritualPatterns).toHaveLength(1);
     expect(brief.decision.selected.ritualPatternKey).toBe(brief.trace.ritualPatterns[0]);
-    expect(brief.whyThis).toContain("steady capacity");
+    expect(brief.whyThis).toContain("Steady capacity");
   });
 
   it("high produces an active recommendation without creating a task list", () => {
@@ -749,7 +754,7 @@ describe("generateWeeklyBrief", () => {
     );
   });
 
-  it("resolves Surprise me to a real visible practice category before scoring", () => {
+  it("resolves Surprise me to a visible practice before scoring", () => {
     const brief = generateWeeklyBrief({
       currentDate: "2026-06-06T12:00:00.000Z",
       capacityMode: "low",
@@ -806,7 +811,7 @@ describe("generateWeeklyBrief", () => {
       status: "matched_selected_pattern",
       selectedPatternMatches: ["plant"],
     });
-    expect(brief.explanation.howThisWasChosen).toEqual(
+    expect(brief.explanation.diagnosticHowThisWasChosen).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           kind: "check_in_fit",
@@ -841,7 +846,7 @@ describe("generateWeeklyBrief", () => {
     });
     expect(selectedSignals[0].strength).not.toBe("accent");
     expect(selectedSignals.filter((signal) => signal.strength === "accent")).toHaveLength(1);
-    expect(brief.explanation.howThisWasChosen).toEqual(
+    expect(brief.explanation.diagnosticHowThisWasChosen).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           kind: "numerology_accent",
@@ -853,7 +858,7 @@ describe("generateWeeklyBrief", () => {
     const visibleExplanationText = JSON.stringify([
       brief.explanation.whyThisFits,
       brief.explanation.signals,
-      brief.explanation.howThisWasChosen,
+      brief.explanation.diagnosticHowThisWasChosen,
     ]).toLowerCase();
 
     expect(visibleExplanationText).not.toContain("guarantee");
@@ -937,7 +942,7 @@ describe("generateWeeklyBrief", () => {
     expect(brief.whyThis).toContain("Friday, June 5 morning stood out");
     expect(brief.whyThis).toContain("stronger match with saved household themes");
     expect(brief.explanation.whyThisFits).toContain("Friday, June 5 morning stood out");
-    expect(brief.explanation.howThisWasChosen).toEqual(
+    expect(brief.explanation.diagnosticHowThisWasChosen).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           kind: "timing_choice",
@@ -961,7 +966,7 @@ describe("generateWeeklyBrief", () => {
     expect(brief.decision.selected.ritualPatternKey).toBe("full_light_on_the_table");
     expect(brief.theme).toBe("Put one line where the light can hold it.");
     expect(brief.intention).toBe("Put one line where the light can hold it.");
-    expect(brief.recommendedRitual).toContain("Use the light as witness.");
+    expect(brief.recommendedRitual).toContain("Use the light as witness");
     expect(brief.recommendedRitual).toContain("Put one spoken or written line where the light falls.");
     expect(brief.recommendedRitual).toContain("Close by changing the light.");
     expect(brief.reflectionPrompt).toBe("What line is ready to be witnessed once?");
@@ -994,7 +999,7 @@ describe("generateWeeklyBrief", () => {
     expect(brief.decision.selected.ritualPatternKey).toBe("two_words_at_the_table");
     expect(brief.theme).toBe("Put a threshold word on the table.");
     expect(brief.intention).toBe("Put a threshold word on the table.");
-    expect(brief.recommendedRitual).toContain("Choose a word for the crossing.");
+    expect(brief.recommendedRitual).toContain("Choose a word for the crossing");
     expect(brief.recommendedRitual).toContain("turn toward the next room or doorway.");
     expect(brief.reflectionPrompt).toBe("What word belongs at the crossing?");
     expect(brief.theme).not.toContain("Give one small thing support");
@@ -1050,7 +1055,7 @@ describe("generateWeeklyBrief", () => {
     );
     expect(brief.whyThis).toContain("No single timing window stood out strongly this week");
     expect(brief.explanation.whyThisFits).toContain("No single timing window stood out strongly this week");
-    expect(brief.explanation.howThisWasChosen).toEqual(
+    expect(brief.explanation.diagnosticHowThisWasChosen).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           kind: "timing_choice",
@@ -1080,11 +1085,11 @@ describe("generateWeeklyBrief", () => {
       },
     });
 
-    expect(brief.explanation.howThisWasChosen).toEqual(
+    expect(brief.explanation.diagnosticHowThisWasChosen).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          kind: "ritual_focus",
-          body: expect.stringContaining("held preparation rather than a launch"),
+          kind: "timing_choice",
+          body: expect.stringContaining("preparation rather than launch"),
         }),
       ]),
     );
@@ -1106,11 +1111,11 @@ describe("generateWeeklyBrief", () => {
       },
     });
 
-    expect(brief.explanation.howThisWasChosen).toEqual(
+    expect(brief.explanation.diagnosticHowThisWasChosen).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           kind: "ritual_focus",
-          body: expect.stringContaining("small and embodied"),
+          body: expect.stringContaining("small action"),
         }),
         expect.objectContaining({
           title: "Kept bounded",
@@ -1413,11 +1418,9 @@ describe("generateWeeklyBrief", () => {
     expect(brief.decision.selected.natalContactThemeKeys).toEqual(
       expect.arrayContaining(["visible_warmth", "private_natal_contact"]),
     );
-    expect(brief.whyThis).toContain(
-      "Private timing fit added a quiet note for visible warmth",
-    );
+    expect(brief.whyThis).toContain("household context");
     expect(brief.explanation.whyThisFits).not.toContain("natal Venus");
-    expect(brief.explanation.howThisWasChosen).toEqual(
+    expect(brief.explanation.diagnosticHowThisWasChosen).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           kind: "natal_fit",
@@ -1523,8 +1526,7 @@ describe("generateWeeklyBrief", () => {
       astrologyVisibility: "subtle",
     });
 
-    expect(brief.whyThis).toContain("quiet note for visible warmth");
-    expect(brief.whyThis).toContain("exact chart contacts stay in debug");
+    expect(brief.whyThis).toContain("household context");
     expect(brief.explanation.whyThisFits).not.toContain("natal Venus");
     expect(brief.whyThis).not.toContain("Venus in Leo");
     expect(brief.whyThis).not.toContain("natal Venus");
@@ -1548,9 +1550,8 @@ describe("generateWeeklyBrief", () => {
       astrologyVisibility: "explicit",
     });
 
-    expect(brief.whyThis).toContain("quiet note for visible warmth");
-    expect(brief.whyThis).toContain("exact chart contacts stay in debug");
-    expect(brief.explanation.howThisWasChosen).toEqual(
+    expect(brief.whyThis).toContain("household context");
+    expect(brief.explanation.diagnosticHowThisWasChosen).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           kind: "natal_fit",

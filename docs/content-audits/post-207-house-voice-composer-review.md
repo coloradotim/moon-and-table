@@ -269,7 +269,7 @@ The new regression test checks the #207 golden scenarios for these blocked norma
 - raw `source.` ids
 - raw `note.` ids
 - raw `private_profile` keys
-- `surprise me,` as if it were a real category
+- `surprise me,` as if it were a selected practice
 - `surprise me ->` as unresolved open-preference wording
 
 Current result: no blocked phrases in the #207 golden scenario normal copy.
@@ -843,7 +843,7 @@ You chose Seasonal, both of you, marking a threshold, low capacity. The last day
 
 Source lineage: seasonal bowl and household-threshold customs. Form kept contained.
 
-### 12. Surprise me resolved to a real category
+### 12. Surprise me resolved to a visible practice
 
 - Scenario fixture: `batch1.surprise_me.resolves_visible_category`
 - Resulting ritual: Carried Key Word

@@ -300,7 +300,7 @@ This gate re-ran the live failure and the highest-risk contract paths as normal 
 ### contract.plant.both_high_tending_waning
 
 - Check-in inputs: today; Plant; both of us; Tending the home; room for something deeper / high; waning gibbous timing.
-- Selected visible category: Plant.
+- Selected visible practice: Plant.
 - Selected pattern: `plant_witness_to_growth`.
 - Selected ritual-form family: plant witness/growth.
 - Title/theme: Let the plant witness the household tending.
@@ -320,7 +320,7 @@ This gate re-ran the live failure and the highest-risk contract paths as normal 
 ### contract.home.high_tending_waning
 
 - Check-in inputs: today; Home; me; Tending the home; room for something deeper / high; waning timing.
-- Selected visible category: Home.
+- Selected visible practice: Home.
 - Selected pattern: `first_light_at_the_threshold`.
 - Selected ritual-form family: first light / threshold; threshold/crossing/bowl/key.
 - Title/theme: Let first light mark the threshold.
@@ -340,7 +340,7 @@ This gate re-ran the live failure and the highest-risk contract paths as normal 
 ### contract.kitchen.high_tending_full
 
 - Check-in inputs: today; Kitchen; both of us; Tending us; room for something deeper / high; full moon timing.
-- Selected visible category: Kitchen.
+- Selected visible practice: Kitchen.
 - Selected pattern: `warm_cup_between_us`.
 - Selected ritual-form family: warm cup/bowl.
 - Title/theme: Let the cup hold the warmth.
@@ -360,7 +360,7 @@ This gate re-ran the live failure and the highest-risk contract paths as normal 
 ### contract.reflection.high_saying_new
 
 - Check-in inputs: today; Reflection; me; Saying something clearly; room for something deeper / high; new moon timing.
-- Selected visible category: Reflection.
+- Selected visible practice: Reflection.
 - Selected pattern: `window_light_threshold`.
 - Selected ritual-form family: first light / threshold; threshold/crossing/bowl/key; written/folded/container; first/last threshold.
 - Title/theme: Give the phrase a window threshold.
@@ -380,7 +380,7 @@ This gate re-ran the live failure and the highest-risk contract paths as normal 
 ### contract.candle.high_beginning
 
 - Check-in inputs: today; Candle or light; me; Making a beginning; room for something deeper / high; new moon timing.
-- Selected visible category: Candle or light.
+- Selected visible practice: Candle or light.
 - Selected pattern: `first_light_at_the_threshold`.
 - Selected ritual-form family: first light / threshold; threshold/crossing/bowl/key.
 - Title/theme: Let first light mark the threshold.
@@ -400,7 +400,7 @@ This gate re-ran the live failure and the highest-risk contract paths as normal 
 ### contract.surprise.high_preserves_resolved_category
 
 - Check-in inputs: today; Surprise me; me; Saying something clearly; room for something deeper / high; full moon timing.
-- Selected visible category: Reflection, resolved from Surprise me.
+- Selected visible practice: Reflection, resolved from open preference.
 - Selected pattern: `window_light_threshold`.
 - Selected ritual-form family: first light / threshold; threshold/crossing/bowl/key; written/folded/container; first/last threshold.
 - Title/theme: Give the phrase a window threshold.
@@ -420,7 +420,7 @@ This gate re-ran the live failure and the highest-risk contract paths as normal 
 ### contract.surprise.both_preserves_audience
 
 - Check-in inputs: today; Surprise me; both of us; Tending us; room for something deeper / high; full moon timing.
-- Selected visible category: Kitchen, resolved from Surprise me.
+- Selected visible practice: Kitchen, resolved from open preference.
 - Selected pattern: `warm_cup_between_us`.
 - Selected ritual-form family: warm cup/bowl.
 - Title/theme: Let the cup hold the warmth.
@@ -440,7 +440,7 @@ This gate re-ran the live failure and the highest-risk contract paths as normal 
 ### contract.plant.high_rest_companionship
 
 - Check-in inputs: today; Plant; me; Resting; room for something deeper / high; dark/new timing.
-- Selected visible category: Plant.
+- Selected visible practice: Plant.
 - Selected pattern: `dormant_green_rest`.
 - Selected ritual-form family: plant rest/dormancy; seasonal marker.
 - Title/theme: Let the green thing keep a deeper rest.
@@ -460,7 +460,7 @@ This gate re-ran the live failure and the highest-risk contract paths as normal 
 ### calendar.month_turn.best_week
 
 - Check-in inputs: best moment this week; Home; both of us; Marking a threshold; enough to engage / steady; month-turn timing.
-- Selected visible category: Home.
+- Selected visible practice: Home.
 - Selected pattern: `first_day_last_day`.
 - Selected ritual-form family: first/last threshold; seasonal marker; threshold/crossing/bowl/key; written/folded/container.
 - Title/theme: Give the threshold a first word and a last word.
@@ -510,7 +510,7 @@ Implementation changes:
 | Scenario | Expected contract | Disallowed | Result |
 | --- | --- | --- | --- |
 | Plant + Tending the home + High + Waning | Plant/Home-compatible tending ritual | Candle/light release, salt/water clearing, category set-aside smoothing | `plant_witness_to_growth`, pass |
-| Plant + Tending the home + High + neutral timing | Plant/Home-compatible tending ritual | category drift | `plant_witness_to_growth`, pass |
+| Plant + Tending the home + High + neutral timing | Plant/Home-compatible tending ritual | practice drift | `plant_witness_to_growth`, pass |
 | Plant + Resting + High + dark/seasonal | Plant rest/dormancy/witness | Candle/light unless Plant remains real material | `dormant_green_rest`, pass |
 | Kitchen + Tending us + High + Full moon | Kitchen warmth/table/cup/bread/honey/vessel | Candle/light just because full moon is strong | `warm_cup_between_us`, pass |
 | Kitchen + Beginning + High + Waning | Kitchen grain/bowl/preparation beginning | generic release unless clearing selected | `grain_bowl_beginning`, pass |
@@ -519,7 +519,7 @@ Implementation changes:
 | Reflection + Saying clearly + High + New moon | Reflection phrase/written/folded/window form | generic beginning light | `window_light_threshold`, pass |
 | Candle/light + Beginning + High + New moon | Candle/light beginning | Home threshold without light/beginning | `first_light_at_the_threshold`, pass |
 | Candle/light + Resting + High + Full/dark | Candle/light rest/holding/lowering | clarity pressure/productivity | `full_light_holding_bowl`, pass |
-| Surprise me + High | resolve one real category first, preserve it | category drift after resolution | resolves to Reflection/window threshold, pass |
+| Surprise me + High | resolve one visible practice first, preserve it | practice drift after resolution | resolves to Reflection/window threshold, pass |
 | Both of us + High | action changes for two people | pronoun-only audience handling | warm cup uses two-person action, pass |
 
 Test expectations were written from the product contract above, not from whatever the engine happened to select.

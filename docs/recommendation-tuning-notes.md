@@ -228,7 +228,7 @@ Demoted older weak or overly task-like patterns:
 The generic optional candle add-on is no longer emitted as recommendation
 filler. Candle/light appears when light is the ritual form, not as garnish.
 
-`Surprise me` now resolves to one real visible practice category before
+`Surprise me` now resolves to one real visible practice before
 recommendation. The decision record marks this as `resolved_open_preference`
 so review can see that the user chose an open selection and what category was
 used for scoring.
@@ -329,7 +329,7 @@ many scenarios because scoring treated generic tag overlap as sufficient.
 
 The generator now scores ritual form families separately from broad style tags.
 Form-family fit asks whether the selected ritual material/action actually
-matches the current combination: visible practice category, focus, capacity,
+matches the current combination: visible practice, focus, capacity,
 timing, and audience.
 
 Examples of form-family expectations:

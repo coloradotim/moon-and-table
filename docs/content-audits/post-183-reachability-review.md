@@ -193,7 +193,7 @@ This cleanup patch was added before merge based on human review of the first
 | batch1.quiet_welcome | Quiet welcome; category=Kitchen; capacity=a_little / low; focus=Tending us; audience=both_of_us; scope=today; timing=Waxing moon, Autumn equinox — gratitude and storing, Jupiter in Leo — visible warmth | two_words_at_the_table / Two Words at the Table | honeyed_word / Honeyed Word | offering/welcome/vessel; quiet_welcome or equivalent | honey/sweetening, welcome/offering/vessel, warm cup/bowl | pass | Welcome family matches, but exact Quiet Welcome lost to Honeyed Word. |
 | issue183.candle.rest_dark | Candle/light + resting + dark/evening; category=Candle or light; capacity=a_little / low; focus=Resting; audience=me; scope=today; timing=Waning moon, Moon in Cancer — home rhythm, Numerology 6 | new scenario | bank_the_house_light / Bank the House Light | banked/darkening/closure light | banked/darkening light | pass | No obvious awkward part from diagnostics; still needs human voice/meaning review. |
 | issue183.candle.full_saying_clearly | Candle/light + full + saying clearly; category=Candle or light; capacity=a_little / low; focus=Saying something clearly; audience=me; scope=today; timing=Full moon, Mercury in Cancer — careful words for home, Numerology 7 | new scenario | full_light_on_the_table / Full Light on the Table | full light/table is acceptable | full light / clarity | pass | Full Light remains appropriate only if light/clarity is central here. |
-| batch1.surprise_me.resolves_visible_category | Surprise me; category=Surprise me; capacity=enough_to_engage / steady; focus=Saying something clearly; audience=me; scope=today; timing=Waxing moon, Autumn equinox — gratitude and storing, Jupiter in Leo — visible warmth | two_words_at_the_table / Two Words at the Table | carried_key_word / Carried Key Word | resolves to real visible category and does not always pick broad fallback | carried phrase, threshold/crossing/bowl/key, written/folded/container | pass | No obvious awkward part from diagnostics; still needs human voice/meaning review. |
+| batch1.surprise_me.resolves_visible_category | Surprise me; open preference=Surprise me; capacity=enough_to_engage / steady; focus=Saying something clearly; audience=me; scope=today; timing=Waxing moon, Autumn equinox — gratitude and storing, Jupiter in Leo — visible warmth | two_words_at_the_table / Two Words at the Table | carried_key_word / Carried Key Word | resolves to a visible practice and does not always pick broad fallback | carried phrase, threshold/crossing/bowl/key, written/folded/container | pass | No obvious awkward part from diagnostics; still needs human voice/meaning review. |
 
 ## 5. Ritual-Form Family Diagnostics
 
@@ -207,7 +207,7 @@ This cleanup patch was added before merge based on human review of the first
 | explicit category honored | 35 |
 | explicit category set aside with blocker | not separately tracked |
 | explicit category set aside without clear blocker | 0 |
-| open category resolved | 2 |
+| open preference resolved | 2 |
 | broad pattern overselected | 0 |
 | clearing without release/removal form | not separately tracked as a warning |
 | kitchen material missing | not separately tracked as a warning |
@@ -360,7 +360,7 @@ The report now has two concentration views:
 - Strongest selected patterns: bread_at_the_center, carried_key_word
 - Weak or missing combinations: none obvious in this suite
 - Overused patterns: none obvious
-- Note: Surprise me is not a category; the report shows it resolving to a real selected pattern/category path.
+- Note: Surprise me is not a category; the report shows it resolving to a real selected practice path.
 
 
 ## 9. Generated Recommendation Samples
@@ -1322,7 +1322,7 @@ Decision/debug summary:
 - Automatic warnings: none
 - Awkward parts to review: No obvious awkward part from diagnostics; still needs human voice/meaning review.
 
-### batch1.surprise_me.resolves_visible_category: Surprise me resolves to visible category
+### batch1.surprise_me.resolves_visible_category: Surprise me resolves to visible practice
 
 Purpose: Checks open selection resolves before recommendation while still recording the open choice.
 

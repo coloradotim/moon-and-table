@@ -212,7 +212,7 @@ Overall verdict: show Jessica after #222/#223 human review. The best paths feel 
 - Warnings: none from generator quality warnings in this custom pass; see full recommendation-quality report for fixture warnings.
 - Human verdict: show Jessica.
 - Blunt flags: none.
-- Reviewer note: Resolves to a real category and looks magical.
+- Reviewer note: Resolves to a visible practice and looks magical.
 
 ### demo.11.surprise.both: Surprise me + both of us
 - Input summary: Surprise me + both of us
@@ -437,7 +437,7 @@ Demo-safe additions after this patch:
 - Kitchen + both of us + tending us + high + full moon selects `warm_cup_between_us`, not Candle/light just because full moon is strong.
 - Reflection + saying clearly + high + new moon selects `window_light_threshold`, preserving the phrase/window route.
 - Candle/light + resting + high now selects `full_light_holding_bowl`, not `full_light_on_the_table` clarity pressure.
-- Surprise me + high resolves to a real category first and preserves it in the generated copy.
+- Surprise me + high resolves to a visible practice first and preserves that practice in the generated copy.
 
 Full corrected Plant demo output:
 

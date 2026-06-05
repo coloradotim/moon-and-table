@@ -398,7 +398,7 @@ describe("app shell rendering", () => {
     const questionIndex = html.indexOf("Question to carry");
     const howIndex = html.indexOf("How this was chosen");
     const whyIndex = html.indexOf("Why this fits");
-    const sourcesIndex = html.indexOf("<h3>Material lineage</h3>");
+    const materialFitIndex = html.indexOf("<h3>Material and ritual fit</h3>");
     const rightIndex = html.indexOf("This feels right.");
     const tryAgainIndex = html.indexOf("Give me another option");
     const checkInAgainIndex = html.indexOf("I want to check in again");
@@ -461,20 +461,22 @@ describe("app shell rendering", () => {
     expect(html).toMatch(
       new RegExp("Current phase:</strong> [A-Z][a-z]+(?: [a-z]+)* moon"),
     );
-    expect(html).toContain("Kept bounded");
+    expect(html).toContain("Capacity and audience fit");
     expect(html).not.toContain("Schedule — realistic window");
     expect(html).toContain("Why this fits");
     expect(html).not.toContain("Private chart fit");
     expect(html).not.toContain("No saved natal placements were loaded for this brief.");
     expect(html).toContain("How this was chosen");
-    expect(html).toContain("Ritual form");
-    expect(html).toContain("Private timing fit");
+    expect(html).toContain("Material and ritual fit");
+    expect(html).toContain("Timing fit");
+    expect(html).not.toContain("Private timing fit");
     expect(html).not.toContain("Safety and fit");
     expect(html).not.toContain("Household safety guardrails");
     expect(html).not.toContain("Safety filters applied");
     expect(html).toContain('<details class="brief__choice-details" aria-label="How this was chosen">');
     expect(html).not.toContain('<details class="brief__choice-details" aria-label="How this was chosen" open');
-    expect(html).toContain('class="brief__chosen-section" aria-label="Material lineage"');
+    expect(html).not.toContain('class="brief__chosen-section" aria-label="Material lineage"');
+    expect(html).toContain("Source lineage:");
     expect(html).not.toContain('<section class="brief__sources" aria-label="Sources used">');
     expect(html).toContain("When you have five quiet minutes.");
     expect(html).not.toContain("Thursday evening");
@@ -521,8 +523,8 @@ describe("app shell rendering", () => {
     expect(intentionIndex).toBeLessThan(questionIndex);
     expect(whyIndex).toBeLessThan(questionIndex);
     expect(questionIndex).toBeLessThan(howIndex);
-    expect(howIndex).toBeLessThan(sourcesIndex);
-    expect(sourcesIndex).toBeLessThan(tryAgainIndex);
+    expect(howIndex).toBeLessThan(materialFitIndex);
+    expect(materialFitIndex).toBeLessThan(tryAgainIndex);
     expect(tryAgainIndex).toBeLessThan(feedbackIndex);
     expect(html).not.toContain("Private weekly ritual brief");
     expect(html).not.toContain("Using your household settings.");
@@ -726,6 +728,9 @@ describe("app shell rendering", () => {
     expect(html).toContain("Evaluated ritual patterns");
     expect(html).toContain("Rejected ritual patterns");
     expect(html).toContain("Source references");
+    expect(html).toContain("Diagnostic explanation");
+    expect(html).toContain("Chosen for");
+    expect(html).toContain("Private timing fit");
     expect(html).toContain("Selected");
     expect(html).toContain("Inputs");
     expect(html).toContain("Check-in choices");

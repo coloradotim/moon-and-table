@@ -73,7 +73,7 @@ Moon & Table has a house voice. User-facing profile settings should not remix th
 
 Mismatch language should be honest. If a check-in answer did not directly match the selected ritual, the expanded explanation should say what was held as a tone, what matched, and what was set aside. For example, a `Making a beginning` focus during waning timing can become preparation for a first step; a `Tending us` focus during low capacity can become a smaller shared ritual rather than a long conversation.
 
-The recommendation contract is stricter than ordinary scoring. Explicit check-in category/practice type, ritual focus, audience, capacity, time scope, and hard avoid/preference constraints should be preserved unless a real blocker exists. Timing, lunar phase, numerology, private profile fit, natal themes, material strength, and presentation polish may shape the selected ritual, but they cannot override the contract on their own. If `Surprise me` is selected, the engine resolves one real visible category first and then treats that resolved category as the contract for selection and presentation.
+The recommendation contract is stricter than ordinary scoring. Explicit check-in category/practice type, ritual focus, audience, capacity, time scope, and hard avoid/preference constraints should be preserved unless a real blocker exists. Timing, lunar phase, numerology, private profile fit, natal themes, material strength, and presentation polish may shape the selected ritual, but they cannot override the contract on their own. If `Surprise me` is selected, the engine resolves one real visible practice first and then treats that resolved practice as the contract for selection and presentation.
 
 Normal copy should not rationalize ignored input. Phrases such as "held lightly," "stronger material form," "timing overrode," or "your choice helped point toward" are not acceptable when an explicit category or focus actually lost.
 
@@ -127,7 +127,7 @@ explicit category/focus override, high-capacity depth gaps, audience action not
 reflected, timing leading without authority, timing overriding an explicit
 contract, minor numerology overweighting, major timing events not used for
 best-week scenarios, unresolved open preference, resolved open-preference
-category not preserved, and open-preference language being used as a category
+practice not preserved, and open-preference language being used as a selected practice
 or style. Coverage-gap diagnostics should be visible in report/debug output
 without making the normal ritual card sound broken.
 

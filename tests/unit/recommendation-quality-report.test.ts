@@ -38,21 +38,10 @@ function normalCopyFieldsFromReport(): string {
 function expectedWarningIdsForScenario(
   scenario: (typeof recommendationQualityScenarios)[number],
 ): string[] {
-  const warningIds = [
+  return [
     ...(scenario.contract?.expectedWarningIds ?? []),
     ...(scenario.authoredOutput?.expectedWarningIds ?? []),
   ];
-
-  if (
-    (scenario.contract?.coverageGapExpected ||
-      scenario.contract?.closestCompatiblePatternExpected ||
-      scenario.authoredOutput?.matchType === "closest_compatible_match") &&
-    !warningIds.includes("coverage_gap_not_disclosed_in_expanded_explanation")
-  ) {
-    warningIds.push("coverage_gap_not_disclosed_in_expanded_explanation");
-  }
-
-  return warningIds;
 }
 
 function withWarningId(

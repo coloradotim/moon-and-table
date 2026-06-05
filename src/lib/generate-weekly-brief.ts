@@ -356,6 +356,7 @@ export type ExplanationSectionKind =
   | "check_in_fit"
   | "ritual_focus"
   | "ritual_fit"
+  | "coverage_gap"
   | "profile_fit"
   | "natal_fit"
   | "capacity_boundary"
@@ -373,6 +374,7 @@ export type ExplanationSection = {
 export type BriefExplanation = {
   whyThisFits: string;
   howThisWasChosen: ExplanationSection[];
+  diagnosticHowThisWasChosen: ExplanationSection[];
   signals: BriefSignal[];
   reasoning: BriefReason[];
   filtersApplied: BriefFilterNote[];
@@ -1560,7 +1562,41 @@ function getRecommendationContractRejectionReasons(
     );
   }
 
+  if (hasWrongPrimaryRitualFunction(input, pattern)) {
+    reasons.push(
+      scoreReason(
+        "recommendation_contract_wrong_function",
+        "Recommendation contract function mismatch",
+        -99,
+        `${focusLabel ?? "selected focus"} was selected explicitly`,
+      ),
+    );
+  }
+
   return reasons;
+}
+
+function hasWrongPrimaryRitualFunction(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+): boolean {
+  const focusKey = input.currentRitualCheckIn?.ritualFocusKey;
+
+  if (!focusKey) {
+    return false;
+  }
+
+  const releaseLike =
+    pattern.key.endsWith("_release") ||
+    pattern.key === "salt_clear_water_release" ||
+    pattern.ritualStyles.includes("release") ||
+    pattern.ritualStyles.includes("salt_clear_water");
+
+  if (!releaseLike) {
+    return false;
+  }
+
+  return focusKey !== "clearing_something_out";
 }
 
 function getRitualFormScoreReasons(
@@ -1986,11 +2022,7 @@ function getRecommendedRitual(
   const presentation = getEffectivePresentation(pattern, capacityMode, audience, context);
 
   if (presentation) {
-    return [
-      ...presentation.approach,
-      ...presentation.steps,
-      presentation.closing,
-    ].filter(Boolean).map(ensureSentence).join(" ");
+    return composePresentedRitualBody(presentation);
   }
 
   const toneClosing = getToneClosing(tonePreferences);
@@ -2001,6 +2033,65 @@ function getRecommendedRitual(
   }
 
   return `${pattern.steps.join(" ")}${closing}`;
+}
+
+function composePresentedRitualBody(
+  presentation: Omit<RitualPresentation, "variants">,
+): string {
+  const approach = combineShortRitualFragments(presentation.approach);
+  const steps = presentation.steps.filter(Boolean).map(ensureSentence);
+  const closing = ensureSentence(presentation.closing);
+
+  return [...approach, ...steps, closing]
+    .filter(Boolean)
+    .map(ensureSentence)
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function combineShortRitualFragments(parts: string[]): string[] {
+  const sentences = parts.filter(Boolean).map(ensureSentence);
+  const combined: string[] = [];
+
+  for (let index = 0; index < sentences.length; index += 1) {
+    const current = sentences[index]!;
+    const next = sentences[index + 1];
+
+    if (next && shouldCombineRitualFragments(current, next)) {
+      combined.push(
+        `${stripTerminalPunctuation(current)}; ${lowercaseFirst(stripTerminalPunctuation(next))}.`,
+      );
+      index += 1;
+      continue;
+    }
+
+    combined.push(current);
+  }
+
+  return combined;
+}
+
+function shouldCombineRitualFragments(current: string, next: string): boolean {
+  if (current.length > 90 || next.length > 90) {
+    return false;
+  }
+
+  if (/^close\b/i.test(current) || /^close\b/i.test(next)) {
+    return false;
+  }
+
+  return true;
+}
+
+function stripTerminalPunctuation(value: string): string {
+  return value.trim().replace(/[.!?]+$/, "");
+}
+
+function lowercaseFirst(value: string): string {
+  const trimmed = value.trim();
+
+  return trimmed ? `${trimmed.charAt(0).toLowerCase()}${trimmed.slice(1)}` : trimmed;
 }
 
 function getEffectivePresentation(
@@ -2016,7 +2107,9 @@ function getEffectivePresentation(
   }
 
   const audienceVariant =
-    audience === "together" ? presentation.variants?.together : undefined;
+    audience === "together"
+      ? getAudiencePresentationVariant(presentation, capacityMode, context)
+      : undefined;
   const capacityVariant = presentation.variants?.[capacityMode];
   const contextVariants = getPresentationVariantKeys(pattern, capacityMode, audience, context)
     .map((key) => presentation.variants?.[key])
@@ -2025,9 +2118,9 @@ function getEffectivePresentation(
     );
   const merged = {
     ...presentation,
-    ...audienceVariant,
     ...Object.assign({}, ...contextVariants),
     ...capacityVariant,
+    ...audienceVariant,
   };
 
   return {
@@ -2038,6 +2131,22 @@ function getEffectivePresentation(
     carry: merged.carry ?? presentation.carry,
     closing: merged.closing ?? presentation.closing,
   };
+}
+
+function getAudiencePresentationVariant(
+  presentation: RitualPresentation,
+  capacityMode: CapacityMode,
+  context?: RitualPresentationContext,
+): Partial<Omit<RitualPresentation, "variants">> | undefined {
+  if (context?.currentRitualCheckIn?.ritualFocusKey === "getting_grounded") {
+    return presentation.variants?.togetherGrounding ?? presentation.variants?.together;
+  }
+
+  if (capacityMode === "high" && presentation.variants?.togetherHigh) {
+    return presentation.variants.togetherHigh;
+  }
+
+  return presentation.variants?.together;
 }
 
 type RitualPresentationContext = {
@@ -2082,6 +2191,10 @@ function getPresentationVariantKeys(
 
   if (focusKey === "making_a_beginning") {
     keys.push("beginningFocus");
+  }
+
+  if (focusKey === "getting_grounded") {
+    keys.push("grounding");
   }
 
   if (focusKey === "resting") {
@@ -2661,7 +2774,7 @@ function getPracticeChoiceDiagnostic(
       selectedHints,
       selectedPatternMatches,
       status: "resolved_open_preference",
-      note: "Surprise me resolved to one visible practice category before recommendation.",
+      note: "Surprise me resolved to one visible practice before recommendation.",
     };
   }
 
@@ -2824,7 +2937,7 @@ function getPatternMaterialPhrase(pattern: RitualPattern): string {
     salt_clear_water_release:
       "Salt and clear water belong to explicit release: the named thing leaves, then the bowl returns.",
     waning_phrase_release:
-      "The phrase leaves through one chosen close: removal, water, tearing, or being placed away.",
+      "The closed book gives the phrase one contained way to leave your hands.",
     clear_the_threshold_bowl:
       "The vessel closes by emptying what it held and becoming ordinary again.",
     bank_the_house_light:
@@ -2974,6 +3087,7 @@ function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeekly
     clear_the_threshold_bowl: "one held marker, one emptying, then the vessel returns",
     bank_the_house_light: "one lowered light, one ending, then no more work",
     first_light_for_the_beginning: "one first light, one sentence, then no plan",
+    first_light_at_the_threshold: "one first light, one crossing, one later return",
     candle_witness_one_phrase: "one phrase, one witness, then the light changes",
     unlit_candle_witness: "one unlit candle, one word, then ordinary return",
     window_light_threshold: "one window edge, one phrase, then the curtain closes",
@@ -3005,6 +3119,8 @@ function getCompressedLineage(pattern: RitualPattern): string | undefined {
     grain_bowl_beginning: "bread/grain table-center and seed-water beginning logic",
     bread_at_the_center: "bread/grain table-center and welcome logic",
     seed_waiting: "seed-water beginning logic",
+    plant_witness_to_growth: "plant-lore living witness and flower-message logic",
+    dormant_green_rest: "plant dormancy and living-companion logic",
     warm_cup_between_us: "quiet household welcome forms",
     quiet_welcome: "quiet household welcome forms",
     honeyed_word: "quiet welcome and household sweetness forms",
@@ -3017,6 +3133,7 @@ function getCompressedLineage(pattern: RitualPattern): string | undefined {
     seasonal_marker_bowl: "seasonal marker and vessel-return logic",
     first_day_last_day: "first-and-last calendar threshold logic",
     full_light_on_the_table: "hearth/table first-and-last logic",
+    first_light_at_the_threshold: "household fire-kindling and first-light threshold logic",
     first_light_for_the_beginning: "first-light and lunar visible-light logic",
     candle_witness_one_phrase: "lunar visible-light and hearth/table witness logic",
     unlit_candle_witness: "candle witness and no-flame household light logic",
@@ -3063,9 +3180,11 @@ function getWhyThisFits(
   selectedTimingSignals: TimingSignal[],
 ): string {
   const parts = [
-    `You chose ${getChosenForPhrase(input, pattern)}.`,
+    getPresentedMaterialPhrase(pattern, input),
+    getFocusMeaningPhrase(input, pattern),
     getTimingBridgePhrase(timingCard, pattern, input, selectedTimingSignals),
-    getPatternMaterialPhrase(pattern),
+    getAudienceMeaningPhrase(input, pattern),
+    getCapacityMeaningPhrase(input),
   ];
   const profilePhrase =
     profileSignalMatches.length > 0
@@ -3076,11 +3195,30 @@ function getWhyThisFits(
           ? "Private timing fit added a quiet thematic note."
           : "";
 
-  if (profilePhrase && parts.join(" ").length < 260) {
+  if (profilePhrase && parts.join(" ").length < 360) {
     parts.push(profilePhrase);
   }
 
-  return parts.join(" ").replace(/\s+/g, " ").trim();
+  return parts.filter(Boolean).join(" ").replace(/\s+/g, " ").trim();
+}
+
+function getPresentedMaterialPhrase(
+  pattern: RitualPattern,
+  input: ResolvedGenerateWeeklyBriefInput,
+): string {
+  const presentation = getEffectivePresentation(
+    pattern,
+    input.capacityMode,
+    input.audience,
+    {
+      currentRitualCheckIn: input.currentRitualCheckIn,
+      timingFact: getPrimaryMoonTimingFact(input.timingFacts),
+    },
+  );
+
+  return presentation
+    ? ensureSentence(presentation.whyThisPractice)
+    : getPatternMaterialPhrase(pattern);
 }
 
 function getTimingChoiceSection(
@@ -3130,8 +3268,33 @@ function getCheckInFitSection(
   return {
     kind: "check_in_fit",
     title: "Chosen for",
-    body: getChosenForPhrase(input, pattern),
+    body: getCheckInMeaningPhrase(input, pattern),
   };
+}
+
+function getCheckInMeaningPhrase(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+): string {
+  const checkIn = input.currentRitualCheckIn;
+  const practiceFit = getPracticeFit(input, pattern);
+  const practiceLabel = practiceFit.label?.replace(/^Surprise me ->\s*/, "");
+  const focusLabel =
+    input.selectedRitualFocus?.label ??
+    checkIn?.ritualFocusLabel ??
+    checkIn?.ritualFocusText;
+  const audiencePhrase =
+    checkIn?.audience === "both_of_us" || input.audience === "together"
+      ? "for both of you"
+      : "for one person";
+  const focusPhrase = focusLabel
+    ? `, with ${focusLabel.toLowerCase()} as the work`
+    : "";
+  const practicePhrase = practiceLabel
+    ? `${practiceLabel} stays materially present`
+    : "The selected material stays central";
+
+  return `${practicePhrase}${focusPhrase}, ${audiencePhrase}, at ${getCapacityPhrase(input.capacityMode)}.`;
 }
 
 function getNumerologyAccentSection(
@@ -3186,7 +3349,123 @@ function getRitualFocusSection(
   return {
     kind: "ritual_focus",
     title: "Focus bridge",
+    body: getFocusMeaningPhrase(input, pattern) ?? body,
+  };
+}
+
+function getFocusMeaningPhrase(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+): string | undefined {
+  const focusKey = input.currentRitualCheckIn?.ritualFocusKey;
+  const styles = pattern.ritualStyles;
+
+  switch (focusKey) {
+    case "making_a_beginning":
+      return styles.some((style) =>
+        ["beginning", "seed", "grain", "first_light"].includes(style),
+      )
+        ? "The ritual gives the beginning a first body before it becomes work."
+        : "The chosen material holds the beginning small enough to wait.";
+    case "tending_us":
+      return "The shared material carries tending-us as a small action, not a long talk.";
+    case "tending_the_home":
+      return "The household material makes tending visible, then returns to ordinary use.";
+    case "marking_a_threshold":
+      if (pattern.key === "first_day_last_day" || pattern.key === "last_word_first_word") {
+        return "The doorway gives the threshold one crossing to carry the words.";
+      }
+
+      return "The ritual gives the threshold one action and one close.";
+    case "saying_something_clearly":
+      return "The phrase receives one material action so the saying can end cleanly.";
+    case "clearing_something_out":
+      return "The material gives release one path out and one clear stop.";
+    case "getting_grounded":
+      return "The material gives attention one edge to return to, then stops.";
+    case "resting":
+      return "The action lets rest be held by material instead of explained into more work.";
+    default:
+      return undefined;
+  }
+}
+
+function getAudienceMeaningPhrase(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+): string | undefined {
+  if (
+    input.currentRitualCheckIn?.audience !== "both_of_us" &&
+    input.audience !== "together"
+  ) {
+    return undefined;
+  }
+
+  if (pattern.ritualStyles.some((style) => ["shared_space", "table_reset", "warm"].includes(style))) {
+    return "For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you.";
+  }
+
+  return "For both of you, the rite works through one small role each, or one shared object touched together.";
+}
+
+function getCapacityMeaningPhrase(input: ResolvedGenerateWeeklyBriefInput): string {
+  switch (input.capacityMode) {
+    case "pause":
+      return "Pause capacity makes permission the whole shape.";
+    case "low":
+      return "Low capacity keeps the rite to one material action and one close.";
+    case "steady":
+      return "Steady capacity gives the material a little room to be placed, held, and returned.";
+    case "high":
+      return "High capacity asks for a fuller arc: staged action, a held moment, and a return.";
+  }
+}
+
+function getCoverageGapSection(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+): ExplanationSection | undefined {
+  const checkIn = input.currentRitualCheckIn;
+  const practiceLabel = checkIn?.practiceTypeLabel ?? "";
+  const resolvedPracticeLabel = practiceLabel.replace(/^Surprise me ->\s*/, "");
+  const focusKey = checkIn?.ritualFocusKey;
+  const isHigh = input.capacityMode === "high";
+  const isSurprise = /^Surprise me ->/.test(practiceLabel);
+  const practice = resolvedPracticeLabel.toLowerCase();
+
+  let body: string | undefined;
+
+  if (isHigh && practice === "plant" && focusKey === "tending_the_home") {
+    body = "The grimoire does not yet have a deeper Plant + home-tending rite. This keeps Plant at the center rather than drifting to a stronger non-Plant form.";
+  } else if (isHigh && practice === "plant" && focusKey === "resting") {
+    body = "The grimoire does not yet have a deeper Plant + rest rite. This keeps plant rest centered instead of borrowing a stronger dark-light form.";
+  } else if (practice === "home" && focusKey === "tending_the_home" && (isHigh || pattern.key.includes("first_light"))) {
+    body = "Home tending coverage is still thin at this depth. This keeps the recommendation in a bounded household form while leaving the deeper home-tending gap visible.";
+  } else if (isHigh && practice === "reflection" && focusKey === "saying_something_clearly" && pattern.ritualStyles.includes("threshold_reset")) {
+    body = "High-capacity Reflection phrase coverage is still thin when the chosen form leans threshold or light. The phrase remains the center, but this needs deeper rite-family work.";
+  } else if (isHigh && practice === "seasonal" && focusKey === "marking_a_threshold") {
+    body = "Seasonal threshold coverage is still shallow at high capacity. This uses the strongest marker or crossing form without pretending the high-depth arc is complete.";
+  } else if (
+    practice === "candle or light" &&
+    focusKey === "getting_grounded" &&
+    pattern.ritualStyles.includes("release")
+  ) {
+    body = "Low Candle/light grounding coverage is still thin when the selected form leans release. This keeps light as the material while leaving the grounding gap visible.";
+  } else if (isSurprise && isHigh) {
+    body = `The open preference resolved to ${resolvedPracticeLabel || "one visible practice"} before selection. High-capacity coverage for this focus is still thin, so this should be reviewed as compatible rather than complete.`;
+  } else if (isSurprise && focusKey === "resting" && pattern.ritualStyles.includes("release")) {
+    body = "The open check-in resolved to a visible practice, but rest coverage is thin here. This form should not be treated as a complete rest answer.";
+  }
+
+  if (!body) {
+    return undefined;
+  }
+
+  return {
+    kind: "coverage_gap",
+    title: "Closest compatible",
     body,
+    visibility: "expanded",
   };
 }
 
@@ -3346,7 +3625,7 @@ function getSourcesSection(
   };
 }
 
-function getHowThisWasChosen(
+function getDiagnosticHowThisWasChosen(
   timingCard: SymbolicCard,
   pattern: RitualPattern,
   input: ResolvedGenerateWeeklyBriefInput,
@@ -3364,6 +3643,7 @@ function getHowThisWasChosen(
     getRitualFocusSection(input, pattern),
     getRitualFitSection(input, pattern, preferenceMatches),
     getSourcesSection(sourcesUsed, pattern),
+    getCoverageGapSection(input, pattern),
     getTradeoffSection(input, pattern, excludedPatternKeys, safetyNotes) ??
       {
         kind: "capacity_boundary" as const,
@@ -3376,6 +3656,180 @@ function getHowThisWasChosen(
   ].filter((section): section is ExplanationSection => section !== undefined);
 
   return sections;
+}
+
+function getSectionByKind(
+  sections: ExplanationSection[],
+  kind: ExplanationSectionKind,
+): ExplanationSection | undefined {
+  return sections.find((section) => section.kind === kind);
+}
+
+function getHowThisWasChosen(
+  diagnosticSections: ExplanationSection[],
+  pattern: RitualPattern,
+  input: ResolvedGenerateWeeklyBriefInput,
+): ExplanationSection[] {
+  const ritualFit = getSectionByKind(diagnosticSections, "ritual_fit");
+  const focusFit = getSectionByKind(diagnosticSections, "ritual_focus");
+  const timingFit = getSectionByKind(diagnosticSections, "timing_choice");
+  const sourceFit = getSectionByKind(diagnosticSections, "sources");
+  const closestCompatible = getSectionByKind(diagnosticSections, "coverage_gap");
+  const boundary =
+    getSectionByKind(diagnosticSections, "tradeoff_or_alternative") ??
+    getSectionByKind(diagnosticSections, "capacity_boundary");
+  const materialBody = getCompactMaterialRitualFitBody(
+    ritualFit,
+    focusFit,
+    sourceFit,
+    pattern,
+    input,
+  );
+  const timingBody = getCompactTimingFitBody(timingFit, input);
+  const capacityAudienceBody = getCompactCapacityAudienceBody(boundary, pattern, input);
+
+  return [
+    {
+      kind: "ritual_fit" as const,
+      title: "Material and ritual fit",
+      body: materialBody,
+    },
+    timingBody
+      ? {
+          kind: "timing_choice" as const,
+          title: "Timing fit",
+          body: timingBody,
+        }
+      : undefined,
+    {
+      kind: "capacity_boundary" as const,
+      title: "Capacity and audience fit",
+      body: capacityAudienceBody,
+    },
+    closestCompatible
+      ? {
+          ...closestCompatible,
+          body: getCompactClosestCompatibleBody(closestCompatible.body),
+        }
+      : undefined,
+  ].filter((section): section is ExplanationSection => section !== undefined);
+}
+
+function getCompactMaterialRitualFitBody(
+  ritualFit: ExplanationSection | undefined,
+  focusFit: ExplanationSection | undefined,
+  sourceFit: ExplanationSection | undefined,
+  pattern: RitualPattern,
+  input: ResolvedGenerateWeeklyBriefInput,
+): string {
+  const practice = getPracticeFit(input, pattern).label?.replace(/^Surprise me ->\s*/, "");
+  const material = practice
+    ? `${practice} remains the material path.`
+    : "The chosen material remains the path.";
+  const focus = focusFit?.body
+    ? ensureSentence(focusFit.body)
+    : ensureSentence(getPatternMaterialPhrase(pattern));
+  const ritual = ritualFit?.body
+    ? ensureSentence(ritualFit.body)
+    : "";
+  const sourceLineage = sourceFit?.body ? ` ${sourceFit.body}` : "";
+
+  return `${material} ${focus} ${ritual}`.replace(/\s+/g, " ").trim() + sourceLineage;
+}
+
+function getCompactTimingFitBody(
+  timingFit: ExplanationSection | undefined,
+  input: ResolvedGenerateWeeklyBriefInput,
+): string | undefined {
+  if (!timingFit) {
+    return undefined;
+  }
+
+  const text = timingFit.body;
+
+  if (/No single timing window stood out strongly/i.test(text)) {
+    return "Timing does not need to lead here; the rite can stay close to capacity.";
+  }
+
+  if (input.timeScope === "best_moment_this_week") {
+    const windowLabel = input.selectedTimingWindow?.label;
+    return windowLabel
+      ? `${windowLabel} is the useful window; timing shapes the material without turning it into a command.`
+      : "The week view keeps timing useful without making it a command.";
+  }
+
+  return text
+    .replace(/\bThe window stood out because of\b/i, "It matters because of")
+    .replace(/\bThe timing signal shaped the recommendation\b/i, "Timing shaped the rite");
+}
+
+function getCompactCapacityAudienceBody(
+  boundary: ExplanationSection | undefined,
+  pattern: RitualPattern,
+  input: ResolvedGenerateWeeklyBriefInput,
+): string {
+  const capacity = getCompactCapacityMeaningPhrase(input.capacityMode);
+  const audience = getAudienceMeaningPhraseForInput(pattern, input);
+  const boundaryBody = boundary?.body
+    ? ` ${ensureSentence(boundary.body)}`
+    : "";
+
+  return `${capacity}${audience ? ` ${audience}` : ""}${boundaryBody}`;
+}
+
+function getAudienceMeaningPhraseForInput(
+  pattern: RitualPattern,
+  input: ResolvedGenerateWeeklyBriefInput,
+): string | undefined {
+  if (
+    input.currentRitualCheckIn?.audience !== "both_of_us" &&
+    input.audience !== "together"
+  ) {
+    return undefined;
+  }
+
+  const ritualBody = getRecommendedRitual(
+    pattern,
+    input.capacityMode,
+    input.tonePreferences,
+    input.audience,
+    {
+      currentRitualCheckIn: input.currentRitualCheckIn,
+      timingFact: getPrimaryMoonTimingFact(input.timingFacts),
+    },
+  );
+
+  if (!hasAudienceStructureInRitualBody(ritualBody)) {
+    return undefined;
+  }
+
+  return "For both of you, the rite lives in one role each or one shared object between you.";
+}
+
+function hasAudienceStructureInRitualBody(ritualBody: string): boolean {
+  return /\b(?:one of you|the other|each|both|together|between you|shared)\b/i.test(
+    ritualBody,
+  );
+}
+
+function getCompactCapacityMeaningPhrase(capacityMode: CapacityMode): string {
+  switch (capacityMode) {
+    case "pause":
+      return "The whole shape stays at permission and stopping.";
+    case "low":
+      return "This stays small: one material action and a clean close.";
+    case "steady":
+      return "The material gets room to be placed, held, and returned.";
+    case "high":
+      return "The larger shape needs staged action, a held moment, and a real return.";
+  }
+}
+
+function getCompactClosestCompatibleBody(body: string): string {
+  return body
+    .replace(/\bThis keeps\b/g, "It keeps")
+    .replace(/\bwhile leaving\b/g, "and leaves")
+    .replace(/\bThis should be reviewed as compatible rather than complete\./g, "Review this as compatible rather than complete.");
 }
 
 function labelFromSnake(value: string | undefined): string {
@@ -3619,35 +4073,28 @@ function getCheckInReason(
 function getWhyThis(
   timingCard: SymbolicCard,
   pattern: RitualPattern,
-  privateProfileCard: SymbolicCard | undefined,
+  _privateProfileCard: SymbolicCard | undefined,
   input: ResolvedGenerateWeeklyBriefInput,
   preferenceMatches: string[],
   profileSignalMatches: PrivateProfileSignal[],
   natalContactMatches: NatalContact[],
   excludedPatternKeys: string[],
 ): string {
-  const timingBridge = getTimingBridgePhrase(timingCard, pattern, input, getSelectedTimingSignals(input));
-  const profileFit = getFitReason(
-    privateProfileCard,
+  const whyThisFits = getWhyThisFits(
+    timingCard,
+    pattern,
+    input,
     preferenceMatches,
-    input.avoidedRitualStyles,
     profileSignalMatches,
     natalContactMatches,
-    input.astrologyVisibility,
-    input.audience,
+    getSelectedTimingSignals(input),
   );
   const fitReason =
     excludedPatternKeys.length > 0
       ? ` Kept bounded: ${getBoundaryPhrase(pattern, input)}.`
       : "";
 
-  return [
-    `Chosen for ${getChosenForPhrase(input, pattern)}.`,
-    timingBridge,
-    getPatternMaterialPhrase(pattern),
-    profileFit,
-    fitReason,
-  ].filter(Boolean).join(" ").replace(/\s+/g, " ").trim();
+  return [whyThisFits, fitReason].filter(Boolean).join(" ").replace(/\s+/g, " ").trim();
 }
 
 function getReasoning(
@@ -4092,6 +4539,18 @@ function getExplanation(
     selectedTimingSignals,
     safetyNotes,
   );
+  const diagnosticHowThisWasChosen = getDiagnosticHowThisWasChosen(
+    timingCard,
+    pattern,
+    input,
+    preferenceMatches,
+    profileSignalMatches,
+    natalContactMatches,
+    excludedPatternKeys,
+    safetyNotes,
+    selectedTimingSignals,
+    sourcesUsed,
+  );
 
   return {
     whyThisFits: getWhyThisFits(
@@ -4104,17 +4563,11 @@ function getExplanation(
       selectedTimingSignals,
     ),
     howThisWasChosen: getHowThisWasChosen(
-      timingCard,
+      diagnosticHowThisWasChosen,
       pattern,
       input,
-      preferenceMatches,
-      profileSignalMatches,
-      natalContactMatches,
-      excludedPatternKeys,
-      safetyNotes,
-      selectedTimingSignals,
-      sourcesUsed,
     ),
+    diagnosticHowThisWasChosen,
     signals: getBriefSignals(
       input,
       privateProfileCard,

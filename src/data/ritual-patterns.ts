@@ -42,11 +42,14 @@ export type RitualPresentation = RitualPresentationVariant & {
       | "fullTiming"
       | "waningTiming"
       | "beginningFocus"
+      | "grounding"
       | "resting"
       | "thresholdReflection"
       | "homeLowCapacity"
       | "candleFullSayingClearly"
       | "togetherTendingUs"
+      | "togetherGrounding"
+      | "togetherHigh"
       | "soloReflection",
       Partial<RitualPresentationVariant>
     >
