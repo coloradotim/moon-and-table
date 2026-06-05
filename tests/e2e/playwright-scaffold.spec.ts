@@ -22,3 +22,27 @@ test("home page fits a phone-sized viewport", async ({ page }) => {
 
   expect(hasHorizontalOverflow).toBe(false);
 });
+
+test("home page exposes production favicon assets", async ({ page }) => {
+  await page.goto("/");
+
+  const faviconLinks = await page
+    .locator('link[rel~="icon"], link[rel="apple-touch-icon"]')
+    .evaluateAll((links) =>
+      links.map((link) => ({
+        href: link.getAttribute("href"),
+        rel: link.getAttribute("rel"),
+        sizes: link.getAttribute("sizes"),
+        type: link.getAttribute("type"),
+      })),
+    );
+
+  expect(faviconLinks).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({ href: "/favicon.ico", rel: "icon", sizes: "any" }),
+      expect.objectContaining({ href: "/favicon.svg", rel: "icon", type: "image/svg+xml" }),
+      expect.objectContaining({ href: "/favicon-32x32.png", rel: "icon", sizes: "32x32" }),
+      expect.objectContaining({ href: "/apple-touch-icon.png", rel: "apple-touch-icon" }),
+    ]),
+  );
+});

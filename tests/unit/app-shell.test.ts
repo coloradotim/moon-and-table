@@ -552,6 +552,43 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("Calendar");
   });
 
+  it("renders the masthead moon from the current date, not selected ritual timing", () => {
+    const starterPrivateBriefData = resolvePrivateBriefData({});
+    const privateBriefData = {
+      ...starterPrivateBriefData,
+      input: {
+        ...starterPrivateBriefData.input,
+        currentDate: "2026-06-05T12:00:00-06:00",
+        timezone: "America/Denver",
+      },
+    };
+    const selectedTimingBrief = generateWeeklyBrief(privateBriefData.input);
+    const briefWithFutureSelectedTiming: typeof selectedTimingBrief = {
+      ...selectedTimingBrief,
+      trace: {
+        ...selectedTimingBrief.trace,
+        timingFactDetails: [
+          {
+            ...selectedTimingBrief.trace.timingFactDetails[0],
+            label: "Last quarter moon",
+            phaseAngleDegrees: 270,
+            exactIso: "2026-06-08T10:00:59.929Z",
+          },
+        ],
+      },
+    };
+
+    const html = renderSignedInShell(privateBriefData, {
+      brief: briefWithFutureSelectedTiming,
+    });
+
+    expect(html).toContain("Current phase:</strong> Waning gibbous moon");
+    expect(html).toContain("Next lunar milestone:</strong> Last quarter moon on June 8, 2026");
+    expect(html).toContain('data-moon-phase-glyph="waning_gibbous"');
+    expect(html).not.toContain("Current phase:</strong> Last quarter moon");
+    expect(html).not.toContain("Next lunar milestone:</strong> New moon");
+  });
+
   it("renders a signed-in How it works page from the app menu", () => {
     const html = renderSignedInShell(resolvePrivateBriefData({}), {
       activeView: "how_it_works",
