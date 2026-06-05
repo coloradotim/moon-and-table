@@ -29,6 +29,36 @@ export type RecommendationContractExpectation = {
   rationale: string;
 };
 
+export type AuthoredOutputWarningId =
+  | "fragmentary_option_menu_body"
+  | "title_intention_duplicate_without_depth"
+  | "why_this_fits_describes_matching_not_meaning"
+  | "how_chosen_reads_like_system_report"
+  | "source_lineage_too_raw_or_academic"
+  | "high_capacity_no_deeper_ritual_shape"
+  | "audience_only_pronoun_change"
+  | "normal_copy_rationalizes_mismatch"
+  | "ritual_body_lacks_activation_or_closure"
+  | "material_used_as_prop_not_ritual_matter"
+  | "closest_match_overclaims_fit"
+  | "coverage_gap_not_disclosed_in_expanded_explanation"
+  | "coverage_gap_disclosed_as_broken_app_language";
+
+export type AuthoredOutputExpectation = {
+  verdict: "pass" | "review_required" | "request_changes";
+  goodOutputShouldFeelLike: string;
+  centralMaterialAction: string;
+  ritualFunction: string;
+  timingMayDo: string;
+  capacityShouldChange: string;
+  audienceShouldChange: string;
+  matchType: "exact_strong_match" | "closest_compatible_match" | "review_gap";
+  imperfectFitDisclosure?: string;
+  disallowedCopyPatterns: string[];
+  expectedWarningIds?: AuthoredOutputWarningId[];
+  reviewReason?: string;
+};
+
 export type RecommendationQualityScenario = {
   id: string;
   title: string;
@@ -37,6 +67,7 @@ export type RecommendationQualityScenario = {
   currentRitualCheckIn: CurrentRitualCheckIn;
   profilePlaceholders?: PrivateProfileSignalInput[];
   contract?: RecommendationContractExpectation;
+  authoredOutput?: AuthoredOutputExpectation;
   expectedQualities: string[];
   disallowedOutcomes: string[];
   humanReviewNotes: string;
@@ -74,6 +105,294 @@ const contractBlockedNormalCopyPhrases = [
   "Surprise me category",
 ];
 
+function sharedKitchenAudienceGap(patternKey: string): AuthoredOutputExpectation {
+  return {
+    verdict: "review_required",
+    goodOutputShouldFeelLike: "a shared tending-us rite with a real role for each person",
+    centralMaterialAction: "one shared cup, bowl, word, sweetness cue, or table object with two-person action",
+    ritualFunction: "tending us",
+    timingMayDo: "timing may warm or witness the shared action without replacing it",
+    capacityShouldChange: "capacity should shape the size of the shared action, not only the explanation",
+    audienceShouldChange: "both people should act in the ritual body",
+    matchType: "exact_strong_match",
+    imperfectFitDisclosure: "none required",
+    disallowedCopyPatterns: ["both of you only in explanation", "pronoun-only shared action"],
+    expectedWarningIds: ["audience_only_pronoun_change"],
+    reviewReason: `${patternKey} is shared in explanation more than in embodied action.`,
+  };
+}
+
+function firstLastOptionMenuGap(patternKey: string): AuthoredOutputExpectation {
+  return {
+    verdict: "request_changes",
+    goodOutputShouldFeelLike: "a first/last threshold rite with one chosen place and one chosen close",
+    centralMaterialAction: "one doorway crossing or one written/folded threshold word path",
+    ritualFunction: "threshold, closing, and beginning",
+    timingMayDo: "calendar threshold timing may lead when the check-in supports threshold work",
+    capacityShouldChange: "capacity should shape sequence and return, not add choices",
+    audienceShouldChange: "both people should speak, place, fold, or cross in clear roles when audience is both",
+    matchType: "exact_strong_match",
+    imperfectFitDisclosure: "none required",
+    disallowedCopyPatterns: ["doorway, table, or bowl", "crossing once or folding the words away"],
+    expectedWarningIds: [
+      "fragmentary_option_menu_body",
+      "audience_only_pronoun_change",
+    ],
+    reviewReason: `${patternKey} is contract-correct but still presents the core ritual as an option menu.`,
+  };
+}
+
+const authoredOutputExpectationsByScenarioId: Record<string, AuthoredOutputExpectation> = {
+  "tending_us.low.bounded": sharedKitchenAudienceGap("quiet_welcome"),
+  "issue202.kitchen.warmth.not_threshold": sharedKitchenAudienceGap("quiet_welcome"),
+  "issue204.kitchen.bounded_sweetness": sharedKitchenAudienceGap("honeyed_word"),
+  "issue205.kitchen.warmth.not_phrase": sharedKitchenAudienceGap("quiet_welcome"),
+  "issue222.candle.venus_warmth_tending_us": sharedKitchenAudienceGap("full_light_on_the_table"),
+  "issue222.candle.best_week_lunation_window": sharedKitchenAudienceGap("full_light_on_the_table"),
+  "contract.surprise.forced_kitchen_preserved": sharedKitchenAudienceGap("quiet_welcome"),
+  "issue205.seasonal.first_last_words": firstLastOptionMenuGap("first_day_last_day"),
+  "calendar.month_turn.best_week": firstLastOptionMenuGap("first_day_last_day"),
+  "contract.candle.high_beginning": {
+    verdict: "review_required",
+    goodOutputShouldFeelLike: "a fuller first-light beginning rite with real high-capacity architecture, not a tiny threshold crossing",
+    centralMaterialAction: "one threshold-light crossing with a named first step",
+    ritualFunction: "beginning",
+    timingMayDo: "new moon may make the first light small and preparatory",
+    capacityShouldChange: "high capacity should add staged light, threshold, rest, and return architecture rather than a one-phrase crossing",
+    audienceShouldChange: "me-only can stay solitary",
+    matchType: "exact_strong_match",
+    imperfectFitDisclosure: "none required",
+    disallowedCopyPatterns: ["doorway, window, or table", "cross or turn away", "best available match"],
+    expectedWarningIds: ["high_capacity_no_deeper_ritual_shape"],
+    reviewReason: "Coherent, but still closer to a low/steady first-light rite than a deeper high-capacity ritual.",
+  },
+  "contract.candle.high_resting": {
+    verdict: "review_required",
+    goodOutputShouldFeelLike: "a candle/light rest rite with enough held/resting/return architecture for high capacity",
+    centralMaterialAction: "empty bowl in table light, folded line, return",
+    ritualFunction: "rest and holding",
+    timingMayDo: "full light may hold what is present before the room lowers",
+    capacityShouldChange: "high capacity should make the held/resting/return arc substantial, not only one quiet minute plus later return",
+    audienceShouldChange: "me-only can remain quiet and material",
+    matchType: "exact_strong_match",
+    imperfectFitDisclosure: "none required",
+    disallowedCopyPatterns: ["forced clarity", "more explanation instead of action"],
+    expectedWarningIds: ["high_capacity_no_deeper_ritual_shape"],
+    reviewReason: "Coherent and material, but high capacity still feels thin: one quiet minute plus a later return.",
+  },
+  "contract.plant.both_high_tending_waning": {
+    verdict: "review_required",
+    goodOutputShouldFeelLike: "a dignified Plant-centered closest-compatible rite that does not drift to clearing",
+    centralMaterialAction: "plant witness with two spoken roles and return",
+    ritualFunction: "tending by witnessing",
+    timingMayDo: "waning may quiet the tending without making it release",
+    capacityShouldChange: "high capacity should create more plant-material depth when the grimoire has it",
+    audienceShouldChange: "both people should have separate embodied roles",
+    matchType: "closest_compatible_match",
+    imperfectFitDisclosure: "How this was chosen should say Plant + high home-tending coverage is thin and the engine preserved Plant instead of drifting.",
+    disallowedCopyPatterns: ["held lightly", "stronger material form", "Plant answer held lightly"],
+    expectedWarningIds: ["coverage_gap_not_disclosed_in_expanded_explanation"],
+  },
+  "contract.plant.high_rest_companionship": {
+    verdict: "review_required",
+    goodOutputShouldFeelLike: "a Plant rest rite rooted in dormancy rather than candle darkness",
+    centralMaterialAction: "plant or plant image rests untouched, then returns",
+    ritualFunction: "rest",
+    timingMayDo: "dark or quiet timing may lower the room",
+    capacityShouldChange: "high capacity should add a fuller rest arc when coverage exists",
+    audienceShouldChange: "me-only can be companionship with the plant",
+    matchType: "closest_compatible_match",
+    imperfectFitDisclosure: "How this was chosen should name the high-depth Plant rest gap without apology.",
+    disallowedCopyPatterns: ["bank the light", "forced dark-light replacement"],
+    expectedWarningIds: ["coverage_gap_not_disclosed_in_expanded_explanation"],
+  },
+  "contract.kitchen.high_tending_full": {
+    verdict: "review_required",
+    goodOutputShouldFeelLike: "a warm table rite for both people with a deeper shared arc, not full-moon clarity pressure",
+    centralMaterialAction: "shared cup or table warmth with two-person roles",
+    ritualFunction: "tending us",
+    timingMayDo: "full moon may witness warmth without moving the ritual to Candle/light",
+    capacityShouldChange: "high capacity should make the shared arc meaningfully fuller than one word and one quiet minute",
+    audienceShouldChange: "both people should do different parts of the cup/table action",
+    matchType: "exact_strong_match",
+    imperfectFitDisclosure: "none required",
+    disallowedCopyPatterns: ["both of you only in explanation", "full light on the table"],
+    expectedWarningIds: ["high_capacity_no_deeper_ritual_shape"],
+    reviewReason: "Coherent and embodied, but still too close to a steady/low shared cup rite for high capacity.",
+  },
+  "contract.kitchen.high_beginning_waning": {
+    verdict: "review_required",
+    goodOutputShouldFeelLike: "a grain beginning held in preparation",
+    centralMaterialAction: "one grain or bean in a bowl at the table",
+    ritualFunction: "beginning",
+    timingMayDo: "waning may make the beginning wait before launch",
+    capacityShouldChange: "high capacity should give the bowl a fuller held/resting/return arc than one sentence and one quiet minute",
+    audienceShouldChange: "me-only can stay a single table action",
+    matchType: "exact_strong_match",
+    imperfectFitDisclosure: "none required",
+    disallowedCopyPatterns: ["grain, rice, oats, bean, or seed menu", "launch pressure"],
+    expectedWarningIds: ["high_capacity_no_deeper_ritual_shape"],
+    reviewReason: "Coherent and strong in house voice, but high capacity still relies on one sentence, one quiet minute, and a later return.",
+  },
+  "contract.home.high_tending_waning": {
+    verdict: "request_changes",
+    goodOutputShouldFeelLike: "Home tending, not a light-threshold beginning disguised as tending",
+    centralMaterialAction: "a home object placed, returned, arranged, or mapped",
+    ritualFunction: "tending the home",
+    timingMayDo: "waning may make the action quieter or more returning",
+    capacityShouldChange: "high capacity should deepen the home-tending architecture",
+    audienceShouldChange: "me-only can still be material and complete",
+    matchType: "review_gap",
+    imperfectFitDisclosure: "How this was chosen should name the Home high-tending gap if a closest form is used.",
+    disallowedCopyPatterns: ["light threshold as generic Home tending", "held lightly", "stronger material form"],
+    expectedWarningIds: [
+      "high_capacity_no_deeper_ritual_shape",
+      "coverage_gap_not_disclosed_in_expanded_explanation",
+    ],
+    reviewReason: "The selected first-light threshold form is coherent but not Home-tending enough.",
+  },
+  "contract.home.high_threshold_full": {
+    verdict: "review_required",
+    goodOutputShouldFeelLike: "a threshold rite where crossing has a real high-capacity function",
+    centralMaterialAction: "window or doorway threshold with one crossing/closing",
+    ritualFunction: "threshold",
+    timingMayDo: "full light may witness the crossing without promising protection",
+    capacityShouldChange: "high capacity should add meaningful staging, holding, and closure beyond one phrase and one curtain close",
+    audienceShouldChange: "both people should share the crossing",
+    matchType: "exact_strong_match",
+    imperfectFitDisclosure: "none required",
+    disallowedCopyPatterns: ["stays outside", "protection", "security"],
+    expectedWarningIds: ["high_capacity_no_deeper_ritual_shape"],
+    reviewReason: "Coherent and shared, but too slight for high capacity.",
+  },
+  "contract.reflection.high_saying_new": {
+    verdict: "request_changes",
+    goodOutputShouldFeelLike: "Reflection-first phrase work with enough ritual shape for high capacity",
+    centralMaterialAction: "spoken or written phrase placed, folded, witnessed, or returned",
+    ritualFunction: "saying clearly",
+    timingMayDo: "new moon may freshen the phrase without turning it into a beginning threshold",
+    capacityShouldChange: "high capacity should add staging/placement/return without journaling homework",
+    audienceShouldChange: "me-only can be solitary phrase work",
+    matchType: "review_gap",
+    imperfectFitDisclosure: "How this was chosen should not overstate a threshold-light form as a strong Reflection match.",
+    disallowedCopyPatterns: ["generic beginning light", "threshold-light as Reflection default"],
+    expectedWarningIds: ["high_capacity_no_deeper_ritual_shape"],
+    reviewReason: "The selected window-light threshold form is phrase-compatible but too threshold/light-forward.",
+  },
+  "contract.seasonal.high_month_turn_threshold": {
+    verdict: "review_required",
+    goodOutputShouldFeelLike: "a seasonal threshold rite with marker, return, and month-turn logic",
+    centralMaterialAction: "seasonal marker bowl or first/last crossing",
+    ritualFunction: "seasonal threshold",
+    timingMayDo: "month turn may lead because the user asked for a threshold-seasonal form",
+    capacityShouldChange: "high capacity should add return/put-away structure",
+    audienceShouldChange: "both people should share the marker or crossing",
+    matchType: "closest_compatible_match",
+    imperfectFitDisclosure: "How this was chosen should name the closest-compatible seasonal threshold coverage if thin.",
+    disallowedCopyPatterns: ["holiday feed", "festival script", "public reenactment"],
+    expectedWarningIds: ["coverage_gap_not_disclosed_in_expanded_explanation"],
+  },
+  "contract.surprise.high_preserves_resolved_category": {
+    verdict: "review_required",
+    goodOutputShouldFeelLike: "one resolved category with high-capacity phrase work that does not keep drifting",
+    centralMaterialAction: "written/spoken phrase held by the resolved material path",
+    ritualFunction: "saying clearly",
+    timingMayDo: "timing may shape the phrase after category resolution",
+    capacityShouldChange: "high capacity should deepen the resolved category, not change it",
+    audienceShouldChange: "me-only can stay solitary",
+    matchType: "closest_compatible_match",
+    imperfectFitDisclosure: "How this was chosen should be honest if the resolved category has thin high-capacity phrase coverage.",
+    disallowedCopyPatterns: ["Surprise me ritual", "Surprise me category", "Surprise me matched"],
+    expectedWarningIds: ["coverage_gap_not_disclosed_in_expanded_explanation"],
+  },
+  "contract.surprise.both_preserves_audience": {
+    verdict: "review_required",
+    goodOutputShouldFeelLike: "one resolved shared category with embodied both-of-us action",
+    centralMaterialAction: "shared cup/table action with two roles",
+    ritualFunction: "tending us",
+    timingMayDo: "timing may warm or witness but not replace the shared action",
+    capacityShouldChange: "high capacity should deepen the shared action",
+    audienceShouldChange: "each person should have a role",
+    matchType: "closest_compatible_match",
+    imperfectFitDisclosure: "How this was chosen should disclose closest-compatible coverage if the resolved category is thin.",
+    disallowedCopyPatterns: ["both of you only in explanation", "Surprise me ritual"],
+    expectedWarningIds: ["coverage_gap_not_disclosed_in_expanded_explanation"],
+  },
+  "contract.best_week.month_turn_may_lead": {
+    verdict: "request_changes",
+    goodOutputShouldFeelLike: "a Home threshold month-turn rite with one chosen place and shared roles",
+    centralMaterialAction: "one doorway crossing or one threshold word placement, not a place/action menu",
+    ritualFunction: "threshold and month turn",
+    timingMayDo: "month-turn timing may lead because the user asked for best moment this week",
+    capacityShouldChange: "steady capacity should give a bounded sequence with a clear close",
+    audienceShouldChange: "both people should speak, place, or cross in embodied roles",
+    matchType: "exact_strong_match",
+    imperfectFitDisclosure: "none required",
+    disallowedCopyPatterns: ["doorway, table, or bowl", "crossing once or folding the words away"],
+    expectedWarningIds: [
+      "fragmentary_option_menu_body",
+      "audience_only_pronoun_change",
+    ],
+    reviewReason: "The selection is contract-correct, but the body is still an option menu and does not embody both people.",
+  },
+  "contract.tending_us.both_low_embodied": {
+    verdict: "request_changes",
+    goodOutputShouldFeelLike: "a low-capacity shared Kitchen welcome with roles for both people",
+    centralMaterialAction: "shared cup or bowl with each person doing one part",
+    ritualFunction: "tending us",
+    timingMayDo: "seasonal timing may mark welcome without becoming a public calendar script",
+    capacityShouldChange: "low capacity should stay one vessel, one welcome, one return",
+    audienceShouldChange: "both people should act, not only be named in explanation",
+    matchType: "exact_strong_match",
+    imperfectFitDisclosure: "none required",
+    disallowedCopyPatterns: ["both of you only in explanation", "relationship advice"],
+    expectedWarningIds: ["audience_only_pronoun_change"],
+    reviewReason: "The selected quiet_welcome body is material but does not give both people embodied roles.",
+  },
+  "batch1.quiet_welcome": {
+    verdict: "request_changes",
+    goodOutputShouldFeelLike: "a quiet welcome vessel rite where both people share the action",
+    centralMaterialAction: "cup or bowl welcome with two-person action and return",
+    ritualFunction: "welcome and tending us",
+    timingMayDo: "seasonal timing may make the welcome visible without festival language",
+    capacityShouldChange: "low capacity should stay one vessel, one welcome, one return",
+    audienceShouldChange: "both people should have an action in the ritual body",
+    matchType: "exact_strong_match",
+    imperfectFitDisclosure: "none required",
+    disallowedCopyPatterns: ["both of you only in explanation", "therapy conversation"],
+    expectedWarningIds: ["audience_only_pronoun_change"],
+    reviewReason: "The body has a shared vessel but does not embody both people beyond surrounding copy.",
+  },
+  "contract.home.low_tending_waning_not_release": {
+    verdict: "request_changes",
+    goodOutputShouldFeelLike: "one low-capacity Home tending gesture, not clearing and not threshold-light beginning",
+    centralMaterialAction: "place, return, or arrange one home object",
+    ritualFunction: "tending",
+    timingMayDo: "waning may quiet the gesture without turning it into release",
+    capacityShouldChange: "low capacity should stay one material/action/closure",
+    audienceShouldChange: "me-only can stay one concrete Home action",
+    matchType: "review_gap",
+    imperfectFitDisclosure: "If a closest compatible form is used, How this was chosen should say the Home low-tending coverage is thin.",
+    disallowedCopyPatterns: ["light threshold as generic Home tending", "clearing by default"],
+    expectedWarningIds: ["coverage_gap_not_disclosed_in_expanded_explanation"],
+    reviewReason: "The current form avoids clearing, but it still answers Home tending with threshold light.",
+  },
+  "contract.surprise.low_resolves_real_category": {
+    verdict: "request_changes",
+    goodOutputShouldFeelLike: "a low-capacity resolved-category rest rite",
+    centralMaterialAction: "resting action in the resolved category",
+    ritualFunction: "rest",
+    timingMayDo: "waning may lower the action but not convert rest into release",
+    capacityShouldChange: "low capacity should stay one small action with closure",
+    audienceShouldChange: "me-only can stay solitary",
+    matchType: "review_gap",
+    imperfectFitDisclosure: "How this was chosen should not make a release rite sound like a rest answer.",
+    disallowedCopyPatterns: ["release as rest", "Surprise me ritual"],
+    expectedWarningIds: ["closest_match_overclaims_fit"],
+    reviewReason: "The current open-preference result preserves a category but reads as release rather than rest.",
+  },
+};
+
 function scenario(
   base: Omit<RecommendationQualityScenario, "humanReviewNotes" | "input"> & {
     preferredRitualStyles?: string[];
@@ -87,6 +406,7 @@ function scenario(
 ): RecommendationQualityScenario {
   return {
     ...base,
+    authoredOutput: authoredOutputExpectationsByScenarioId[base.id],
     humanReviewNotes: "Human review notes:",
     input: {
       currentDate: base.currentDate,

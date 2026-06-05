@@ -136,6 +136,12 @@ Explicit check-in answers form the recommendation contract. The engine should pr
 
 Selection order should stay conservative: hard eligibility first, then explicit or resolved category, focus, capacity/depth, audience action, time scope, timing shape, material/source strength, variety, and presentation. High capacity should deepen the selected category/focus; when no high-depth form exists, prefer a compatible steady form and surface the gap in review diagnostics rather than jumping categories. `Surprise me` must resolve to a real visible category before scoring and then preserve that resolved category.
 
+Selection correctness is only the first gate. The selected ritual still needs an
+authored final presentation: one material/action path, clear activation and
+closure, material logic, embodied audience action, and capacity depth visible in
+the ritual body. A contract-correct recommendation that reads like an option
+menu or a score-rationalized report is not a finished product outcome.
+
 When timing, focus, practice type, audience, or capacity are in tension, the output needs a meaning bridge. It should resolve into one coherent ritual, not a list of partially related reasons. Carry prompts should come from the resolved ritual meaning, not from a raw lunar fallback or whichever timing card happened to be first.
 
 Carry prompts and optional accents should stay inside the selected ritual form. The generator should prefer the selected pattern's `RitualPresentation`, then focus-aware or material-aware copy, before falling back to timing. Optional accents are not a required second action. They should name the same material, vessel, threshold, light, leaf, cup, key, bowl, or phrase already present in the selected ritual, or else stay absent.
@@ -188,6 +194,11 @@ Recommendation-contract tests should be written from product expectations before
 The executable matrix in `docs/content-audits/recommendation-contract-matrix.md`
 is the current product-contract review packet for category/focus/capacity,
 audience, timing authority, coverage-gap, and open-preference behavior.
+
+The companion authored-output matrix in
+`docs/content-audits/authored-output-quality-matrix.md` reviews whether the
+final normal copy sounds human-authored, coherent, magical, and specific after
+the contract selection has happened.
 
 ## Boundaries
 

@@ -109,6 +109,68 @@ These are product rules:
 
 Diagnostics can prove that a recommendation was explainable. They cannot prove that it was good.
 
+## Authored Output Bar
+
+Technically valid is not enough.
+
+The recommendation contract asks whether the engine answered the check-in. The
+authored-output bar asks whether the final recommendation reads like a human
+household-grimoire entry selected with care. A recommendation can preserve
+category, focus, audience, capacity, and timing authority and still fail if the
+ritual body is an option menu, the material is treated as a prop, the expanded
+explanation sounds like a score dump, or high capacity produces the same tiny
+rite with more explanation wrapped around it.
+
+Authored output requires:
+
+- one selected material/action path, not `doorway, window, or table` menus
+- clear activation and closure
+- visible ritual function such as witness, beginning, clearing, rest,
+  threshold, welcome, tending, holding, lowering, returning, or saying clearly
+- material/action logic that treats candle, light, bowl, key, grain, plant, cup,
+  threshold, water, or folded word as ritual matter
+- `Why this fits` that explains meaning, not matching mechanics
+- `How this was chosen` that stays readable and secondary
+- high-capacity ritual architecture when capacity is high
+- embodied both-of-us action when the audience is shared
+- light, specific source lineage without raw ids, author lists, or academic tone
+
+In authored-output review, `pass` means good enough to show in the product. It
+does not mean "technically coherent" or "not obviously broken." A
+contract-correct recommendation can still require review or changes when high
+capacity stays shallow, both-of-us action is only present in explanation, or a
+closest-compatible match is hidden.
+
+High capacity should require deeper ritual architecture when the selected path
+can support it: staged action, a material/place relationship, a held/resting or
+return arc, meaningful closure, and enough ritual duration or shape to feel
+deeper than a low-capacity rite. High capacity should not be a one-minute pause
+with extra explanation or a later return pasted on.
+
+For `both_of_us`, the ritual body should embody two people unless shared
+stillness or an object held between the two is explicitly the mechanism. Pronoun
+changes, private-fit language, and carry prompts are not enough by themselves.
+
+Closest-compatible recommendations must remain complete and dignified, but they
+must not overclaim. Coverage-gap honesty belongs in collapsed `How this was
+chosen`, diagnostics, or review reports. It should not become apology or
+broken-app language in the main ritual body.
+
+Bad expanded-copy directions:
+
+- `held lightly`
+- `stronger material form`
+- `best available match` in normal ritual copy
+- `sorry, content is limited`
+- `the app could not...`
+- fake confidence that a closest-compatible match is exact
+
+Better expanded-copy directions:
+
+- `Closest strong match: the grimoire does not yet have a deeper Plant + home-tending rite. This keeps Plant as the center rather than drifting to a stronger Candle/light form.`
+- `This uses the strongest compatible Kitchen form available for high capacity. It keeps the work at the table instead of moving to Candle/light just because the full moon is strong.`
+- `The ritual stays small because this part of the grimoire is still shallow. It preserves the category and focus rather than pretending a different ritual answered the check-in.`
+
 ## Ritual Coherence Rules
 
 The title, timing reason, ritual body, intention, optional accent, carry prompt, and closing should feel like one ritual.
@@ -203,7 +265,27 @@ selection behavior, report diagnostics, quality fixtures, Surprise me
 resolution, timing authority, capacity-depth behavior, or normal-copy
 explanations.
 
+The authored-output matrix lives in
+`docs/content-audits/authored-output-quality-matrix.md`. Use it when changing
+ritual presentation, `Why this fits`, `How this was chosen`, source summaries,
+capacity variants, optional accents, carry prompts, audience-specific copy, or
+normal-copy diagnostics. It is the companion to the contract matrix: #224 asks
+whether the selected ritual kind is acceptable; #225 asks whether the final
+text is good enough to show.
+
 Good scenarios should catch output that technically uses the right inputs but still feels generic, contradictory, overassembled, or thin.
+
+Authored-output scenarios can add explicit expectations for:
+
+- what a good output should feel like
+- the central material/action
+- the ritual function
+- what timing is allowed to do
+- what capacity and audience should change
+- whether the selection is an exact strong match or closest-compatible match
+- how imperfect fit should be disclosed
+- disallowed copy patterns
+- expected authored-output warning ids
 
 Tests must define expected product behavior before engine behavior is adjusted. Do not update expected patterns, warning counts, or scenario verdicts merely to match current output. If current output violates the recommendation contract, change selection/coherence behavior or document a real blocker.
 

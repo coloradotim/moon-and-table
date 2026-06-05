@@ -52,6 +52,19 @@ export const RECOMMENDATION_QUALITY_WARNING_IDS = [
   "stronger_wrong_category_rejected",
   "recommendation_confidence_limited",
   "contract_request_changes",
+  "fragmentary_option_menu_body",
+  "title_intention_duplicate_without_depth",
+  "why_this_fits_describes_matching_not_meaning",
+  "how_chosen_reads_like_system_report",
+  "source_lineage_too_raw_or_academic",
+  "high_capacity_no_deeper_ritual_shape",
+  "audience_only_pronoun_change",
+  "normal_copy_rationalizes_mismatch",
+  "ritual_body_lacks_activation_or_closure",
+  "material_used_as_prop_not_ritual_matter",
+  "closest_match_overclaims_fit",
+  "coverage_gap_not_disclosed_in_expanded_explanation",
+  "coverage_gap_disclosed_as_broken_app_language",
   "timing_led_without_major_event",
   "timing_overrode_explicit_contract",
   "minor_numerology_overweighted",
@@ -77,6 +90,7 @@ export type RecommendationQualityCopyFields = {
   optionalAddOn: string;
   reflectionPrompt: string;
   whyThisFits: string;
+  sourceSummary: string;
   howThisWasChosen: Array<{ title: string; body: string }>;
 };
 
@@ -104,6 +118,14 @@ export type RecommendationQualityScenarioResult = {
     coverageGapExpected: boolean;
     closestCompatiblePatternExpected: boolean;
     reviewVerdict: string;
+    reviewReason?: string;
+  };
+  authoredOutputStatus?: {
+    verdict: string;
+    matchType: string;
+    centralMaterialAction: string;
+    ritualFunction: string;
+    expectedWarningIds: string[];
     reviewReason?: string;
   };
   howThisWasChosen: Array<{ title: string; body: string }>;
@@ -206,6 +228,24 @@ const DEBUG_KEY_PATTERN =
 const CONTRACT_NORMAL_COPY_BLOCKED_PATTERN =
   /\b(held lightly|stronger material form|better fit elsewhere|timing overrode|moon phase overrode|helped point toward|surprise me matched|surprise me ritual|surprise me category)\b/i;
 
+const FRAGMENTARY_OPTION_MENU_PATTERN =
+  /\b(?:doorway, window, or table|doorway, table, or bowl|cross or turn away|crossing once or folding|lamp, window light, morning light, or supervised candle|lower, turn from, or extinguish|move the bowl back, leave it empty, or return it)\b/i;
+
+const BROKEN_APP_COVERAGE_GAP_PATTERN =
+  /\b(?:sorry|content is limited|the app could not|no ritual available|failed to|cannot produce)\b/i;
+
+const SOURCE_LINEAGE_RAW_OR_ACADEMIC_PATTERN =
+  /\b(?:source\.[a-z0-9_.-]+|note\.[a-z0-9_.-]+|sourceReviewIds|sourceNoteIds|NASA says|according to NASA|bibliography|citation)\b/i;
+
+const PROP_OR_DEMYSTIFYING_PATTERN =
+  /\b(?:just a visual reminder|only symbolic|just symbolic|decorative prop|productivity reset|works because psychology|psychological cue)\b/i;
+
+const MATCHING_NOT_MEANING_PATTERN =
+  /\b(?:matched the selected ritual context|timing shaped the tone|your choice helped point toward|stronger material form|score reason|raw score|exact pattern match)\b/i;
+
+const SYSTEM_REPORT_PATTERN =
+  /\b(?:candidate|rejected|score|raw score|exact pattern match|ritual form family matched|selected pattern|approved ritual container|selected ritual context|tradeoff)\b/i;
+
 function normalCopyText(copy: RecommendationQualityCopyFields): string {
   return [
     copy.theme,
@@ -215,6 +255,7 @@ function normalCopyText(copy: RecommendationQualityCopyFields): string {
     copy.optionalAddOn,
     copy.reflectionPrompt,
     copy.whyThisFits,
+    copy.sourceSummary,
     ...copy.howThisWasChosen.flatMap((section) => [section.title, section.body]),
   ].join("\n");
 }
@@ -228,6 +269,7 @@ function defaultCopyFields(brief: WeeklyBrief): RecommendationQualityCopyFields 
     optionalAddOn: brief.optionalAddOn,
     reflectionPrompt: brief.reflectionPrompt,
     whyThisFits: brief.explanation.whyThisFits,
+    sourceSummary: brief.sourceSummary,
     howThisWasChosen: brief.explanation.howThisWasChosen.map((section) => ({
       title: section.title,
       body: section.body,
@@ -248,6 +290,65 @@ function startsWithImperative(value: string): boolean {
 function hasMeaningBridge(value: string): boolean {
   return /\b(prepar|making room|make room|first step|beginning|start|reclaim|threshold|clear room|set up|ready)\b/i.test(value);
 }
+
+function hasActivationAndClosure(value: string): boolean {
+  return (
+    /\b(?:choose|set|stand|place|put|name|speak|write|fold|touch|return|lower|light|turn|empty|rinse)\b/i.test(
+      value,
+    ) &&
+    /\b(?:close|closed|closure|return|returned|leave|left|stop|end|until|tomorrow|back in|empty|rinsed|extinguish|lowered)\b/i.test(
+      value,
+    )
+  );
+}
+
+function hasHighCapacityShape(value: string): boolean {
+  const ritualSentences = sentenceCount(value);
+
+  return (
+    ritualSentences >= 5 &&
+    /\b(?:one of you|the other|each|both|write|written|fold|place|return|until tomorrow|next return|through one quiet minute|leave it|back in its ordinary place|close when)\b/i.test(
+      value,
+    )
+  );
+}
+
+function hasCoverageGapDisclosure(copy: RecommendationQualityCopyFields): boolean {
+  const expandedText = copy.howThisWasChosen
+    .flatMap((section) => [section.title, section.body])
+    .join("\n");
+
+  return /\b(?:coverage gap|closest compatible|grimoire does not yet|grimoire is still shallow|strongest compatible|coverage is thin|thin coverage)\b/i.test(
+    expandedText,
+  );
+}
+
+const AUTHORED_OUTPUT_WARNING_MESSAGES: Partial<Record<RecommendationQualityWarningId, string>> = {
+  fragmentary_option_menu_body:
+    "Ritual body asks the user to choose the core place, action, or closure instead of authoring one path.",
+  title_intention_duplicate_without_depth:
+    "Title and intention duplicate each other without adding enough ritual depth.",
+  why_this_fits_describes_matching_not_meaning:
+    "Why this fits describes selection mechanics instead of ritual meaning.",
+  how_chosen_reads_like_system_report:
+    "How this was chosen reads like a diagnostics report instead of readable secondary explanation.",
+  source_lineage_too_raw_or_academic:
+    "Source lineage is too raw, academic, or compliance-forward for normal copy.",
+  high_capacity_no_deeper_ritual_shape:
+    "High capacity does not show a deeper ritual architecture in the body.",
+  audience_only_pronoun_change:
+    "Both-of-us audience appears in copy but not in an embodied action.",
+  ritual_body_lacks_activation_or_closure:
+    "Ritual body lacks a clear activation and closure.",
+  material_used_as_prop_not_ritual_matter:
+    "Material is treated as a reminder, prop, or psychology cue instead of ritual matter.",
+  closest_match_overclaims_fit:
+    "Closest-compatible output overclaims fit instead of staying modest and accurate.",
+  coverage_gap_not_disclosed_in_expanded_explanation:
+    "Closest-compatible or coverage-gap scenario does not disclose the gap in expanded explanation.",
+  coverage_gap_disclosed_as_broken_app_language:
+    "Coverage gap is disclosed in broken-app or apology language.",
+};
 
 function warning(id: RecommendationQualityWarningId, message: string): RecommendationQualityWarning {
   return { id, message };
@@ -277,7 +378,10 @@ function hasContractMajorTimingEvidence(args: {
 }
 
 export function getRecommendationQualityWarnings(args: {
-  scenario: Pick<RecommendationQualityScenario, "contract" | "currentRitualCheckIn">;
+  scenario: Pick<
+    RecommendationQualityScenario,
+    "authoredOutput" | "contract" | "currentRitualCheckIn"
+  >;
   brief?: WeeklyBrief;
   copy: RecommendationQualityCopyFields;
   selectedRitualPatternKey?: string;
@@ -581,6 +685,148 @@ export function getRecommendationQualityWarnings(args: {
         "Normal copy appears to smooth over an ignored explicit selection.",
       ),
     );
+    warnings.push(
+      warning(
+        "normal_copy_rationalizes_mismatch",
+        "Normal copy rationalizes mismatch instead of naming it honestly in expanded explanation.",
+      ),
+    );
+  }
+
+  if (FRAGMENTARY_OPTION_MENU_PATTERN.test(copy.recommendedRitual)) {
+    warnings.push(
+      warning(
+        "fragmentary_option_menu_body",
+        AUTHORED_OUTPUT_WARNING_MESSAGES.fragmentary_option_menu_body!,
+      ),
+    );
+  }
+
+  if (
+    copy.theme.trim().toLowerCase() === copy.intention.trim().toLowerCase() &&
+    sentenceCount(copy.recommendedRitual) < 4
+  ) {
+    warnings.push(
+      warning(
+        "title_intention_duplicate_without_depth",
+        AUTHORED_OUTPUT_WARNING_MESSAGES.title_intention_duplicate_without_depth!,
+      ),
+    );
+  }
+
+  if (MATCHING_NOT_MEANING_PATTERN.test(copy.whyThisFits)) {
+    warnings.push(
+      warning(
+        "why_this_fits_describes_matching_not_meaning",
+        AUTHORED_OUTPUT_WARNING_MESSAGES.why_this_fits_describes_matching_not_meaning!,
+      ),
+    );
+  }
+
+  if (
+    copy.howThisWasChosen.some((section) =>
+      SYSTEM_REPORT_PATTERN.test(`${section.title}\n${section.body}`),
+    )
+  ) {
+    warnings.push(
+      warning(
+        "how_chosen_reads_like_system_report",
+        AUTHORED_OUTPUT_WARNING_MESSAGES.how_chosen_reads_like_system_report!,
+      ),
+    );
+  }
+
+  if (SOURCE_LINEAGE_RAW_OR_ACADEMIC_PATTERN.test(copy.sourceSummary)) {
+    warnings.push(
+      warning(
+        "source_lineage_too_raw_or_academic",
+        AUTHORED_OUTPUT_WARNING_MESSAGES.source_lineage_too_raw_or_academic!,
+      ),
+    );
+  }
+
+  if (
+    scenario.currentRitualCheckIn.capacityMode === "high" &&
+    !hasHighCapacityShape(copy.recommendedRitual)
+  ) {
+    warnings.push(
+      warning(
+        "high_capacity_no_deeper_ritual_shape",
+        AUTHORED_OUTPUT_WARNING_MESSAGES.high_capacity_no_deeper_ritual_shape!,
+      ),
+    );
+  }
+
+  if (
+    scenario.currentRitualCheckIn.audience === "both_of_us" &&
+    /\b(?:both of you|for both of you)\b/i.test(allCopy) &&
+    !/\b(?:one of you|the other|each|both touch|together|between you|shared)\b/i.test(
+      copy.recommendedRitual,
+    )
+  ) {
+    warnings.push(
+      warning(
+        "audience_only_pronoun_change",
+        AUTHORED_OUTPUT_WARNING_MESSAGES.audience_only_pronoun_change!,
+      ),
+    );
+  }
+
+  if (!hasActivationAndClosure(copy.recommendedRitual)) {
+    warnings.push(
+      warning(
+        "ritual_body_lacks_activation_or_closure",
+        AUTHORED_OUTPUT_WARNING_MESSAGES.ritual_body_lacks_activation_or_closure!,
+      ),
+    );
+  }
+
+  if (PROP_OR_DEMYSTIFYING_PATTERN.test(allCopy)) {
+    warnings.push(
+      warning(
+        "material_used_as_prop_not_ritual_matter",
+        AUTHORED_OUTPUT_WARNING_MESSAGES.material_used_as_prop_not_ritual_matter!,
+      ),
+    );
+  }
+
+  if (
+    (scenario.contract?.coverageGapExpected ||
+      scenario.contract?.closestCompatiblePatternExpected ||
+      scenario.authoredOutput?.matchType === "closest_compatible_match") &&
+    !hasCoverageGapDisclosure(copy)
+  ) {
+    warnings.push(
+      warning(
+        "coverage_gap_not_disclosed_in_expanded_explanation",
+        AUTHORED_OUTPUT_WARNING_MESSAGES.coverage_gap_not_disclosed_in_expanded_explanation!,
+      ),
+    );
+  }
+
+  if (
+    (scenario.contract?.coverageGapExpected ||
+      scenario.contract?.closestCompatiblePatternExpected ||
+      scenario.authoredOutput?.matchType === "closest_compatible_match") &&
+    /\b(?:perfect|exactly fits|everything aligned|strong fit|ideal)\b/i.test(
+      copy.whyThisFits,
+    )
+  ) {
+    warnings.push(
+      warning(
+        "closest_match_overclaims_fit",
+        AUTHORED_OUTPUT_WARNING_MESSAGES.closest_match_overclaims_fit!,
+      ),
+    );
+  }
+
+  if (BROKEN_APP_COVERAGE_GAP_PATTERN.test(allCopy)) {
+    warnings.push(
+      warning(
+        "coverage_gap_disclosed_as_broken_app_language",
+        AUTHORED_OUTPUT_WARNING_MESSAGES.coverage_gap_disclosed_as_broken_app_language!,
+      ),
+    );
   }
 
   if (
@@ -604,6 +850,12 @@ export function getRecommendationQualityWarnings(args: {
         warning(
           "normal_copy_rationalizes_set_aside",
           "Normal copy included a phrase blocked by the scenario contract.",
+        ),
+      );
+      warnings.push(
+        warning(
+          "normal_copy_rationalizes_mismatch",
+          "Normal copy included mismatch-smoothing language blocked by the scenario contract.",
         ),
       );
     }
@@ -736,6 +988,19 @@ export function getRecommendationQualityWarnings(args: {
     }
   }
 
+  if (scenario.authoredOutput) {
+    for (const warningId of scenario.authoredOutput.expectedWarningIds ?? []) {
+      warnings.push(
+        warning(
+          warningId,
+          scenario.authoredOutput.reviewReason ??
+            AUTHORED_OUTPUT_WARNING_MESSAGES[warningId] ??
+            "Authored-output scenario marks this output for human review.",
+        ),
+      );
+    }
+  }
+
   const duplicateSectionTitles = copy.howThisWasChosen
     .map((section) => section.title.trim().toLowerCase())
     .filter((title, index, titles) => title && titles.indexOf(title) !== index);
@@ -832,6 +1097,25 @@ function getContractStatus(args: {
       contract.closestCompatiblePatternExpected ?? false,
     reviewVerdict: contract.reviewVerdict ?? "pass",
     reviewReason: contract.reviewReason,
+  };
+}
+
+function getAuthoredOutputStatus(
+  scenario: RecommendationQualityScenario,
+): RecommendationQualityScenarioResult["authoredOutputStatus"] {
+  const authoredOutput = scenario.authoredOutput;
+
+  if (!authoredOutput) {
+    return undefined;
+  }
+
+  return {
+    verdict: authoredOutput.verdict,
+    matchType: authoredOutput.matchType,
+    centralMaterialAction: authoredOutput.centralMaterialAction,
+    ritualFunction: authoredOutput.ritualFunction,
+    expectedWarningIds: authoredOutput.expectedWarningIds ?? [],
+    reviewReason: authoredOutput.reviewReason,
   };
 }
 
@@ -1013,6 +1297,7 @@ export function createRecommendationQualityReport(
         selectedRitualPatternKey: brief.decision.selected.ritualPatternKey,
         selectedRitualFormFamilies: selectedRitualFormFamilyLabels,
       }),
+      authoredOutputStatus: getAuthoredOutputStatus(scenario),
       howThisWasChosen,
       selectedTimingSignals: brief.decision.selected.timingSignalLabels,
       selectedTimingWindow: brief.decision.inputs.selectedTimingWindow
@@ -1066,6 +1351,8 @@ export function formatRecommendationQualityReport(
     "# Recommendation Quality Scenario Report",
     "",
     "This report is a review bench. Warnings are prompts for human review, not proof that a recommendation is bad.",
+    "",
+    "Authored-output warnings are product review findings, not acceptable baselines. A scenario can be contract-correct and still not be product-ready. In authored-output scenarios, `pass` means good enough to show, not merely coherent.",
     "",
     `Scenarios sampled: ${report.scenarioCount}`,
     "",
@@ -1206,6 +1493,25 @@ export function formatRecommendationQualityReport(
             `- Rationale: ${scenario.contract.rationale}`,
           ]
         : []),
+      ...(scenario.authoredOutput
+        ? [
+            "",
+            "Authored-output expectation:",
+            "",
+            `- Verdict: ${scenario.authoredOutput.verdict}`,
+            `- Good output should feel like: ${scenario.authoredOutput.goodOutputShouldFeelLike}`,
+            `- Central material/action: ${scenario.authoredOutput.centralMaterialAction}`,
+            `- Ritual function: ${scenario.authoredOutput.ritualFunction}`,
+            `- Timing may do: ${scenario.authoredOutput.timingMayDo}`,
+            `- Capacity should change: ${scenario.authoredOutput.capacityShouldChange}`,
+            `- Audience should change: ${scenario.authoredOutput.audienceShouldChange}`,
+            `- Match type: ${scenario.authoredOutput.matchType}`,
+            `- Imperfect-fit disclosure: ${scenario.authoredOutput.imperfectFitDisclosure ?? "not applicable"}`,
+            `- Disallowed copy patterns: ${formatList(scenario.authoredOutput.disallowedCopyPatterns)}`,
+            `- Expected authored-output warnings: ${formatList(scenario.authoredOutput.expectedWarningIds ?? [])}`,
+            `- Review reason: ${scenario.authoredOutput.reviewReason ?? "none"}`,
+          ]
+        : []),
       "",
       "Generated recommendation:",
       "",
@@ -1235,6 +1541,19 @@ export function formatRecommendationQualityReport(
             `- Closest compatible expected: ${result.contractStatus.closestCompatiblePatternExpected ? "yes" : "no"}`,
             `- Review verdict: ${result.contractStatus.reviewVerdict}`,
             `- Review reason: ${result.contractStatus.reviewReason ?? "none"}`,
+          ]
+        : []),
+      ...(result.authoredOutputStatus
+        ? [
+            "",
+            "Authored-output status:",
+            "",
+            `- Verdict: ${result.authoredOutputStatus.verdict}`,
+            `- Match type: ${result.authoredOutputStatus.matchType}`,
+            `- Central material/action: ${result.authoredOutputStatus.centralMaterialAction}`,
+            `- Ritual function: ${result.authoredOutputStatus.ritualFunction}`,
+            `- Expected warnings: ${formatList(result.authoredOutputStatus.expectedWarningIds)}`,
+            `- Review reason: ${result.authoredOutputStatus.reviewReason ?? "none"}`,
           ]
         : []),
       "",
