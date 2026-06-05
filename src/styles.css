@@ -104,6 +104,10 @@ button:disabled {
   line-height: 1;
 }
 
+.masthead--check-in .masthead__nameplate h1 {
+  line-height: 0.95;
+}
+
 .masthead__home {
   display: inline-flex;
   padding: 0;

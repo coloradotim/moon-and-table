@@ -22,6 +22,8 @@ describe("app shell rendering", () => {
     const checkInRule = css.match(/\.shell--check-in\s*\{[^}]+\}/)?.[0] ?? "";
     const entryRule = css.match(/\.shell--entry\s*\{[^}]+\}/)?.[0] ?? "";
     const checkInMastheadRule = css.match(/\.masthead--check-in\s*\{[^}]+\}/)?.[0] ?? "";
+    const checkInMastheadTitleRule =
+      css.match(/\.masthead--check-in \.masthead__nameplate h1\s*\{[^}]+\}/)?.[0] ?? "";
     const entryBrandTitleRule = css.match(/\.entry-brand h1\s*\{[^}]+\}/)?.[0] ?? "";
 
     expect(entryRule).toContain("align-content: start");
@@ -32,6 +34,7 @@ describe("app shell rendering", () => {
     expect(checkInRule).toContain("width: min(100%, 680px)");
     expect(checkInRule).toContain("padding-block: var(--opening-shell-padding-block)");
     expect(checkInMastheadRule).toContain("--text-masthead: var(--text-entry-title)");
+    expect(checkInMastheadTitleRule).toContain("line-height: 0.95");
     expect(entryBrandTitleRule).toContain("font-size: var(--text-entry-title)");
   });
 
