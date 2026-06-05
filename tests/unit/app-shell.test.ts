@@ -404,6 +404,10 @@ describe("app shell rendering", () => {
     const checkInAgainIndex = html.indexOf("I want to check in again");
     const feedbackIndex = html.indexOf("Give feedback");
     const actionsIndex = html.indexOf('class="brief__actions"');
+    const menuThisWeekIndex = html.indexOf('data-menu-action="this_week"');
+    const menuHowItWorksIndex = html.indexOf('data-menu-action="how_it_works"');
+    const menuProfileIndex = html.indexOf('data-menu-action="profile_settings"');
+    const menuSignOutIndex = html.indexOf('data-auth-action="sign-out"');
 
     expect(html).toContain('class="brief__core"');
     expect(html).toContain('class="brief__theme"');
@@ -453,6 +457,9 @@ describe("app shell rendering", () => {
     expect(html).toContain('data-menu-action="this_week"');
     expect(html).toContain('data-menu-action="profile_settings"');
     expect(html).toContain('data-menu-action="how_it_works"');
+    expect(menuThisWeekIndex).toBeLessThan(menuHowItWorksIndex);
+    expect(menuHowItWorksIndex).toBeLessThan(menuProfileIndex);
+    expect(menuProfileIndex).toBeLessThan(menuSignOutIndex);
     expect(html).toContain("data-testid=\"recommended-ritual\"");
     expect(html).not.toContain("This week's signals");
     expect(html).not.toContain('class="brief__signal-list"');
