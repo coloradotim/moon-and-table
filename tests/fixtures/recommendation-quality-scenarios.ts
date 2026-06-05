@@ -11,6 +11,8 @@ export type RecommendationContractExpectation = {
   categorySelectionMode: "explicit_category" | "surprise_me_open_preference";
   expectedCategory?: string;
   resolvedCategory?: string;
+  reviewVerdict?: "pass" | "review_required" | "request_changes";
+  reviewReason?: string;
   expectedFocusBehavior: string;
   expectedCapacityBehavior: string;
   expectedAudienceBehavior: string;
@@ -1911,6 +1913,8 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
     contract: {
       categorySelectionMode: "explicit_category",
       expectedCategory: "Home",
+      reviewVerdict: "request_changes",
+      reviewReason: "Current output selects first_light_at_the_threshold; this is form-family compatible but too light/beginning-forward for Home + tending the home.",
       expectedFocusBehavior: "Tending the home during waning should become returning, placing, house-map, table-center, or putting-away work.",
       expectedCapacityBehavior: "High capacity should deepen Home tending; if depth is thin, pick compatible steady Home coverage and report it.",
       expectedAudienceBehavior: "Me-only Home action should still be material and complete.",
@@ -1919,7 +1923,7 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
       disallowedPatternKeys: ["waning_light_release", "salt_clear_water_release", "full_light_on_the_table"],
       disallowedRitualFormFamilies: ["salt/water release", "waning phrase/release", "full light / clarity"],
       disallowedNormalCopyPhrases: contractBlockedNormalCopyPhrases,
-      expectedWarningIds: ["coverage_gap_category_focus_capacity", "closest_compatible_pattern_selected", "high_capacity_depth_gap", "stronger_wrong_category_rejected", "recommendation_confidence_limited"],
+      expectedWarningIds: ["coverage_gap_category_focus_capacity", "closest_compatible_pattern_selected", "high_capacity_depth_gap", "stronger_wrong_category_rejected", "recommendation_confidence_limited", "contract_request_changes"],
       coverageGapExpected: true,
       closestCompatiblePatternExpected: true,
       rationale: "Home tending can be quieted by waning timing, but clearing/release only belongs when clearing is explicit.",
@@ -1978,6 +1982,8 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
     contract: {
       categorySelectionMode: "explicit_category",
       expectedCategory: "Reflection",
+      reviewVerdict: "request_changes",
+      reviewReason: "Current output selects window_light_threshold; this is phrase-compatible but too threshold/light-forward for Reflection + saying something clearly at high capacity.",
       expectedFocusBehavior: "Saying clearly should become one spoken/written/folded/witnessed phrase, not a new-beginning launch.",
       expectedCapacityBehavior: "High capacity may add staging, placement, or return without becoming journaling homework.",
       expectedAudienceBehavior: "Me-only phrase work can be solitary and bounded.",
@@ -1986,7 +1992,8 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
       disallowedPatternKeys: ["first_light_for_the_beginning", "grain_bowl_beginning", "warm_cup_between_us"],
       disallowedRitualFormFamilies: ["grain/seed/bowl", "warm cup/bowl"],
       disallowedNormalCopyPhrases: contractBlockedNormalCopyPhrases,
-      rationale: "New moon may freshen the phrase, but it should not turn clear speech into unrelated beginning work.",
+      expectedWarningIds: ["contract_request_changes"],
+      rationale: "New moon may freshen the phrase, but it should not turn clear speech into unrelated beginning or threshold-light work.",
     },
     expectedQualities: ["reflection phrase", "written or folded form", "saying clearly preserved"],
     disallowedOutcomes: ["first_light_for_the_beginning", "generic beginning light"],
@@ -2177,6 +2184,8 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
     contract: {
       categorySelectionMode: "explicit_category",
       expectedCategory: "Home",
+      reviewVerdict: "request_changes",
+      reviewReason: "Current output selects first_light_at_the_threshold; low-capacity Home tending should place, return, or arrange a home object rather than mark a light threshold.",
       expectedFocusBehavior: "Tending the home should become placing, returning, or arranging one thing; clearing is not implied.",
       expectedCapacityBehavior: "Low capacity should stay one material/action/closure.",
       expectedAudienceBehavior: "Me-only action can be one concrete Home gesture.",
@@ -2185,7 +2194,8 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
       disallowedPatternKeys: ["waning_light_release", "salt_clear_water_release"],
       disallowedRitualFormFamilies: ["salt/water release", "waning phrase/release"],
       disallowedNormalCopyPhrases: contractBlockedNormalCopyPhrases,
-      rationale: "Ordinary waning timing should not silently convert Home tending into clearing/release.",
+      expectedWarningIds: ["contract_request_changes"],
+      rationale: "Ordinary waning timing should not silently convert Home tending into clearing/release or unrelated threshold-light beginning.",
     },
     expectedQualities: ["Home tending remains tending", "low capacity bounded"],
     disallowedOutcomes: ["release/purge as default", "salt water clearing"],
@@ -2437,6 +2447,8 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
     contract: {
       categorySelectionMode: "surprise_me_open_preference",
       resolvedCategory: "Candle or light",
+      reviewVerdict: "request_changes",
+      reviewReason: "Current output selects waning_light_release; open preference resolved to Candle/light for resting, but the action reads as release rather than rest.",
       expectedFocusBehavior: "Resting should remain rest after the resolved category is chosen.",
       expectedCapacityBehavior: "Low capacity should stay one material/action/closure.",
       expectedAudienceBehavior: "Me-only action can be solitary.",
@@ -2445,7 +2457,8 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
       disallowedPatternKeys: ["salt_clear_water_release", "grain_bowl_beginning"],
       disallowedRitualFormFamilies: ["salt/water release", "grain/seed/bowl"],
       disallowedNormalCopyPhrases: contractBlockedNormalCopyPhrases,
-      rationale: "Surprise me is an open category mode; the resolved category becomes binding before pattern scoring.",
+      expectedWarningIds: ["contract_request_changes"],
+      rationale: "Surprise me is an open category mode; the resolved category becomes binding before pattern scoring, but resting must still remain rest.",
     },
     expectedQualities: ["one real category", "low capacity bounded"],
     disallowedOutcomes: ["Surprise me treated as a category", "unresolved open preference"],

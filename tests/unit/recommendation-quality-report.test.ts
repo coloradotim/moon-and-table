@@ -113,6 +113,7 @@ describe("recommendation quality report", () => {
     expect(categorySelectionModes).toEqual(
       new Set(["explicit_category", "surprise_me_open_preference"]),
     );
+    expect(report.warningCounts.contract_request_changes).toBeGreaterThanOrEqual(4);
 
     for (const result of contractResults) {
       const status = result.contractStatus;

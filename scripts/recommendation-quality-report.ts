@@ -51,6 +51,7 @@ export const RECOMMENDATION_QUALITY_WARNING_IDS = [
   "high_capacity_depth_gap",
   "stronger_wrong_category_rejected",
   "recommendation_confidence_limited",
+  "contract_request_changes",
   "timing_led_without_major_event",
   "timing_overrode_explicit_contract",
   "minor_numerology_overweighted",
@@ -102,6 +103,8 @@ export type RecommendationQualityScenarioResult = {
     requiredExplanationPresent: boolean;
     coverageGapExpected: boolean;
     closestCompatiblePatternExpected: boolean;
+    reviewVerdict: string;
+    reviewReason?: string;
   };
   howThisWasChosen: Array<{ title: string; body: string }>;
   selectedTimingSignals: string[];
@@ -721,6 +724,16 @@ export function getRecommendationQualityWarnings(args: {
         ),
       );
     }
+
+    if (contract.reviewVerdict === "request_changes") {
+      warnings.push(
+        warning(
+          "contract_request_changes",
+          contract.reviewReason ??
+            "Scenario contract marks the selected recommendation as requiring product changes before it should become baseline.",
+        ),
+      );
+    }
   }
 
   const duplicateSectionTitles = copy.howThisWasChosen
@@ -817,6 +830,8 @@ function getContractStatus(args: {
     coverageGapExpected: contract.coverageGapExpected ?? false,
     closestCompatiblePatternExpected:
       contract.closestCompatiblePatternExpected ?? false,
+    reviewVerdict: contract.reviewVerdict ?? "pass",
+    reviewReason: contract.reviewReason,
   };
 }
 
@@ -1186,6 +1201,8 @@ export function formatRecommendationQualityReport(
             `- Disallowed ritual form families: ${formatList(scenario.contract.disallowedRitualFormFamilies ?? [])}`,
             `- Disallowed normal-copy phrases: ${formatList(scenario.contract.disallowedNormalCopyPhrases ?? [])}`,
             `- Expected warning ids: ${formatList(scenario.contract.expectedWarningIds ?? [])}`,
+            `- Review verdict: ${scenario.contract.reviewVerdict ?? "pass"}`,
+            `- Review reason: ${scenario.contract.reviewReason ?? "none"}`,
             `- Rationale: ${scenario.contract.rationale}`,
           ]
         : []),
@@ -1216,6 +1233,8 @@ export function formatRecommendationQualityReport(
             `- Required explanation present: ${result.contractStatus.requiredExplanationPresent ? "yes" : "no"}`,
             `- Coverage gap expected: ${result.contractStatus.coverageGapExpected ? "yes" : "no"}`,
             `- Closest compatible expected: ${result.contractStatus.closestCompatiblePatternExpected ? "yes" : "no"}`,
+            `- Review verdict: ${result.contractStatus.reviewVerdict}`,
+            `- Review reason: ${result.contractStatus.reviewReason ?? "none"}`,
           ]
         : []),
       "",

@@ -90,22 +90,22 @@ Executable recommendation-quality scenarios now include:
 | `contract.plant.high_rest_companionship` | Plant / Resting / high / me | shape_only | `dormant_green_rest` | plant rest/dormancy, seasonal marker | coverage gap diagnostics |
 | `contract.kitchen.high_tending_full` | Kitchen / Tending us / high / both_of_us | shape_only | `warm_cup_between_us` | warm cup/bowl | none |
 | `contract.kitchen.high_beginning_waning` | Kitchen / Making a beginning / high / me | shape_only | `grain_bowl_beginning` | grain/seed/bowl, seasonal marker, bread/grain center | none |
-| `contract.home.high_tending_waning` | Home / Tending the home / high / me | shape_only | `first_light_at_the_threshold` | first light / threshold, threshold/crossing/bowl/key | coverage gap diagnostics |
+| `contract.home.high_tending_waning` | Home / Tending the home / high / me | shape_only | `first_light_at_the_threshold` | first light / threshold, threshold/crossing/bowl/key | coverage gap diagnostics + request changes |
 | `contract.home.high_threshold_full` | Home / Marking a threshold / high / both_of_us | shape_only | `window_light_threshold` | first light / threshold, threshold/crossing/bowl/key, written/folded/container, first/last threshold | none |
-| `contract.reflection.high_saying_new` | Reflection / Saying something clearly / high / me | shape_only | `window_light_threshold` | first light / threshold, threshold/crossing/bowl/key, written/folded/container, first/last threshold | none |
+| `contract.reflection.high_saying_new` | Reflection / Saying something clearly / high / me | shape_only | `window_light_threshold` | first light / threshold, threshold/crossing/bowl/key, written/folded/container, first/last threshold | request changes |
 | `contract.candle.high_beginning` | Candle or light / Making a beginning / high / me | may_lead | `first_light_at_the_threshold` | first light / threshold, threshold/crossing/bowl/key | none |
 | `contract.candle.high_resting` | Candle or light / Resting / high / me | shape_only | `full_light_holding_bowl` | full light / clarity, vessel emptying/return | none |
 | `contract.surprise.high_preserves_resolved_category` | Open preference / Saying something clearly / high / me | shape_only | `window_light_threshold` | first light / threshold, threshold/crossing/bowl/key, written/folded/container, first/last threshold | coverage gap diagnostics |
 | `contract.surprise.both_preserves_audience` | Open preference / Tending us / high / both_of_us | shape_only | `warm_cup_between_us` | warm cup/bowl | coverage gap diagnostics |
 | `contract.seasonal.high_month_turn_threshold` | Seasonal / Marking a threshold / high / both_of_us | may_lead | `seasonal_marker_bowl` | seasonal marker, welcome/offering/vessel, vessel emptying/return | coverage gap diagnostics |
-| `contract.home.low_tending_waning_not_release` | Home / Tending the home / low / me | shape_only | `first_light_at_the_threshold` | first light / threshold, threshold/crossing/bowl/key | none |
+| `contract.home.low_tending_waning_not_release` | Home / Tending the home / low / me | shape_only | `first_light_at_the_threshold` | first light / threshold, threshold/crossing/bowl/key | request changes |
 | `contract.pause.grounded_complete` | Home / Getting grounded / pause / me | must_not_lead | `threshold_bowl` | threshold/crossing/bowl/key, vessel emptying/return, first/last threshold | none |
 | `contract.reflection.low_saying_no_journaling` | Reflection / Saying something clearly / low / me | shape_only | `window_light_threshold` | first light / threshold, threshold/crossing/bowl/key, written/folded/container, first/last threshold | none |
 | `contract.tending_us.both_low_embodied` | Kitchen / Tending us / low / both_of_us | shape_only | `quiet_welcome` | welcome/offering/vessel, warm cup/bowl, seasonal marker | none |
 | `contract.numerology.minor_accent_only` | Home / Tending the home / steady / me | shape_only | `bread_at_the_center` | bread/grain center, welcome/offering/vessel, seasonal marker | none |
 | `contract.numerology.major_best_week_may_lead` | Reflection / Saying something clearly / steady / me | may_lead | `window_light_threshold` | first light / threshold, threshold/crossing/bowl/key, written/folded/container, first/last threshold | none |
 | `contract.best_week.month_turn_may_lead` | Home / Marking a threshold / steady / both_of_us | may_lead | `first_day_last_day` | first/last threshold, seasonal marker, threshold/crossing/bowl/key, written/folded/container | none |
-| `contract.surprise.low_resolves_real_category` | Open preference / Resting / low / me | shape_only | `waning_light_release` | banked/darkening light, waning phrase/release | none |
+| `contract.surprise.low_resolves_real_category` | Open preference / Resting / low / me | shape_only | `waning_light_release` | banked/darkening light, waning phrase/release | request changes |
 | `contract.surprise.full_moon_preserves_resolution` | Open preference / Saying something clearly / low / me | shape_only | `window_light_threshold` | first light / threshold, threshold/crossing/bowl/key, written/folded/container, first/last threshold | none |
 | `contract.surprise.no_strong_timing_material_carries` | Open preference / Getting grounded / low / me | must_not_lead | `first_light_at_the_threshold` | first light / threshold, threshold/crossing/bowl/key | none |
 | `contract.surprise.forced_plant_preserved` | Resolved open preference to Plant / Tending the home / low / me | shape_only | `plant_witness_to_growth` | plant witness/growth | none |
@@ -148,6 +148,7 @@ The report warning vocabulary now includes the #224 contract diagnostics:
 - `high_capacity_depth_gap`
 - `stronger_wrong_category_rejected`
 - `recommendation_confidence_limited`
+- `contract_request_changes`
 - `timing_led_without_major_event`
 - `timing_overrode_explicit_contract`
 - `minor_numerology_overweighted`
@@ -161,9 +162,10 @@ The report now prints `Recommendation contract` and `Contract status` sections f
 ## 9. Known Remaining Gaps
 
 - Plant + high capacity still relies on closest compatible Plant forms, mostly `plant_witness_to_growth` or `dormant_green_rest`, rather than a deeper high-capacity Plant-specific ritual.
-- Home + high tending under waning currently selects `first_light_at_the_threshold`, which is compatible by threshold form family but should get human review for whether it feels too light-forward for Home tending.
-- Reflection + high saying clearly under new moon selects `window_light_threshold`, which is form-compatible but crosses Reflection, light, and threshold language; Tim should review whether it feels like Reflection first.
-- Some open-preference resting cases resolve to Candle/light and can select `waning_light_release`; this passes category resolution but should be watched so rest does not become release unless the ritual body clearly holds rest.
+- Request changes: Home + high tending under waning currently selects `first_light_at_the_threshold`; this is form-family compatible but too light/beginning-forward for Home + tending the home.
+- Request changes: Home + low tending under waning currently selects `first_light_at_the_threshold`; low-capacity Home tending should place, return, or arrange a home object rather than mark a light threshold.
+- Request changes: Reflection + high saying clearly under new moon selects `window_light_threshold`; this is phrase-compatible but too threshold/light-forward for Reflection + saying something clearly at high capacity.
+- Request changes: open preference + resting currently resolves to Candle/light and selects `waning_light_release`; the resolved category is preserved, but the action reads as release rather than rest.
 - Coverage-gap diagnostics are report-level only. Normal copy remains coherent and does not apologize for coverage thinness.
 
 ## 10. Human Review Questions
@@ -183,6 +185,7 @@ Latest local recommendation-quality snapshot while creating this packet:
 - Distinct selected patterns: 31
 - Unexpected contract warnings: 0
 - Coverage-gap warning groups: 7, all expected by scenario contract
+- `contract_request_changes`: 4
 - `surprise_me_unresolved`: 0
 - `resolved_surprise_category_not_preserved`: 0
 - `surprise_me_used_as_category_or_style`: 0
