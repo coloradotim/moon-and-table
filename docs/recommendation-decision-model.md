@@ -66,7 +66,7 @@ Moon & Table has a house voice. User-facing profile settings should not remix th
 
 Mismatch language should be honest. If a check-in answer did not directly match the selected ritual, the expanded explanation should say what was held as a tone, what matched, and what was set aside. For example, a `Making a beginning` focus during waning timing can become preparation for a first step; a `Tending us` focus during low capacity can become a smaller shared ritual rather than a long conversation.
 
-Across-week timing should say why a selected date or window stood out. If no timing window is strong enough, the explanation should say that plainly and invite the ritual whenever capacity allows. This is timing look-ahead, not schedule awareness.
+Across-week timing should say why a selected date or window stood out. If no timing window is strong enough, the explanation should say that plainly and invite the ritual whenever capacity allows. This is timing look-ahead, not schedule awareness. First-day, last-day, and month-turn calendar thresholds may shape a threshold or first-and-last ritual when they are selected, but calendar timing is not the ritual and should not become named-day folklore or date trivia.
 
 Profile and natal language is visibility-aware. The default card should use theme language and avoid raw private placements or aspect details. Expanded explanation may become more explicit when astrology visibility allows it, but it should still stay symbolic, non-deterministic, and separate from debug.
 

@@ -82,6 +82,11 @@ const SAMPLE_DATES = [
   "2026-07-10T12:00:00.000Z",
 ] as const;
 
+const TIMING_SAMPLE_DATES = [
+  ...SAMPLE_DATES,
+  "2026-08-31T12:00:00.000Z",
+] as const;
+
 const CAPACITY_LIMITS: Record<CapacityMode, number> = {
   pause: 0,
   low: 5,
@@ -189,7 +194,7 @@ export function getDefaultContentReachabilityScenarios(): ContentReachabilitySce
     } satisfies ContentReachabilityScenario;
   });
 
-  const timingScenarios: ContentReachabilityScenario[] = SAMPLE_DATES.flatMap(
+  const timingScenarios: ContentReachabilityScenario[] = TIMING_SAMPLE_DATES.flatMap(
     (dateIso, index) =>
       CAPACITY_MODES.map((capacityMode) => {
         const audience = getAudienceForIndex(index);

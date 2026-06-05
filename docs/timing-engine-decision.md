@@ -22,7 +22,7 @@ computed timing facts
 
 Computed facts are raw material. The app should not show every computed fact, and it should not treat every fact as relevant. Signal selection should choose only 2-4 timing/profile/context signals that actually influenced the recommendation.
 
-Schedule awareness is deferred until it has a real product design. Current brief timing/window copy is capacity-based, not calendar-based, and should not name hard-coded weekday windows.
+Schedule awareness is deferred until it has a real product design. Current brief timing/window copy may use computed timing facts, including month-boundary calendar thresholds, but it should not name hard-coded weekday windows or imply private availability.
 
 ## Model
 
@@ -42,13 +42,14 @@ type BaseTimingFact = {
     | "planet_sign"
     | "planet_retrograde"
     | "planetary_aspect"
-    | "numerology_date";
+    | "numerology_date"
+    | "calendar_threshold";
   label: string;
   startIso?: string;
   endIso?: string;
   exactIso?: string;
   timezone?: string;
-  computedBy: "astronomy_engine" | "app_numerology" | "manual";
+  computedBy: "astronomy_engine" | "app_numerology" | "app_calendar" | "manual";
   confidence: "computed" | "estimated" | "manual";
 };
 ```
@@ -125,6 +126,18 @@ The current calculation reduces ordinary digit sums to 1-9:
 Master numbers 11 and 22 are reduced for MVP. Life path numbers, names, compatibility, and personal numerology are deferred.
 
 Universal numerology is a timing accent, not a check-in input. The generator computes it for the current or selected date and may pass it through approved timing interpretation rules, but it can only surface when it matches the selected ritual context and a stronger non-numerology signal is already present. Numerology should remain secondary to lunar, seasonal, astrology, capacity, profile, and check-in fit.
+
+## Phase 3B — Household Calendar Threshold Facts
+
+Implemented in app code without a holiday or folklore feed:
+
+- first day of the calendar month
+- last day of the calendar month
+- month turn / month boundary
+
+These facts are UTC-stable calendar boundaries. They support the product idea that the household is crossing from one named stretch of time into another. They do not say that a date requires a ritual, and they do not import named holidays, feast days, public festival customs, luck/protection/prosperity claims, or date trivia.
+
+Approved timing interpretation rules can use these facts as supporting signals for existing threshold, first-and-last, seasonal bowl, folded-word, and home-tending forms. Calendar timing shapes the ritual; it is not the ritual.
 
 ## Phase 4 — Private Natal Contact Computation
 
@@ -236,7 +249,7 @@ The default look-ahead is 7 days. The function scans deterministic timing facts,
 - score and score reasons
 - safe natal-contact keys and theme keys when private natal profiles are available
 
-Candidate sources currently include exact new/full moon events, lunar phase baseline, moon sign timing, solstice/equinox markers, core major aspects, conservative retrograde cues, universal day numerology accents, and private transit-to-natal contacts when profiles are passed in.
+Candidate sources currently include exact new/full moon events, lunar phase baseline, moon sign timing, solstice/equinox markers, first/last/month-turn calendar thresholds, core major aspects, conservative retrograde cues, universal day numerology accents, and private transit-to-natal contacts when profiles are passed in.
 
 This is not schedule awareness. The look-ahead does not know household availability, does not name fake weekday windows, and does not use hard-coded assumptions such as realistic Thursday evening. A future schedule feature can filter or combine timing candidates only after it has real private schedule inputs.
 
@@ -255,6 +268,7 @@ Implemented tests cover:
 - retrograde status for a known date
 - major aspect detection within the configured orb
 - universal year/month/day numerology examples
+- first-day, last-day, and month-turn calendar threshold examples
 - invalid date handling
 - UTC week boundary behavior
 - timing rule eligibility and signal selection
@@ -262,6 +276,7 @@ Implemented tests cover:
 - seven-day timing window candidate generation
 - known exact new and full moon timing windows
 - known solstice/equinox timing windows
+- month-turn look-ahead as a household threshold timing candidate
 - universal day numerology as an accent timing candidate
 - numerology selection diagnostics showing whether computed date numbers were eligible, matched the ritual context, selected as an accent, or left hidden
 - private natal-contact boosts using fake profiles only

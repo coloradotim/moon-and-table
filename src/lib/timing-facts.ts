@@ -31,6 +31,7 @@ export const TIMING_FACT_TYPES = [
   "planet_retrograde",
   "planetary_aspect",
   "numerology_date",
+  "calendar_threshold",
 ] as const;
 
 export type TimingFactType = (typeof TIMING_FACT_TYPES)[number];
@@ -38,6 +39,7 @@ export type TimingFactType = (typeof TIMING_FACT_TYPES)[number];
 export type TimingFactComputedBy =
   | "astronomy_engine"
   | "app_numerology"
+  | "app_calendar"
   | "manual";
 
 export type TimingFactConfidence = "computed" | "estimated" | "manual";
@@ -80,6 +82,11 @@ export type MajorAspect =
   | "sextile";
 
 export type NumerologyScope = NumerologyTimingScope;
+
+export type CalendarThreshold =
+  | "first_day_of_month"
+  | "last_day_of_month"
+  | "month_turn";
 
 export type BaseTimingFact = {
   id: string;
@@ -154,6 +161,16 @@ export type PlanetaryAspectFact = BaseTimingFact & {
 
 export type NumerologyDateFact = BaseTimingFact & NumerologyTimingFact;
 
+export type CalendarThresholdFact = BaseTimingFact & {
+  type: "calendar_threshold";
+  threshold: CalendarThreshold;
+  calendarUnit: "month";
+  dateIso: string;
+  monthName: string;
+  previousMonthName?: string;
+  nextMonthName?: string;
+};
+
 export type TimingFact =
   | MoonPhaseFact
   | LunationFact
@@ -163,7 +180,8 @@ export type TimingFact =
   | PlanetSignFact
   | PlanetRetrogradeFact
   | PlanetaryAspectFact
-  | NumerologyDateFact;
+  | NumerologyDateFact
+  | CalendarThresholdFact;
 
 export type TimingFactOptions = {
   timezone?: string;
@@ -219,6 +237,21 @@ const SEASON_LABELS: Record<SeasonalMarker, string> = {
   september_equinox: "September equinox",
   december_solstice: "December solstice",
 };
+
+const MONTH_NAMES = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+] as const;
 
 function resolveDate(value: Date | string): Date {
   const date = value instanceof Date ? new Date(value) : new Date(value);
@@ -408,6 +441,128 @@ function buildSeasonalMarkerFacts(
     }));
 }
 
+function startOfUtcDay(date: Date): Date {
+  const start = new Date(date);
+
+  start.setUTCHours(0, 0, 0, 0);
+
+  return start;
+}
+
+function endOfUtcDay(date: Date): Date {
+  const end = new Date(date);
+
+  end.setUTCHours(23, 59, 59, 999);
+
+  return end;
+}
+
+function lastUtcDateOfMonth(date: Date): number {
+  return new Date(
+    Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + 1, 0),
+  ).getUTCDate();
+}
+
+function monthNameFor(year: number, monthIndex: number): string {
+  const normalized = ((monthIndex % 12) + 12) % 12;
+
+  return MONTH_NAMES[normalized];
+}
+
+function buildCalendarThresholdFact({
+  date,
+  timezone,
+  threshold,
+  label,
+  previousMonthName,
+  nextMonthName,
+}: {
+  date: Date;
+  timezone: string;
+  threshold: CalendarThreshold;
+  label: string;
+  previousMonthName?: string;
+  nextMonthName?: string;
+}): CalendarThresholdFact {
+  const dayStart = startOfUtcDay(date);
+  const dayEnd = endOfUtcDay(date);
+  const dateIso = dayStart.toISOString().slice(0, 10);
+  const monthName = monthNameFor(date.getUTCFullYear(), date.getUTCMonth());
+
+  return {
+    id: `timing.calendar_threshold.${threshold}.${dateIso}`,
+    type: "calendar_threshold",
+    label,
+    startIso: dayStart.toISOString(),
+    endIso: dayEnd.toISOString(),
+    exactIso: dayStart.toISOString(),
+    timezone,
+    threshold,
+    calendarUnit: "month",
+    dateIso,
+    monthName,
+    previousMonthName,
+    nextMonthName,
+    computedBy: "app_calendar",
+    confidence: "computed",
+  };
+}
+
+export function getCalendarThresholdFacts(
+  value: Date | string,
+  timezone = "UTC",
+): CalendarThresholdFact[] {
+  const date = resolveDate(value);
+  const dayOfMonth = date.getUTCDate();
+  const lastDay = lastUtcDateOfMonth(date);
+  const year = date.getUTCFullYear();
+  const monthIndex = date.getUTCMonth();
+  const monthName = monthNameFor(year, monthIndex);
+  const previousMonthName = monthNameFor(year, monthIndex - 1);
+  const nextMonthName = monthNameFor(year, monthIndex + 1);
+  const facts: CalendarThresholdFact[] = [];
+
+  if (dayOfMonth === 1) {
+    facts.push(
+      buildCalendarThresholdFact({
+        date,
+        timezone,
+        threshold: "first_day_of_month",
+        label: `First day of ${monthName}`,
+        previousMonthName,
+      }),
+      buildCalendarThresholdFact({
+        date,
+        timezone,
+        threshold: "month_turn",
+        label: `Month turn into ${monthName}`,
+        previousMonthName,
+      }),
+    );
+  }
+
+  if (dayOfMonth === lastDay) {
+    facts.push(
+      buildCalendarThresholdFact({
+        date,
+        timezone,
+        threshold: "last_day_of_month",
+        label: `Last day of ${monthName}`,
+        nextMonthName,
+      }),
+      buildCalendarThresholdFact({
+        date,
+        timezone,
+        threshold: "month_turn",
+        label: `Month turn out of ${monthName}`,
+        nextMonthName,
+      }),
+    );
+  }
+
+  return facts;
+}
+
 function buildPlanetSignFacts(date: Date, timezone: string): PlanetSignFact[] {
   return (Object.keys(PLANET_BODIES) as PlanetName[]).map((planet) => {
     const longitude = getPlanetLongitude(planet, date);
@@ -563,5 +718,6 @@ export function getTimingFactsForDate(
       ? buildPlanetaryAspectFacts(date, timezone, aspectOrbDegrees)
       : []),
     ...getNumerologyTimingFacts(date, timezone),
+    ...getCalendarThresholdFacts(date, timezone),
   ];
 }

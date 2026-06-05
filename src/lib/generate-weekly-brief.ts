@@ -320,6 +320,7 @@ export type BriefSignal = {
     | "planetary"
     | "numerology"
     | "seasonal"
+    | "calendar"
     | "profile"
     | "capacity"
     | "schedule";
@@ -2145,6 +2146,8 @@ function getSignalType(signal: TimingSignal): BriefSignal["type"] {
       return "numerology";
     case "solar_season":
       return "seasonal";
+    case "calendar_threshold":
+      return "calendar";
     case "moon_sign":
     case "sun_sign":
     case "planet_sign":
@@ -2571,7 +2574,7 @@ function getPrimaryTimingPhrase(
       label: candidate.signalLabel,
       type: getSignalType(candidate),
     }))
-    .find((candidate) => ["moon", "planetary", "seasonal"].includes(candidate.type));
+    .find((candidate) => ["moon", "planetary", "seasonal", "calendar"].includes(candidate.type));
 
   if (input.timeScope === "best_moment_this_week") {
     if (isStrongTimingWindow(input.selectedTimingWindow)) {
@@ -2659,7 +2662,14 @@ function getTimingChoiceSection(
 
   const primarySignal =
     selectedTimingSignals.find((signal) =>
-      ["moon_phase", "lunation", "planet_sign", "planetary_aspect", "solar_season"].includes(signal.timingFactType),
+      [
+        "moon_phase",
+        "lunation",
+        "planet_sign",
+        "planetary_aspect",
+        "solar_season",
+        "calendar_threshold",
+      ].includes(signal.timingFactType),
     );
 
   return {

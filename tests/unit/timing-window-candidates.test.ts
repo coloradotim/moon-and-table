@@ -117,6 +117,44 @@ describe("timing window candidates", () => {
     );
   });
 
+  it("can include month-turn calendar thresholds as human-readable timing windows", () => {
+    const candidates = getTimingWindowCandidates({
+      startDate: "2026-07-29T00:00:00.000Z",
+      daysAhead: 5,
+      options: {
+        includePlanetaryAspects: false,
+        includeRetrogrades: false,
+        maxCandidates: 30,
+      },
+    });
+    const monthTurn = candidates.find(
+      (candidate) => candidate.label === "Month turn into August",
+    );
+
+    expect(monthTurn).toMatchObject({
+      startsAtIso: "2026-08-01T00:00:00.000Z",
+      strength: "supporting",
+      signalKeys: expect.arrayContaining([
+        "timing_rule.calendar_threshold.month_turn",
+      ]),
+    });
+    expect(monthTurn?.scoreReasons).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          code: "calendar_threshold",
+          label: "Calendar threshold",
+          detail: "Month turn into August",
+        }),
+      ]),
+    );
+
+    const serialized = JSON.stringify(monthTurn).toLowerCase();
+
+    expect(serialized).not.toContain("schedule.");
+    expect(serialized).not.toContain("folklore says");
+    expect(serialized).not.toContain("holiday");
+  });
+
   it("does not emit hard-coded schedule windows", () => {
     const candidates = getTimingWindowCandidates({
       startDate: "2026-06-21T00:00:00.000Z",

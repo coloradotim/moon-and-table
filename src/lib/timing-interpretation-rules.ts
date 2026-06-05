@@ -717,6 +717,97 @@ const SEASONAL_MARKER_RULES: TimingInterpretationRule[] = [
   },
 ];
 
+const CALENDAR_THRESHOLD_RULE_SOURCE_REFERENCES = [
+  "docs/content-packets/domestic-threshold-vessel-welcome-source-packet.md",
+  "docs/content-audits/post-191-source-packet-review.md",
+  "note.computed_facts_are_not_meanings",
+  "note.calendar_customs_as_household_thresholds",
+  "note.hearth_first_and_last",
+];
+
+const CALENDAR_THRESHOLD_RULES: TimingInterpretationRule[] = [
+  {
+    id: "timing_rule.calendar_threshold.first_day_of_month",
+    timingFactType: "calendar_threshold",
+    condition: { threshold: "first_day_of_month" },
+    signalLabel: "First day of the month — threshold and first word",
+    signalSummary:
+      "A calendar threshold can support one small opening, first word, or household crossing without becoming date trivia.",
+    symbolicCardKeys: ["first_last", "threshold", "folded_word"],
+    ritualStyleHints: [
+      "beginning",
+      "threshold_reset",
+      "reflection",
+      "home_tending",
+      "carrying",
+      "seasonal",
+    ],
+    weight: 78,
+    strength: "supporting",
+    avoidIf: [
+      "calendar_timing_as_requirement",
+      "named_day_folklore",
+      "manifestation_claims",
+    ],
+    sourceReferences: CALENDAR_THRESHOLD_RULE_SOURCE_REFERENCES,
+    approvalStatus: "approved",
+  },
+  {
+    id: "timing_rule.calendar_threshold.last_day_of_month",
+    timingFactType: "calendar_threshold",
+    condition: { threshold: "last_day_of_month" },
+    signalLabel: "Last day of the month — closing and return",
+    signalSummary:
+      "A calendar threshold can support closing, returning, or emptying one household marker without turning the date into an instruction.",
+    symbolicCardKeys: ["first_last", "bowl_vessel", "threshold"],
+    ritualStyleHints: [
+      "closing",
+      "threshold_reset",
+      "reflection",
+      "home_tending",
+      "seasonal",
+      "bowl",
+      "clearing",
+    ],
+    weight: 78,
+    strength: "supporting",
+    avoidIf: [
+      "calendar_timing_as_requirement",
+      "named_day_folklore",
+      "purification_claims",
+    ],
+    sourceReferences: CALENDAR_THRESHOLD_RULE_SOURCE_REFERENCES,
+    approvalStatus: "approved",
+  },
+  {
+    id: "timing_rule.calendar_threshold.month_turn",
+    timingFactType: "calendar_threshold",
+    condition: { threshold: "month_turn" },
+    signalLabel: "Month turn — crossing between months",
+    signalSummary:
+      "A month boundary can shape a small threshold, bowl, or first-and-last ritual without becoming a folklore feed.",
+    symbolicCardKeys: ["first_last", "threshold", "seasonal_bowl"],
+    ritualStyleHints: [
+      "threshold_reset",
+      "seasonal",
+      "home_tending",
+      "reflection",
+      "beginning",
+      "closing",
+      "bowl",
+    ],
+    weight: 76,
+    strength: "supporting",
+    avoidIf: [
+      "calendar_timing_as_requirement",
+      "named_day_folklore",
+      "holiday_feed",
+    ],
+    sourceReferences: CALENDAR_THRESHOLD_RULE_SOURCE_REFERENCES,
+    approvalStatus: "approved",
+  },
+];
+
 const DRAFT_PLACEHOLDER_RULES: TimingInterpretationRule[] = [
   {
     id: "timing_rule.solar_season.placeholder",
@@ -785,6 +876,7 @@ export const starterTimingInterpretationRules: TimingInterpretationRule[] = [
   ...PLANET_RETROGRADE_RULES,
   ...PLANETARY_ASPECT_RULES,
   ...SEASONAL_MARKER_RULES,
+  ...CALENDAR_THRESHOLD_RULES,
   ...DRAFT_PLACEHOLDER_RULES,
 ];
 

@@ -119,7 +119,12 @@ function getFactStartIso(fact: TimingFact, sampleDate: Date): string {
 }
 
 function getFactEndIso(fact: TimingFact, sampleDate: Date): string | undefined {
-  if (fact.type === "moon_phase" || fact.type === "moon_sign" || fact.type === "numerology_date") {
+  if (
+    fact.type === "moon_phase" ||
+    fact.type === "moon_sign" ||
+    fact.type === "numerology_date" ||
+    fact.type === "calendar_threshold"
+  ) {
     return addUtcDays(sampleDate, 1).toISOString();
   }
 
@@ -131,7 +136,11 @@ function isCorePlanetaryAspect(fact: PlanetaryAspectFact): boolean {
 }
 
 function isCandidateFact(fact: TimingFact): boolean {
-  if (fact.type === "lunation" || fact.type === "solar_season") {
+  if (
+    fact.type === "lunation" ||
+    fact.type === "solar_season" ||
+    fact.type === "calendar_threshold"
+  ) {
     return true;
   }
 
@@ -213,6 +222,13 @@ function factScoreReason(fact: TimingFact): TimingWindowScoreReason {
         code: "seasonal_marker",
         label: "Seasonal marker",
         points: 9,
+      };
+    case "calendar_threshold":
+      return {
+        code: "calendar_threshold",
+        label: "Calendar threshold",
+        points: fact.threshold === "month_turn" ? 11 : 10,
+        detail: fact.label,
       };
     case "planetary_aspect":
       return {
@@ -344,6 +360,10 @@ function labelForCandidate(
 
   if (fact.type === "numerology_date") {
     return `Universal day ${fact.number}`;
+  }
+
+  if (fact.type === "calendar_threshold") {
+    return fact.label;
   }
 
   return signal.signalLabel;

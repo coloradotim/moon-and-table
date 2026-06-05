@@ -4,6 +4,7 @@ import {
   getTimingFactsForDate,
   getUniversalNumerologyNumbers,
   getZodiacSignForLongitude,
+  type CalendarThresholdFact,
   type NumerologyDateFact,
   type PlanetSignFact,
   type PlanetRetrogradeFact,
@@ -169,6 +170,74 @@ describe("timing facts", () => {
         }),
       ]),
     );
+  });
+
+  it("computes first-day calendar threshold facts", () => {
+    const facts = getTimingFactsForDate("2026-07-01T12:00:00.000Z");
+    const calendarFacts = facts.filter(
+      (fact): fact is CalendarThresholdFact => fact.type === "calendar_threshold",
+    );
+
+    expect(calendarFacts).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "timing.calendar_threshold.first_day_of_month.2026-07-01",
+          threshold: "first_day_of_month",
+          label: "First day of July",
+          dateIso: "2026-07-01",
+          monthName: "July",
+          previousMonthName: "June",
+          computedBy: "app_calendar",
+          confidence: "computed",
+        }),
+        expect.objectContaining({
+          id: "timing.calendar_threshold.month_turn.2026-07-01",
+          threshold: "month_turn",
+          label: "Month turn into July",
+        }),
+      ]),
+    );
+  });
+
+  it("computes last-day calendar threshold facts including leap-year month ends", () => {
+    const juneFacts = getTimingFactsForDate("2026-06-30T12:00:00.000Z");
+    const leapFacts = getTimingFactsForDate("2028-02-29T12:00:00.000Z");
+    const juneCalendarFacts = juneFacts.filter(
+      (fact): fact is CalendarThresholdFact => fact.type === "calendar_threshold",
+    );
+    const leapCalendarFacts = leapFacts.filter(
+      (fact): fact is CalendarThresholdFact => fact.type === "calendar_threshold",
+    );
+
+    expect(juneCalendarFacts).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          threshold: "last_day_of_month",
+          label: "Last day of June",
+          dateIso: "2026-06-30",
+          nextMonthName: "July",
+        }),
+        expect.objectContaining({
+          threshold: "month_turn",
+          label: "Month turn out of June",
+        }),
+      ]),
+    );
+    expect(leapCalendarFacts).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          threshold: "last_day_of_month",
+          label: "Last day of February",
+          dateIso: "2028-02-29",
+        }),
+      ]),
+    );
+  });
+
+  it("does not create calendar threshold facts on ordinary month days", () => {
+    const facts = getTimingFactsForDate("2026-07-15T12:00:00.000Z");
+
+    expect(facts.some((fact) => fact.type === "calendar_threshold")).toBe(false);
   });
 
   it("reduces numerology values to 1-9 for MVP", () => {
