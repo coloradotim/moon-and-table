@@ -1,10 +1,17 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
 
 import { recommendationQualityScenarios } from "../fixtures/recommendation-quality-scenarios";
 import {
+  createRecommendationQualityDelta,
   createRecommendationQualityReport,
+  createRecommendationQualitySummary,
+  formatRecommendationQualityDelta,
   formatRecommendationQualityReport,
+  formatRecommendationQualitySummary,
   getRecommendationQualityWarnings,
+  type RecommendationQualityWarningId,
+  type RecommendationQualitySummary,
 } from "../../scripts/recommendation-quality-report";
 
 function normalCopyFieldsFromReport(): string {
@@ -46,6 +53,13 @@ function expectedWarningIdsForScenario(
   }
 
   return warningIds;
+}
+
+function withWarningId(
+  values: RecommendationQualityWarningId[],
+  warningId: RecommendationQualityWarningId,
+): RecommendationQualityWarningId[] {
+  return [...new Set([...values, warningId])];
 }
 
 describe("recommendation quality report", () => {
@@ -113,6 +127,141 @@ describe("recommendation quality report", () => {
     expect(formatted).toContain("Top rejected near alternatives:");
     expect(formatted).toContain("Human review notes:");
     expect(formatted).not.toContain("undefined");
+  });
+
+  it("generates a stable quality summary with warning counts, verdict counts, and distributions", () => {
+    const report = createRecommendationQualityReport();
+    const summary = createRecommendationQualitySummary(report, {
+      generatedAtIso: "2026-06-05T00:00:00.000Z",
+    });
+    const formatted = formatRecommendationQualitySummary(summary);
+
+    expect(summary.generatedAtIso).toBe("2026-06-05T00:00:00.000Z");
+    expect(summary.scenarioCounts.total).toBe(recommendationQualityScenarios.length);
+    expect(summary.scenarioCounts.contract).toBeGreaterThanOrEqual(24);
+    expect(summary.scenarioCounts.authoredOutput).toBeGreaterThanOrEqual(13);
+    expect(summary.scenarioCounts.highCapacity).toBeGreaterThan(0);
+    expect(summary.scenarioCounts.bothOfUs).toBeGreaterThan(0);
+    expect(summary.scenarioCounts.openPreferenceOrResolvedCategory).toBeGreaterThan(0);
+    expect(summary.warningCounts).toHaveProperty("contract_request_changes");
+    expect(summary.warningCounts).toHaveProperty("fragmentary_option_menu_body");
+    expect(summary.warningCounts).toHaveProperty("audience_only_pronoun_change");
+    expect(summary.warningCounts).toHaveProperty("high_capacity_no_deeper_ritual_shape");
+    expect(summary.warningCounts).toHaveProperty("closest_match_overclaims_fit");
+    expect(summary.warningCounts).toHaveProperty("coverage_gap_not_disclosed_in_expanded_explanation");
+    expect(summary.warningCounts).toHaveProperty("coverage_gap_category_focus_capacity");
+    expect(summary.warningCounts).toHaveProperty("closest_compatible_pattern_selected");
+    expect(summary.warningCounts).toHaveProperty("recommendation_confidence_limited");
+    expect(summary.warningCounts).toHaveProperty("timing_overrode_explicit_contract");
+    expect(summary.warningCounts).toHaveProperty("resolved_surprise_category_not_preserved");
+    expect(summary.verdictCounts.contract).toHaveProperty("pass");
+    expect(summary.verdictCounts.contract).toHaveProperty("review_required");
+    expect(summary.verdictCounts.contract).toHaveProperty("request_changes");
+    expect(summary.verdictCounts.authoredOutput).toHaveProperty("pass");
+    expect(summary.verdictCounts.authoredOutput).toHaveProperty("review_required");
+    expect(summary.verdictCounts.authoredOutput).toHaveProperty("request_changes");
+    expect(summary.selectionDistribution.distinctSelectedPatternCount).toBeGreaterThan(0);
+    expect(summary.selectionDistribution.topSelectedPatterns.length).toBeGreaterThan(0);
+    expect(summary.selectionDistribution.selectedCategoryDistribution.length).toBeGreaterThan(0);
+    expect(summary.selectionDistribution.selectedRitualFormFamilyDistribution.length).toBeGreaterThan(0);
+    expect(summary.scenarios[0]).toEqual(
+      expect.objectContaining({
+        id: expect.any(String),
+        selectedPatternKey: expect.any(String),
+        warningIds: expect.any(Array),
+      }),
+    );
+    expect(formatted).toContain("# Recommendation Quality Summary");
+    expect(formatted).toContain("## Required Warning Counts");
+    expect(formatted).toContain("## Selection Distribution");
+  });
+
+  it("reports changed selected patterns, warnings, verdicts, improvements, and worsenings", () => {
+    const report = createRecommendationQualityReport();
+    const current = createRecommendationQualitySummary(report, {
+      generatedAtIso: "current",
+    });
+    const baseline: RecommendationQualitySummary = JSON.parse(JSON.stringify(current));
+    const changedScenario = baseline.scenarios[0];
+    const improvedScenario = baseline.scenarios.find(
+      (scenario) => scenario.warningIds.length > 0 || scenario.authoredOutputVerdict !== "pass",
+    ) ?? baseline.scenarios[1];
+    const worsenedScenario = baseline.scenarios.find(
+      (scenario) => scenario.id !== improvedScenario.id,
+    )!;
+
+    changedScenario.selectedPatternKey = "synthetic_previous_pattern";
+    changedScenario.warningIds = ["fragmentary_option_menu_body"];
+    baseline.warningCounts.fragmentary_option_menu_body += 1;
+    baseline.warningCounts.audience_only_pronoun_change += 1;
+    baseline.scenarios = baseline.scenarios.map((scenario) => {
+      if (scenario.id === improvedScenario.id) {
+        return {
+          ...scenario,
+          authoredOutputVerdict: "request_changes",
+          warningIds: withWarningId(scenario.warningIds, "audience_only_pronoun_change"),
+        };
+      }
+
+      return scenario;
+    });
+    current.scenarios = current.scenarios.map((scenario) => {
+      if (scenario.id === worsenedScenario.id) {
+        return {
+          ...scenario,
+          contractVerdict: "request_changes",
+          warningIds: withWarningId(scenario.warningIds, "contract_request_changes"),
+        };
+      }
+
+      return scenario;
+    });
+    current.warningCounts.contract_request_changes += 1;
+    current.verdictCounts.contract.request_changes += 1;
+
+    const delta = createRecommendationQualityDelta({ baseline, current });
+    const formatted = formatRecommendationQualityDelta(delta);
+
+    expect(delta.changedSelectedPatterns).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: changedScenario.id,
+          before: "synthetic_previous_pattern",
+        }),
+      ]),
+    );
+    expect(delta.changedWarnings.map((item) => item.id)).toEqual(
+      expect.arrayContaining([changedScenario.id, improvedScenario.id, worsenedScenario.id]),
+    );
+    expect(delta.changedContractStatus.map((item) => item.id)).toContain(worsenedScenario.id);
+    expect(delta.changedAuthoredOutputStatus.map((item) => item.id)).toContain(improvedScenario.id);
+    expect(delta.improvedScenarios).toContain(improvedScenario.id);
+    expect(delta.worsenedScenarios).toContain(worsenedScenario.id);
+    expect(delta.newWarnings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: "contract_request_changes" }),
+      ]),
+    );
+    expect(delta.resolvedWarnings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: "audience_only_pronoun_change" }),
+      ]),
+    );
+    expect(formatted).toContain("## Quality delta");
+    expect(formatted).toContain("### Changed selected patterns");
+    expect(formatted).toContain("### Diagnostic integrity");
+  });
+
+  it("documents the required PR quality-delta template", () => {
+    const docs = [
+      readFileSync(new URL("../../docs/recommendation-quality-model.md", import.meta.url), "utf8"),
+      readFileSync(new URL("../../docs/content-audits/post-quality-trend-delta-review.md", import.meta.url), "utf8"),
+    ].join("\n");
+
+    expect(docs).toContain("## Quality delta");
+    expect(docs).toContain("Baseline: <main SHA/report path>");
+    expect(docs).toContain("Current: <PR SHA/report path>");
+    expect(docs).toContain("Diagnostic integrity");
   });
 
   it("checks recommendation-contract scenarios as contracts, not output snapshots", () => {
