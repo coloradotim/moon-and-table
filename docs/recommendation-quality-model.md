@@ -190,6 +190,19 @@ Recommendation quality needs scenario review and human judgment. A privacy-safe 
 - closing review
 - human notes
 
+Contract scenarios add a stricter layer for recommendation integrity. They define
+the expected category-selection mode, expected explicit or resolved category,
+focus behavior, capacity behavior, audience behavior, timing authority
+classification, acceptable and disallowed ritual form families, blocked
+normal-copy phrases, expected diagnostics, and the rationale before the current
+engine selects anything.
+
+The documented contract matrix lives in
+`docs/content-audits/recommendation-contract-matrix.md`. Use it when changing
+selection behavior, report diagnostics, quality fixtures, Surprise me
+resolution, timing authority, capacity-depth behavior, or normal-copy
+explanations.
+
 Good scenarios should catch output that technically uses the right inputs but still feels generic, contradictory, overassembled, or thin.
 
 Tests must define expected product behavior before engine behavior is adjusted. Do not update expected patterns, warning counts, or scenario verdicts merely to match current output. If current output violates the recommendation contract, change selection/coherence behavior or document a real blocker.
