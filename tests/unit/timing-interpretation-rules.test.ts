@@ -113,6 +113,62 @@ describe("timing interpretation rules", () => {
     }
   });
 
+  it("creates approved calendar threshold signals for month boundaries", () => {
+    const firstDayFacts = getTimingFactsForDate("2026-07-01T12:00:00.000Z");
+    const lastDayFacts = getTimingFactsForDate("2026-07-31T12:00:00.000Z");
+    const firstDaySignals = getTimingSignalsForFacts(firstDayFacts).filter(
+      (signal) => signal.timingFactType === "calendar_threshold",
+    );
+    const lastDaySignals = getTimingSignalsForFacts(lastDayFacts).filter(
+      (signal) => signal.timingFactType === "calendar_threshold",
+    );
+    const calendarRules = getEligibleTimingInterpretationRules().filter(
+      (rule) => rule.timingFactType === "calendar_threshold",
+    );
+
+    expect(calendarRules.map((rule) => rule.id).sort()).toEqual([
+      "timing_rule.calendar_threshold.first_day_of_month",
+      "timing_rule.calendar_threshold.last_day_of_month",
+      "timing_rule.calendar_threshold.month_turn",
+    ]);
+    expect(firstDaySignals).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          ruleId: "timing_rule.calendar_threshold.first_day_of_month",
+          signalLabel: "First day of the month — threshold and first word",
+          symbolicCardKeys: ["first_last", "threshold", "folded_word"],
+          strength: "supporting",
+        }),
+        expect.objectContaining({
+          ruleId: "timing_rule.calendar_threshold.month_turn",
+          signalLabel: "Month turn — crossing between months",
+          symbolicCardKeys: ["first_last", "threshold", "seasonal_bowl"],
+        }),
+      ]),
+    );
+    expect(lastDaySignals).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          ruleId: "timing_rule.calendar_threshold.last_day_of_month",
+          signalLabel: "Last day of the month — closing and return",
+        }),
+      ]),
+    );
+
+    for (const signal of [...firstDaySignals, ...lastDaySignals]) {
+      expect(signal.sourceReferences).toEqual(
+        expect.arrayContaining([
+          "docs/content-packets/domestic-threshold-vessel-welcome-source-packet.md",
+          "docs/content-audits/post-191-source-packet-review.md",
+          "note.computed_facts_are_not_meanings",
+        ]),
+      );
+      expect(signal.signalSummary.toLowerCase()).not.toContain("folklore says");
+      expect(signal.signalSummary.toLowerCase()).not.toContain("should");
+      expect(signal.signalSummary.toLowerCase()).not.toContain("guarantee");
+    }
+  });
+
   it("keeps approved numerology rules source-backed and accent-level for 1-9", () => {
     const rules = getEligibleTimingInterpretationRules().filter(
       (rule) => rule.timingFactType === "numerology_date",

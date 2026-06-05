@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  getCalendarThresholdFacts,
   getTimingFactsForDate,
   getUniversalNumerologyNumbers,
   getZodiacSignForLongitude,
+  type CalendarThresholdFact,
   type NumerologyDateFact,
   type PlanetSignFact,
   type PlanetRetrogradeFact,
@@ -15,9 +17,11 @@ import {
   reduceNumerology,
 } from "../../src/lib/numerology-timing";
 
+const UTC_OPTIONS = { timezone: "UTC" };
+
 describe("timing facts", () => {
   it("keeps the existing four-bucket lunar phase behavior available", () => {
-    const facts = getTimingFactsForDate("2026-06-15T03:00:00.000Z");
+    const facts = getTimingFactsForDate("2026-06-15T03:00:00.000Z", UTC_OPTIONS);
     const moonPhase = facts.find((fact) => fact.type === "moon_phase");
 
     expect(moonPhase).toMatchObject({
@@ -30,7 +34,7 @@ describe("timing facts", () => {
   });
 
   it("includes exact lunation facts when the selected week contains one", () => {
-    const facts = getTimingFactsForDate("2026-06-15T03:00:00.000Z");
+    const facts = getTimingFactsForDate("2026-06-15T03:00:00.000Z", UTC_OPTIONS);
     const lunation = facts.find((fact) => fact.type === "lunation");
 
     expect(lunation).toMatchObject({
@@ -44,7 +48,7 @@ describe("timing facts", () => {
   });
 
   it("computes moon sign as a factual zodiac position", () => {
-    const facts = getTimingFactsForDate("2026-06-21T00:00:00.000Z");
+    const facts = getTimingFactsForDate("2026-06-21T00:00:00.000Z", UTC_OPTIONS);
     const moonSign = facts.find((fact) => fact.type === "moon_sign");
 
     expect(moonSign).toMatchObject({
@@ -57,8 +61,8 @@ describe("timing facts", () => {
   });
 
   it("handles sun sign boundary behavior around the June solstice", () => {
-    const beforeSolstice = getTimingFactsForDate("2026-06-21T00:00:00.000Z");
-    const afterSolstice = getTimingFactsForDate("2026-06-21T12:00:00.000Z");
+    const beforeSolstice = getTimingFactsForDate("2026-06-21T00:00:00.000Z", UTC_OPTIONS);
+    const afterSolstice = getTimingFactsForDate("2026-06-21T12:00:00.000Z", UTC_OPTIONS);
 
     expect(beforeSolstice.find((fact) => fact.type === "sun_sign")).toMatchObject({
       sign: "gemini",
@@ -71,7 +75,7 @@ describe("timing facts", () => {
   });
 
   it("detects solstice or equinox markers inside the selected week", () => {
-    const facts = getTimingFactsForDate("2026-06-21T12:00:00.000Z");
+    const facts = getTimingFactsForDate("2026-06-21T12:00:00.000Z", UTC_OPTIONS);
     const marker = facts.find(
       (fact): fact is SeasonalMarkerFact => fact.type === "solar_season",
     );
@@ -85,6 +89,7 @@ describe("timing facts", () => {
 
   it("computes planetary signs without adding interpretation", () => {
     const facts = getTimingFactsForDate("2026-06-21T00:00:00.000Z", {
+      timezone: "UTC",
       includePlanetaryAspects: false,
     });
     const mercury = facts.find(
@@ -103,6 +108,7 @@ describe("timing facts", () => {
 
   it("computes retrograde status as apparent motion only", () => {
     const facts = getTimingFactsForDate("2026-06-21T00:00:00.000Z", {
+      timezone: "UTC",
       includePlanetaryAspects: false,
     });
     const pluto = facts.find(
@@ -120,6 +126,7 @@ describe("timing facts", () => {
 
   it("detects only major aspects within the configured orb", () => {
     const facts = getTimingFactsForDate("2026-06-21T00:00:00.000Z", {
+      timezone: "UTC",
       aspectOrbDegrees: 3,
     });
     const mercuryMars = facts.find(
@@ -137,8 +144,8 @@ describe("timing facts", () => {
   });
 
   it("computes universal numerology year, month, and day facts", () => {
-    const numbers = getUniversalNumerologyNumbers("2026-06-21T00:00:00.000Z");
-    const facts = getTimingFactsForDate("2026-06-21T00:00:00.000Z");
+    const numbers = getUniversalNumerologyNumbers("2026-06-21T00:00:00.000Z", "UTC");
+    const facts = getTimingFactsForDate("2026-06-21T00:00:00.000Z", UTC_OPTIONS);
     const numerologyFacts = facts.filter(
       (fact): fact is NumerologyDateFact => fact.type === "numerology_date",
     );
@@ -171,6 +178,156 @@ describe("timing facts", () => {
     );
   });
 
+  it("computes first-day calendar threshold facts", () => {
+    const facts = getTimingFactsForDate("2026-07-01T12:00:00.000Z", UTC_OPTIONS);
+    const calendarFacts = facts.filter(
+      (fact): fact is CalendarThresholdFact => fact.type === "calendar_threshold",
+    );
+
+    expect(calendarFacts).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: "timing.calendar_threshold.first_day_of_month.2026-07-01",
+          threshold: "first_day_of_month",
+          label: "First day of July",
+          dateIso: "2026-07-01",
+          monthName: "July",
+          previousMonthName: "June",
+          computedBy: "app_calendar",
+          confidence: "computed",
+        }),
+        expect.objectContaining({
+          id: "timing.calendar_threshold.month_turn.2026-07-01",
+          threshold: "month_turn",
+          label: "Month turn into July",
+        }),
+      ]),
+    );
+  });
+
+  it("computes last-day calendar threshold facts including leap-year month ends", () => {
+    const juneFacts = getTimingFactsForDate("2026-06-30T12:00:00.000Z", UTC_OPTIONS);
+    const leapFacts = getTimingFactsForDate("2028-02-29T12:00:00.000Z", UTC_OPTIONS);
+    const juneCalendarFacts = juneFacts.filter(
+      (fact): fact is CalendarThresholdFact => fact.type === "calendar_threshold",
+    );
+    const leapCalendarFacts = leapFacts.filter(
+      (fact): fact is CalendarThresholdFact => fact.type === "calendar_threshold",
+    );
+
+    expect(juneCalendarFacts).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          threshold: "last_day_of_month",
+          label: "Last day of June",
+          dateIso: "2026-06-30",
+          nextMonthName: "July",
+        }),
+        expect.objectContaining({
+          threshold: "month_turn",
+          label: "Month turn out of June",
+        }),
+      ]),
+    );
+    expect(leapCalendarFacts).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          threshold: "last_day_of_month",
+          label: "Last day of February",
+          dateIso: "2028-02-29",
+        }),
+      ]),
+    );
+  });
+
+  it("evaluates first-day calendar thresholds in the supplied local timezone", () => {
+    const stillJuneInDenver = getCalendarThresholdFacts(
+      "2026-07-01T01:00:00.000Z",
+      "America/Denver",
+    );
+    const julyInDenver = getCalendarThresholdFacts(
+      "2026-07-01T06:00:00.000Z",
+      "America/Denver",
+    );
+
+    expect(stillJuneInDenver).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          threshold: "last_day_of_month",
+          label: "Last day of June",
+          dateIso: "2026-06-30",
+          timezone: "America/Denver",
+        }),
+        expect.objectContaining({
+          threshold: "month_turn",
+          label: "Month turn out of June",
+          dateIso: "2026-06-30",
+        }),
+      ]),
+    );
+    expect(stillJuneInDenver).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          threshold: "first_day_of_month",
+          label: "First day of July",
+        }),
+      ]),
+    );
+    expect(julyInDenver).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          threshold: "first_day_of_month",
+          label: "First day of July",
+          dateIso: "2026-07-01",
+          startIso: "2026-07-01T06:00:00.000Z",
+          timezone: "America/Denver",
+        }),
+        expect.objectContaining({
+          threshold: "month_turn",
+          label: "Month turn into July",
+          dateIso: "2026-07-01",
+        }),
+      ]),
+    );
+  });
+
+  it("keeps local last-day thresholds when UTC has already crossed months", () => {
+    const facts = getCalendarThresholdFacts(
+      "2026-08-01T01:00:00.000Z",
+      "America/Denver",
+    );
+
+    expect(facts).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          threshold: "last_day_of_month",
+          label: "Last day of July",
+          dateIso: "2026-07-31",
+          timezone: "America/Denver",
+        }),
+        expect.objectContaining({
+          threshold: "month_turn",
+          label: "Month turn out of July",
+          dateIso: "2026-07-31",
+        }),
+      ]),
+    );
+    expect(facts).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          threshold: "first_day_of_month",
+          label: "First day of August",
+        }),
+      ]),
+    );
+  });
+
+  it("does not create calendar threshold facts on ordinary month days", () => {
+    const facts = getTimingFactsForDate("2026-07-15T12:00:00.000Z", UTC_OPTIONS);
+
+    expect(facts.some((fact) => fact.type === "calendar_threshold")).toBe(false);
+  });
+
   it("reduces numerology values to 1-9 for MVP", () => {
     expect(reduceNumerology(2026)).toBe(1);
     expect(reduceNumerology(29)).toBe(2);
@@ -179,20 +336,23 @@ describe("timing facts", () => {
   });
 
   it("computes fixed universal numerology date examples deterministically", () => {
-    expect(getUniversalNumerologyNumbers("2026-01-01T00:00:00.000Z")).toEqual({
+    expect(getUniversalNumerologyNumbers("2026-01-01T00:00:00.000Z", "UTC")).toEqual({
       universal_year: 1,
       universal_month: 2,
       universal_day: 3,
     });
-    expect(getUniversalNumerologyNumbers("2027-12-31T23:59:59.000Z")).toEqual({
+    expect(getUniversalNumerologyNumbers("2027-12-31T23:59:59.000Z", "UTC")).toEqual({
       universal_year: 2,
       universal_month: 5,
       universal_day: 9,
     });
   });
 
-  it("exposes a reusable numerology fact API with UTC-stable dates", () => {
-    const facts = getNumerologyTimingFacts("2026-06-21T00:30:00.000+02:00");
+  it("exposes a reusable numerology fact API with timezone-local dates", () => {
+    const facts = getNumerologyTimingFacts(
+      "2026-06-21T00:30:00.000+02:00",
+      "America/Denver",
+    );
 
     expect(facts).toHaveLength(3);
     expect(facts[0]).toMatchObject({
@@ -200,6 +360,7 @@ describe("timing facts", () => {
       type: "numerology_date",
       dateIso: "2026-06-20",
       exactIso: "2026-06-20T22:30:00.000Z",
+      timezone: "America/Denver",
       computedBy: "app_numerology",
       confidence: "computed",
     });
@@ -218,7 +379,7 @@ describe("timing facts", () => {
   });
 
   it("uses UTC date boundaries deterministically", () => {
-    const facts = getTimingFactsForDate("2026-06-21T00:30:00.000+02:00");
+    const facts = getTimingFactsForDate("2026-06-21T00:30:00.000+02:00", UTC_OPTIONS);
     const moonPhase = facts.find((fact) => fact.type === "moon_phase");
 
     expect(moonPhase?.startIso).toBe("2026-06-15T00:00:00.000Z");

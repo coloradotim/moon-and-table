@@ -534,6 +534,7 @@ describe("generateWeeklyBrief", () => {
   it("does not expose fallback schedule assumptions in default output", () => {
     const brief = generateWeeklyBrief({
       currentDate: "2026-06-03T12:00:00.000Z",
+      timezone: "America/Denver",
       capacityMode: "low",
     });
     const defaultOutput = JSON.stringify({
@@ -852,6 +853,7 @@ describe("generateWeeklyBrief", () => {
   it("uses an across-the-week timing candidate in the decision record and scoring", () => {
     const brief = generateWeeklyBrief({
       currentDate: "2026-06-03T12:00:00.000Z",
+      timezone: "America/Denver",
       capacityMode: "low",
       currentRitualCheckIn: {
         timeScope: "best_moment_this_week",
@@ -908,7 +910,7 @@ describe("generateWeeklyBrief", () => {
     expect(brief.decision.inputs.selectedTimingWindow).toMatchObject({
       id: "timing_window.fake.venus_leo",
       label: "Venus in Leo",
-      userWindow: "Around Friday, June 5 afternoon.",
+      userWindow: "Around Friday, June 5 morning.",
       isStrong: true,
     });
     expect(brief.trace.selectedTimingWindow).toMatchObject({
@@ -916,7 +918,7 @@ describe("generateWeeklyBrief", () => {
       label: "Venus in Leo",
       isStrong: true,
     });
-    expect(brief.bestWindow).toContain("Around Friday, June 5 afternoon.");
+    expect(brief.bestWindow).toContain("Around Friday, June 5 morning.");
     expect(brief.decision.inputs.checkInInfluences).toContain("timing_window");
     expect(brief.trace.computedTimingFacts.map((fact) => fact.id)).toContain(
       "fake.timing.venus",
@@ -927,13 +929,13 @@ describe("generateWeeklyBrief", () => {
       "because of a stronger match with saved household themes",
     );
     expect(brief.explanation.whyThisFits).toContain(
-      "Friday, June 5 afternoon stood out as the strongest timing window this week.",
+      "Friday, June 5 morning stood out as the strongest timing window this week.",
     );
     expect(brief.explanation.howThisWasChosen).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           kind: "timing_choice",
-          body: expect.stringContaining("Friday, June 5 afternoon was the strongest timing window"),
+          body: expect.stringContaining("Friday, June 5 morning was the strongest timing window"),
         }),
       ]),
     );

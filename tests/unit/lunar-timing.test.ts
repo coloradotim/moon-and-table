@@ -19,7 +19,7 @@ describe("lunar timing", () => {
   });
 
   it("returns a computed new moon timing fact for a known June 2026 lunation", () => {
-    const fact = getLunarTimingFact("2026-06-15T03:00:00.000Z");
+    const fact = getLunarTimingFact("2026-06-15T03:00:00.000Z", "UTC");
 
     expect(fact).toMatchObject({
       type: "moon_phase",
@@ -38,7 +38,7 @@ describe("lunar timing", () => {
   });
 
   it("returns a computed full moon timing fact for a known June 2026 lunation", () => {
-    const fact = getLunarTimingFact("2026-06-30T00:00:00.000Z");
+    const fact = getLunarTimingFact("2026-06-30T00:00:00.000Z", "UTC");
 
     expect(fact.key).toBe("moon.full");
     expect(fact.phase).toBe("full");
@@ -49,17 +49,17 @@ describe("lunar timing", () => {
   });
 
   it("distinguishes waxing and waning fixed dates", () => {
-    expect(getLunarTimingFact("2026-06-20T12:00:00.000Z").key).toBe(
+    expect(getLunarTimingFact("2026-06-20T12:00:00.000Z", "UTC").key).toBe(
       "moon.waxing",
     );
-    expect(getLunarTimingFact("2026-07-05T00:00:00.000Z").key).toBe(
+    expect(getLunarTimingFact("2026-07-05T00:00:00.000Z", "UTC").key).toBe(
       "moon.waning",
     );
   });
 
   it("is deterministic for Date and ISO string inputs representing the same instant", () => {
-    const isoFact = getLunarTimingFact("2026-06-30T00:00:00.000Z");
-    const dateFact = getLunarTimingFact(new Date("2026-06-30T00:00:00.000Z"));
+    const isoFact = getLunarTimingFact("2026-06-30T00:00:00.000Z", "UTC");
+    const dateFact = getLunarTimingFact(new Date("2026-06-30T00:00:00.000Z"), "UTC");
 
     expect(dateFact).toEqual(isoFact);
   });

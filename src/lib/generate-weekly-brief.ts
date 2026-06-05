@@ -42,6 +42,7 @@ import {
 } from "./private-profile-signals";
 import { validateRitualSafety, type RitualSafetyFlags } from "./ritual-safety";
 import {
+  getDefaultTimingTimezone,
   getTimingFactsForDate,
   type TimingFact,
 } from "./timing-facts";
@@ -320,6 +321,7 @@ export type BriefSignal = {
     | "planetary"
     | "numerology"
     | "seasonal"
+    | "calendar"
     | "profile"
     | "capacity"
     | "schedule";
@@ -395,6 +397,7 @@ export type WeeklyBrief = {
 
 export type GenerateWeeklyBriefInput = {
   currentDate?: Date | string;
+  timezone?: string;
   dateRange?: string;
   timingFacts?: TimingFactKey[];
   timingFactDetails?: LunarTimingFact[];
@@ -416,6 +419,7 @@ export type GenerateWeeklyBriefInput = {
 
 type ResolvedGenerateWeeklyBriefInput = {
   currentDate: Date;
+  timezone: string;
   dateRange: string;
   timingFacts: TimingFactKey[];
   timingFactDetails: LunarTimingFact[];
@@ -737,8 +741,8 @@ function getEffectiveDurationMinutes(
   );
 }
 
-function getPartOfDay(date: Date): string {
-  const hour = date.getUTCHours();
+function getPartOfDay(date: Date, timezone: string): string {
+  const { hour } = getLocalTimeParts(date, timezone);
 
   if (hour < 5) {
     return "overnight";
@@ -759,21 +763,46 @@ function getPartOfDay(date: Date): string {
   return "late evening";
 }
 
-function formatTimingWindowDate(iso: string): string {
+function getLocalTimeParts(date: Date, timezone: string): {
+  hour: number;
+  minute: number;
+  second: number;
+} {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23",
+    timeZone: timezone,
+  }).formatToParts(date);
+  const valueByType = new Map(parts.map((part) => [part.type, part.value]));
+
+  return {
+    hour: Number(valueByType.get("hour")),
+    minute: Number(valueByType.get("minute")),
+    second: Number(valueByType.get("second")),
+  };
+}
+
+function formatTimingWindowDate(
+  iso: string,
+  timezone = getDefaultTimingTimezone(),
+): string {
   const date = new Date(iso);
   const dayLabel = new Intl.DateTimeFormat("en-US", {
     weekday: "long",
     month: "long",
     day: "numeric",
-    timeZone: "UTC",
+    timeZone: timezone,
   }).format(date);
+  const localTime = getLocalTimeParts(date, timezone);
   const hasSpecificTime =
-    date.getUTCHours() !== 0 ||
-    date.getUTCMinutes() !== 0 ||
-    date.getUTCSeconds() !== 0;
+    localTime.hour !== 0 ||
+    localTime.minute !== 0 ||
+    localTime.second !== 0;
 
   return hasSpecificTime
-    ? `${dayLabel} ${getPartOfDay(date)}`
+    ? `${dayLabel} ${getPartOfDay(date, timezone)}`
     : dayLabel;
 }
 
@@ -783,8 +812,19 @@ function isStrongTimingWindow(
   return candidate !== undefined && candidate.strength !== "accent" && candidate.score >= 10;
 }
 
-function getTimingWindowUserWindow(candidate: TimingWindowCandidate): string {
-  return `Around ${formatTimingWindowDate(candidate.startsAtIso)}.`;
+function getTimingWindowUserWindow(
+  candidate: TimingWindowCandidate,
+  timezone = getTimingWindowTimezone(candidate),
+): string {
+  return `Around ${formatTimingWindowDate(
+    candidate.startsAtIso,
+    timezone,
+  )}.`;
+}
+
+function getTimingWindowTimezone(candidate: TimingWindowCandidate): string {
+  return candidate.timingFacts.find((fact) => fact.timezone)?.timezone ??
+    getDefaultTimingTimezone();
 }
 
 function getBestWindow(
@@ -801,7 +841,7 @@ function getBestWindow(
 
   if (input?.timeScope === "best_moment_this_week") {
     if (isStrongTimingWindow(input.selectedTimingWindow)) {
-      return `${getTimingWindowUserWindow(input.selectedTimingWindow)} ${capacityWindow}`;
+      return `${getTimingWindowUserWindow(input.selectedTimingWindow, input.timezone)} ${capacityWindow}`;
     }
 
     return `No strong timing window stood out this week. ${capacityWindow}`;
@@ -2145,6 +2185,8 @@ function getSignalType(signal: TimingSignal): BriefSignal["type"] {
       return "numerology";
     case "solar_season":
       return "seasonal";
+    case "calendar_threshold":
+      return "calendar";
     case "moon_sign":
     case "sun_sign":
     case "planet_sign":
@@ -2566,19 +2608,28 @@ function getPrimaryTimingPhrase(
   input: ResolvedGenerateWeeklyBriefInput,
   selectedTimingSignals: TimingSignal[],
 ): string {
+  const calendarSignal = getPrimaryCalendarThresholdSignal(selectedTimingSignals);
   const signal = selectedTimingSignals
     .map((candidate) => ({
       label: candidate.signalLabel,
       type: getSignalType(candidate),
     }))
-    .find((candidate) => ["moon", "planetary", "seasonal"].includes(candidate.type));
+    .find((candidate) => ["moon", "planetary", "seasonal", "calendar"].includes(candidate.type));
 
   if (input.timeScope === "best_moment_this_week") {
     if (isStrongTimingWindow(input.selectedTimingWindow)) {
-      return `${formatTimingWindowDate(input.selectedTimingWindow.startsAtIso)} stood out as the strongest timing window this week.`;
+      if (calendarSignal) {
+        return `${formatTimingWindowDate(input.selectedTimingWindow.startsAtIso, input.timezone)} stood out as a household calendar threshold. ${getCalendarThresholdTimingPhrase(calendarSignal)}`;
+      }
+
+      return `${formatTimingWindowDate(input.selectedTimingWindow.startsAtIso, input.timezone)} stood out as the strongest timing window this week.`;
     }
 
     return "No single timing window stood out strongly this week.";
+  }
+
+  if (calendarSignal) {
+    return getCalendarThresholdTimingPhrase(calendarSignal);
   }
 
   if (signal) {
@@ -2586,6 +2637,28 @@ function getPrimaryTimingPhrase(
   }
 
   return `${timingCard.title} shaped the timing tone.`;
+}
+
+function getPrimaryCalendarThresholdSignal(
+  selectedTimingSignals: TimingSignal[],
+): TimingSignal | undefined {
+  return selectedTimingSignals.find(
+    (signal) => signal.timingFactType === "calendar_threshold",
+  );
+}
+
+function getCalendarThresholdTimingPhrase(signal: TimingSignal): string {
+  const label = signal.signalLabel.toLowerCase();
+
+  if (label.includes("first day")) {
+    return "The first day of the month makes this an opening threshold: one small word or action crosses first.";
+  }
+
+  if (label.includes("last day")) {
+    return "The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down.";
+  }
+
+  return "The month turn gives this a clean threshold without turning the calendar into a command.";
 }
 
 function getWhyThisFits(
@@ -2643,10 +2716,15 @@ function getTimingChoiceSection(
 ): ExplanationSection {
   if (input.timeScope === "best_moment_this_week") {
     if (isStrongTimingWindow(input.selectedTimingWindow)) {
+      const calendarSignal = getPrimaryCalendarThresholdSignal(selectedTimingSignals);
+      const calendarPhrase = calendarSignal
+        ? ` ${getCalendarThresholdTimingPhrase(calendarSignal)}`
+        : "";
+
       return {
         kind: "timing_choice",
         title: "Timing",
-        body: `${formatTimingWindowDate(input.selectedTimingWindow.startsAtIso)} was the strongest timing window in the next several days. ${getTimingWindowReason(input.selectedTimingWindow)}`,
+        body: `${formatTimingWindowDate(input.selectedTimingWindow.startsAtIso, input.timezone)} was the strongest timing window in the next several days. ${getTimingWindowReason(input.selectedTimingWindow)}${calendarPhrase}`,
       };
     }
 
@@ -2658,15 +2736,25 @@ function getTimingChoiceSection(
   }
 
   const primarySignal =
+    getPrimaryCalendarThresholdSignal(selectedTimingSignals) ??
     selectedTimingSignals.find((signal) =>
-      ["moon_phase", "lunation", "planet_sign", "planetary_aspect", "solar_season"].includes(signal.timingFactType),
+      [
+        "moon_phase",
+        "lunation",
+        "planet_sign",
+        "planetary_aspect",
+        "solar_season",
+        "calendar_threshold",
+      ].includes(signal.timingFactType),
     );
 
   return {
     kind: "timing_choice",
     title: "Timing",
     body: primarySignal
-      ? `${primarySignal.signalLabel} was the main timing signal used here: ${ensureSentence(primarySignal.signalSummary)}`
+      ? primarySignal.timingFactType === "calendar_threshold"
+        ? `${primarySignal.signalLabel} shaped this as household calendar timing. ${getCalendarThresholdTimingPhrase(primarySignal)}`
+        : `${primarySignal.signalLabel} was the main timing signal used here: ${ensureSentence(primarySignal.signalSummary)}`
       : `${timingCard.title} shaped the timing theme: ${ensureSentence(timingCard.summary)}`,
   };
 }
@@ -3149,7 +3237,7 @@ function getCheckInReason(
   if (checkIn.timeScope === "best_moment_this_week") {
     if (isStrongTimingWindow(input.selectedTimingWindow)) {
       reasons.push(
-        `You asked the app to look across the week, so it chose ${formatTimingWindowDate(input.selectedTimingWindow.startsAtIso)} as the strongest available timing window. ${getTimingWindowReason(input.selectedTimingWindow)}`,
+        `You asked the app to look across the week, so it chose ${formatTimingWindowDate(input.selectedTimingWindow.startsAtIso, input.timezone)} as the strongest available timing window. ${getTimingWindowReason(input.selectedTimingWindow)}`,
       );
     } else {
       reasons.push(
@@ -3902,7 +3990,7 @@ function getRecommendationDecision({
       numerology: getNumerologyDiagnostic(input, pattern, selectedTimingSignals),
       timeScope: input.timeScope,
       ...(input.selectedTimingWindow
-        ? { selectedTimingWindow: summarizeTimingWindow(input.selectedTimingWindow) }
+        ? { selectedTimingWindow: summarizeTimingWindow(input.selectedTimingWindow, input.timezone) }
         : {}),
       checkInInfluences: getCheckInInfluences(input),
       ...(input.currentRitualCheckIn
@@ -3958,6 +4046,7 @@ function selectTimingWindowCandidate(
 
 function summarizeTimingWindow(
   candidate: TimingWindowCandidate | undefined,
+  timezone = getDefaultTimingTimezone(),
 ): SelectedTimingWindowSummary | undefined {
   if (!candidate) {
     return undefined;
@@ -3966,7 +4055,7 @@ function summarizeTimingWindow(
   return {
     id: candidate.id,
     label: candidate.label,
-    userWindow: getTimingWindowUserWindow(candidate),
+    userWindow: getTimingWindowUserWindow(candidate, timezone),
     startsAtIso: candidate.startsAtIso,
     endsAtIso: candidate.endsAtIso,
     score: candidate.score,
@@ -3990,6 +4079,7 @@ function mergeTimingFacts(facts: TimingFact[]): TimingFact[] {
 
 function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBriefInput {
   const currentDate = resolveCurrentDate(input.currentDate);
+  const timezone = input.timezone ?? getDefaultTimingTimezone();
   const currentRitualCheckIn = resolveSurpriseMePracticeChoice(
     input.currentRitualCheckIn,
   );
@@ -4036,6 +4126,7 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
       ? input.timingWindowCandidates ??
         getTimingWindowCandidates({
           startDate: currentDate,
+          timezone,
           privateNatalProfiles: selectedNatalProfiles,
           astrologyVisibility,
           options: { maxCandidates: 8 },
@@ -4051,7 +4142,7 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
   const timingDate = strongSelectedTimingWindow
     ? resolveCurrentDate(strongSelectedTimingWindow.startsAtIso)
     : currentDate;
-  const lunarTimingFact = getLunarTimingFact(timingDate);
+  const lunarTimingFact = getLunarTimingFact(timingDate, timezone);
   const timingFactDetails =
     input.timingFactDetails ??
     (input.timingFacts === undefined ? [lunarTimingFact] : []);
@@ -4064,7 +4155,7 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
     input.computedTimingFacts ??
     mergeTimingFacts([
       ...(strongSelectedTimingWindow?.timingFacts ?? []),
-      ...getTimingFactsForDate(timingDate),
+      ...getTimingFactsForDate(timingDate, { timezone }),
     ]);
   const natalContacts = getNatalContactsForTimingFacts({
     timingFacts: computedTimingFacts,
@@ -4092,6 +4183,7 @@ function resolveInput(input: GenerateWeeklyBriefInput): ResolvedGenerateWeeklyBr
 
   return {
     currentDate,
+    timezone,
     dateRange: input.dateRange ?? getWeekDateRange(currentDate),
     timingFacts,
     timingFactDetails,
@@ -4326,7 +4418,7 @@ export function generateWeeklyBrief(
         ? { currentRitualCheckIn: resolvedInput.currentRitualCheckIn }
         : {}),
       ...(resolvedInput.selectedTimingWindow
-        ? { selectedTimingWindow: summarizeTimingWindow(resolvedInput.selectedTimingWindow) }
+        ? { selectedTimingWindow: summarizeTimingWindow(resolvedInput.selectedTimingWindow, resolvedInput.timezone) }
         : {}),
       capacityMode: resolvedInput.capacityMode,
       audience: resolvedInput.audience,

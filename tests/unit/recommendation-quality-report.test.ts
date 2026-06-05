@@ -44,6 +44,9 @@ describe("recommendation quality report", () => {
         "numerology.accent.secondary",
         "source_debug.no_raw_keys",
         "repetition.no_generic_closing",
+        "calendar.first_day.threshold_word",
+        "calendar.last_day.closing_bowl",
+        "calendar.month_turn.best_week",
       ]),
     );
     expect(serialized).not.toContain("@gmail.com");
@@ -145,6 +148,64 @@ describe("recommendation quality report", () => {
         expect.objectContaining({ key: "honeyed_word" }),
       ]),
     );
+  });
+
+  it("surfaces calendar threshold timing in recommendation quality scenarios", () => {
+    const report = createRecommendationQualityReport();
+    const resultById = new Map(
+      report.scenarioResults.map((result) => [result.scenario.id, result]),
+    );
+    const firstDay = resultById.get("calendar.first_day.threshold_word");
+    const lastDay = resultById.get("calendar.last_day.closing_bowl");
+    const monthTurn = resultById.get("calendar.month_turn.best_week");
+    const formatted = formatRecommendationQualityReport(report);
+
+    expect(firstDay?.selectedTimingSignals).toEqual(
+      expect.arrayContaining([
+        "First day of the month — threshold and first word",
+      ]),
+    );
+    expect(firstDay?.brief.explanation.whyThisFits).toContain(
+      "The first day of the month makes this an opening threshold",
+    );
+    expect(firstDay?.howThisWasChosen).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          title: "Timing",
+          body: expect.stringContaining("The first day of the month makes this an opening threshold"),
+        }),
+      ]),
+    );
+    expect(lastDay?.selectedTimingSignals).toEqual(
+      expect.arrayContaining([
+        "Last day of the month — closing and return",
+      ]),
+    );
+    expect(lastDay?.brief.explanation.whyThisFits).toContain(
+      "The last day of the month makes this a closing rite",
+    );
+    expect(monthTurn).toMatchObject({
+      selectedRitualPattern: { key: "first_day_last_day" },
+      ritualFormFamilyMatched: true,
+      selectedTimingWindow: {
+        label: "Month turn out of August",
+        isStrong: true,
+        reasonLabels: expect.arrayContaining(["Calendar threshold"]),
+      },
+    });
+    expect(monthTurn?.selectedTimingSignals).toEqual(
+      expect.arrayContaining(["Month turn — crossing between months"]),
+    );
+    expect(monthTurn?.brief.explanation.whyThisFits).toContain(
+      "stood out as a household calendar threshold",
+    );
+    expect(monthTurn?.brief.explanation.whyThisFits).toContain(
+      "The month turn gives this a clean threshold",
+    );
+    expect(formatted).toContain("Calendar threshold");
+    expect(formatted).toContain("Month turn — crossing between months");
+    expect(formatted.toLowerCase()).not.toContain("folklore says");
+    expect(formatted.toLowerCase()).not.toContain("today's folklore says");
   });
 
   it("flags known bad sample-like output", () => {
