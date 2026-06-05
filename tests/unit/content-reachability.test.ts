@@ -63,7 +63,6 @@ describe("content reachability diagnostics", () => {
         "full_light_on_the_table",
         "house_from_root_to_roof",
         "kitchen_reset",
-        "last_word_first_word",
         "plant_witness_to_growth",
         "salt_clear_water_release",
         "seasonal_marker_bowl",

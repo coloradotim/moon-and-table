@@ -104,7 +104,7 @@ describe("recommendation quality report", () => {
       selectedRitualFormFamilies: expect.arrayContaining(["welcome/offering/vessel"]),
     });
     expect(resultById.get("home.threshold.arrival")).toMatchObject({
-      selectedRitualPattern: { key: "carried_key_word" },
+      selectedRitualPattern: { key: "threshold_bowl" },
       ritualFormFamilyMatched: true,
       selectedRitualFormFamilies: expect.arrayContaining(["threshold/crossing/bowl/key"]),
     });
@@ -120,9 +120,9 @@ describe("recommendation quality report", () => {
       "honeyed_word",
     );
     expect(resultById.get("issue183.home.tending_steady")).toMatchObject({
-      selectedRitualPattern: { key: "carried_key_word" },
+      selectedRitualPattern: { key: "house_from_root_to_roof" },
       ritualFormFamilyMatched: true,
-      selectedRitualFormFamilies: expect.arrayContaining(["threshold/crossing/bowl/key"]),
+      selectedRitualFormFamilies: expect.arrayContaining(["house map"]),
     });
     expect(resultById.get("issue183.home.tending_steady")?.selectedRitualPattern.key).not.toBe(
       "salt_clear_water_release",
@@ -160,7 +160,7 @@ describe("recommendation quality report", () => {
       ["issue183.plant.beginning.seed", "seed_waiting"],
       ["batch1.kitchen.grain_beginning", "grain_bowl_beginning"],
       ["batch1.quiet_welcome", "honeyed_word"],
-      ["home.threshold.arrival", "carried_key_word"],
+      ["home.threshold.arrival", "threshold_bowl"],
       ["batch1.home.salt_water_clearing", "salt_clear_water_release"],
       ["issue183.candle.rest_dark", "bank_the_house_light"],
       ["issue183.candle.full_saying_clearly", "full_light_on_the_table"],
@@ -169,9 +169,20 @@ describe("recommendation quality report", () => {
       ["issue201.kitchen.bread_center_enoughness", "bread_at_the_center"],
       ["issue201.home.bread_grain_table_center", "bread_at_the_center"],
       ["issue201.seasonal.grain_continuity", "seasonal_marker_bowl"],
+      ["issue202.reflection.returnable_key", "carried_key_word"],
+      ["issue202.reflection.last_first_word", "last_word_first_word"],
+      ["issue202.seasonal.entry_first_crossing", "seasonal_entry_bowl"],
+    ]);
+    const issue202LossPatterns = new Map([
+      ["issue202.generic.low_not_threshold", ["carried_key_word", "threshold_bowl", "seasonal_entry_bowl", "last_word_first_word"]],
+      ["issue202.clearing.not_key", ["carried_key_word", "threshold_bowl", "seasonal_entry_bowl", "last_word_first_word"]],
+      ["issue202.kitchen.warmth.not_threshold", ["carried_key_word", "threshold_bowl", "seasonal_entry_bowl", "last_word_first_word"]],
+      ["issue202.plant.not_threshold", ["carried_key_word", "threshold_bowl", "seasonal_entry_bowl", "last_word_first_word"]],
+      ["batch1.surprise_me.resolves_visible_category", ["carried_key_word", "threshold_bowl", "seasonal_entry_bowl", "last_word_first_word"]],
     ]);
     const requiredScenarioIds = [
       ...expectedPatterns.keys(),
+      ...issue202LossPatterns.keys(),
       "kitchen.warmth.together",
       "batch1.reflection.folded_phrase",
       "batch1.surprise_me.resolves_visible_category",
@@ -207,10 +218,23 @@ describe("recommendation quality report", () => {
       "conflicting with household avoid flags",
       "surprise me,",
       "surprise me ->",
+      "protection",
+      "warding",
+      "security",
+      "luck",
+      "prosperity",
+      "bad luck",
+      "first-foot",
     ];
 
     for (const [scenarioId, patternKey] of expectedPatterns) {
       expect(resultById.get(scenarioId)?.selectedRitualPattern.key).toBe(patternKey);
+    }
+
+    for (const [scenarioId, blockedPatternKeys] of issue202LossPatterns) {
+      expect(blockedPatternKeys, scenarioId).not.toContain(
+        resultById.get(scenarioId)?.selectedRitualPattern.key,
+      );
     }
 
     expect(["warm_cup_between_us", "quiet_welcome"]).toContain(
