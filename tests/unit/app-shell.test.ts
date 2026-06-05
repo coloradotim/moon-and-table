@@ -17,14 +17,21 @@ import { resolvePrivateBriefData } from "../../src/lib/private-data";
 import { generateWeeklyBrief } from "../../src/lib/generate-weekly-brief";
 
 describe("app shell rendering", () => {
-  it("keeps check-in flow top-anchored while entry states can center", () => {
+  it("aligns entry/loading and check-in headlines while keeping check-in top-anchored", () => {
     const css = readFileSync(new URL("../../src/styles.css", import.meta.url), "utf8");
     const checkInRule = css.match(/\.shell--check-in\s*\{[^}]+\}/)?.[0] ?? "";
     const entryRule = css.match(/\.shell--entry\s*\{[^}]+\}/)?.[0] ?? "";
+    const checkInMastheadRule = css.match(/\.masthead--check-in\s*\{[^}]+\}/)?.[0] ?? "";
+    const entryBrandTitleRule = css.match(/\.entry-brand h1\s*\{[^}]+\}/)?.[0] ?? "";
 
-    expect(entryRule).toContain("align-content: center");
+    expect(entryRule).toContain("align-content: start");
+    expect(entryRule).toContain("width: min(100%, 680px)");
+    expect(entryRule).toContain("padding-block: var(--opening-shell-padding-block)");
     expect(checkInRule).toContain("align-content: start");
-    expect(checkInRule).toContain("padding-block: clamp(52px, 13vh, 112px) clamp(28px, 8vh, 72px)");
+    expect(checkInRule).toContain("width: min(100%, 680px)");
+    expect(checkInRule).toContain("padding-block: var(--opening-shell-padding-block)");
+    expect(checkInMastheadRule).toContain("--text-masthead: var(--text-entry-title)");
+    expect(entryBrandTitleRule).toContain("font-size: var(--text-entry-title)");
   });
 
   it("renders the pre-brief check-in before a generated brief", () => {
