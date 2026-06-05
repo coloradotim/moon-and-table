@@ -4,9 +4,10 @@ Status: ready to merge if checks pass
 
 ## PR / Branch Summary
 
-- PR number and title: TBD after PR creation - Constrain Honeyed Word bounded sweetness
+- PR number and title: #218 - Constrain Honeyed Word bounded sweetness
 - Branch: `codex/issue-204-honeyed-word-bounds`
 - Base branch: `main`
+- Implementation commit: `9b1e345`
 - Issue addressed: #204
 - Implementation summary: narrowed `honeyed_word` so it reads and selects as a bounded sweetness-word rite, not a generic warm fallback. `quiet_welcome` now carries ordinary welcome without requiring honey.
 
