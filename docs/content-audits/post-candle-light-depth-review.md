@@ -4,7 +4,8 @@ Status: ready for human review after validation.
 Issue: #234.  
 Branch: `codex/issue-234-candle-light-depth`.  
 Base: `main` at `e4bc246`.  
-PR: TBD.
+PR: #250, Add documented Candle/light depth families.  
+Implementation commit SHA: `f71d594`.
 
 ## 1. PR / Branch Summary
 
@@ -374,4 +375,4 @@ Merge recommendation: hold for human review.
 
 ## 11. ChatGPT Handoff Prompt
 
-Please review PR <PR number> for issue #234. Primary review doc: docs/content-audits/post-candle-light-depth-review.md. Verify that Candle/light rites are source-backed from #227, rest does not become release, first-light/renewed-light logic is bounded, electric/lamp/no-flame routes remain magical, high-capacity outputs are truly deeper, Both-of-us has embodied action, warning deltas are honest, and no unsafe/protection/cleansing/manifestation claims slipped in. Give blocking issues, non-blocking concerns, scenario IDs to fix later, and merge recommendation.
+Please review PR #250 for issue #234. Primary review doc: docs/content-audits/post-candle-light-depth-review.md. Verify that Candle/light rites are source-backed from #227, rest does not become release, first-light/renewed-light logic is bounded, electric/lamp/no-flame routes remain magical, high-capacity outputs are truly deeper, Both-of-us has embodied action, warning deltas are honest, and no unsafe/protection/cleansing/manifestation claims slipped in. Give blocking issues, non-blocking concerns, scenario IDs to fix later, and merge recommendation.
