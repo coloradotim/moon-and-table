@@ -6,6 +6,13 @@ Moon & Table chooses one ritual from our private household grimoire, then explai
 
 This document is the source of truth for recommendation quality. It exists so future work does not produce generic, repetitive, mechanically assembled ritual output.
 
+`Today’s shape` is a pre-recommendation timing-weather surface, not part of the
+final ritual recommendation. It may make moon, calendar, season, private timing,
+or numerology weather visible before the check-in, but it must not prescribe a
+ritual, override explicit answers, or become a horoscope feed. Its copy should
+be curated and compact: magical enough to name the moment, bounded enough to
+leave the check-in in charge.
+
 ## Product Standard
 
 Moon & Table should feel like:

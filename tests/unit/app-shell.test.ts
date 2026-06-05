@@ -47,6 +47,7 @@ describe("app shell rendering", () => {
     expect(html).toContain(
       "Welcome back, Morgan.",
     );
+    expect(html).toContain("Today’s shape");
     expect(html).toContain("Are you wanting something for today, or looking across the week?");
     expect(html).toContain("For today");
     expect(html).toContain("Across the week");
@@ -63,6 +64,75 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("AI");
     expect(html).not.toContain("algorithm");
     expect(html).not.toContain("generated");
+  });
+
+  it("renders Today's shape near the first check-in question with curated timing copy", () => {
+    const html = renderRitualCheckInShell({
+      draft: { step: "time_scope" },
+      displayName: "Morgan Example",
+      todaysShapeBrief: {
+        title: "Today’s shape",
+        summary: "Waning gibbous moon. Next lunar milestone: Last quarter moon on Sunday. No large timing marker is at the center today; the day can stay simple.",
+        chips: [
+          { label: "Waning gibbous moon; next last quarter moon", kind: "moon", emphasis: "supporting" },
+          { label: "7 note", kind: "numerology", emphasis: "accent" },
+        ],
+        details: [
+          {
+            title: "Moon",
+            body: "Waning gibbous moon. Next lunar milestone: Last quarter moon on June 8.",
+          },
+          {
+            title: "Numerology",
+            body: "A 7 note adds reflection and sorting.",
+          },
+        ],
+        timingAuthority: "shape_only",
+        majorEventPresent: false,
+      },
+    });
+
+    expect(html.indexOf("Today’s shape")).toBeLessThan(
+      html.indexOf("Are you wanting something for today"),
+    );
+    expect(html).toContain("Waning gibbous moon");
+    expect(html).toContain("Next lunar milestone: Last quarter moon on Sunday");
+    expect(html).not.toContain("7 note");
+    expect(html).not.toContain("A 7 note adds reflection and sorting.");
+    expect(html).not.toContain("<summary>More</summary>");
+    expect(html).not.toContain("Timing weather");
+    expect(html).not.toContain("you should");
+    expect(html).not.toContain("timing overrides check-in");
+    expect(html).not.toContain("score");
+    expect(html).not.toContain("source");
+    expect(html).not.toContain("degree");
+    expect(html).not.toContain("debug");
+    expect(html).not.toContain("person_a");
+    expect(html).not.toContain("person_b");
+  });
+
+  it("can show a major event in Today's shape without making it the ritual", () => {
+    const html = renderRitualCheckInShell({
+      draft: { step: "time_scope" },
+      todaysShapeBrief: {
+        title: "Today’s shape",
+        summary: "New moon today, with a 1 note in the date. Good weather for a small beginning, first light, or one phrase that does not need to become a plan.",
+        chips: [
+          { label: "New moon today", kind: "moon", emphasis: "primary" },
+          { label: "1 note", kind: "numerology", emphasis: "supporting" },
+        ],
+        details: [],
+        timingAuthority: "may_lead",
+        majorEventPresent: true,
+      },
+    });
+
+    expect(html).toContain("New moon today");
+    expect(html).toContain("Good weather for a small beginning");
+    expect(html).toContain("For today");
+    expect(html).toContain("Across the week");
+    expect(html).not.toContain("Choose ritual");
+    expect(html).not.toContain("This timing overrides");
   });
 
   it("renders first-login check-in copy without a welcome-back greeting", () => {
@@ -135,6 +205,7 @@ describe("app shell rendering", () => {
     expect(html).toContain("Kitchen");
     expect(html).toContain("Candle or light");
     expect(html).toContain("Surprise me");
+    expect(html).not.toContain("Today’s shape");
     expect(html).not.toContain("Conversation");
     expect(html).not.toContain("Who is this for?");
     expect(html).not.toContain("Home tending");

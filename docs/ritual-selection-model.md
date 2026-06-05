@@ -79,6 +79,14 @@ The first timing look-ahead API is `getTimingWindowCandidates()` in `src/lib/tim
 
 This is not schedule awareness. It can say that a meaningful timing event occurs at a real computed time, but it does not know whether the household is free then.
 
+The first check-in screen may show `Today’s shape`, a compact timing-weather
+brief documented in `docs/todays-shape-brief.md`. It orients the user before
+the first answer, but it is not a recommendation and it does not score or
+override check-in answers. It uses curated language over computed timing facts
+and private-safe timing-window metadata; raw fact ids, scores, source ids,
+degrees, contact keys, and chart diagnostics belong only in debug or report
+surfaces.
+
 ## Capacity
 
 The capacity question is:
