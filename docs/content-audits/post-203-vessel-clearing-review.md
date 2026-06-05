@@ -20,6 +20,12 @@ Files changed by purpose:
 - Scenarios/tests: `tests/fixtures/recommendation-quality-scenarios.ts`, `tests/unit/recommendation-quality-report.test.ts`
 - Docs: this review packet
 
+Cleanup patch for PR #216:
+
+- Removed the exact `clear_the_threshold_bowl` pattern key from `issue203.seasonal.end_empty_return`; the scenario now uses material/form styles only: seasonal, closing, emptying, return, bowl, vessel.
+- Narrowed `vessel_empty_return` expected-family diagnostics so Seasonal scenarios do not all count as vessel-emptying work. The family is expected only when focus or styles point to clearing, emptying, return, rinsing, bowl, vessel, or closing.
+- Changed `clear_the_threshold_bowl` normal closing copy from "empty, clean, or back in its place" to "empty, rinsed, or back in its place."
+
 Scope confirmations:
 
 - New visible categories added: no.
@@ -173,6 +179,7 @@ Concentration review:
 
 - `salt_clear_water_release` remains at 4 selections, unchanged from #202.
 - The new scenario increases `clear_the_threshold_bowl` to 3, proving vessel emptying can be reached without increasing salt/water concentration.
+- After removing the exact pattern key from `issue203.seasonal.end_empty_return`, the scenario still selects `clear_the_threshold_bowl`.
 - Broad pattern concentration: none.
 
 ## Vessel / Emptying Reachability Audit
@@ -266,7 +273,7 @@ Normal user-facing copy only; score dumps are excluded.
 ### `issue203.seasonal.end_empty_return`
 
 - Title/theme: Empty the threshold bowl.
-- Ritual body: Let emptying be the action. Do not add new meaning while closing the old one. Choose a bowl or vessel that has been holding a marker. Name what is finished or ready to be put away. Empty, rinse, or return the marker. Put the bowl back in its ordinary place. Close when the bowl is empty, clean, or back in its place.
+- Ritual body: Let emptying be the action. Do not add new meaning while closing the old one. Choose a bowl or vessel that has been holding a marker. Name what is finished or ready to be put away. Empty, rinse, or return the marker. Put the bowl back in its ordinary place. Close when the bowl is empty, rinsed, or back in its place.
 - Intention: Empty the threshold bowl.
 - Best window: When you have five quiet minutes.
 - Optional accent: No add-on needed.
@@ -279,7 +286,7 @@ Normal user-facing copy only; score dumps are excluded.
 ### `calendar.last_day.closing_bowl`
 
 - Title/theme: Empty the threshold bowl.
-- Ritual body: Let emptying be the action. Do not add new meaning while closing the old one. Choose a bowl or vessel that has been holding a marker. Name what is finished or ready to be put away. Empty, rinse, or return the marker. Put the bowl back in its ordinary place. Close when the bowl is empty, clean, or back in its place.
+- Ritual body: Let emptying be the action. Do not add new meaning while closing the old one. Choose a bowl or vessel that has been holding a marker. Name what is finished or ready to be put away. Empty, rinse, or return the marker. Put the bowl back in its ordinary place. Close when the bowl is empty, rinsed, or back in its place.
 - Intention: Empty the threshold bowl.
 - Best window: When you have five quiet minutes.
 - Optional accent: No add-on needed.
@@ -406,6 +413,7 @@ What changed:
 - Strengthened `bowl_vessel`, `salt_clear_water_release`, `clear_the_threshold_bowl`, `seasonal_marker_bowl`, and `folded_phrase_vessel`.
 - Added internal `vessel_empty_return` form family for diagnostics/reporting.
 - Added `issue203.seasonal.end_empty_return` and tests proving salt-water wins explicit clearing and loses arrival/tending/marker/surprise cases.
+- Cleanup patch removed the exact target pattern key from `issue203.seasonal.end_empty_return`, narrowed Seasonal `vessel_empty_return` expectations, and changed threshold-bowl closure from "clean" to "rinsed."
 
 Source support:
 
@@ -416,7 +424,7 @@ Source support:
 Before/after:
 
 - Salt/water now says release leaves and the bowl returns.
-- Seasonal emptying can select `clear_the_threshold_bowl` without making salt-water required.
+- Seasonal emptying selects `clear_the_threshold_bowl` without naming that exact pattern key in preferred styles and without making salt-water required.
 - Seasonal marker bowl now has marker/return closure.
 - Folded phrase vessel now includes a later ordinary return.
 

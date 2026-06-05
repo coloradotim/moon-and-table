@@ -146,6 +146,15 @@ function hasPractice(checkIn: CurrentRitualCheckIn | undefined, label: string, s
   return lowerLabel === label || styles.some((style) => hints.includes(style));
 }
 
+function hasVesselEmptyReturnSignal(focus: string | undefined, hintSet: Set<string>): boolean {
+  return (
+    focus === "clearing_something_out" ||
+    ["emptying", "return", "rinsing", "bowl", "vessel", "closing"].some(
+      (style) => hintSet.has(style),
+    )
+  );
+}
+
 export function getExplicitPracticeCategory(checkIn?: CurrentRitualCheckIn): string | undefined {
   if (!checkIn || checkIn.practiceTypeLabel === "Surprise me") {
     return undefined;
@@ -270,7 +279,10 @@ export function getExpectedRitualFormFamilies(
   }
 
   if (category === "Seasonal") {
-    expected.push("seasonal_marker", "vessel_empty_return", "first_last_threshold", "threshold_crossing_bowl_key");
+    expected.push("seasonal_marker", "first_last_threshold", "threshold_crossing_bowl_key");
+    if (hasVesselEmptyReturnSignal(focus, hintSet)) {
+      expected.push("vessel_empty_return");
+    }
   }
 
   if (

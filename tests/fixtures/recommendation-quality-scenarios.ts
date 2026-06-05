@@ -1048,7 +1048,7 @@ export const recommendationQualityScenarios: RecommendationQualityScenario[] = [
       ritualFocusKey: "clearing_something_out",
       ritualFocusLabel: "Clearing something out",
     },
-    preferredRitualStyles: ["clear_the_threshold_bowl", "seasonal", "closing", "emptying", "return", "bowl"],
+    preferredRitualStyles: ["seasonal", "closing", "emptying", "return", "bowl", "vessel"],
     expectedQualities: ["emptying is the action", "vessel returns", "no salt-water required"],
     disallowedOutcomes: ["salt-water as default", "public festival script", "purification guarantee"],
   }),

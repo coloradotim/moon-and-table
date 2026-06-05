@@ -2038,7 +2038,7 @@ export const batchOneRitualPatterns: RitualPattern[] = [
       approach: ["Let emptying be the action.", "Do not add new meaning while closing the old one."],
       steps: ["Choose a bowl or vessel that has been holding a marker.", "Name what is finished or ready to be put away.", "Empty, rinse, or return the marker.", "Put the bowl back in its ordinary place."],
       carry: "What changes when the vessel is empty again?",
-      closing: "Close when the bowl is empty, clean, or back in its place.",
+      closing: "Close when the bowl is empty, rinsed, or back in its place.",
     },
     safetyFlags: withSafetyOverrides({ cleanupBurden: "tiny" }),
     safetyNotes: ["Dispose of water, salt, food, or objects appropriately."],
