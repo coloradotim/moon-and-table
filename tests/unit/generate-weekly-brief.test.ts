@@ -534,6 +534,7 @@ describe("generateWeeklyBrief", () => {
   it("does not expose fallback schedule assumptions in default output", () => {
     const brief = generateWeeklyBrief({
       currentDate: "2026-06-03T12:00:00.000Z",
+      timezone: "America/Denver",
       capacityMode: "low",
     });
     const defaultOutput = JSON.stringify({
