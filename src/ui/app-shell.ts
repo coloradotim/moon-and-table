@@ -33,27 +33,15 @@ import {
 } from "../lib/profile-tuning";
 
 const feedbackLabels: Record<BriefFeedbackType, string> = {
-  good: "Save this",
+  good: "This feels right.",
   too_much: "Simpler, please",
   too_generic: "This feels off",
   more_like_this: "More like this",
   not_this_style: "Not this kind of ritual",
   skipped: "I skipped it",
-  try_again: "Try something else",
+  try_again: "Give me another option",
 };
 const capacityModes: CapacityMode[] = ["pause", "low", "steady", "high"];
-const capacityDisplayLabels: Record<CapacityMode, string> = {
-  pause: "Surviving",
-  low: "Bare minimum",
-  steady: "Steady",
-  high: "Energized",
-};
-const capacityPickerDescriptions: Record<CapacityMode, string> = {
-  pause: "nothing required",
-  low: "five minutes or less",
-  steady: "about twenty minutes",
-  high: "about half an hour",
-};
 const profileCapacityLabels: Record<CapacityMode, string> = {
   pause: "Barely any",
   low: "A little",
@@ -87,8 +75,6 @@ export type SignedInView = "this_week" | "profile_settings" | "how_it_works";
 export type SignedInShellOptions = {
   activeView?: SignedInView;
   brief?: WeeklyBrief;
-  capacityModeOverride?: CapacityMode | null;
-  capacityPickerOpen?: boolean;
   feedbackStatus?: string;
   tryAgainStatus?: string;
   selectedFeedbackType?: BriefFeedbackType;
@@ -579,49 +565,6 @@ function renderBriefTheme(theme: string): string {
   return sentences
     .map((sentence) => `<span class="brief__theme-line">${escapeHtml(sentence)}</span>`)
     .join("");
-}
-
-function renderCapacityControl(
-  capacityMode: CapacityMode,
-  isOpen: boolean,
-): string {
-  const pickerId = "current-capacity-picker";
-  const openClass = isOpen ? " capacity-control--open" : "";
-  const picker = isOpen
-    ? `
-      <div class="capacity-control__popover" id="${pickerId}" role="listbox" aria-label="How much do you have this week?">
-        <p class="capacity-control__title">How much do you have this week?</p>
-        <div class="capacity-control__options">
-          ${capacityModes.map((mode) => {
-            const selected = mode === capacityMode;
-
-            return `
-              <button
-                type="button"
-                role="option"
-                data-capacity-mode="${escapeHtml(mode)}"
-                aria-selected="${selected ? "true" : "false"}"
-              >${escapeHtml(`${capacityDisplayLabels[mode]} — ${capacityPickerDescriptions[mode]}`)}</button>
-            `;
-          }).join("")}
-        </div>
-        <p class="capacity-control__helper">This only changes the current view.</p>
-      </div>
-    `
-    : "";
-
-  return `
-    <section class="capacity-control${openClass}" data-capacity-control="true" aria-label="Capacity">
-      <button
-        class="capacity-control__toggle"
-        type="button"
-        data-capacity-toggle="true"
-        aria-expanded="${isOpen ? "true" : "false"}"
-        aria-controls="${pickerId}"
-      >Capacity: <span>${escapeHtml(capacityDisplayLabels[capacityMode])}</span><span class="capacity-control__chevron" aria-hidden="true">▾</span></button>
-      ${picker}
-    </section>
-  `;
 }
 
 function renderSelectOptions(
@@ -1381,8 +1324,6 @@ export function renderSignedInShell(
 ): string {
   const activeView = options.activeView ?? "this_week";
   const brief = options.brief ?? generateWeeklyBrief(privateBriefData.input);
-  const capacityMode =
-    options.capacityModeOverride ?? brief.trace.capacityMode;
   const debugTrace = options.showDebugTrace ? renderDeveloperDecision(brief) : "";
   const weeklyBrief = `
     <article class="brief" aria-label="Weekly brief">
@@ -1412,26 +1353,31 @@ export function renderSignedInShell(
       </section>
 
       <section class="brief__actions" aria-label="Brief actions">
-        <div class="brief__control-group">
-          ${renderCapacityControl(capacityMode, options.capacityPickerOpen ?? false)}
-          <button
-            class="secondary-action try-again-button"
-            type="button"
-            data-feedback-type="try_again"
-            data-try-again-action="true"
-            aria-pressed="false"${options.savingFeedbackType ? " disabled" : ""}
-          >${escapeHtml(options.savingFeedbackType === "try_again" ? "Saving" : feedbackLabels.try_again)}</button>
-          <button
-            class="secondary-action"
-            type="button"
-            data-check-in-start-over="true"
-          >Start over</button>
+        <div class="brief__closing-actions">
+          <p class="brief__actions-question">How does this feel to you?</p>
+          <div class="brief__closing-secondary">
+            ${renderFeedbackButton("good", options)}
+            <button
+              class="quiet-action try-again-button"
+              type="button"
+              data-feedback-type="try_again"
+              data-try-again-action="true"
+              aria-pressed="false"${options.savingFeedbackType ? " disabled" : ""}
+            >${escapeHtml(options.savingFeedbackType === "try_again" ? "Saving" : feedbackLabels.try_again)}</button>
+            <button
+              class="quiet-action"
+              type="button"
+              data-check-in-start-over="true"
+            >I want to check in again</button>
+          </div>
+          ${options.feedbackStatus ? `<p class="muted feedback__status" data-feedback-status="true">${escapeHtml(options.feedbackStatus)}</p>` : ""}
+        </div>
+        <div class="brief__meta-actions">
           <details class="feedback" aria-label="Feedback">
             <summary>Give feedback</summary>
             <div class="feedback__chips">
-              ${BRIEF_FEEDBACK_TYPES.filter((type) => type !== "try_again" && type !== "too_much").map((type) => renderFeedbackButton(type, options)).join("")}
+              ${BRIEF_FEEDBACK_TYPES.filter((type) => type !== "try_again" && type !== "too_much" && type !== "good").map((type) => renderFeedbackButton(type, options)).join("")}
             </div>
-            ${options.feedbackStatus ? `<p class="muted feedback__status" data-feedback-status="true">${escapeHtml(options.feedbackStatus)}</p>` : ""}
           </details>
         </div>
         ${options.tryAgainStatus ? `<p class="muted feedback__status" data-try-again-status="true">${escapeHtml(options.tryAgainStatus)}</p>` : ""}
