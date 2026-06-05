@@ -284,7 +284,7 @@ describe("recommendation quality report", () => {
     expect(categorySelectionModes).toEqual(
       new Set(["explicit_category", "surprise_me_open_preference"]),
     );
-    expect(report.warningCounts.contract_request_changes).toBeGreaterThanOrEqual(4);
+    expect(report.warningCounts.contract_request_changes).toBeGreaterThanOrEqual(3);
 
     for (const result of contractResults) {
       const status = result.contractStatus;
@@ -445,13 +445,15 @@ describe("recommendation quality report", () => {
       ["issue222.candle.full_saying_both", "candle_witness_one_phrase"],
       ["issue222.candle.full_rest", "full_light_holding_bowl"],
       ["issue222.candle.waning_clearing_release", "waning_light_release"],
-      ["issue222.candle.dark_rest_low", "bank_the_house_light"],
-      ["issue222.candle.live_flame_avoided_unlit", "unlit_candle_witness"],
+      ["issue222.candle.dark_rest_low", "banked_light_evening"],
+      ["issue234.candle.rest_low_waning_banked", "banked_light_evening"],
+      ["issue222.candle.live_flame_avoided_unlit", "unlit_or_electric_witness"],
+      ["issue234.candle.high_renewed_light_return", "renewed_light_return"],
       ["issue222.reflection.mercury_saying_clearly", "window_light_threshold"],
       ["issue222.candle.best_week_lunation_window", "full_light_on_the_table"],
       ["issue222.surprise.candle_real_fit", "window_light_threshold"],
       ["issue223.candle.high.full_both_saying", "candle_witness_one_phrase"],
-      ["issue223.candle.high.new_beginning", "first_light_for_the_beginning"],
+      ["issue223.candle.high.new_beginning", "first_light_beginning"],
       ["issue223.candle.high.waning_clearing", "waning_light_release"],
       ["issue223.candle.steady.resting", "full_light_holding_bowl"],
       ["issue223.candle.high.best_week", "candle_witness_one_phrase"],

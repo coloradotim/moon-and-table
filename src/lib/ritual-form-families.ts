@@ -4,6 +4,7 @@ import type { CurrentRitualCheckIn } from "./current-ritual-check-in";
 export const RITUAL_FORM_FAMILIES = [
   "banked_or_darkening_light",
   "first_light_threshold",
+  "renewed_light_return",
   "full_light_clarity",
   "plant_release_removal",
   "plant_seed_beginning",
@@ -32,6 +33,7 @@ export type RitualFormFamily = (typeof RITUAL_FORM_FAMILIES)[number];
 const FORM_FAMILY_LABELS: Record<RitualFormFamily, string> = {
   banked_or_darkening_light: "banked/darkening light",
   first_light_threshold: "first light / threshold",
+  renewed_light_return: "renewed light / return",
   full_light_clarity: "full light / clarity",
   plant_release_removal: "plant release/removal",
   plant_seed_beginning: "plant seed/beginning",
@@ -56,6 +58,10 @@ const FORM_FAMILY_LABELS: Record<RitualFormFamily, string> = {
 };
 
 const FORM_FAMILIES_BY_PATTERN_KEY: Record<string, RitualFormFamily[]> = {
+  banked_light_evening: ["banked_or_darkening_light"],
+  first_light_beginning: ["first_light_threshold"],
+  renewed_light_return: ["renewed_light_return"],
+  unlit_or_electric_witness: ["full_light_clarity", "banked_or_darkening_light"],
   bank_the_house_light: ["banked_or_darkening_light"],
   darkening_light: ["banked_or_darkening_light", "seasonal_marker"],
   first_light_at_the_threshold: ["first_light_threshold", "threshold_crossing_bowl_key"],
@@ -97,8 +103,15 @@ const FORM_FAMILIES_BY_STYLE: Record<string, RitualFormFamily[]> = {
   window_light: ["first_light_threshold", "threshold_crossing_bowl_key"],
   waning_light: ["banked_or_darkening_light", "waning_phrase_release"],
   no_live_flame: ["full_light_clarity", "banked_or_darkening_light"],
+  unlit_or_electric_witness: ["full_light_clarity", "banked_or_darkening_light"],
+  electric_candle: ["full_light_clarity", "banked_or_darkening_light"],
+  lamp: ["full_light_clarity", "banked_or_darkening_light"],
+  renewed_light: ["renewed_light_return"],
+  renewed_light_return: ["renewed_light_return"],
+  dark_to_light: ["renewed_light_return"],
   darkening_light: ["banked_or_darkening_light"],
   banked_light: ["banked_or_darkening_light"],
+  banked_light_evening: ["banked_or_darkening_light"],
   seed: ["plant_seed_beginning", "grain_seed_bowl"],
   grain: ["grain_seed_bowl", "bread_grain_center"],
   bread: ["bread_grain_center"],
@@ -298,7 +311,7 @@ export function getExpectedRitualFormFamilies(
 
   if (category === "Candle or light") {
     if (focus === "making_a_beginning" || focus === "marking_a_threshold") {
-      expected.push("first_light_threshold");
+      expected.push("first_light_threshold", "renewed_light_return");
     } else if (focus === "clearing_something_out") {
       expected.push("banked_or_darkening_light", "waning_phrase_release");
     } else if (focus === "resting") {
