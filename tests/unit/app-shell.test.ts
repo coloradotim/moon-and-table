@@ -306,24 +306,35 @@ describe("app shell rendering", () => {
     const howIndex = html.indexOf("How this was chosen");
     const whyIndex = html.indexOf("Why this fits");
     const sourcesIndex = html.indexOf("<h3>Sources</h3>");
-    const tryAgainIndex = html.indexOf("Try something else");
+    const rightIndex = html.indexOf("This feels right.");
+    const tryAgainIndex = html.indexOf("Give me another option");
+    const checkInAgainIndex = html.indexOf("I want to check in again");
     const feedbackIndex = html.indexOf("Give feedback");
     const actionsIndex = html.indexOf('class="brief__actions"');
-    const capacityIndex = html.indexOf('data-capacity-control="true"');
 
     expect(html).toContain('class="brief__core"');
     expect(html).toContain('class="brief__theme"');
     expect(html).toContain("<h2");
     expect(html).toContain('class="brief__depth"');
     expect(html).toContain('class="brief__actions"');
-    expect(html).toContain('class="brief__control-group"');
-    expect(html).toContain("Capacity: <span>Bare minimum</span>");
+    expect(html).toContain('class="brief__closing-actions"');
+    expect(html).toContain('class="brief__actions-question"');
+    expect(html).toContain('class="brief__closing-secondary"');
+    expect(html).toContain('class="brief__meta-actions"');
+    expect(html).toContain("This feels right.");
+    expect(html).toContain("How does this feel to you?");
+    expect(html).toContain("Give me another option");
+    expect(html).toContain("I want to check in again");
+    expect(html).not.toContain("Capacity: <span>Bare minimum</span>");
     expect(html).not.toContain("Current capacity:");
-    expect(html).toContain('data-capacity-toggle="true"');
-    expect(html).toContain('aria-expanded="false"');
+    expect(html).not.toContain('data-capacity-toggle="true"');
+    expect(html).not.toContain('data-capacity-control="true"');
     expect(html).not.toContain("How much do you have this week?");
     expect(actionsIndex).toBeGreaterThan(-1);
-    expect(capacityIndex).toBeGreaterThan(actionsIndex);
+    expect(rightIndex).toBeGreaterThan(actionsIndex);
+    expect(tryAgainIndex).toBeGreaterThan(rightIndex);
+    expect(checkInAgainIndex).toBeGreaterThan(tryAgainIndex);
+    expect(feedbackIndex).toBeGreaterThan(checkInAgainIndex);
     expect(html).toContain("This week");
     expect(html).toContain("Profile settings");
     expect(html).toContain("How it works");
@@ -396,8 +407,10 @@ describe("app shell rendering", () => {
     expect(html).toContain('data-feedback-type="not_this_style"');
     expect(html).toContain('data-feedback-type="skipped"');
     expect(html).toContain('data-feedback-type="try_again"');
-    expect(html).toContain("Try something else");
-    expect(html).toContain("Start over");
+    expect(html).toContain("Give me another option");
+    expect(html).toContain("I want to check in again");
+    expect(html).not.toContain("Try something else");
+    expect(html).not.toContain(">Start over</button>");
     expect(html).toContain('data-check-in-start-over="true"');
     expect(html).toContain('<section class="brief__question" aria-label="Question to carry">');
     expect(html).not.toContain('class="brief__question-details"');
@@ -506,7 +519,7 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("natal placement");
   });
 
-  it("renders the capacity picker in the brief controls when requested", () => {
+  it("does not render the capacity picker in the brief footer", () => {
     const privateBriefData = resolvePrivateBriefData({});
     const brief = generateWeeklyBrief({
       ...privateBriefData.input,
@@ -514,29 +527,22 @@ describe("app shell rendering", () => {
     });
     const html = renderSignedInShell(privateBriefData, {
       brief,
-      capacityModeOverride: "steady",
-      capacityPickerOpen: true,
     });
 
     const actionsIndex = html.indexOf('class="brief__actions"');
-    const capacityIndex = html.indexOf('data-capacity-control="true"');
 
-    expect(html).toContain("Capacity: <span>Steady</span>");
+    expect(html).not.toContain("Capacity: <span>Steady</span>");
     expect(html).not.toContain("Current capacity:");
     expect(actionsIndex).toBeGreaterThan(-1);
-    expect(capacityIndex).toBeGreaterThan(actionsIndex);
-    expect(html).toContain('aria-expanded="true"');
-    expect(html).toContain("How much do you have this week?");
-    expect(html).toContain("Surviving — nothing required");
-    expect(html).toContain("Bare minimum — five minutes or less");
-    expect(html).toContain("Steady — about twenty minutes");
-    expect(html).toContain("Energized — about half an hour");
-    expect(html).toContain("This only changes the current view.");
-    expect(html).toContain('data-capacity-mode="pause"');
-    expect(html).toContain('data-capacity-mode="low"');
-    expect(html).toContain('data-capacity-mode="steady"');
-    expect(html).toContain('data-capacity-mode="high"');
-    expect(html).toContain('aria-selected="true"');
+    expect(html).not.toContain('data-capacity-control="true"');
+    expect(html).not.toContain('data-capacity-toggle="true"');
+    expect(html).not.toContain('aria-expanded="true"');
+    expect(html).not.toContain("How much do you have this week?");
+    expect(html).not.toContain("This only changes the current view.");
+    expect(html).not.toContain('data-capacity-mode="pause"');
+    expect(html).not.toContain('data-capacity-mode="low"');
+    expect(html).not.toContain('data-capacity-mode="steady"');
+    expect(html).not.toContain('data-capacity-mode="high"');
   });
 
   it("renders a real optional add-on as a quiet inline line", () => {
@@ -654,10 +660,22 @@ describe("app shell rendering", () => {
 
     expect(html).toContain("Here is another approved option.");
     expect(html).toContain("Got it.");
-    expect(html).toContain('class="secondary-action try-again-button"');
-    expect(html).toContain('data-try-again-action="true"\n            aria-pressed="false"');
+    expect(html).toContain('class="quiet-action try-again-button"');
+    expect(html).toContain('data-try-again-action="true"');
+    expect(html).toContain('aria-pressed="false"');
     expect(html).not.toContain("try-again-button feedback-button--selected");
     expect(html).not.toContain("Feedback saves to your private profile.");
+  });
+
+  it("renders the positive acknowledgement status copy", () => {
+    const html = renderSignedInShell(resolvePrivateBriefData({}), {
+      feedbackStatus: "I’m very glad.",
+      selectedFeedbackType: "good",
+    });
+
+    expect(html).toContain("This feels right.");
+    expect(html).toContain("I’m very glad.");
+    expect(html).toContain('data-feedback-type="good"');
   });
 
   it("renders a saving state for clicked feedback buttons", () => {

@@ -72,8 +72,6 @@ let activePrivateBriefData: PrivateBriefData | null = null;
 let activeBrief: WeeklyBrief | null = null;
 let activeSignedInView: SignedInView = "this_week";
 let activeProfileSettingsTabId: string | null = null;
-let activeCapacityModeOverride: CapacityMode | null = null;
-let activeCapacityPickerOpen = false;
 let activeCheckInDraft: RitualCheckInDraft = createInitialRitualCheckInDraft();
 let activeCurrentRitualCheckIn: CurrentRitualCheckIn | null = null;
 let activeFirstLoginCheckIn = false;
@@ -131,9 +129,6 @@ function getActiveBriefInput(
             : activePrivateBriefData.input.audience,
         }
       : {}),
-    ...(activeCapacityModeOverride
-      ? { capacityMode: activeCapacityModeOverride }
-      : {}),
     ...(excludedRitualPatternKeys
       ? { excludedRitualPatternKeys }
       : {}),
@@ -183,8 +178,6 @@ function renderActiveSignedInShell(options: {
   appRoot.innerHTML = renderSignedInShell(activePrivateBriefData, {
     activeView: activeSignedInView,
     brief: activeBrief,
-    capacityModeOverride: activeCapacityModeOverride,
-    capacityPickerOpen: activeCapacityPickerOpen,
     feedbackStatus: options.feedbackStatus,
     tryAgainStatus: options.tryAgainStatus,
     selectedFeedbackType: options.selectedFeedbackType,
@@ -196,8 +189,6 @@ function renderActiveSignedInShell(options: {
 
 function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" }>): void {
   activeSignedInState = state;
-  activeCapacityModeOverride = null;
-  activeCapacityPickerOpen = false;
   privateDataRequestId += 1;
   const requestId = privateDataRequestId;
 
@@ -222,8 +213,6 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
           activeBrief = null;
           activeSignedInView = "this_week";
           activeProfileSettingsTabId = null;
-          activeCapacityModeOverride = null;
-          activeCapacityPickerOpen = false;
           activeFirstLoginCheckIn = false;
           appRoot.innerHTML = renderAppShell({
             status: "unauthorized",
@@ -248,8 +237,6 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activeBrief = null;
         activeSignedInView = "this_week";
         activeProfileSettingsTabId = null;
-        activeCapacityModeOverride = null;
-        activeCapacityPickerOpen = false;
         activeCurrentRitualCheckIn = null;
         activeFirstLoginCheckIn = false;
         activeCheckInDraft = createInitialRitualCheckInDraft();
@@ -299,8 +286,6 @@ function renderActiveBriefStatus(
 
 function completeCheckIn(checkIn: CurrentRitualCheckIn): void {
   activeCurrentRitualCheckIn = checkIn;
-  activeCapacityModeOverride = null;
-  activeCapacityPickerOpen = false;
   activeSignedInView = "this_week";
   activeProfileSettingsTabId = null;
   activeFirstLoginCheckIn = false;
@@ -654,7 +639,11 @@ async function handleFeedbackClick(feedbackType: BriefFeedbackType): Promise<voi
   try {
     renderActiveBriefStatus("Saving.", undefined, feedbackType, feedbackType);
     await saveActiveBriefFeedback(feedbackType);
-    renderActiveBriefStatus("Got it.", undefined, feedbackType);
+    renderActiveBriefStatus(
+      feedbackType === "good" ? "I’m very glad." : "Got it.",
+      undefined,
+      feedbackType,
+    );
   } catch (error) {
     renderActiveBriefStatus(
       error instanceof Error ? error.message : "Could not save feedback.",
@@ -690,7 +679,6 @@ async function handleTryAgainClick(): Promise<void> {
     }
 
     activeBrief = alternateBrief;
-    activeCapacityPickerOpen = false;
     renderActiveSignedInShell({
       tryAgainStatus: "Here is another approved option.",
       selectedFeedbackType: "try_again",
@@ -703,17 +691,9 @@ async function handleTryAgainClick(): Promise<void> {
 }
 
 function closeOpenOverlays(): void {
-  activeCapacityPickerOpen = false;
   document
     .querySelectorAll("details[data-app-menu='true'][open]")
     .forEach((menu) => menu.removeAttribute("open"));
-}
-
-function applyCapacityOverride(capacityMode: CapacityMode): void {
-  activeCapacityModeOverride = capacityMode;
-  activeCapacityPickerOpen = false;
-  activeBrief = generateWeeklyBrief(getActiveBriefInput());
-  renderActiveSignedInShell();
 }
 
 function startCheckInOver(): void {
@@ -721,8 +701,6 @@ function startCheckInOver(): void {
   activeBrief = null;
   activeCurrentRitualCheckIn = null;
   activeCheckInDraft = createInitialRitualCheckInDraft();
-  activeCapacityModeOverride = null;
-  activeCapacityPickerOpen = false;
   activeSignedInView = "this_week";
   activeProfileSettingsTabId = null;
   renderActiveCheckInShell();
@@ -757,7 +735,6 @@ appRoot.addEventListener("click", (event) => {
   );
   const profileSettingsTab = profileSettingsTabTarget?.dataset.profileSettingsTab;
   const feedbackType = target.dataset.feedbackType;
-  const capacityMode = target.dataset.capacityMode;
   const checkInActionTarget = target.closest<HTMLElement>("[data-check-in-action]");
   const checkInAction = checkInActionTarget?.dataset.checkInAction;
   const checkInValue = checkInActionTarget?.dataset.checkInValue;
@@ -772,26 +749,14 @@ appRoot.addEventListener("click", (event) => {
     return;
   }
 
-  if (target.closest("[data-capacity-toggle='true']")) {
-    activeCapacityPickerOpen = !activeCapacityPickerOpen;
-    renderActiveSignedInShell();
-    return;
-  }
-
   if (checkInAction && typeof checkInValue === "string") {
     handleCheckInAction(checkInAction, checkInValue);
-    return;
-  }
-
-  if (capacityMode && isCapacityMode(capacityMode)) {
-    applyCapacityOverride(capacityMode);
     return;
   }
 
   if (homeAction === "this_week") {
     event.preventDefault();
     activeSignedInView = "this_week";
-    activeCapacityPickerOpen = false;
 
     if (activePrivateBriefData && activeBrief) {
       renderActiveSignedInShell();
@@ -807,7 +772,6 @@ appRoot.addEventListener("click", (event) => {
   ) {
     event.preventDefault();
     activeSignedInView = menuAction;
-    activeCapacityPickerOpen = false;
     menuActionTarget
       ?.closest("details[data-app-menu='true']")
       ?.removeAttribute("open");
@@ -845,8 +809,6 @@ appRoot.addEventListener("click", (event) => {
   if (action === "sign-out") {
     clearCheckInLoadingTimeout();
     target.closest("details[data-app-menu='true']")?.removeAttribute("open");
-    activeCapacityModeOverride = null;
-    activeCapacityPickerOpen = false;
     activeCurrentRitualCheckIn = null;
     activeCheckInDraft = createInitialRitualCheckInDraft();
     void signOutOfFirebase(firebaseServices);
@@ -861,18 +823,12 @@ document.addEventListener("click", (event) => {
   }
 
   const clickedMenu = Boolean(target.closest("details[data-app-menu='true']"));
-  const clickedCapacity = Boolean(target.closest("[data-capacity-control='true']"));
-
   if (!clickedMenu) {
     document
       .querySelectorAll("details[data-app-menu='true'][open]")
       .forEach((menu) => menu.removeAttribute("open"));
   }
 
-  if (!clickedCapacity && activeCapacityPickerOpen) {
-    activeCapacityPickerOpen = false;
-    renderActiveSignedInShell();
-  }
 });
 
 document.addEventListener("keydown", (event) => {
@@ -883,13 +839,10 @@ document.addEventListener("keydown", (event) => {
   const hadOpenMenu = Boolean(
     document.querySelector("details[data-app-menu='true'][open]"),
   );
-  const hadOpenCapacityPicker = activeCapacityPickerOpen;
 
   closeOpenOverlays();
 
-  if (hadOpenCapacityPicker) {
-    renderActiveSignedInShell();
-  } else if (hadOpenMenu) {
+  if (hadOpenMenu) {
     event.preventDefault();
   }
 });
@@ -905,8 +858,6 @@ subscribeToAuthState(firebaseServices, (state) => {
   activeBrief = null;
   activeSignedInView = "this_week";
   activeProfileSettingsTabId = null;
-  activeCapacityModeOverride = null;
-  activeCapacityPickerOpen = false;
   activeCurrentRitualCheckIn = null;
   activeCheckInDraft = createInitialRitualCheckInDraft();
   clearCheckInLoadingTimeout();
