@@ -355,6 +355,21 @@ function sentenceCount(value: string): number {
   return value.split(/[.!?]+/).filter((sentence) => sentence.trim().length > 0).length;
 }
 
+function normalizeTitleIntention(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s]/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function titleAndIntentionDuplicate(copy: RecommendationQualityCopyFields): boolean {
+  const title = normalizeTitleIntention(copy.theme);
+  const intention = normalizeTitleIntention(copy.intention);
+
+  return title.length > 0 && title === intention;
+}
+
 function startsWithImperative(value: string): boolean {
   const firstWord = value.trim().toLowerCase().match(/^[a-z]+/)?.[0];
 
@@ -782,10 +797,7 @@ export function getRecommendationQualityWarnings(args: {
     );
   }
 
-  if (
-    copy.theme.trim().toLowerCase() === copy.intention.trim().toLowerCase() &&
-    sentenceCount(copy.recommendedRitual) < 4
-  ) {
+  if (titleAndIntentionDuplicate(copy)) {
     warnings.push(
       warning(
         "title_intention_duplicate_without_depth",

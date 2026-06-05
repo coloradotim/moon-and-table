@@ -35,6 +35,14 @@ function normalCopyFieldsFromReport(): string {
     .join("\n");
 }
 
+function normalizeTitleIntention(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}\s]/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function expectedWarningIdsForScenario(
   scenario: (typeof recommendationQualityScenarios)[number],
 ): string[] {
@@ -306,6 +314,35 @@ describe("recommendation quality report", () => {
       expect(result.scenario.authoredOutput?.disallowedCopyPatterns.length).toBeGreaterThan(
         0,
       );
+    }
+  });
+
+  it("keeps title and intention distinct in issue #247 smoke outputs", () => {
+    const smokeScenarioIds = [
+      "issue237.candle.both_grounding_low",
+      "tending_us.low.bounded",
+      "issue237.candle.both_high_beginning",
+      "contract.plant.both_high_tending_waning",
+      "batch1.plant.dead_leaf_release",
+      "issue237.surprise.both_resting_low",
+    ];
+    const report = createRecommendationQualityReport(
+      recommendationQualityScenarios.filter((scenario) =>
+        smokeScenarioIds.includes(scenario.id),
+      ),
+    );
+
+    expect(report.scenarioResults).toHaveLength(smokeScenarioIds.length);
+
+    for (const result of report.scenarioResults) {
+      expect(
+        normalizeTitleIntention(result.brief.intention),
+        result.scenario.id,
+      ).not.toBe(normalizeTitleIntention(result.brief.theme));
+      expect(
+        result.warnings.map((warning) => warning.id),
+        result.scenario.id,
+      ).not.toContain("title_intention_duplicate_without_depth");
     }
   });
 
@@ -936,6 +973,7 @@ describe("recommendation quality report", () => {
     expect(warnings).toEqual(
       expect.arrayContaining([
         "fragmentary_option_menu_body",
+        "title_intention_duplicate_without_depth",
         "why_this_fits_describes_matching_not_meaning",
         "how_chosen_reads_like_system_report",
         "source_lineage_too_raw_or_academic",
@@ -944,6 +982,40 @@ describe("recommendation quality report", () => {
         "closest_match_overclaims_fit",
       ]),
     );
+  });
+
+  it("flags title and intention duplication even when the ritual body has several steps", () => {
+    const warnings = getRecommendationQualityWarnings({
+      scenario: {
+        currentRitualCheckIn: {
+          timeScope: "today",
+          energyCapacity: "room_for_something_deeper",
+          capacityMode: "high",
+          audience: "me",
+          practiceTypeLabel: "Candle or light",
+          practiceTypeHints: ["candle_or_light"],
+          ritualFocusKey: "resting",
+          ritualFocusLabel: "Resting",
+        },
+      },
+      selectedRitualPatternKey: "bank_the_house_light",
+      selectedRitualPatternStyles: ["candle_or_light", "rest"],
+      selectedTimingWindow: { isStrong: false, reasonLabels: [] },
+      copy: {
+        theme: "Bank one house light.",
+        recommendedRitual:
+          "Set one lamp at the table. Lower the room around it. Sit until the room settles. Return once. Close when the lamp is turned down.",
+        intention: "Bank one house light",
+        bestWindow: "A quiet stretch tonight.",
+        optionalAddOn: "",
+        reflectionPrompt: "What can stay warm without being worked on?",
+        whyThisFits: "The light gives rest a place to gather.",
+        sourceSummary: "Source lineage: household light and rest logic.",
+        howThisWasChosen: [],
+      },
+    }).map((warning) => warning.id);
+
+    expect(warnings).toContain("title_intention_duplicate_without_depth");
   });
 
   it("flags demystified ritual matter and broken-app coverage-gap apology", () => {
