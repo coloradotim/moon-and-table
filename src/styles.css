@@ -386,9 +386,9 @@ h2 {
 
 .shell--check-in {
   display: grid;
-  align-content: center;
+  align-content: start;
   width: min(100%, 680px);
-  padding-block: clamp(28px, 8vh, 72px);
+  padding-block: clamp(52px, 13vh, 112px) clamp(28px, 8vh, 72px);
 }
 
 .check-in {
@@ -1709,6 +1709,10 @@ fieldset {
 
   .brief {
     padding: 24px;
+  }
+
+  .shell--check-in {
+    padding-block: clamp(28px, 8vh, 52px) 24px;
   }
 
   .check-in {

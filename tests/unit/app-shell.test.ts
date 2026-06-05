@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
 
 import {
   renderAppShell,
@@ -16,6 +17,16 @@ import { resolvePrivateBriefData } from "../../src/lib/private-data";
 import { generateWeeklyBrief } from "../../src/lib/generate-weekly-brief";
 
 describe("app shell rendering", () => {
+  it("keeps check-in flow top-anchored while entry states can center", () => {
+    const css = readFileSync(new URL("../../src/styles.css", import.meta.url), "utf8");
+    const checkInRule = css.match(/\.shell--check-in\s*\{[^}]+\}/)?.[0] ?? "";
+    const entryRule = css.match(/\.shell--entry\s*\{[^}]+\}/)?.[0] ?? "";
+
+    expect(entryRule).toContain("align-content: center");
+    expect(checkInRule).toContain("align-content: start");
+    expect(checkInRule).toContain("padding-block: clamp(52px, 13vh, 112px) clamp(28px, 8vh, 72px)");
+  });
+
   it("renders the pre-brief check-in before a generated brief", () => {
     const html = renderRitualCheckInShell({
       draft: { step: "time_scope" },
