@@ -59,7 +59,13 @@ const FORM_FAMILIES_BY_PATTERN_KEY: Record<string, RitualFormFamily[]> = {
   bank_the_house_light: ["banked_or_darkening_light"],
   darkening_light: ["banked_or_darkening_light", "seasonal_marker"],
   first_light_at_the_threshold: ["first_light_threshold", "threshold_crossing_bowl_key"],
+  first_light_for_the_beginning: ["first_light_threshold"],
   full_light_on_the_table: ["full_light_clarity"],
+  candle_witness_one_phrase: ["full_light_clarity", "spoken_table_phrase"],
+  unlit_candle_witness: ["full_light_clarity", "banked_or_darkening_light"],
+  window_light_threshold: ["first_light_threshold", "threshold_crossing_bowl_key", "written_folded_container"],
+  waning_light_release: ["banked_or_darkening_light", "waning_phrase_release"],
+  full_light_holding_bowl: ["full_light_clarity", "vessel_empty_return"],
   dead_leaf_release: ["plant_release_removal"],
   seed_waiting: ["plant_seed_beginning"],
   plant_witness_to_growth: ["plant_witness_growth"],
@@ -87,6 +93,10 @@ const FORM_FAMILIES_BY_PATTERN_KEY: Record<string, RitualFormFamily[]> = {
 const FORM_FAMILIES_BY_STYLE: Record<string, RitualFormFamily[]> = {
   first_light: ["first_light_threshold"],
   full_light: ["full_light_clarity"],
+  candle_witness: ["full_light_clarity"],
+  window_light: ["first_light_threshold", "threshold_crossing_bowl_key"],
+  waning_light: ["banked_or_darkening_light", "waning_phrase_release"],
+  no_live_flame: ["full_light_clarity", "banked_or_darkening_light"],
   darkening_light: ["banked_or_darkening_light"],
   banked_light: ["banked_or_darkening_light"],
   seed: ["plant_seed_beginning", "grain_seed_bowl"],
@@ -100,6 +110,7 @@ const FORM_FAMILIES_BY_STYLE: Record<string, RitualFormFamily[]> = {
   bounded_speech: ["honey_sweetening", "spoken_table_phrase"],
   salt: ["salt_water_release"],
   vessel: ["vessel_empty_return"],
+  bowl: ["vessel_empty_return"],
   emptying: ["vessel_empty_return"],
   return: ["vessel_empty_return"],
   rinsing: ["vessel_empty_return"],
@@ -288,8 +299,10 @@ export function getExpectedRitualFormFamilies(
   if (category === "Candle or light") {
     if (focus === "making_a_beginning" || focus === "marking_a_threshold") {
       expected.push("first_light_threshold");
+    } else if (focus === "clearing_something_out") {
+      expected.push("banked_or_darkening_light", "waning_phrase_release");
     } else if (focus === "resting") {
-      expected.push("banked_or_darkening_light");
+      expected.push("banked_or_darkening_light", "full_light_clarity");
     } else if (focus === "saying_something_clearly" || focus === "tending_us") {
       expected.push("full_light_clarity");
     } else {

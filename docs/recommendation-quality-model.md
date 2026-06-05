@@ -113,6 +113,25 @@ Diagnostics can prove that a recommendation was explainable. They cannot prove t
 
 The title, timing reason, ritual body, intention, optional accent, carry prompt, and closing should feel like one ritual.
 
+## Recommendation Contract
+
+Explicit check-in answers are binding product constraints unless a real blocker is present. Visible category/practice type, ritual focus, audience, capacity, time scope, and hard avoid/preference constraints define the question the recommendation must answer.
+
+Timing, numerology, natal themes, private profile themes, source support, and material strength may shape the selected path. They may not replace an explicit selection just because another pattern scores well. Plant plus waning timing should become Plant-shaped dormancy, witness, tending, rest, seed, or release when release is actually selected. Kitchen plus full timing should become a fuller Kitchen/table/cup/bread/honey/vessel rite, not Candle/light just because the moon is bright.
+
+The selection hierarchy is:
+
+1. hard safety, privacy, source, and approval eligibility
+2. explicit visible category or resolved `Surprise me` category
+3. explicit ritual focus
+4. capacity and depth
+5. audience and action structure
+6. time scope
+7. timing, lunar, numerology, and private timing shape
+8. material/source strength, variety, and presentation quality
+
+If an explicit category or focus cannot be served, the decision record should name the real blocker. Normal copy should not smooth over the miss with phrases like "held lightly," "stronger material form," or timing-overrode language. `Surprise me` resolves to one real visible category first, then that resolved category should be preserved through selection and presentation.
+
 If timing, focus, practice type, audience, or capacity are in tension, the app needs a meaning bridge. It should not drop one input silently, pretend everything matched, or fall back to raw timing language.
 
 Carry prompts and optional accents should come from the selected ritual's actual material and action whenever possible. A cup ritual should carry cup, warmth, hand, table, or setting-down language. A salt/water ritual should carry salt, water, bowl, pouring, rinsing, or emptying language. A seed ritual should carry seed, grain, bowl, waiting, or patience language. Generic lunar questions are fallback only.
@@ -172,6 +191,8 @@ Recommendation quality needs scenario review and human judgment. A privacy-safe 
 - human notes
 
 Good scenarios should catch output that technically uses the right inputs but still feels generic, contradictory, overassembled, or thin.
+
+Tests must define expected product behavior before engine behavior is adjusted. Do not update expected patterns, warning counts, or scenario verdicts merely to match current output. If current output violates the recommendation contract, change selection/coherence behavior or document a real blocker.
 
 The current scenario bench lives in `tests/fixtures/recommendation-quality-scenarios.ts`.
 Run it with:

@@ -57,21 +57,21 @@ describe("content reachability diagnostics", () => {
       expect.arrayContaining([
         "bank_the_house_light",
         "bread_at_the_center",
-        "carried_key_word",
         "clear_one_surface",
         "first_light_at_the_threshold",
         "full_light_on_the_table",
-        "house_from_root_to_roof",
         "kitchen_reset",
         "plant_witness_to_growth",
-        "salt_clear_water_release",
+        "quiet_welcome",
+        "seasonal_entry_bowl",
         "seasonal_marker_bowl",
-        "table_reset",
         "two_words_at_the_table",
+        "unlit_candle_witness",
+        "waning_light_release",
       ]),
     );
     expect(report.gaps.approvedRitualPatternsNotSelected).toEqual(
-      expect.arrayContaining(["tea_ritual", "tend_one_plant"]),
+      expect.arrayContaining(["table_reset", "tea_ritual", "tend_one_plant"]),
     );
     expect(report.gaps.approvedRitualPatternsNotSelected.length).toBeGreaterThan(0);
     expect(report.gaps.approvedRitualPatternsNotSelected.every((key) =>

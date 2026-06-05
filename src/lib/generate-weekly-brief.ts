@@ -1274,6 +1274,16 @@ function getPatternStyleMatches(
   );
 }
 
+function isHighCapacityFallbackCandidate(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+): boolean {
+  return (
+    input.capacityMode === "high" &&
+    pattern.capacityModes.some((mode) => mode === "steady" || mode === "low")
+  );
+}
+
 function getCheckInTextStyleHints(text: string | undefined): string[] {
   if (!text) {
     return [];
@@ -1340,6 +1350,30 @@ function getFocusStyleHints(input: ResolvedGenerateWeeklyBriefInput): string[] {
   ]);
 }
 
+const PRIMARY_FOCUS_STYLE_HINTS: Partial<Record<string, string[]>> = {
+  clearing_something_out: ["clearing", "surface_reset", "closing"],
+  getting_grounded: ["grounding", "table_reset", "home_tending"],
+  making_a_beginning: ["beginning", "seed", "grain", "first_light"],
+  marking_a_threshold: ["threshold_reset", "crossing", "first_last"],
+  resting: ["rest", "warm", "tea", "closing", "bowl"],
+  saying_something_clearly: ["naming", "conversation", "written", "folded_word"],
+  tending_the_home: ["home_tending", "plant_tending", "kitchen", "table_reset", "house_map"],
+  tending_us: ["shared_space", "table_reset", "conversation", "warm"],
+};
+
+function getPrimaryFocusStyleMatches(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+): string[] {
+  const focusKey = input.currentRitualCheckIn?.ritualFocusKey;
+
+  if (!focusKey) {
+    return [];
+  }
+
+  return getPatternStyleMatches(pattern, PRIMARY_FOCUS_STYLE_HINTS[focusKey] ?? []);
+}
+
 function getAccentRitualStyles(input: ResolvedGenerateWeeklyBriefInput): string[] {
   return uniqueValues([
     ...input.preferredRitualStyles,
@@ -1397,6 +1431,19 @@ function getCheckInPatternScoreReasons(
     );
   }
 
+  const primaryFocusMatches = getPrimaryFocusStyleMatches(input, pattern);
+
+  if (primaryFocusMatches.length > 0) {
+    reasons.push(
+      scoreReason(
+        "checkin_primary_focus_action_match",
+        "Check-in primary focus action match",
+        4,
+        primaryFocusMatches.join(", "),
+      ),
+    );
+  }
+
   if (checkIn.audience === "both_of_us") {
     const fitsTogether =
       pattern.audienceFit?.includes("together") ||
@@ -1450,6 +1497,71 @@ const BROAD_MULTI_CATEGORY_PATTERN_KEYS = new Set([
   "two_words_at_the_table",
   "full_light_on_the_table",
 ]);
+
+function getRecommendationContractRejectionReasons(
+  input: ResolvedGenerateWeeklyBriefInput,
+  pattern: RitualPattern,
+): ScoreReason[] {
+  const checkIn = input.currentRitualCheckIn;
+
+  if (!checkIn) {
+    return [];
+  }
+
+  const reasons: ScoreReason[] = [];
+  const practiceHints = checkIn.practiceTypeHints ?? [];
+  const explicitCategory = getExplicitPracticeCategory(checkIn);
+  const expectedFamilies = getExpectedRitualFormFamilies(
+    checkIn,
+    practiceHints,
+  );
+  const patternFamilies = getRitualFormFamiliesForPattern(pattern);
+  const categoryMatches = getPatternStyleMatches(pattern, practiceHints);
+  const familyMatches = ritualFormFamiliesMatch(patternFamilies, expectedFamilies);
+
+  if (
+    explicitCategory &&
+    practiceHints.length > 0 &&
+    categoryMatches.length === 0 &&
+    !familyMatches
+  ) {
+    reasons.push(
+      scoreReason(
+        "recommendation_contract_category_mismatch",
+        "Recommendation contract category mismatch",
+        -99,
+        `${explicitCategory} was selected explicitly`,
+      ),
+    );
+  }
+
+  const focus = input.selectedRitualFocus;
+  const focusLabel =
+    focus?.label ??
+    checkIn.ritualFocusLabel ??
+    checkIn.ritualFocusText;
+  const focusHints = getFocusStyleHints(input);
+  const focusMatches = getPatternStyleMatches(pattern, focusHints);
+
+  if (
+    focusLabel &&
+    focusHints.length > 0 &&
+    categoryMatches.length === 0 &&
+    focusMatches.length === 0 &&
+    !familyMatches
+  ) {
+    reasons.push(
+      scoreReason(
+        "recommendation_contract_focus_mismatch",
+        "Recommendation contract focus mismatch",
+        -99,
+        `${focusLabel} was selected explicitly`,
+      ),
+    );
+  }
+
+  return reasons;
+}
 
 function getRitualFormScoreReasons(
   input: ResolvedGenerateWeeklyBriefInput,
@@ -1590,7 +1702,10 @@ function getEligiblePatternCandidates(
       );
     }
 
-    if (!pattern.capacityModes.includes(input.capacityMode)) {
+    if (
+      !pattern.capacityModes.includes(input.capacityMode) &&
+      !isHighCapacityFallbackCandidate(input, pattern)
+    ) {
       rejectionReasons.push(
         scoreReason(
           "capacity_mode_mismatch",
@@ -1600,6 +1715,10 @@ function getEligiblePatternCandidates(
         ),
       );
     }
+
+    rejectionReasons.push(
+      ...getRecommendationContractRejectionReasons(input, pattern),
+    );
 
     if (
       input.capacityMode !== "pause" &&
@@ -1716,6 +1835,18 @@ function getEligiblePatternCandidates(
             ),
           ]
         : [];
+    const highCapacityFallbackReason =
+      isHighCapacityFallbackCandidate(input, pattern) &&
+      !pattern.capacityModes.includes(input.capacityMode)
+        ? [
+            scoreReason(
+              "high_capacity_same_contract_fallback",
+              "High-capacity compatible fallback",
+              -1,
+              `using ${pattern.capacityModes.join(", ")} form inside the selected category/focus`,
+            ),
+          ]
+        : [];
     const natalContactReasons = getNatalContactScoreReasons(
       natalContactMatches,
       pattern,
@@ -1746,6 +1877,7 @@ function getEligiblePatternCandidates(
       ...getRitualFormScoreReasons(input, pattern),
       ...defaultPatternReason,
       ...highCapacityReason,
+      ...highCapacityFallbackReason,
     );
 
     const score = sumScoreReasons(scoreReasons);
@@ -1894,8 +2026,8 @@ function getEffectivePresentation(
   const merged = {
     ...presentation,
     ...audienceVariant,
-    ...capacityVariant,
     ...Object.assign({}, ...contextVariants),
+    ...capacityVariant,
   };
 
   return {
@@ -2561,7 +2693,7 @@ function getPracticeChoiceDiagnostic(
     selectedHints,
     selectedPatternMatches,
     status: "set_aside",
-    note: "The selected practice answer did not match the winning ritual pattern and was set aside for stronger fit signals.",
+    note: "The selected practice answer did not match the winning ritual pattern; this should happen only when approved forms were blocked.",
   };
 }
 
@@ -2697,6 +2829,18 @@ function getPatternMaterialPhrase(pattern: RitualPattern): string {
       "The vessel closes by emptying what it held and becoming ordinary again.",
     bank_the_house_light:
       "Lowered light lets rest become visible without asking for more action.",
+    first_light_for_the_beginning:
+      "First light gives the beginning a visible edge before it becomes work.",
+    candle_witness_one_phrase:
+      "The light witnesses one phrase, then changes so the phrase can end.",
+    unlit_candle_witness:
+      "The unlit candle holds witness without asking for flame.",
+    window_light_threshold:
+      "Window light gives the phrase an edge to meet and leave.",
+    waning_light_release:
+      "Lowered light gives release a way to lessen without drama.",
+    full_light_holding_bowl:
+      "The bowl gives full light a place to hold what is named, then return.",
     full_light_on_the_table:
       "Light gives the line a place to be witnessed and then ended.",
     folded_phrase_vessel:
@@ -2745,6 +2889,28 @@ function getTimingBridgePhrase(
 
   if (calendarSignal) {
     return getCalendarThresholdTimingPhrase(calendarSignal);
+  }
+
+  if (pattern.ritualStyles.includes("candle_or_light")) {
+    if (primaryMoonFact === "moon.new" && focusKey === "making_a_beginning") {
+      return "New-moon darkness makes the first light small: it opens the beginning, then stops before proof.";
+    }
+
+    if (primaryMoonFact === "moon.full" && focusKey === "saying_something_clearly") {
+      return "Full light lets the phrase be witnessed once, then closed by changing the light.";
+    }
+
+    if (primaryMoonFact === "moon.full" && focusKey === "resting") {
+      return "Full light lets what is present be acknowledged before the room lowers.";
+    }
+
+    if (primaryMoonFact === "moon.waning" && focusKey === "clearing_something_out") {
+      return "Waning light turns clearing into lowering the light and stopping there.";
+    }
+
+    if (focusKey === "resting" && pattern.ritualStyles.some((style) => ["dark", "rest", "no_live_flame"].includes(style))) {
+      return "Dark or quiet timing lets the light do less and still hold the rite.";
+    }
   }
 
   if (
@@ -2807,6 +2973,12 @@ function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeekly
     waning_phrase_release: "one phrase, one removal path, then empty hands",
     clear_the_threshold_bowl: "one held marker, one emptying, then the vessel returns",
     bank_the_house_light: "one lowered light, one ending, then no more work",
+    first_light_for_the_beginning: "one first light, one sentence, then no plan",
+    candle_witness_one_phrase: "one phrase, one witness, then the light changes",
+    unlit_candle_witness: "one unlit candle, one word, then ordinary return",
+    window_light_threshold: "one window edge, one phrase, then the curtain closes",
+    waning_light_release: "one lowered light, one lessening phrase, then stop",
+    full_light_holding_bowl: "one empty bowl, one held thing, then return",
     full_light_on_the_table: "one light, one line, then the light changes",
     folded_phrase_vessel: "one phrase, one fold, one holding place, then later return",
     seasonal_marker_bowl: "the bowl holds one marker until its ordinary return",
@@ -2845,6 +3017,12 @@ function getCompressedLineage(pattern: RitualPattern): string | undefined {
     seasonal_marker_bowl: "seasonal marker and vessel-return logic",
     first_day_last_day: "first-and-last calendar threshold logic",
     full_light_on_the_table: "hearth/table first-and-last logic",
+    first_light_for_the_beginning: "first-light and lunar visible-light logic",
+    candle_witness_one_phrase: "lunar visible-light and hearth/table witness logic",
+    unlit_candle_witness: "candle witness and no-flame household light logic",
+    window_light_threshold: "first-light threshold and lunar visible-light logic",
+    waning_light_release: "waning lunar visibility and household light-lowering logic",
+    full_light_holding_bowl: "full lunar light, hearth light, and vessel-holding logic",
     bank_the_house_light: "household fire-banking customs",
     seasonal_entry_bowl: "seasonal threshold and first-crossing household logic",
     last_word_first_word: "first-and-last threshold and household crossing logic",
@@ -3002,7 +3180,7 @@ function getRitualFocusSection(
   } else if (focusFit.matched) {
     body = `${sentenceCase(focusLabel.toLowerCase())} stays inside the ritual action.`;
   } else {
-    body = `${sentenceCase(focusLabel.toLowerCase())} is held as tone while the ritual stays within the available form.`;
+    body = `${sentenceCase(focusLabel.toLowerCase())} stays bounded by the chosen material instead of expanding into explanation.`;
   }
 
   return {
@@ -3043,7 +3221,7 @@ function getProfileFitSection(
   if (profileSignalMatches.length > 0) {
     return {
       kind: "profile_fit",
-      title: "Household fit",
+      title: "Private timing fit",
       body: getProfileThemeReason(profileSignalMatches, input.audience),
     };
   }
@@ -3090,7 +3268,7 @@ function getNatalContactSection(
 
   return {
     kind: "natal_fit",
-    title: "Household fit",
+    title: "Private timing fit",
     body: `${contactLabel} added a quiet note for ${themeLabels[0] ?? "private fit"}. It does not turn the chart contact into an instruction.`,
   };
 }
@@ -3125,11 +3303,11 @@ function getTradeoffSection(
   const mismatchParts: string[] = [];
 
   if (practiceFit.label && !practiceFit.matched && !practiceFit.openPreference) {
-    mismatchParts.push(`The ${practiceFit.label.toLowerCase()} answer was held lightly while the ritual stayed with the stronger material form.`);
+    mismatchParts.push(`${sentenceCase(practiceFit.label.toLowerCase())} has no clean path inside this bounded form.`);
   }
 
   if (focusFit.label && !focusFit.matched && !focusIsBridgedByPattern) {
-    mismatchParts.push(`${sentenceCase(focusFit.label.toLowerCase())} stayed as tone rather than forcing a mismatched action.`);
+    mismatchParts.push(`${sentenceCase(focusFit.label.toLowerCase())} stays small enough to be carried by this material.`);
   }
 
   if (excludedPatternKeys.length > 0 || safetyNotes.length > 0) {

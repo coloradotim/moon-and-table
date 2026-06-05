@@ -174,6 +174,20 @@ describe("recommendation quality report", () => {
       ["issue202.reflection.last_first_word", "last_word_first_word"],
       ["issue202.seasonal.entry_first_crossing", "seasonal_entry_bowl"],
       ["issue203.seasonal.end_empty_return", "clear_the_threshold_bowl"],
+      ["issue222.candle.new_beginning_first_light", "first_light_for_the_beginning"],
+      ["issue222.candle.full_saying_both", "candle_witness_one_phrase"],
+      ["issue222.candle.full_rest", "full_light_holding_bowl"],
+      ["issue222.candle.waning_clearing_release", "waning_light_release"],
+      ["issue222.candle.dark_rest_low", "bank_the_house_light"],
+      ["issue222.candle.live_flame_avoided_unlit", "unlit_candle_witness"],
+      ["issue222.reflection.mercury_saying_clearly", "window_light_threshold"],
+      ["issue222.candle.best_week_lunation_window", "full_light_on_the_table"],
+      ["issue222.surprise.candle_real_fit", "window_light_threshold"],
+      ["issue223.candle.high.full_both_saying", "candle_witness_one_phrase"],
+      ["issue223.candle.high.new_beginning", "first_light_for_the_beginning"],
+      ["issue223.candle.high.waning_clearing", "waning_light_release"],
+      ["issue223.candle.steady.resting", "full_light_holding_bowl"],
+      ["issue223.candle.high.best_week", "candle_witness_one_phrase"],
     ]);
     const issue202LossPatterns = new Map([
       ["issue202.generic.low_not_threshold", ["carried_key_word", "threshold_bowl", "seasonal_entry_bowl", "last_word_first_word"]],
@@ -198,6 +212,56 @@ describe("recommendation quality report", () => {
     const issue205LossPatterns = new Map([
       ["issue205.kitchen.warmth.not_phrase", ["folded_phrase_vessel", "waning_phrase_release", "carried_key_word", "last_word_first_word", "plant_phrase_under_the_pot"]],
     ]);
+    const recommendationContractMatrix = new Map([
+      ["contract.plant.both_high_tending_waning", {
+        expectedFamilies: ["plant witness/growth"],
+        blockedPatterns: ["waning_light_release", "salt_clear_water_release", "full_light_on_the_table"],
+      }],
+      ["contract.plant.high_tending_no_timing", {
+        expectedFamilies: ["plant witness/growth"],
+        blockedPatterns: ["waning_light_release", "salt_clear_water_release", "candle_witness_one_phrase"],
+      }],
+      ["contract.plant.high_rest_companionship", {
+        expectedFamilies: ["plant rest/dormancy"],
+        blockedPatterns: ["bank_the_house_light", "waning_light_release", "full_light_on_the_table"],
+      }],
+      ["contract.kitchen.high_tending_full", {
+        expectedFamilies: ["warm cup/bowl"],
+        blockedPatterns: ["candle_witness_one_phrase", "full_light_on_the_table", "waning_light_release"],
+      }],
+      ["contract.kitchen.high_beginning_waning", {
+        expectedFamilies: ["grain/seed/bowl"],
+        blockedPatterns: ["waning_light_release", "salt_clear_water_release", "full_light_on_the_table"],
+      }],
+      ["contract.home.high_tending_waning", {
+        expectedFamilies: ["house map", "threshold/crossing/bowl/key", "bread/grain center"],
+        blockedPatterns: ["waning_light_release", "salt_clear_water_release", "full_light_on_the_table"],
+      }],
+      ["contract.home.high_threshold_full", {
+        expectedFamilies: ["threshold/crossing/bowl/key"],
+        blockedPatterns: ["candle_witness_one_phrase", "full_light_on_the_table", "warm_cup_between_us"],
+      }],
+      ["contract.reflection.high_saying_new", {
+        expectedFamilies: ["written/folded/container", "first/last threshold"],
+        blockedPatterns: ["first_light_for_the_beginning", "grain_bowl_beginning", "warm_cup_between_us"],
+      }],
+      ["contract.candle.high_beginning", {
+        expectedFamilies: ["first light / threshold"],
+        blockedPatterns: ["house_from_root_to_roof", "threshold_bowl", "grain_bowl_beginning"],
+      }],
+      ["contract.candle.high_resting", {
+        expectedFamilies: ["full light / clarity", "banked/darkening light"],
+        blockedPatterns: ["candle_witness_one_phrase", "full_light_on_the_table", "first_light_for_the_beginning"],
+      }],
+      ["contract.surprise.high_preserves_resolved_category", {
+        expectedFamilies: ["written/folded/container", "first/last threshold", "full light / clarity"],
+        blockedPatterns: ["grain_bowl_beginning"],
+      }],
+      ["contract.surprise.both_preserves_audience", {
+        expectedFamilies: ["warm cup/bowl", "welcome/offering/vessel"],
+        blockedPatterns: ["candle_witness_one_phrase"],
+      }],
+    ]);
     const requiredScenarioIds = [
       ...expectedPatterns.keys(),
       ...issue202LossPatterns.keys(),
@@ -209,6 +273,15 @@ describe("recommendation quality report", () => {
       "issue205.home.carried_word_return",
       "issue205.plant.placed_phrase",
       "issue205.seasonal.first_last_words",
+      "issue222.candle.venus_warmth_tending_us",
+      "issue222.candle.saturn_boundary_rest",
+      "issue222.candle.no_strong_timing",
+      "issue223.candle.high.full_both_saying",
+      "issue223.candle.high.new_beginning",
+      "issue223.candle.high.waning_clearing",
+      "issue223.candle.steady.resting",
+      "issue223.candle.high.best_week",
+      ...recommendationContractMatrix.keys(),
       "issue183.kitchen.clearing_salt",
       "issue183.reflection.waning_release",
       "kitchen.warmth.together",
@@ -271,6 +344,21 @@ describe("recommendation quality report", () => {
       "spell database",
       "petition",
       "affirmation",
+      "ambience",
+      "wellness",
+      "productivity",
+      "psychology",
+      "scientific proof",
+      "only symbolic",
+      "just symbolic",
+      "visual reminder",
+      "held lightly",
+      "stronger material form",
+      "better fit elsewhere",
+      "timing overrode",
+      "moon phase overrode",
+      "helped point toward",
+      "set aside",
     ];
 
     for (const [scenarioId, patternKey] of expectedPatterns) {
@@ -301,6 +389,25 @@ describe("recommendation quality report", () => {
       );
     }
 
+    for (const [scenarioId, contract] of recommendationContractMatrix) {
+      const result = resultById.get(scenarioId);
+
+      expect(result, scenarioId).toBeDefined();
+      expect(contract.blockedPatterns, scenarioId).not.toContain(
+        result?.selectedRitualPattern.key,
+      );
+      expect(
+        result?.selectedRitualFormFamilies.some((family) =>
+          contract.expectedFamilies.includes(family),
+        ),
+        `${scenarioId} selected ${result?.selectedRitualPattern.key} with families ${result?.selectedRitualFormFamilies.join(", ")}`,
+      ).toBe(true);
+      expect(result?.warnings, scenarioId).toEqual([]);
+      expect(result?.brief.bestWindow.toLowerCase(), scenarioId).not.toContain(
+        "five quiet minutes",
+      );
+    }
+
     expect(resultById.get("issue183.kitchen.clearing_salt")?.selectedRitualPattern.key).toBe(
       "salt_clear_water_release",
     );
@@ -322,6 +429,17 @@ describe("recommendation quality report", () => {
     expect(["last_word_first_word", "first_day_last_day"]).toContain(
       resultById.get("issue205.seasonal.first_last_words")?.selectedRitualPattern.key,
     );
+    for (const scenarioId of [
+      "issue223.candle.high.full_both_saying",
+      "issue223.candle.high.new_beginning",
+      "issue223.candle.high.waning_clearing",
+      "issue223.candle.steady.resting",
+      "issue223.candle.high.best_week",
+    ]) {
+      expect(resultById.get(scenarioId)?.brief.bestWindow.toLowerCase(), scenarioId).not.toContain(
+        "five quiet minutes",
+      );
+    }
 
     expect(["warm_cup_between_us", "quiet_welcome"]).toContain(
       resultById.get("kitchen.warmth.together")?.selectedRitualPattern.key,
@@ -451,6 +569,10 @@ describe("recommendation quality report", () => {
             title: "Debug",
             body: "candidate close_the_evening was rejected by score.",
           },
+          {
+            title: "Debug",
+            body: "duplicate heading should be caught.",
+          },
         ],
       },
     }).map((warning) => warning.id);
@@ -465,6 +587,7 @@ describe("recommendation quality report", () => {
         "generic_closing_repeated",
         "carry_prompt_contradicts_focus",
         "source_id_visible_in_normal_copy",
+        "duplicate_explanation_section_headings",
       ]),
     );
   });
