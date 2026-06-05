@@ -406,7 +406,7 @@ describe("generateWeeklyBrief", () => {
       {
         scenarioId: "batch1.home.salt_water_clearing",
         patternKey: "salt_clear_water_release",
-        expectedPrompt: "What feels cleaner when it has somewhere ordinary to go?",
+        expectedPrompt: "What feels finished when it has somewhere ordinary to go?",
       },
       {
         scenarioId: "batch1.reflection.folded_phrase",
@@ -451,12 +451,14 @@ describe("generateWeeklyBrief", () => {
       qualityScenarioInput("batch1.kitchen.grain_beginning"),
     );
 
-    expect(saltBrief.sourceSummary).toContain("salt and boundary folklore");
+    expect(saltBrief.sourceSummary).toContain(
+      "salt-water clearing and rinsed-vessel logic",
+    );
     expect(grainBrief.sourceSummary).toContain(
       "bread/grain table-center and seed-water beginning logic",
     );
     expect(JSON.stringify(saltBrief.explanation.sourcesUsed)).toContain(
-      "salt and boundary folklore",
+      "salt-water clearing and rinsed-vessel logic",
     );
     expect(JSON.stringify(grainBrief.explanation.howThisWasChosen)).toContain(
       "bread/grain table-center and seed-water beginning logic",
