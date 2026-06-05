@@ -160,6 +160,13 @@ Visible v1 options:
 
 `Surprise me` is an open selection in the UI, not a seventh practice category. Before recommendation, the generator resolves it to one real visible category based on the ritual focus and capacity context, then records `resolved_open_preference` in the decision diagnostics. The app should not pretend "Surprise me" itself matched the selected ritual.
 
+In recommendation-contract fixtures and diagnostics, use language such as
+`open_preference`, `categorySelectionMode: surprise_me`, `resolved category`,
+or `resolved_open_preference`. Do not use `Surprise me` as a ritual style,
+ritual-form family, source lineage, or selected practice category. Once the
+open preference resolves, the resolved real category is binding under the same
+contract rules as an explicit category.
+
 `Conversation` is intentionally not a visible practice-type option right now. Conversation-shaped ritual content can remain in the approved library for focus-based or future use, but it needs a dedicated source/content pass before it becomes a top-level check-in/profile preference.
 
 ## Current Implementation
@@ -177,6 +184,10 @@ The explanation should not pretend every answer matched. If the selected ritual 
 Recommendation quality is defined in `docs/recommendation-quality-model.md`. Selection is only one part of the product. The final output also needs authored ritual presentation, a clean carrying prompt, and a clean closing.
 
 Recommendation-contract tests should be written from product expectations before tuning the engine. Do not bless current output just because it passes scoring diagnostics.
+
+The executable matrix in `docs/content-audits/recommendation-contract-matrix.md`
+is the current product-contract review packet for category/focus/capacity,
+audience, timing authority, coverage-gap, and open-preference behavior.
 
 ## Boundaries
 

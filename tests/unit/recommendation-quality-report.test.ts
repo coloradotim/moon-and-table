@@ -31,7 +31,12 @@ describe("recommendation quality report", () => {
   it("keeps scenario fixtures privacy-safe and broad enough for review", () => {
     const serialized = JSON.stringify(recommendationQualityScenarios).toLowerCase();
 
-    expect(recommendationQualityScenarios.length).toBeGreaterThanOrEqual(20);
+    const contractScenarios = recommendationQualityScenarios.filter(
+      (scenario) => scenario.contract,
+    );
+
+    expect(recommendationQualityScenarios.length).toBeGreaterThanOrEqual(100);
+    expect(contractScenarios.length).toBeGreaterThanOrEqual(24);
     expect(recommendationQualityScenarios.map((scenario) => scenario.id)).toEqual(
       expect.arrayContaining([
         "pause.permission.enough",
@@ -47,6 +52,14 @@ describe("recommendation quality report", () => {
         "calendar.first_day.threshold_word",
         "calendar.last_day.closing_bowl",
         "calendar.month_turn.best_week",
+        "contract.plant.both_high_tending_waning",
+        "contract.kitchen.high_tending_full",
+        "contract.seasonal.high_month_turn_threshold",
+        "contract.numerology.minor_accent_only",
+        "contract.numerology.major_best_week_may_lead",
+        "contract.surprise.forced_plant_preserved",
+        "contract.surprise.forced_kitchen_preserved",
+        "contract.surprise.forced_candle_preserved",
       ]),
     );
     expect(serialized).not.toContain("@gmail.com");
@@ -70,6 +83,8 @@ describe("recommendation quality report", () => {
     expect(formatted).toContain("Selected ritual form family:");
     expect(formatted).toContain("Expected ritual form family:");
     expect(formatted).toContain("Ritual form family matched:");
+    expect(formatted).toContain("Recommendation contract:");
+    expect(formatted).toContain("Contract status:");
     expect(formatted).toContain("### Broad Pattern Concentration");
     expect(formatted).toContain("### Pattern Concentration Review");
     expect(formatted).toContain("### Strong Patterns Not Selected");
@@ -77,6 +92,45 @@ describe("recommendation quality report", () => {
     expect(formatted).toContain("Top rejected near alternatives:");
     expect(formatted).toContain("Human review notes:");
     expect(formatted).not.toContain("undefined");
+  });
+
+  it("checks recommendation-contract scenarios as contracts, not output snapshots", () => {
+    const report = createRecommendationQualityReport();
+    const contractResults = report.scenarioResults.filter(
+      (result) => result.scenario.contract,
+    );
+    const timingAuthorityModes = new Set(
+      contractResults.map((result) => result.scenario.contract?.timingAuthority),
+    );
+    const categorySelectionModes = new Set(
+      contractResults.map((result) => result.scenario.contract?.categorySelectionMode),
+    );
+
+    expect(contractResults.length).toBeGreaterThanOrEqual(24);
+    expect(timingAuthorityModes).toEqual(
+      new Set(["shape_only", "may_lead", "must_not_lead"]),
+    );
+    expect(categorySelectionModes).toEqual(
+      new Set(["explicit_category", "surprise_me_open_preference"]),
+    );
+    expect(report.warningCounts.contract_request_changes).toBeGreaterThanOrEqual(4);
+
+    for (const result of contractResults) {
+      const status = result.contractStatus;
+      const expectedWarningIds = result.scenario.contract?.expectedWarningIds ?? [];
+
+      expect(status, result.scenario.id).toBeDefined();
+      expect(status?.categoryPreserved, result.scenario.id).toBe(true);
+      expect(status?.acceptablePattern, result.scenario.id).toBe(true);
+      expect(status?.acceptableFamily, result.scenario.id).toBe(true);
+      expect(status?.blockedPatternAvoided, result.scenario.id).toBe(true);
+      expect(status?.blockedFamilyAvoided, result.scenario.id).toBe(true);
+      expect(status?.requiredExplanationPresent, result.scenario.id).toBe(true);
+      expect(
+        result.warnings.map((warning) => warning.id).sort(),
+        result.scenario.id,
+      ).toEqual([...expectedWarningIds].sort());
+    }
   });
 
   it("surfaces Batch 1 ritual-form reachability in named scenarios", () => {
@@ -282,6 +336,9 @@ describe("recommendation quality report", () => {
       "issue223.candle.steady.resting",
       "issue223.candle.high.best_week",
       ...recommendationContractMatrix.keys(),
+      ...recommendationQualityScenarios
+        .filter((scenario) => scenario.contract)
+        .map((scenario) => scenario.id),
       "issue183.kitchen.clearing_salt",
       "issue183.reflection.waning_release",
       "kitchen.warmth.together",
@@ -402,7 +459,11 @@ describe("recommendation quality report", () => {
         ),
         `${scenarioId} selected ${result?.selectedRitualPattern.key} with families ${result?.selectedRitualFormFamilies.join(", ")}`,
       ).toBe(true);
-      expect(result?.warnings, scenarioId).toEqual([]);
+      const expectedWarningIds = result?.scenario.contract?.expectedWarningIds ?? [];
+      expect(
+        result?.warnings.map((warning) => warning.id).sort(),
+        scenarioId,
+      ).toEqual([...expectedWarningIds].sort());
       expect(result?.brief.bestWindow.toLowerCase(), scenarioId).not.toContain(
         "five quiet minutes",
       );
@@ -457,7 +518,11 @@ describe("recommendation quality report", () => {
       const result = resultById.get(scenarioId);
 
       expect(result, scenarioId).toBeDefined();
-      expect(result?.warnings, scenarioId).toEqual([]);
+      const expectedWarningIds = result?.scenario.contract?.expectedWarningIds ?? [];
+      expect(
+        result?.warnings.map((warning) => warning.id).sort(),
+        scenarioId,
+      ).toEqual([...expectedWarningIds].sort());
 
       const normalCopy = [
         result?.brief.theme,

@@ -46,7 +46,18 @@ export const RECOMMENDATION_QUALITY_WARNING_IDS = [
   "high_capacity_selected_low_depth_pattern",
   "audience_not_reflected_in_action",
   "normal_copy_rationalizes_set_aside",
+  "coverage_gap_category_focus_capacity",
+  "closest_compatible_pattern_selected",
+  "high_capacity_depth_gap",
+  "stronger_wrong_category_rejected",
+  "recommendation_confidence_limited",
+  "contract_request_changes",
+  "timing_led_without_major_event",
+  "timing_overrode_explicit_contract",
+  "minor_numerology_overweighted",
+  "major_timing_event_not_used_for_best_week",
   "resolved_surprise_category_not_preserved",
+  "surprise_me_used_as_category_or_style",
   "duplicate_explanation_section_headings",
 ] as const;
 
@@ -79,6 +90,22 @@ export type RecommendationQualityScenarioResult = {
   selectedRitualFormFamilies: string[];
   expectedRitualFormFamilies: string[];
   ritualFormFamilyMatched: boolean;
+  contractStatus?: {
+    categorySelectionMode: string;
+    expectedCategory?: string;
+    resolvedCategory?: string;
+    timingAuthority: string;
+    categoryPreserved: boolean;
+    acceptablePattern: boolean;
+    acceptableFamily: boolean;
+    blockedPatternAvoided: boolean;
+    blockedFamilyAvoided: boolean;
+    requiredExplanationPresent: boolean;
+    coverageGapExpected: boolean;
+    closestCompatiblePatternExpected: boolean;
+    reviewVerdict: string;
+    reviewReason?: string;
+  };
   howThisWasChosen: Array<{ title: string; body: string }>;
   selectedTimingSignals: string[];
   selectedTimingWindow?: {
@@ -176,6 +203,9 @@ const SOURCE_ID_PATTERN =
 const DEBUG_KEY_PATTERN =
   /\b(?:score|scored|points|candidate|candidates|rejected|decision|debug|sourceReferences|ritualPatternKey|selectedPatternKey)\b/i;
 
+const CONTRACT_NORMAL_COPY_BLOCKED_PATTERN =
+  /\b(held lightly|stronger material form|better fit elsewhere|timing overrode|moon phase overrode|helped point toward|surprise me matched|surprise me ritual|surprise me category)\b/i;
+
 function normalCopyText(copy: RecommendationQualityCopyFields): string {
   return [
     copy.theme,
@@ -223,8 +253,31 @@ function warning(id: RecommendationQualityWarningId, message: string): Recommend
   return { id, message };
 }
 
-export function getRecommendationQualityWarnings(args: {
+function includesAny(value: string, phrases: string[] = []): boolean {
+  const lower = value.toLowerCase();
+
+  return phrases.some((phrase) => lower.includes(phrase.toLowerCase()));
+}
+
+function hasContractMajorTimingEvidence(args: {
   scenario: Pick<RecommendationQualityScenario, "currentRitualCheckIn">;
+  brief?: WeeklyBrief;
+  selectedTimingWindow?: { isStrong: boolean; reasonLabels: string[] };
+}): boolean {
+  if (args.selectedTimingWindow?.isStrong) {
+    return true;
+  }
+
+  return args.brief?.trace.selectedTimingSignals.some((signal) =>
+    signal.strength === "primary" ||
+    ["lunation", "solar_season", "calendar_threshold", "planetary_aspect"].includes(
+      signal.timingFactType,
+    ),
+  ) ?? false;
+}
+
+export function getRecommendationQualityWarnings(args: {
+  scenario: Pick<RecommendationQualityScenario, "contract" | "currentRitualCheckIn">;
   brief?: WeeklyBrief;
   copy: RecommendationQualityCopyFields;
   selectedRitualPatternKey?: string;
@@ -521,17 +574,166 @@ export function getRecommendationQualityWarnings(args: {
     );
   }
 
-  if (
-    /\b(held lightly|stronger material form|better fit elsewhere|timing overrode|moon phase overrode|helped point toward)\b/i.test(
-      allCopy,
-    )
-  ) {
+  if (CONTRACT_NORMAL_COPY_BLOCKED_PATTERN.test(allCopy)) {
     warnings.push(
       warning(
         "normal_copy_rationalizes_set_aside",
         "Normal copy appears to smooth over an ignored explicit selection.",
       ),
     );
+  }
+
+  if (
+    /\bsurprise_me\b/i.test(allCopy) ||
+    /\bSurprise me\b/i.test(allCopy) ||
+    selectedPatternStyles.includes("surprise_me")
+  ) {
+    warnings.push(
+      warning(
+        "surprise_me_used_as_category_or_style",
+        "Surprise me appeared as a category, style, source lineage, or normal-copy ritual family.",
+      ),
+    );
+  }
+
+  if (scenario.contract) {
+    const contract = scenario.contract;
+
+    if (includesAny(allCopy, contract.disallowedNormalCopyPhrases)) {
+      warnings.push(
+        warning(
+          "normal_copy_rationalizes_set_aside",
+          "Normal copy included a phrase blocked by the scenario contract.",
+        ),
+      );
+    }
+
+    if (
+      contract.disallowedPatternKeys?.includes(args.brief?.decision.selected.ritualPatternKey ?? "")
+    ) {
+      warnings.push(
+        warning(
+          "explicit_category_overridden_without_blocker",
+          "Selected pattern is explicitly disallowed by the recommendation contract.",
+        ),
+      );
+    }
+
+    if (
+      contract.disallowedRitualFormFamilies?.some((family) =>
+        getRitualFormFamilyLabels(selectedFamilies).includes(family),
+      )
+    ) {
+      warnings.push(
+        warning(
+          "explicit_focus_overridden_without_bridge",
+          "Selected ritual form family is explicitly disallowed by the recommendation contract.",
+        ),
+      );
+    }
+
+    if (
+      contract.timingAuthority === "must_not_lead" &&
+      (args.selectedTimingWindow?.isStrong ||
+        args.brief?.decision.inputs.practiceChoice?.status === "set_aside")
+    ) {
+      warnings.push(
+        warning(
+          "timing_led_without_major_event",
+          "Scenario contract says timing must not lead, but the selected recommendation used major timing authority.",
+        ),
+      );
+    }
+
+    if (
+      contract.timingAuthority === "shape_only" &&
+      args.brief?.decision.inputs.practiceChoice?.status === "set_aside"
+    ) {
+      warnings.push(
+        warning(
+          "timing_overrode_explicit_contract",
+          "Shape-only timing appears to have overridden an explicit check-in contract.",
+        ),
+      );
+    }
+
+    if (
+      contract.timingAuthority === "may_lead" &&
+      scenario.currentRitualCheckIn.timeScope === "best_moment_this_week" &&
+      !hasContractMajorTimingEvidence(args)
+    ) {
+      warnings.push(
+        warning(
+          "major_timing_event_not_used_for_best_week",
+          "Best-week scenario expected a major timing event to be available for timing-led selection.",
+        ),
+      );
+    }
+
+    if (
+      args.brief?.decision.inputs.numerology?.status === "matched_selected" &&
+      contract.timingAuthority !== "may_lead" &&
+      args.brief.decision.inputs.numerology.selectedSignalLabels.length > 0 &&
+      args.brief.decision.selected.timingSignalLabels.every((label) =>
+        args.brief?.decision.inputs.numerology?.selectedSignalLabels.includes(label),
+      )
+    ) {
+      warnings.push(
+        warning(
+          "minor_numerology_overweighted",
+          "Numerology appears to be the dominant timing reason where the contract allows it only as an accent.",
+        ),
+      );
+    }
+
+    if (contract.coverageGapExpected) {
+      warnings.push(
+        warning(
+          "coverage_gap_category_focus_capacity",
+          "Scenario intentionally marks thin category/focus/capacity coverage for human review.",
+        ),
+      );
+      warnings.push(
+        warning(
+          "recommendation_confidence_limited",
+          "Recommendation confidence is limited by the scenario's documented coverage gap.",
+        ),
+      );
+
+      if (scenario.currentRitualCheckIn.capacityMode === "high") {
+        warnings.push(
+          warning(
+            "high_capacity_depth_gap",
+            "High-capacity scenario is served by the closest compatible approved form rather than a fully high-depth pattern.",
+          ),
+        );
+      }
+    }
+
+    if (contract.closestCompatiblePatternExpected) {
+      warnings.push(
+        warning(
+          "closest_compatible_pattern_selected",
+          "Scenario expects the closest compatible approved pattern rather than a wrong-category higher-polish ritual.",
+        ),
+      );
+      warnings.push(
+        warning(
+          "stronger_wrong_category_rejected",
+          "Scenario expects stronger wrong-category alternatives to stay rejected.",
+        ),
+      );
+    }
+
+    if (contract.reviewVerdict === "request_changes") {
+      warnings.push(
+        warning(
+          "contract_request_changes",
+          contract.reviewReason ??
+            "Scenario contract marks the selected recommendation as requiring product changes before it should become baseline.",
+        ),
+      );
+    }
   }
 
   const duplicateSectionTitles = copy.howThisWasChosen
@@ -577,6 +779,60 @@ function getTopRejectedAlternatives(brief: WeeklyBrief) {
       title: candidate.title,
       reasons: candidate.reasons.slice(0, 3),
     }));
+}
+
+function getContractStatus(args: {
+  scenario: RecommendationQualityScenario;
+  brief: WeeklyBrief;
+  selectedRitualPatternKey: string;
+  selectedRitualFormFamilies: string[];
+}): RecommendationQualityScenarioResult["contractStatus"] {
+  const { scenario, brief, selectedRitualPatternKey, selectedRitualFormFamilies } = args;
+  const contract = scenario.contract;
+
+  if (!contract) {
+    return undefined;
+  }
+
+  const practiceChoice = brief.decision.inputs.practiceChoice;
+  const allCopy = normalCopyText(defaultCopyFields(brief));
+
+  return {
+    categorySelectionMode: contract.categorySelectionMode,
+    expectedCategory: contract.expectedCategory,
+    resolvedCategory: contract.resolvedCategory,
+    timingAuthority: contract.timingAuthority,
+    categoryPreserved:
+      contract.categorySelectionMode === "surprise_me_open_preference"
+        ? practiceChoice?.status === "resolved_open_preference" &&
+          (practiceChoice.selectedPatternMatches.length > 0 ||
+            !contract.resolvedCategory)
+        : practiceChoice?.status !== "set_aside",
+    acceptablePattern:
+      !contract.acceptablePatternKeys ||
+      contract.acceptablePatternKeys.includes(selectedRitualPatternKey),
+    acceptableFamily:
+      !contract.acceptableRitualFormFamilies ||
+      selectedRitualFormFamilies.some((family) =>
+        contract.acceptableRitualFormFamilies?.includes(family),
+      ),
+    blockedPatternAvoided:
+      !contract.disallowedPatternKeys?.includes(selectedRitualPatternKey),
+    blockedFamilyAvoided:
+      !contract.disallowedRitualFormFamilies?.some((family) =>
+        selectedRitualFormFamilies.includes(family),
+      ),
+    requiredExplanationPresent:
+      !contract.requiredExplanationTerms ||
+      contract.requiredExplanationTerms.every((term) =>
+        allCopy.toLowerCase().includes(term.toLowerCase()),
+      ),
+    coverageGapExpected: contract.coverageGapExpected ?? false,
+    closestCompatiblePatternExpected:
+      contract.closestCompatiblePatternExpected ?? false,
+    reviewVerdict: contract.reviewVerdict ?? "pass",
+    reviewReason: contract.reviewReason,
+  };
 }
 
 function countBy(values: string[]): Array<{ key: string; count: number }> {
@@ -719,6 +975,8 @@ export function createRecommendationQualityReport(
     const selectedRitualFormFamilies = selectedPattern
       ? getRitualFormFamiliesForPattern(selectedPattern)
       : [];
+    const selectedRitualFormFamilyLabels =
+      getRitualFormFamilyLabels(selectedRitualFormFamilies);
     const expectedRitualFormFamilies = getExpectedRitualFormFamilies(
       scenario.currentRitualCheckIn,
       scenario.currentRitualCheckIn.practiceTypeHints ?? [],
@@ -743,12 +1001,18 @@ export function createRecommendationQualityReport(
         key: brief.decision.selected.ritualPatternKey,
         title: selectedPattern?.title ?? brief.decision.selected.ritualPatternKey,
       },
-      selectedRitualFormFamilies: getRitualFormFamilyLabels(selectedRitualFormFamilies),
+      selectedRitualFormFamilies: selectedRitualFormFamilyLabels,
       expectedRitualFormFamilies: getRitualFormFamilyLabels(expectedRitualFormFamilies),
       ritualFormFamilyMatched: ritualFormFamiliesMatch(
         selectedRitualFormFamilies,
         expectedRitualFormFamilies,
       ),
+      contractStatus: getContractStatus({
+        scenario,
+        brief,
+        selectedRitualPatternKey: brief.decision.selected.ritualPatternKey,
+        selectedRitualFormFamilies: selectedRitualFormFamilyLabels,
+      }),
       howThisWasChosen,
       selectedTimingSignals: brief.decision.selected.timingSignalLabels,
       selectedTimingWindow: brief.decision.inputs.selectedTimingWindow
@@ -919,6 +1183,29 @@ export function formatRecommendationQualityReport(
       `- Focus: ${scenario.currentRitualCheckIn.ritualFocusLabel ?? "not set"}`,
       `- Expected qualities: ${formatList(scenario.expectedQualities)}`,
       `- Disallowed outcomes: ${formatList(scenario.disallowedOutcomes)}`,
+      ...(scenario.contract
+        ? [
+            "",
+            "Recommendation contract:",
+            "",
+            `- Category-selection mode: ${scenario.contract.categorySelectionMode}`,
+            `- Expected category: ${scenario.contract.expectedCategory ?? "not pinned"}`,
+            `- Resolved category: ${scenario.contract.resolvedCategory ?? "not applicable"}`,
+            `- Expected focus behavior: ${scenario.contract.expectedFocusBehavior}`,
+            `- Expected capacity behavior: ${scenario.contract.expectedCapacityBehavior}`,
+            `- Expected audience behavior: ${scenario.contract.expectedAudienceBehavior}`,
+            `- Timing authority: ${scenario.contract.timingAuthority}`,
+            `- Acceptable patterns: ${formatList(scenario.contract.acceptablePatternKeys ?? [])}`,
+            `- Acceptable ritual form families: ${formatList(scenario.contract.acceptableRitualFormFamilies ?? [])}`,
+            `- Disallowed patterns: ${formatList(scenario.contract.disallowedPatternKeys ?? [])}`,
+            `- Disallowed ritual form families: ${formatList(scenario.contract.disallowedRitualFormFamilies ?? [])}`,
+            `- Disallowed normal-copy phrases: ${formatList(scenario.contract.disallowedNormalCopyPhrases ?? [])}`,
+            `- Expected warning ids: ${formatList(scenario.contract.expectedWarningIds ?? [])}`,
+            `- Review verdict: ${scenario.contract.reviewVerdict ?? "pass"}`,
+            `- Review reason: ${scenario.contract.reviewReason ?? "none"}`,
+            `- Rationale: ${scenario.contract.rationale}`,
+          ]
+        : []),
       "",
       "Generated recommendation:",
       "",
@@ -933,6 +1220,23 @@ export function formatRecommendationQualityReport(
       `- Optional add-on: ${brief.optionalAddOn || "none"}`,
       `- Reflection/carry prompt: ${brief.reflectionPrompt}`,
       `- Why this fits: ${brief.explanation.whyThisFits}`,
+      ...(result.contractStatus
+        ? [
+            "",
+            "Contract status:",
+            "",
+            `- Category preserved: ${result.contractStatus.categoryPreserved ? "yes" : "no"}`,
+            `- Acceptable pattern: ${result.contractStatus.acceptablePattern ? "yes" : "no"}`,
+            `- Acceptable family: ${result.contractStatus.acceptableFamily ? "yes" : "no"}`,
+            `- Blocked pattern avoided: ${result.contractStatus.blockedPatternAvoided ? "yes" : "no"}`,
+            `- Blocked family avoided: ${result.contractStatus.blockedFamilyAvoided ? "yes" : "no"}`,
+            `- Required explanation present: ${result.contractStatus.requiredExplanationPresent ? "yes" : "no"}`,
+            `- Coverage gap expected: ${result.contractStatus.coverageGapExpected ? "yes" : "no"}`,
+            `- Closest compatible expected: ${result.contractStatus.closestCompatiblePatternExpected ? "yes" : "no"}`,
+            `- Review verdict: ${result.contractStatus.reviewVerdict}`,
+            `- Review reason: ${result.contractStatus.reviewReason ?? "none"}`,
+          ]
+        : []),
       "",
       "How this was chosen:",
       "",

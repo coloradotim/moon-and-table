@@ -114,6 +114,16 @@ Safety, explicit avoid flags, approval status, capacity mode, max duration, and 
 
 `Surprise me` is not a scoring style. It records that the person left practice type open, then lets timing, capacity, focus, saved profile context, and approved pattern fit do the work.
 
+Recommendation-quality contract scenarios add report-level diagnostics for
+contract failures and intentional coverage gaps. These diagnostics include
+explicit category/focus override, high-capacity depth gaps, audience action not
+reflected, timing leading without authority, timing overriding an explicit
+contract, minor numerology overweighting, major timing events not used for
+best-week scenarios, unresolved open preference, resolved open-preference
+category not preserved, and open-preference language being used as a category
+or style. Coverage-gap diagnostics should be visible in report/debug output
+without making the normal ritual card sound broken.
+
 Numerology accents are selected conservatively. A matched universal date number can take the final timing-signal slot, but only after a non-accent timing signal has already been selected. If numerology is computed but does not match the ritual context, or if stronger timing signals fill the recommendation cleanly, it stays in diagnostics instead of the visible brief.
 
 ## Debug View
