@@ -9,11 +9,13 @@ PR: #251
 
 This PR implements the narrow #231 Home/hearth/table slice that #227 marks implementation-ready:
 
-- `hearth_object_return`: Home tending through one ordinary household object placed beside table light, held briefly, and returned.
-- `last_household_light`: Home rest/closing through one last household light and one resting place left alone.
+- `hearth_object_return`: Home tending through one small room object placed at the table or room center, held briefly, and returned home.
+- `last_household_light`: Home rest/closing through one resting place left alone, with room light only as an existing last signal.
 - `home_hearth_table_return`: a diagnostic ritual-form family so Home/hearth/table work can be measured separately from threshold fallback and Candle/light takeover.
 
 It does not implement broader table-center, household shrine, house blessing, generic object-return, Moon-specific, Plant, Kitchen, or Reflection work.
+
+Cleanup patch note: review accepted the structure but found the first wording too templated and too dependent on table light. The follow-up patch keeps the same selections and diagnostics while making the normal copy warmer, more room-centered, and less Candle/light-dependent.
 
 ## 2. Scope Confirmation
 
@@ -66,11 +68,12 @@ Guardrail exclusions:
 
 | Scenario | Before | After | Review |
 |---|---|---|---|
-| `contract.home.low_tending_waning_not_release` | `first_light_at_the_threshold`; too threshold-light-forward for low Home tending. | `hearth_object_return`; one object placed beside table light and returned. | Pass; warning resolved through output improvement. |
-| `contract.home.high_tending_waning` | `first_light_at_the_threshold`; compatible but too beginning/threshold-forward. | `hearth_object_return`; room-edge return, held pause, ordinary return. | Pass; high-depth warning resolved through actual ritual architecture. |
+| `contract.home.low_tending_waning_not_release` | `first_light_at_the_threshold`; too threshold-light-forward for low Home tending. First #231 draft then said "ordinary household object" and required table light. | `hearth_object_return`; one small room object goes to the table or room center, then comes home again. | Pass; warning resolved through output improvement, then voice tightened. |
+| `contract.home.high_tending_waning` | `first_light_at_the_threshold`; compatible but too beginning/threshold-forward. First #231 draft leaned on table light and "ordinary return." | `hearth_object_return`; room-edge walk, held minute, and object home again. | Pass; high-depth warning resolved through actual ritual architecture. |
 | `issue231.home.high_tending_no_timing` | Not previously covered. | `hearth_object_return`; timing stays quiet. | Pass; proves material form carries neutral timing. |
-| `issue231.home.dark_rest_closing` | Not previously covered. | `last_household_light`; Home rest via last-light settling. | Pass; Candle/light does not take over category. |
+| `issue231.home.dark_rest_closing` | Not previously covered. First #231 draft centered the household light too strongly. | `last_household_light`; Home rest through a resting place, with light only as an existing last signal. | Pass; Candle/light does not take over category. |
 | `contract.home.high_threshold_full` | Threshold selected when threshold explicit. | Still threshold/light-window form; warning remains for high-capacity thinness. | Correctly not displaced by new Home tending form. |
+| Numerology Home scenarios | Changed selection to `hearth_object_return`. | Numerology remains absent from title/body/why unless it is a quiet secondary diagnostic. | Pass; Home/hearth material match, not numerology, drives the selection. |
 
 ## 6. Quality Delta
 
@@ -115,6 +118,8 @@ Resolved warnings:
 
 Diagnostic integrity: warnings decreased because the Home contract outputs changed from threshold-light fallback to sourced Home/hearth/object-return forms. No warning checks were removed or weakened.
 
+Cleanup delta: unchanged from the structural #231 pass. The cleanup tightened normal copy and added blocked-phrase guards; it did not reduce warnings by weakening diagnostics.
+
 ## 7. Full Normal Outputs
 
 ### `contract.home.low_tending_waning_not_release`
@@ -122,14 +127,14 @@ Diagnostic integrity: warnings decreased because the Home contract outputs chang
 - Input: Home; Tending the home; me; low; today
 - Selected pattern: `hearth_object_return`
 - Selected family: Home hearth/table return, vessel emptying/return
-- Title/theme: Return one hearth-side object.
-- Ritual body: Choose an object that already belongs here; let the return, not cleaning, be the close. Choose one ordinary household object that already has a place. Set it beside the table light and name what can settle here. Return it to its place. Close when the object is back where it belongs.
-- Intention: Let the returned object give household care one concrete place to land.
+- Title/theme: Return one small thing to the room.
+- Ritual body: Let the return, not cleaning, be the close. Take one small thing from this room that already has a real place: a mug, key, folded cloth, book, or coaster. Set it at the table or room center. Name one way the room can be cared for without being fixed. Put the object back. Close when the object is home again.
+- Intention: Let one returned thing give the room a small act of care.
 - Best window: When you have five quiet minutes.
 - Optional accent: No add-on needed.
-- Carry prompt: What can settle through one return?
-- Why this fits: Hearth-settling mechanics give household care a small shape: one object is placed, held, and returned. The household material makes tending visible, then returns to ordinary use. Waning timing makes this a settling return, not a purge or a cleaning reset. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
-- How this was chosen: Material and ritual fit: Home remains the material path. The household material makes tending visible, then returns to ordinary use. Hearth-settling mechanics give household care a small shape: one object is placed, held, and returned. Source lineage: smoored hearth and household object-return mechanics. / Timing fit: Waning timing makes this a settling return, not a purge or a cleaning reset. / Capacity and audience fit: This stays small: one material action and a clean close. One household object, one settled pause, then ordinary return.
+- Carry prompt: What can be cared for by putting one thing back?
+- Why this fits: Home tending does not need to mean cleaning. Returning one thing to its place gives the house a small act of care with a clear end. The object and its return are the rite. Waning timing supports settling and returning, not purging or clearing. Low capacity keeps the rite to one material action and one close.
+- How this was chosen: Material and ritual fit: Home remains the material path. The object and its return are the rite. Home tending does not need to mean cleaning. Returning one thing to its place gives the house a small act of care with a clear end. Source lineage: smoored hearth and household object-return mechanics. / Timing fit: Waning timing supports settling and returning, not purging or clearing. / Capacity and audience fit: This stays small: one material action and a clean close. One room object, one held minute, then the object is home again.
 - Source summary: Source lineage: smoored hearth and household object-return mechanics. Form kept contained.
 - Warnings: none
 
@@ -138,14 +143,14 @@ Diagnostic integrity: warnings decreased because the Home contract outputs chang
 - Input: Home; Tending the home; me; high; today
 - Selected pattern: `hearth_object_return`
 - Selected family: Home hearth/table return, vessel emptying/return
-- Title/theme: Settle the house through one returned object.
-- Ritual body: Choose an object that already belongs here; let the return, not cleaning, be the close. Choose one ordinary object from the room and set it beside the table light. Walk once to the room's edge and back to the table. Name what the home can keep settled without becoming a project. Let the object rest beside the light through one quiet minute. Return it to its ordinary place. Close when the object is back in ordinary use and the table is left alone.
-- Intention: Let the returned object give household care one concrete place to land.
+- Title/theme: Settle the house through one returned thing.
+- Ritual body: Let the return, not cleaning, be the close. Choose one small thing from the room that has a real place. Set it at the table or room center. Walk once to the room's edge and back. Name one way the home can be cared for without becoming a project. Let the object rest there for one quiet minute. Put it back. Close when the object is home again and the table is left alone.
+- Intention: Let the return give household care a beginning, middle, and end.
 - Best window: When you have room to linger this week.
 - Optional accent: No add-on needed.
-- Carry prompt: What kind of care returns with the object?
-- Why this fits: Hearth-settling mechanics give household care a small shape: one object is placed, held, and returned. The household material makes tending visible, then returns to ordinary use. Waning timing makes this a settling return, not a purge or a cleaning reset. High capacity asks for a fuller arc: staged action, a held moment, and a return. Private context supports keeping this practical and contained.
-- How this was chosen: Material and ritual fit: Home remains the material path. The household material makes tending visible, then returns to ordinary use. Hearth-settling mechanics give household care a small shape: one object is placed, held, and returned. Source lineage: smoored hearth and household object-return mechanics. / Timing fit: Waning timing makes this a settling return, not a purge or a cleaning reset. / Capacity and audience fit: The larger shape needs staged action, a held moment, and a real return. One household object, one settled pause, then ordinary return.
+- Carry prompt: What can settle without being fixed?
+- Why this fits: Home tending stays Home here: one thing is lifted, held at the center, and returned. The room-edge walk and held minute deepen the action without making it a chore. Waning timing supports settling and returning, not purging or clearing. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+- How this was chosen: Material and ritual fit: Home remains the material path. The room-edge walk and held minute deepen the action without making it a chore. Home tending stays Home here: one thing is lifted, held at the center, and returned. Source lineage: smoored hearth and household object-return mechanics. / Timing fit: Waning timing supports settling and returning, not purging or clearing. / Capacity and audience fit: The larger shape needs staged action, a held moment, and a real return. One room object, one held minute, then the object is home again.
 - Source summary: Source lineage: smoored hearth and household object-return mechanics. Form kept contained.
 - Warnings: none
 
@@ -154,14 +159,14 @@ Diagnostic integrity: warnings decreased because the Home contract outputs chang
 - Input: Home; Tending the home; me; high; today
 - Selected pattern: `hearth_object_return`
 - Selected family: Home hearth/table return, vessel emptying/return
-- Title/theme: Settle the house through one returned object.
-- Ritual body: Choose an object that already belongs here; let the return, not cleaning, be the close. Choose one ordinary object from the room and set it beside the table light. Walk once to the room's edge and back to the table. Name what the home can keep settled without becoming a project. Let the object rest beside the light through one quiet minute. Return it to its ordinary place. Close when the object is back in ordinary use and the table is left alone.
-- Intention: Let the returned object give household care one concrete place to land.
+- Title/theme: Settle the house through one returned thing.
+- Ritual body: Let the return, not cleaning, be the close. Choose one small thing from the room that has a real place. Set it at the table or room center. Walk once to the room's edge and back. Name one way the home can be cared for without becoming a project. Let the object rest there for one quiet minute. Put it back. Close when the object is home again and the table is left alone.
+- Intention: Let the return give household care a beginning, middle, and end.
 - Best window: When you have room to linger this week.
 - Optional accent: No add-on needed.
-- Carry prompt: What kind of care returns with the object?
-- Why this fits: Hearth-settling mechanics give household care a small shape: one object is placed, held, and returned. The household material makes tending visible, then returns to ordinary use. The timing can stay quiet while the household form does the tending. High capacity asks for a fuller arc: staged action, a held moment, and a return. Private context supports keeping this practical and contained.
-- How this was chosen: Material and ritual fit: Home remains the material path. The household material makes tending visible, then returns to ordinary use. Hearth-settling mechanics give household care a small shape: one object is placed, held, and returned. Source lineage: smoored hearth and household object-return mechanics. / Timing fit: The timing can stay quiet while the household form does the tending. / Capacity and audience fit: The larger shape needs staged action, a held moment, and a real return. One household object, one settled pause, then ordinary return.
+- Carry prompt: What can settle without being fixed?
+- Why this fits: Home tending stays Home here: one thing is lifted, held at the center, and returned. The room-edge walk and held minute deepen the action without making it a chore. The timing can stay quiet while the room receives one small act of care. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+- How this was chosen: Material and ritual fit: Home remains the material path. The room-edge walk and held minute deepen the action without making it a chore. Home tending stays Home here: one thing is lifted, held at the center, and returned. Source lineage: smoored hearth and household object-return mechanics. / Timing fit: The timing can stay quiet while the room receives one small act of care. / Capacity and audience fit: The larger shape needs staged action, a held moment, and a real return. One room object, one held minute, then the object is home again.
 - Source summary: Source lineage: smoored hearth and household object-return mechanics. Form kept contained.
 - Warnings: none
 
@@ -170,14 +175,14 @@ Diagnostic integrity: warnings decreased because the Home contract outputs chang
 - Input: Home; Resting; me; steady; today
 - Selected pattern: `last_household_light`
 - Selected family: Home hearth/table return, banked/darkening light
-- Title/theme: Settle the last household light.
-- Ritual body: Let one light become the last household center; leave one resting place undisturbed. Set one household light at the table or room center. Place one hand near the light and name what can stop asking tonight. Lower the light. Leave one resting place undisturbed until the next return. Close when the light is lowered and the resting place is left alone.
-- Intention: Let the last household light hold rest without asking for more.
+- Title/theme: Let the room have one last signal.
+- Ritual body: Let the room settle before anything else is asked. Choose one resting place in the room: a chair, folded blanket, bedside table, or quiet corner. If a lamp is already part of the room, lower it. If not, simply leave the resting place undisturbed. Name what does not need more tending tonight. Close when the room is allowed to stay as it is.
+- Intention: Let the house rest without asking for one more task.
 - Best window: When you have a little space this week.
 - Optional accent: No add-on needed.
-- Carry prompt: What can stay warm here without more tending?
-- Why this fits: Smooring gives Home rest a last-light shape: the light lowers, the room keeps warmth, and nothing else is asked. The action lets rest be held by material instead of explained into more work. Dark or quiet timing lets the house lower one light and leave the rest alone. Steady capacity gives the material a little room to be placed, held, and returned. Private context supports keeping this practical and contained.
-- How this was chosen: Material and ritual fit: Home remains the material path. The action lets rest be held by material instead of explained into more work. Smooring gives Home rest a last-light shape: the light lowers, the room keeps warmth, and nothing else is asked. Source lineage: smoored hearth, last-light, and household settling mechanics. / Timing fit: Dark or quiet timing lets the house lower one light and leave the rest alone. / Capacity and audience fit: The material gets room to be placed, held, and returned. One last light, one resting place, then no more tending.
+- Carry prompt: What can stay as it is tonight?
+- Why this fits: Home rest should not become a light-centered rite or a cleaning reset. The last signal belongs to the room: one place is left alone, and nothing else is asked. The resting place, not the light, carries the close. Dark or quiet timing lets the room have one last signal, then stay as it is. Steady capacity gives the material a little room to be placed, held, and returned.
+- How this was chosen: Material and ritual fit: Home remains the material path. The resting place, not the light, carries the close. Home rest should not become a light-centered rite or a cleaning reset. The last signal belongs to the room: one place is left alone, and nothing else is asked. Source lineage: smoored hearth, last-light, and household settling mechanics. / Timing fit: Dark or quiet timing lets the room have one last signal, then stay as it is. / Capacity and audience fit: The material gets room to be placed, held, and returned. One resting place, one last signal, then the room is left alone.
 - Source summary: Source lineage: smoored hearth, last-light, and household settling mechanics. Form kept contained.
 - Warnings: none
 
@@ -203,14 +208,14 @@ Diagnostic integrity: warnings decreased because the Home contract outputs chang
 - Selected category: Surprise me -> Home
 - Selected pattern: `hearth_object_return`
 - Selected family: Home hearth/table return, vessel emptying/return
-- Title/theme: Settle the house through one returned object.
-- Ritual body: Choose an object that already belongs here; let the return, not cleaning, be the close. Choose one ordinary object from the room and set it beside the table light. Walk once to the room's edge and back to the table. Name what the home can keep settled without becoming a project. Let the object rest beside the light through one quiet minute. Return it to its ordinary place. Close when the object is back in ordinary use and the table is left alone.
-- Intention: Let the returned object give household care one concrete place to land.
+- Title/theme: Settle the house through one returned thing.
+- Ritual body: Let the return, not cleaning, be the close. Choose one small thing from the room that has a real place. Set it at the table or room center. Walk once to the room's edge and back. Name one way the home can be cared for without becoming a project. Let the object rest there for one quiet minute. Put it back. Close when the object is home again and the table is left alone.
+- Intention: Let the return give household care a beginning, middle, and end.
 - Best window: When you have room to linger this week.
 - Optional accent: No add-on needed.
-- Carry prompt: What kind of care returns with the object?
-- Why this fits: Hearth-settling mechanics give household care a small shape: one object is placed, held, and returned. The household material makes tending visible, then returns to ordinary use. The timing can stay quiet while the household form does the tending. High capacity asks for a fuller arc: staged action, a held moment, and a return. Private context supports keeping this practical and contained.
-- How this was chosen: Material and ritual fit: Home remains the material path. The household material makes tending visible, then returns to ordinary use. Hearth-settling mechanics give household care a small shape: one object is placed, held, and returned. Source lineage: smoored hearth and household object-return mechanics. / Timing fit: The timing can stay quiet while the household form does the tending. / Capacity and audience fit: The larger shape needs staged action, a held moment, and a real return. One household object, one settled pause, then ordinary return.
+- Carry prompt: What can settle without being fixed?
+- Why this fits: Home tending stays Home here: one thing is lifted, held at the center, and returned. The room-edge walk and held minute deepen the action without making it a chore. The timing can stay quiet while the room receives one small act of care. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+- How this was chosen: Material and ritual fit: Home remains the material path. The room-edge walk and held minute deepen the action without making it a chore. Home tending stays Home here: one thing is lifted, held at the center, and returned. Source lineage: smoored hearth and household object-return mechanics. / Timing fit: The timing can stay quiet while the room receives one small act of care. / Capacity and audience fit: The larger shape needs staged action, a held moment, and a real return. One room object, one held minute, then the object is home again.
 - Source summary: Source lineage: smoored hearth and household object-return mechanics. Form kept contained.
 - Warnings: none
 
@@ -238,12 +243,30 @@ Diagnostic integrity: warnings decreased because the Home contract outputs chang
 - Ritual body: Keep the release specific and small; let rinsing be closure, not another ritual. Put clear water in a small bowl and add a pinch of salt. Name one spent thing that can leave this household field. Pour the water away. Rinse the bowl and return it to ordinary use. Close when the bowl is rinsed and empty.
 - Warnings: none
 
+### Numerology Home Scenarios
+
+Scenario IDs:
+
+- `contract.numerology.minor_accent_only`
+- `numerology.accent.secondary`
+
+Both still select `hearth_object_return` because Home/hearth object return is now the better material match for Home + tending, not because numerology is leading. Numerology does not appear in the title, ritual body, intention, carry prompt, Why this fits, or How this was chosen. No number-led, fate, luck, prosperity, manifestation, or certainty language appears. Warnings: none.
+
+Representative normal output:
+
+- Title/theme: Return one small thing to the room.
+- Ritual body: Let the return, not cleaning, be the close. Choose one small thing from the room that has a real place. Set it at the table or room center and touch the surface once. Name what can be cared for without being fixed. Put the object back. Close when the object is home again and the surface is left alone.
+- Intention: Let one returned thing give the room a small act of care.
+- Carry prompt: What feels a little more at home when this returns?
+- Why this fits: Home tending does not need to mean cleaning. Returning one thing to its place gives the house a small act of care with a clear end. The object and its return are the rite. The timing can stay quiet while the room receives one small act of care. Steady capacity gives the material a little room to be placed, held, and returned.
+
 ## 8. Remaining Home Gaps And Risks
 
 - `contract.home.high_threshold_full` still has `high_capacity_no_deeper_ritual_shape`; this is intentionally preserved because threshold high-capacity depth is not solved by #231.
 - `house_from_root_to_roof` remains older house-map coverage and still has less elegant source lineage than the new hearth/object-return patterns.
 - Broader table-center, household shrine, and generic object-return remain out of scope until exact sources are pinned and approved.
 - `hearth_object_return` appears 6 times in the quality matrix; concentration is worth watching, but the count is from targeted #231 scenarios and generic Home-tending numerology fixtures.
+- Cleanup patch added blocked-phrase guards for the templated Home/hearth copy class: "ordinary household object," "ordinary use," "household material makes tending visible," "one concrete place to land," "one settled pause," and related phrases.
 
 ## 9. Validation Results
 
@@ -269,11 +292,21 @@ Implemented the narrow #231 Home/hearth/table source-ready slice from #227:
 - Added `hearth_object_return` and `last_household_light`.
 - Added `home_hearth_table_return` diagnostics.
 - Updated Home+tending scenarios so low/high waning and high/no-strong-timing select Home/hearth/table object-return rather than threshold-light fallback.
+- Cleanup patch tightened Home/hearth normal copy so object return uses a room object at the table or room center instead of table-light dependency.
+- Cleanup patch adjusted `last_household_light` so Home rest centers the resting place and room close; light is only an existing last signal.
+- Numerology scenarios remain minor-accent only; Home/hearth material match drives selection and no number-led language appears.
 - Preserved threshold output when threshold is explicit.
 - No new visible categories, broad scoring changes, UI changes, broad sources, copied source text, or private data.
 - No protection/warding/security, cleansing, healing, prosperity, manifestation, chore/productivity, or copied prayer language.
 
-Quality delta: contract request changes 3 -> 1; authored request changes 4 -> 2; high-capacity depth warnings 5 -> 4; worsened scenarios none.
+Before/after examples:
+
+- Low Home tending before cleanup: "Choose one ordinary household object that already has a place... Set it beside the table light..."
+- Low Home tending after cleanup: "Take one small thing from this room that already has a real place: a mug, key, folded cloth, book, or coaster. Set it at the table or room center..."
+- High Home tending before cleanup: "Choose one ordinary object from the room and set it beside the table light... Return it to its ordinary place."
+- High Home tending after cleanup: "Choose one small thing from the room that has a real place. Set it at the table or room center... Put it back. Close when the object is home again..."
+
+Quality delta: contract request changes 3 -> 1; authored request changes 4 -> 2; high-capacity depth warnings 5 -> 4; worsened scenarios none. Cleanup did not change warning counts; it tightened wording and added phrase guards.
 
 Handoff prompt:
 

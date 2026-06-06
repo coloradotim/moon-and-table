@@ -2941,9 +2941,9 @@ function getPatternMaterialPhrase(pattern: RitualPattern): string {
     clear_the_threshold_bowl:
       "The vessel closes by emptying what it held and becoming ordinary again.",
     hearth_object_return:
-      "The returned object gives household care a place, a pause, and a clean end.",
+      "Returning one thing to its place gives the room a small act of care with a clear end.",
     last_household_light:
-      "The last household light lets the room settle without making rest into a task.",
+      "One resting place is left alone so the room can stop asking for more.",
     bank_the_house_light:
       "Lowered light lets rest become visible without asking for more action.",
     first_light_for_the_beginning:
@@ -3036,15 +3036,15 @@ function getTimingBridgePhrase(
       primaryMoonFact === "moon.waning" &&
       input.preferredRitualStyles.includes("waning")
     ) {
-      return "Waning timing makes this a settling return, not a purge or a cleaning reset.";
+      return "Waning timing supports settling and returning, not purging or clearing.";
     }
 
     if (focusKey === "resting") {
-      return "Dark or quiet timing lets the house lower one light and leave the rest alone.";
+      return "Dark or quiet timing lets the room have one last signal, then stay as it is.";
     }
 
     if (focusKey === "tending_the_home") {
-      return "The timing can stay quiet while the household form does the tending.";
+      return "The timing can stay quiet while the room receives one small act of care.";
     }
   }
 
@@ -3107,8 +3107,8 @@ function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeekly
     salt_clear_water_release: "one named release, one emptied bowl, then ordinary return",
     waning_phrase_release: "one phrase, one removal path, then empty hands",
     clear_the_threshold_bowl: "one held marker, one emptying, then the vessel returns",
-    hearth_object_return: "one household object, one settled pause, then ordinary return",
-    last_household_light: "one last light, one resting place, then no more tending",
+    hearth_object_return: "one room object, one held minute, then the object is home again",
+    last_household_light: "one resting place, one last signal, then the room is left alone",
     bank_the_house_light: "one lowered light, one ending, then no more work",
     first_light_for_the_beginning: "one first light, one sentence, then no plan",
     first_light_at_the_threshold: "one first light, one crossing, one later return",
@@ -3221,7 +3221,11 @@ function getWhyThisFits(
           ? "Private timing fit added a quiet thematic note."
           : "";
 
-  if (profilePhrase && parts.join(" ").length < 360) {
+  if (
+    profilePhrase &&
+    parts.join(" ").length < 360 &&
+    !pattern.ritualStyles.includes("home_hearth")
+  ) {
     parts.push(profilePhrase);
   }
 
@@ -3396,6 +3400,12 @@ function getFocusMeaningPhrase(
     case "tending_us":
       return "The shared material carries tending-us as a small action, not a long talk.";
     case "tending_the_home":
+      if (pattern.key === "hearth_object_return") {
+        return input.capacityMode === "high"
+          ? "The room-edge walk and held minute deepen the action without making it a chore."
+          : "The object and its return are the rite.";
+      }
+
       return "The household material makes tending visible, then returns to ordinary use.";
     case "marking_a_threshold":
       if (pattern.key === "first_day_last_day" || pattern.key === "last_word_first_word") {
@@ -3410,6 +3420,10 @@ function getFocusMeaningPhrase(
     case "getting_grounded":
       return "The material gives attention one edge to return to, then stops.";
     case "resting":
+      if (pattern.key === "last_household_light") {
+        return "The resting place, not the light, carries the close.";
+      }
+
       return "The action lets rest be held by material instead of explained into more work.";
     default:
       return undefined;
@@ -4356,6 +4370,16 @@ function getDistinctPresentationIntention(
   context: RitualPresentationContext | undefined,
   presentation: Omit<RitualPresentation, "variants">,
 ): string {
+  if (pattern.key === "hearth_object_return") {
+    return context?.currentRitualCheckIn?.capacityMode === "high"
+      ? "Let the return give household care a beginning, middle, and end."
+      : "Let one returned thing give the room a small act of care.";
+  }
+
+  if (pattern.key === "last_household_light") {
+    return "Let the house rest without asking for one more task.";
+  }
+
   const matter = getRitualMatterForIntention(pattern);
   const isShared =
     audience === "together" ||
