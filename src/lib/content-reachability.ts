@@ -254,7 +254,44 @@ export function getDefaultContentReachabilityScenarios(): ContentReachabilitySce
       }),
   );
 
-  return [...patternScenarios, ...timingScenarios, ...practiceScenarios];
+  const focusedContentScenarios: ContentReachabilityScenario[] = [
+    {
+      id: "focused.home_hearth_object_return",
+      label: "Focused reachability: Home hearth object return",
+      input: {
+        currentDate: "2026-06-03T12:00:00.000Z",
+        capacityMode: "high",
+        audience: "together",
+        privateProfileKeys: getProfileKeysForAudience("together"),
+        profileInputs: SAMPLE_PROFILE_INPUTS,
+        preferredRitualStyles: [
+          "home_tending",
+          "home_hearth",
+          "object_return",
+          "return",
+          "table_reset",
+        ],
+        avoidedRitualStyles: ["shopping_required", "long_journaling"],
+        currentRitualCheckIn: {
+          timeScope: "today",
+          energyCapacity: "room_for_something_deeper",
+          capacityMode: "high",
+          audience: "both_of_us",
+          practiceTypeHints: ["home_tending"],
+          practiceTypeLabel: "Home",
+          ritualFocusKey: "tending_the_home",
+          ritualFocusLabel: "Tending the home",
+        },
+      },
+    },
+  ];
+
+  return [
+    ...patternScenarios,
+    ...timingScenarios,
+    ...practiceScenarios,
+    ...focusedContentScenarios,
+  ];
 }
 
 function toScenarioResult(

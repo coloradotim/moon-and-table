@@ -284,7 +284,7 @@ describe("recommendation quality report", () => {
     expect(categorySelectionModes).toEqual(
       new Set(["explicit_category", "surprise_me_open_preference"]),
     );
-    expect(report.warningCounts.contract_request_changes).toBeGreaterThanOrEqual(3);
+    expect(report.warningCounts.contract_request_changes).toBeGreaterThanOrEqual(1);
 
     for (const result of contractResults) {
       const status = result.contractStatus;
@@ -476,6 +476,34 @@ describe("recommendation quality report", () => {
     expect(resultById.get("issue183.home.tending_steady")?.selectedRitualPattern.key).not.toBe(
       "salt_clear_water_release",
     );
+    expect(resultById.get("contract.home.low_tending_waning_not_release")).toMatchObject({
+      selectedRitualPattern: { key: "hearth_object_return" },
+      ritualFormFamilyMatched: true,
+      selectedRitualFormFamilies: expect.arrayContaining(["Home hearth/table return"]),
+    });
+    expect(resultById.get("contract.home.low_tending_waning_not_release")?.selectedRitualPattern.key).not.toBe(
+      "first_light_at_the_threshold",
+    );
+    expect(resultById.get("contract.home.high_tending_waning")).toMatchObject({
+      selectedRitualPattern: { key: "hearth_object_return" },
+      ritualFormFamilyMatched: true,
+      selectedRitualFormFamilies: expect.arrayContaining(["Home hearth/table return"]),
+    });
+    expect(resultById.get("issue231.home.high_tending_no_timing")).toMatchObject({
+      selectedRitualPattern: { key: "hearth_object_return" },
+      ritualFormFamilyMatched: true,
+      selectedRitualFormFamilies: expect.arrayContaining(["Home hearth/table return"]),
+    });
+    expect(resultById.get("issue231.home.dark_rest_closing")).toMatchObject({
+      selectedRitualPattern: { key: "last_household_light" },
+      ritualFormFamilyMatched: true,
+      selectedRitualFormFamilies: expect.arrayContaining(["Home hearth/table return"]),
+    });
+    expect(resultById.get("issue231.surprise.home_high_resolved")).toMatchObject({
+      selectedRitualPattern: { key: "hearth_object_return" },
+      ritualFormFamilyMatched: true,
+      selectedRitualFormFamilies: expect.arrayContaining(["Home hearth/table return"]),
+    });
     expect(resultById.get("issue183.plant.beginning.seed")).toMatchObject({
       ritualFormFamilyMatched: true,
       selectedRitualFormFamilies: expect.arrayContaining(["plant seed/beginning"]),
@@ -585,8 +613,8 @@ describe("recommendation quality report", () => {
         blockedPatterns: ["waning_light_release", "salt_clear_water_release", "full_light_on_the_table"],
       }],
       ["contract.home.high_tending_waning", {
-        expectedFamilies: ["house map", "threshold/crossing/bowl/key", "bread/grain center"],
-        blockedPatterns: ["waning_light_release", "salt_clear_water_release", "full_light_on_the_table"],
+        expectedFamilies: ["Home hearth/table return"],
+        blockedPatterns: ["first_light_at_the_threshold", "waning_light_release", "salt_clear_water_release", "full_light_on_the_table"],
       }],
       ["contract.home.high_threshold_full", {
         expectedFamilies: ["threshold/crossing/bowl/key"],

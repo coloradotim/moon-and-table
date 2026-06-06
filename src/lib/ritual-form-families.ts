@@ -19,6 +19,7 @@ export const RITUAL_FORM_FAMILIES = [
   "threshold_crossing_bowl_key",
   "salt_water_release",
   "vessel_empty_return",
+  "home_hearth_table_return",
   "house_map",
   "written_folded_container",
   "spoken_table_phrase",
@@ -48,6 +49,7 @@ const FORM_FAMILY_LABELS: Record<RitualFormFamily, string> = {
   threshold_crossing_bowl_key: "threshold/crossing/bowl/key",
   salt_water_release: "salt/water release",
   vessel_empty_return: "vessel emptying/return",
+  home_hearth_table_return: "Home hearth/table return",
   house_map: "house map",
   written_folded_container: "written/folded/container",
   spoken_table_phrase: "spoken/table phrase",
@@ -58,6 +60,8 @@ const FORM_FAMILY_LABELS: Record<RitualFormFamily, string> = {
 };
 
 const FORM_FAMILIES_BY_PATTERN_KEY: Record<string, RitualFormFamily[]> = {
+  hearth_object_return: ["home_hearth_table_return", "vessel_empty_return"],
+  last_household_light: ["home_hearth_table_return", "banked_or_darkening_light"],
   banked_light_evening: ["banked_or_darkening_light"],
   first_light_beginning: ["first_light_threshold"],
   renewed_light_return: ["renewed_light_return"],
@@ -112,6 +116,10 @@ const FORM_FAMILIES_BY_STYLE: Record<string, RitualFormFamily[]> = {
   darkening_light: ["banked_or_darkening_light"],
   banked_light: ["banked_or_darkening_light"],
   banked_light_evening: ["banked_or_darkening_light"],
+  home_hearth: ["home_hearth_table_return"],
+  hearth_settling: ["home_hearth_table_return"],
+  object_return: ["home_hearth_table_return", "vessel_empty_return"],
+  last_household_light: ["home_hearth_table_return", "banked_or_darkening_light"],
   seed: ["plant_seed_beginning", "grain_seed_bowl"],
   grain: ["grain_seed_bowl", "bread_grain_center"],
   bread: ["bread_grain_center"],
@@ -304,8 +312,15 @@ export function getExpectedRitualFormFamilies(
       expected.push("threshold_crossing_bowl_key", "first_light_threshold", "first_last_threshold");
     } else if (focus === "clearing_something_out") {
       expected.push("salt_water_release", "vessel_empty_return", "threshold_crossing_bowl_key");
-    } else if (focus === "tending_the_home" || focus === "getting_grounded") {
+    } else if (focus === "tending_the_home") {
+      expected.push("home_hearth_table_return", "house_map", "bread_grain_center");
+      if (hintSet.has("threshold_reset") || hintSet.has("crossing")) {
+        expected.push("threshold_crossing_bowl_key");
+      }
+    } else if (focus === "getting_grounded") {
       expected.push("house_map", "threshold_crossing_bowl_key", "bread_grain_center");
+    } else if (focus === "resting") {
+      expected.push("home_hearth_table_return", "banked_or_darkening_light");
     }
   }
 
