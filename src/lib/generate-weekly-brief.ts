@@ -3210,7 +3210,7 @@ function getWhyThisFits(
     getFocusMeaningPhrase(input, pattern),
     getTimingBridgePhrase(timingCard, pattern, input, selectedTimingSignals),
     getAudienceMeaningPhrase(input, pattern),
-    getCapacityMeaningPhrase(input),
+    getCapacityMeaningPhrase(input, pattern),
   ];
   const profilePhrase =
     profileSignalMatches.length > 0
@@ -3390,6 +3390,12 @@ function getFocusMeaningPhrase(
   const focusKey = input.currentRitualCheckIn?.ritualFocusKey;
   const styles = pattern.ritualStyles;
 
+  if (pattern.key === "bread_at_the_center") {
+    return input.capacityMode === "low"
+      ? "Low capacity keeps the rite simple: place it, name enough, breathe, and clear the plate."
+      : "The table center gives the rite a visible place, then the plate is cleared.";
+  }
+
   switch (focusKey) {
     case "making_a_beginning":
       return styles.some((style) =>
@@ -3398,14 +3404,22 @@ function getFocusMeaningPhrase(
         ? "The ritual gives the beginning a first body before it becomes work."
         : "The chosen material holds the beginning small enough to wait.";
     case "tending_us":
-      return "The cup, bowl, light, or table gives both of you one shared action before talk begins.";
+      if (pattern.key === "quiet_welcome" || pattern.key === "warm_cup_between_us") {
+        return "The cup or bowl gives both of you one small shared action before talk begins.";
+      }
+
+      if (pattern.ritualStyles.includes("candle_or_light") || pattern.ritualStyles.includes("light_focus")) {
+        return "The light gives both of you one small shared action before talk begins.";
+      }
+
+      if (pattern.key === "honeyed_word") {
+        return "The sweetness cue gives both of you one small shared action before talk begins.";
+      }
+
+      return "The selected material gives both of you one small shared action before talk begins.";
     case "tending_the_home":
       if (pattern.key === "plant_witness_to_growth") {
         return "The plant stays where it is; the rite works by noticing it and leaving it untouched.";
-      }
-
-      if (pattern.key === "bread_at_the_center") {
-        return "Bread gives enough a small place at the table; the rite ends when the plate is clear.";
       }
 
       if (pattern.key === "seasonal_marker_bowl") {
@@ -3424,6 +3438,10 @@ function getFocusMeaningPhrase(
 
       return "The material gives household care one clear act of tending without becoming a chore.";
     case "marking_a_threshold":
+      if (pattern.key === "seasonal_marker_bowl") {
+        return "The marker gives the season one household place, and leaving the bowl in place keeps the rite small.";
+      }
+
       if (pattern.key === "first_day_last_day" || pattern.key === "last_word_first_word") {
         return "The doorway gives the threshold one crossing to carry the words.";
       }
@@ -3435,7 +3453,7 @@ function getFocusMeaningPhrase(
       return "The material gives release one path out and one clear stop.";
     case "getting_grounded":
       if (pattern.key === "warm_cup_between_us") {
-        return "The cup gives wandering attention a little weight, then returns to the table.";
+        return "The cup gives wandering attention a little weight, then is set down.";
       }
 
       if (pattern.ritualStyles.includes("candle_or_light") || pattern.ritualStyles.includes("light_focus")) {
@@ -3444,10 +3462,6 @@ function getFocusMeaningPhrase(
 
       if (pattern.key === "plant_witness_to_growth") {
         return "The plant gives attention a living place to rest without becoming a task.";
-      }
-
-      if (pattern.key === "bread_at_the_center") {
-        return "Bread gives attention a small table center, then the plate is cleared.";
       }
 
       return "The material gives wandering attention one steady place to return to, then stops.";
@@ -3473,6 +3487,22 @@ function getAudienceMeaningPhrase(
     return undefined;
   }
 
+  if (pattern.key === "plant_witness_to_growth") {
+    return "For both of you, the plant witnesses one word from each of you without being handled.";
+  }
+
+  if (pattern.key === "quiet_welcome") {
+    return "For both of you, one person names the welcome and the other touches the vessel.";
+  }
+
+  if (pattern.key === "warm_cup_between_us") {
+    return "For both of you, the cup or bowl gives the rite one thing to hold between you.";
+  }
+
+  if (pattern.ritualStyles.includes("candle_or_light") || pattern.ritualStyles.includes("light_focus")) {
+    return "For both of you, the shared light gives the rite one thing to hold between you.";
+  }
+
   if (pattern.ritualStyles.some((style) => ["shared_space", "table_reset", "warm"].includes(style))) {
     return "For both of you, the shared surface or vessel gives the rite one thing to hold between you.";
   }
@@ -3480,15 +3510,23 @@ function getAudienceMeaningPhrase(
   return "For both of you, the rite works through one small role each, or one shared object touched together.";
 }
 
-function getCapacityMeaningPhrase(input: ResolvedGenerateWeeklyBriefInput): string {
+function getCapacityMeaningPhrase(input: ResolvedGenerateWeeklyBriefInput, pattern: RitualPattern): string {
   switch (input.capacityMode) {
     case "pause":
       return "Pause capacity makes permission the whole shape.";
     case "low":
+      if (pattern.key === "bread_at_the_center") {
+        return "The plate is cleared before the rite becomes more than one small table act.";
+      }
+
       return "Low capacity keeps the rite to one material action and one close.";
     case "steady":
       return "Steady capacity gives the material a little room to be placed, held, and returned.";
     case "high":
+      if (pattern.key === "plant_witness_to_growth") {
+        return "High capacity gives the witness a held minute and two named roles without adding a task.";
+      }
+
       return "High capacity asks for a fuller arc: staged action, a held moment, and a return.";
   }
 }

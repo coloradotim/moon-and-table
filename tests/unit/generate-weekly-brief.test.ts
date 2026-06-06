@@ -299,7 +299,8 @@ describe("generateWeeklyBrief", () => {
     expect(brief.intention).toBe(
       "Let the plant give household care a place to rest.",
     );
-    expect(brief.recommendedRitual).toContain("Sit near one plant that is already part of the room");
+    expect(brief.recommendedRitual).toContain("Let the plant witness without being handled");
+    expect(brief.recommendedRitual).toContain("already part of the room");
     expect(brief.recommendedRitual).toContain("Let the plant witness it for one breath.");
     expect(brief.recommendedRitual).toContain("Close by letting the plant stay as it is.");
     expect(brief.reflectionPrompt).toBe(
@@ -1125,7 +1126,7 @@ describe("generateWeeklyBrief", () => {
       expect.arrayContaining([
         expect.objectContaining({
           kind: "ritual_focus",
-          body: expect.stringContaining("one shared action"),
+          body: expect.stringContaining("one small shared action"),
         }),
         expect.objectContaining({
           title: "Kept bounded",

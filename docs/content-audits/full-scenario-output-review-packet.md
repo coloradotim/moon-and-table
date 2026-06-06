@@ -118,7 +118,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup already near you can hold a pause without asking you to set anything up. The cup gives wandering attention a little weight, then returns to the table. New moon adds emphasis; the rite stays with its chosen material. Pause capacity makes permission the whole shape. Nothing here needs to become a project.
+A cup already near you can hold a pause without asking you to set anything up. The cup gives wandering attention a little weight, then is set down. New moon adds emphasis; the rite stays with its chosen material. Pause capacity makes permission the whole shape. Nothing here needs to become a project.
 
 Question to carry
 What can the cup hold for this pause?
@@ -131,7 +131,7 @@ Timing shaped it
 New moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
-The cup gives wandering attention a little weight, then returns to the table.
+The cup gives wandering attention a little weight, then is set down.
 
 Ritual form
 A cup already near you can hold a pause without asking you to set anything up.
@@ -471,7 +471,7 @@ Full normal output:
 ```text
 Let a plant witness the growth.
 
-Sit near one plant that is already part of the room; speak softly or silently. Sit or stand near one plant, leaf, seed, or plant image. Name one thing that is growing, slowly or privately. Let the plant witness it for one breath. Leave the plant untouched. Close by letting the plant stay as it is.
+Let the plant witness without being handled. Sit or stand near one plant, leaf, seed, or plant image already part of the room. Name one thing that is growing, slowly or privately. Let the plant witness it for one breath. Leave the plant untouched. Close by letting the plant stay as it is.
 
 Intention
 Let the plant give household care a place to rest.
@@ -699,7 +699,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Full moon adds emphasis; the rite stays with its chosen material. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
+A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The cup or bowl gives both of you one small shared action before talk begins. Full moon adds emphasis; the rite stays with its chosen material. For both of you, the cup or bowl gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
 
 Question to carry
 What warmth can remain on the shared surface?
@@ -712,7 +712,7 @@ Timing shaped it
 Full moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
-The cup, bowl, light, or table gives both of you one shared action before talk begins.
+The cup or bowl gives both of you one small shared action before talk begins.
 
 Ritual form
 A cup is a small vessel for welcome: it can hold warmth without asking for a conversation.
@@ -772,7 +772,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup or small bowl can hold welcome briefly without starting a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Seasonal timing asks for one private marker that can rest at the table. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+A cup or small bowl can hold welcome briefly without starting a conversation. The cup or bowl gives both of you one small shared action before talk begins. Seasonal timing asks for one private marker that can rest at the table. For both of you, one person names the welcome and the other touches the vessel. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What welcome can the shared vessel hold for both of you?
@@ -785,7 +785,7 @@ Timing shaped it
 Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The cup, bowl, light, or table gives both of you one shared action before talk begins.
+The cup or bowl gives both of you one small shared action before talk begins.
 
 Ritual form
 A cup or small bowl can hold welcome briefly without starting a conversation.
@@ -845,7 +845,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Shared light can give a small common focus a form without asking it to become larger. The cup, bowl, light, or table gives both of you one shared action before talk begins. Full moon adds emphasis; the rite stays with its chosen material. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+Shared light can give a small common focus a form without asking it to become larger. The light gives both of you one small shared action before talk begins. Full moon adds emphasis; the rite stays with its chosen material. For both of you, the shared light gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What can the shared light hold for both of you?
@@ -858,7 +858,7 @@ Timing shaped it
 Full moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
-The cup, bowl, light, or table gives both of you one shared action before talk begins.
+The light gives both of you one small shared action before talk begins.
 
 Ritual form
 Shared light can give a small common focus a form without asking it to become larger.
@@ -991,7 +991,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Bread gives enough a small place at the table. Bread gives attention a small table center, then the plate is cleared. Tuesday, July 14 overnight stood out this week. The window stood out because of clear lunar timing. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
+Bread gives enough a small place at the table. Low capacity keeps the rite simple: place it, name enough, breathe, and clear the plate. Tuesday, July 14 overnight stood out this week. The window stood out because of clear lunar timing. The plate is cleared before the rite becomes more than one small table act. Nothing here needs to become a project.
 
 Question to carry
 What is already enough for tonight?
@@ -1004,7 +1004,7 @@ Timing shaped it
 Tuesday, July 14 overnight stood out this week. The window stood out because of clear lunar timing.
 
 Focus bridge
-Bread gives attention a small table center, then the plate is cleared.
+Low capacity keeps the rite simple: place it, name enough, breathe, and clear the plate.
 
 Ritual form
 Bread gives enough a small place at the table.
@@ -1280,7 +1280,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A seasonal bowl gives calendar change a private household form: one marker held, then returned. The ritual gives the threshold one action and one close. Seasonal timing asks for one private marker that can rest at the table. Steady capacity gives the material a little room to be placed, held, and returned. Nothing here needs to become a project.
+A seasonal bowl gives calendar change a private household form: one marker held, then returned. The marker gives the season one household place, and leaving the bowl in place keeps the rite small. Seasonal timing asks for one private marker that can rest at the table. Steady capacity gives the material a little room to be placed, held, and returned. Nothing here needs to become a project.
 
 Question to carry
 What season is this home actually in?
@@ -1293,7 +1293,7 @@ Timing shaped it
 Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The ritual gives the threshold one action and one close.
+The marker gives the season one household place, and leaving the bowl in place keeps the rite small.
 
 Ritual form
 A seasonal bowl gives calendar change a private household form: one marker held, then returned.
@@ -1426,7 +1426,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A seasonal bowl gives calendar change a private household form: one marker held, then returned. The ritual gives the threshold one action and one close. Seasonal timing asks for one private marker that can rest at the table. For both of you, the rite works through one small role each, or one shared object touched together. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+A seasonal bowl gives calendar change a private household form: one marker held, then returned. The marker gives the season one household place, and leaving the bowl in place keeps the rite small. Seasonal timing asks for one private marker that can rest at the table. For both of you, the rite works through one small role each, or one shared object touched together. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What season can the bowl hold between you without becoming display?
@@ -1439,7 +1439,7 @@ Timing shaped it
 Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The ritual gives the threshold one action and one close.
+The marker gives the season one household place, and leaving the bowl in place keeps the rite small.
 
 Ritual form
 A seasonal bowl gives calendar change a private household form: one marker held, then returned.
@@ -1788,7 +1788,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Bread gives enough a small place at the table. Bread gives attention a small table center, then the plate is cleared. Seasonal timing asks for one private marker that can rest at the table. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
+Bread gives enough a small place at the table. Low capacity keeps the rite simple: place it, name enough, breathe, and clear the plate. Seasonal timing asks for one private marker that can rest at the table. The plate is cleared before the rite becomes more than one small table act. Nothing here needs to become a project.
 
 Question to carry
 What is already enough for tonight?
@@ -1801,7 +1801,7 @@ Timing shaped it
 Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-Bread gives attention a small table center, then the plate is cleared.
+Low capacity keeps the rite simple: place it, name enough, breathe, and clear the plate.
 
 Ritual form
 Bread gives enough a small place at the table.
@@ -1934,7 +1934,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup or small bowl can hold welcome briefly without starting a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Seasonal timing asks for one private marker that can rest at the table. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+A cup or small bowl can hold welcome briefly without starting a conversation. The cup or bowl gives both of you one small shared action before talk begins. Seasonal timing asks for one private marker that can rest at the table. For both of you, one person names the welcome and the other touches the vessel. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What welcome can the shared vessel hold for both of you?
@@ -1947,7 +1947,7 @@ Timing shaped it
 Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The cup, bowl, light, or table gives both of you one shared action before talk begins.
+The cup or bowl gives both of you one small shared action before talk begins.
 
 Ritual form
 A cup or small bowl can hold welcome briefly without starting a conversation.
@@ -2065,7 +2065,7 @@ Full normal output:
 ```text
 Let a plant witness the growth.
 
-Sit near one plant that is already part of the room; speak softly or silently. Sit or stand near one plant, leaf, seed, or plant image. Name one thing that is growing, slowly or privately. Let the plant witness it for one breath. Leave the plant untouched. Close by letting the plant stay as it is.
+Let the plant witness without being handled. Sit or stand near one plant, leaf, seed, or plant image already part of the room. Name one thing that is growing, slowly or privately. Let the plant witness it for one breath. Leave the plant untouched. Close by letting the plant stay as it is.
 
 Intention
 Let the plant give household care a place to rest.
@@ -2731,7 +2731,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Bread gives enough a small place at the table. Bread gives enough a small place at the table; the rite ends when the plate is clear. Seasonal timing asks for one private marker that can rest at the table. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
+Bread gives enough a small place at the table. Low capacity keeps the rite simple: place it, name enough, breathe, and clear the plate. Seasonal timing asks for one private marker that can rest at the table. The plate is cleared before the rite becomes more than one small table act. Nothing here needs to become a project.
 
 Question to carry
 What is already enough for tonight?
@@ -2744,7 +2744,7 @@ Timing shaped it
 Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-Bread gives enough a small place at the table; the rite ends when the plate is clear.
+Low capacity keeps the rite simple: place it, name enough, breathe, and clear the plate.
 
 Ritual form
 Bread gives enough a small place at the table.
@@ -2801,7 +2801,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Bread gives enough a small place at the table. Bread gives enough a small place at the table; the rite ends when the plate is clear. Seasonal timing asks for one private marker that can rest at the table. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
+Bread gives enough a small place at the table. The table center gives the rite a visible place, then the plate is cleared. Seasonal timing asks for one private marker that can rest at the table. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
 
 Question to carry
 What is already enough between you tonight?
@@ -2814,7 +2814,7 @@ Timing shaped it
 Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-Bread gives enough a small place at the table; the rite ends when the plate is clear.
+The table center gives the rite a visible place, then the plate is cleared.
 
 Ritual form
 Bread gives enough a small place at the table.
@@ -2871,7 +2871,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A seasonal bowl gives calendar change a private household form: one marker held, then returned. The ritual gives the threshold one action and one close. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. For both of you, the rite works through one small role each, or one shared object touched together. Low capacity keeps the rite to one material action and one close.
+A seasonal bowl gives calendar change a private household form: one marker held, then returned. The marker gives the season one household place, and leaving the bowl in place keeps the rite small. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. For both of you, the rite works through one small role each, or one shared object touched together. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What season can the bowl hold between you without becoming display?
@@ -2884,7 +2884,7 @@ Timing shaped it
 The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down.
 
 Focus bridge
-The ritual gives the threshold one action and one close.
+The marker gives the season one household place, and leaving the bowl in place keeps the rite small.
 
 Ritual form
 A seasonal bowl gives calendar change a private household form: one marker held, then returned.
@@ -2944,7 +2944,7 @@ Optional accent
 Let the beginning stay small enough to wait.
 
 Why this fits
-Kindling and first-sighting traditions make a beginning visible before it becomes a project. The ritual gives the beginning a first body before it becomes work. Waxing moon adds emphasis; the rite stays with its chosen material. For both of you, the rite works through one small role each, or one shared object touched together. Low capacity keeps the rite to one material action and one close.
+Kindling and first-sighting traditions make a beginning visible before it becomes a project. The ritual gives the beginning a first body before it becomes work. Waxing moon adds emphasis; the rite stays with its chosen material. For both of you, the shared light gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What first step can belong to the household without becoming a project?
@@ -3379,7 +3379,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A seasonal bowl gives calendar change a private household form: one marker held, then returned. The ritual gives the threshold one action and one close. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. For both of you, the rite works through one small role each, or one shared object touched together. Low capacity keeps the rite to one material action and one close.
+A seasonal bowl gives calendar change a private household form: one marker held, then returned. The marker gives the season one household place, and leaving the bowl in place keeps the rite small. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. For both of you, the rite works through one small role each, or one shared object touched together. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What season can the bowl hold between you without becoming display?
@@ -3392,7 +3392,7 @@ Timing shaped it
 The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down.
 
 Focus bridge
-The ritual gives the threshold one action and one close.
+The marker gives the season one household place, and leaving the bowl in place keeps the rite small.
 
 Ritual form
 A seasonal bowl gives calendar change a private household form: one marker held, then returned.
@@ -3525,7 +3525,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup or small bowl can hold welcome briefly without starting a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Seasonal timing asks for one private marker that can rest at the table. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+A cup or small bowl can hold welcome briefly without starting a conversation. The cup or bowl gives both of you one small shared action before talk begins. Seasonal timing asks for one private marker that can rest at the table. For both of you, one person names the welcome and the other touches the vessel. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What welcome can the shared vessel hold for both of you?
@@ -3538,7 +3538,7 @@ Timing shaped it
 Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The cup, bowl, light, or table gives both of you one shared action before talk begins.
+The cup or bowl gives both of you one small shared action before talk begins.
 
 Ritual form
 A cup or small bowl can hold welcome briefly without starting a conversation.
@@ -3595,7 +3595,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Sweetness belongs here as a material cue for one bounded word that can be set down and ended. The cup, bowl, light, or table gives both of you one shared action before talk begins. Waxing moon adds emphasis; the rite stays with its chosen material. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+Sweetness belongs here as a material cue for one bounded word that can be set down and ended. The sweetness cue gives both of you one small shared action before talk begins. Waxing moon adds emphasis; the rite stays with its chosen material. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What word can be sweetened between you and then set down?
@@ -3608,7 +3608,7 @@ Timing shaped it
 Waxing moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
-The cup, bowl, light, or table gives both of you one shared action before talk begins.
+The sweetness cue gives both of you one small shared action before talk begins.
 
 Ritual form
 Sweetness belongs here as a material cue for one bounded word that can be set down and ended.
@@ -3726,7 +3726,7 @@ Full normal output:
 ```text
 Let a plant witness the growth.
 
-Sit near one plant that is already part of the room; speak softly or silently. Sit or stand near one plant, leaf, seed, or plant image. Name one thing that is growing, slowly or privately. Let the plant witness it for one breath. Leave the plant untouched. Close by letting the plant stay as it is.
+Let the plant witness without being handled. Sit or stand near one plant, leaf, seed, or plant image already part of the room. Name one thing that is growing, slowly or privately. Let the plant witness it for one breath. Leave the plant untouched. Close by letting the plant stay as it is.
 
 Intention
 Let the plant give household care a place to rest.
@@ -4316,7 +4316,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup or small bowl can hold welcome briefly without starting a conversation. The action lets rest be held by material instead of explained into more work. Seasonal timing asks for one private marker that can rest at the table. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+A cup or small bowl can hold welcome briefly without starting a conversation. The action lets rest be held by material instead of explained into more work. Seasonal timing asks for one private marker that can rest at the table. For both of you, one person names the welcome and the other touches the vessel. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What welcome can the shared vessel hold for both of you?
@@ -4681,7 +4681,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Full visible light gives the phrase a clear witness, while the material path stays table light. The phrase receives one material action so the saying can end cleanly. Full light lets the phrase be witnessed once, then closed by changing the light. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+Full visible light gives the phrase a clear witness, while the material path stays table light. The phrase receives one material action so the saying can end cleanly. Full light lets the phrase be witnessed once, then closed by changing the light. For both of you, the shared light gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What line can be witnessed between you without becoming talk?
@@ -5119,7 +5119,7 @@ Optional accent
 Let the beginning stay small enough to wait.
 
 Why this fits
-Renewed-light sources support a transition arc: old light state ends, one new safe light begins, and continuity returns. The ritual gives the beginning a first body before it becomes work. New-moon darkness makes the first light small: it opens the beginning, then stops before proof. For both of you, the rite works through one small role each, or one shared object touched together. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+Renewed-light sources support a transition arc: old light state ends, one new safe light begins, and continuity returns. The ritual gives the beginning a first body before it becomes work. New-moon darkness makes the first light small: it opens the beginning, then stops before proof. For both of you, the shared light gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What begins better when both of you bring one light back?
@@ -5262,7 +5262,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Shared light can give a small common focus a form without asking it to become larger. The cup, bowl, light, or table gives both of you one shared action before talk begins. Waning moon adds emphasis; the rite stays with its chosen material. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
+Shared light can give a small common focus a form without asking it to become larger. The light gives both of you one small shared action before talk begins. Waning moon adds emphasis; the rite stays with its chosen material. For both of you, the shared light gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
 
 Question to carry
 What can the shared light hold for both of you?
@@ -5275,7 +5275,7 @@ Timing shaped it
 Waning moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
-The cup, bowl, light, or table gives both of you one shared action before talk begins.
+The light gives both of you one small shared action before talk begins.
 
 Ritual form
 Shared light can give a small common focus a form without asking it to become larger.
@@ -5402,7 +5402,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Full timing and a light practice can make the ritual simple: a line is placed, witnessed, and closed. The phrase receives one material action so the saying can end cleanly. Wednesday, June 3 morning stood out this week. The window stood out because of full visible light timing. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
+Full timing and a light practice can make the ritual simple: a line is placed, witnessed, and closed. The phrase receives one material action so the saying can end cleanly. Wednesday, June 3 morning stood out this week. The window stood out because of full visible light timing. For both of you, the shared light gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
 
 Question to carry
 What can the shared light hold for both of you?
@@ -5545,7 +5545,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A lowered household light can give both people one shared edge to return to. The light gives attention a visible place to land, then the room can stay quiet. No single timing window needs to lead this week; choose the moment that keeps the rite easy to close. For both of you, the rite works through one small role each, or one shared object touched together. Low capacity keeps the rite to one material action and one close.
+A lowered household light can give both people one shared edge to return to. The light gives attention a visible place to land, then the room can stay quiet. No single timing window needs to lead this week; choose the moment that keeps the rite easy to close. For both of you, the shared light gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What can both of you return to without working on it?
@@ -5688,7 +5688,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Full visible light gives the phrase a clear witness, while the material path stays table light. The phrase receives one material action so the saying can end cleanly. Full light lets the phrase be witnessed once, then closed by changing the light. For both of you, the shared surface or vessel gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+Full visible light gives the phrase a clear witness, while the material path stays table light. The phrase receives one material action so the saying can end cleanly. Full light lets the phrase be witnessed once, then closed by changing the light. For both of you, the shared light gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What line can be witnessed between you without becoming talk?
@@ -5834,7 +5834,7 @@ Optional accent
 Let the beginning stay small enough to wait.
 
 Why this fits
-Kindling and first-sighting traditions make a beginning visible before it becomes a project. The ritual gives the beginning a first body before it becomes work. New-moon darkness makes the first light small: it opens the beginning, then stops before proof. For both of you, the rite works through one small role each, or one shared object touched together. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+Kindling and first-sighting traditions make a beginning visible before it becomes a project. The ritual gives the beginning a first body before it becomes work. New-moon darkness makes the first light small: it opens the beginning, then stops before proof. For both of you, the shared light gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What beginning becomes stronger when both of you let it wait at the threshold first?
@@ -6053,7 +6053,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Full visible light gives the phrase a clear witness, while the material path stays table light. The phrase receives one material action so the saying can end cleanly. Wednesday, June 3 morning stood out this week. The window stood out because of full visible light timing. For both of you, the shared surface or vessel gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+Full visible light gives the phrase a clear witness, while the material path stays table light. The phrase receives one material action so the saying can end cleanly. Wednesday, June 3 morning stood out this week. The window stood out because of full visible light timing. For both of you, the shared light gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What line can be witnessed between you without becoming talk?
@@ -6114,7 +6114,7 @@ Full normal output:
 ```text
 Let the plant witness the household tending.
 
-Sit near one plant that is already part of the room; speak softly or silently. Set one plant, leaf, seed, or plant image where both of you can see it. One of you names what in the home is still living; the other names what can be left undisturbed. Let the plant witness both words through one quiet minute. Put the plant or image back where it belongs without adding a task. Close when the plant is back in place and no new task has been added.
+Let the plant witness without being handled. Stand or sit together near one plant, leaf, seed, or plant image already part of the room. One of you names what in the home is still living; the other names what can be left undisturbed. Let the plant witness both words through one quiet minute. Leave the plant untouched. Close by letting the plant stay as it is, with no new task added.
 
 Intention
 Let the plant give household care a place to rest.
@@ -6126,7 +6126,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The plant stays where it is; the rite works by noticing it and leaving it untouched. Waning moon adds emphasis; the rite stays with its chosen material. For both of you, the shared surface or vessel gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The plant stays where it is; the rite works by noticing it and leaving it untouched. Waning moon adds emphasis; the rite stays with its chosen material. For both of you, the plant witnesses one word from each of you without being handled. High capacity gives the witness a held minute and two named roles without adding a task.
 
 Question to carry
 What in the home can be tended by being witnessed and left steady?
@@ -6190,7 +6190,7 @@ Full normal output:
 ```text
 Let the plant witness the household tending.
 
-Sit near one plant that is already part of the room; speak softly or silently. Set one plant, leaf, seed, or plant image where both of you can see it. Name what in the home is still living. Name what can be left undisturbed. Let the plant witness both words through one quiet minute. Put the plant or image back where it belongs without adding a task. Close when the plant is back in place and no new task has been added.
+Let the plant witness without being handled. Stand or sit near one plant, leaf, seed, or plant image already part of the room. Name what in the home is still living. Name what can be left undisturbed. Let the plant witness both words through one quiet minute. Leave the plant untouched. Close by letting the plant stay as it is, with no new task added.
 
 Intention
 Let the plant give household care a place to rest.
@@ -6202,7 +6202,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The plant stays where it is; the rite works by noticing it and leaving it untouched. No single timing window needs to lead this week; choose the moment that keeps the rite easy to close. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The plant stays where it is; the rite works by noticing it and leaving it untouched. No single timing window needs to lead this week; choose the moment that keeps the rite easy to close. High capacity gives the witness a held minute and two named roles without adding a task.
 
 Question to carry
 What in the home can be tended by being witnessed and left steady?
@@ -6351,7 +6351,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Full moon adds emphasis; the rite stays with its chosen material. For both of you, the shared surface or vessel gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The cup or bowl gives both of you one small shared action before talk begins. Full moon adds emphasis; the rite stays with its chosen material. For both of you, the cup or bowl gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What warmth can remain on the shared surface?
@@ -6364,7 +6364,7 @@ Timing shaped it
 Full moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
-The cup, bowl, light, or table gives both of you one shared action before talk begins.
+The cup or bowl gives both of you one small shared action before talk begins.
 
 Ritual form
 A cup is a small vessel for welcome: it can hold warmth without asking for a conversation.
@@ -6713,7 +6713,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The ritual gives the threshold one action and one close. Full moon adds emphasis; the rite stays with its chosen material. For both of you, the rite works through one small role each, or one shared object touched together. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The ritual gives the threshold one action and one close. Full moon adds emphasis; the rite stays with its chosen material. For both of you, the shared light gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What phrase can meet the edge between you?
@@ -7154,7 +7154,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Full moon adds emphasis; the rite stays with its chosen material. For both of you, the shared surface or vessel gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The cup or bowl gives both of you one small shared action before talk begins. Full moon adds emphasis; the rite stays with its chosen material. For both of you, the cup or bowl gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What warmth can remain on the shared surface?
@@ -7167,7 +7167,7 @@ Timing shaped it
 Full moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
-The cup, bowl, light, or table gives both of you one shared action before talk begins.
+The cup or bowl gives both of you one small shared action before talk begins.
 
 Ritual form
 A cup is a small vessel for welcome: it can hold warmth without asking for a conversation.
@@ -7230,7 +7230,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A seasonal bowl gives calendar change a private household form: one marker held, then returned. The ritual gives the threshold one action and one close. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. For both of you, the rite works through one small role each, or one shared object touched together. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+A seasonal bowl gives calendar change a private household form: one marker held, then returned. The marker gives the season one household place, and leaving the bowl in place keeps the rite small. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. For both of you, the rite works through one small role each, or one shared object touched together. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What season can the bowl hold between you without becoming display?
@@ -7243,7 +7243,7 @@ Timing shaped it
 The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down.
 
 Focus bridge
-The ritual gives the threshold one action and one close.
+The marker gives the season one household place, and leaving the bowl in place keeps the rite small.
 
 Ritual form
 A seasonal bowl gives calendar change a private household form: one marker held, then returned.
@@ -7525,7 +7525,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup or small bowl can hold welcome briefly without starting a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Seasonal timing asks for one private marker that can rest at the table. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+A cup or small bowl can hold welcome briefly without starting a conversation. The cup or bowl gives both of you one small shared action before talk begins. Seasonal timing asks for one private marker that can rest at the table. For both of you, one person names the welcome and the other touches the vessel. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What welcome can the shared vessel hold for both of you?
@@ -7538,7 +7538,7 @@ Timing shaped it
 Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The cup, bowl, light, or table gives both of you one shared action before talk begins.
+The cup or bowl gives both of you one small shared action before talk begins.
 
 Ritual form
 A cup or small bowl can hold welcome briefly without starting a conversation.
@@ -7887,7 +7887,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-If full light is selected for rest, the ritual should end by reducing brightness rather than sharpening it. The action lets rest be held by material instead of explained into more work. Waning moon adds emphasis; the rite stays with its chosen material. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+If full light is selected for rest, the ritual should end by reducing brightness rather than sharpening it. The action lets rest be held by material instead of explained into more work. Waning moon adds emphasis; the rite stays with its chosen material. For both of you, the shared light gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What can the shared light hold for both of you?
@@ -8091,7 +8091,7 @@ Full normal output:
 ```text
 Let a plant witness the growth.
 
-Sit near one plant that is already part of the room; speak softly or silently. Sit or stand near one plant, leaf, seed, or plant image. Name one thing that is growing, slowly or privately. Let the plant witness it for one breath. Leave the plant untouched. Close by letting the plant stay as it is.
+Let the plant witness without being handled. Sit or stand near one plant, leaf, seed, or plant image already part of the room. Name one thing that is growing, slowly or privately. Let the plant witness it for one breath. Leave the plant untouched. Close by letting the plant stay as it is.
 
 Intention
 Let the plant give household care a place to rest.
@@ -8176,7 +8176,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup or small bowl can hold welcome briefly without starting a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Seasonal timing asks for one private marker that can rest at the table. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+A cup or small bowl can hold welcome briefly without starting a conversation. The cup or bowl gives both of you one small shared action before talk begins. Seasonal timing asks for one private marker that can rest at the table. For both of you, one person names the welcome and the other touches the vessel. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What welcome can the shared vessel hold for both of you?
@@ -8189,7 +8189,7 @@ Timing shaped it
 Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The cup, bowl, light, or table gives both of you one shared action before talk begins.
+The cup or bowl gives both of you one small shared action before talk begins.
 
 Ritual form
 A cup or small bowl can hold welcome briefly without starting a conversation.

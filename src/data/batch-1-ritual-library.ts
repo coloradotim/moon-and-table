@@ -2055,27 +2055,27 @@ export const batchOneRitualPatterns: RitualPattern[] = [
     presentation: {
       invitation: "Let a plant witness the growth.",
       whyThisPractice: "Plant folklore and flower-language traditions can make a living thing a witness, not a prop.",
-      approach: ["Sit near one plant that is already part of the room.", "Speak softly or silently."],
-      steps: ["Sit or stand near one plant, leaf, seed, or plant image.", "Name one thing that is growing, slowly or privately.", "Let the plant witness it for one breath.", "Leave the plant untouched."],
+      approach: ["Let the plant witness without being handled."],
+      steps: ["Sit or stand near one plant, leaf, seed, or plant image already part of the room.", "Name one thing that is growing, slowly or privately.", "Let the plant witness it for one breath.", "Leave the plant untouched."],
       carry: "What can keep growing without being handled today?",
       closing: "Close by letting the plant stay as it is.",
       variants: {
         together: {
-          steps: ["Stand together near one plant or leaf.", "Each name one word for what is growing here.", "Let the plant witness both words for one breath.", "Leave the plant untouched."],
+          steps: ["Stand together near one plant, leaf, seed, or plant image already part of the room.", "Each name one word for what is growing here.", "Let the plant witness both words for one breath.", "Leave the plant untouched."],
           carry: "What can grow between you without being pulled open?",
           closing: "Close by letting the plant stay as it is.",
         },
         high: {
           invitation: "Let the plant witness the household tending.",
-          steps: ["Set one plant, leaf, seed, or plant image where both of you can see it.", "Name what in the home is still living.", "Name what can be left undisturbed.", "Let the plant witness both words through one quiet minute.", "Put the plant or image back where it belongs without adding a task."],
+          steps: ["Stand or sit near one plant, leaf, seed, or plant image already part of the room.", "Name what in the home is still living.", "Name what can be left undisturbed.", "Let the plant witness both words through one quiet minute.", "Leave the plant untouched."],
           carry: "What in the home can be tended by being witnessed and left steady?",
-          closing: "Close when the plant is back in place and no new task has been added.",
+          closing: "Close by letting the plant stay as it is, with no new task added.",
         },
         togetherHigh: {
           invitation: "Let the plant witness the household tending.",
-          steps: ["Set one plant, leaf, seed, or plant image where both of you can see it.", "One of you names what in the home is still living; the other names what can be left undisturbed.", "Let the plant witness both words through one quiet minute.", "Put the plant or image back where it belongs without adding a task."],
+          steps: ["Stand or sit together near one plant, leaf, seed, or plant image already part of the room.", "One of you names what in the home is still living; the other names what can be left undisturbed.", "Let the plant witness both words through one quiet minute.", "Leave the plant untouched."],
           carry: "What in the home can be tended by being witnessed and left steady?",
-          closing: "Close when the plant is back in place and no new task has been added.",
+          closing: "Close by letting the plant stay as it is, with no new task added.",
         },
         pause: {
           steps: ["Look toward one plant or leaf.", "Let the looking be the witness."],
