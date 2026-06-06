@@ -2929,7 +2929,7 @@ function getPatternMaterialPhrase(pattern: RitualPattern): string {
     quiet_welcome:
       "A cup or bowl makes welcome visible without making it a performance.",
     honeyed_word:
-      "A tiny sweetness cue gives one bounded word material form, then returns to ordinary use.",
+      "A tiny sweetness cue gives one bounded word material form, then the cup is cleared.",
     carried_key_word:
       "The key gives the threshold one word to carry briefly, then return.",
     threshold_bowl:
@@ -3071,7 +3071,7 @@ function getTimingBridgePhrase(
   }
 
   if (pattern.ritualStyles.includes("seasonal")) {
-    return "Seasonal timing asks for a small marker, not a public calendar performance.";
+    return "Seasonal timing asks for one private marker that can rest at the table.";
   }
 
   if (strongestSignal) {
@@ -3098,13 +3098,13 @@ function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeekly
     dead_leaf_release: "one spent leaf, one release, then the plant is left alone",
     seed_waiting: "one seed or grain, one beginning, then waiting without proof",
     grain_bowl_beginning: "one grain, one sentence, one night of waiting",
-    bread_at_the_center: "one table marker, one enoughness phrase, then ordinary return",
+    bread_at_the_center: "one bread-like staple, one enough sentence, then the plate is cleared",
     warm_cup_between_us: "one cup, one warm phrase, then the cup is set down",
     quiet_welcome: "one vessel, one welcome, then the vessel returns",
     honeyed_word: "one bounded word, one sweetness cue, then the cup is returned",
     carried_key_word: "one word, one crossing, then the key returns",
     threshold_bowl: "one object crosses in, then returns or the bowl moves",
-    salt_clear_water_release: "one named release, one emptied bowl, then ordinary return",
+    salt_clear_water_release: "one named release, one emptied bowl, then the bowl is rinsed",
     waning_phrase_release: "one phrase, one removal path, then empty hands",
     clear_the_threshold_bowl: "one held marker, one emptying, then the vessel returns",
     hearth_object_return: "one room object, one held minute, then the object is home again",
@@ -3119,7 +3119,7 @@ function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeekly
     full_light_holding_bowl: "one empty bowl, one held thing, then return",
     full_light_on_the_table: "one light, one line, then the light changes",
     folded_phrase_vessel: "one phrase, one fold, one holding place, then later return",
-    seasonal_marker_bowl: "the bowl holds one marker until its ordinary return",
+    seasonal_marker_bowl: "the bowl holds one marker until the table is met again",
     first_day_last_day: "one threshold action, one clean close",
     seasonal_entry_bowl: "one entry marker, one crossing, then the bowl rests",
     last_word_first_word: "one last word, one crossing, one first word",
@@ -3398,7 +3398,7 @@ function getFocusMeaningPhrase(
         ? "The ritual gives the beginning a first body before it becomes work."
         : "The chosen material holds the beginning small enough to wait.";
     case "tending_us":
-      return "The shared material carries tending-us as a small action, not a long talk.";
+      return "The cup, bowl, light, or table gives both of you one shared action before talk begins.";
     case "tending_the_home":
       if (pattern.key === "hearth_object_return") {
         return input.capacityMode === "high"
@@ -3406,7 +3406,7 @@ function getFocusMeaningPhrase(
           : "The object and its return are the rite.";
       }
 
-      return "The household material makes tending visible, then returns to ordinary use.";
+      return "The chosen object gives household care a place, then goes back where it belongs.";
     case "marking_a_threshold":
       if (pattern.key === "first_day_last_day" || pattern.key === "last_word_first_word") {
         return "The doorway gives the threshold one crossing to carry the words.";
@@ -3418,7 +3418,7 @@ function getFocusMeaningPhrase(
     case "clearing_something_out":
       return "The material gives release one path out and one clear stop.";
     case "getting_grounded":
-      return "The material gives attention one edge to return to, then stops.";
+      return "The chosen object gives wandering attention one steady place to return to, then stops.";
     case "resting":
       if (pattern.key === "last_household_light") {
         return "The resting place, not the light, carries the close.";
@@ -3442,7 +3442,7 @@ function getAudienceMeaningPhrase(
   }
 
   if (pattern.ritualStyles.some((style) => ["shared_space", "table_reset", "warm"].includes(style))) {
-    return "For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you.";
+    return "For both of you, the shared surface or vessel gives the rite one thing to hold between you.";
   }
 
   return "For both of you, the rite works through one small role each, or one shared object touched together.";
@@ -3664,8 +3664,8 @@ function getSourcesSection(
     kind: "sources",
     title: "Material lineage",
     body: compressedLineage
-      ? `Source lineage: ${compressedLineage}.`
-      : `Source lineage: ${lineage ?? sourcesUsed[0]?.label ?? "reviewed symbolic cards"}.`,
+      ? `${compressedLineage}.`
+      : `${lineage ?? sourcesUsed[0]?.label ?? "reviewed symbolic cards"}.`,
     sourceLabels: sourcesUsed.slice(0, 4).map((source) => source.label),
   };
 }
@@ -4399,8 +4399,8 @@ function getDistinctPresentationIntention(
     resting: `Let ${matter} hold rest without asking for more.`,
     saying_something_clearly: `Let ${matter} hold one phrase clearly and briefly.`,
     tending_us: `Let ${matter} give care a small shared form.`,
-    tending_the_home: `Let ${matter} give household care one concrete place to land.`,
-    marking_a_threshold: `Let ${matter} mark the crossing and return to ordinary use.`,
+    tending_the_home: `Let ${matter} give household care a place to rest.`,
+    marking_a_threshold: `Let ${matter} mark the crossing and come back to its place.`,
     something_else: `Let ${matter} give the moment a clear, bounded form.`,
   };
   const composed = focusKey ? byFocus[focusKey] : undefined;

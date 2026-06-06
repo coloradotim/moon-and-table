@@ -297,10 +297,11 @@ describe("generateWeeklyBrief", () => {
     expect(brief.trace.ritualPatterns).toEqual(["plant_witness_to_growth"]);
     expect(brief.theme).toBe("Let a plant witness the growth.");
     expect(brief.intention).toBe(
-      "Let the plant give household care one concrete place to land.",
+      "Let the plant give household care a place to rest.",
     );
-    expect(brief.recommendedRitual).toContain("Let the plant hold attention without becoming a task");
-    expect(brief.recommendedRitual).toContain("leaving the plant untouched");
+    expect(brief.recommendedRitual).toContain("Sit near one plant that is already part of the room");
+    expect(brief.recommendedRitual).toContain("Let the plant witness it for one breath.");
+    expect(brief.recommendedRitual).toContain("Close by letting the plant stay as it is.");
     expect(brief.reflectionPrompt).toBe(
       "What can keep growing without being handled today?",
     );
@@ -497,7 +498,7 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.trace.ritualPatterns).toEqual(["plant_witness_to_growth"]);
     expect(brief.recommendedRitual).toContain(
-      "Close by thanking the witness in plain words and leaving the plant untouched.",
+      "Close by letting the plant stay as it is.",
     );
     expect(brief.recommendedRitual).not.toContain("Keep it simple and useful.");
   });
@@ -520,7 +521,7 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.trace.ritualPatterns).toEqual(["plant_witness_to_growth"]);
     expect(brief.recommendedRitual).toContain(
-      "Close by thanking the witness in plain words and leaving the plant untouched.",
+      "Close by letting the plant stay as it is.",
     );
     expect(brief.recommendedRitual).not.toContain("Keep it gentle.");
     expect(brief.recommendedRitual).not.toContain("Stop there.");
@@ -1003,7 +1004,7 @@ describe("generateWeeklyBrief", () => {
     expect(brief.decision.selected.ritualPatternKey).toBe("two_words_at_the_table");
     expect(brief.theme).toBe("Put a threshold word on the table.");
     expect(brief.intention).toBe(
-      "Let the phrase mark the crossing and return to ordinary use.",
+      "Let the phrase mark the crossing and come back to its place.",
     );
     expect(brief.recommendedRitual).toContain("Choose a word for the crossing");
     expect(brief.recommendedRitual).toContain("turn toward the next room or doorway.");
@@ -1121,7 +1122,7 @@ describe("generateWeeklyBrief", () => {
       expect.arrayContaining([
         expect.objectContaining({
           kind: "ritual_focus",
-          body: expect.stringContaining("small action"),
+          body: expect.stringContaining("one shared action"),
         }),
         expect.objectContaining({
           title: "Kept bounded",

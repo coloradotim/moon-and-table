@@ -22,7 +22,7 @@ Metadata:
 - Best window: No timing needed.
 - Contract status: n/a
 - Authored-output status: n/a
-- Warning IDs: none
+- Warning IDs: pause_with_imperative_steps
 - Source summary: Source lineage: quiet household welcome forms. Form kept contained.
 - Source lineage: quiet household welcome forms
 - Materials: one or two cups, warm drink or warm water if already safe
@@ -33,7 +33,7 @@ Full normal output:
 ```text
 Let the cup hold the warmth.
 
-Use what is already ordinary here; let the cup do the holding. Touch or hold a cup already nearby. Let warmth or the idea of warmth be enough. Close by setting the cup down.
+Set one cup at the table; let the cup hold warmth without starting a conversation. Touch or hold a cup already nearby. Let warmth or the idea of warmth be enough. Close by setting the cup down.
 
 Intention
 Let the warm cup hold rest without asking for more.
@@ -64,7 +64,7 @@ Ritual form
 A cup is a small vessel for welcome: it can hold warmth without asking for a conversation.
 
 Material lineage
-Source lineage: quiet household welcome forms.
+quiet household welcome forms.
 
 Kept bounded
 One cup, one warm phrase, then the cup is set down.
@@ -95,7 +95,7 @@ Metadata:
 - Best window: No timing needed.
 - Contract status: n/a
 - Authored-output status: n/a
-- Warning IDs: none
+- Warning IDs: pause_with_imperative_steps
 - Source summary: Source lineage: quiet household welcome forms. Form kept contained.
 - Source lineage: quiet household welcome forms
 - Materials: one or two cups, warm drink or warm water if already safe
@@ -106,7 +106,7 @@ Full normal output:
 ```text
 Let the cup hold the warmth.
 
-Use what is already ordinary here; let the cup do the holding. Touch or hold a cup already nearby. Let warmth or the idea of warmth be enough. Close by setting the cup down.
+Set one cup at the table; let the cup hold warmth without starting a conversation. Touch or hold a cup already nearby. Let warmth or the idea of warmth be enough. Close by setting the cup down.
 
 Intention
 Let the warm cup bring attention back to one steady place.
@@ -118,7 +118,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The material gives attention one edge to return to, then stops. New moon supports this form without making the timing a command. Pause capacity makes permission the whole shape. Private context supports keeping this practical and contained.
+A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The chosen object gives wandering attention one steady place to return to, then stops. New moon supports this form without making the timing a command. Pause capacity makes permission the whole shape. Private context supports keeping this practical and contained.
 
 Question to carry
 What can the cup hold for this pause?
@@ -131,13 +131,13 @@ Timing shaped it
 New moon supports this form without making the timing a command.
 
 Focus bridge
-The material gives attention one edge to return to, then stops.
+The chosen object gives wandering attention one steady place to return to, then stops.
 
 Ritual form
 A cup is a small vessel for welcome: it can hold warmth without asking for a conversation.
 
 Material lineage
-Source lineage: quiet household welcome forms.
+quiet household welcome forms.
 
 Kept bounded
 One cup, one warm phrase, then the cup is set down.
@@ -210,7 +210,7 @@ Ritual form
 Kindling and first-sighting traditions make a beginning visible before it becomes a project.
 
 Material lineage
-Source lineage: household fire-kindling and first-light threshold logic.
+household fire-kindling and first-light threshold logic.
 
 Kept bounded
 One first light, one crossing, one later return.
@@ -283,7 +283,7 @@ Ritual form
 Seed and water make a beginning material without demanding immediate growth.
 
 Material lineage
-Source lineage: seed-water beginning logic.
+seed-water beginning logic.
 
 Kept bounded
 One seed or grain, one beginning, then waiting without proof.
@@ -356,7 +356,7 @@ Ritual form
 If full light is selected for rest, the ritual should end by reducing brightness rather than sharpening it.
 
 Material lineage
-Source lineage: hearth/table first-and-last logic.
+hearth/table first-and-last logic.
 
 Kept bounded
 One light, one line, then the light changes.
@@ -410,7 +410,7 @@ Optional accent
 Let lamp or window light be the whole accent.
 
 Why this fits
-Kindling and first-sighting traditions make a beginning visible before it becomes a project. The material gives attention one edge to return to, then stops. Full moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Kindling and first-sighting traditions make a beginning visible before it becomes a project. The chosen object gives wandering attention one steady place to return to, then stops. Full moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
 
 Question to carry
 What is the first step small enough to cross with?
@@ -423,13 +423,13 @@ Timing shaped it
 Full moon supports this form without making the timing a command.
 
 Focus bridge
-The material gives attention one edge to return to, then stops.
+The chosen object gives wandering attention one steady place to return to, then stops.
 
 Ritual form
 Kindling and first-sighting traditions make a beginning visible before it becomes a project.
 
 Material lineage
-Source lineage: household fire-kindling and first-light threshold logic.
+household fire-kindling and first-light threshold logic.
 
 Kept bounded
 One first light, one crossing, one later return.
@@ -462,7 +462,7 @@ Metadata:
 - Authored-output status: n/a
 - Warning IDs: none
 - Source summary: Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
-- Source lineage: Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
+- Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
 - Materials: one plant, leaf, seed, or plant image
 - Safety flags: ingestion=none; essentialOils=none; smoke=none; fire=none; pets=review_required; children=supervision; pregnancy=no_claim; allergies=choose non-contact when plant safety is uncertain; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
@@ -471,10 +471,10 @@ Full normal output:
 ```text
 Let a plant witness the growth.
 
-Let the plant hold attention without becoming a task; speak softly or silently. Sit or stand near one plant, leaf, seed, or plant image. Name one thing that is growing, slowly or privately. Let the plant witness it without asking for advice. Close by thanking the witness in plain words and leaving the plant untouched.
+Sit near one plant that is already part of the room; speak softly or silently. Sit or stand near one plant, leaf, seed, or plant image. Name one thing that is growing, slowly or privately. Let the plant witness it for one breath. Leave the plant untouched. Close by letting the plant stay as it is.
 
 Intention
-Let the plant give household care one concrete place to land.
+Let the plant give household care a place to rest.
 
 Best window
 When you have five quiet minutes.
@@ -483,7 +483,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The household material makes tending visible, then returns to ordinary use. Waning moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The chosen object gives household care a place, then goes back where it belongs. Waning moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
 
 Question to carry
 What can keep growing without being handled today?
@@ -496,13 +496,13 @@ Timing shaped it
 Waning moon supports this form without making the timing a command.
 
 Focus bridge
-The household material makes tending visible, then returns to ordinary use.
+The chosen object gives household care a place, then goes back where it belongs.
 
 Ritual form
 Plant folklore and flower-language traditions can make a living thing a witness, not a prop.
 
 Material lineage
-Source lineage: plant-lore living witness and flower-message logic.
+plant-lore living witness and flower-message logic.
 
 Kept bounded
 One small action, no extra setup.
@@ -535,7 +535,7 @@ Metadata:
 - Authored-output status: n/a
 - Warning IDs: none
 - Source summary: Source lineage: plant-message and folded-phrase placement logic. Form kept contained.
-- Source lineage: Source lineage: plant-message and folded-phrase placement logic. Form kept contained.
+- Source lineage: plant-message and folded-phrase placement logic. Form kept contained.
 - Materials: paper, pencil, plant pot or plant area
 - Safety flags: ingestion=none; essentialOils=none; smoke=none; fire=none; pets=review_required; children=safe; pregnancy=no_claim; allergies=avoid plant contact if safety is uncertain; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
@@ -575,7 +575,7 @@ Ritual form
 Plant-message traditions support a private phrase placed near living growth without assigning the plant a fixed meaning.
 
 Material lineage
-Source lineage: plant-message and folded-phrase placement logic.
+plant-message and folded-phrase placement logic.
 
 Kept bounded
 One folded phrase, one plant-side place, then later return.
@@ -609,7 +609,7 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: quiet household welcome forms. Form kept contained.
 - Source lineage: quiet household welcome forms
-- Materials: bowl, cup, bread, grain, water, or warm drink
+- Materials: one cup or small bowl
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only materials already safe for the household; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
@@ -617,7 +617,7 @@ Full normal output:
 ```text
 Set out a quiet welcome.
 
-Welcome is the ritual form, not a performance; choose one ordinary welcome vessel; a cup or small bowl is enough. Set the cup or bowl at the table or counter. Name what is welcome in this home today. Return or wash the vessel when finished. Close by returning the material to ordinary use.
+Set one cup or small bowl at the table; let the vessel mark welcome, then stop. Set the cup or bowl at the table. Name what is welcome in this home today. Set the vessel down and leave it for one breath. Close by clearing the cup or bowl when you are done.
 
 Intention
 Let the table hold rest without asking for more.
@@ -629,7 +629,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A modest bowl, cup, bread, or grain can make hospitality visible without demanding belief. The action lets rest be held by material instead of explained into more work. Seasonal timing asks for a small marker, not a public calendar performance. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+A cup or small bowl can hold welcome briefly without starting a conversation. The action lets rest be held by material instead of explained into more work. Seasonal timing asks for one private marker that can rest at the table. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
 
 Question to carry
 What welcome should be visible until the vessel is cleared?
@@ -639,16 +639,16 @@ Chosen for
 Kitchen stays materially present, with resting as the work, for one person, at low capacity.
 
 Timing shaped it
-Seasonal timing asks for a small marker, not a public calendar performance.
+Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
 The action lets rest be held by material instead of explained into more work.
 
 Ritual form
-A modest bowl, cup, bread, or grain can make hospitality visible without demanding belief.
+A cup or small bowl can hold welcome briefly without starting a conversation.
 
 Material lineage
-Source lineage: quiet household welcome forms.
+quiet household welcome forms.
 
 Kept bounded
 One vessel, one welcome, then the vessel returns.
@@ -687,7 +687,7 @@ Full normal output:
 ```text
 Let the cup hold the warmth.
 
-Use what is already ordinary here; let the cup do the holding. Place two cups, or one cup between you, at the table. Each offer one word for what is welcome here. Set the cup or cups down to close the warmth. Close when the cup is set down.
+Set one cup at the table; let the cup hold warmth without starting a conversation. Place one cup between you at the table, or set one cup for each of you. Each offer one word for what is welcome here. Set the cup or cups down to close the warmth. Close when the cup is set down.
 
 Intention
 Let the warm cup give care a small shared form.
@@ -699,7 +699,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The shared material carries tending-us as a small action, not a long talk. Full moon supports this form without making the timing a command. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
+A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Full moon supports this form without making the timing a command. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
 
 Question to carry
 What warmth can remain on the shared surface?
@@ -712,13 +712,13 @@ Timing shaped it
 Full moon supports this form without making the timing a command.
 
 Focus bridge
-The shared material carries tending-us as a small action, not a long talk.
+The cup, bowl, light, or table gives both of you one shared action before talk begins.
 
 Ritual form
 A cup is a small vessel for welcome: it can hold warmth without asking for a conversation.
 
 Material lineage
-Source lineage: quiet household welcome forms.
+quiet household welcome forms.
 
 Kept bounded
 One cup, one warm phrase, then the cup is set down.
@@ -752,7 +752,7 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: quiet household welcome forms. Form kept contained.
 - Source lineage: quiet household welcome forms
-- Materials: bowl, cup, bread, grain, water, or warm drink
+- Materials: one cup or small bowl
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only materials already safe for the household; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
@@ -760,7 +760,7 @@ Full normal output:
 ```text
 Set out a quiet welcome.
 
-Welcome is the ritual form, not a performance; choose one ordinary welcome vessel; a cup or small bowl is enough. Set one cup or small bowl at the table between you. One of you names what is welcome here; the other touches the vessel once. Return or wash the vessel when finished. Close when the vessel has been returned or washed.
+Set one cup or small bowl at the table; let the vessel mark welcome, then stop. Set one cup or small bowl at the table between you. One of you names what is welcome here; the other touches the vessel once. Set the vessel down and leave it for one breath. Close by clearing the cup or bowl when you are done.
 
 Intention
 Let the table give care a small shared form.
@@ -772,7 +772,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A modest bowl, cup, bread, or grain can make hospitality visible without demanding belief. The shared material carries tending-us as a small action, not a long talk. Seasonal timing asks for a small marker, not a public calendar performance. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+A cup or small bowl can hold welcome briefly without starting a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Seasonal timing asks for one private marker that can rest at the table. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What welcome can the shared vessel hold for both of you?
@@ -782,16 +782,16 @@ Chosen for
 Home stays materially present, with tending us as the work, for both of you, at low capacity.
 
 Timing shaped it
-Seasonal timing asks for a small marker, not a public calendar performance.
+Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The shared material carries tending-us as a small action, not a long talk.
+The cup, bowl, light, or table gives both of you one shared action before talk begins.
 
 Ritual form
-A modest bowl, cup, bread, or grain can make hospitality visible without demanding belief.
+A cup or small bowl can hold welcome briefly without starting a conversation.
 
 Material lineage
-Source lineage: quiet household welcome forms.
+quiet household welcome forms.
 
 Kept bounded
 One vessel, one welcome, then the vessel returns.
@@ -845,7 +845,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Shared light can give a small common focus a form without asking it to become larger. The shared material carries tending-us as a small action, not a long talk. Full moon supports this form without making the timing a command. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+Shared light can give a small common focus a form without asking it to become larger. The cup, bowl, light, or table gives both of you one shared action before talk begins. Full moon supports this form without making the timing a command. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What can the shared light hold for both of you?
@@ -858,13 +858,13 @@ Timing shaped it
 Full moon supports this form without making the timing a command.
 
 Focus bridge
-The shared material carries tending-us as a small action, not a long talk.
+The cup, bowl, light, or table gives both of you one shared action before talk begins.
 
 Ritual form
 Shared light can give a small common focus a form without asking it to become larger.
 
 Material lineage
-Source lineage: hearth/table first-and-last logic.
+hearth/table first-and-last logic.
 
 Kept bounded
 One light, one line, then the light changes.
@@ -937,7 +937,7 @@ Ritual form
 Full timing and a light practice can make the ritual simple: a line is placed, witnessed, and closed.
 
 Material lineage
-Source lineage: hearth/table first-and-last logic.
+hearth/table first-and-last logic.
 
 Kept bounded
 One light, one line, then the light changes.
@@ -971,15 +971,15 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: bread/grain table-center and welcome logic. Form kept contained.
 - Source lineage: bread/grain table-center and welcome logic
-- Materials: bread or ordinary substitute already safe for the household, table or plate
+- Materials: bread, toast, cracker, tortilla, roll, biscuit, or another bread-like staple, table or plate
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only food already safe for the household; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
 
 ```text
-Put bread at the center.
+Put one small piece of bread at the table.
 
-Use bread only if it already belongs here; one ordinary substitute that already works in this household is enough. Let the table hold one small sign of enough. Place a small piece of bread, or one ordinary household substitute, on a plate at the table center. Name what is enough for this household right now in one sentence. Return it to ordinary kitchen use. Close when the plate is clear: the bread is eaten, put away, or returned to ordinary use.
+Use what is already in the kitchen: a small piece of bread, toast, cracker, tortilla, roll, or biscuit. Do not go get anything special. Set it at the center of the table. Say one plain sentence about what is already enough here. Let it sit there for one breath. Then eat it or put it away. Close when the table is clear again.
 
 Intention
 Let the bread at the center bring attention back to one steady place.
@@ -991,10 +991,10 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Bread or grain makes enoughness visible at the table: a center, not a promise. The material gives attention one edge to return to, then stops. Tuesday, July 14 overnight stood out this week. The window stood out because of exact new moon and exact lunar timing. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Bread or grain gives enough a table center without turning it into a claim. The chosen object gives wandering attention one steady place to return to, then stops. Tuesday, July 14 overnight stood out this week. The window stood out because of exact new moon and exact lunar timing. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
 
 Question to carry
-What can sit at the center without needing to become more?
+What is already enough for tonight?
 
 How this was chosen
 Chosen for
@@ -1004,16 +1004,16 @@ Timing shaped it
 Tuesday, July 14 overnight stood out this week. The window stood out because of exact new moon and exact lunar timing.
 
 Focus bridge
-The material gives attention one edge to return to, then stops.
+The chosen object gives wandering attention one steady place to return to, then stops.
 
 Ritual form
-Bread or grain makes enoughness visible at the table: a center, not a promise.
+Bread or grain gives enough a table center without turning it into a claim.
 
 Material lineage
-Source lineage: bread/grain table-center and welcome logic.
+bread/grain table-center and welcome logic.
 
 Kept bounded
-One table marker, one enoughness phrase, then ordinary return.
+One bread-like staple, one enough sentence, then the plate is cleared.
 
 Private timing fit
 Private context supports keeping this practical and contained.
@@ -1083,7 +1083,7 @@ Ritual form
 Home tending does not need to mean cleaning. Returning one thing to its place gives the house a small act of care with a clear end.
 
 Material lineage
-Source lineage: smoored hearth and household object-return mechanics.
+smoored hearth and household object-return mechanics.
 
 Kept bounded
 One room object, one held minute, then the object is home again.
@@ -1128,7 +1128,7 @@ Put a threshold word on the table.
 Choose a word for the crossing; let the surface hold it before you move. Stand or sit at the table. Place one threshold word on the surface, spoken or written. Touch the table, then turn toward the next room or doorway. Close by turning from the table toward the threshold.
 
 Intention
-Let the phrase mark the crossing and return to ordinary use.
+Let the phrase mark the crossing and come back to its place.
 
 Best window
 When you have a little space this week.
@@ -1156,7 +1156,7 @@ Ritual form
 A table can temporarily hold a threshold word before it is carried, crossed, or left behind.
 
 Material lineage
-Source lineage: hearth/table first-and-last logic.
+hearth/table first-and-last logic.
 
 Kept bounded
 One primary ritual, no task list.
@@ -1226,7 +1226,7 @@ Ritual form
 Waning light gives release a way to lessen without making it dramatic.
 
 Material lineage
-Source lineage: waning lunar visibility and household light-lowering logic.
+waning lunar visibility and household light-lowering logic.
 
 Kept bounded
 One lowered light, one lessening phrase, then stop.
@@ -1260,7 +1260,7 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: seasonal marker and vessel-return logic. Form kept contained.
 - Source lineage: seasonal marker and vessel-return logic
-- Materials: small bowl, grain, leaf, key, bread, or ordinary seasonal object
+- Materials: small bowl, one seasonal marker already present
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only safe ordinary household materials; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
@@ -1268,10 +1268,10 @@ Full normal output:
 ```text
 Let one bowl mark the season.
 
-Use one ordinary material already in the home; let the bowl hold the season without decorating the house. Choose one small seasonal marker already in the home. Place it in a small bowl and name what this season is asking the home to hold. Leave the bowl where it can rest until the next return to the table. When the marker is done, return it to ordinary use or empty the bowl. Close by leaving the bowl alone until its next ordinary return.
+Place one seasonal object in the bowl; let the bowl hold the season until you return to the table. Choose one small seasonal marker already present: a leaf, grain, key, ribbon, stone, or bit of bread can be enough. Place it in a small bowl and name what this season is asking the home to hold. Leave the bowl where it can rest until the next return to the table. When the marker is done, put it back, eat it if it is food, or empty the bowl. Close by leaving the bowl where it is.
 
 Intention
-Let the bowl mark the crossing and return to ordinary use.
+Let the bowl mark the crossing and come back to its place.
 
 Best window
 When you have a little space this week.
@@ -1280,7 +1280,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A seasonal bowl gives calendar change a private household form: one marker held, then returned. The ritual gives the threshold one action and one close. Seasonal timing asks for a small marker, not a public calendar performance. Steady capacity gives the material a little room to be placed, held, and returned. Private context supports keeping this practical and contained.
+A seasonal bowl gives calendar change a private household form: one marker held, then returned. The ritual gives the threshold one action and one close. Seasonal timing asks for one private marker that can rest at the table. Steady capacity gives the material a little room to be placed, held, and returned. Private context supports keeping this practical and contained.
 
 Question to carry
 What season is this home actually in?
@@ -1290,7 +1290,7 @@ Chosen for
 Seasonal stays materially present, with marking a threshold as the work, for one person, at steady capacity.
 
 Timing shaped it
-Seasonal timing asks for a small marker, not a public calendar performance.
+Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
 The ritual gives the threshold one action and one close.
@@ -1299,10 +1299,10 @@ Ritual form
 A seasonal bowl gives calendar change a private household form: one marker held, then returned.
 
 Material lineage
-Source lineage: seasonal marker and vessel-return logic.
+seasonal marker and vessel-return logic.
 
 Kept bounded
-The bowl holds one marker until its ordinary return.
+The bowl holds one marker until the table is met again.
 
 Private timing fit
 Private context supports keeping this practical and contained.
@@ -1372,10 +1372,10 @@ Ritual form
 Salt and water belong here because the work is release: one named thing leaves, and the bowl becomes ordinary again.
 
 Material lineage
-Source lineage: salt-water clearing and rinsed-vessel logic.
+salt-water clearing and rinsed-vessel logic.
 
 Kept bounded
-One named release, one emptied bowl, then ordinary return.
+One named release, one emptied bowl, then the bowl is rinsed.
 
 Private timing fit
 Private context supports keeping this practical and contained.
@@ -1406,7 +1406,7 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: seasonal marker and vessel-return logic. Form kept contained.
 - Source lineage: seasonal marker and vessel-return logic
-- Materials: small bowl, grain, leaf, key, bread, or ordinary seasonal object
+- Materials: small bowl, one seasonal marker already present
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only safe ordinary household materials; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
@@ -1414,10 +1414,10 @@ Full normal output:
 ```text
 Let one bowl mark the season.
 
-Use one ordinary material already in the home; let the bowl hold the season without decorating the house. Choose one small seasonal marker already in the home. One of you places it in a small bowl; the other names what this season is asking the home to hold. Both touch the table once, then leave the bowl where it can rest until the next return. When the marker is done, return it to ordinary use or empty the bowl. Close when both of you have left the bowl alone until its next ordinary return.
+Place one seasonal object in the bowl; let the bowl hold the season until you return to the table. Choose one small seasonal marker already present: a leaf, grain, key, ribbon, stone, or bit of bread can be enough. One of you places it in a small bowl; the other names what this season is asking the home to hold. Both touch the table once, then leave the bowl where it can rest until the next return. When the marker is done, put it back, eat it if it is food, or empty the bowl. Close when both of you have left the bowl where it is.
 
 Intention
-Let the bowl mark the crossing and return to ordinary use.
+Let the bowl mark the crossing and come back to its place.
 
 Best window
 When you have room to linger this week.
@@ -1426,7 +1426,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A seasonal bowl gives calendar change a private household form: one marker held, then returned. The ritual gives the threshold one action and one close. Seasonal timing asks for a small marker, not a public calendar performance. For both of you, the rite works through one small role each, or one shared object touched together. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+A seasonal bowl gives calendar change a private household form: one marker held, then returned. The ritual gives the threshold one action and one close. Seasonal timing asks for one private marker that can rest at the table. For both of you, the rite works through one small role each, or one shared object touched together. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What season can the bowl hold between you without becoming display?
@@ -1436,7 +1436,7 @@ Chosen for
 Seasonal stays materially present, with marking a threshold as the work, for both of you, at high capacity.
 
 Timing shaped it
-Seasonal timing asks for a small marker, not a public calendar performance.
+Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
 The ritual gives the threshold one action and one close.
@@ -1445,13 +1445,13 @@ Ritual form
 A seasonal bowl gives calendar change a private household form: one marker held, then returned.
 
 Material lineage
-Source lineage: seasonal marker and vessel-return logic.
+seasonal marker and vessel-return logic.
 
 Closest compatible
 Seasonal threshold coverage is still shallow at high capacity. This uses the strongest marker or crossing form without pretending the high-depth arc is complete.
 
 Kept bounded
-The bowl holds one marker until its ordinary return.
+The bowl holds one marker until the table is met again.
 
 Private timing fit
 For both of you, the fit leans toward practical home-tending magic and clear structure and bounded action.
@@ -1493,7 +1493,7 @@ Give the threshold a bowl.
 Use the bowl only when the doorway is the real ritual place; keep the words plain and brief. Place a small bowl by the doorway. Put in a key and name what crosses in with you. Cross the threshold once, then return the key to ordinary use. Close when the object returns or the bowl is moved away from the threshold.
 
 Intention
-Let the bowl mark the crossing and return to ordinary use.
+Let the bowl mark the crossing and come back to its place.
 
 Best window
 When you have a little space this week.
@@ -1521,7 +1521,7 @@ Ritual form
 A vessel at the edge of the home gives arrival a place to gather, cross, and end.
 
 Material lineage
-Source lineage: threshold crossing and bowl-vessel household logic.
+threshold crossing and bowl-vessel household logic.
 
 Kept bounded
 One object crosses in, then returns or the bowl moves.
@@ -1563,7 +1563,7 @@ Let the key carry the threshold word.
 Use a key that already returns to a place; keep the carrying brief: one crossing, then return. Hold an ordinary key. Say or write one threshold word. Carry it through one doorway. Return the key to its usual place. Close when the key has returned.
 
 Intention
-Let the key mark the crossing and return to ordinary use.
+Let the key mark the crossing and come back to its place.
 
 Best window
 When you have five quiet minutes.
@@ -1591,7 +1591,7 @@ Ritual form
 A threshold word belongs on something that can cross once and return.
 
 Material lineage
-Source lineage: key, threshold, return, and household marker folklore.
+key, threshold, return, and household marker folklore.
 
 Kept bounded
 One word, one crossing, then the key returns.
@@ -1633,7 +1633,7 @@ Say the last word and the first word.
 Keep each word single and plain; let the doorway mark the crossing. Stand at one doorway. Say or write one last word for what is closing. Cross the doorway once. Say or write one first word for what begins after it. Close by not adding a third word.
 
 Intention
-Let the phrase mark the crossing and return to ordinary use.
+Let the phrase mark the crossing and come back to its place.
 
 Best window
 When you have five quiet minutes.
@@ -1661,7 +1661,7 @@ Ritual form
 First-and-last attention gives a crossing a hinge without requiring a long reflection.
 
 Material lineage
-Source lineage: first-and-last threshold and household crossing logic.
+first-and-last threshold and household crossing logic.
 
 Kept bounded
 One last word, one crossing, one first word.
@@ -1706,7 +1706,7 @@ Refresh the entry with a seasonal bowl.
 Mark the crossing, not the whole season; use what is already here. Place a small bowl near the entry. One of you adds one ordinary object that fits the season; the other names the first crossing into this season. Step past the bowl once together and leave it alone. Close when both of you have crossed once and the bowl is left in place.
 
 Intention
-Let the bowl mark the crossing and return to ordinary use.
+Let the bowl mark the crossing and come back to its place.
 
 Best window
 When you have a little space this week.
@@ -1734,7 +1734,7 @@ Ritual form
 Seasonal customs can become a private threshold marker when the entry receives one ordinary object.
 
 Material lineage
-Source lineage: seasonal threshold and first-crossing household logic.
+seasonal threshold and first-crossing household logic.
 
 Kept bounded
 One entry marker, one crossing, then the bowl rests.
@@ -1768,15 +1768,15 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: bread/grain table-center and welcome logic. Form kept contained.
 - Source lineage: bread/grain table-center and welcome logic
-- Materials: bread or ordinary substitute already safe for the household, table or plate
+- Materials: bread, toast, cracker, tortilla, roll, biscuit, or another bread-like staple, table or plate
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only food already safe for the household; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
 
 ```text
-Put bread at the center.
+Put one small piece of bread at the table.
 
-Use bread only if it already belongs here; one ordinary substitute that already works in this household is enough. Let the table hold one small sign of enough. Place a small piece of bread, or one ordinary household substitute, on a plate at the table center. Name what is enough for this household right now in one sentence. Return it to ordinary kitchen use. Close when the plate is clear: the bread is eaten, put away, or returned to ordinary use.
+Use what is already in the kitchen: a small piece of bread, toast, cracker, tortilla, roll, or biscuit. Do not go get anything special. Set it at the center of the table. Say one plain sentence about what is already enough here. Let it sit there for one breath. Then eat it or put it away. Close when the table is clear again.
 
 Intention
 Let the bread at the center bring attention back to one steady place.
@@ -1788,29 +1788,29 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Bread or grain makes enoughness visible at the table: a center, not a promise. The material gives attention one edge to return to, then stops. Seasonal timing asks for a small marker, not a public calendar performance. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Bread or grain gives enough a table center without turning it into a claim. The chosen object gives wandering attention one steady place to return to, then stops. Seasonal timing asks for one private marker that can rest at the table. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
 
 Question to carry
-What can sit at the center without needing to become more?
+What is already enough for tonight?
 
 How this was chosen
 Chosen for
 Home stays materially present, with getting grounded as the work, for one person, at low capacity.
 
 Timing shaped it
-Seasonal timing asks for a small marker, not a public calendar performance.
+Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The material gives attention one edge to return to, then stops.
+The chosen object gives wandering attention one steady place to return to, then stops.
 
 Ritual form
-Bread or grain makes enoughness visible at the table: a center, not a promise.
+Bread or grain gives enough a table center without turning it into a claim.
 
 Material lineage
-Source lineage: bread/grain table-center and welcome logic.
+bread/grain table-center and welcome logic.
 
 Kept bounded
-One table marker, one enoughness phrase, then ordinary return.
+One bread-like staple, one enough sentence, then the plate is cleared.
 
 Private timing fit
 Private context supports keeping this practical and contained.
@@ -1880,10 +1880,10 @@ Ritual form
 Salt and water belong here because the work is release: one named thing leaves, and the bowl becomes ordinary again.
 
 Material lineage
-Source lineage: salt-water clearing and rinsed-vessel logic.
+salt-water clearing and rinsed-vessel logic.
 
 Kept bounded
-One named release, one emptied bowl, then ordinary return.
+One named release, one emptied bowl, then the bowl is rinsed.
 
 Private timing fit
 Private context supports keeping this practical and contained.
@@ -1914,7 +1914,7 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: quiet household welcome forms. Form kept contained.
 - Source lineage: quiet household welcome forms
-- Materials: bowl, cup, bread, grain, water, or warm drink
+- Materials: one cup or small bowl
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only materials already safe for the household; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
@@ -1922,7 +1922,7 @@ Full normal output:
 ```text
 Set out a quiet welcome.
 
-Welcome is the ritual form, not a performance; choose one ordinary welcome vessel; a cup or small bowl is enough. Set one cup or small bowl at the table between you. One of you names what is welcome here; the other touches the vessel once. Return or wash the vessel when finished. Close when the vessel has been returned or washed.
+Set one cup or small bowl at the table; let the vessel mark welcome, then stop. Set one cup or small bowl at the table between you. One of you names what is welcome here; the other touches the vessel once. Set the vessel down and leave it for one breath. Close by clearing the cup or bowl when you are done.
 
 Intention
 Let the table give care a small shared form.
@@ -1934,7 +1934,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A modest bowl, cup, bread, or grain can make hospitality visible without demanding belief. The shared material carries tending-us as a small action, not a long talk. Seasonal timing asks for a small marker, not a public calendar performance. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+A cup or small bowl can hold welcome briefly without starting a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Seasonal timing asks for one private marker that can rest at the table. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What welcome can the shared vessel hold for both of you?
@@ -1944,16 +1944,16 @@ Chosen for
 Kitchen stays materially present, with tending us as the work, for both of you, at low capacity.
 
 Timing shaped it
-Seasonal timing asks for a small marker, not a public calendar performance.
+Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The shared material carries tending-us as a small action, not a long talk.
+The cup, bowl, light, or table gives both of you one shared action before talk begins.
 
 Ritual form
-A modest bowl, cup, bread, or grain can make hospitality visible without demanding belief.
+A cup or small bowl can hold welcome briefly without starting a conversation.
 
 Material lineage
-Source lineage: quiet household welcome forms.
+quiet household welcome forms.
 
 Kept bounded
 One vessel, one welcome, then the vessel returns.
@@ -2004,7 +2004,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Seed and water make a beginning material without demanding immediate growth. The ritual gives the beginning a first body before it becomes work. Seasonal timing asks for a small marker, not a public calendar performance. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Seed and water make a beginning material without demanding immediate growth. The ritual gives the beginning a first body before it becomes work. Seasonal timing asks for one private marker that can rest at the table. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
 
 Question to carry
 What beginning can wait like a seed or grain?
@@ -2014,7 +2014,7 @@ Chosen for
 Plant stays materially present, with making a beginning as the work, for one person, at low capacity.
 
 Timing shaped it
-Seasonal timing asks for a small marker, not a public calendar performance.
+Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
 The ritual gives the beginning a first body before it becomes work.
@@ -2023,7 +2023,7 @@ Ritual form
 Seed and water make a beginning material without demanding immediate growth.
 
 Material lineage
-Source lineage: seed-water beginning logic.
+seed-water beginning logic.
 
 Kept bounded
 One seed or grain, one beginning, then waiting without proof.
@@ -2056,7 +2056,7 @@ Metadata:
 - Authored-output status: n/a
 - Warning IDs: none
 - Source summary: Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
-- Source lineage: Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
+- Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
 - Materials: one plant, leaf, seed, or plant image
 - Safety flags: ingestion=none; essentialOils=none; smoke=none; fire=none; pets=review_required; children=supervision; pregnancy=no_claim; allergies=choose non-contact when plant safety is uncertain; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
@@ -2065,10 +2065,10 @@ Full normal output:
 ```text
 Let a plant witness the growth.
 
-Let the plant hold attention without becoming a task; speak softly or silently. Sit or stand near one plant, leaf, seed, or plant image. Name one thing that is growing, slowly or privately. Let the plant witness it without asking for advice. Close by thanking the witness in plain words and leaving the plant untouched.
+Sit near one plant that is already part of the room; speak softly or silently. Sit or stand near one plant, leaf, seed, or plant image. Name one thing that is growing, slowly or privately. Let the plant witness it for one breath. Leave the plant untouched. Close by letting the plant stay as it is.
 
 Intention
-Let the plant give household care one concrete place to land.
+Let the plant give household care a place to rest.
 
 Best window
 Around Friday, March 20 morning. When you have a little space this week.
@@ -2077,7 +2077,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The household material makes tending visible, then returns to ordinary use. Friday, March 20 morning stood out this week. The window stood out because of seasonal marker. Steady capacity gives the material a little room to be placed, held, and returned. Private context supports keeping this practical and contained.
+Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The chosen object gives household care a place, then goes back where it belongs. Friday, March 20 morning stood out this week. The window stood out because of seasonal marker. Steady capacity gives the material a little room to be placed, held, and returned. Private context supports keeping this practical and contained.
 
 Question to carry
 What can keep growing without being handled today?
@@ -2090,13 +2090,13 @@ Timing shaped it
 Friday, March 20 morning stood out this week. The window stood out because of seasonal marker.
 
 Focus bridge
-The household material makes tending visible, then returns to ordinary use.
+The chosen object gives household care a place, then goes back where it belongs.
 
 Ritual form
 Plant folklore and flower-language traditions can make a living thing a witness, not a prop.
 
 Material lineage
-Source lineage: plant-lore living witness and flower-message logic.
+plant-lore living witness and flower-message logic.
 
 Kept bounded
 One primary ritual, no task list.
@@ -2169,10 +2169,10 @@ Ritual form
 Salt and water belong here because the work is release: one named thing leaves, and the bowl becomes ordinary again.
 
 Material lineage
-Source lineage: salt-water clearing and rinsed-vessel logic.
+salt-water clearing and rinsed-vessel logic.
 
 Kept bounded
-One named release, one emptied bowl, then ordinary return.
+One named release, one emptied bowl, then the bowl is rinsed.
 
 Private timing fit
 Private context supports keeping this practical and contained.
@@ -2242,10 +2242,10 @@ Ritual form
 Salt and water belong here because the work is release: one named thing leaves, and the bowl becomes ordinary again.
 
 Material lineage
-Source lineage: salt-water clearing and rinsed-vessel logic.
+salt-water clearing and rinsed-vessel logic.
 
 Kept bounded
-One named release, one emptied bowl, then ordinary return.
+One named release, one emptied bowl, then the bowl is rinsed.
 
 Private timing fit
 Private context supports keeping this practical and contained.
@@ -2275,7 +2275,7 @@ Metadata:
 - Authored-output status: n/a
 - Warning IDs: none
 - Source summary: Source lineage: waxing moon card and house from root to roof pattern. Form kept contained.
-- Source lineage: Source lineage: waxing moon card and house from root to roof pattern. Form kept contained.
+- Source lineage: waxing moon card and house from root to roof pattern. Form kept contained.
 - Materials: floor, wall, doorway, table or center place
 - Safety flags: ingestion=none; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=none; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
@@ -2287,7 +2287,7 @@ Walk the house from root to roof.
 Move by places of contact, not by cleaning; use plain household words instead of borrowed prayer language. Touch the floor or lowest safe point and name what supports the home. Touch a wall, beam, or table and name what holds. Stand at the threshold and name what the house carries forward. Close by touching the threshold and leaving the map complete.
 
 Intention
-Let the ritual matter give household care one concrete place to land.
+Let the ritual matter give household care a place to rest.
 
 Best window
 When you have a little space this week.
@@ -2296,7 +2296,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-House-blessing structure can become a private map: ground, wall, center, threshold. The household material makes tending visible, then returns to ordinary use. Seasonal timing asks for a small marker, not a public calendar performance. Steady capacity gives the material a little room to be placed, held, and returned. Private context supports keeping this practical and contained.
+House-blessing structure can become a private map: ground, wall, center, threshold. The chosen object gives household care a place, then goes back where it belongs. Seasonal timing asks for one private marker that can rest at the table. Steady capacity gives the material a little room to be placed, held, and returned. Private context supports keeping this practical and contained.
 
 Question to carry
 What part of this home is holding more than you noticed?
@@ -2306,16 +2306,16 @@ Chosen for
 Home stays materially present, with tending the home as the work, for one person, at steady capacity.
 
 Timing shaped it
-Seasonal timing asks for a small marker, not a public calendar performance.
+Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The household material makes tending visible, then returns to ordinary use.
+The chosen object gives household care a place, then goes back where it belongs.
 
 Ritual form
 House-blessing structure can become a private map: ground, wall, center, threshold.
 
 Material lineage
-Source lineage: Waxing Moon card.
+Waxing Moon card.
 
 Kept bounded
 One primary ritual, no task list.
@@ -2385,7 +2385,7 @@ Ritual form
 A spent leaf gives release a precise edge: remove what is already finished, not what is alive.
 
 Material lineage
-Source lineage: plant growth and rest traditions.
+plant growth and rest traditions.
 
 Kept bounded
 One spent leaf, one release, then the plant is left alone.
@@ -2458,7 +2458,7 @@ Ritual form
 A spent leaf gives release a precise edge: remove what is already finished, not what is alive.
 
 Material lineage
-Source lineage: plant growth and rest traditions.
+plant growth and rest traditions.
 
 Kept bounded
 One spent leaf, one release, then the plant is left alone.
@@ -2512,7 +2512,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Seed and water make a beginning material without demanding immediate growth. The ritual gives the beginning a first body before it becomes work. Seasonal timing asks for a small marker, not a public calendar performance. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Seed and water make a beginning material without demanding immediate growth. The ritual gives the beginning a first body before it becomes work. Seasonal timing asks for one private marker that can rest at the table. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
 
 Question to carry
 What beginning can wait like a seed or grain?
@@ -2522,7 +2522,7 @@ Chosen for
 Plant stays materially present, with making a beginning as the work, for one person, at low capacity.
 
 Timing shaped it
-Seasonal timing asks for a small marker, not a public calendar performance.
+Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
 The ritual gives the beginning a first body before it becomes work.
@@ -2531,7 +2531,7 @@ Ritual form
 Seed and water make a beginning material without demanding immediate growth.
 
 Material lineage
-Source lineage: seed-water beginning logic.
+seed-water beginning logic.
 
 Kept bounded
 One seed or grain, one beginning, then waiting without proof.
@@ -2564,7 +2564,7 @@ Metadata:
 - Authored-output status: n/a
 - Warning IDs: none
 - Source summary: Source lineage: plant dormancy and living-companion logic. Form kept contained.
-- Source lineage: Source lineage: plant dormancy and living-companion logic. Form kept contained.
+- Source lineage: plant dormancy and living-companion logic. Form kept contained.
 - Materials: plant, seed, leaf, or plant image
 - Safety flags: ingestion=none; essentialOils=none; smoke=none; fire=none; pets=review_required; children=safe; pregnancy=no_claim; allergies=choose non-contact when plant safety is uncertain; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
@@ -2604,7 +2604,7 @@ Ritual form
 Plant life includes dormancy; not every living thing is always growing visibly.
 
 Material lineage
-Source lineage: plant dormancy and living-companion logic.
+plant dormancy and living-companion logic.
 
 Kept bounded
 One small action, no extra setup.
@@ -2658,7 +2658,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Waning timing makes this a beginning held in reserve rather than launched. The ritual gives the beginning a first body before it becomes work. Waning timing turns the beginning toward preparation rather than launch. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
+Waning timing makes this a beginning held in reserve rather than launched. The ritual gives the beginning a first body before it becomes work. Waning timing turns the beginning toward preparation rather than launch. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
 
 Question to carry
 What beginning can be held between you before it becomes work?
@@ -2677,7 +2677,7 @@ Ritual form
 Waning timing makes this a beginning held in reserve rather than launched.
 
 Material lineage
-Source lineage: bread/grain table-center and seed-water beginning logic.
+bread/grain table-center and seed-water beginning logic.
 
 Kept bounded
 One grain, one sentence, one night of waiting.
@@ -2711,18 +2711,18 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: bread/grain table-center and welcome logic. Form kept contained.
 - Source lineage: bread/grain table-center and welcome logic
-- Materials: bread or ordinary substitute already safe for the household, table or plate
+- Materials: bread, toast, cracker, tortilla, roll, biscuit, or another bread-like staple, table or plate
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only food already safe for the household; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
 
 ```text
-Put bread at the center.
+Put one small piece of bread at the table.
 
-Use bread only if it already belongs here; one ordinary substitute that already works in this household is enough. Let the table hold one small sign of enough. Place a small piece of bread, or one ordinary household substitute, on a plate at the table center. Name what is enough for this household right now in one sentence. Return it to ordinary kitchen use. Close when the plate is clear: the bread is eaten, put away, or returned to ordinary use.
+Use what is already in the kitchen: a small piece of bread, toast, cracker, tortilla, roll, or biscuit. Do not go get anything special. Set it at the center of the table. Say one plain sentence about what is already enough here. Let it sit there for one breath. Then eat it or put it away. Close when the table is clear again.
 
 Intention
-Let the bread at the center give household care one concrete place to land.
+Let the bread at the center give household care a place to rest.
 
 Best window
 When you have five quiet minutes.
@@ -2731,29 +2731,29 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Bread or grain makes enoughness visible at the table: a center, not a promise. The household material makes tending visible, then returns to ordinary use. Seasonal timing asks for a small marker, not a public calendar performance. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Bread or grain gives enough a table center without turning it into a claim. The chosen object gives household care a place, then goes back where it belongs. Seasonal timing asks for one private marker that can rest at the table. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
 
 Question to carry
-What can sit at the center without needing to become more?
+What is already enough for tonight?
 
 How this was chosen
 Chosen for
 Kitchen stays materially present, with tending the home as the work, for one person, at low capacity.
 
 Timing shaped it
-Seasonal timing asks for a small marker, not a public calendar performance.
+Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The household material makes tending visible, then returns to ordinary use.
+The chosen object gives household care a place, then goes back where it belongs.
 
 Ritual form
-Bread or grain makes enoughness visible at the table: a center, not a promise.
+Bread or grain gives enough a table center without turning it into a claim.
 
 Material lineage
-Source lineage: bread/grain table-center and welcome logic.
+bread/grain table-center and welcome logic.
 
 Kept bounded
-One table marker, one enoughness phrase, then ordinary return.
+One bread-like staple, one enough sentence, then the plate is cleared.
 
 Private timing fit
 Private context supports keeping this practical and contained.
@@ -2781,18 +2781,18 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: bread/grain table-center and welcome logic. Form kept contained.
 - Source lineage: bread/grain table-center and welcome logic
-- Materials: bread or ordinary substitute already safe for the household, table or plate
+- Materials: bread, toast, cracker, tortilla, roll, biscuit, or another bread-like staple, table or plate
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only food already safe for the household; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
 
 ```text
-Put bread at the center.
+Put one small piece of bread at the table.
 
-Use bread only if it already belongs here; one ordinary substitute that already works in this household is enough. Let the table hold one small sign of enough. Place a small piece of bread, or one ordinary household substitute, on a plate at the table center. One of you names what is enough; the other turns the plate slightly toward the center. Both leave the plate alone until it returns to ordinary use. Close when the plate is clear: the bread is eaten, put away, or returned to ordinary use.
+Use what is already in the kitchen: a small piece of bread, toast, cracker, tortilla, roll, or biscuit. Do not go get anything special. Set a small piece of bread, toast, cracker, tortilla, roll, or biscuit at the center of the table. One of you names what is already enough here; the other turns the plate slightly toward the center. Let it sit there for one breath. Then eat it or put it away. Close when the table is clear again.
 
 Intention
-Let the bread at the center give household care one concrete place to land.
+Let the bread at the center give household care a place to rest.
 
 Best window
 When you have a little space this week.
@@ -2801,29 +2801,29 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Bread or grain makes enoughness visible at the table: a center, not a promise. The household material makes tending visible, then returns to ordinary use. Seasonal timing asks for a small marker, not a public calendar performance. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
+Bread or grain gives enough a table center without turning it into a claim. The chosen object gives household care a place, then goes back where it belongs. Seasonal timing asks for one private marker that can rest at the table. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
 
 Question to carry
-What can sit at the center between you without needing to become more?
+What is already enough between you tonight?
 
 How this was chosen
 Chosen for
 Home stays materially present, with tending the home as the work, for both of you, at steady capacity.
 
 Timing shaped it
-Seasonal timing asks for a small marker, not a public calendar performance.
+Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The household material makes tending visible, then returns to ordinary use.
+The chosen object gives household care a place, then goes back where it belongs.
 
 Ritual form
-Bread or grain makes enoughness visible at the table: a center, not a promise.
+Bread or grain gives enough a table center without turning it into a claim.
 
 Material lineage
-Source lineage: bread/grain table-center and welcome logic.
+bread/grain table-center and welcome logic.
 
 Kept bounded
-One table marker, one enoughness phrase, then ordinary return.
+One bread-like staple, one enough sentence, then the plate is cleared.
 
 Private timing fit
 For both of you, the fit leans toward practical home-tending magic and clear structure and bounded action.
@@ -2851,7 +2851,7 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: seasonal marker and vessel-return logic. Form kept contained.
 - Source lineage: seasonal marker and vessel-return logic
-- Materials: small bowl, grain, leaf, key, bread, or ordinary seasonal object
+- Materials: small bowl, one seasonal marker already present
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only safe ordinary household materials; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
@@ -2859,10 +2859,10 @@ Full normal output:
 ```text
 Let one bowl mark the season.
 
-Use one ordinary material already in the home; let the bowl hold the season without decorating the house. Choose one small seasonal marker already in the home. One of you places it in a small bowl; the other names what this season is asking the home to hold. Both touch the table once, then leave the bowl where it can rest until the next return. When the marker is done, return it to ordinary use or empty the bowl. Close when both of you have left the bowl alone until its next ordinary return.
+Place one seasonal object in the bowl; let the bowl hold the season until you return to the table. Choose one small seasonal marker already present: a leaf, grain, key, ribbon, stone, or bit of bread can be enough. One of you places it in a small bowl; the other names what this season is asking the home to hold. Both touch the table once, then leave the bowl where it can rest until the next return. When the marker is done, put it back, eat it if it is food, or empty the bowl. Close when both of you have left the bowl where it is.
 
 Intention
-Let the bowl mark the crossing and return to ordinary use.
+Let the bowl mark the crossing and come back to its place.
 
 Best window
 When you have five quiet minutes.
@@ -2890,10 +2890,10 @@ Ritual form
 A seasonal bowl gives calendar change a private household form: one marker held, then returned.
 
 Material lineage
-Source lineage: seasonal marker and vessel-return logic.
+seasonal marker and vessel-return logic.
 
 Kept bounded
-The bowl holds one marker until its ordinary return.
+The bowl holds one marker until the table is met again.
 
 Private timing fit
 For both of you, the fit leans toward practical home-tending magic and clear structure and bounded action.
@@ -2963,7 +2963,7 @@ Ritual form
 Kindling and first-sighting traditions make a beginning visible before it becomes a project.
 
 Material lineage
-Source lineage: household fire-kindling and first-light threshold logic.
+household fire-kindling and first-light threshold logic.
 
 Kept bounded
 One first light, one crossing, one later return.
@@ -3036,7 +3036,7 @@ Ritual form
 Clear speech can become a held object: written once, folded once, and not expanded.
 
 Material lineage
-Source lineage: folded-word and household container-return logic.
+folded-word and household container-return logic.
 
 Kept bounded
 One phrase, one fold, one holding place, then later return.
@@ -3109,7 +3109,7 @@ Ritual form
 Waning light supports lessening when the phrase has a real way out.
 
 Material lineage
-Source lineage: waning-light and household removal logic.
+waning-light and household removal logic.
 
 Kept bounded
 One phrase, one removal path, then empty hands.
@@ -3154,7 +3154,7 @@ Put a threshold word on the table.
 Choose a word for the crossing; let the surface hold it before you move. Stand or sit at the table. Place one threshold word on the surface, spoken or written. Touch the table, then turn toward the next room or doorway. Close by turning from the table toward the threshold.
 
 Intention
-Let the phrase mark the crossing and return to ordinary use.
+Let the phrase mark the crossing and come back to its place.
 
 Best window
 When you have five quiet minutes.
@@ -3182,7 +3182,7 @@ Ritual form
 A table can temporarily hold a threshold word before it is carried, crossed, or left behind.
 
 Material lineage
-Source lineage: hearth/table first-and-last logic.
+hearth/table first-and-last logic.
 
 Kept bounded
 One small action, no extra setup.
@@ -3252,7 +3252,7 @@ Ritual form
 Fire-banking customs give evening closure a form: lower the light, keep the warmth, and stop adding fuel.
 
 Material lineage
-Source lineage: household fire-banking customs.
+household fire-banking customs.
 
 Kept bounded
 One lowered light, one ending, then no more work.
@@ -3325,7 +3325,7 @@ Ritual form
 Full timing and a light practice can make the ritual simple: a line is placed, witnessed, and closed.
 
 Material lineage
-Source lineage: hearth/table first-and-last logic.
+hearth/table first-and-last logic.
 
 Kept bounded
 One light, one line, then the light changes.
@@ -3359,7 +3359,7 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: seasonal marker and vessel-return logic. Form kept contained.
 - Source lineage: seasonal marker and vessel-return logic
-- Materials: small bowl, grain, leaf, key, bread, or ordinary seasonal object
+- Materials: small bowl, one seasonal marker already present
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only safe ordinary household materials; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
@@ -3367,10 +3367,10 @@ Full normal output:
 ```text
 Let one bowl mark the season.
 
-Use one ordinary material already in the home; let the bowl hold the season without decorating the house. Choose one small seasonal marker already in the home. One of you places it in a small bowl; the other names what this season is asking the home to hold. Both touch the table once, then leave the bowl where it can rest until the next return. When the marker is done, return it to ordinary use or empty the bowl. Close when both of you have left the bowl alone until its next ordinary return.
+Place one seasonal object in the bowl; let the bowl hold the season until you return to the table. Choose one small seasonal marker already present: a leaf, grain, key, ribbon, stone, or bit of bread can be enough. One of you places it in a small bowl; the other names what this season is asking the home to hold. Both touch the table once, then leave the bowl where it can rest until the next return. When the marker is done, put it back, eat it if it is food, or empty the bowl. Close when both of you have left the bowl where it is.
 
 Intention
-Let the bowl mark the crossing and return to ordinary use.
+Let the bowl mark the crossing and come back to its place.
 
 Best window
 When you have five quiet minutes.
@@ -3398,10 +3398,10 @@ Ritual form
 A seasonal bowl gives calendar change a private household form: one marker held, then returned.
 
 Material lineage
-Source lineage: seasonal marker and vessel-return logic.
+seasonal marker and vessel-return logic.
 
 Kept bounded
-The bowl holds one marker until its ordinary return.
+The bowl holds one marker until the table is met again.
 
 Private timing fit
 For both of you, the fit leans toward practical home-tending magic and clear structure and bounded action.
@@ -3443,7 +3443,7 @@ Empty the threshold bowl.
 Let emptying be the action; do not add new meaning while closing the old one. Choose a bowl or vessel that has been holding a marker. One of you names what is finished; the other empties, rinses, or returns the marker. Put the bowl back in its ordinary place together. Close when the bowl is empty, rinsed, or back in its place.
 
 Intention
-Let the bowl mark the crossing and return to ordinary use.
+Let the bowl mark the crossing and come back to its place.
 
 Best window
 When you have a little space this week.
@@ -3471,7 +3471,7 @@ Ritual form
 A vessel can close by emptying what it held and becoming ordinary again.
 
 Material lineage
-Source lineage: emptying, returning, and household threshold-vessel logic.
+emptying, returning, and household threshold-vessel logic.
 
 Kept bounded
 One held marker, one emptying, then the vessel returns.
@@ -3505,7 +3505,7 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: quiet household welcome forms. Form kept contained.
 - Source lineage: quiet household welcome forms
-- Materials: bowl, cup, bread, grain, water, or warm drink
+- Materials: one cup or small bowl
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only materials already safe for the household; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
@@ -3513,7 +3513,7 @@ Full normal output:
 ```text
 Set out a quiet welcome.
 
-Welcome is the ritual form, not a performance; choose one ordinary welcome vessel; a cup or small bowl is enough. Set one cup or small bowl at the table between you. One of you names what is welcome here; the other touches the vessel once. Return or wash the vessel when finished. Close when the vessel has been returned or washed.
+Set one cup or small bowl at the table; let the vessel mark welcome, then stop. Set one cup or small bowl at the table between you. One of you names what is welcome here; the other touches the vessel once. Set the vessel down and leave it for one breath. Close by clearing the cup or bowl when you are done.
 
 Intention
 Let the table give care a small shared form.
@@ -3525,7 +3525,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A modest bowl, cup, bread, or grain can make hospitality visible without demanding belief. The shared material carries tending-us as a small action, not a long talk. Seasonal timing asks for a small marker, not a public calendar performance. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+A cup or small bowl can hold welcome briefly without starting a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Seasonal timing asks for one private marker that can rest at the table. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What welcome can the shared vessel hold for both of you?
@@ -3535,16 +3535,16 @@ Chosen for
 Kitchen stays materially present, with tending us as the work, for both of you, at low capacity.
 
 Timing shaped it
-Seasonal timing asks for a small marker, not a public calendar performance.
+Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The shared material carries tending-us as a small action, not a long talk.
+The cup, bowl, light, or table gives both of you one shared action before talk begins.
 
 Ritual form
-A modest bowl, cup, bread, or grain can make hospitality visible without demanding belief.
+A cup or small bowl can hold welcome briefly without starting a conversation.
 
 Material lineage
-Source lineage: quiet household welcome forms.
+quiet household welcome forms.
 
 Kept bounded
 One vessel, one welcome, then the vessel returns.
@@ -3595,7 +3595,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Sweetness belongs here as a material cue for one bounded word that can be set down and ended. The shared material carries tending-us as a small action, not a long talk. Waxing moon supports this form without making the timing a command. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+Sweetness belongs here as a material cue for one bounded word that can be set down and ended. The cup, bowl, light, or table gives both of you one shared action before talk begins. Waxing moon supports this form without making the timing a command. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What word can be sweetened between you and then set down?
@@ -3608,13 +3608,13 @@ Timing shaped it
 Waxing moon supports this form without making the timing a command.
 
 Focus bridge
-The shared material carries tending-us as a small action, not a long talk.
+The cup, bowl, light, or table gives both of you one shared action before talk begins.
 
 Ritual form
 Sweetness belongs here as a material cue for one bounded word that can be set down and ended.
 
 Material lineage
-Source lineage: quiet welcome and household sweetness forms.
+quiet welcome and household sweetness forms.
 
 Kept bounded
 One bounded word, one sweetness cue, then the cup is returned.
@@ -3684,7 +3684,7 @@ Ritual form
 Kindling and first-sighting traditions make a beginning visible before it becomes a project.
 
 Material lineage
-Source lineage: household fire-kindling and first-light threshold logic.
+household fire-kindling and first-light threshold logic.
 
 Kept bounded
 One first light, one crossing, one later return.
@@ -3717,7 +3717,7 @@ Metadata:
 - Authored-output status: n/a
 - Warning IDs: none
 - Source summary: Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
-- Source lineage: Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
+- Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
 - Materials: one plant, leaf, seed, or plant image
 - Safety flags: ingestion=none; essentialOils=none; smoke=none; fire=none; pets=review_required; children=supervision; pregnancy=no_claim; allergies=choose non-contact when plant safety is uncertain; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
@@ -3726,10 +3726,10 @@ Full normal output:
 ```text
 Let a plant witness the growth.
 
-Let the plant hold attention without becoming a task; speak softly or silently. Sit or stand near one plant, leaf, seed, or plant image. Name one thing that is growing, slowly or privately. Let the plant witness it without asking for advice. Close by thanking the witness in plain words and leaving the plant untouched.
+Sit near one plant that is already part of the room; speak softly or silently. Sit or stand near one plant, leaf, seed, or plant image. Name one thing that is growing, slowly or privately. Let the plant witness it for one breath. Leave the plant untouched. Close by letting the plant stay as it is.
 
 Intention
-Let the plant give household care one concrete place to land.
+Let the plant give household care a place to rest.
 
 Best window
 When you have five quiet minutes.
@@ -3738,7 +3738,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The household material makes tending visible, then returns to ordinary use. Waning moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The chosen object gives household care a place, then goes back where it belongs. Waning moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
 
 Question to carry
 What can keep growing without being handled today?
@@ -3751,13 +3751,13 @@ Timing shaped it
 Waning moon supports this form without making the timing a command.
 
 Focus bridge
-The household material makes tending visible, then returns to ordinary use.
+The chosen object gives household care a place, then goes back where it belongs.
 
 Ritual form
 Plant folklore and flower-language traditions can make a living thing a witness, not a prop.
 
 Material lineage
-Source lineage: plant-lore living witness and flower-message logic.
+plant-lore living witness and flower-message logic.
 
 Kept bounded
 One small action, no extra setup.
@@ -3830,7 +3830,7 @@ Ritual form
 Waning light supports lessening when the phrase has a real way out.
 
 Material lineage
-Source lineage: waning-light and household removal logic.
+waning-light and household removal logic.
 
 Kept bounded
 One phrase, one removal path, then empty hands.
@@ -3875,7 +3875,7 @@ Give the threshold a bowl.
 Use the bowl only when the doorway is the real ritual place; keep the words plain and brief. Place a small bowl by the doorway. Put in a key and name what crosses in with you. Cross the threshold once, then return the key to ordinary use. Close when the object returns or the bowl is moved away from the threshold.
 
 Intention
-Let the bowl mark the crossing and return to ordinary use.
+Let the bowl mark the crossing and come back to its place.
 
 Best window
 When you have five quiet minutes.
@@ -3903,7 +3903,7 @@ Ritual form
 A vessel at the edge of the home gives arrival a place to gather, cross, and end.
 
 Material lineage
-Source lineage: threshold crossing and bowl-vessel household logic.
+threshold crossing and bowl-vessel household logic.
 
 Kept bounded
 One object crosses in, then returns or the bowl moves.
@@ -3973,7 +3973,7 @@ Ritual form
 Clear speech can become a held object: written once, folded once, and not expanded.
 
 Material lineage
-Source lineage: folded-word and household container-return logic.
+folded-word and household container-return logic.
 
 Kept bounded
 One phrase, one fold, one holding place, then later return.
@@ -4046,7 +4046,7 @@ Ritual form
 Waning light supports lessening when the phrase has a real way out.
 
 Material lineage
-Source lineage: waning-light and household removal logic.
+waning-light and household removal logic.
 
 Kept bounded
 One phrase, one removal path, then empty hands.
@@ -4091,7 +4091,7 @@ Let the key carry one word.
 Use a key that already returns to a place; keep the carrying brief: one crossing, then return. Hold an ordinary key. Say or write one word for what should cross with you. Carry it through the next doorway. Return the key to its usual place. Close when the key is back in ordinary use.
 
 Intention
-Let the key mark the crossing and return to ordinary use.
+Let the key mark the crossing and come back to its place.
 
 Best window
 When you have five quiet minutes.
@@ -4119,7 +4119,7 @@ Ritual form
 A key is useful here because it already belongs to leaving, crossing, and returning.
 
 Material lineage
-Source lineage: key, threshold, return, and household marker folklore.
+key, threshold, return, and household marker folklore.
 
 Kept bounded
 One word, one crossing, then the key returns.
@@ -4149,7 +4149,7 @@ Metadata:
 - Authored-output status: n/a
 - Warning IDs: none
 - Source summary: Source lineage: plant-message and folded-phrase placement logic. Form kept contained.
-- Source lineage: Source lineage: plant-message and folded-phrase placement logic. Form kept contained.
+- Source lineage: plant-message and folded-phrase placement logic. Form kept contained.
 - Materials: paper, pencil, plant pot or plant area
 - Safety flags: ingestion=none; essentialOils=none; smoke=none; fire=none; pets=review_required; children=safe; pregnancy=no_claim; allergies=avoid plant contact if safety is uncertain; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
@@ -4189,7 +4189,7 @@ Ritual form
 Plant-message traditions support a private phrase placed near living growth without assigning the plant a fixed meaning.
 
 Material lineage
-Source lineage: plant-message and folded-phrase placement logic.
+plant-message and folded-phrase placement logic.
 
 Kept bounded
 One folded phrase, one plant-side place, then later return.
@@ -4222,7 +4222,7 @@ Metadata:
 - Authored-output status: pass
 - Warning IDs: none
 - Source summary: Source lineage: first-and-last calendar threshold logic. Form kept contained.
-- Source lineage: Source lineage: first-and-last calendar threshold logic. Form kept contained.
+- Source lineage: first-and-last calendar threshold logic. Form kept contained.
 - Materials: paper or spoken words, doorway
 - Safety flags: ingestion=none; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=none; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
@@ -4234,7 +4234,7 @@ Give the threshold a first word and a last word.
 Keep the words plain; let the threshold hold the change. Stand at one doorway. Name one last word for what is ending. Name one first word for what is beginning. Cross the doorway once with both words spoken or held on paper. Close when the crossing is complete and no third word is added.
 
 Intention
-Let the phrase mark the crossing and return to ordinary use.
+Let the phrase mark the crossing and come back to its place.
 
 Best window
 When you have five quiet minutes.
@@ -4262,7 +4262,7 @@ Ritual form
 Calendar customs can become private first-and-last markers without becoming a holiday feed.
 
 Material lineage
-Source lineage: first-and-last calendar threshold logic.
+first-and-last calendar threshold logic.
 
 Kept bounded
 One threshold action, one clean close.
@@ -4296,7 +4296,7 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: quiet household welcome forms. Form kept contained.
 - Source lineage: quiet household welcome forms
-- Materials: bowl, cup, bread, grain, water, or warm drink
+- Materials: one cup or small bowl
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only materials already safe for the household; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
@@ -4304,7 +4304,7 @@ Full normal output:
 ```text
 Set out a quiet welcome.
 
-Welcome is the ritual form, not a performance; choose one ordinary welcome vessel; a cup or small bowl is enough. Set one cup or small bowl at the table between you. One of you names what is welcome here; the other touches the vessel once. Return or wash the vessel when finished. Close when the vessel has been returned or washed.
+Set one cup or small bowl at the table; let the vessel mark welcome, then stop. Set one cup or small bowl at the table between you. One of you names what is welcome here; the other touches the vessel once. Set the vessel down and leave it for one breath. Close by clearing the cup or bowl when you are done.
 
 Intention
 Let the table hold rest without asking for more.
@@ -4316,7 +4316,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A modest bowl, cup, bread, or grain can make hospitality visible without demanding belief. The action lets rest be held by material instead of explained into more work. Seasonal timing asks for a small marker, not a public calendar performance. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+A cup or small bowl can hold welcome briefly without starting a conversation. The action lets rest be held by material instead of explained into more work. Seasonal timing asks for one private marker that can rest at the table. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What welcome can the shared vessel hold for both of you?
@@ -4326,16 +4326,16 @@ Chosen for
 Kitchen stays materially present, with resting as the work, for both of you, at low capacity.
 
 Timing shaped it
-Seasonal timing asks for a small marker, not a public calendar performance.
+Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
 The action lets rest be held by material instead of explained into more work.
 
 Ritual form
-A modest bowl, cup, bread, or grain can make hospitality visible without demanding belief.
+A cup or small bowl can hold welcome briefly without starting a conversation.
 
 Material lineage
-Source lineage: quiet household welcome forms.
+quiet household welcome forms.
 
 Kept bounded
 One vessel, one welcome, then the vessel returns.
@@ -4380,7 +4380,7 @@ Fold a word for the crossing.
 Write one sentence only; let the fold give the words a body. Write one threshold word or one short line. Fold the paper once toward itself. Place it near the doorway. Let it rest until the next crossing, then return it or put it away. Close when the folded word has crossed or been placed.
 
 Intention
-Let the bowl mark the crossing and return to ordinary use.
+Let the bowl mark the crossing and come back to its place.
 
 Best window
 When you have five quiet minutes.
@@ -4408,7 +4408,7 @@ Ritual form
 A threshold word needs a body if it is going to be carried, crossed, or put away.
 
 Material lineage
-Source lineage: folded-word and household container-return logic.
+folded-word and household container-return logic.
 
 Kept bounded
 One phrase, one fold, one holding place, then later return.
@@ -4481,7 +4481,7 @@ Ritual form
 A vessel can close by emptying what it held and becoming ordinary again.
 
 Material lineage
-Source lineage: emptying, returning, and household threshold-vessel logic.
+emptying, returning, and household threshold-vessel logic.
 
 Kept bounded
 One held marker, one emptying, then the vessel returns.
@@ -4554,7 +4554,7 @@ Ritual form
 A vessel can close by emptying what it held and becoming ordinary again.
 
 Material lineage
-Source lineage: emptying, returning, and household threshold-vessel logic.
+emptying, returning, and household threshold-vessel logic.
 
 Kept bounded
 One held marker, one emptying, then the vessel returns.
@@ -4627,7 +4627,7 @@ Ritual form
 First light can open a beginning without asking it to launch.
 
 Material lineage
-Source lineage: first-light and observable-light timing logic.
+first-light and observable-light timing logic.
 
 Kept bounded
 One first light, one sentence, then no plan.
@@ -4681,7 +4681,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Full visible light gives the phrase a clear witness, while the material path stays table light. The phrase receives one material action so the saying can end cleanly. Full light lets the phrase be witnessed once, then closed by changing the light. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+Full visible light gives the phrase a clear witness, while the material path stays table light. The phrase receives one material action so the saying can end cleanly. Full light lets the phrase be witnessed once, then closed by changing the light. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What line can be witnessed between you without becoming talk?
@@ -4700,7 +4700,7 @@ Ritual form
 Full visible light gives the phrase a clear witness, while the material path stays table light.
 
 Material lineage
-Source lineage: observable full-light timing and hearth/table witness logic.
+observable full-light timing and hearth/table witness logic.
 
 Kept bounded
 One phrase, one witness, then the light changes.
@@ -4773,7 +4773,7 @@ Ritual form
 Table light can acknowledge what is already present; the empty bowl gives it a place to rest and return.
 
 Material lineage
-Source lineage: table light and bounded vessel-holding logic.
+table light and bounded vessel-holding logic.
 
 Kept bounded
 One empty bowl, one held thing, then return.
@@ -4846,7 +4846,7 @@ Ritual form
 Waning timing makes the release a lowering of light rather than a purge.
 
 Material lineage
-Source lineage: waning lunar visibility and household light-lowering logic.
+waning lunar visibility and household light-lowering logic.
 
 Kept bounded
 One lowered light, one lessening phrase, then stop.
@@ -4919,7 +4919,7 @@ Ritual form
 Smooring gives rest a form: light is lowered and held safely instead of being treated as gone.
 
 Material lineage
-Source lineage: smoored hearth and banked-light mechanics.
+smoored hearth and banked-light mechanics.
 
 Kept bounded
 One small action, no extra setup.
@@ -4992,7 +4992,7 @@ Ritual form
 Smooring gives rest a form: light is lowered and held safely instead of being treated as gone.
 
 Material lineage
-Source lineage: smoored hearth and banked-light mechanics.
+smoored hearth and banked-light mechanics.
 
 Kept bounded
 One small action, no extra setup.
@@ -5065,7 +5065,7 @@ Ritual form
 An electric candle can witness without flame or divination.
 
 Material lineage
-Source lineage: safe witness-light and kept-light mechanics.
+safe witness-light and kept-light mechanics.
 
 Kept bounded
 One small action, no extra setup.
@@ -5138,7 +5138,7 @@ Ritual form
 Renewed-light sources support a transition arc: old light state ends, one new safe light begins, and continuity returns.
 
 Material lineage
-Source lineage: renewed-light and need-fire mechanics, restricted to transition only.
+renewed-light and need-fire mechanics, restricted to transition only.
 
 Kept bounded
 One primary ritual, no task list.
@@ -5211,7 +5211,7 @@ Ritual form
 Window light lets a phrase meet a threshold without requiring flame or outdoor viewing.
 
 Material lineage
-Source lineage: first-light threshold and observable-light timing logic.
+first-light threshold and observable-light timing logic.
 
 Kept bounded
 One window edge, one phrase, then the curtain closes.
@@ -5262,7 +5262,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Shared light can give a small common focus a form without asking it to become larger. The shared material carries tending-us as a small action, not a long talk. Waning moon supports this form without making the timing a command. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
+Shared light can give a small common focus a form without asking it to become larger. The cup, bowl, light, or table gives both of you one shared action before talk begins. Waning moon supports this form without making the timing a command. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
 
 Question to carry
 What can the shared light hold for both of you?
@@ -5275,13 +5275,13 @@ Timing shaped it
 Waning moon supports this form without making the timing a command.
 
 Focus bridge
-The shared material carries tending-us as a small action, not a long talk.
+The cup, bowl, light, or table gives both of you one shared action before talk begins.
 
 Ritual form
 Shared light can give a small common focus a form without asking it to become larger.
 
 Material lineage
-Source lineage: hearth/table first-and-last logic.
+hearth/table first-and-last logic.
 
 Kept bounded
 One light, one line, then the light changes.
@@ -5351,7 +5351,7 @@ Ritual form
 Smooring gives rest a form: light is lowered and held safely instead of being treated as gone.
 
 Material lineage
-Source lineage: smoored hearth and banked-light mechanics.
+smoored hearth and banked-light mechanics.
 
 Kept bounded
 One small action, no extra setup.
@@ -5402,7 +5402,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Full timing and a light practice can make the ritual simple: a line is placed, witnessed, and closed. The phrase receives one material action so the saying can end cleanly. Wednesday, June 3 morning stood out this week. The window stood out because of full visible light timing. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
+Full timing and a light practice can make the ritual simple: a line is placed, witnessed, and closed. The phrase receives one material action so the saying can end cleanly. Wednesday, June 3 morning stood out this week. The window stood out because of full visible light timing. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
 
 Question to carry
 What can the shared light hold for both of you?
@@ -5421,7 +5421,7 @@ Ritual form
 Full timing and a light practice can make the ritual simple: a line is placed, witnessed, and closed.
 
 Material lineage
-Source lineage: hearth/table first-and-last logic.
+hearth/table first-and-last logic.
 
 Kept bounded
 One light, one line, then the light changes.
@@ -5475,7 +5475,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A lowered household light can give attention one warm edge to return to. The material gives attention one edge to return to, then stops. No single timing window stood out strongly this week, so the ritual can happen whenever capacity allows. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+A lowered household light can give attention one warm edge to return to. The chosen object gives wandering attention one steady place to return to, then stops. No single timing window stood out strongly this week, so the ritual can happen whenever capacity allows. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
 
 Question to carry
 What can your attention return to without being worked on?
@@ -5488,13 +5488,13 @@ Timing shaped it
 No single timing window stood out strongly this week, so the recommendation stays close to your check-in and current capacity. You can do it whenever it feels workable.
 
 Focus bridge
-The material gives attention one edge to return to, then stops.
+The chosen object gives wandering attention one steady place to return to, then stops.
 
 Ritual form
 A lowered household light can give attention one warm edge to return to.
 
 Material lineage
-Source lineage: household fire-banking customs.
+household fire-banking customs.
 
 Kept bounded
 One lowered light, one ending, then no more work.
@@ -5545,7 +5545,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A lowered household light can give both people one shared edge to return to. The material gives attention one edge to return to, then stops. No single timing window stood out strongly this week, so the ritual can happen whenever capacity allows. For both of you, the rite works through one small role each, or one shared object touched together. Low capacity keeps the rite to one material action and one close.
+A lowered household light can give both people one shared edge to return to. The chosen object gives wandering attention one steady place to return to, then stops. No single timing window stood out strongly this week, so the ritual can happen whenever capacity allows. For both of you, the rite works through one small role each, or one shared object touched together. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What can both of you return to without working on it?
@@ -5558,13 +5558,13 @@ Timing shaped it
 No single timing window stood out strongly this week, so the recommendation stays close to your check-in and current capacity. You can do it whenever it feels workable.
 
 Focus bridge
-The material gives attention one edge to return to, then stops.
+The chosen object gives wandering attention one steady place to return to, then stops.
 
 Ritual form
 A lowered household light can give both people one shared edge to return to.
 
 Material lineage
-Source lineage: household fire-banking customs.
+household fire-banking customs.
 
 Kept bounded
 One lowered light, one ending, then no more work.
@@ -5634,7 +5634,7 @@ Ritual form
 Window light lets a phrase meet a threshold without requiring flame or outdoor viewing.
 
 Material lineage
-Source lineage: first-light threshold and observable-light timing logic.
+first-light threshold and observable-light timing logic.
 
 Kept bounded
 One window edge, one phrase, then the curtain closes.
@@ -5688,7 +5688,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Full visible light gives the phrase a clear witness, while the material path stays table light. The phrase receives one material action so the saying can end cleanly. Full light lets the phrase be witnessed once, then closed by changing the light. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+Full visible light gives the phrase a clear witness, while the material path stays table light. The phrase receives one material action so the saying can end cleanly. Full light lets the phrase be witnessed once, then closed by changing the light. For both of you, the shared surface or vessel gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What line can be witnessed between you without becoming talk?
@@ -5707,7 +5707,7 @@ Ritual form
 Full visible light gives the phrase a clear witness, while the material path stays table light.
 
 Material lineage
-Source lineage: observable full-light timing and hearth/table witness logic.
+observable full-light timing and hearth/table witness logic.
 
 Kept bounded
 One phrase, one witness, then the light changes.
@@ -5780,7 +5780,7 @@ Ritual form
 Kindling and kept-light sources support first light as a beginning held before action.
 
 Material lineage
-Source lineage: kindling, kept-light, and renewed-light mechanics.
+kindling, kept-light, and renewed-light mechanics.
 
 Kept bounded
 One primary ritual, no task list.
@@ -5853,7 +5853,7 @@ Ritual form
 Kindling and first-sighting traditions make a beginning visible before it becomes a project.
 
 Material lineage
-Source lineage: household fire-kindling and first-light threshold logic.
+household fire-kindling and first-light threshold logic.
 
 Kept bounded
 One first light, one crossing, one later return.
@@ -5926,7 +5926,7 @@ Ritual form
 Waning timing makes the release a lowering of light rather than a purge.
 
 Material lineage
-Source lineage: waning lunar visibility and household light-lowering logic.
+waning lunar visibility and household light-lowering logic.
 
 Kept bounded
 One lowered light, one lessening phrase, then stop.
@@ -5999,7 +5999,7 @@ Ritual form
 Table light can acknowledge what is already present; the empty bowl gives it a place to rest and return.
 
 Material lineage
-Source lineage: table light and bounded vessel-holding logic.
+table light and bounded vessel-holding logic.
 
 Kept bounded
 One empty bowl, one held thing, then return.
@@ -6053,7 +6053,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Full visible light gives the phrase a clear witness, while the material path stays table light. The phrase receives one material action so the saying can end cleanly. Wednesday, June 3 morning stood out this week. The window stood out because of full visible light timing. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+Full visible light gives the phrase a clear witness, while the material path stays table light. The phrase receives one material action so the saying can end cleanly. Wednesday, June 3 morning stood out this week. The window stood out because of full visible light timing. For both of you, the shared surface or vessel gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What line can be witnessed between you without becoming talk?
@@ -6072,7 +6072,7 @@ Ritual form
 Full visible light gives the phrase a clear witness, while the material path stays table light.
 
 Material lineage
-Source lineage: observable full-light timing and hearth/table witness logic.
+observable full-light timing and hearth/table witness logic.
 
 Kept bounded
 One phrase, one witness, then the light changes.
@@ -6105,7 +6105,7 @@ Metadata:
 - Authored-output status: review_required
 - Warning IDs: coverage_gap_category_focus_capacity, recommendation_confidence_limited, high_capacity_depth_gap, closest_compatible_pattern_selected, stronger_wrong_category_rejected
 - Source summary: Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
-- Source lineage: Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
+- Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
 - Materials: one plant, leaf, seed, or plant image
 - Safety flags: ingestion=none; essentialOils=none; smoke=none; fire=none; pets=review_required; children=supervision; pregnancy=no_claim; allergies=choose non-contact when plant safety is uncertain; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
@@ -6114,10 +6114,10 @@ Full normal output:
 ```text
 Let the plant witness the household tending.
 
-Let the plant hold attention without becoming a task; speak softly or silently. Set one plant, leaf, seed, or plant image where both of you can see it. One of you names what in the home is still living; the other names what can be left undisturbed. Let the plant witness both words through one quiet minute. Return the plant or image to its ordinary place without adding a task. Close when the plant is back in its ordinary place and no new task has been added.
+Sit near one plant that is already part of the room; speak softly or silently. Set one plant, leaf, seed, or plant image where both of you can see it. One of you names what in the home is still living; the other names what can be left undisturbed. Let the plant witness both words through one quiet minute. Put the plant or image back where it belongs without adding a task. Close when the plant is back in place and no new task has been added.
 
 Intention
-Let the plant give household care one concrete place to land.
+Let the plant give household care a place to rest.
 
 Best window
 When you have room to linger this week.
@@ -6126,7 +6126,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The household material makes tending visible, then returns to ordinary use. Waning moon supports this form without making the timing a command. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The chosen object gives household care a place, then goes back where it belongs. Waning moon supports this form without making the timing a command. For both of you, the shared surface or vessel gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What in the home can be tended by being witnessed and left steady?
@@ -6139,13 +6139,13 @@ Timing shaped it
 Waning moon supports this form without making the timing a command.
 
 Focus bridge
-The household material makes tending visible, then returns to ordinary use.
+The chosen object gives household care a place, then goes back where it belongs.
 
 Ritual form
 Plant folklore and flower-language traditions can make a living thing a witness, not a prop.
 
 Material lineage
-Source lineage: plant-lore living witness and flower-message logic.
+plant-lore living witness and flower-message logic.
 
 Closest compatible
 The grimoire does not yet have a deeper Plant + home-tending rite. This keeps Plant at the center rather than drifting to a stronger non-Plant form.
@@ -6181,7 +6181,7 @@ Metadata:
 - Authored-output status: n/a
 - Warning IDs: coverage_gap_category_focus_capacity, recommendation_confidence_limited, high_capacity_depth_gap, closest_compatible_pattern_selected, stronger_wrong_category_rejected
 - Source summary: Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
-- Source lineage: Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
+- Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
 - Materials: one plant, leaf, seed, or plant image
 - Safety flags: ingestion=none; essentialOils=none; smoke=none; fire=none; pets=review_required; children=supervision; pregnancy=no_claim; allergies=choose non-contact when plant safety is uncertain; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
@@ -6190,10 +6190,10 @@ Full normal output:
 ```text
 Let the plant witness the household tending.
 
-Let the plant hold attention without becoming a task; speak softly or silently. Set one plant, leaf, seed, or plant image where both of you can see it. One of you names what in the home is still living; the other names what can be left undisturbed. Let the plant witness both words through one quiet minute. Return the plant or image to its ordinary place without adding a task. Close when the plant is back in its ordinary place and no new task has been added.
+Sit near one plant that is already part of the room; speak softly or silently. Set one plant, leaf, seed, or plant image where both of you can see it. Name what in the home is still living. Name what can be left undisturbed. Let the plant witness both words through one quiet minute. Put the plant or image back where it belongs without adding a task. Close when the plant is back in place and no new task has been added.
 
 Intention
-Let the plant give household care one concrete place to land.
+Let the plant give household care a place to rest.
 
 Best window
 No strong timing window stood out this week. When you have room to linger this week.
@@ -6202,7 +6202,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The household material makes tending visible, then returns to ordinary use. No single timing window stood out strongly this week, so the ritual can happen whenever capacity allows. High capacity asks for a fuller arc: staged action, a held moment, and a return. Private context supports keeping this practical and contained.
+Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The chosen object gives household care a place, then goes back where it belongs. No single timing window stood out strongly this week, so the ritual can happen whenever capacity allows. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What in the home can be tended by being witnessed and left steady?
@@ -6215,13 +6215,13 @@ Timing shaped it
 No single timing window stood out strongly this week, so the recommendation stays close to your check-in and current capacity. You can do it whenever it feels workable.
 
 Focus bridge
-The household material makes tending visible, then returns to ordinary use.
+The chosen object gives household care a place, then goes back where it belongs.
 
 Ritual form
 Plant folklore and flower-language traditions can make a living thing a witness, not a prop.
 
 Material lineage
-Source lineage: plant-lore living witness and flower-message logic.
+plant-lore living witness and flower-message logic.
 
 Closest compatible
 The grimoire does not yet have a deeper Plant + home-tending rite. This keeps Plant at the center rather than drifting to a stronger non-Plant form.
@@ -6254,7 +6254,7 @@ Metadata:
 - Authored-output status: review_required
 - Warning IDs: coverage_gap_category_focus_capacity, recommendation_confidence_limited, high_capacity_depth_gap, closest_compatible_pattern_selected, stronger_wrong_category_rejected
 - Source summary: Source lineage: plant dormancy and living-companion logic. Form kept contained.
-- Source lineage: Source lineage: plant dormancy and living-companion logic. Form kept contained.
+- Source lineage: plant dormancy and living-companion logic. Form kept contained.
 - Materials: plant, seed, leaf, or plant image
 - Safety flags: ingestion=none; essentialOils=none; smoke=none; fire=none; pets=review_required; children=safe; pregnancy=no_claim; allergies=choose non-contact when plant safety is uncertain; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
@@ -6294,7 +6294,7 @@ Ritual form
 Plant life includes dormancy; not every living thing is always growing visibly.
 
 Material lineage
-Source lineage: plant dormancy and living-companion logic.
+plant dormancy and living-companion logic.
 
 Closest compatible
 The grimoire does not yet have a deeper Plant + rest rite. This keeps plant rest centered instead of borrowing a stronger dark-light form.
@@ -6339,7 +6339,7 @@ Full normal output:
 ```text
 Let the cup hold the warmth.
 
-Use what is already ordinary here; let the cup do the holding. Place two cups, or one cup between you, at the table. Each offer one word for what is welcome here. Set the cup or cups down to close the warmth. Close when the cup or cups are set down and the shared surface is left quiet.
+Set one cup at the table; let the cup hold warmth without starting a conversation. Place one cup between you at the table, or set one cup for each of you. Each offer one word for what is welcome here. Set the cup or cups down to close the warmth. Close when the cup or cups are set down and the shared surface is left quiet.
 
 Intention
 Let the warm cup give care a small shared form.
@@ -6351,7 +6351,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The shared material carries tending-us as a small action, not a long talk. Full moon supports this form without making the timing a command. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Full moon supports this form without making the timing a command. For both of you, the shared surface or vessel gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What warmth can remain on the shared surface?
@@ -6364,13 +6364,13 @@ Timing shaped it
 Full moon supports this form without making the timing a command.
 
 Focus bridge
-The shared material carries tending-us as a small action, not a long talk.
+The cup, bowl, light, or table gives both of you one shared action before talk begins.
 
 Ritual form
 A cup is a small vessel for welcome: it can hold warmth without asking for a conversation.
 
 Material lineage
-Source lineage: quiet household welcome forms.
+quiet household welcome forms.
 
 Kept bounded
 One cup, one warm phrase, then the cup is set down.
@@ -6443,7 +6443,7 @@ Ritual form
 Waning timing makes this a beginning held in reserve rather than launched.
 
 Material lineage
-Source lineage: bread/grain table-center and seed-water beginning logic.
+bread/grain table-center and seed-water beginning logic.
 
 Kept bounded
 One grain, one sentence, one night of waiting.
@@ -6516,7 +6516,7 @@ Ritual form
 Home tending stays Home here: one thing is lifted, held at the center, and returned.
 
 Material lineage
-Source lineage: smoored hearth and household object-return mechanics.
+smoored hearth and household object-return mechanics.
 
 Kept bounded
 One room object, one held minute, then the object is home again.
@@ -6589,7 +6589,7 @@ Ritual form
 Home tending stays Home here: one thing is lifted, held at the center, and returned.
 
 Material lineage
-Source lineage: smoored hearth and household object-return mechanics.
+smoored hearth and household object-return mechanics.
 
 Kept bounded
 One room object, one held minute, then the object is home again.
@@ -6659,7 +6659,7 @@ Ritual form
 Home rest should not become a light-centered rite or a cleaning reset. The last signal belongs to the room: one place is left alone, and nothing else is asked.
 
 Material lineage
-Source lineage: smoored hearth, last-light, and household settling mechanics.
+smoored hearth, last-light, and household settling mechanics.
 
 Kept bounded
 One resting place, one last signal, then the room is left alone.
@@ -6704,7 +6704,7 @@ Give the phrase a window threshold.
 Use the window as the crossing place; let closing the curtain be the close. Stand together near the window light. One of you names the phrase; the other closes the curtain. Let the edge stand. Close when the curtain is closed.
 
 Intention
-Let the threshold mark the crossing and return to ordinary use.
+Let the threshold mark the crossing and come back to its place.
 
 Best window
 When you have room to linger this week.
@@ -6732,7 +6732,7 @@ Ritual form
 Window light lets a phrase meet a threshold without requiring flame or outdoor viewing.
 
 Material lineage
-Source lineage: first-light threshold and observable-light timing logic.
+first-light threshold and observable-light timing logic.
 
 Kept bounded
 One window edge, one phrase, then the curtain closes.
@@ -6805,7 +6805,7 @@ Ritual form
 Window light lets a phrase meet a threshold without requiring flame or outdoor viewing.
 
 Material lineage
-Source lineage: first-light threshold and observable-light timing logic.
+first-light threshold and observable-light timing logic.
 
 Closest compatible
 High-capacity Reflection phrase coverage is still thin when the chosen form leans threshold or light. The phrase remains the center, but this needs deeper rite-family work.
@@ -6881,7 +6881,7 @@ Ritual form
 Kindling and first-sighting traditions make a beginning visible before it becomes a project.
 
 Material lineage
-Source lineage: household fire-kindling and first-light threshold logic.
+household fire-kindling and first-light threshold logic.
 
 Kept bounded
 One first light, one crossing, one later return.
@@ -6954,7 +6954,7 @@ Ritual form
 Table light can acknowledge what is already present; the empty bowl gives it a place to rest and return.
 
 Material lineage
-Source lineage: table light and bounded vessel-holding logic.
+table light and bounded vessel-holding logic.
 
 Kept bounded
 One empty bowl, one held thing, then return.
@@ -7027,7 +7027,7 @@ Ritual form
 Window light lets a phrase meet a threshold without requiring flame or outdoor viewing.
 
 Material lineage
-Source lineage: first-light threshold and observable-light timing logic.
+first-light threshold and observable-light timing logic.
 
 Closest compatible
 High-capacity Reflection phrase coverage is still thin when the chosen form leans threshold or light. The phrase remains the center, but this needs deeper rite-family work.
@@ -7103,7 +7103,7 @@ Ritual form
 Home tending stays Home here: one thing is lifted, held at the center, and returned.
 
 Material lineage
-Source lineage: smoored hearth and household object-return mechanics.
+smoored hearth and household object-return mechanics.
 
 Kept bounded
 One room object, one held minute, then the object is home again.
@@ -7142,7 +7142,7 @@ Full normal output:
 ```text
 Let the cup hold the warmth.
 
-Use what is already ordinary here; let the cup do the holding. Place two cups, or one cup between you, at the table. Each offer one word for what is welcome here. Set the cup or cups down to close the warmth. Close when the cup or cups are set down and the shared surface is left quiet.
+Set one cup at the table; let the cup hold warmth without starting a conversation. Place one cup between you at the table, or set one cup for each of you. Each offer one word for what is welcome here. Set the cup or cups down to close the warmth. Close when the cup or cups are set down and the shared surface is left quiet.
 
 Intention
 Let the warm cup give care a small shared form.
@@ -7154,7 +7154,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The shared material carries tending-us as a small action, not a long talk. Full moon supports this form without making the timing a command. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Full moon supports this form without making the timing a command. For both of you, the shared surface or vessel gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What warmth can remain on the shared surface?
@@ -7167,13 +7167,13 @@ Timing shaped it
 Full moon supports this form without making the timing a command.
 
 Focus bridge
-The shared material carries tending-us as a small action, not a long talk.
+The cup, bowl, light, or table gives both of you one shared action before talk begins.
 
 Ritual form
 A cup is a small vessel for welcome: it can hold warmth without asking for a conversation.
 
 Material lineage
-Source lineage: quiet household welcome forms.
+quiet household welcome forms.
 
 Closest compatible
 The open preference resolved to Kitchen before selection. High-capacity coverage for this focus is still thin, so this should be reviewed as compatible rather than complete.
@@ -7210,7 +7210,7 @@ Metadata:
 - Warning IDs: coverage_gap_category_focus_capacity, recommendation_confidence_limited, high_capacity_depth_gap, closest_compatible_pattern_selected, stronger_wrong_category_rejected
 - Source summary: Source lineage: seasonal marker and vessel-return logic. Form kept contained.
 - Source lineage: seasonal marker and vessel-return logic
-- Materials: small bowl, grain, leaf, key, bread, or ordinary seasonal object
+- Materials: small bowl, one seasonal marker already present
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only safe ordinary household materials; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
@@ -7218,10 +7218,10 @@ Full normal output:
 ```text
 Let one bowl mark the season.
 
-Use one ordinary material already in the home; let the bowl hold the season without decorating the house. Choose one small seasonal marker already in the home. One of you places it in a small bowl; the other names what this season is asking the home to hold. Both touch the table once, then leave the bowl where it can rest until the next return. When the marker is done, return it to ordinary use or empty the bowl. Close when both of you have left the bowl alone until its next ordinary return.
+Place one seasonal object in the bowl; let the bowl hold the season until you return to the table. Choose one small seasonal marker already present: a leaf, grain, key, ribbon, stone, or bit of bread can be enough. One of you places it in a small bowl; the other names what this season is asking the home to hold. Both touch the table once, then leave the bowl where it can rest until the next return. When the marker is done, put it back, eat it if it is food, or empty the bowl. Close when both of you have left the bowl where it is.
 
 Intention
-Let the bowl mark the crossing and return to ordinary use.
+Let the bowl mark the crossing and come back to its place.
 
 Best window
 When you have room to linger this week.
@@ -7249,13 +7249,13 @@ Ritual form
 A seasonal bowl gives calendar change a private household form: one marker held, then returned.
 
 Material lineage
-Source lineage: seasonal marker and vessel-return logic.
+seasonal marker and vessel-return logic.
 
 Closest compatible
 Seasonal threshold coverage is still shallow at high capacity. This uses the strongest marker or crossing form without pretending the high-depth arc is complete.
 
 Kept bounded
-The bowl holds one marker until its ordinary return.
+The bowl holds one marker until the table is met again.
 
 Private timing fit
 For both of you, the fit leans toward practical home-tending magic and clear structure and bounded action.
@@ -7325,7 +7325,7 @@ Ritual form
 Home tending does not need to mean cleaning. Returning one thing to its place gives the house a small act of care with a clear end.
 
 Material lineage
-Source lineage: smoored hearth and household object-return mechanics.
+smoored hearth and household object-return mechanics.
 
 Kept bounded
 One room object, one held minute, then the object is home again.
@@ -7379,7 +7379,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A vessel at the edge of the home gives arrival a place to gather, cross, and end. The material gives attention one edge to return to, then stops. Waning moon supports this form without making the timing a command. Pause capacity makes permission the whole shape. Private context supports keeping this practical and contained.
+A vessel at the edge of the home gives arrival a place to gather, cross, and end. The chosen object gives wandering attention one steady place to return to, then stops. Waning moon supports this form without making the timing a command. Pause capacity makes permission the whole shape. Private context supports keeping this practical and contained.
 
 Question to carry
 What belongs with you after this crossing?
@@ -7392,13 +7392,13 @@ Timing shaped it
 Waning moon supports this form without making the timing a command.
 
 Focus bridge
-The material gives attention one edge to return to, then stops.
+The chosen object gives wandering attention one steady place to return to, then stops.
 
 Ritual form
 A vessel at the edge of the home gives arrival a place to gather, cross, and end.
 
 Material lineage
-Source lineage: threshold crossing and bowl-vessel household logic.
+threshold crossing and bowl-vessel household logic.
 
 Kept bounded
 One object crosses in, then returns or the bowl moves.
@@ -7471,7 +7471,7 @@ Ritual form
 Window light lets a phrase meet a threshold without requiring flame or outdoor viewing.
 
 Material lineage
-Source lineage: first-light threshold and observable-light timing logic.
+first-light threshold and observable-light timing logic.
 
 Kept bounded
 One window edge, one phrase, then the curtain closes.
@@ -7505,7 +7505,7 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: quiet household welcome forms. Form kept contained.
 - Source lineage: quiet household welcome forms
-- Materials: bowl, cup, bread, grain, water, or warm drink
+- Materials: one cup or small bowl
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only materials already safe for the household; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
@@ -7513,7 +7513,7 @@ Full normal output:
 ```text
 Set out a quiet welcome.
 
-Welcome is the ritual form, not a performance; choose one ordinary welcome vessel; a cup or small bowl is enough. Set one cup or small bowl at the table between you. One of you names what is welcome here; the other touches the vessel once. Return or wash the vessel when finished. Close when the vessel has been returned or washed.
+Set one cup or small bowl at the table; let the vessel mark welcome, then stop. Set one cup or small bowl at the table between you. One of you names what is welcome here; the other touches the vessel once. Set the vessel down and leave it for one breath. Close by clearing the cup or bowl when you are done.
 
 Intention
 Let the table give care a small shared form.
@@ -7525,7 +7525,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A modest bowl, cup, bread, or grain can make hospitality visible without demanding belief. The shared material carries tending-us as a small action, not a long talk. Seasonal timing asks for a small marker, not a public calendar performance. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+A cup or small bowl can hold welcome briefly without starting a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Seasonal timing asks for one private marker that can rest at the table. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What welcome can the shared vessel hold for both of you?
@@ -7535,16 +7535,16 @@ Chosen for
 Kitchen stays materially present, with tending us as the work, for both of you, at low capacity.
 
 Timing shaped it
-Seasonal timing asks for a small marker, not a public calendar performance.
+Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The shared material carries tending-us as a small action, not a long talk.
+The cup, bowl, light, or table gives both of you one shared action before talk begins.
 
 Ritual form
-A modest bowl, cup, bread, or grain can make hospitality visible without demanding belief.
+A cup or small bowl can hold welcome briefly without starting a conversation.
 
 Material lineage
-Source lineage: quiet household welcome forms.
+quiet household welcome forms.
 
 Kept bounded
 One vessel, one welcome, then the vessel returns.
@@ -7614,7 +7614,7 @@ Ritual form
 Home tending does not need to mean cleaning. Returning one thing to its place gives the house a small act of care with a clear end.
 
 Material lineage
-Source lineage: smoored hearth and household object-return mechanics.
+smoored hearth and household object-return mechanics.
 
 Kept bounded
 One room object, one held minute, then the object is home again.
@@ -7687,7 +7687,7 @@ Ritual form
 Window light lets a phrase meet a threshold without requiring flame or outdoor viewing.
 
 Material lineage
-Source lineage: first-light threshold and observable-light timing logic.
+first-light threshold and observable-light timing logic.
 
 Kept bounded
 One window edge, one phrase, then the curtain closes.
@@ -7720,7 +7720,7 @@ Metadata:
 - Authored-output status: pass
 - Warning IDs: none
 - Source summary: Source lineage: first-and-last calendar threshold logic. Form kept contained.
-- Source lineage: Source lineage: first-and-last calendar threshold logic. Form kept contained.
+- Source lineage: first-and-last calendar threshold logic. Form kept contained.
 - Materials: paper or spoken words, doorway
 - Safety flags: ingestion=none; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=none; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
@@ -7732,7 +7732,7 @@ Give the threshold a first word and a last word.
 Keep the words plain; let the threshold hold the change. Stand together at one doorway. One of you names the last word for what is ending; the other names the first word for what is beginning. Cross the doorway once together with both words spoken or held on paper. Close when both of you have crossed and no third word is added.
 
 Intention
-Let the phrase mark the crossing and return to ordinary use.
+Let the phrase mark the crossing and come back to its place.
 
 Best window
 Around Monday, August 31. When you have a little space this week.
@@ -7760,7 +7760,7 @@ Ritual form
 Calendar customs can become private first-and-last markers without becoming a holiday feed.
 
 Material lineage
-Source lineage: first-and-last calendar threshold logic.
+first-and-last calendar threshold logic.
 
 Kept bounded
 One threshold action, one clean close.
@@ -7833,7 +7833,7 @@ Ritual form
 Fire-banking customs give evening closure a form: lower the light, keep the warmth, and stop adding fuel.
 
 Material lineage
-Source lineage: household fire-banking customs.
+household fire-banking customs.
 
 Kept bounded
 One lowered light, one ending, then no more work.
@@ -7887,7 +7887,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-If full light is selected for rest, the ritual should end by reducing brightness rather than sharpening it. The action lets rest be held by material instead of explained into more work. Waning moon supports this form without making the timing a command. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+If full light is selected for rest, the ritual should end by reducing brightness rather than sharpening it. The action lets rest be held by material instead of explained into more work. Waning moon supports this form without making the timing a command. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What can the shared light hold for both of you?
@@ -7906,7 +7906,7 @@ Ritual form
 If full light is selected for rest, the ritual should end by reducing brightness rather than sharpening it.
 
 Material lineage
-Source lineage: hearth/table first-and-last logic.
+hearth/table first-and-last logic.
 
 Kept bounded
 One light, one line, then the light changes.
@@ -7979,7 +7979,7 @@ Ritual form
 Window light lets a phrase meet a threshold without requiring flame or outdoor viewing.
 
 Material lineage
-Source lineage: first-light threshold and observable-light timing logic.
+first-light threshold and observable-light timing logic.
 
 Kept bounded
 One window edge, one phrase, then the curtain closes.
@@ -8033,7 +8033,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Kindling and first-sighting traditions make a beginning visible before it becomes a project. The material gives attention one edge to return to, then stops. No single timing window stood out strongly this week, so the ritual can happen whenever capacity allows. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Kindling and first-sighting traditions make a beginning visible before it becomes a project. The chosen object gives wandering attention one steady place to return to, then stops. No single timing window stood out strongly this week, so the ritual can happen whenever capacity allows. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
 
 Question to carry
 What is the first step small enough to cross with?
@@ -8046,13 +8046,13 @@ Timing shaped it
 No single timing window stood out strongly this week, so the recommendation stays close to your check-in and current capacity. You can do it whenever it feels workable.
 
 Focus bridge
-The material gives attention one edge to return to, then stops.
+The chosen object gives wandering attention one steady place to return to, then stops.
 
 Ritual form
 Kindling and first-sighting traditions make a beginning visible before it becomes a project.
 
 Material lineage
-Source lineage: household fire-kindling and first-light threshold logic.
+household fire-kindling and first-light threshold logic.
 
 Kept bounded
 One first light, one crossing, one later return.
@@ -8082,7 +8082,7 @@ Metadata:
 - Authored-output status: n/a
 - Warning IDs: none
 - Source summary: Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
-- Source lineage: Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
+- Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
 - Materials: one plant, leaf, seed, or plant image
 - Safety flags: ingestion=none; essentialOils=none; smoke=none; fire=none; pets=review_required; children=supervision; pregnancy=no_claim; allergies=choose non-contact when plant safety is uncertain; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
@@ -8091,10 +8091,10 @@ Full normal output:
 ```text
 Let a plant witness the growth.
 
-Let the plant hold attention without becoming a task; speak softly or silently. Sit or stand near one plant, leaf, seed, or plant image. Name one thing that is growing, slowly or privately. Let the plant witness it without asking for advice. Close by thanking the witness in plain words and leaving the plant untouched.
+Sit near one plant that is already part of the room; speak softly or silently. Sit or stand near one plant, leaf, seed, or plant image. Name one thing that is growing, slowly or privately. Let the plant witness it for one breath. Leave the plant untouched. Close by letting the plant stay as it is.
 
 Intention
-Let the plant give household care one concrete place to land.
+Let the plant give household care a place to rest.
 
 Best window
 When you have five quiet minutes.
@@ -8103,7 +8103,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The household material makes tending visible, then returns to ordinary use. Waxing moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The chosen object gives household care a place, then goes back where it belongs. Waxing moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
 
 Question to carry
 What can keep growing without being handled today?
@@ -8116,13 +8116,13 @@ Timing shaped it
 Waxing moon supports this form without making the timing a command.
 
 Focus bridge
-The household material makes tending visible, then returns to ordinary use.
+The chosen object gives household care a place, then goes back where it belongs.
 
 Ritual form
 Plant folklore and flower-language traditions can make a living thing a witness, not a prop.
 
 Material lineage
-Source lineage: plant-lore living witness and flower-message logic.
+plant-lore living witness and flower-message logic.
 
 Kept bounded
 One small action, no extra setup.
@@ -8156,7 +8156,7 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: quiet household welcome forms. Form kept contained.
 - Source lineage: quiet household welcome forms
-- Materials: bowl, cup, bread, grain, water, or warm drink
+- Materials: one cup or small bowl
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only materials already safe for the household; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
@@ -8164,7 +8164,7 @@ Full normal output:
 ```text
 Set out a quiet welcome.
 
-Welcome is the ritual form, not a performance; choose one ordinary welcome vessel; a cup or small bowl is enough. Set one cup or small bowl at the table between you. One of you names what is welcome here; the other touches the vessel once. Return or wash the vessel when finished. Close when the vessel has been returned or washed.
+Set one cup or small bowl at the table; let the vessel mark welcome, then stop. Set one cup or small bowl at the table between you. One of you names what is welcome here; the other touches the vessel once. Set the vessel down and leave it for one breath. Close by clearing the cup or bowl when you are done.
 
 Intention
 Let the table give care a small shared form.
@@ -8176,7 +8176,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A modest bowl, cup, bread, or grain can make hospitality visible without demanding belief. The shared material carries tending-us as a small action, not a long talk. Seasonal timing asks for a small marker, not a public calendar performance. For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+A cup or small bowl can hold welcome briefly without starting a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Seasonal timing asks for one private marker that can rest at the table. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What welcome can the shared vessel hold for both of you?
@@ -8186,16 +8186,16 @@ Chosen for
 Kitchen stays materially present, with tending us as the work, for both of you, at low capacity.
 
 Timing shaped it
-Seasonal timing asks for a small marker, not a public calendar performance.
+Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The shared material carries tending-us as a small action, not a long talk.
+The cup, bowl, light, or table gives both of you one shared action before talk begins.
 
 Ritual form
-A modest bowl, cup, bread, or grain can make hospitality visible without demanding belief.
+A cup or small bowl can hold welcome briefly without starting a conversation.
 
 Material lineage
-Source lineage: quiet household welcome forms.
+quiet household welcome forms.
 
 Kept bounded
 One vessel, one welcome, then the vessel returns.
@@ -8265,7 +8265,7 @@ Ritual form
 Fire-banking customs give evening closure a form: lower the light, keep the warmth, and stop adding fuel.
 
 Material lineage
-Source lineage: household fire-banking customs.
+household fire-banking customs.
 
 Kept bounded
 One lowered light, one ending, then no more work.
@@ -8298,7 +8298,7 @@ Metadata:
 - Authored-output status: pass
 - Warning IDs: none
 - Source summary: Source lineage: first-and-last calendar threshold logic. Form kept contained.
-- Source lineage: Source lineage: first-and-last calendar threshold logic. Form kept contained.
+- Source lineage: first-and-last calendar threshold logic. Form kept contained.
 - Materials: paper or spoken words, doorway
 - Safety flags: ingestion=none; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=none; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
@@ -8310,7 +8310,7 @@ Give the threshold a first word and a last word.
 Keep the words plain; let the threshold hold the change. Stand together at one doorway. One of you names the last word for what is ending; the other names the first word for what is beginning. Cross the doorway once together with both words spoken or held on paper. Close when both of you have crossed and no third word is added.
 
 Intention
-Let the phrase mark the crossing and return to ordinary use.
+Let the phrase mark the crossing and come back to its place.
 
 Best window
 Around Monday, August 31. When you have a little space this week.
@@ -8338,7 +8338,7 @@ Ritual form
 Calendar customs can become private first-and-last markers without becoming a holiday feed.
 
 Material lineage
-Source lineage: first-and-last calendar threshold logic.
+first-and-last calendar threshold logic.
 
 Kept bounded
 One threshold action, one clean close.
@@ -8411,7 +8411,7 @@ Ritual form
 Window light lets a phrase meet a threshold without requiring flame or outdoor viewing.
 
 Material lineage
-Source lineage: first-light threshold and observable-light timing logic.
+first-light threshold and observable-light timing logic.
 
 Kept bounded
 One window edge, one phrase, then the curtain closes.
@@ -8429,8 +8429,8 @@ Source lineage: first-light threshold and observable-light timing logic. Form ke
 
 | scenario ID | selected category | selected pattern | focus | capacity | audience | warning IDs |
 |---|---|---|---|---|---|---|
-| pause.permission.enough | not asked | warm_cup_between_us | Resting | pause | me | none |
-| pause.grounded.no_task_list | not asked | warm_cup_between_us | Getting grounded | pause | me | none |
+| pause.permission.enough | not asked | warm_cup_between_us | Resting | pause | me | pause_with_imperative_steps |
+| pause.grounded.no_task_list | not asked | warm_cup_between_us | Getting grounded | pause | me | pause_with_imperative_steps |
 | waning.beginning.preparation_bridge | Home | first_light_at_the_threshold | Making a beginning | low | me | none |
 | waning.beginning.plant_bridge | Plant | seed_waiting | Making a beginning | low | me | none |
 | candle.no_generic_addon | Candle or light | full_light_on_the_table | Resting | low | me | none |
@@ -8596,6 +8596,7 @@ Source lineage: first-light threshold and observable-light timing logic. Form ke
 | coverage_gap_category_focus_capacity | contract.plant.both_high_tending_waning, contract.plant.high_tending_no_timing, contract.plant.high_rest_companionship, contract.surprise.high_preserves_resolved_category, contract.surprise.both_preserves_audience, contract.seasonal.high_month_turn_threshold |
 | high_capacity_depth_gap | contract.plant.both_high_tending_waning, contract.plant.high_tending_no_timing, contract.plant.high_rest_companionship, contract.surprise.high_preserves_resolved_category, contract.surprise.both_preserves_audience, contract.seasonal.high_month_turn_threshold |
 | high_capacity_no_deeper_ritual_shape | contract.kitchen.high_tending_full, contract.kitchen.high_beginning_waning, contract.home.high_threshold_full, contract.reflection.high_saying_new |
+| pause_with_imperative_steps | pause.permission.enough, pause.grounded.no_task_list |
 | recommendation_confidence_limited | contract.plant.both_high_tending_waning, contract.plant.high_tending_no_timing, contract.plant.high_rest_companionship, contract.surprise.high_preserves_resolved_category, contract.surprise.both_preserves_audience, contract.seasonal.high_month_turn_threshold |
 | stronger_wrong_category_rejected | contract.plant.both_high_tending_waning, contract.plant.high_tending_no_timing, contract.plant.high_rest_companionship, contract.surprise.high_preserves_resolved_category, contract.surprise.both_preserves_audience, contract.seasonal.high_month_turn_threshold |
 
@@ -8605,21 +8606,22 @@ Occurrences are review index entries only; they do not automatically fail the sc
 
 | phrase | scenario IDs |
 |---|---|
-| enoughness | best_week.no_strong_signal_honesty, issue202.generic.low_not_threshold, issue201.kitchen.bread_center_enoughness, issue201.home.bread_grain_table_center |
-| ordinary substitute | best_week.no_strong_signal_honesty, issue202.generic.low_not_threshold, issue201.kitchen.bread_center_enoughness, issue201.home.bread_grain_table_center |
-| ordinary household substitute | best_week.no_strong_signal_honesty, issue202.generic.low_not_threshold, issue201.kitchen.bread_center_enoughness, issue201.home.bread_grain_table_center |
-| already belongs here | best_week.no_strong_signal_honesty, issue202.generic.low_not_threshold, issue201.kitchen.bread_center_enoughness, issue201.home.bread_grain_table_center |
-| Use bread only if | best_week.no_strong_signal_honesty, issue202.generic.low_not_threshold, issue201.kitchen.bread_center_enoughness, issue201.home.bread_grain_table_center |
-| that already works in this household | best_week.no_strong_signal_honesty, issue202.generic.low_not_threshold, issue201.kitchen.bread_center_enoughness, issue201.home.bread_grain_table_center |
-| return it to ordinary kitchen use | best_week.no_strong_signal_honesty, issue202.generic.low_not_threshold, issue201.kitchen.bread_center_enoughness |
-| returned to ordinary use | best_week.no_strong_signal_honesty, issue202.generic.low_not_threshold, issue201.kitchen.bread_center_enoughness, issue201.home.bread_grain_table_center |
-| ordinary use | plant.low.honor_choice, kitchen.tea.ordinary_care, best_week.no_strong_signal_honesty, numerology.not_carry_prompt, source_debug.how_chosen_human_labels, repetition.no_generic_closing, repetition.cross_scenario_watch, home.threshold.arrival, issue202.reflection.returnable_key, issue202.reflection.last_first_word, issue202.seasonal.entry_first_crossing, issue202.generic.low_not_threshold, issue202.clearing.not_key, plant.seasonal.companionship, batch1.home.salt_water_clearing, issue183.kitchen.clearing_salt, issue183.home.tending_steady, issue201.kitchen.bread_center_enoughness, issue201.home.bread_grain_table_center, issue201.seasonal.grain_continuity, issue183.reflection.threshold, batch1.seasonal.marker_bowl, issue183.seasonal.entry_release, issue204.plant.not_honey, issue204.threshold.not_honey, issue205.home.carried_word_return, issue205.seasonal.first_last_words, calendar.first_day.threshold_word, issue222.candle.live_flame_avoided_unlit, issue234.candle.high_renewed_light_return, issue237.candle.both_high_beginning, contract.plant.both_high_tending_waning, contract.plant.high_tending_no_timing, contract.home.high_threshold_full, contract.seasonal.high_month_turn_threshold, contract.best_week.month_turn_may_lead, contract.surprise.forced_plant_preserved, calendar.month_turn.best_week |
-| ordinary place | issue183.seasonal.entry_release, calendar.last_day.closing_bowl, issue203.seasonal.end_empty_return, issue222.candle.full_rest, issue223.candle.steady.resting, contract.plant.both_high_tending_waning, contract.plant.high_tending_no_timing, contract.plant.high_rest_companionship, contract.kitchen.high_beginning_waning, contract.candle.high_resting |
-| one small sign of enough | best_week.no_strong_signal_honesty, issue202.generic.low_not_threshold, issue201.kitchen.bread_center_enoughness, issue201.home.bread_grain_table_center |
-| one edge to return to | pause.grounded.no_task_list, candle.live_flame_avoided, best_week.no_strong_signal_honesty, issue202.generic.low_not_threshold, issue222.candle.no_strong_timing, issue237.candle.both_grounding_low, contract.pause.grounded_complete, contract.surprise.no_strong_timing_material_carries |
-| material gives attention | pause.grounded.no_task_list, candle.live_flame_avoided, best_week.no_strong_signal_honesty, issue202.generic.low_not_threshold, issue222.candle.no_strong_timing, issue237.candle.both_grounding_low, contract.pause.grounded_complete, contract.surprise.no_strong_timing_material_carries |
-| household material makes tending visible | plant.low.honor_choice, plant.seasonal.companionship, issue183.home.tending_steady, issue201.kitchen.bread_center_enoughness, issue201.home.bread_grain_table_center, issue204.plant.not_honey, contract.plant.both_high_tending_waning, contract.plant.high_tending_no_timing, contract.surprise.forced_plant_preserved |
-| one concrete place to land | plant.low.honor_choice, plant.seasonal.companionship, issue183.home.tending_steady, issue201.kitchen.bread_center_enoughness, issue201.home.bread_grain_table_center, issue204.plant.not_honey, contract.plant.both_high_tending_waning, contract.plant.high_tending_no_timing, contract.surprise.forced_plant_preserved |
+| enoughness | none |
+| ordinary substitute | none |
+| ordinary household substitute | none |
+| already belongs here | none |
+| Use bread only if | none |
+| that already works in this household | none |
+| return it to ordinary kitchen use | none |
+| returned to ordinary use | none |
+| ordinary use | repetition.no_generic_closing, home.threshold.arrival, issue202.clearing.not_key, batch1.home.salt_water_clearing, issue183.kitchen.clearing_salt, issue204.threshold.not_honey, issue205.home.carried_word_return, issue222.candle.live_flame_avoided_unlit, issue234.candle.high_renewed_light_return, issue237.candle.both_high_beginning |
+| ordinary place | issue183.seasonal.entry_release, calendar.last_day.closing_bowl, issue203.seasonal.end_empty_return, issue222.candle.full_rest, issue223.candle.steady.resting, contract.plant.high_rest_companionship, contract.kitchen.high_beginning_waning, contract.candle.high_resting |
+| one small sign of enough | none |
+| one edge to return to | none |
+| Source lineage: Source lineage | none |
+| material gives attention | none |
+| household material makes tending visible | none |
+| one concrete place to land | none |
 | one settled pause | none |
 | held lightly | none |
 | stronger material form | none |
@@ -8631,10 +8633,10 @@ Occurrences are review index entries only; they do not automatically fail the sc
 | coverage gap | none |
 | the app could not | none |
 | set aside | none |
-| not a promise | best_week.no_strong_signal_honesty, issue202.generic.low_not_threshold, issue201.kitchen.bread_center_enoughness, issue201.home.bread_grain_table_center |
+| not a promise | none |
 | ordinary object | issue202.seasonal.entry_first_crossing, issue222.candle.dark_rest_low, issue234.candle.rest_low_waning_banked, issue222.candle.saturn_boundary_rest |
-| substitute | best_week.no_strong_signal_honesty, issue202.generic.low_not_threshold, issue201.kitchen.bread_center_enoughness, issue201.home.bread_grain_table_center |
-| if it already | best_week.no_strong_signal_honesty, issue202.generic.low_not_threshold, issue201.kitchen.bread_center_enoughness, issue201.home.bread_grain_table_center |
+| substitute | none |
+| if it already | none |
 | release as rest | none |
 | cleansing | none |
 | protection | none |

@@ -24,6 +24,7 @@ const SUSPICIOUS_PHRASES = [
   "ordinary place",
   "one small sign of enough",
   "one edge to return to",
+  "Source lineage: Source lineage",
   "material gives attention",
   "household material makes tending visible",
   "one concrete place to land",
@@ -55,6 +56,10 @@ const SUSPICIOUS_PHRASES = [
 
 function formatList(values: string[]): string {
   return values.length > 0 ? values.join(", ") : "none";
+}
+
+function stripSourceLineagePrefix(value: string): string {
+  return value.replace(/^Source lineage:\s*/i, "").trim();
 }
 
 function escapeTableCell(value: string): string {
@@ -152,7 +157,9 @@ function buildScenarioSection(
     (item) => item.key === result.selectedRitualPattern.key,
   );
   const checkIn = result.scenario.currentRitualCheckIn;
-  const sourceLineage = pattern?.sourceLineageLabel ?? result.brief.sourceSummary;
+  const sourceLineage = stripSourceLineagePrefix(
+    pattern?.sourceLineageLabel ?? result.brief.sourceSummary,
+  );
 
   return [
     `## Scenario: ${result.scenario.id}`,
