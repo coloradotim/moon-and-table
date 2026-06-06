@@ -15,6 +15,8 @@
     "diagnose:content": "tsx scripts/content-reachability.ts",
     "recommendation:quality": "tsx scripts/recommendation-quality-report.ts",
     "recommendation:quality:delta": "tsx scripts/recommendation-quality-delta.ts",
+    "recommendation:quality:packet": "tsx scripts/recommendation-quality-review-packet.ts",
+    "recommendation:quality:wording-cleanup": "tsx scripts/recommendation-quality-wording-cleanup-review.ts",
     "lint:content": "tsx scripts/content-lint.ts",
     "build": "vite build",
     "preview": "vite preview",

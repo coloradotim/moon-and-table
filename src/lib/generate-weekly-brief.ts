@@ -2644,7 +2644,7 @@ function getProfileThemeReason(
   const labels = getProfileThemeLabels(profileSignalMatches, audience);
 
   if (labels.length === 0) {
-    return "Private household context supports keeping this practical and contained.";
+    return "The practice stays inside the room and ends cleanly.";
   }
 
   if (audience === "together" && labels.length > 1) {
@@ -2653,10 +2653,10 @@ function getProfileThemeReason(
 
   if (audience === "either") {
     if (labels[0]?.includes("practical")) {
-      return "Private context supports keeping this practical and contained.";
+      return "Nothing here needs to become a project.";
     }
 
-    return `Private context supports ${labels[0]} in a small, contained rite.`;
+    return `The rite stays private and small, with ${labels[0]} kept inside the room.`;
   }
 
   return `The household context leans toward ${labels[0]} in a small, concrete rite.`;
@@ -2923,13 +2923,13 @@ function getPatternMaterialPhrase(pattern: RitualPattern): string {
     grain_bowl_beginning:
       "Grain gives the beginning table-weight; the bowl gives it a place to wait.",
     bread_at_the_center:
-      "Bread or grain gives enoughness a table center, not a promise to prove.",
+      "Bread gives enough a small place at the table.",
     warm_cup_between_us:
       "The cup holds warmth without asking it to become a conversation.",
     quiet_welcome:
       "A cup or bowl makes welcome visible without making it a performance.",
     honeyed_word:
-      "A tiny sweetness cue gives one bounded word material form, then returns to ordinary use.",
+      "A tiny sweetness cue gives one bounded word material form, then the cup is cleared.",
     carried_key_word:
       "The key gives the threshold one word to carry briefly, then return.",
     threshold_bowl:
@@ -3001,7 +3001,7 @@ function getTimingBridgePhrase(
       return `${formatTimingWindowDate(input.selectedTimingWindow.startsAtIso, input.timezone)} stood out this week. ${getTimingWindowReason(input.selectedTimingWindow)}${calendarPhrase}`;
     }
 
-    return "No single timing window stood out strongly this week, so the ritual can happen whenever capacity allows.";
+    return "No single timing window needs to lead this week; choose the moment that keeps the rite easy to close.";
   }
 
   if (calendarSignal) {
@@ -3071,7 +3071,7 @@ function getTimingBridgePhrase(
   }
 
   if (pattern.ritualStyles.includes("seasonal")) {
-    return "Seasonal timing asks for a small marker, not a public calendar performance.";
+    return "Seasonal timing asks for one private marker that can rest at the table.";
   }
 
   if (strongestSignal) {
@@ -3084,13 +3084,13 @@ function getTimingBridgePhrase(
         "planetary_aspect",
       ].includes(strongestSignal.timingFactType)
     ) {
-      return "Current sky timing supports this form without making the timing a command.";
+      return "Current sky timing stays in the background while the material action leads.";
     }
 
-    return `${strongestSignal.signalLabel} supports this form without making the timing a command.`;
+    return `${strongestSignal.signalLabel} adds emphasis; the rite stays with its chosen material.`;
   }
 
-  return `${timingCard.title} supports this form without making the timing a command.`;
+  return `${timingCard.title} adds background emphasis while the ritual stays small.`;
 }
 
 function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeeklyBriefInput): string {
@@ -3098,13 +3098,13 @@ function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeekly
     dead_leaf_release: "one spent leaf, one release, then the plant is left alone",
     seed_waiting: "one seed or grain, one beginning, then waiting without proof",
     grain_bowl_beginning: "one grain, one sentence, one night of waiting",
-    bread_at_the_center: "one table marker, one enoughness phrase, then ordinary return",
+    bread_at_the_center: "one bread-like staple, one enough sentence, then the plate is cleared",
     warm_cup_between_us: "one cup, one warm phrase, then the cup is set down",
     quiet_welcome: "one vessel, one welcome, then the vessel returns",
     honeyed_word: "one bounded word, one sweetness cue, then the cup is returned",
     carried_key_word: "one word, one crossing, then the key returns",
     threshold_bowl: "one object crosses in, then returns or the bowl moves",
-    salt_clear_water_release: "one named release, one emptied bowl, then ordinary return",
+    salt_clear_water_release: "one named release, one emptied bowl, then the bowl is rinsed",
     waning_phrase_release: "one phrase, one removal path, then empty hands",
     clear_the_threshold_bowl: "one held marker, one emptying, then the vessel returns",
     hearth_object_return: "one room object, one held minute, then the object is home again",
@@ -3119,7 +3119,7 @@ function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeekly
     full_light_holding_bowl: "one empty bowl, one held thing, then return",
     full_light_on_the_table: "one light, one line, then the light changes",
     folded_phrase_vessel: "one phrase, one fold, one holding place, then later return",
-    seasonal_marker_bowl: "the bowl holds one marker until its ordinary return",
+    seasonal_marker_bowl: "the bowl holds one marker until the table is met again",
     first_day_last_day: "one threshold action, one clean close",
     seasonal_entry_bowl: "one entry marker, one crossing, then the bowl rests",
     last_word_first_word: "one last word, one crossing, one first word",
@@ -3210,7 +3210,7 @@ function getWhyThisFits(
     getFocusMeaningPhrase(input, pattern),
     getTimingBridgePhrase(timingCard, pattern, input, selectedTimingSignals),
     getAudienceMeaningPhrase(input, pattern),
-    getCapacityMeaningPhrase(input),
+    getCapacityMeaningPhrase(input, pattern),
   ];
   const profilePhrase =
     profileSignalMatches.length > 0
@@ -3390,6 +3390,12 @@ function getFocusMeaningPhrase(
   const focusKey = input.currentRitualCheckIn?.ritualFocusKey;
   const styles = pattern.ritualStyles;
 
+  if (pattern.key === "bread_at_the_center") {
+    return input.capacityMode === "low"
+      ? "Low capacity keeps the rite simple: place it, name enough, breathe, and clear the plate."
+      : "The table center gives the rite a visible place, then the plate is cleared.";
+  }
+
   switch (focusKey) {
     case "making_a_beginning":
       return styles.some((style) =>
@@ -3398,16 +3404,44 @@ function getFocusMeaningPhrase(
         ? "The ritual gives the beginning a first body before it becomes work."
         : "The chosen material holds the beginning small enough to wait.";
     case "tending_us":
-      return "The shared material carries tending-us as a small action, not a long talk.";
+      if (pattern.key === "quiet_welcome" || pattern.key === "warm_cup_between_us") {
+        return "The cup or bowl gives both of you one small shared action before talk begins.";
+      }
+
+      if (pattern.ritualStyles.includes("candle_or_light") || pattern.ritualStyles.includes("light_focus")) {
+        return "The light gives both of you one small shared action before talk begins.";
+      }
+
+      if (pattern.key === "honeyed_word") {
+        return "The sweetness cue gives both of you one small shared action before talk begins.";
+      }
+
+      return "The selected material gives both of you one small shared action before talk begins.";
     case "tending_the_home":
+      if (pattern.key === "plant_witness_to_growth") {
+        return "The plant stays where it is; the rite works by noticing it and leaving it untouched.";
+      }
+
+      if (pattern.key === "seasonal_marker_bowl") {
+        return "The bowl gives the season one place at the table and stays there after the words end.";
+      }
+
+      if (pattern.key === "quiet_welcome" || pattern.key === "warm_cup_between_us") {
+        return "The cup or bowl gives household care one visible place, then clears away.";
+      }
+
       if (pattern.key === "hearth_object_return") {
         return input.capacityMode === "high"
           ? "The room-edge walk and held minute deepen the action without making it a chore."
-          : "The object and its return are the rite.";
+          : "One small thing is lifted, named, and put back; the return is the care.";
       }
 
-      return "The household material makes tending visible, then returns to ordinary use.";
+      return "The material gives household care one clear act of tending without becoming a chore.";
     case "marking_a_threshold":
+      if (pattern.key === "seasonal_marker_bowl") {
+        return "The marker gives the season one household place, and leaving the bowl in place keeps the rite small.";
+      }
+
       if (pattern.key === "first_day_last_day" || pattern.key === "last_word_first_word") {
         return "The doorway gives the threshold one crossing to carry the words.";
       }
@@ -3418,7 +3452,19 @@ function getFocusMeaningPhrase(
     case "clearing_something_out":
       return "The material gives release one path out and one clear stop.";
     case "getting_grounded":
-      return "The material gives attention one edge to return to, then stops.";
+      if (pattern.key === "warm_cup_between_us") {
+        return "The cup gives wandering attention a little weight, then is set down.";
+      }
+
+      if (pattern.ritualStyles.includes("candle_or_light") || pattern.ritualStyles.includes("light_focus")) {
+        return "The light gives attention a visible place to land, then the room can stay quiet.";
+      }
+
+      if (pattern.key === "plant_witness_to_growth") {
+        return "The plant gives attention a living place to rest without becoming a task.";
+      }
+
+      return "The material gives wandering attention one steady place to return to, then stops.";
     case "resting":
       if (pattern.key === "last_household_light") {
         return "The resting place, not the light, carries the close.";
@@ -3441,22 +3487,46 @@ function getAudienceMeaningPhrase(
     return undefined;
   }
 
+  if (pattern.key === "plant_witness_to_growth") {
+    return "For both of you, the plant witnesses one word from each of you without being handled.";
+  }
+
+  if (pattern.key === "quiet_welcome") {
+    return "For both of you, one person names the welcome and the other touches the vessel.";
+  }
+
+  if (pattern.key === "warm_cup_between_us") {
+    return "For both of you, the cup or bowl gives the rite one thing to hold between you.";
+  }
+
+  if (pattern.ritualStyles.includes("candle_or_light") || pattern.ritualStyles.includes("light_focus")) {
+    return "For both of you, the shared light gives the rite one thing to hold between you.";
+  }
+
   if (pattern.ritualStyles.some((style) => ["shared_space", "table_reset", "warm"].includes(style))) {
-    return "For both of you, the shared surface or vessel is the mechanism: it gives the rite one thing to hold between you.";
+    return "For both of you, the shared surface or vessel gives the rite one thing to hold between you.";
   }
 
   return "For both of you, the rite works through one small role each, or one shared object touched together.";
 }
 
-function getCapacityMeaningPhrase(input: ResolvedGenerateWeeklyBriefInput): string {
+function getCapacityMeaningPhrase(input: ResolvedGenerateWeeklyBriefInput, pattern: RitualPattern): string {
   switch (input.capacityMode) {
     case "pause":
       return "Pause capacity makes permission the whole shape.";
     case "low":
+      if (pattern.key === "bread_at_the_center") {
+        return "The plate is cleared before the rite becomes more than one small table act.";
+      }
+
       return "Low capacity keeps the rite to one material action and one close.";
     case "steady":
       return "Steady capacity gives the material a little room to be placed, held, and returned.";
     case "high":
+      if (pattern.key === "plant_witness_to_growth") {
+        return "High capacity gives the witness a held minute and two named roles without adding a task.";
+      }
+
       return "High capacity asks for a fuller arc: staged action, a held moment, and a return.";
   }
 }
@@ -3664,8 +3734,8 @@ function getSourcesSection(
     kind: "sources",
     title: "Material lineage",
     body: compressedLineage
-      ? `Source lineage: ${compressedLineage}.`
-      : `Source lineage: ${lineage ?? sourcesUsed[0]?.label ?? "reviewed symbolic cards"}.`,
+      ? `${compressedLineage}.`
+      : `${lineage ?? sourcesUsed[0]?.label ?? "reviewed symbolic cards"}.`,
     sourceLabels: sourcesUsed.slice(0, 4).map((source) => source.label),
   };
 }
@@ -3965,11 +4035,13 @@ function getTimingWindowReason(candidate: TimingWindowCandidate): string {
     "natal_contact_present",
     "shared_natal_contact_match",
     "multiple_natal_contacts_same_theme",
+    "exact_full_moon",
+    "exact_new_moon",
   ].includes(primaryReason.code)) {
     const primaryLabel = primaryReason.label.toLowerCase();
     reasonParts.push(
       primaryLabel === "primary timing signal"
-        ? "the timing signal matched the ritual shape"
+        ? "this was the clearest timing window"
         : primaryLabel,
     );
   }
@@ -3979,23 +4051,23 @@ function getTimingWindowReason(candidate: TimingWindowCandidate): string {
   }
 
   if (hasExactMoonReason) {
-    reasonParts.push("exact lunar timing");
+    reasonParts.push("clear lunar timing");
   }
 
   const uniqueReasonParts = uniqueValues(reasonParts);
   const timingSignalMatched = uniqueReasonParts.includes(
-    "the timing signal matched the ritual shape",
+    "this was the clearest timing window",
   );
   const otherReasonParts = uniqueReasonParts.filter(
-    (part) => part !== "the timing signal matched the ritual shape",
+    (part) => part !== "this was the clearest timing window",
   );
 
   if (timingSignalMatched && otherReasonParts.length > 0) {
-    return `The window stood out because the timing signal matched the ritual shape and because of ${otherReasonParts.join(" and ")}.`;
+    return `This was the clearest timing window this week, with ${otherReasonParts.join(" and ")}.`;
   }
 
   if (timingSignalMatched) {
-    return "The window stood out because the timing signal matched the ritual shape.";
+    return "This was the clearest timing window this week, so the rite stays small and well-marked.";
   }
 
   return otherReasonParts.length > 0
@@ -4380,6 +4452,10 @@ function getDistinctPresentationIntention(
     return "Let the house rest without asking for one more task.";
   }
 
+  if (pattern.key === "bread_at_the_center") {
+    return "Let the table remember that enough can be small.";
+  }
+
   const matter = getRitualMatterForIntention(pattern);
   const isShared =
     audience === "together" ||
@@ -4399,8 +4475,8 @@ function getDistinctPresentationIntention(
     resting: `Let ${matter} hold rest without asking for more.`,
     saying_something_clearly: `Let ${matter} hold one phrase clearly and briefly.`,
     tending_us: `Let ${matter} give care a small shared form.`,
-    tending_the_home: `Let ${matter} give household care one concrete place to land.`,
-    marking_a_threshold: `Let ${matter} mark the crossing and return to ordinary use.`,
+    tending_the_home: `Let ${matter} give household care a place to rest.`,
+    marking_a_threshold: `Let ${matter} mark the crossing and come back to its place.`,
     something_else: `Let ${matter} give the moment a clear, bounded form.`,
   };
   const composed = focusKey ? byFocus[focusKey] : undefined;

@@ -483,7 +483,7 @@ describe("app shell rendering", () => {
     expect(html).toContain('<details class="brief__choice-details" aria-label="How this was chosen">');
     expect(html).not.toContain('<details class="brief__choice-details" aria-label="How this was chosen" open');
     expect(html).not.toContain('class="brief__chosen-section" aria-label="Material lineage"');
-    expect(html).toContain("Source lineage:");
+    expect(html).toContain("hearth/table first-and-last logic");
     expect(html).not.toContain('<section class="brief__sources" aria-label="Sources used">');
     expect(html).toContain("When you have five quiet minutes.");
     expect(html).not.toContain("Thursday evening");
