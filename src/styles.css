@@ -1869,6 +1869,22 @@ fieldset {
     min-height: 42px;
   }
 
+  .brief__closing-secondary {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .brief__closing-secondary > .feedback-button,
+  .brief__closing-secondary > .quiet-action {
+    min-height: 30px;
+    line-height: 1.25;
+  }
+
+  .brief__meta-actions {
+    padding-top: 16px;
+  }
+
   .masthead--with-session {
     align-items: center;
   }
