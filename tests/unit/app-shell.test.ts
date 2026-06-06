@@ -432,7 +432,7 @@ describe("app shell rendering", () => {
     expect(tryAgainIndex).toBeGreaterThan(rightIndex);
     expect(checkInAgainIndex).toBeGreaterThan(tryAgainIndex);
     expect(feedbackIndex).toBeGreaterThan(checkInAgainIndex);
-    expect(html).toContain("This week");
+    expect(html).toContain("Current ritual");
     expect(html).toContain("Profile settings");
     expect(html).toContain("How it works");
     expect(html).toContain("Sign out");
