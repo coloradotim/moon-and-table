@@ -1354,12 +1354,12 @@ function getFocusStyleHints(input: ResolvedGenerateWeeklyBriefInput): string[] {
 
 const PRIMARY_FOCUS_STYLE_HINTS: Partial<Record<string, string[]>> = {
   clearing_something_out: ["clearing", "surface_reset", "closing"],
-  getting_grounded: ["grounding", "table_reset", "home_tending"],
+  getting_grounded: ["grounding", "table_reset", "home_tending", "home_hearth"],
   making_a_beginning: ["beginning", "seed", "grain", "first_light"],
   marking_a_threshold: ["threshold_reset", "crossing", "first_last"],
-  resting: ["rest", "warm", "tea", "closing", "bowl"],
+  resting: ["rest", "warm", "tea", "closing", "bowl", "home_hearth"],
   saying_something_clearly: ["naming", "conversation", "written", "folded_word"],
-  tending_the_home: ["home_tending", "plant_tending", "kitchen", "table_reset", "house_map"],
+  tending_the_home: ["home_tending", "home_hearth", "object_return", "plant_tending", "kitchen", "table_reset", "house_map"],
   tending_us: ["shared_space", "table_reset", "conversation", "warm"],
 };
 
@@ -2940,6 +2940,10 @@ function getPatternMaterialPhrase(pattern: RitualPattern): string {
       "The closed book gives the phrase one contained way to leave your hands.",
     clear_the_threshold_bowl:
       "The vessel closes by emptying what it held and becoming ordinary again.",
+    hearth_object_return:
+      "The returned object gives household care a place, a pause, and a clean end.",
+    last_household_light:
+      "The last household light lets the room settle without making rest into a task.",
     bank_the_house_light:
       "Lowered light lets rest become visible without asking for more action.",
     first_light_for_the_beginning:
@@ -3026,6 +3030,24 @@ function getTimingBridgePhrase(
     }
   }
 
+  if (pattern.ritualStyles.includes("home_hearth")) {
+    if (
+      focusKey === "tending_the_home" &&
+      primaryMoonFact === "moon.waning" &&
+      input.preferredRitualStyles.includes("waning")
+    ) {
+      return "Waning timing makes this a settling return, not a purge or a cleaning reset.";
+    }
+
+    if (focusKey === "resting") {
+      return "Dark or quiet timing lets the house lower one light and leave the rest alone.";
+    }
+
+    if (focusKey === "tending_the_home") {
+      return "The timing can stay quiet while the household form does the tending.";
+    }
+  }
+
   if (
     focusKey === "making_a_beginning" &&
     (primaryMoonFact === "moon.waning" || primaryMoonFact === "moon.new")
@@ -3085,6 +3107,8 @@ function getBoundaryPhrase(pattern: RitualPattern, input: ResolvedGenerateWeekly
     salt_clear_water_release: "one named release, one emptied bowl, then ordinary return",
     waning_phrase_release: "one phrase, one removal path, then empty hands",
     clear_the_threshold_bowl: "one held marker, one emptying, then the vessel returns",
+    hearth_object_return: "one household object, one settled pause, then ordinary return",
+    last_household_light: "one last light, one resting place, then no more tending",
     bank_the_house_light: "one lowered light, one ending, then no more work",
     first_light_for_the_beginning: "one first light, one sentence, then no plan",
     first_light_at_the_threshold: "one first light, one crossing, one later return",
@@ -3126,6 +3150,8 @@ function getCompressedLineage(pattern: RitualPattern): string | undefined {
     honeyed_word: "quiet welcome and household sweetness forms",
     salt_clear_water_release: "salt-water clearing and rinsed-vessel logic",
     clear_the_threshold_bowl: "emptying, returning, and household threshold-vessel logic",
+    hearth_object_return: "smoored hearth and household object-return mechanics",
+    last_household_light: "smoored hearth, last-light, and household settling mechanics",
     carried_key_word: "key, threshold, return, and household marker folklore",
     threshold_bowl: "threshold crossing and bowl-vessel household logic",
     folded_phrase_vessel: "folded-word and household container-return logic",
@@ -3439,7 +3465,12 @@ function getCoverageGapSection(
     body = "The grimoire does not yet have a deeper Plant + home-tending rite. This keeps Plant at the center rather than drifting to a stronger non-Plant form.";
   } else if (isHigh && practice === "plant" && focusKey === "resting") {
     body = "The grimoire does not yet have a deeper Plant + rest rite. This keeps plant rest centered instead of borrowing a stronger dark-light form.";
-  } else if (practice === "home" && focusKey === "tending_the_home" && (isHigh || pattern.key.includes("first_light"))) {
+  } else if (
+    practice === "home" &&
+    focusKey === "tending_the_home" &&
+    (isHigh || pattern.key.includes("first_light")) &&
+    !pattern.ritualStyles.includes("home_hearth")
+  ) {
     body = "Home tending coverage is still thin at this depth. This keeps the recommendation in a bounded household form while leaving the deeper home-tending gap visible.";
   } else if (isHigh && practice === "reflection" && focusKey === "saying_something_clearly" && pattern.ritualStyles.includes("threshold_reset")) {
     body = "High-capacity Reflection phrase coverage is still thin when the chosen form leans threshold or light. The phrase remains the center, but this needs deeper rite-family work.";
@@ -3451,7 +3482,7 @@ function getCoverageGapSection(
     pattern.ritualStyles.includes("release")
   ) {
     body = "Low Candle/light grounding coverage is still thin when the selected form leans release. This keeps light as the material while leaving the grounding gap visible.";
-  } else if (isSurprise && isHigh) {
+  } else if (isSurprise && isHigh && !pattern.ritualStyles.includes("home_hearth")) {
     body = `The open preference resolved to ${resolvedPracticeLabel || "one visible practice"} before selection. High-capacity coverage for this focus is still thin, so this should be reviewed as compatible rather than complete.`;
   } else if (isSurprise && focusKey === "resting" && pattern.ritualStyles.includes("release")) {
     body = "The open check-in resolved to a visible practice, but rest coverage is thin here. This form should not be treated as a complete rest answer.";
@@ -4264,6 +4295,14 @@ function getRitualMatterForIntention(pattern: RitualPattern): string {
 
   if (key.includes("bread")) {
     return "the bread at the center";
+  }
+
+  if (key.includes("hearth_object")) {
+    return "the returned object";
+  }
+
+  if (key.includes("last_household_light")) {
+    return "the last household light";
   }
 
   if (key.includes("cup") || key.includes("warm")) {
