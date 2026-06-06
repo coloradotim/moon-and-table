@@ -990,6 +990,9 @@ describe("generateWeeklyBrief", () => {
       acrossWeekBrief.explanation.howThisWasChosen,
     ]).toLowerCase();
     expect(visibleAcrossWeekCopy).toContain(
+      "this was the clearest timing window",
+    );
+    expect(visibleAcrossWeekCopy).not.toContain(
       "the timing signal matched the ritual shape",
     );
     expect(visibleAcrossWeekCopy).not.toContain("primary timing signal");
@@ -1060,8 +1063,8 @@ describe("generateWeeklyBrief", () => {
     expect(brief.bestWindow).toBe(
       "No strong timing window stood out this week. When you have five quiet minutes.",
     );
-    expect(brief.whyThis).toContain("No single timing window stood out strongly this week");
-    expect(brief.explanation.whyThisFits).toContain("No single timing window stood out strongly this week");
+    expect(brief.whyThis).toContain("No single timing window needs to lead this week");
+    expect(brief.explanation.whyThisFits).toContain("No single timing window needs to lead this week");
     expect(brief.explanation.diagnosticHowThisWasChosen).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -1319,7 +1322,7 @@ describe("generateWeeklyBrief", () => {
     const explanationText = JSON.stringify(brief.explanation);
 
     expect(explanationText).toContain("Capacity");
-    expect(explanationText).toContain("Private context supports");
+    expect(explanationText).toContain("Nothing here needs to become a project");
     expect(explanationText).not.toContain("Schedule");
     expect(explanationText).not.toContain("Saturday morning");
     expect(explanationText).not.toContain("Thursday evening");
@@ -1626,7 +1629,7 @@ describe("generateWeeklyBrief", () => {
         computedBy: "astronomy_engine",
       }),
     ]);
-    expect(brief.whyThis).toContain("New moon supports this form");
+    expect(brief.whyThis).toContain("New moon adds emphasis");
   });
 
   it("can produce an alternate approved pattern when the current pattern is excluded", () => {
@@ -1807,8 +1810,7 @@ describe("generateWeeklyBrief", () => {
 
     expect(brief.trace.ritualPatterns).not.toEqual(["candle_light_focus"]);
     expect(brief.trace.safety.excludedPatternKeys).toContain("candle_light_focus");
-    expect(brief.whyThis).toContain("Private context supports");
-    expect(brief.whyThis).toContain("keeping this practical and contained");
+    expect(brief.whyThis).toContain("Nothing here needs to become a project");
   });
 
   it("lets profile themes influence scoring when multiple patterns are eligible", () => {

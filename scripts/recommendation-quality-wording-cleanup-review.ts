@@ -19,6 +19,15 @@ const BAD_PHRASES = [
   "return it to ordinary kitchen use",
   "one small sign of enough",
   "one edge to return to",
+  "can be enough",
+  "chosen object",
+  "goes back where it belongs",
+  "eat it if it is food",
+  "bit of bread can be enough",
+  "supports this form without making the timing a command",
+  "Private context supports keeping this practical and contained",
+  "timing signal matched the ritual shape",
+  "exact full moon and exact lunar timing",
   "material gives attention",
   "household material makes tending visible",
   "one concrete place to land",
@@ -34,12 +43,12 @@ const BAD_PHRASES = [
 ] as const;
 
 const REVIEW_EXAMPLE_IDS = [
-  "issue201.kitchen.bread_center_enoughness",
-  "batch1.quiet_welcome",
-  "batch1.seasonal.marker_bowl",
+  "pause.grounded.no_task_list",
   "plant.low.honor_choice",
-  "issue231.home.low_tending_waning",
-  "kitchen.warmth.together",
+  "issue201.kitchen.bread_center_enoughness",
+  "batch1.seasonal.marker_bowl",
+  "batch1.quiet_welcome",
+  "source_debug.how_chosen_human_labels",
 ] as const;
 
 type ParsedScenario = {
@@ -227,7 +236,7 @@ function getFixApplied(patternKey: string, issues: string[]): string {
   }
 
   if (patternKey === "seasonal_marker_bowl") {
-    return "Reworked seasonal bowl body around one seasonal marker, table placement, held bowl, and a concrete leave/empty/eat/put-back closure.";
+    return "Reworked seasonal bowl body around one marker, table placement, and leaving the bowl in place instead of a material or closure menu.";
   }
 
   if (patternKey === "plant_witness_to_growth") {
@@ -345,6 +354,10 @@ function main(): void {
     "# Full Scenario Output Wording Cleanup Review",
     "",
     "Generated from the full recommendation-quality scenario set. The before column uses the packet committed at `HEAD`; the after column uses the current generated recommendations after this cleanup patch.",
+    "",
+    "The previous cleanup pass was too lenient; this pass tightened ritual bodies further.",
+    "",
+    "The named examples were not the whole scope; all 116 scenario outputs were re-reviewed.",
     "",
     "## Summary",
     "",

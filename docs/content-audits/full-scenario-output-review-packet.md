@@ -22,7 +22,7 @@ Metadata:
 - Best window: No timing needed.
 - Contract status: n/a
 - Authored-output status: n/a
-- Warning IDs: pause_with_imperative_steps
+- Warning IDs: none
 - Source summary: Source lineage: quiet household welcome forms. Form kept contained.
 - Source lineage: quiet household welcome forms
 - Materials: one or two cups, warm drink or warm water if already safe
@@ -33,7 +33,7 @@ Full normal output:
 ```text
 Let the cup hold the warmth.
 
-Set one cup at the table; let the cup hold warmth without starting a conversation. Touch or hold a cup already nearby. Let warmth or the idea of warmth be enough. Close by setting the cup down.
+Let this be smaller than setup. Touch a cup already near you. Feel its weight for one breath. Set it down. Let that be the whole pause. Close when the cup is down.
 
 Intention
 Let the warm cup hold rest without asking for more.
@@ -45,7 +45,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The action lets rest be held by material instead of explained into more work. Darker or quieter timing lets the ritual lower the room instead of sharpening attention. Pause capacity makes permission the whole shape. Private context supports keeping this practical and contained.
+A cup already near you can hold a pause without asking you to set anything up. The action lets rest be held by material instead of explained into more work. Darker or quieter timing lets the ritual lower the room instead of sharpening attention. Pause capacity makes permission the whole shape. Nothing here needs to become a project.
 
 Question to carry
 What can the cup hold for this pause?
@@ -61,7 +61,7 @@ Focus bridge
 The action lets rest be held by material instead of explained into more work.
 
 Ritual form
-A cup is a small vessel for welcome: it can hold warmth without asking for a conversation.
+A cup already near you can hold a pause without asking you to set anything up.
 
 Material lineage
 quiet household welcome forms.
@@ -70,7 +70,7 @@ Kept bounded
 One cup, one warm phrase, then the cup is set down.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -95,7 +95,7 @@ Metadata:
 - Best window: No timing needed.
 - Contract status: n/a
 - Authored-output status: n/a
-- Warning IDs: pause_with_imperative_steps
+- Warning IDs: none
 - Source summary: Source lineage: quiet household welcome forms. Form kept contained.
 - Source lineage: quiet household welcome forms
 - Materials: one or two cups, warm drink or warm water if already safe
@@ -106,7 +106,7 @@ Full normal output:
 ```text
 Let the cup hold the warmth.
 
-Set one cup at the table; let the cup hold warmth without starting a conversation. Touch or hold a cup already nearby. Let warmth or the idea of warmth be enough. Close by setting the cup down.
+Let this be smaller than setup. Touch a cup already near you. Feel its weight for one breath. Set it down. Let that be the whole pause. Close when the cup is down.
 
 Intention
 Let the warm cup bring attention back to one steady place.
@@ -118,7 +118,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The chosen object gives wandering attention one steady place to return to, then stops. New moon supports this form without making the timing a command. Pause capacity makes permission the whole shape. Private context supports keeping this practical and contained.
+A cup already near you can hold a pause without asking you to set anything up. The cup gives wandering attention a little weight, then returns to the table. New moon adds emphasis; the rite stays with its chosen material. Pause capacity makes permission the whole shape. Nothing here needs to become a project.
 
 Question to carry
 What can the cup hold for this pause?
@@ -128,13 +128,13 @@ Chosen for
 The selected material stays central, with getting grounded as the work, for one person, at pause capacity.
 
 Timing shaped it
-New moon supports this form without making the timing a command.
+New moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
-The chosen object gives wandering attention one steady place to return to, then stops.
+The cup gives wandering attention a little weight, then returns to the table.
 
 Ritual form
-A cup is a small vessel for welcome: it can hold warmth without asking for a conversation.
+A cup already near you can hold a pause without asking you to set anything up.
 
 Material lineage
 quiet household welcome forms.
@@ -143,7 +143,7 @@ Kept bounded
 One cup, one warm phrase, then the cup is set down.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 6 stayed secondary to the ritual material and timing.
@@ -191,7 +191,7 @@ Optional accent
 Let the beginning stay small enough to wait.
 
 Why this fits
-Kindling and first-sighting traditions make a beginning visible before it becomes a project. The ritual gives the beginning a first body before it becomes work. Waning timing turns the beginning toward preparation rather than launch. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Kindling and first-sighting traditions make a beginning visible before it becomes a project. The ritual gives the beginning a first body before it becomes work. Waning timing turns the beginning toward preparation rather than launch. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What is the first step small enough to cross with?
@@ -216,7 +216,7 @@ Kept bounded
 One first light, one crossing, one later return.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -264,7 +264,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Seed and water make a beginning material without demanding immediate growth. The ritual gives the beginning a first body before it becomes work. Waning timing turns the beginning toward preparation rather than launch. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Seed and water make a beginning material without demanding immediate growth. The ritual gives the beginning a first body before it becomes work. Waning timing turns the beginning toward preparation rather than launch. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What beginning can wait like a seed or grain?
@@ -289,7 +289,7 @@ Kept bounded
 One seed or grain, one beginning, then waiting without proof.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -337,7 +337,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-If full light is selected for rest, the ritual should end by reducing brightness rather than sharpening it. The action lets rest be held by material instead of explained into more work. Full light lets what is present be acknowledged before the room lowers. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+If full light is selected for rest, the ritual should end by reducing brightness rather than sharpening it. The action lets rest be held by material instead of explained into more work. Full light lets what is present be acknowledged before the room lowers. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What can grow quieter once the light is lowered?
@@ -362,7 +362,7 @@ Kept bounded
 One light, one line, then the light changes.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -410,7 +410,7 @@ Optional accent
 Let lamp or window light be the whole accent.
 
 Why this fits
-Kindling and first-sighting traditions make a beginning visible before it becomes a project. The chosen object gives wandering attention one steady place to return to, then stops. Full moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Kindling and first-sighting traditions make a beginning visible before it becomes a project. The light gives attention a visible place to land, then the room can stay quiet. Full moon adds emphasis; the rite stays with its chosen material. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What is the first step small enough to cross with?
@@ -420,10 +420,10 @@ Chosen for
 Candle or light stays materially present, with getting grounded as the work, for one person, at low capacity.
 
 Timing shaped it
-Full moon supports this form without making the timing a command.
+Full moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
-The chosen object gives wandering attention one steady place to return to, then stops.
+The light gives attention a visible place to land, then the room can stay quiet.
 
 Ritual form
 Kindling and first-sighting traditions make a beginning visible before it becomes a project.
@@ -435,7 +435,7 @@ Kept bounded
 One first light, one crossing, one later return.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -483,7 +483,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The chosen object gives household care a place, then goes back where it belongs. Waning moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The plant stays where it is; the rite works by noticing it and leaving it untouched. Waning moon adds emphasis; the rite stays with its chosen material. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What can keep growing without being handled today?
@@ -493,10 +493,10 @@ Chosen for
 Plant stays materially present, with tending the home as the work, for one person, at low capacity.
 
 Timing shaped it
-Waning moon supports this form without making the timing a command.
+Waning moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
-The chosen object gives household care a place, then goes back where it belongs.
+The plant stays where it is; the rite works by noticing it and leaving it untouched.
 
 Ritual form
 Plant folklore and flower-language traditions can make a living thing a witness, not a prop.
@@ -508,7 +508,7 @@ Kept bounded
 One small action, no extra setup.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -556,7 +556,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Plant-message traditions support a private phrase placed near living growth without assigning the plant a fixed meaning. The phrase receives one material action so the saying can end cleanly. Wednesday, December 23 evening stood out this week. The window stood out because of exact full moon and exact lunar timing. Low capacity keeps the rite to one material action and one close.
+Plant-message traditions support a private phrase placed near living growth without assigning the plant a fixed meaning. The phrase receives one material action so the saying can end cleanly. Wednesday, December 23 evening stood out this week. The window stood out because of clear lunar timing. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What phrase can rest near a growing thing?
@@ -566,7 +566,7 @@ Chosen for
 Plant stays materially present, with saying something clearly as the work, for one person, at low capacity.
 
 Timing shaped it
-Wednesday, December 23 evening stood out this week. The window stood out because of exact full moon and exact lunar timing.
+Wednesday, December 23 evening stood out this week. The window stood out because of clear lunar timing.
 
 Focus bridge
 The phrase receives one material action so the saying can end cleanly.
@@ -581,7 +581,7 @@ Kept bounded
 One folded phrase, one plant-side place, then later return.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 4 stayed secondary to the ritual material and timing.
@@ -617,7 +617,7 @@ Full normal output:
 ```text
 Set out a quiet welcome.
 
-Set one cup or small bowl at the table; let the vessel mark welcome, then stop. Set the cup or bowl at the table. Name what is welcome in this home today. Set the vessel down and leave it for one breath. Close by clearing the cup or bowl when you are done.
+Let welcome be brief and visible. Set one cup or small bowl at the table. Name what is welcome here today. Let the vessel sit for one breath. Clear it when you are done. Close when the cup or bowl is clear.
 
 Intention
 Let the table hold rest without asking for more.
@@ -629,7 +629,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup or small bowl can hold welcome briefly without starting a conversation. The action lets rest be held by material instead of explained into more work. Seasonal timing asks for one private marker that can rest at the table. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+A cup or small bowl can hold welcome briefly without starting a conversation. The action lets rest be held by material instead of explained into more work. Seasonal timing asks for one private marker that can rest at the table. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What welcome should be visible until the vessel is cleared?
@@ -654,7 +654,7 @@ Kept bounded
 One vessel, one welcome, then the vessel returns.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Source summary
 Source lineage: quiet household welcome forms. Form kept contained.
@@ -699,7 +699,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Full moon supports this form without making the timing a command. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
+A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Full moon adds emphasis; the rite stays with its chosen material. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
 
 Question to carry
 What warmth can remain on the shared surface?
@@ -709,7 +709,7 @@ Chosen for
 Kitchen stays materially present, with tending us as the work, for both of you, at steady capacity.
 
 Timing shaped it
-Full moon supports this form without making the timing a command.
+Full moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The cup, bowl, light, or table gives both of you one shared action before talk begins.
@@ -760,7 +760,7 @@ Full normal output:
 ```text
 Set out a quiet welcome.
 
-Set one cup or small bowl at the table; let the vessel mark welcome, then stop. Set one cup or small bowl at the table between you. One of you names what is welcome here; the other touches the vessel once. Set the vessel down and leave it for one breath. Close by clearing the cup or bowl when you are done.
+Let welcome be brief and visible. Set one cup or small bowl between you. One of you names what is welcome here; the other touches the vessel once. Let it sit for one breath. Clear it when you are done. Close when the cup or bowl is clear.
 
 Intention
 Let the table give care a small shared form.
@@ -845,7 +845,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Shared light can give a small common focus a form without asking it to become larger. The cup, bowl, light, or table gives both of you one shared action before talk begins. Full moon supports this form without making the timing a command. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+Shared light can give a small common focus a form without asking it to become larger. The cup, bowl, light, or table gives both of you one shared action before talk begins. Full moon adds emphasis; the rite stays with its chosen material. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What can the shared light hold for both of you?
@@ -855,7 +855,7 @@ Chosen for
 Candle or light stays materially present, with tending us as the work, for both of you, at low capacity.
 
 Timing shaped it
-Full moon supports this form without making the timing a command.
+Full moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The cup, bowl, light, or table gives both of you one shared action before talk begins.
@@ -918,7 +918,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Full timing and a light practice can make the ritual simple: a line is placed, witnessed, and closed. The phrase receives one material action so the saying can end cleanly. Thursday, June 4 stood out this week. The window stood out because the timing signal matched the ritual shape. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Full timing and a light practice can make the ritual simple: a line is placed, witnessed, and closed. The phrase receives one material action so the saying can end cleanly. Thursday, June 4 stood out this week. This was the clearest timing window this week, so the rite stays small and well-marked. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What line is ready to be witnessed once?
@@ -928,7 +928,7 @@ Chosen for
 Candle or light stays materially present, with saying something clearly as the work, for one person, at low capacity.
 
 Timing shaped it
-Thursday, June 4 stood out this week. The window stood out because the timing signal matched the ritual shape.
+Thursday, June 4 stood out this week. This was the clearest timing window this week, so the rite stays small and well-marked.
 
 Focus bridge
 The phrase receives one material action so the saying can end cleanly.
@@ -943,7 +943,7 @@ Kept bounded
 One light, one line, then the light changes.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -971,7 +971,7 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: bread/grain table-center and welcome logic. Form kept contained.
 - Source lineage: bread/grain table-center and welcome logic
-- Materials: bread, toast, cracker, tortilla, roll, biscuit, or another bread-like staple, table or plate
+- Materials: bread, toast, cracker, tortilla, roll, or biscuit, table or plate
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only food already safe for the household; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
@@ -982,7 +982,7 @@ Put one small piece of bread at the table.
 Use what is already in the kitchen: a small piece of bread, toast, cracker, tortilla, roll, or biscuit. Do not go get anything special. Set it at the center of the table. Say one plain sentence about what is already enough here. Let it sit there for one breath. Then eat it or put it away. Close when the table is clear again.
 
 Intention
-Let the bread at the center bring attention back to one steady place.
+Let the table remember that enough can be small.
 
 Best window
 Around Tuesday, July 14 overnight. When you have five quiet minutes.
@@ -991,7 +991,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Bread or grain gives enough a table center without turning it into a claim. The chosen object gives wandering attention one steady place to return to, then stops. Tuesday, July 14 overnight stood out this week. The window stood out because of exact new moon and exact lunar timing. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Bread gives enough a small place at the table. Bread gives attention a small table center, then the plate is cleared. Tuesday, July 14 overnight stood out this week. The window stood out because of clear lunar timing. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What is already enough for tonight?
@@ -1001,13 +1001,13 @@ Chosen for
 Home stays materially present, with getting grounded as the work, for one person, at low capacity.
 
 Timing shaped it
-Tuesday, July 14 overnight stood out this week. The window stood out because of exact new moon and exact lunar timing.
+Tuesday, July 14 overnight stood out this week. The window stood out because of clear lunar timing.
 
 Focus bridge
-The chosen object gives wandering attention one steady place to return to, then stops.
+Bread gives attention a small table center, then the plate is cleared.
 
 Ritual form
-Bread or grain gives enough a table center without turning it into a claim.
+Bread gives enough a small place at the table.
 
 Material lineage
 bread/grain table-center and welcome logic.
@@ -1016,7 +1016,7 @@ Kept bounded
 One bread-like staple, one enough sentence, then the plate is cleared.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 4 stayed secondary to the ritual material and timing.
@@ -1064,7 +1064,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Home tending does not need to mean cleaning. Returning one thing to its place gives the house a small act of care with a clear end. The object and its return are the rite. The timing can stay quiet while the room receives one small act of care. Steady capacity gives the material a little room to be placed, held, and returned.
+Home tending does not need to mean cleaning. Returning one thing to its place gives the house a small act of care with a clear end. One small thing is lifted, named, and put back; the return is the care. The timing can stay quiet while the room receives one small act of care. Steady capacity gives the material a little room to be placed, held, and returned.
 
 Question to carry
 What feels a little more at home when this returns?
@@ -1077,7 +1077,7 @@ Timing shaped it
 The timing can stay quiet while the room receives one small act of care.
 
 Focus bridge
-The object and its return are the rite.
+One small thing is lifted, named, and put back; the return is the care.
 
 Ritual form
 Home tending does not need to mean cleaning. Returning one thing to its place gives the house a small act of care with a clear end.
@@ -1089,7 +1089,7 @@ Kept bounded
 One room object, one held minute, then the object is home again.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -1137,7 +1137,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A table can temporarily hold a threshold word before it is carried, crossed, or left behind. The ritual gives the threshold one action and one close. Waxing moon supports this form without making the timing a command. Steady capacity gives the material a little room to be placed, held, and returned. Private context supports keeping this practical and contained.
+A table can temporarily hold a threshold word before it is carried, crossed, or left behind. The ritual gives the threshold one action and one close. Waxing moon adds emphasis; the rite stays with its chosen material. Steady capacity gives the material a little room to be placed, held, and returned. Nothing here needs to become a project.
 
 Question to carry
 What word belongs at the crossing?
@@ -1147,7 +1147,7 @@ Chosen for
 Reflection stays materially present, with marking a threshold as the work, for one person, at steady capacity.
 
 Timing shaped it
-Waxing moon supports this form without making the timing a command.
+Waxing moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The ritual gives the threshold one action and one close.
@@ -1162,7 +1162,7 @@ Kept bounded
 One primary ritual, no task list.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Source summary
 Source lineage: hearth/table first-and-last logic. Form kept contained.
@@ -1207,7 +1207,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Waning light gives release a way to lessen without making it dramatic. The material gives release one path out and one clear stop. Full moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Waning light gives release a way to lessen without making it dramatic. The material gives release one path out and one clear stop. Full moon adds emphasis; the rite stays with its chosen material. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What can leave by becoming smaller first?
@@ -1217,7 +1217,7 @@ Chosen for
 Home stays materially present, with clearing something out as the work, for one person, at low capacity.
 
 Timing shaped it
-Full moon supports this form without making the timing a command.
+Full moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The material gives release one path out and one clear stop.
@@ -1232,7 +1232,7 @@ Kept bounded
 One lowered light, one lessening phrase, then stop.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -1268,7 +1268,7 @@ Full normal output:
 ```text
 Let one bowl mark the season.
 
-Place one seasonal object in the bowl; let the bowl hold the season until you return to the table. Choose one small seasonal marker already present: a leaf, grain, key, ribbon, stone, or bit of bread can be enough. Place it in a small bowl and name what this season is asking the home to hold. Leave the bowl where it can rest until the next return to the table. When the marker is done, put it back, eat it if it is food, or empty the bowl. Close by leaving the bowl where it is.
+Let the bowl hold one seasonal marker without becoming a display. Choose one small seasonal marker already present: a leaf, a ribbon, or a stone. Place it in a small bowl at the table. Name what season the home is in. Leave the bowl where it is until the next time you return to the table. Close by leaving the bowl in place.
 
 Intention
 Let the bowl mark the crossing and come back to its place.
@@ -1280,7 +1280,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A seasonal bowl gives calendar change a private household form: one marker held, then returned. The ritual gives the threshold one action and one close. Seasonal timing asks for one private marker that can rest at the table. Steady capacity gives the material a little room to be placed, held, and returned. Private context supports keeping this practical and contained.
+A seasonal bowl gives calendar change a private household form: one marker held, then returned. The ritual gives the threshold one action and one close. Seasonal timing asks for one private marker that can rest at the table. Steady capacity gives the material a little room to be placed, held, and returned. Nothing here needs to become a project.
 
 Question to carry
 What season is this home actually in?
@@ -1305,7 +1305,7 @@ Kept bounded
 The bowl holds one marker until the table is met again.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 6 stayed secondary to the ritual material and timing.
@@ -1353,7 +1353,7 @@ Optional accent
 Let the empty bowl sit for one breath before putting it away.
 
 Why this fits
-Salt and water belong here because the work is release: one named thing leaves, and the bowl becomes ordinary again. The material gives release one path out and one clear stop. Waning moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Salt and water belong here because the work is release: one named thing leaves, and the bowl becomes ordinary again. The material gives release one path out and one clear stop. Waning moon adds emphasis; the rite stays with its chosen material. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What feels finished when it has somewhere ordinary to go?
@@ -1363,7 +1363,7 @@ Chosen for
 Home stays materially present, with clearing something out as the work, for one person, at low capacity.
 
 Timing shaped it
-Waning moon supports this form without making the timing a command.
+Waning moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The material gives release one path out and one clear stop.
@@ -1378,7 +1378,7 @@ Kept bounded
 One named release, one emptied bowl, then the bowl is rinsed.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -1414,7 +1414,7 @@ Full normal output:
 ```text
 Let one bowl mark the season.
 
-Place one seasonal object in the bowl; let the bowl hold the season until you return to the table. Choose one small seasonal marker already present: a leaf, grain, key, ribbon, stone, or bit of bread can be enough. One of you places it in a small bowl; the other names what this season is asking the home to hold. Both touch the table once, then leave the bowl where it can rest until the next return. When the marker is done, put it back, eat it if it is food, or empty the bowl. Close when both of you have left the bowl where it is.
+Let the bowl hold one seasonal marker without becoming a display. Choose one small seasonal marker already present: a leaf, a ribbon, or a stone. One of you places it in a small bowl; the other names the season the home is in. Both touch the table once. Leave the bowl where it is until the next time you return to the table. Close when both of you have left the bowl in place.
 
 Intention
 Let the bowl mark the crossing and come back to its place.
@@ -1502,7 +1502,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A vessel at the edge of the home gives arrival a place to gather, cross, and end. The ritual gives the threshold one action and one close. Waxing moon supports this form without making the timing a command. Steady capacity gives the material a little room to be placed, held, and returned. Private context supports keeping this practical and contained.
+A vessel at the edge of the home gives arrival a place to gather, cross, and end. The ritual gives the threshold one action and one close. Waxing moon adds emphasis; the rite stays with its chosen material. Steady capacity gives the material a little room to be placed, held, and returned. Nothing here needs to become a project.
 
 Question to carry
 What belongs with you after this crossing?
@@ -1512,7 +1512,7 @@ Chosen for
 Home stays materially present, with marking a threshold as the work, for one person, at steady capacity.
 
 Timing shaped it
-Waxing moon supports this form without making the timing a command.
+Waxing moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The ritual gives the threshold one action and one close.
@@ -1527,7 +1527,7 @@ Kept bounded
 One object crosses in, then returns or the bowl moves.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Source summary
 Source lineage: threshold crossing and bowl-vessel household logic. Form kept contained.
@@ -1572,7 +1572,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A threshold word belongs on something that can cross once and return. The ritual gives the threshold one action and one close. Waxing moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports clear structure and bounded action in a small, contained rite.
+A threshold word belongs on something that can cross once and return. The ritual gives the threshold one action and one close. Waxing moon adds emphasis; the rite stays with its chosen material. Low capacity keeps the rite to one material action and one close. The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Question to carry
 What word should cross once, then return?
@@ -1582,7 +1582,7 @@ Chosen for
 Reflection stays materially present, with marking a threshold as the work, for one person, at low capacity.
 
 Timing shaped it
-Waxing moon supports this form without making the timing a command.
+Waxing moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The ritual gives the threshold one action and one close.
@@ -1597,7 +1597,7 @@ Kept bounded
 One word, one crossing, then the key returns.
 
 Private timing fit
-Private context supports clear structure and bounded action in a small, contained rite.
+The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Source summary
 Source lineage: key, threshold, return, and household marker folklore. Form kept contained.
@@ -1642,7 +1642,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-First-and-last attention gives a crossing a hinge without requiring a long reflection. The doorway gives the threshold one crossing to carry the words. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. Low capacity keeps the rite to one material action and one close. Private context supports clear structure and bounded action in a small, contained rite.
+First-and-last attention gives a crossing a hinge without requiring a long reflection. The doorway gives the threshold one crossing to carry the words. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. Low capacity keeps the rite to one material action and one close. The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Question to carry
 What changes after the last word crosses into the first?
@@ -1667,7 +1667,7 @@ Kept bounded
 One last word, one crossing, one first word.
 
 Private timing fit
-Private context supports clear structure and bounded action in a small, contained rite.
+The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Small accent
 Numerology 3 stayed secondary to the ritual material and timing.
@@ -1768,7 +1768,7 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: bread/grain table-center and welcome logic. Form kept contained.
 - Source lineage: bread/grain table-center and welcome logic
-- Materials: bread, toast, cracker, tortilla, roll, biscuit, or another bread-like staple, table or plate
+- Materials: bread, toast, cracker, tortilla, roll, or biscuit, table or plate
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only food already safe for the household; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
@@ -1779,7 +1779,7 @@ Put one small piece of bread at the table.
 Use what is already in the kitchen: a small piece of bread, toast, cracker, tortilla, roll, or biscuit. Do not go get anything special. Set it at the center of the table. Say one plain sentence about what is already enough here. Let it sit there for one breath. Then eat it or put it away. Close when the table is clear again.
 
 Intention
-Let the bread at the center bring attention back to one steady place.
+Let the table remember that enough can be small.
 
 Best window
 When you have five quiet minutes.
@@ -1788,7 +1788,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Bread or grain gives enough a table center without turning it into a claim. The chosen object gives wandering attention one steady place to return to, then stops. Seasonal timing asks for one private marker that can rest at the table. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Bread gives enough a small place at the table. Bread gives attention a small table center, then the plate is cleared. Seasonal timing asks for one private marker that can rest at the table. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What is already enough for tonight?
@@ -1801,10 +1801,10 @@ Timing shaped it
 Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The chosen object gives wandering attention one steady place to return to, then stops.
+Bread gives attention a small table center, then the plate is cleared.
 
 Ritual form
-Bread or grain gives enough a table center without turning it into a claim.
+Bread gives enough a small place at the table.
 
 Material lineage
 bread/grain table-center and welcome logic.
@@ -1813,7 +1813,7 @@ Kept bounded
 One bread-like staple, one enough sentence, then the plate is cleared.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -1861,7 +1861,7 @@ Optional accent
 Let the empty bowl sit for one breath before putting it away.
 
 Why this fits
-Salt and water belong here because the work is release: one named thing leaves, and the bowl becomes ordinary again. The material gives release one path out and one clear stop. Waning moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Salt and water belong here because the work is release: one named thing leaves, and the bowl becomes ordinary again. The material gives release one path out and one clear stop. Waning moon adds emphasis; the rite stays with its chosen material. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What feels finished when it has somewhere ordinary to go?
@@ -1871,7 +1871,7 @@ Chosen for
 Home stays materially present, with clearing something out as the work, for one person, at low capacity.
 
 Timing shaped it
-Waning moon supports this form without making the timing a command.
+Waning moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The material gives release one path out and one clear stop.
@@ -1886,7 +1886,7 @@ Kept bounded
 One named release, one emptied bowl, then the bowl is rinsed.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -1922,7 +1922,7 @@ Full normal output:
 ```text
 Set out a quiet welcome.
 
-Set one cup or small bowl at the table; let the vessel mark welcome, then stop. Set one cup or small bowl at the table between you. One of you names what is welcome here; the other touches the vessel once. Set the vessel down and leave it for one breath. Close by clearing the cup or bowl when you are done.
+Let welcome be brief and visible. Set one cup or small bowl between you. One of you names what is welcome here; the other touches the vessel once. Let it sit for one breath. Clear it when you are done. Close when the cup or bowl is clear.
 
 Intention
 Let the table give care a small shared form.
@@ -2004,7 +2004,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Seed and water make a beginning material without demanding immediate growth. The ritual gives the beginning a first body before it becomes work. Seasonal timing asks for one private marker that can rest at the table. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Seed and water make a beginning material without demanding immediate growth. The ritual gives the beginning a first body before it becomes work. Seasonal timing asks for one private marker that can rest at the table. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What beginning can wait like a seed or grain?
@@ -2029,7 +2029,7 @@ Kept bounded
 One seed or grain, one beginning, then waiting without proof.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -2077,7 +2077,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The chosen object gives household care a place, then goes back where it belongs. Friday, March 20 morning stood out this week. The window stood out because of seasonal marker. Steady capacity gives the material a little room to be placed, held, and returned. Private context supports keeping this practical and contained.
+Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The plant stays where it is; the rite works by noticing it and leaving it untouched. Friday, March 20 morning stood out this week. The window stood out because of seasonal marker. Steady capacity gives the material a little room to be placed, held, and returned. Nothing here needs to become a project.
 
 Question to carry
 What can keep growing without being handled today?
@@ -2090,7 +2090,7 @@ Timing shaped it
 Friday, March 20 morning stood out this week. The window stood out because of seasonal marker.
 
 Focus bridge
-The chosen object gives household care a place, then goes back where it belongs.
+The plant stays where it is; the rite works by noticing it and leaving it untouched.
 
 Ritual form
 Plant folklore and flower-language traditions can make a living thing a witness, not a prop.
@@ -2102,7 +2102,7 @@ Kept bounded
 One primary ritual, no task list.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 6 stayed secondary to the ritual material and timing.
@@ -2150,7 +2150,7 @@ Optional accent
 Let the empty bowl sit for one breath before putting it away.
 
 Why this fits
-Salt and water belong here because the work is release: one named thing leaves, and the bowl becomes ordinary again. The material gives release one path out and one clear stop. Waning moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Salt and water belong here because the work is release: one named thing leaves, and the bowl becomes ordinary again. The material gives release one path out and one clear stop. Waning moon adds emphasis; the rite stays with its chosen material. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What feels finished when it has somewhere ordinary to go?
@@ -2160,7 +2160,7 @@ Chosen for
 Home stays materially present, with clearing something out as the work, for one person, at low capacity.
 
 Timing shaped it
-Waning moon supports this form without making the timing a command.
+Waning moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The material gives release one path out and one clear stop.
@@ -2175,7 +2175,7 @@ Kept bounded
 One named release, one emptied bowl, then the bowl is rinsed.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -2223,7 +2223,7 @@ Optional accent
 Let the empty bowl sit for one breath before putting it away.
 
 Why this fits
-Salt and water belong here because the work is release: one named thing leaves, and the bowl becomes ordinary again. The material gives release one path out and one clear stop. Waning moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Salt and water belong here because the work is release: one named thing leaves, and the bowl becomes ordinary again. The material gives release one path out and one clear stop. Waning moon adds emphasis; the rite stays with its chosen material. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What feels finished when it has somewhere ordinary to go?
@@ -2233,7 +2233,7 @@ Chosen for
 Kitchen stays materially present, with clearing something out as the work, for one person, at low capacity.
 
 Timing shaped it
-Waning moon supports this form without making the timing a command.
+Waning moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The material gives release one path out and one clear stop.
@@ -2248,7 +2248,7 @@ Kept bounded
 One named release, one emptied bowl, then the bowl is rinsed.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -2296,7 +2296,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-House-blessing structure can become a private map: ground, wall, center, threshold. The chosen object gives household care a place, then goes back where it belongs. Seasonal timing asks for one private marker that can rest at the table. Steady capacity gives the material a little room to be placed, held, and returned. Private context supports keeping this practical and contained.
+House-blessing structure can become a private map: ground, wall, center, threshold. The material gives household care one clear act of tending without becoming a chore. Seasonal timing asks for one private marker that can rest at the table. Steady capacity gives the material a little room to be placed, held, and returned. Nothing here needs to become a project.
 
 Question to carry
 What part of this home is holding more than you noticed?
@@ -2309,7 +2309,7 @@ Timing shaped it
 Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The chosen object gives household care a place, then goes back where it belongs.
+The material gives household care one clear act of tending without becoming a chore.
 
 Ritual form
 House-blessing structure can become a private map: ground, wall, center, threshold.
@@ -2321,7 +2321,7 @@ Kept bounded
 One primary ritual, no task list.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Source summary
 Source lineage: waxing moon card and house from root to roof pattern. Form kept contained.
@@ -2366,7 +2366,7 @@ Optional accent
 Let the plant remain untouched after the spent leaf is gone.
 
 Why this fits
-A spent leaf gives release a precise edge: remove what is already finished, not what is alive. The material gives release one path out and one clear stop. Waning moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+A spent leaf gives release a precise edge: remove what is already finished, not what is alive. The material gives release one path out and one clear stop. Waning moon adds emphasis; the rite stays with its chosen material. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What is as complete as the spent leaf?
@@ -2376,7 +2376,7 @@ Chosen for
 Plant stays materially present, with clearing something out as the work, for one person, at low capacity.
 
 Timing shaped it
-Waning moon supports this form without making the timing a command.
+Waning moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The material gives release one path out and one clear stop.
@@ -2391,7 +2391,7 @@ Kept bounded
 One spent leaf, one release, then the plant is left alone.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -2439,7 +2439,7 @@ Optional accent
 Let the plant remain untouched after the spent leaf is gone.
 
 Why this fits
-A spent leaf gives release a precise edge: remove what is already finished, not what is alive. The material gives release one path out and one clear stop. Waning moon supports this form without making the timing a command. For both of you, the rite works through one small role each, or one shared object touched together. Low capacity keeps the rite to one material action and one close.
+A spent leaf gives release a precise edge: remove what is already finished, not what is alive. The material gives release one path out and one clear stop. Waning moon adds emphasis; the rite stays with its chosen material. For both of you, the rite works through one small role each, or one shared object touched together. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What can both of you leave complete after the spent leaf is gone?
@@ -2449,7 +2449,7 @@ Chosen for
 Plant stays materially present, with clearing something out as the work, for both of you, at low capacity.
 
 Timing shaped it
-Waning moon supports this form without making the timing a command.
+Waning moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The material gives release one path out and one clear stop.
@@ -2512,7 +2512,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Seed and water make a beginning material without demanding immediate growth. The ritual gives the beginning a first body before it becomes work. Seasonal timing asks for one private marker that can rest at the table. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Seed and water make a beginning material without demanding immediate growth. The ritual gives the beginning a first body before it becomes work. Seasonal timing asks for one private marker that can rest at the table. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What beginning can wait like a seed or grain?
@@ -2537,7 +2537,7 @@ Kept bounded
 One seed or grain, one beginning, then waiting without proof.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -2585,7 +2585,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Plant life includes dormancy; not every living thing is always growing visibly. The action lets rest be held by material instead of explained into more work. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Plant life includes dormancy; not every living thing is always growing visibly. The action lets rest be held by material instead of explained into more work. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What is allowed to stay dormant and still be alive?
@@ -2610,7 +2610,7 @@ Kept bounded
 One small action, no extra setup.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 6 stayed secondary to the ritual material and timing.
@@ -2711,7 +2711,7 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: bread/grain table-center and welcome logic. Form kept contained.
 - Source lineage: bread/grain table-center and welcome logic
-- Materials: bread, toast, cracker, tortilla, roll, biscuit, or another bread-like staple, table or plate
+- Materials: bread, toast, cracker, tortilla, roll, or biscuit, table or plate
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only food already safe for the household; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
@@ -2722,7 +2722,7 @@ Put one small piece of bread at the table.
 Use what is already in the kitchen: a small piece of bread, toast, cracker, tortilla, roll, or biscuit. Do not go get anything special. Set it at the center of the table. Say one plain sentence about what is already enough here. Let it sit there for one breath. Then eat it or put it away. Close when the table is clear again.
 
 Intention
-Let the bread at the center give household care a place to rest.
+Let the table remember that enough can be small.
 
 Best window
 When you have five quiet minutes.
@@ -2731,7 +2731,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Bread or grain gives enough a table center without turning it into a claim. The chosen object gives household care a place, then goes back where it belongs. Seasonal timing asks for one private marker that can rest at the table. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Bread gives enough a small place at the table. Bread gives enough a small place at the table; the rite ends when the plate is clear. Seasonal timing asks for one private marker that can rest at the table. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What is already enough for tonight?
@@ -2744,10 +2744,10 @@ Timing shaped it
 Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The chosen object gives household care a place, then goes back where it belongs.
+Bread gives enough a small place at the table; the rite ends when the plate is clear.
 
 Ritual form
-Bread or grain gives enough a table center without turning it into a claim.
+Bread gives enough a small place at the table.
 
 Material lineage
 bread/grain table-center and welcome logic.
@@ -2756,7 +2756,7 @@ Kept bounded
 One bread-like staple, one enough sentence, then the plate is cleared.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Source summary
 Source lineage: bread/grain table-center and welcome logic. Form kept contained.
@@ -2781,7 +2781,7 @@ Metadata:
 - Warning IDs: none
 - Source summary: Source lineage: bread/grain table-center and welcome logic. Form kept contained.
 - Source lineage: bread/grain table-center and welcome logic
-- Materials: bread, toast, cracker, tortilla, roll, biscuit, or another bread-like staple, table or plate
+- Materials: bread, toast, cracker, tortilla, roll, or biscuit, table or plate
 - Safety flags: ingestion=normal_food_use_only; essentialOils=none; smoke=none; fire=none; pets=safe; children=safe; pregnancy=no_claim; allergies=use only food already safe for the household; medicalClaims=forbidden; culturalContext=none; emotionalIntensity=low; cleanupBurden=tiny
 
 Full normal output:
@@ -2792,7 +2792,7 @@ Put one small piece of bread at the table.
 Use what is already in the kitchen: a small piece of bread, toast, cracker, tortilla, roll, or biscuit. Do not go get anything special. Set a small piece of bread, toast, cracker, tortilla, roll, or biscuit at the center of the table. One of you names what is already enough here; the other turns the plate slightly toward the center. Let it sit there for one breath. Then eat it or put it away. Close when the table is clear again.
 
 Intention
-Let the bread at the center give household care a place to rest.
+Let the table remember that enough can be small.
 
 Best window
 When you have a little space this week.
@@ -2801,7 +2801,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Bread or grain gives enough a table center without turning it into a claim. The chosen object gives household care a place, then goes back where it belongs. Seasonal timing asks for one private marker that can rest at the table. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
+Bread gives enough a small place at the table. Bread gives enough a small place at the table; the rite ends when the plate is clear. Seasonal timing asks for one private marker that can rest at the table. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
 
 Question to carry
 What is already enough between you tonight?
@@ -2814,10 +2814,10 @@ Timing shaped it
 Seasonal timing asks for one private marker that can rest at the table.
 
 Focus bridge
-The chosen object gives household care a place, then goes back where it belongs.
+Bread gives enough a small place at the table; the rite ends when the plate is clear.
 
 Ritual form
-Bread or grain gives enough a table center without turning it into a claim.
+Bread gives enough a small place at the table.
 
 Material lineage
 bread/grain table-center and welcome logic.
@@ -2859,7 +2859,7 @@ Full normal output:
 ```text
 Let one bowl mark the season.
 
-Place one seasonal object in the bowl; let the bowl hold the season until you return to the table. Choose one small seasonal marker already present: a leaf, grain, key, ribbon, stone, or bit of bread can be enough. One of you places it in a small bowl; the other names what this season is asking the home to hold. Both touch the table once, then leave the bowl where it can rest until the next return. When the marker is done, put it back, eat it if it is food, or empty the bowl. Close when both of you have left the bowl where it is.
+Let the bowl hold one seasonal marker without becoming a display. Choose one small seasonal marker already present: a leaf, a ribbon, or a stone. One of you places it in a small bowl; the other names the season the home is in. Both touch the table once. Leave the bowl where it is until the next time you return to the table. Close when both of you have left the bowl in place.
 
 Intention
 Let the bowl mark the crossing and come back to its place.
@@ -2944,7 +2944,7 @@ Optional accent
 Let the beginning stay small enough to wait.
 
 Why this fits
-Kindling and first-sighting traditions make a beginning visible before it becomes a project. The ritual gives the beginning a first body before it becomes work. Waxing moon supports this form without making the timing a command. For both of you, the rite works through one small role each, or one shared object touched together. Low capacity keeps the rite to one material action and one close.
+Kindling and first-sighting traditions make a beginning visible before it becomes a project. The ritual gives the beginning a first body before it becomes work. Waxing moon adds emphasis; the rite stays with its chosen material. For both of you, the rite works through one small role each, or one shared object touched together. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What first step can belong to the household without becoming a project?
@@ -2954,7 +2954,7 @@ Chosen for
 Candle or light stays materially present, with making a beginning as the work, for both of you, at low capacity.
 
 Timing shaped it
-Waxing moon supports this form without making the timing a command.
+Waxing moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The ritual gives the beginning a first body before it becomes work.
@@ -3017,7 +3017,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Clear speech can become a held object: written once, folded once, and not expanded. The phrase receives one material action so the saying can end cleanly. The timing gives the phrase a clear place without turning it into a report. Low capacity keeps the rite to one material action and one close. Private context supports clear structure and bounded action in a small, contained rite.
+Clear speech can become a held object: written once, folded once, and not expanded. The phrase receives one material action so the saying can end cleanly. The timing gives the phrase a clear place without turning it into a report. Low capacity keeps the rite to one material action and one close. The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Question to carry
 What is clearer after it has been folded once?
@@ -3042,7 +3042,7 @@ Kept bounded
 One phrase, one fold, one holding place, then later return.
 
 Private timing fit
-Private context supports clear structure and bounded action in a small, contained rite.
+The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -3090,7 +3090,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Waning light supports lessening when the phrase has a real way out. The material gives release one path out and one clear stop. Waning moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports warmth, beauty, and affection in a small, contained rite.
+Waning light supports lessening when the phrase has a real way out. The material gives release one path out and one clear stop. Waning moon adds emphasis; the rite stays with its chosen material. Low capacity keeps the rite to one material action and one close. The rite stays private and small, with warmth, beauty, and affection kept inside the room.
 
 Question to carry
 What is complete enough to leave your hands?
@@ -3100,7 +3100,7 @@ Chosen for
 Reflection stays materially present, with clearing something out as the work, for one person, at low capacity.
 
 Timing shaped it
-Waning moon supports this form without making the timing a command.
+Waning moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The material gives release one path out and one clear stop.
@@ -3115,7 +3115,7 @@ Kept bounded
 One phrase, one removal path, then empty hands.
 
 Private timing fit
-Private context supports warmth, beauty, and affection in a small, contained rite.
+The rite stays private and small, with warmth, beauty, and affection kept inside the room.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -3163,7 +3163,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A table can temporarily hold a threshold word before it is carried, crossed, or left behind. The ritual gives the threshold one action and one close. Waxing moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+A table can temporarily hold a threshold word before it is carried, crossed, or left behind. The ritual gives the threshold one action and one close. Waxing moon adds emphasis; the rite stays with its chosen material. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What word belongs at the crossing?
@@ -3173,7 +3173,7 @@ Chosen for
 Reflection stays materially present, with marking a threshold as the work, for one person, at low capacity.
 
 Timing shaped it
-Waxing moon supports this form without making the timing a command.
+Waxing moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The ritual gives the threshold one action and one close.
@@ -3188,7 +3188,7 @@ Kept bounded
 One small action, no extra setup.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Source summary
 Source lineage: hearth/table first-and-last logic. Form kept contained.
@@ -3233,7 +3233,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Fire-banking customs give evening closure a form: lower the light, keep the warmth, and stop adding fuel. The action lets rest be held by material instead of explained into more work. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Fire-banking customs give evening closure a form: lower the light, keep the warmth, and stop adding fuel. The action lets rest be held by material instead of explained into more work. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What can stay warm here without being worked on tonight?
@@ -3258,7 +3258,7 @@ Kept bounded
 One lowered light, one ending, then no more work.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 6 stayed secondary to the ritual material and timing.
@@ -3306,7 +3306,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Full timing and a light practice can make the ritual simple: a line is placed, witnessed, and closed. The phrase receives one material action so the saying can end cleanly. Full light lets the phrase be witnessed once, then closed by changing the light. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Full timing and a light practice can make the ritual simple: a line is placed, witnessed, and closed. The phrase receives one material action so the saying can end cleanly. Full light lets the phrase be witnessed once, then closed by changing the light. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What line is ready to be witnessed once?
@@ -3331,7 +3331,7 @@ Kept bounded
 One light, one line, then the light changes.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -3367,7 +3367,7 @@ Full normal output:
 ```text
 Let one bowl mark the season.
 
-Place one seasonal object in the bowl; let the bowl hold the season until you return to the table. Choose one small seasonal marker already present: a leaf, grain, key, ribbon, stone, or bit of bread can be enough. One of you places it in a small bowl; the other names what this season is asking the home to hold. Both touch the table once, then leave the bowl where it can rest until the next return. When the marker is done, put it back, eat it if it is food, or empty the bowl. Close when both of you have left the bowl where it is.
+Let the bowl hold one seasonal marker without becoming a display. Choose one small seasonal marker already present: a leaf, a ribbon, or a stone. One of you places it in a small bowl; the other names the season the home is in. Both touch the table once. Leave the bowl where it is until the next time you return to the table. Close when both of you have left the bowl in place.
 
 Intention
 Let the bowl mark the crossing and come back to its place.
@@ -3513,7 +3513,7 @@ Full normal output:
 ```text
 Set out a quiet welcome.
 
-Set one cup or small bowl at the table; let the vessel mark welcome, then stop. Set one cup or small bowl at the table between you. One of you names what is welcome here; the other touches the vessel once. Set the vessel down and leave it for one breath. Close by clearing the cup or bowl when you are done.
+Let welcome be brief and visible. Set one cup or small bowl between you. One of you names what is welcome here; the other touches the vessel once. Let it sit for one breath. Clear it when you are done. Close when the cup or bowl is clear.
 
 Intention
 Let the table give care a small shared form.
@@ -3595,7 +3595,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Sweetness belongs here as a material cue for one bounded word that can be set down and ended. The cup, bowl, light, or table gives both of you one shared action before talk begins. Waxing moon supports this form without making the timing a command. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+Sweetness belongs here as a material cue for one bounded word that can be set down and ended. The cup, bowl, light, or table gives both of you one shared action before talk begins. Waxing moon adds emphasis; the rite stays with its chosen material. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What word can be sweetened between you and then set down?
@@ -3605,7 +3605,7 @@ Chosen for
 Kitchen stays materially present, with tending us as the work, for both of you, at low capacity.
 
 Timing shaped it
-Waxing moon supports this form without making the timing a command.
+Waxing moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The cup, bowl, light, or table gives both of you one shared action before talk begins.
@@ -3665,7 +3665,7 @@ Optional accent
 Let the beginning stay small enough to wait.
 
 Why this fits
-Kindling and first-sighting traditions make a beginning visible before it becomes a project. The ritual gives the beginning a first body before it becomes work. Waning timing turns the beginning toward preparation rather than launch. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Kindling and first-sighting traditions make a beginning visible before it becomes a project. The ritual gives the beginning a first body before it becomes work. Waning timing turns the beginning toward preparation rather than launch. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What is the first step small enough to cross with?
@@ -3690,7 +3690,7 @@ Kept bounded
 One first light, one crossing, one later return.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -3738,7 +3738,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The chosen object gives household care a place, then goes back where it belongs. Waning moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The plant stays where it is; the rite works by noticing it and leaving it untouched. Waning moon adds emphasis; the rite stays with its chosen material. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What can keep growing without being handled today?
@@ -3748,10 +3748,10 @@ Chosen for
 Plant stays materially present, with tending the home as the work, for one person, at low capacity.
 
 Timing shaped it
-Waning moon supports this form without making the timing a command.
+Waning moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
-The chosen object gives household care a place, then goes back where it belongs.
+The plant stays where it is; the rite works by noticing it and leaving it untouched.
 
 Ritual form
 Plant folklore and flower-language traditions can make a living thing a witness, not a prop.
@@ -3763,7 +3763,7 @@ Kept bounded
 One small action, no extra setup.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -3811,7 +3811,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Waning light supports lessening when the phrase has a real way out. The material gives release one path out and one clear stop. Waning moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports warmth, beauty, and affection in a small, contained rite.
+Waning light supports lessening when the phrase has a real way out. The material gives release one path out and one clear stop. Waning moon adds emphasis; the rite stays with its chosen material. Low capacity keeps the rite to one material action and one close. The rite stays private and small, with warmth, beauty, and affection kept inside the room.
 
 Question to carry
 What is complete enough to leave your hands?
@@ -3821,7 +3821,7 @@ Chosen for
 Reflection stays materially present, with clearing something out as the work, for one person, at low capacity.
 
 Timing shaped it
-Waning moon supports this form without making the timing a command.
+Waning moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The material gives release one path out and one clear stop.
@@ -3836,7 +3836,7 @@ Kept bounded
 One phrase, one removal path, then empty hands.
 
 Private timing fit
-Private context supports warmth, beauty, and affection in a small, contained rite.
+The rite stays private and small, with warmth, beauty, and affection kept inside the room.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -3884,7 +3884,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A vessel at the edge of the home gives arrival a place to gather, cross, and end. The ritual gives the threshold one action and one close. Waxing moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+A vessel at the edge of the home gives arrival a place to gather, cross, and end. The ritual gives the threshold one action and one close. Waxing moon adds emphasis; the rite stays with its chosen material. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What belongs with you after this crossing?
@@ -3894,7 +3894,7 @@ Chosen for
 Home stays materially present, with marking a threshold as the work, for one person, at low capacity.
 
 Timing shaped it
-Waxing moon supports this form without making the timing a command.
+Waxing moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The ritual gives the threshold one action and one close.
@@ -3909,7 +3909,7 @@ Kept bounded
 One object crosses in, then returns or the bowl moves.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Source summary
 Source lineage: threshold crossing and bowl-vessel household logic. Form kept contained.
@@ -3954,7 +3954,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Clear speech can become a held object: written once, folded once, and not expanded. The phrase receives one material action so the saying can end cleanly. The timing gives the phrase a clear place without turning it into a report. Low capacity keeps the rite to one material action and one close. Private context supports clear structure and bounded action in a small, contained rite.
+Clear speech can become a held object: written once, folded once, and not expanded. The phrase receives one material action so the saying can end cleanly. The timing gives the phrase a clear place without turning it into a report. Low capacity keeps the rite to one material action and one close. The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Question to carry
 What is clearer after it has been folded once?
@@ -3979,7 +3979,7 @@ Kept bounded
 One phrase, one fold, one holding place, then later return.
 
 Private timing fit
-Private context supports clear structure and bounded action in a small, contained rite.
+The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -4027,7 +4027,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Waning light supports lessening when the phrase has a real way out. The material gives release one path out and one clear stop. Waning moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports warmth, beauty, and affection in a small, contained rite.
+Waning light supports lessening when the phrase has a real way out. The material gives release one path out and one clear stop. Waning moon adds emphasis; the rite stays with its chosen material. Low capacity keeps the rite to one material action and one close. The rite stays private and small, with warmth, beauty, and affection kept inside the room.
 
 Question to carry
 What is complete enough to leave your hands?
@@ -4037,7 +4037,7 @@ Chosen for
 Reflection stays materially present, with clearing something out as the work, for one person, at low capacity.
 
 Timing shaped it
-Waning moon supports this form without making the timing a command.
+Waning moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The material gives release one path out and one clear stop.
@@ -4052,7 +4052,7 @@ Kept bounded
 One phrase, one removal path, then empty hands.
 
 Private timing fit
-Private context supports warmth, beauty, and affection in a small, contained rite.
+The rite stays private and small, with warmth, beauty, and affection kept inside the room.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -4100,7 +4100,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A key is useful here because it already belongs to leaving, crossing, and returning. The ritual gives the threshold one action and one close. Waxing moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports clear structure and bounded action in a small, contained rite.
+A key is useful here because it already belongs to leaving, crossing, and returning. The ritual gives the threshold one action and one close. Waxing moon adds emphasis; the rite stays with its chosen material. Low capacity keeps the rite to one material action and one close. The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Question to carry
 What word can cross the threshold with you?
@@ -4110,7 +4110,7 @@ Chosen for
 Home stays materially present, with marking a threshold as the work, for one person, at low capacity.
 
 Timing shaped it
-Waxing moon supports this form without making the timing a command.
+Waxing moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The ritual gives the threshold one action and one close.
@@ -4125,7 +4125,7 @@ Kept bounded
 One word, one crossing, then the key returns.
 
 Private timing fit
-Private context supports clear structure and bounded action in a small, contained rite.
+The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Source summary
 Source lineage: key, threshold, return, and household marker folklore. Form kept contained.
@@ -4170,7 +4170,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Plant-message traditions support a private phrase placed near living growth without assigning the plant a fixed meaning. The phrase receives one material action so the saying can end cleanly. The timing gives the phrase a clear place without turning it into a report. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Plant-message traditions support a private phrase placed near living growth without assigning the plant a fixed meaning. The phrase receives one material action so the saying can end cleanly. The timing gives the phrase a clear place without turning it into a report. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What phrase can rest near a growing thing?
@@ -4195,7 +4195,7 @@ Kept bounded
 One folded phrase, one plant-side place, then later return.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -4243,7 +4243,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Calendar customs can become private first-and-last markers without becoming a holiday feed. The doorway gives the threshold one crossing to carry the words. The first day of the month makes this an opening threshold: one small word or action crosses first. Low capacity keeps the rite to one material action and one close. Private context supports clear structure and bounded action in a small, contained rite.
+Calendar customs can become private first-and-last markers without becoming a holiday feed. The doorway gives the threshold one crossing to carry the words. The first day of the month makes this an opening threshold: one small word or action crosses first. Low capacity keeps the rite to one material action and one close. The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Question to carry
 What word closes, and what word opens?
@@ -4268,7 +4268,7 @@ Kept bounded
 One threshold action, one clean close.
 
 Private timing fit
-Private context supports clear structure and bounded action in a small, contained rite.
+The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Small accent
 Numerology 9 stayed secondary to the ritual material and timing.
@@ -4304,7 +4304,7 @@ Full normal output:
 ```text
 Set out a quiet welcome.
 
-Set one cup or small bowl at the table; let the vessel mark welcome, then stop. Set one cup or small bowl at the table between you. One of you names what is welcome here; the other touches the vessel once. Set the vessel down and leave it for one breath. Close by clearing the cup or bowl when you are done.
+Let welcome be brief and visible. Set one cup or small bowl between you. One of you names what is welcome here; the other touches the vessel once. Let it sit for one breath. Clear it when you are done. Close when the cup or bowl is clear.
 
 Intention
 Let the table hold rest without asking for more.
@@ -4389,7 +4389,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A threshold word needs a body if it is going to be carried, crossed, or put away. The ritual gives the threshold one action and one close. The first day of the month makes this an opening threshold: one small word or action crosses first. Low capacity keeps the rite to one material action and one close. Private context supports clear structure and bounded action in a small, contained rite.
+A threshold word needs a body if it is going to be carried, crossed, or put away. The ritual gives the threshold one action and one close. The first day of the month makes this an opening threshold: one small word or action crosses first. Low capacity keeps the rite to one material action and one close. The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Question to carry
 What word can cross once, then rest?
@@ -4414,7 +4414,7 @@ Kept bounded
 One phrase, one fold, one holding place, then later return.
 
 Private timing fit
-Private context supports clear structure and bounded action in a small, contained rite.
+The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Small accent
 Numerology 9 stayed secondary to the ritual material and timing.
@@ -4462,7 +4462,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A vessel can close by emptying what it held and becoming ordinary again. The material gives release one path out and one clear stop. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+A vessel can close by emptying what it held and becoming ordinary again. The material gives release one path out and one clear stop. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What changes when the vessel is empty again?
@@ -4487,7 +4487,7 @@ Kept bounded
 One held marker, one emptying, then the vessel returns.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 3 stayed secondary to the ritual material and timing.
@@ -4535,7 +4535,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A vessel can close by emptying what it held and becoming ordinary again. The material gives release one path out and one clear stop. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+A vessel can close by emptying what it held and becoming ordinary again. The material gives release one path out and one clear stop. The last day of the month makes this a closing rite: one marker can be emptied, returned, or set down. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What changes when the vessel is empty again?
@@ -4560,7 +4560,7 @@ Kept bounded
 One held marker, one emptying, then the vessel returns.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 3 stayed secondary to the ritual material and timing.
@@ -4608,7 +4608,7 @@ Optional accent
 Let the beginning stay small enough to wait.
 
 Why this fits
-First light can open a beginning without asking it to launch. The ritual gives the beginning a first body before it becomes work. New-moon darkness makes the first light small: it opens the beginning, then stops before proof. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+First light can open a beginning without asking it to launch. The ritual gives the beginning a first body before it becomes work. New-moon darkness makes the first light small: it opens the beginning, then stops before proof. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What beginning is real enough to name once?
@@ -4633,7 +4633,7 @@ Kept bounded
 One first light, one sentence, then no plan.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -4754,7 +4754,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Table light can acknowledge what is already present; the empty bowl gives it a place to rest and return. The action lets rest be held by material instead of explained into more work. Full light lets what is present be acknowledged before the room lowers. Low capacity keeps the rite to one material action and one close. Private context supports warmth, beauty, and affection in a small, contained rite.
+Table light can acknowledge what is already present; the empty bowl gives it a place to rest and return. The action lets rest be held by material instead of explained into more work. Full light lets what is present be acknowledged before the room lowers. Low capacity keeps the rite to one material action and one close. The rite stays private and small, with warmth, beauty, and affection kept inside the room.
 
 Question to carry
 What can rest because it has been seen once?
@@ -4779,7 +4779,7 @@ Kept bounded
 One empty bowl, one held thing, then return.
 
 Private timing fit
-Private context supports warmth, beauty, and affection in a small, contained rite.
+The rite stays private and small, with warmth, beauty, and affection kept inside the room.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -4827,7 +4827,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Waning timing makes the release a lowering of light rather than a purge. The material gives release one path out and one clear stop. Waning light turns clearing into lowering the light and stopping there. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Waning timing makes the release a lowering of light rather than a purge. The material gives release one path out and one clear stop. Waning light turns clearing into lowering the light and stopping there. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What is ready to draw down?
@@ -4852,7 +4852,7 @@ Kept bounded
 One lowered light, one lessening phrase, then stop.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -4900,7 +4900,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Smooring gives rest a form: light is lowered and held safely instead of being treated as gone. The action lets rest be held by material instead of explained into more work. Dark or quiet timing lets the light do less and still hold the rite. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Smooring gives rest a form: light is lowered and held safely instead of being treated as gone. The action lets rest be held by material instead of explained into more work. Dark or quiet timing lets the light do less and still hold the rite. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What can stay held after the light is lowered?
@@ -4925,7 +4925,7 @@ Kept bounded
 One small action, no extra setup.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -4973,7 +4973,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Smooring gives rest a form: light is lowered and held safely instead of being treated as gone. The action lets rest be held by material instead of explained into more work. Dark or quiet timing lets the light do less and still hold the rite. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Smooring gives rest a form: light is lowered and held safely instead of being treated as gone. The action lets rest be held by material instead of explained into more work. Dark or quiet timing lets the light do less and still hold the rite. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What can stay held after the light is lowered?
@@ -4998,7 +4998,7 @@ Kept bounded
 One small action, no extra setup.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -5046,7 +5046,7 @@ Optional accent
 This no-flame witness is the whole rite.
 
 Why this fits
-An electric candle can witness without flame or divination. The phrase receives one material action so the saying can end cleanly. Full light lets the phrase be witnessed once, then closed by changing the light. Low capacity keeps the rite to one material action and one close. Private context supports warmth, beauty, and affection in a small, contained rite.
+An electric candle can witness without flame or divination. The phrase receives one material action so the saying can end cleanly. Full light lets the phrase be witnessed once, then closed by changing the light. Low capacity keeps the rite to one material action and one close. The rite stays private and small, with warmth, beauty, and affection kept inside the room.
 
 Question to carry
 What can be witnessed without being lit?
@@ -5071,7 +5071,7 @@ Kept bounded
 One small action, no extra setup.
 
 Private timing fit
-Private context supports warmth, beauty, and affection in a small, contained rite.
+The rite stays private and small, with warmth, beauty, and affection kept inside the room.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -5192,7 +5192,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The phrase receives one material action so the saying can end cleanly. The timing gives the phrase a clear place without turning it into a report. Low capacity keeps the rite to one material action and one close. Private context supports clear structure and bounded action in a small, contained rite.
+Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The phrase receives one material action so the saying can end cleanly. The timing gives the phrase a clear place without turning it into a report. Low capacity keeps the rite to one material action and one close. The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Question to carry
 What phrase can meet the threshold and stop there?
@@ -5217,7 +5217,7 @@ Kept bounded
 One window edge, one phrase, then the curtain closes.
 
 Private timing fit
-Private context supports clear structure and bounded action in a small, contained rite.
+The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Source summary
 Source lineage: first-light threshold and observable-light timing logic. Form kept contained.
@@ -5262,7 +5262,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Shared light can give a small common focus a form without asking it to become larger. The cup, bowl, light, or table gives both of you one shared action before talk begins. Waning moon supports this form without making the timing a command. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
+Shared light can give a small common focus a form without asking it to become larger. The cup, bowl, light, or table gives both of you one shared action before talk begins. Waning moon adds emphasis; the rite stays with its chosen material. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Steady capacity gives the material a little room to be placed, held, and returned.
 
 Question to carry
 What can the shared light hold for both of you?
@@ -5272,7 +5272,7 @@ Chosen for
 Candle or light stays materially present, with tending us as the work, for both of you, at steady capacity.
 
 Timing shaped it
-Waning moon supports this form without making the timing a command.
+Waning moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The cup, bowl, light, or table gives both of you one shared action before talk begins.
@@ -5332,7 +5332,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Smooring gives rest a form: light is lowered and held safely instead of being treated as gone. The action lets rest be held by material instead of explained into more work. Dark or quiet timing lets the light do less and still hold the rite. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Smooring gives rest a form: light is lowered and held safely instead of being treated as gone. The action lets rest be held by material instead of explained into more work. Dark or quiet timing lets the light do less and still hold the rite. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What can stay held after the light is lowered?
@@ -5357,7 +5357,7 @@ Kept bounded
 One small action, no extra setup.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Source summary
 Source lineage: smoored hearth and banked-light mechanics. Form kept contained.
@@ -5475,7 +5475,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A lowered household light can give attention one warm edge to return to. The chosen object gives wandering attention one steady place to return to, then stops. No single timing window stood out strongly this week, so the ritual can happen whenever capacity allows. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+A lowered household light can give attention one warm edge to return to. The light gives attention a visible place to land, then the room can stay quiet. No single timing window needs to lead this week; choose the moment that keeps the rite easy to close. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What can your attention return to without being worked on?
@@ -5488,7 +5488,7 @@ Timing shaped it
 No single timing window stood out strongly this week, so the recommendation stays close to your check-in and current capacity. You can do it whenever it feels workable.
 
 Focus bridge
-The chosen object gives wandering attention one steady place to return to, then stops.
+The light gives attention a visible place to land, then the room can stay quiet.
 
 Ritual form
 A lowered household light can give attention one warm edge to return to.
@@ -5500,7 +5500,7 @@ Kept bounded
 One lowered light, one ending, then no more work.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Source summary
 Source lineage: household fire-banking customs. Form kept contained.
@@ -5545,7 +5545,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A lowered household light can give both people one shared edge to return to. The chosen object gives wandering attention one steady place to return to, then stops. No single timing window stood out strongly this week, so the ritual can happen whenever capacity allows. For both of you, the rite works through one small role each, or one shared object touched together. Low capacity keeps the rite to one material action and one close.
+A lowered household light can give both people one shared edge to return to. The light gives attention a visible place to land, then the room can stay quiet. No single timing window needs to lead this week; choose the moment that keeps the rite easy to close. For both of you, the rite works through one small role each, or one shared object touched together. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What can both of you return to without working on it?
@@ -5558,7 +5558,7 @@ Timing shaped it
 No single timing window stood out strongly this week, so the recommendation stays close to your check-in and current capacity. You can do it whenever it feels workable.
 
 Focus bridge
-The chosen object gives wandering attention one steady place to return to, then stops.
+The light gives attention a visible place to land, then the room can stay quiet.
 
 Ritual form
 A lowered household light can give both people one shared edge to return to.
@@ -5615,7 +5615,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The phrase receives one material action so the saying can end cleanly. Full light lets the phrase be witnessed once, then closed by changing the light. Low capacity keeps the rite to one material action and one close. Private context supports clear structure and bounded action in a small, contained rite.
+Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The phrase receives one material action so the saying can end cleanly. Full light lets the phrase be witnessed once, then closed by changing the light. Low capacity keeps the rite to one material action and one close. The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Question to carry
 What phrase can meet the threshold and stop there?
@@ -5640,7 +5640,7 @@ Kept bounded
 One window edge, one phrase, then the curtain closes.
 
 Private timing fit
-Private context supports clear structure and bounded action in a small, contained rite.
+The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -5761,7 +5761,7 @@ Optional accent
 Let the beginning stay small enough to wait.
 
 Why this fits
-Kindling and kept-light sources support first light as a beginning held before action. The ritual gives the beginning a first body before it becomes work. New-moon darkness makes the first light small: it opens the beginning, then stops before proof. High capacity asks for a fuller arc: staged action, a held moment, and a return. Private context supports keeping this practical and contained.
+Kindling and kept-light sources support first light as a beginning held before action. The ritual gives the beginning a first body before it becomes work. New-moon darkness makes the first light small: it opens the beginning, then stops before proof. High capacity asks for a fuller arc: staged action, a held moment, and a return. Nothing here needs to become a project.
 
 Question to carry
 What beginning becomes stronger when first light holds it before work begins?
@@ -5786,7 +5786,7 @@ Kept bounded
 One primary ritual, no task list.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -5907,7 +5907,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Waning timing makes the release a lowering of light rather than a purge. The material gives release one path out and one clear stop. Waning light turns clearing into lowering the light and stopping there. High capacity asks for a fuller arc: staged action, a held moment, and a return. Private context supports keeping this practical and contained.
+Waning timing makes the release a lowering of light rather than a purge. The material gives release one path out and one clear stop. Waning light turns clearing into lowering the light and stopping there. High capacity asks for a fuller arc: staged action, a held moment, and a return. Nothing here needs to become a project.
 
 Question to carry
 What becomes lighter when it is lowered in stages?
@@ -5932,7 +5932,7 @@ Kept bounded
 One lowered light, one lessening phrase, then stop.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -5980,7 +5980,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Table light can acknowledge what is already present; the empty bowl gives it a place to rest and return. The action lets rest be held by material instead of explained into more work. Full light lets what is present be acknowledged before the room lowers. Steady capacity gives the material a little room to be placed, held, and returned. Private context supports warmth, beauty, and affection in a small, contained rite.
+Table light can acknowledge what is already present; the empty bowl gives it a place to rest and return. The action lets rest be held by material instead of explained into more work. Full light lets what is present be acknowledged before the room lowers. Steady capacity gives the material a little room to be placed, held, and returned. The rite stays private and small, with warmth, beauty, and affection kept inside the room.
 
 Question to carry
 What can be held for one minute and then returned?
@@ -6005,7 +6005,7 @@ Kept bounded
 One empty bowl, one held thing, then return.
 
 Private timing fit
-Private context supports warmth, beauty, and affection in a small, contained rite.
+The rite stays private and small, with warmth, beauty, and affection kept inside the room.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -6126,7 +6126,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The chosen object gives household care a place, then goes back where it belongs. Waning moon supports this form without making the timing a command. For both of you, the shared surface or vessel gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The plant stays where it is; the rite works by noticing it and leaving it untouched. Waning moon adds emphasis; the rite stays with its chosen material. For both of you, the shared surface or vessel gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What in the home can be tended by being witnessed and left steady?
@@ -6136,10 +6136,10 @@ Chosen for
 Plant stays materially present, with tending the home as the work, for both of you, at high capacity.
 
 Timing shaped it
-Waning moon supports this form without making the timing a command.
+Waning moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
-The chosen object gives household care a place, then goes back where it belongs.
+The plant stays where it is; the rite works by noticing it and leaving it untouched.
 
 Ritual form
 Plant folklore and flower-language traditions can make a living thing a witness, not a prop.
@@ -6202,7 +6202,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The chosen object gives household care a place, then goes back where it belongs. No single timing window stood out strongly this week, so the ritual can happen whenever capacity allows. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The plant stays where it is; the rite works by noticing it and leaving it untouched. No single timing window needs to lead this week; choose the moment that keeps the rite easy to close. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What in the home can be tended by being witnessed and left steady?
@@ -6215,7 +6215,7 @@ Timing shaped it
 No single timing window stood out strongly this week, so the recommendation stays close to your check-in and current capacity. You can do it whenever it feels workable.
 
 Focus bridge
-The chosen object gives household care a place, then goes back where it belongs.
+The plant stays where it is; the rite works by noticing it and leaving it untouched.
 
 Ritual form
 Plant folklore and flower-language traditions can make a living thing a witness, not a prop.
@@ -6230,7 +6230,7 @@ Kept bounded
 One primary ritual, no task list.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Source summary
 Source lineage: plant-lore living witness and flower-message logic. Form kept contained.
@@ -6275,7 +6275,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Plant life includes dormancy; not every living thing is always growing visibly. The action lets rest be held by material instead of explained into more work. Darker or quieter timing lets the ritual lower the room instead of sharpening attention. High capacity asks for a fuller arc: staged action, a held moment, and a return. Private context supports keeping this practical and contained.
+Plant life includes dormancy; not every living thing is always growing visibly. The action lets rest be held by material instead of explained into more work. Darker or quieter timing lets the ritual lower the room instead of sharpening attention. High capacity asks for a fuller arc: staged action, a held moment, and a return. Nothing here needs to become a project.
 
 Question to carry
 What becomes more alive when it is not asked to grow tonight?
@@ -6303,7 +6303,7 @@ Kept bounded
 One primary ritual, no task list.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -6351,7 +6351,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Full moon supports this form without making the timing a command. For both of you, the shared surface or vessel gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Full moon adds emphasis; the rite stays with its chosen material. For both of you, the shared surface or vessel gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What warmth can remain on the shared surface?
@@ -6361,7 +6361,7 @@ Chosen for
 Kitchen stays materially present, with tending us as the work, for both of you, at high capacity.
 
 Timing shaped it
-Full moon supports this form without making the timing a command.
+Full moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The cup, bowl, light, or table gives both of you one shared action before talk begins.
@@ -6424,7 +6424,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Waning timing makes this a beginning held in reserve rather than launched. The ritual gives the beginning a first body before it becomes work. Waning timing turns the beginning toward preparation rather than launch. High capacity asks for a fuller arc: staged action, a held moment, and a return. Private context supports keeping this practical and contained.
+Waning timing makes this a beginning held in reserve rather than launched. The ritual gives the beginning a first body before it becomes work. Waning timing turns the beginning toward preparation rather than launch. High capacity asks for a fuller arc: staged action, a held moment, and a return. Nothing here needs to become a project.
 
 Question to carry
 What beginning becomes steadier when the grain holds it first?
@@ -6449,7 +6449,7 @@ Kept bounded
 One grain, one sentence, one night of waiting.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -6522,7 +6522,7 @@ Kept bounded
 One room object, one held minute, then the object is home again.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -6595,7 +6595,7 @@ Kept bounded
 One room object, one held minute, then the object is home again.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Source summary
 Source lineage: smoored hearth and household object-return mechanics. Form kept contained.
@@ -6665,7 +6665,7 @@ Kept bounded
 One resting place, one last signal, then the room is left alone.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -6713,7 +6713,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The ritual gives the threshold one action and one close. Full moon supports this form without making the timing a command. For both of you, the rite works through one small role each, or one shared object touched together. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The ritual gives the threshold one action and one close. Full moon adds emphasis; the rite stays with its chosen material. For both of you, the rite works through one small role each, or one shared object touched together. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What phrase can meet the edge between you?
@@ -6723,7 +6723,7 @@ Chosen for
 Home stays materially present, with marking a threshold as the work, for both of you, at high capacity.
 
 Timing shaped it
-Full moon supports this form without making the timing a command.
+Full moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The ritual gives the threshold one action and one close.
@@ -6786,7 +6786,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The phrase receives one material action so the saying can end cleanly. The timing gives the phrase a clear place without turning it into a report. High capacity asks for a fuller arc: staged action, a held moment, and a return. Private context supports clear structure and bounded action in a small, contained rite.
+Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The phrase receives one material action so the saying can end cleanly. The timing gives the phrase a clear place without turning it into a report. High capacity asks for a fuller arc: staged action, a held moment, and a return. The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Question to carry
 What phrase can meet the threshold and stop there?
@@ -6814,7 +6814,7 @@ Kept bounded
 One window edge, one phrase, then the curtain closes.
 
 Private timing fit
-Private context supports clear structure and bounded action in a small, contained rite.
+The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -6862,7 +6862,7 @@ Optional accent
 Let the beginning stay small enough to wait.
 
 Why this fits
-Kindling and first-sighting traditions make a beginning visible before it becomes a project. The ritual gives the beginning a first body before it becomes work. New-moon darkness makes the first light small: it opens the beginning, then stops before proof. High capacity asks for a fuller arc: staged action, a held moment, and a return. Private context supports keeping this practical and contained.
+Kindling and first-sighting traditions make a beginning visible before it becomes a project. The ritual gives the beginning a first body before it becomes work. New-moon darkness makes the first light small: it opens the beginning, then stops before proof. High capacity asks for a fuller arc: staged action, a held moment, and a return. Nothing here needs to become a project.
 
 Question to carry
 What beginning becomes stronger when it waits at the threshold first?
@@ -6887,7 +6887,7 @@ Kept bounded
 One first light, one crossing, one later return.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -6935,7 +6935,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Table light can acknowledge what is already present; the empty bowl gives it a place to rest and return. The action lets rest be held by material instead of explained into more work. Full light lets what is present be acknowledged before the room lowers. High capacity asks for a fuller arc: staged action, a held moment, and a return. Private context supports warmth, beauty, and affection in a small, contained rite.
+Table light can acknowledge what is already present; the empty bowl gives it a place to rest and return. The action lets rest be held by material instead of explained into more work. Full light lets what is present be acknowledged before the room lowers. High capacity asks for a fuller arc: staged action, a held moment, and a return. The rite stays private and small, with warmth, beauty, and affection kept inside the room.
 
 Question to carry
 What can be held in full light without being solved?
@@ -6960,7 +6960,7 @@ Kept bounded
 One empty bowl, one held thing, then return.
 
 Private timing fit
-Private context supports warmth, beauty, and affection in a small, contained rite.
+The rite stays private and small, with warmth, beauty, and affection kept inside the room.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -7008,7 +7008,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The phrase receives one material action so the saying can end cleanly. Full light lets the phrase be witnessed once, then closed by changing the light. High capacity asks for a fuller arc: staged action, a held moment, and a return. Private context supports clear structure and bounded action in a small, contained rite.
+Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The phrase receives one material action so the saying can end cleanly. Full light lets the phrase be witnessed once, then closed by changing the light. High capacity asks for a fuller arc: staged action, a held moment, and a return. The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Question to carry
 What phrase can meet the threshold and stop there?
@@ -7036,7 +7036,7 @@ Kept bounded
 One window edge, one phrase, then the curtain closes.
 
 Private timing fit
-Private context supports clear structure and bounded action in a small, contained rite.
+The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -7109,7 +7109,7 @@ Kept bounded
 One room object, one held minute, then the object is home again.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Source summary
 Source lineage: smoored hearth and household object-return mechanics. Form kept contained.
@@ -7154,7 +7154,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Full moon supports this form without making the timing a command. For both of you, the shared surface or vessel gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
+A cup is a small vessel for welcome: it can hold warmth without asking for a conversation. The cup, bowl, light, or table gives both of you one shared action before talk begins. Full moon adds emphasis; the rite stays with its chosen material. For both of you, the shared surface or vessel gives the rite one thing to hold between you. High capacity asks for a fuller arc: staged action, a held moment, and a return.
 
 Question to carry
 What warmth can remain on the shared surface?
@@ -7164,7 +7164,7 @@ Chosen for
 Kitchen stays materially present, with tending us as the work, for both of you, at high capacity.
 
 Timing shaped it
-Full moon supports this form without making the timing a command.
+Full moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The cup, bowl, light, or table gives both of you one shared action before talk begins.
@@ -7218,7 +7218,7 @@ Full normal output:
 ```text
 Let one bowl mark the season.
 
-Place one seasonal object in the bowl; let the bowl hold the season until you return to the table. Choose one small seasonal marker already present: a leaf, grain, key, ribbon, stone, or bit of bread can be enough. One of you places it in a small bowl; the other names what this season is asking the home to hold. Both touch the table once, then leave the bowl where it can rest until the next return. When the marker is done, put it back, eat it if it is food, or empty the bowl. Close when both of you have left the bowl where it is.
+Let the bowl hold one seasonal marker without becoming a display. Choose one small seasonal marker already present: a leaf, a ribbon, or a stone. One of you places it in a small bowl; the other names the season the home is in. Both touch the table once. Leave the bowl where it is until the next time you return to the table. Close when both of you have left the bowl in place.
 
 Intention
 Let the bowl mark the crossing and come back to its place.
@@ -7306,7 +7306,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Home tending does not need to mean cleaning. Returning one thing to its place gives the house a small act of care with a clear end. The object and its return are the rite. Waning timing supports settling and returning, not purging or clearing. Low capacity keeps the rite to one material action and one close.
+Home tending does not need to mean cleaning. Returning one thing to its place gives the house a small act of care with a clear end. One small thing is lifted, named, and put back; the return is the care. Waning timing supports settling and returning, not purging or clearing. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What can be cared for by putting one thing back?
@@ -7319,7 +7319,7 @@ Timing shaped it
 Waning timing supports settling and returning, not purging or clearing.
 
 Focus bridge
-The object and its return are the rite.
+One small thing is lifted, named, and put back; the return is the care.
 
 Ritual form
 Home tending does not need to mean cleaning. Returning one thing to its place gives the house a small act of care with a clear end.
@@ -7331,7 +7331,7 @@ Kept bounded
 One room object, one held minute, then the object is home again.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -7379,7 +7379,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-A vessel at the edge of the home gives arrival a place to gather, cross, and end. The chosen object gives wandering attention one steady place to return to, then stops. Waning moon supports this form without making the timing a command. Pause capacity makes permission the whole shape. Private context supports keeping this practical and contained.
+A vessel at the edge of the home gives arrival a place to gather, cross, and end. The material gives wandering attention one steady place to return to, then stops. Waning moon adds emphasis; the rite stays with its chosen material. Pause capacity makes permission the whole shape. Nothing here needs to become a project.
 
 Question to carry
 What belongs with you after this crossing?
@@ -7389,10 +7389,10 @@ Chosen for
 Home stays materially present, with getting grounded as the work, for one person, at pause capacity.
 
 Timing shaped it
-Waning moon supports this form without making the timing a command.
+Waning moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
-The chosen object gives wandering attention one steady place to return to, then stops.
+The material gives wandering attention one steady place to return to, then stops.
 
 Ritual form
 A vessel at the edge of the home gives arrival a place to gather, cross, and end.
@@ -7404,7 +7404,7 @@ Kept bounded
 One object crosses in, then returns or the bowl moves.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -7452,7 +7452,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The phrase receives one material action so the saying can end cleanly. The timing gives the phrase a clear place without turning it into a report. Low capacity keeps the rite to one material action and one close. Private context supports clear structure and bounded action in a small, contained rite.
+Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The phrase receives one material action so the saying can end cleanly. The timing gives the phrase a clear place without turning it into a report. Low capacity keeps the rite to one material action and one close. The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Question to carry
 What phrase can meet the threshold and stop there?
@@ -7477,7 +7477,7 @@ Kept bounded
 One window edge, one phrase, then the curtain closes.
 
 Private timing fit
-Private context supports clear structure and bounded action in a small, contained rite.
+The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -7513,7 +7513,7 @@ Full normal output:
 ```text
 Set out a quiet welcome.
 
-Set one cup or small bowl at the table; let the vessel mark welcome, then stop. Set one cup or small bowl at the table between you. One of you names what is welcome here; the other touches the vessel once. Set the vessel down and leave it for one breath. Close by clearing the cup or bowl when you are done.
+Let welcome be brief and visible. Set one cup or small bowl between you. One of you names what is welcome here; the other touches the vessel once. Let it sit for one breath. Clear it when you are done. Close when the cup or bowl is clear.
 
 Intention
 Let the table give care a small shared form.
@@ -7595,7 +7595,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Home tending does not need to mean cleaning. Returning one thing to its place gives the house a small act of care with a clear end. The object and its return are the rite. The timing can stay quiet while the room receives one small act of care. Steady capacity gives the material a little room to be placed, held, and returned.
+Home tending does not need to mean cleaning. Returning one thing to its place gives the house a small act of care with a clear end. One small thing is lifted, named, and put back; the return is the care. The timing can stay quiet while the room receives one small act of care. Steady capacity gives the material a little room to be placed, held, and returned.
 
 Question to carry
 What feels a little more at home when this returns?
@@ -7608,7 +7608,7 @@ Timing shaped it
 The timing can stay quiet while the room receives one small act of care.
 
 Focus bridge
-The object and its return are the rite.
+One small thing is lifted, named, and put back; the return is the care.
 
 Ritual form
 Home tending does not need to mean cleaning. Returning one thing to its place gives the house a small act of care with a clear end.
@@ -7620,7 +7620,7 @@ Kept bounded
 One room object, one held minute, then the object is home again.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -7668,7 +7668,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The phrase receives one material action so the saying can end cleanly. Sunday, June 21 morning stood out this week. The window stood out because of major numerology hit marked for review. Steady capacity gives the material a little room to be placed, held, and returned. Private context supports clear structure and bounded action in a small, contained rite.
+Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The phrase receives one material action so the saying can end cleanly. Sunday, June 21 morning stood out this week. The window stood out because of major numerology hit marked for review. Steady capacity gives the material a little room to be placed, held, and returned. The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Question to carry
 What phrase can meet the threshold and stop there?
@@ -7693,7 +7693,7 @@ Kept bounded
 One window edge, one phrase, then the curtain closes.
 
 Private timing fit
-Private context supports clear structure and bounded action in a small, contained rite.
+The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Small accent
 Numerology 6 stayed secondary to the ritual material and timing.
@@ -7814,7 +7814,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Fire-banking customs give evening closure a form: lower the light, keep the warmth, and stop adding fuel. The action lets rest be held by material instead of explained into more work. Dark or quiet timing lets the light do less and still hold the rite. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Fire-banking customs give evening closure a form: lower the light, keep the warmth, and stop adding fuel. The action lets rest be held by material instead of explained into more work. Dark or quiet timing lets the light do less and still hold the rite. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What can stay warm here without being worked on tonight?
@@ -7839,7 +7839,7 @@ Kept bounded
 One lowered light, one ending, then no more work.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -7887,7 +7887,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-If full light is selected for rest, the ritual should end by reducing brightness rather than sharpening it. The action lets rest be held by material instead of explained into more work. Waning moon supports this form without making the timing a command. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
+If full light is selected for rest, the ritual should end by reducing brightness rather than sharpening it. The action lets rest be held by material instead of explained into more work. Waning moon adds emphasis; the rite stays with its chosen material. For both of you, the shared surface or vessel gives the rite one thing to hold between you. Low capacity keeps the rite to one material action and one close.
 
 Question to carry
 What can the shared light hold for both of you?
@@ -7897,7 +7897,7 @@ Chosen for
 Candle or light stays materially present, with resting as the work, for both of you, at low capacity.
 
 Timing shaped it
-Waning moon supports this form without making the timing a command.
+Waning moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
 The action lets rest be held by material instead of explained into more work.
@@ -7960,7 +7960,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The phrase receives one material action so the saying can end cleanly. Full light lets the phrase be witnessed once, then closed by changing the light. Low capacity keeps the rite to one material action and one close. Private context supports clear structure and bounded action in a small, contained rite.
+Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The phrase receives one material action so the saying can end cleanly. Full light lets the phrase be witnessed once, then closed by changing the light. Low capacity keeps the rite to one material action and one close. The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Question to carry
 What phrase can meet the threshold and stop there?
@@ -7985,7 +7985,7 @@ Kept bounded
 One window edge, one phrase, then the curtain closes.
 
 Private timing fit
-Private context supports clear structure and bounded action in a small, contained rite.
+The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -8033,7 +8033,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Kindling and first-sighting traditions make a beginning visible before it becomes a project. The chosen object gives wandering attention one steady place to return to, then stops. No single timing window stood out strongly this week, so the ritual can happen whenever capacity allows. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Kindling and first-sighting traditions make a beginning visible before it becomes a project. The light gives attention a visible place to land, then the room can stay quiet. No single timing window needs to lead this week; choose the moment that keeps the rite easy to close. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What is the first step small enough to cross with?
@@ -8046,7 +8046,7 @@ Timing shaped it
 No single timing window stood out strongly this week, so the recommendation stays close to your check-in and current capacity. You can do it whenever it feels workable.
 
 Focus bridge
-The chosen object gives wandering attention one steady place to return to, then stops.
+The light gives attention a visible place to land, then the room can stay quiet.
 
 Ritual form
 Kindling and first-sighting traditions make a beginning visible before it becomes a project.
@@ -8058,7 +8058,7 @@ Kept bounded
 One first light, one crossing, one later return.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Source summary
 Source lineage: household fire-kindling and first-light threshold logic. Form kept contained.
@@ -8103,7 +8103,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The chosen object gives household care a place, then goes back where it belongs. Waxing moon supports this form without making the timing a command. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Plant folklore and flower-language traditions can make a living thing a witness, not a prop. The plant stays where it is; the rite works by noticing it and leaving it untouched. Waxing moon adds emphasis; the rite stays with its chosen material. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What can keep growing without being handled today?
@@ -8113,10 +8113,10 @@ Chosen for
 Plant stays materially present, with tending the home as the work, for one person, at low capacity.
 
 Timing shaped it
-Waxing moon supports this form without making the timing a command.
+Waxing moon adds emphasis; the rite stays with its chosen material.
 
 Focus bridge
-The chosen object gives household care a place, then goes back where it belongs.
+The plant stays where it is; the rite works by noticing it and leaving it untouched.
 
 Ritual form
 Plant folklore and flower-language traditions can make a living thing a witness, not a prop.
@@ -8128,7 +8128,7 @@ Kept bounded
 One small action, no extra setup.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -8164,7 +8164,7 @@ Full normal output:
 ```text
 Set out a quiet welcome.
 
-Set one cup or small bowl at the table; let the vessel mark welcome, then stop. Set one cup or small bowl at the table between you. One of you names what is welcome here; the other touches the vessel once. Set the vessel down and leave it for one breath. Close by clearing the cup or bowl when you are done.
+Let welcome be brief and visible. Set one cup or small bowl between you. One of you names what is welcome here; the other touches the vessel once. Let it sit for one breath. Clear it when you are done. Close when the cup or bowl is clear.
 
 Intention
 Let the table give care a small shared form.
@@ -8246,7 +8246,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Fire-banking customs give evening closure a form: lower the light, keep the warmth, and stop adding fuel. The action lets rest be held by material instead of explained into more work. Full light lets what is present be acknowledged before the room lowers. Low capacity keeps the rite to one material action and one close. Private context supports keeping this practical and contained.
+Fire-banking customs give evening closure a form: lower the light, keep the warmth, and stop adding fuel. The action lets rest be held by material instead of explained into more work. Full light lets what is present be acknowledged before the room lowers. Low capacity keeps the rite to one material action and one close. Nothing here needs to become a project.
 
 Question to carry
 What can stay warm here without being worked on tonight?
@@ -8271,7 +8271,7 @@ Kept bounded
 One lowered light, one ending, then no more work.
 
 Private timing fit
-Private context supports keeping this practical and contained.
+Nothing here needs to become a project.
 
 Small accent
 Numerology 7 stayed secondary to the ritual material and timing.
@@ -8392,7 +8392,7 @@ Optional accent
 No add-on needed.
 
 Why this fits
-Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The phrase receives one material action so the saying can end cleanly. The timing gives the phrase a clear place without turning it into a report. Steady capacity gives the material a little room to be placed, held, and returned. Private context supports clear structure and bounded action in a small, contained rite.
+Window light lets a phrase meet a threshold without requiring flame or outdoor viewing. The phrase receives one material action so the saying can end cleanly. The timing gives the phrase a clear place without turning it into a report. Steady capacity gives the material a little room to be placed, held, and returned. The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Question to carry
 What phrase can meet the threshold and stop there?
@@ -8417,7 +8417,7 @@ Kept bounded
 One window edge, one phrase, then the curtain closes.
 
 Private timing fit
-Private context supports clear structure and bounded action in a small, contained rite.
+The rite stays private and small, with clear structure and bounded action kept inside the room.
 
 Source summary
 Source lineage: first-light threshold and observable-light timing logic. Form kept contained.
@@ -8429,8 +8429,8 @@ Source lineage: first-light threshold and observable-light timing logic. Form ke
 
 | scenario ID | selected category | selected pattern | focus | capacity | audience | warning IDs |
 |---|---|---|---|---|---|---|
-| pause.permission.enough | not asked | warm_cup_between_us | Resting | pause | me | pause_with_imperative_steps |
-| pause.grounded.no_task_list | not asked | warm_cup_between_us | Getting grounded | pause | me | pause_with_imperative_steps |
+| pause.permission.enough | not asked | warm_cup_between_us | Resting | pause | me | none |
+| pause.grounded.no_task_list | not asked | warm_cup_between_us | Getting grounded | pause | me | none |
 | waning.beginning.preparation_bridge | Home | first_light_at_the_threshold | Making a beginning | low | me | none |
 | waning.beginning.plant_bridge | Plant | seed_waiting | Making a beginning | low | me | none |
 | candle.no_generic_addon | Candle or light | full_light_on_the_table | Resting | low | me | none |
@@ -8596,7 +8596,6 @@ Source lineage: first-light threshold and observable-light timing logic. Form ke
 | coverage_gap_category_focus_capacity | contract.plant.both_high_tending_waning, contract.plant.high_tending_no_timing, contract.plant.high_rest_companionship, contract.surprise.high_preserves_resolved_category, contract.surprise.both_preserves_audience, contract.seasonal.high_month_turn_threshold |
 | high_capacity_depth_gap | contract.plant.both_high_tending_waning, contract.plant.high_tending_no_timing, contract.plant.high_rest_companionship, contract.surprise.high_preserves_resolved_category, contract.surprise.both_preserves_audience, contract.seasonal.high_month_turn_threshold |
 | high_capacity_no_deeper_ritual_shape | contract.kitchen.high_tending_full, contract.kitchen.high_beginning_waning, contract.home.high_threshold_full, contract.reflection.high_saying_new |
-| pause_with_imperative_steps | pause.permission.enough, pause.grounded.no_task_list |
 | recommendation_confidence_limited | contract.plant.both_high_tending_waning, contract.plant.high_tending_no_timing, contract.plant.high_rest_companionship, contract.surprise.high_preserves_resolved_category, contract.surprise.both_preserves_audience, contract.seasonal.high_month_turn_threshold |
 | stronger_wrong_category_rejected | contract.plant.both_high_tending_waning, contract.plant.high_tending_no_timing, contract.plant.high_rest_companionship, contract.surprise.high_preserves_resolved_category, contract.surprise.both_preserves_audience, contract.seasonal.high_month_turn_threshold |
 
@@ -8619,6 +8618,15 @@ Occurrences are review index entries only; they do not automatically fail the sc
 | one small sign of enough | none |
 | one edge to return to | none |
 | Source lineage: Source lineage | none |
+| can be enough | none |
+| chosen object | none |
+| goes back where it belongs | none |
+| eat it if it is food | none |
+| bit of bread can be enough | none |
+| supports this form without making the timing a command | none |
+| Private context supports keeping this practical and contained | none |
+| timing signal matched the ritual shape | none |
+| exact full moon and exact lunar timing | none |
 | material gives attention | none |
 | household material makes tending visible | none |
 | one concrete place to land | none |
