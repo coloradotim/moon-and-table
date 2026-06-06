@@ -3,7 +3,7 @@
 Issue: #231  
 Branch: `codex/issue-231-home-hearth-table-depth`  
 Base: `main`  
-PR: pending
+PR: #251
 
 ## 1. PR Summary
 
@@ -277,4 +277,4 @@ Quality delta: contract request changes 3 -> 1; authored request changes 4 -> 2;
 
 Handoff prompt:
 
-Please review PR <PR number> for issue #231. Primary review doc: docs/content-audits/post-home-hearth-table-depth-review.md. Verify that Home + tending uses documented Home/hearth/table/object-return structure, not threshold/light fallback or chores. Review before/after for #224 Home request-change cases, source support, outputs, quality delta, and merge recommendation.
+Please review PR #251 for issue #231. Primary review doc: docs/content-audits/post-home-hearth-table-depth-review.md. Verify that Home + tending uses documented Home/hearth/table/object-return structure, not threshold/light fallback or chores. Review before/after for #224 Home request-change cases, source support, outputs, quality delta, and merge recommendation.
