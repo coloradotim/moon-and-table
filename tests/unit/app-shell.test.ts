@@ -358,10 +358,12 @@ describe("app shell rendering", () => {
   it("renders a loading state", () => {
     const html = renderLoadingShell();
 
-    expect(html).toContain("Moon &amp; Table");
-    expect(html).toContain("Opening Moon &amp; Table.");
-    expect(html).toContain("Checking sign-in.");
+    expect(html).toContain('class="shell shell--moon-loading"');
+    expect(html).toContain('aria-label="Loading sign-in state"');
     expect(html).toContain("entry-moon-loader");
+    expect(html).not.toContain("Moon &amp; Table");
+    expect(html).not.toContain("Opening Moon &amp; Table.");
+    expect(html).not.toContain("Checking sign-in.");
     expect(html).not.toContain("Private access");
   });
 
@@ -984,10 +986,12 @@ describe("app shell rendering", () => {
   it("renders private data loading while signed-in Firestore data loads", () => {
     const html = renderPrivateDataLoadingShell();
 
-    expect(html).toContain("Moon &amp; Table");
-    expect(html).toContain("Preparing this week.");
-    expect(html).toContain("Loading household settings.");
+    expect(html).toContain('class="shell shell--moon-loading"');
+    expect(html).toContain('aria-label="Loading household settings"');
     expect(html).toContain("entry-moon-loader");
+    expect(html).not.toContain("Moon &amp; Table");
+    expect(html).not.toContain("Preparing this week.");
+    expect(html).not.toContain("Loading household settings.");
     expect(html).not.toContain("Private settings");
     expect(html).not.toContain("data-testid=\"recommended-ritual\"");
   });
@@ -1003,7 +1007,7 @@ describe("app shell rendering", () => {
 
   it("routes auth states to the correct shell", () => {
     expect(renderAppShell({ status: "loading" })).toContain(
-      "Checking sign-in.",
+      'aria-label="Loading sign-in state"',
     );
     expect(
       renderAppShell({ status: "signed_out", configReady: true }),
@@ -1020,6 +1024,6 @@ describe("app shell rendering", () => {
           displayName: "Person A",
         },
       }),
-    ).toContain("Loading household settings.");
+    ).toContain('aria-label="Loading household settings"');
   });
 });

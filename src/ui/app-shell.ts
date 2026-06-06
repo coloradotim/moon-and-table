@@ -985,21 +985,19 @@ function renderEntryShell({
 }
 
 export function renderLoadingShell(): string {
-  return renderEntryShell({
-    ariaLabel: "Loading sign-in state",
-    title: "Opening Moon & Table.",
-    body: "Checking sign-in.",
-    loading: true,
-  });
+  return renderMoonOnlyLoadingShell("Loading sign-in state");
 }
 
 export function renderPrivateDataLoadingShell(): string {
-  return renderEntryShell({
-    ariaLabel: "Loading household settings",
-    title: "Preparing this week.",
-    body: "Loading household settings.",
-    loading: true,
-  });
+  return renderMoonOnlyLoadingShell("Loading household settings");
+}
+
+function renderMoonOnlyLoadingShell(ariaLabel: string): string {
+  return `
+    <section class="shell shell--moon-loading" aria-label="${escapeHtml(ariaLabel)}">
+      <span class="entry-moon-loader" aria-hidden="true"></span>
+    </section>
+  `;
 }
 
 export function renderSignedOutShell(configReady: boolean): string {
