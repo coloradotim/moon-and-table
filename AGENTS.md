@@ -64,7 +64,7 @@ Real personalization belongs only in Firebase/Firestore for the hosted app, priv
 - Moon & Table has a house voice. User settings may constrain intensity, visibility, capacity, and practice fit, but they should not remix the ritual into a different writing style.
 - Safety should constrain recommendations; it should not rewrite the metaphysics of the practice.
 - Schedule and capacity constraints override symbolic timing.
-- Explicit check-in answers are recommendation contracts. Visible category/practice type, ritual focus, audience, capacity, time scope, and hard avoid/preference constraints may be shaped by timing and source support, but they should not be overridden without a real safety, source, privacy, or eligibility blocker.
+- Explicit check-in answers are recommendation contracts. For Ritual-first work, energy, audience, carrier when asked, purpose, and refinement should shape eligibility and selection. Timing and source support may shape the recommendation, but should not override explicit user selections without a real safety, source, privacy, or eligibility blocker.
 - The app should avoid deterministic claims.
 - Symbolic meaning should come from reviewed, traceable source grounding and approved Ritual records. Current `SymbolicCard` records remain part of current runtime architecture only.
 - Source-backed does not mean scientifically proven. It means reviewed lineage, ritual technology, material/action logic, symbolic tradition, timing support, or other approved curation basis.
@@ -146,7 +146,7 @@ The legacy current-runtime weekly brief still includes:
 - one optional add-on
 - short `why this` explanation
 
-Keep the default under 20 minutes. Use the four capacity modes: `pause`, `low`, `steady`, and `high`. For `low`, keep recommendations to 0-5 minutes. For `pause`, offer no required ritual.
+Keep the legacy current-runtime default under 20 minutes. For legacy current-runtime `WeeklyBrief` work, preserve existing runtime capacity behavior unless an issue explicitly changes it. Future Ritual-first work should follow the energy model in `docs/product/app-flow-decisions.md`.
 
 ## Documentation and tests
 

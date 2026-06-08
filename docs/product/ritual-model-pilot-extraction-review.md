@@ -358,7 +358,7 @@ For repo-documented sources, this document uses source notes and close paraphras
 | carriers.secondary | words, vessel |
 | capacity.supports | room_for_something_deeper |
 | audience.supports | me, both_of_us |
-| timing.relationship | required_or_preferred |
+| timing.relationship | required |
 | availability | findable: review only; directUseEligible: no; recommendationEligible: no |
 | readiness / review note | Model stress test only. Do not make first typed record. |
 
@@ -472,3 +472,85 @@ These candidates come from Gemini’s second-opinion source scout. They are prom
 - Human review must verify source locations and approve ritual presentation fields before anything enters the repo.
 
 - Codex should implement types, inert data files, docs, and validation only. It should not invent ritual prose or make source authority decisions.
+
+## Appendix: Compact proposed Ritual type
+
+> Status: Model sketch only. This is not final runtime code and must not be implemented without a separate typed-data issue.
+
+```ts
+type Ritual = {
+  id: string;
+  status: "pilot" | "draft" | "reviewed" | "recommendable";
+
+  origin: {
+    type: "source" | "household";
+    contributedBy?: "Tim" | "Jessica" | "Both";
+    householdContext?: string;
+    sourceRefs?: SourceGrounding[];
+  };
+
+  presentation: {
+    headline: string;
+    practice: string;
+    intention: string;
+    bestWindow: string;
+    whyThisFits: string;
+    questionToCarry: string;
+  };
+
+  recommendationMetadata: {
+    purposes: {
+      primary: RitualPurpose;
+      secondary?: RitualPurpose[];
+      refinement?: string;
+    };
+    carriers: {
+      primary: RitualCarrier;
+      secondary?: RitualCarrier[];
+    };
+    capacity: {
+      supports: CapacityMode[];
+      default?: CapacityMode;
+    };
+    audience: {
+      supports: AudienceMode[];
+      default?: AudienceMode;
+      bothOfUsStructure?: string;
+    };
+    timing: {
+      relationship: "required" | "preferred" | "helpful" | "none";
+      contexts?: string[];
+    };
+    eligibility: {
+      recommendable: boolean;
+      missing?: string[];
+      notFor?: string[];
+    };
+  };
+
+  searchMetadata: {
+    tags: string[];
+    keywords: string[];
+    materials?: string[];
+    places?: string[];
+    sourceLabel?: string;
+    originLabel?: string;
+  };
+
+  availability: {
+    findable: boolean;
+    directUseEligible: boolean;
+    recommendationEligible: boolean;
+  };
+
+  adaptationPolicy?: {
+    purposeChange: "not_allowed";
+    materialSubstitution?: "none" | "defined_only" | "authored_only";
+    capacityAdaptation?: "not_allowed" | "allowed_if_authored";
+    audienceAdaptation?: "not_allowed" | "allowed_if_authored";
+    timingAdaptation?: "none" | "may_shape_best_window" | "may_shape_why_this_fits";
+  };
+};
+```
+
+Do not create `SourceGrounding`, `RitualPurpose`, `RitualCarrier`, `CapacityMode`, or `AudienceMode` types in code from this appendix. This is documentation only.

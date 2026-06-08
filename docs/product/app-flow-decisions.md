@@ -393,12 +393,13 @@ This document does not settle the future library data model.
 The library architecture remains open, but future architecture should preserve these app-flow decisions unless explicitly changed. Likely future concepts include:
 
 - `Ritual`
-- `RitualPattern`
 - `RitualInstance`
 - favorites
 - feedback
 - intake
 - readiness audit
+
+Current `RitualPattern` records may remain as runtime compatibility, migration evidence, or temporary adapters, but they are not a future canonical library concept.
 
 Those concepts should be designed around this product flow, not used to reopen it by default.
 
