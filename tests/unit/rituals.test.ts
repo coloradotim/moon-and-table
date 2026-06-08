@@ -1,7 +1,16 @@
+import { readFileSync } from "node:fs";
+
 import { describe, expect, it } from "vitest";
 
 import { pilotRituals } from "../../src/data/rituals/pilot-rituals";
-import type { Ritual } from "../../src/data/rituals/types";
+import {
+  RITUAL_AUDIENCES,
+  RITUAL_CAPACITY_MODES,
+  RITUAL_CARRIERS,
+  RITUAL_PURPOSES,
+  RITUAL_TIMING_RELATIONSHIPS,
+  type Ritual,
+} from "../../src/data/rituals/types";
 import {
   validateRitual,
   validateRituals,
@@ -115,6 +124,32 @@ describe("inert Ritual pilot data", () => {
     ).toEqual(expect.arrayContaining(["lamp", "light"]));
   });
 
+  it("uses only valid purpose, carrier, capacity, audience, and timing values", () => {
+    for (const ritual of pilotRituals) {
+      expect(RITUAL_PURPOSES).toContain(
+        ritual.recommendationMetadata.purposes.primary,
+      );
+      expect(RITUAL_CARRIERS).toContain(
+        ritual.recommendationMetadata.carriers.primary,
+      );
+
+      for (const capacity of ritual.recommendationMetadata.capacity.supports) {
+        expect(RITUAL_CAPACITY_MODES).toContain(capacity);
+      }
+
+      for (const audience of ritual.recommendationMetadata.audience.supports) {
+        expect(RITUAL_AUDIENCES).toContain(audience);
+      }
+
+      expect(RITUAL_TIMING_RELATIONSHIPS).toContain(
+        ritual.recommendationMetadata.timing.relationship,
+      );
+      expect(ritual.recommendationMetadata.timing.relationship).not.toBe(
+        "required_or_preferred",
+      );
+    }
+  });
+
   it("keeps source grounding local to the inert Ritual records", () => {
     for (const ritual of pilotRituals) {
       expect(ritual.origin.sourceGrounding.length).toBeGreaterThan(0);
@@ -162,6 +197,16 @@ describe("inert Ritual pilot data", () => {
           ...pilotRituals[0].recommendationMetadata.carriers,
           primary: "room" as Ritual["recommendationMetadata"]["carriers"]["primary"],
         },
+        capacity: {
+          supports: [
+            "low" as Ritual["recommendationMetadata"]["capacity"]["supports"][number],
+          ],
+        },
+        audience: {
+          supports: [
+            "together" as Ritual["recommendationMetadata"]["audience"]["supports"][number],
+          ],
+        },
         timing: {
           relationship:
             "required_or_preferred" as Ritual["recommendationMetadata"]["timing"]["relationship"],
@@ -176,6 +221,12 @@ describe("inert Ritual pilot data", () => {
         }),
         expect.objectContaining({
           path: "recommendationMetadata.carriers.primary",
+        }),
+        expect.objectContaining({
+          path: "recommendationMetadata.capacity.supports.0",
+        }),
+        expect.objectContaining({
+          path: "recommendationMetadata.audience.supports.0",
         }),
         expect.objectContaining({
           path: "recommendationMetadata.timing.relationship",
@@ -228,5 +279,15 @@ describe("inert Ritual pilot data", () => {
         }),
       ]),
     );
+  });
+
+  it("keeps pilot Ritual records out of the current generator", () => {
+    const generatorSource = readFileSync(
+      new URL("../../src/lib/generate-weekly-brief.ts", import.meta.url),
+      "utf8",
+    );
+
+    expect(generatorSource).not.toContain("data/rituals");
+    expect(generatorSource).not.toContain("pilotRituals");
   });
 });
