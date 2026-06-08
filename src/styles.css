@@ -1368,6 +1368,281 @@ h2 {
   box-shadow: 0 22px 58px rgba(79, 64, 42, 0.1);
 }
 
+.ritual-entry-paths {
+  display: grid;
+  max-width: 455px;
+  gap: 10px;
+  padding: 14px 0;
+  border-block: 1px solid rgba(217, 208, 193, 0.72);
+}
+
+.ritual-entry-paths p {
+  margin: 0;
+  color: #52635a;
+  font-size: var(--text-small);
+}
+
+.secondary-path-action {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(159, 174, 166, 0.72);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.58);
+  color: #26312c;
+  cursor: pointer;
+  text-align: left;
+}
+
+.secondary-path-action:hover {
+  border-color: #667b5c;
+  background: rgba(244, 247, 242, 0.92);
+}
+
+.secondary-path-action:focus-visible {
+  outline: 3px solid rgba(102, 123, 92, 0.34);
+  outline-offset: 2px;
+}
+
+.secondary-path-action span {
+  font-weight: 700;
+}
+
+.secondary-path-action small {
+  color: #52635a;
+  font-size: var(--text-small);
+  line-height: 1.35;
+}
+
+.ritual-search {
+  display: grid;
+  gap: 26px;
+  padding: clamp(24px, 4.5vw, 42px);
+  border: 1px solid rgba(200, 190, 173, 0.58);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.93);
+  box-shadow: 0 22px 58px rgba(79, 64, 42, 0.1);
+}
+
+.ritual-search__header {
+  display: grid;
+  max-width: 720px;
+  gap: 8px;
+}
+
+.ritual-search__header h2 {
+  font-size: clamp(2.2rem, 4.8vw, 3.4rem);
+}
+
+.ritual-search__header p:last-child {
+  margin: 0;
+  color: #435349;
+  font-size: var(--text-body);
+}
+
+.ritual-search__controls {
+  display: grid;
+  gap: 14px;
+}
+
+.ritual-search__field {
+  display: grid;
+  max-width: 620px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: end;
+}
+
+.ritual-search__field label {
+  display: grid;
+  gap: 6px;
+  color: #52635a;
+  font-size: var(--text-label);
+  font-weight: 700;
+}
+
+.ritual-search__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ritual-search-chip {
+  min-height: 32px;
+  padding: 0 10px;
+  border: 1px solid rgba(159, 174, 166, 0.72);
+  border-radius: 999px;
+  background: rgba(255, 253, 247, 0.72);
+  color: #26312c;
+  cursor: pointer;
+  font-size: var(--text-small);
+}
+
+.ritual-search-chip:hover,
+.ritual-search-chip--selected {
+  border-color: #667b5c;
+  background: #e8f0e3;
+}
+
+.ritual-search-chip:focus-visible {
+  outline: 3px solid rgba(102, 123, 92, 0.34);
+  outline-offset: 2px;
+}
+
+.ritual-search__body {
+  display: grid;
+  grid-template-columns: minmax(230px, 340px) minmax(0, 1fr);
+  gap: clamp(18px, 4vw, 32px);
+  align-items: start;
+}
+
+.ritual-search__results {
+  display: grid;
+  gap: 10px;
+}
+
+.ritual-search__count {
+  margin: 0;
+  color: #66736a;
+  font-size: var(--text-small);
+  font-weight: 700;
+}
+
+.ritual-result-card {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  padding: 14px;
+  border: 1px solid rgba(200, 190, 173, 0.78);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.72);
+  color: #26312c;
+  cursor: pointer;
+  text-align: left;
+}
+
+.ritual-result-card:hover,
+.ritual-result-card--selected {
+  border-color: #667b5c;
+  background: rgba(244, 247, 242, 0.96);
+}
+
+.ritual-result-card:focus-visible {
+  outline: 3px solid rgba(102, 123, 92, 0.34);
+  outline-offset: 2px;
+}
+
+.ritual-result-card strong {
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.ritual-result-card span:not(.ritual-result-card__badge) {
+  color: #435349;
+  font-size: var(--text-small);
+  line-height: 1.42;
+}
+
+.ritual-result-card small,
+.ritual-result-card__badge,
+.ritual-preview__badge {
+  color: #66736a;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.ritual-search__preview {
+  min-width: 0;
+}
+
+.ritual-preview {
+  display: grid;
+  gap: 18px;
+}
+
+.ritual-preview__header {
+  display: grid;
+  gap: 8px;
+}
+
+.ritual-preview__header h2 {
+  max-width: 680px;
+  font-size: clamp(2rem, 4.4vw, 3.1rem);
+}
+
+.ritual-preview__badge {
+  margin: 0;
+}
+
+.ritual-preview__intention {
+  max-width: 640px;
+  margin: 0;
+  color: #435349;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: var(--text-intention);
+  font-style: italic;
+  line-height: 1.38;
+}
+
+.ritual-preview__section {
+  display: grid;
+  max-width: 720px;
+  gap: 5px;
+}
+
+.ritual-preview__section p:last-child {
+  margin: 0;
+  color: #435349;
+  font-size: var(--text-body);
+  line-height: 1.64;
+}
+
+.ritual-readiness-details {
+  max-width: 720px;
+  padding-top: 4px;
+}
+
+.ritual-readiness-details summary {
+  width: fit-content;
+  color: #53645a;
+  cursor: pointer;
+  font-size: var(--text-label);
+  font-weight: 700;
+}
+
+.ritual-readiness-details dl {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 0;
+}
+
+.ritual-readiness-details div {
+  display: grid;
+  grid-template-columns: minmax(130px, 180px) minmax(0, 1fr);
+  gap: 10px;
+}
+
+.ritual-readiness-details dt,
+.ritual-readiness-details dd {
+  margin: 0;
+  color: #58675f;
+  font-size: var(--text-small);
+  line-height: 1.42;
+}
+
+.ritual-readiness-details dt {
+  color: #26312c;
+  font-weight: 700;
+}
+
+.ritual-search__empty {
+  margin: 0;
+  color: #58675f;
+  font-size: var(--text-small);
+}
+
 .how-it-works {
   display: grid;
   gap: 28px;
@@ -1882,6 +2157,23 @@ fieldset {
 
   .how-it-works {
     padding: 24px;
+  }
+
+  .ritual-search {
+    padding: 24px;
+  }
+
+  .ritual-search__field {
+    grid-template-columns: 1fr;
+  }
+
+  .ritual-search__body {
+    grid-template-columns: 1fr;
+  }
+
+  .ritual-readiness-details div {
+    grid-template-columns: 1fr;
+    gap: 2px;
   }
 
   .feedback button,

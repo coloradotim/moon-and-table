@@ -77,6 +77,9 @@ let activeCheckInDraft: RitualCheckInDraft = createInitialRitualCheckInDraft();
 let activeCurrentRitualCheckIn: CurrentRitualCheckIn | null = null;
 let activeFirstLoginCheckIn = false;
 let checkInLoadingTimeout: number | null = null;
+let activeRitualSearchQuery = "";
+let activeRitualSearchChips: string[] = [];
+let activeSelectedRitualId: string | null = null;
 const showDebugTrace = new URLSearchParams(window.location.search).get("debug") === "true";
 
 function getRequestedSignedInView(): SignedInView | null {
@@ -90,6 +93,10 @@ function getRequestedSignedInView(): SignedInView | null {
 
   if (requested === "how" || requested === "how_it_works") {
     return "how_it_works";
+  }
+
+  if (requested === "search" || requested === "search_rituals") {
+    return "search_rituals";
   }
 
   if (requested === "this_week") {
@@ -193,6 +200,9 @@ function renderActiveSignedInShell(options: {
     savingFeedbackType: options.savingFeedbackType,
     showDebugTrace,
     activeProfileSettingsTabId,
+    ritualSearchQuery: activeRitualSearchQuery,
+    selectedRitualSearchChips: activeRitualSearchChips,
+    selectedRitualId: activeSelectedRitualId,
   });
 }
 
@@ -222,6 +232,9 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
           activeBrief = null;
           activeSignedInView = "this_week";
           activeProfileSettingsTabId = null;
+          activeRitualSearchQuery = "";
+          activeRitualSearchChips = [];
+          activeSelectedRitualId = null;
           activeFirstLoginCheckIn = false;
           appRoot.innerHTML = renderAppShell({
             status: "unauthorized",
@@ -232,6 +245,9 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
 
         activePrivateBriefData = privateBriefData;
         activeProfileSettingsTabId = null;
+        activeRitualSearchQuery = "";
+        activeRitualSearchChips = [];
+        activeSelectedRitualId = null;
         activeBrief = null;
         activeCurrentRitualCheckIn = null;
         activeFirstLoginCheckIn = false;
@@ -246,6 +262,9 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activeBrief = null;
         activeSignedInView = "this_week";
         activeProfileSettingsTabId = null;
+        activeRitualSearchQuery = "";
+        activeRitualSearchChips = [];
+        activeSelectedRitualId = null;
         activeCurrentRitualCheckIn = null;
         activeFirstLoginCheckIn = false;
         activeCheckInDraft = createInitialRitualCheckInDraft();
@@ -715,6 +734,23 @@ function startCheckInOver(): void {
   renderActiveCheckInShell();
 }
 
+function renderSearchRituals(): void {
+  activeSignedInView = "search_rituals";
+  activeProfileSettingsTabId = null;
+
+  if (activePrivateBriefData && activeBrief) {
+    renderActiveSignedInShell();
+  }
+}
+
+function toggleRitualSearchChip(chip: string): void {
+  activeRitualSearchChips = activeRitualSearchChips.includes(chip)
+    ? activeRitualSearchChips.filter((activeChip) => activeChip !== chip)
+    : [...activeRitualSearchChips, chip];
+  activeSelectedRitualId = null;
+  renderSearchRituals();
+}
+
 render({ status: "loading" });
 
 appRoot.addEventListener("click", (event) => {
@@ -747,9 +783,20 @@ appRoot.addEventListener("click", (event) => {
   const checkInActionTarget = target.closest<HTMLElement>("[data-check-in-action]");
   const checkInAction = checkInActionTarget?.dataset.checkInAction;
   const checkInValue = checkInActionTarget?.dataset.checkInValue;
+  const ritualSearchChipTarget = target.closest<HTMLElement>(
+    "[data-ritual-search-chip]",
+  );
+  const ritualSearchChip = ritualSearchChipTarget?.dataset.ritualSearchChip;
+  const ritualSelectTarget = target.closest<HTMLElement>("[data-ritual-select]");
+  const ritualSelect = ritualSelectTarget?.dataset.ritualSelect;
 
   if (target.closest("[data-private-welcome-action='dismiss']")) {
     void handlePrivateWelcomeDismiss();
+    return;
+  }
+
+  if (target.closest("[data-search-rituals-entry='true']")) {
+    renderSearchRituals();
     return;
   }
 
@@ -776,6 +823,7 @@ appRoot.addEventListener("click", (event) => {
 
   if (
     menuAction === "this_week" ||
+    menuAction === "search_rituals" ||
     menuAction === "profile_settings" ||
     menuAction === "how_it_works"
   ) {
@@ -789,6 +837,19 @@ appRoot.addEventListener("click", (event) => {
       renderActiveSignedInShell();
     }
 
+    return;
+  }
+
+  if (ritualSearchChip) {
+    event.preventDefault();
+    toggleRitualSearchChip(ritualSearchChip);
+    return;
+  }
+
+  if (ritualSelect) {
+    event.preventDefault();
+    activeSelectedRitualId = ritualSelect;
+    renderSearchRituals();
     return;
   }
 
@@ -867,6 +928,9 @@ subscribeToAuthState(firebaseServices, (state) => {
   activeBrief = null;
   activeSignedInView = "this_week";
   activeProfileSettingsTabId = null;
+  activeRitualSearchQuery = "";
+  activeRitualSearchChips = [];
+  activeSelectedRitualId = null;
   activeCurrentRitualCheckIn = null;
   activeCheckInDraft = createInitialRitualCheckInDraft();
   clearCheckInLoadingTimeout();
@@ -889,5 +953,13 @@ appRoot.addEventListener("submit", (event) => {
   if (target.matches("[data-check-in-text-form='true']")) {
     event.preventDefault();
     handleCheckInTextSubmit(target);
+  }
+
+  if (target.matches("[data-ritual-search-form='true']")) {
+    event.preventDefault();
+    const formData = new FormData(target);
+    activeRitualSearchQuery = String(formData.get("ritualSearchQuery") ?? "");
+    activeSelectedRitualId = null;
+    renderSearchRituals();
   }
 });

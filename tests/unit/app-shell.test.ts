@@ -6,15 +6,18 @@ import {
   renderLoadingShell,
   renderPrivateDataLoadingShell,
   renderPrivateFirstLoginWelcomeShell,
+  renderRitualPreview,
   renderRitualCheckInLoadingShell,
   renderProfileTuningSection,
   renderRitualCheckInShell,
+  renderSearchRitualsSection,
   renderSignedInShell,
   renderSignedOutShell,
   renderUnauthorizedShell,
 } from "../../src/ui/app-shell";
 import { resolvePrivateBriefData } from "../../src/lib/private-data";
 import { generateWeeklyBrief } from "../../src/lib/generate-weekly-brief";
+import { pilotRituals } from "../../src/data/rituals/pilot-rituals";
 
 describe("app shell rendering", () => {
   it("aligns entry/loading and check-in headlines while keeping check-in top-anchored", () => {
@@ -47,6 +50,9 @@ describe("app shell rendering", () => {
     expect(html).toContain(
       "Welcome back, Morgan.",
     );
+    expect(html).toContain("Choose with me");
+    expect(html).toContain("I have something in mind");
+    expect(html).toContain('data-search-rituals-entry="true"');
     expect(html).toContain("Today’s shape");
     expect(html).toContain("Are you wanting something for today, or looking across the week?");
     expect(html).toContain("For today");
@@ -407,6 +413,9 @@ describe("app shell rendering", () => {
     const feedbackIndex = html.indexOf("Give feedback");
     const actionsIndex = html.indexOf('class="brief__actions"');
     const menuThisWeekIndex = html.indexOf('data-menu-action="this_week"');
+    const menuSearchRitualsIndex = html.indexOf(
+      'data-menu-action="search_rituals"',
+    );
     const menuHowItWorksIndex = html.indexOf('data-menu-action="how_it_works"');
     const menuProfileIndex = html.indexOf('data-menu-action="profile_settings"');
     const menuSignOutIndex = html.indexOf('data-auth-action="sign-out"');
@@ -435,6 +444,7 @@ describe("app shell rendering", () => {
     expect(checkInAgainIndex).toBeGreaterThan(tryAgainIndex);
     expect(feedbackIndex).toBeGreaterThan(checkInAgainIndex);
     expect(html).toContain("Current ritual");
+    expect(html).toContain("Search rituals");
     expect(html).toContain("Profile settings");
     expect(html).toContain("How it works");
     expect(html).toContain("Sign out");
@@ -458,9 +468,11 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("ellipsis");
     expect(html).not.toContain("•••");
     expect(html).toContain('data-menu-action="this_week"');
+    expect(html).toContain('data-menu-action="search_rituals"');
     expect(html).toContain('data-menu-action="profile_settings"');
     expect(html).toContain('data-menu-action="how_it_works"');
-    expect(menuThisWeekIndex).toBeLessThan(menuHowItWorksIndex);
+    expect(menuThisWeekIndex).toBeLessThan(menuSearchRitualsIndex);
+    expect(menuSearchRitualsIndex).toBeLessThan(menuHowItWorksIndex);
     expect(menuHowItWorksIndex).toBeLessThan(menuProfileIndex);
     expect(menuProfileIndex).toBeLessThan(menuSignOutIndex);
     expect(html).toContain("data-testid=\"recommended-ritual\"");
@@ -638,6 +650,71 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("person_a@example.com");
     expect(html).not.toContain("service-account");
     expect(html).not.toContain("firebase config");
+  });
+
+  it("renders the Search rituals view as cards with a read-only preview", () => {
+    const html = renderSignedInShell(resolvePrivateBriefData({}), {
+      activeView: "search_rituals",
+    });
+
+    expect(html).toContain('data-menu-action="search_rituals"');
+    expect(html).toContain('aria-pressed="true">Search rituals</button>');
+    expect(html).toContain("I have something in mind.");
+    expect(html).toContain("Search by material, mood, purpose, place, or phrase.");
+    expect(html).toContain('data-ritual-search-form="true"');
+    expect(html).toContain('type="search"');
+    expect(html).toContain('data-ritual-search-chip="plant"');
+    expect(html).toContain('data-ritual-search-chip="table"');
+    expect(html).toContain('data-ritual-search-chip="opening"');
+    expect(html).toContain('data-ritual-search-chip="bread"');
+    expect(html).toContain('data-ritual-select="ritual.wet_the_seed_and_wait"');
+    expect(html).toContain('data-ritual-select="ritual.set_grain_at_the_table"');
+    expect(html).toContain(
+      'data-ritual-select="ritual.kindle_the_first_household_light"',
+    );
+    expect(html).toContain("Wet the seed and wait.");
+    expect(html).toContain("Set grain at the table.");
+    expect(html).toContain("Kindle the first household light.");
+    expect(html).toContain("Pilot · Preview only");
+    expect(html).toContain("Recommendation eligible");
+    expect(html).toContain("pilot_review");
+    expect(html).toContain("Readiness and source details");
+    expect(html).not.toContain("<table");
+    expect(html).not.toContain("Ritual library");
+    expect(html).not.toContain("Manage rituals");
+    expect(html).not.toContain('data-testid="recommended-ritual"');
+  });
+
+  it("filters the Search rituals view by query and chips", () => {
+    const seedHtml = renderSearchRitualsSection({ query: "seed" });
+    const tableHtml = renderSearchRitualsSection({
+      selectedChips: ["table"],
+    });
+    const emptyHtml = renderSearchRitualsSection({
+      query: "beginning",
+      selectedChips: ["table"],
+    });
+
+    expect(seedHtml).toContain("Wet the seed and wait.");
+    expect(seedHtml).not.toContain("Set grain at the table.");
+    expect(tableHtml).toContain("Set grain at the table.");
+    expect(tableHtml).not.toContain("Wet the seed and wait.");
+    expect(emptyHtml).toContain("No rituals matched that search.");
+  });
+
+  it("renders the shared Ritual preview from presentation fields", () => {
+    const html = renderRitualPreview(pilotRituals[1]);
+
+    expect(html).toContain("Set grain at the table.");
+    expect(html).toContain("Let ordinary nourishment have one clear place at the center.");
+    expect(html).toContain("Place one small piece of bread at the center of the table.");
+    expect(html).toContain("Best window");
+    expect(html).toContain("Why this fits");
+    expect(html).toContain("Question to carry");
+    expect(html).toContain("What ordinary thing is holding more than you noticed?");
+    expect(html).toContain("Recommendation eligible");
+    expect(html).toContain("<dd>no</dd>");
+    expect(html).not.toContain("data-testid=\"recommended-ritual\"");
   });
 
   it("renders the one-time private welcome without onboarding links", () => {
