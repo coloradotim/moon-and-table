@@ -443,7 +443,8 @@ describe("app shell rendering", () => {
     expect(html).toContain("moon-phase-tooltip");
     expect(html).toContain("Current phase:");
     expect(html).toContain("Next lunar milestone:");
-    expect(html).toContain("Last quarter moon on");
+    expect(html).toContain("Last quarter moon");
+    expect(html).toContain("New moon on");
     expect(html).toContain('class="masthead__home"');
     expect(html).toContain('data-home-action="this_week"');
     expect(html).toContain('aria-label="Show this week\'s brief"');
