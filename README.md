@@ -29,16 +29,16 @@ Real personalization belongs only in Firebase/Firestore for the hosted app, priv
 * One recommendation is better than ten options.
 * Rituals should feel like support, not homework.
 * The app should not free-associate from the internet.
-* Symbolic meaning should come from a curated library.
+* Symbolic meaning should come from reviewed source grounding and approved Ritual records; legacy symbolic-card data remains current-runtime support only.
 * Astronomy and calendar timing should be computed or sourced reliably.
 * Personalization should be gentle, practical, and clearly grounded.
 * Schedule and capacity matter as much as symbolic timing.
 * The app should avoid deterministic claims.
 * The tone should be warm, plainspoken, domestic, and useful.
 
-## MVP focus
+## Current Runtime
 
-The first useful version should generate a weekly brief with:
+The current app still renders a generated weekly brief with:
 
 * one theme for the week
 * one best ritual window
@@ -48,6 +48,16 @@ The first useful version should generate a weekly brief with:
 * a short “why this” explanation
 
 Default ritual time should be under 20 minutes.
+
+## Target Ritual-First Direction
+
+Future product work is controlled by:
+
+* `docs/product/moon-and-table-current-direction.md`
+* `docs/product/app-flow-decisions.md`
+* `docs/product/codex-ritual-work-rules.md`
+
+The target direction is a private, source/context-backed Ritual library where the app chooses one whole authored Ritual and gives it bounded moment-specific shape.
 
 ## Private personalization notes
 

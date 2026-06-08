@@ -89,7 +89,7 @@ Before opening a PR that can affect recommendation output, check:
 - generic filler: no repeated filler closings or vague wellness language standing in for meaning
 - optional candle misuse: no generic `light a candle` add-on when the ritual is already candle/light-based or when the accent is not contextual
 - timing/focus contradictions: selected focus is bridged, not vetoed or contradicted by raw timing fallback
-- recommendation contract: selected category, focus, audience, capacity, and time scope are preserved unless a real blocker is recorded in diagnostics; timing, numerology, natal themes, and source strength shape the selected path instead of replacing it
+- recommendation contract: explicit Ritual-first check-in answers are preserved; energy, audience, carrier when asked, purpose, and refinement shape eligibility and selection unless a real safety, source, privacy, or eligibility blocker is recorded in diagnostics; timing, numerology, natal themes, and source strength may shape the selected path instead of replacing it
 - house voice: no user-facing tone selector, writing-style picker, or prompt-style mixer is introduced without a deliberate product decision
 - metaphysical integrity: magical practice is treated as meaningful on its own terms, without flattening it into wellness metaphor, decorative prop, or safety disclaimer
 - privacy/source boundaries: no private data, raw trace keys, or source-compliance machinery leaks into user-facing copy
