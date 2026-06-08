@@ -1,5 +1,13 @@
 # Ritual Pattern Purpose Migration Audit
 
+> Status: Current supporting artifact / migration evidence.
+> This audit may help identify migration risks and failure modes. Existing
+> `RitualPattern` records must not be automatically migrated into future
+> `Ritual` records.
+> For current direction, see `docs/product/moon-and-table-current-direction.md`.
+> Terminology note: this pre-reset audit uses `LibraryRitual` for a possible
+> future model. The current canonical future object name is `Ritual`.
+
 ## 1. Executive summary
 
 This audit covers 57 currently approved recommendation-relevant `RitualPattern` records returned by `getApprovedRitualPatterns()` in `src/data/ritual-patterns.ts`. It includes all 32 Batch 1 rebuilt patterns listed in `batchOneRebuiltPatternKeys` in `src/data/batch-1-ritual-library.ts` and the older approved starter patterns that remain eligible after the demotion filter.

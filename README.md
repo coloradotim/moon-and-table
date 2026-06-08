@@ -8,6 +8,8 @@ The goal is not prediction or mystical certainty. The goal is to surface meaning
 
 ## Core product idea
 
+Current product direction is controlled by `docs/product/moon-and-table-current-direction.md`, `docs/product/app-flow-decisions.md`, and `docs/product/codex-ritual-work-rules.md`.
+
 Moon & Table answers:
 
 > What is symbolically meaningful this week, why might it matter, and what is one simple thing we could do with it?
@@ -27,16 +29,16 @@ Real personalization belongs only in Firebase/Firestore for the hosted app, priv
 * One recommendation is better than ten options.
 * Rituals should feel like support, not homework.
 * The app should not free-associate from the internet.
-* Symbolic meaning should come from a curated library.
+* Symbolic meaning should come from reviewed source grounding and approved Ritual records; legacy symbolic-card data remains current-runtime support only.
 * Astronomy and calendar timing should be computed or sourced reliably.
 * Personalization should be gentle, practical, and clearly grounded.
 * Schedule and capacity matter as much as symbolic timing.
 * The app should avoid deterministic claims.
 * The tone should be warm, plainspoken, domestic, and useful.
 
-## MVP focus
+## Current Runtime
 
-The first useful version should generate a weekly brief with:
+The current app still renders a generated weekly brief with:
 
 * one theme for the week
 * one best ritual window
@@ -46,6 +48,16 @@ The first useful version should generate a weekly brief with:
 * a short “why this” explanation
 
 Default ritual time should be under 20 minutes.
+
+## Target Ritual-First Direction
+
+Future product work is controlled by:
+
+* `docs/product/moon-and-table-current-direction.md`
+* `docs/product/app-flow-decisions.md`
+* `docs/product/codex-ritual-work-rules.md`
+
+The target direction is a private, source/context-backed Ritual library where the app chooses one whole authored Ritual and gives it bounded moment-specific shape.
 
 ## Private personalization notes
 
@@ -70,4 +82,4 @@ See `docs/firebase-setup.md` for the placeholder-only Firebase project setup pat
 
 See `docs/deployment.md` for Vercel deployment, Firebase Auth authorized-domain setup, hosted env vars, and private-data verification.
 
-See `docs/architecture.md` and `docs/data-model.md` for the current app architecture, deployment model, private-data boundary, and data/content model.
+See `docs/product/README.md` for the current product-doc index. Older architecture and content-planning docs have been archived under `docs/archive/` and are historical unless a future issue explicitly revives them.

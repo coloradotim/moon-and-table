@@ -1,5 +1,10 @@
 # Moon & Table App Flow Decisions
 
+> Status: Current / controlling.
+> This is the controlling app-flow document for future Ritual, library, intake,
+> search, direct-selection, recommendation, feedback, favorites, and history work.
+> Preserve these decisions unless a later explicit product decision supersedes them.
+
 ## 1. Purpose of this document
 
 This document records settled user-facing app-flow decisions for Moon & Table. It should constrain future architecture, design, and implementation work unless it is superseded by a later explicit product decision.
@@ -387,13 +392,14 @@ This document does not settle the future library data model.
 
 The library architecture remains open, but future architecture should preserve these app-flow decisions unless explicitly changed. Likely future concepts include:
 
-- `LibraryRitual`
-- `RitualPattern`
+- `Ritual`
 - `RitualInstance`
 - favorites
 - feedback
 - intake
 - readiness audit
+
+Current `RitualPattern` records may remain as runtime compatibility, migration evidence, or temporary adapters, but they are not a future canonical library concept.
 
 Those concepts should be designed around this product flow, not used to reopen it by default.
 
