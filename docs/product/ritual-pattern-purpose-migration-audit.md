@@ -8,7 +8,8 @@ Main finding: most rebuilt Batch 1 patterns now contain enough authored presenta
 
 Recommended migration shape:
 
-- Strong single `LibraryRitual` candidates: `banked_light_evening`, `bank_the_house_light`, `first_light_beginning`, `renewed_light_return`, `last_household_light`, `salt_clear_water_release`, `seed_waiting`, `dead_leaf_release`, `dormant_green_rest`, `grain_bowl_beginning`, `waning_phrase_release`, `waning_light_release`, `carried_key_word`, `seasonal_entry_bowl`, `clear_the_threshold_bowl`, `last_word_first_word`, plus several bounded starter patterns after metadata hardening.
+- Strong single `LibraryRitual` candidates: `banked_light_evening`, `bank_the_house_light`, `first_light_beginning`, `renewed_light_return`, `last_household_light`, `salt_clear_water_release`, `seed_waiting`, `dead_leaf_release`, `dormant_green_rest`, `grain_bowl_beginning`, `waning_phrase_release`, `waning_light_release`, `carried_key_word`, `seasonal_entry_bowl`, `clear_the_threshold_bowl`, and `last_word_first_word`.
+- Practical starter actions are not direct library migrations. Patterns such as `clear_one_surface`, `table_reset`, `kitchen_reset`, `tea_ritual`, `bed_blanket_rest_cue`, and `morning_light_pause` can be ritualized, but the current records do not yet have enough intrinsic purpose, authored ritual shape, carrier/timing context, and recommendation metadata to become canonical grimoire entries without re-authoring.
 - Likely split candidates: `first_light_at_the_threshold`, `full_light_on_the_table`, `full_light_holding_bowl`, `plant_witness_to_growth`, `warm_cup_between_us`, `quiet_welcome`, `bread_at_the_center`, `folded_phrase_vessel`, `seasonal_marker_bowl`, `threshold_bowl`, `two_words_at_the_table`, `window_light_threshold`.
 - Engine-only adapters or legacy mechanics: approved cue patterns without authored presentation such as `bread_enoughness_cue`, `oats_steady_care_cue`, `apple_fresh_choice_cue`, `lemon_freshness_cue`, `rosemary_kitchen_memory`, `basil_kitchen_warmth_cue`, `mint_freshness_cue`, `thyme_steady_care_cue`, `lavender_soft_rest_cue`.
 - Needs research/source-purpose hardening before library migration: plant witness/companion work, moon/light vessel placement, home/table/vessel rites, kitchen/welcome/bread, remembering/rosemary, blessing/protecting, and future body/connecting lanes.
@@ -22,7 +23,7 @@ The doctrine should shift from "source first, pattern second" to: source and hou
 - reusable action sequence;
 - recommendation candidate;
 - source lineage carrier;
-- safety and capacity gate;
+- practical constraint and capacity gate;
 - final presentation source;
 - scoring/style metadata bundle.
 
@@ -96,21 +97,21 @@ Current support is indirect. The closest current structures are:
 
 | Pattern key | Current title | Current carrier(s) | Current engine uses | Intrinsic purpose family/families | Purpose basis | Recommended migration shape | Recommendation-ready for library-first engine | Missing work | Notes |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `clear_one_surface` | Clear One Surface | table/body | Home tending, clearing, low/steady reset | steadying, tending, releasing | presentation, household context | single LibraryRitual | restricted | Add explicit carrier/purpose metadata and source lineage label. | Strong practical household rite, but more home-care than grimoire-specific. |
-| `tend_one_plant` | Tend One Plant | plant/body | Plant/home tending | tending, steadying | presentation, household context | single LibraryRitual | restricted | Add intrinsic purpose and plant-safety readiness fields. | Directly purposeful as plant care; less source-ritualized than Batch 1 plant patterns. |
+| `clear_one_surface` | Clear One Surface | table/body | Home tending, clearing, low/steady reset | steadying, tending, releasing | presentation, household context | practical action, not canonical ritual yet | no | Re-author with ritual identity, source/context basis, carrier, timing/context, and recommendation boundaries. | Can be ritualized, but current record is primarily a bounded household action. |
+| `tend_one_plant` | Tend One Plant | plant/body | Plant/home tending | tending, steadying | presentation, household context | candidate after re-authoring | restricted | Add intrinsic purpose, plant constraints, source/context basis, and recommendation boundaries. | Directly purposeful as plant care; not yet source-ritualized enough for direct migration. |
 | `candle_light_focus` | Candle Light Focus | candlelight | Candle/light focus, pause, reflection | steadying, voicing | presentation, composer-inferred | keep as engine-only adapter | restricted | Clarify whether it is witness, focus, or pause. | Useful fallback; too generic for canonical library without purpose hardening. |
-| `table_reset` | Table Reset | table/body | Home/kitchen/table reset, shared surface | tending, steadying, connecting | presentation, household context | single LibraryRitual | restricted | Add source-context purpose and table-specific boundaries. | Good direct ritual if framed as table tending, not generic tidying. |
-| `threshold_reset` | Threshold Reset | doorway/body | Home threshold reset, marking | marking, steadying, tending | presentation, household context | single LibraryRitual | restricted | Add source lineage/purpose beyond practical entry reset. | Works as entry care; weaker as source-backed threshold ritual. |
-| `tea_ritual` | Tea Pause | table/vessel/body | Kitchen warmth/rest/shared pause | steadying, connecting, tending | presentation, household context | single LibraryRitual | restricted | Separate tea-as-rest from tea-as-connection if expanded. | Purpose is fairly clear; source basis is normal-use kitchen safety more than ritual lineage. |
+| `table_reset` | Table Reset | table/body | Home/kitchen/table reset, shared surface | tending, steadying, connecting | presentation, household context | practical action, not canonical ritual yet | no | Re-author as table rite with source/context purpose, ritual body, timing/context, and boundaries. | Current record is useful table care, not yet a grimoire ritual. |
+| `threshold_reset` | Threshold Reset | doorway/body | Home threshold reset, marking | marking, steadying, tending | presentation, household context | candidate after re-authoring | restricted | Add source lineage/purpose beyond practical entry reset. | Works as entry care; weaker as source-backed threshold ritual. |
+| `tea_ritual` | Tea Pause | table/vessel/body | Kitchen warmth/rest/shared pause | steadying, connecting, tending | presentation, household context | candidate after re-authoring | unclear | Decide rest vs connection purpose, then author ritual form and source/context boundaries. | Purpose is plausible but current source basis is ordinary kitchen practice, not ritual identity. |
 | `bread_enoughness_cue` | Bread Enoughness Cue | table/body | Kitchen/grounding cue | steadying, blessing | source, composer-inferred | keep as engine-only adapter | no | Authored presentation and stronger purpose extraction. | Approved but no presentation; better as material cue, not a library ritual. |
 | `oats_steady_care_cue` | Oats Steady Care Cue | table/body | Kitchen steady care cue | steadying, tending | source, composer-inferred | keep as engine-only adapter | no | Authored presentation and purpose hardening. | Ingredient cue, not a complete ritual. |
 | `apple_fresh_choice_cue` | Apple Fresh Choice Cue | table/body | Kitchen freshness/choice cue | opening, steadying | source, composer-inferred | keep as engine-only adapter | no | Authored presentation and source-purpose confidence. | Material correspondence cue only. |
-| `kitchen_reset` | Kitchen Reset | table/body | Kitchen/home clearing | tending, releasing, steadying | presentation, household context | single LibraryRitual | restricted | Keep bounded; clarify ritual purpose beyond cleaning. | Practice-ready but risks task-manager feel. |
-| `bed_blanket_rest_cue` | Bed or Blanket Rest Cue | body | Rest/pause/home tending | steadying | presentation, household context | single LibraryRitual | restricted | Source-purpose hardening for body/rest carrier. | Candidate for future body lane if made more ritual than rest cue. |
+| `kitchen_reset` | Kitchen Reset | table/body | Kitchen/home clearing | tending, releasing, steadying | presentation, household context | practical action, not canonical ritual yet | no | Re-author beyond cleaning; add ritual identity, source/context basis, and boundaries. | Useful MVP household action, but current shape risks task-manager feel. |
+| `bed_blanket_rest_cue` | Bed or Blanket Rest Cue | body | Rest/pause/home tending | steadying | presentation, household context | legacy MVP mechanic | no | Rebuild body/rest carrier doctrine and authored ritual form before migration. | Current record is a rest cue, not a canonical ritual. |
 | `seasonal_table_home_reset` | Seasonal Table or Home Reset | table/doorway/body | Seasonal home/table reset | marking, tending, steadying | presentation, source, household context | split into multiple LibraryRituals | unclear | Split table seasonal reset from threshold/home reset. | Current title signals a menu of carriers. |
-| `morning_light_pause` | Morning Light Pause | candlelight/body | Light pause/reflection | steadying, opening | presentation, composer-inferred | single LibraryRitual | restricted | Source context for morning/first-light purpose. | Usable but may overlap with stronger first-light patterns. |
+| `morning_light_pause` | Morning Light Pause | candlelight/body | Light pause/reflection | steadying, opening | presentation, composer-inferred | adapter until rebuilt | no | Rebuild around intrinsic morning/first-light purpose or replace with stronger first-light library rituals. | Usable engine fallback, but purpose is partly composer-inferred. |
 | `lemon_freshness_cue` | Lemon Freshness Cue | table/body | Kitchen freshness cue | opening, releasing | source, composer-inferred | keep as engine-only adapter | no | Presentation and source-purpose hardening. | Material cue only. |
-| `rosemary_kitchen_memory` | Rosemary Kitchen Memory Cue | table/plant/words | Kitchen memory cue | remembering, voicing | source, composer-inferred | needs research | unclear | Remembering lane, safety, and authored presentation. | Important future lane but not library-ready. |
+| `rosemary_kitchen_memory` | Rosemary Kitchen Memory Cue | table/plant/words | Kitchen memory cue | remembering, voicing | source, composer-inferred | needs research | unclear | Remembering lane, authored purpose, practical constraints, and presentation. | Important future lane but not library-ready. |
 | `basil_kitchen_warmth_cue` | Basil Kitchen Warmth Cue | table/plant/body | Kitchen warmth cue | connecting, blessing | source, composer-inferred | needs research | no | Purpose confidence and presentation. | Do not migrate as-is. |
 | `mint_freshness_cue` | Mint Freshness Cue | table/plant/body | Kitchen freshness cue | opening, steadying | source, composer-inferred | keep as engine-only adapter | no | Presentation and adaptation boundaries. | Material cue only. |
 | `thyme_steady_care_cue` | Thyme Steady Care Cue | table/plant/body | Kitchen steady-care cue | steadying, tending | source, composer-inferred | keep as engine-only adapter | no | Presentation and source-purpose confidence. | Material cue only. |
@@ -129,10 +130,10 @@ Current support is indirect. The closest current structures are:
 | `window_light_threshold` | Window Light Threshold | candlelight/doorway/words | Reflection saying clearly, threshold, high home | voicing, marking, opening | source, presentation, composer-inferred | split into multiple LibraryRituals | restricted | Split window-threshold from saying-clearly witness. | Current quality scenarios show wide use across purposes. |
 | `house_from_root_to_roof` | House from Root to Roof | doorway/table/body | Home tending, house map | tending, steadying, blessing | source, presentation | single LibraryRitual | restricted | Clarify blessing boundary and source confidence. | Strong house-map rite but blessing/protection must be bounded. |
 | `threshold_bowl` | Threshold Bowl | doorway/vessel | Home threshold, grounding, pause | marking, steadying, tending | source, presentation, composer-inferred | split into multiple LibraryRituals | restricted | Split arrival bowl, grounding bowl, and threshold crossing if all remain. | Good mechanics but purpose can be too broad. |
-| `salt_clear_water_release` | Salt and Clear Water Release | vessel/table/body | Home/kitchen clearing | releasing, marking | source, presentation | single LibraryRitual | yes | Keep safety and no-purification boundaries explicit. | Strong release ritual. |
+| `salt_clear_water_release` | Salt and Clear Water Release | vessel/table/body | Home/kitchen clearing | releasing, marking | source, presentation | single LibraryRitual | yes | Keep practical constraints and no-purification boundaries explicit. | Strong release ritual. |
 | `seed_waiting` | Seed Waiting | plant/vessel/table | Plant beginning | opening, steadying | source, presentation | single LibraryRitual | yes | Add purpose metadata. | Strong beginning ritual. |
 | `plant_witness_to_growth` | Plant Witness to Growth | plant/words/body | Plant tending, high capacity, witness | tending, steadying, connecting, remembering | source, presentation, composer-inferred | split into multiple LibraryRituals | restricted | Split witness, growth attention, shared plant, and remembering if needed. | High priority source-purpose hardening lane. |
-| `dead_leaf_release` | Dead Leaf Release | plant/body | Plant clearing/release | releasing, tending | source, presentation | single LibraryRitual | yes | Add safety/readiness metadata. | Strong intrinsic plant release ritual. |
+| `dead_leaf_release` | Dead Leaf Release | plant/body | Plant clearing/release | releasing, tending | source, presentation | single LibraryRitual | yes | Add readiness and plant-constraint metadata. | Strong intrinsic plant release ritual. |
 | `dormant_green_rest` | Dormant Green Rest | plant/body | Plant rest/dormancy | steadying, tending | source, presentation | single LibraryRitual | yes | Add seasonal/dormancy boundaries. | Strong rest/tending ritual. |
 | `grain_bowl_beginning` | Grain Bowl Beginning | table/vessel | Kitchen beginning | opening, steadying, blessing | source, presentation | single LibraryRitual | yes | Clarify blessing/enoughness boundary. | Strong grain/seed beginning ritual. |
 | `warm_cup_between_us` | Warm Cup Between Us | table/vessel/body | Pause, grounding, Kitchen tending us, rest | connecting, steadying, tending | source, presentation, composer-inferred | split into multiple LibraryRituals | restricted | Split shared connection from rest/grounding cup. | Strong but overused across purposes. |
@@ -150,7 +151,7 @@ Current support is indirect. The closest current structures are:
 | `bread_at_the_center` | Bread at the Center | table/body | Grounding, kitchen/home tending, welcome | steadying, tending, blessing, connecting | source, presentation, composer-inferred | split into multiple LibraryRituals | restricted | Split bread-enoughness, table-center welcome, and shared grounding. | Strong material, overloaded purpose. |
 | `first_day_last_day` | First Day / Last Day | doorway/words | Seasonal/calendar threshold | marking, opening, releasing | source, presentation | single LibraryRitual | yes | Clarify first vs last variants as presentation variants or split. | Good threshold ritual if month-turn context remains intrinsic. |
 | `darkening_light` | Darkening Light | candlelight/body | Seasonal/rest/dark close | steadying, marking | source, presentation | single LibraryRitual | yes | Add source lineage label and boundaries. | Strong dark/rest seasonal close. |
-| `plant_phrase_under_the_pot` | Plant Phrase Under the Pot | plant/words/body | Plant saying clearly, placed phrase | voicing, opening, tending | source, presentation | single LibraryRitual | restricted | Harden plant-message purpose and plant safety. | Good candidate after source-purpose hardening. |
+| `plant_phrase_under_the_pot` | Plant Phrase Under the Pot | plant/words/body | Plant saying clearly, placed phrase | voicing, opening, tending | source, presentation | single LibraryRitual | restricted | Harden plant-message purpose and plant constraints. | Good candidate after source-purpose hardening. |
 | `clear_the_threshold_bowl` | Clear the Threshold Bowl | doorway/vessel | Seasonal/Home clearing threshold | releasing, marking, tending | source, presentation | single LibraryRitual | yes | Add carrier/purpose metadata. | Strong empty/return threshold ritual. |
 | `last_word_first_word` | Last Word / First Word | words/doorway/table | Reflection threshold | marking, voicing, opening, releasing | source, presentation | single LibraryRitual | yes | Decide if first/last variants split later. | Clear purpose if first-last threshold remains central. |
 
@@ -158,11 +159,11 @@ Current support is indirect. The closest current structures are:
 
 ### Starter practical/home patterns
 
-- `clear_one_surface`: Current key/title: `clear_one_surface` / Clear One Surface. Carrier is a small surface and body action. Engine uses it for bounded home clearing/tending. Intrinsic purpose is practical steadying and light release. Purpose is explicit in presentation and household context, but not strongly source-ritualized. It should not be used for deep threshold, blessing, protection, remembering, or relational connection. Migration gap: add explicit purpose/carrier/source-context fields.
-- `tend_one_plant`: Carrier is plant care. Engine uses it for Plant/Home tending. Intrinsic purpose is tending and steadying. It should not carry release, remembering, or voicing unless a more specific plant ritual is selected. Library-ready only as a practical care rite with safety fields.
+- `clear_one_surface`: Current key/title: `clear_one_surface` / Clear One Surface. Carrier is a small surface and body action. Engine uses it for bounded home clearing/tending. Intrinsic purpose is practical steadying and light release. Purpose is explicit in presentation and household context, but not strongly source-ritualized. It should not be used for deep threshold, blessing, protection, remembering, or relational connection. Migration gap: re-author as a ritual with identity, source/context basis, carrier, timing/context, and recommendation boundaries. It is not ready for direct library migration.
+- `tend_one_plant`: Carrier is plant care. Engine uses it for Plant/Home tending. Intrinsic purpose is tending and steadying. It should not carry release, remembering, or voicing unless a more specific plant ritual is selected. It is a candidate after re-authoring, not a direct canonical migration.
 - `candle_light_focus`: Carrier is live flame/light. Engine uses it as a generic focus/pause. Intrinsic purpose is unclear between witness, focus, and pause. It should not become the default explanation for voicing, opening, or release. Keep as adapter unless source/purpose hardened.
-- `table_reset`, `kitchen_reset`, `threshold_reset`, `seasonal_table_home_reset`: These are useful bounded household actions, but their current purpose depends heavily on household context. `seasonal_table_home_reset` combines table, home, and threshold and should split before library migration.
-- `tea_ritual`, `bed_blanket_rest_cue`, `morning_light_pause`: These have clearer embodied/rest purposes. They need explicit purpose and source-context capture before becoming canonical library rituals.
+- `table_reset`, `kitchen_reset`, `threshold_reset`, `seasonal_table_home_reset`: These are useful bounded household actions, but their current purpose depends heavily on household context. `table_reset` and `kitchen_reset` should be treated as practical actions, not canonical rituals yet. `threshold_reset` is a candidate after re-authoring because the doorway carrier gives it a clearer ritual direction. `seasonal_table_home_reset` combines table, home, and threshold and should split before library migration.
+- `tea_ritual`, `bed_blanket_rest_cue`, `morning_light_pause`: These can be ritualized, but that is not enough for direct migration. `tea_ritual` needs a chosen intrinsic purpose and authored ritual form. `bed_blanket_rest_cue` is a legacy MVP rest mechanic until the body/rest lane is rebuilt. `morning_light_pause` should remain an adapter until it is rebuilt around a source/context-backed first-light purpose or replaced by stronger first-light patterns.
 
 ### No-presentation material cue patterns
 
@@ -202,16 +203,8 @@ They currently behave like ingredient/material adapters. Their intrinsic purpose
 
 ## 7. Patterns recommended as single LibraryRituals
 
-Recommended direct or near-direct migration, with explicit carrier/purpose fields added:
+Recommended direct or near-direct migration, with explicit carrier/purpose fields added. This list excludes practical starter actions whose current records only show that they can be ritualized:
 
-- `clear_one_surface` as bounded surface steadying/release, restricted to practical home care.
-- `tend_one_plant` as plant tending, restricted by safety.
-- `table_reset` as table tending/steadying.
-- `threshold_reset` as doorway steadying/marking after source hardening.
-- `tea_ritual` as warm drink steadying/connection.
-- `kitchen_reset` as kitchen tending/release, if kept ritualized.
-- `bed_blanket_rest_cue` as body/rest steadying after body-lane hardening.
-- `morning_light_pause` as light steadying/opening after first-light hardening.
 - `hearth_object_return`
 - `last_household_light`
 - `banked_light_evening`
@@ -238,6 +231,8 @@ Recommended direct or near-direct migration, with explicit carrier/purpose field
 - `clear_the_threshold_bowl`
 - `last_word_first_word`
 
+Practical starter patterns such as `clear_one_surface`, `tend_one_plant`, `table_reset`, `threshold_reset`, `tea_ritual`, `kitchen_reset`, `bed_blanket_rest_cue`, and `morning_light_pause` should move through re-authoring, adapter, or demotion decisions before they are considered for this list.
+
 ## 8. Patterns recommended for splitting
 
 High-priority split candidates:
@@ -261,6 +256,7 @@ High-priority split candidates:
 Keep as adapters until rewritten as complete rituals:
 
 - `candle_light_focus`
+- `morning_light_pause`
 - `bread_enoughness_cue`
 - `oats_steady_care_cue`
 - `apple_fresh_choice_cue`
@@ -269,6 +265,19 @@ Keep as adapters until rewritten as complete rituals:
 - `mint_freshness_cue`
 - `thyme_steady_care_cue`
 - `lavender_soft_rest_cue`
+
+Practical starter actions that should not be treated as canonical library rituals yet:
+
+- `clear_one_surface`
+- `table_reset`
+- `kitchen_reset`
+- `bed_blanket_rest_cue`
+
+Candidates after re-authoring rather than direct migration:
+
+- `tend_one_plant`
+- `threshold_reset`
+- `tea_ritual`
 
 Likely adapter/canonical split:
 
@@ -286,7 +295,7 @@ Source-purpose hardening lanes:
 - Home/table/vessel rites: `threshold_bowl`, `seasonal_marker_bowl`, `clear_the_threshold_bowl`, `table_reset`, and `house_from_root_to_roof` need explicit purpose language so vessel/threshold mechanics do not absorb every home/seasonal need.
 - Kitchen/welcome/table/bread: `quiet_welcome`, `warm_cup_between_us`, `bread_at_the_center`, `honeyed_word`, and material cue patterns need source extraction that names intrinsic purpose, not just material/action lineage.
 - Protection/blessing: Current code has internal focus labels and source guardrails, but no first-class safe blessing/protecting library lane. `house_from_root_to_roof`, `bread_at_the_center`, `grain_bowl_beginning`, and `honeyed_word` should not be allowed to drift into protection/blessing without new boundaries.
-- Remembering/rosemary/evergreen: `rosemary_kitchen_memory` is only a cue. A remembering library ritual needs authored purpose, safety, and source confidence.
+- Remembering/rosemary/evergreen: `rosemary_kitchen_memory` is only a cue. A remembering library ritual needs authored purpose, source confidence, and practical constraint flags.
 - Body/connecting future lane: `bed_blanket_rest_cue`, `warm_cup_between_us`, and shared stillness patterns need body/carrier doctrine before `body` becomes first-class.
 
 ## 11. Generated-language failure analysis
@@ -320,6 +329,7 @@ A future source-backed ritual extraction should capture:
 - intrinsic purpose;
 - purpose refinement;
 - source confidence;
+- practical constraints;
 - adaptation boundaries;
 - what Moon & Table may use;
 - what Moon & Table must not use.
@@ -349,12 +359,14 @@ A future `LibraryRitual` needs fields that make purpose intrinsic:
 - source refs/source-note refs;
 - adaptation boundaries;
 - "must not use for" boundaries;
-- safety flags;
+- safety/practical constraint flags;
 - authored variants;
 - readiness audit result;
 - migration/source status.
 
 `RitualPattern` can remain the engine adapter for now. The library-first engine should eventually select `LibraryRitual`s or library-derived adapters whose purpose matches the check-in before scoring timing and profile fit.
+
+The central readiness frame should be ritual identity: intrinsic purpose, authored ritual body, carrier, timing/context, origin, and recommendation boundaries. Safety is still required where relevant, but it is one readiness field, not the organizing test for whether a practical action has become a ritual.
 
 ## 14. Relationship to WeeklyBrief / future ritual instances
 
