@@ -13,6 +13,7 @@
     "server:open": "scripts/dev.sh open",
     "seed:private": "tsx scripts/seed-private-household.ts",
     "diagnose:content": "tsx scripts/content-reachability.ts",
+    "rituals:readiness": "tsx scripts/ritual-readiness-report.ts",
     "recommendation:quality": "tsx scripts/recommendation-quality-report.ts",
     "recommendation:quality:delta": "tsx scripts/recommendation-quality-delta.ts",
     "recommendation:quality:packet": "tsx scripts/recommendation-quality-review-packet.ts",
