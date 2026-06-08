@@ -62,7 +62,8 @@ export const pilotRituals: Ritual[] = [
         relationship: "helpful",
       },
       eligibility: {
-        recommendable: true,
+        recommendable: false,
+        missing: ["pilot_review"],
       },
     },
     searchMetadata: {
@@ -76,7 +77,7 @@ export const pilotRituals: Ritual[] = [
     availability: {
       findable: true,
       directUseEligible: true,
-      recommendationEligible: true,
+      recommendationEligible: false,
     },
     adaptationPolicy: pilotAdaptationPolicy,
   },
@@ -134,7 +135,8 @@ export const pilotRituals: Ritual[] = [
         relationship: "none",
       },
       eligibility: {
-        recommendable: true,
+        recommendable: false,
+        missing: ["pilot_review"],
       },
     },
     searchMetadata: {
@@ -148,7 +150,7 @@ export const pilotRituals: Ritual[] = [
     availability: {
       findable: true,
       directUseEligible: true,
-      recommendationEligible: true,
+      recommendationEligible: false,
     },
     adaptationPolicy: pilotAdaptationPolicy,
   },
@@ -211,7 +213,8 @@ export const pilotRituals: Ritual[] = [
         relationship: "preferred",
       },
       eligibility: {
-        recommendable: true,
+        recommendable: false,
+        missing: ["pilot_review"],
       },
     },
     searchMetadata: {
@@ -225,7 +228,7 @@ export const pilotRituals: Ritual[] = [
     availability: {
       findable: true,
       directUseEligible: true,
-      recommendationEligible: true,
+      recommendationEligible: false,
     },
     adaptationPolicy: pilotAdaptationPolicy,
   },

@@ -127,7 +127,58 @@ export function validateRitual(ritual: Ritual): RitualValidationResult {
     }
   }
 
-  if (ritual.availability?.recommendationEligible) {
+  if (
+    ritual.status === "pilot" &&
+    ritual.availability?.recommendationEligible === true
+  ) {
+    addFinding(
+      findings,
+      ritualId,
+      "availability.recommendationEligible",
+      "Pilot Rituals must not be recommendation eligible.",
+    );
+  }
+
+  if (
+    ritual.status === "pilot" &&
+    ritual.recommendationMetadata?.eligibility?.recommendable === true
+  ) {
+    addFinding(
+      findings,
+      ritualId,
+      "recommendationMetadata.eligibility.recommendable",
+      "Pilot Rituals must not be recommendable.",
+    );
+  }
+
+  if (
+    ritual.availability?.recommendationEligible === true &&
+    ritual.status !== "recommendable"
+  ) {
+    addFinding(
+      findings,
+      ritualId,
+      "availability.recommendationEligible",
+      "Recommendation-eligible Rituals must have recommendable status.",
+    );
+  }
+
+  if (
+    ritual.recommendationMetadata?.eligibility?.recommendable === true &&
+    ritual.status !== "recommendable"
+  ) {
+    addFinding(
+      findings,
+      ritualId,
+      "recommendationMetadata.eligibility.recommendable",
+      "Recommendable Rituals must have recommendable status.",
+    );
+  }
+
+  if (
+    ritual.availability?.recommendationEligible ||
+    ritual.recommendationMetadata?.eligibility?.recommendable
+  ) {
     if (!ritual.recommendationMetadata) {
       addFinding(
         findings,
@@ -165,6 +216,22 @@ export function validateRitual(ritual: Ritual): RitualValidationResult {
         "Source-origin Rituals require local source grounding.",
       );
     }
+  } else if (ritual.origin?.type === "household") {
+    if (!isNonEmptyString(ritual.origin.householdContext)) {
+      addFinding(
+        findings,
+        ritualId,
+        "origin.householdContext",
+        "Household-origin Rituals require household context.",
+      );
+    }
+  } else {
+    addFinding(
+      findings,
+      ritualId,
+      "origin.type",
+      "Ritual origin type is invalid.",
+    );
   }
 
   return {

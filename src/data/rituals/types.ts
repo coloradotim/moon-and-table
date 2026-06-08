@@ -65,11 +65,18 @@ export type RitualSourceGrounding = {
   doNotImport: string[];
 };
 
-export type RitualOrigin = {
-  type: "source" | "household";
-  householdContext?: string;
+export type SourceRitualOrigin = {
+  type: "source";
   sourceGrounding: RitualSourceGrounding[];
 };
+
+export type HouseholdRitualOrigin = {
+  type: "household";
+  contributedBy?: "Tim" | "Jessica" | "Both";
+  householdContext: string;
+};
+
+export type RitualOrigin = SourceRitualOrigin | HouseholdRitualOrigin;
 
 export type RitualPresentation = {
   headline: string;

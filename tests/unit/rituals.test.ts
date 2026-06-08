@@ -28,6 +28,26 @@ describe("inert Ritual pilot data", () => {
     expect(pilotRituals.every((ritual) => ritual.origin.type === "source")).toBe(
       true,
     );
+    expect(
+      pilotRituals.every((ritual) => ritual.availability.findable === true),
+    ).toBe(true);
+    expect(
+      pilotRituals.every((ritual) => ritual.availability.directUseEligible === true),
+    ).toBe(true);
+    expect(
+      pilotRituals.every(
+        (ritual) => ritual.availability.recommendationEligible === false,
+      ),
+    ).toBe(true);
+    expect(
+      pilotRituals.every(
+        (ritual) =>
+          ritual.recommendationMetadata.eligibility.recommendable === false &&
+          ritual.recommendationMetadata.eligibility.missing?.includes(
+            "pilot_review",
+          ),
+      ),
+    ).toBe(true);
   });
 
   it("keeps reviewed pilot presentation prose unchanged", () => {
@@ -152,6 +172,11 @@ describe("inert Ritual pilot data", () => {
 
   it("keeps source grounding local to the inert Ritual records", () => {
     for (const ritual of pilotRituals) {
+      expect(ritual.origin.type).toBe("source");
+      if (ritual.origin.type !== "source") {
+        throw new Error(`${ritual.id} should be source-origin.`);
+      }
+
       expect(ritual.origin.sourceGrounding.length).toBeGreaterThan(0);
       expect(ritual.origin.sourceGrounding[0]).toEqual(
         expect.objectContaining({
@@ -238,6 +263,11 @@ describe("inert Ritual pilot data", () => {
   it("catches recommendation-eligible records without required metadata", () => {
     const invalid = {
       ...pilotRituals[0],
+      status: "recommendable",
+      availability: {
+        ...pilotRituals[0].availability,
+        recommendationEligible: true,
+      },
       recommendationMetadata: {
         ...pilotRituals[0].recommendationMetadata,
         capacity: {
@@ -258,6 +288,11 @@ describe("inert Ritual pilot data", () => {
   it("catches recommendation-eligible records with missing metadata objects", () => {
     const invalid = {
       ...pilotRituals[0],
+      status: "recommendable",
+      availability: {
+        ...pilotRituals[0].availability,
+        recommendationEligible: true,
+      },
       recommendationMetadata: undefined,
     } as unknown as Ritual;
 
@@ -265,6 +300,141 @@ describe("inert Ritual pilot data", () => {
       expect.arrayContaining([
         expect.objectContaining({
           path: "recommendationMetadata",
+        }),
+      ]),
+    );
+  });
+
+  it("prevents pilot Rituals from self-identifying as recommendation-ready", () => {
+    const recommendationEligiblePilot = {
+      ...pilotRituals[0],
+      availability: {
+        ...pilotRituals[0].availability,
+        recommendationEligible: true,
+      },
+    } satisfies Ritual;
+    const recommendablePilot = {
+      ...pilotRituals[0],
+      recommendationMetadata: {
+        ...pilotRituals[0].recommendationMetadata,
+        eligibility: {
+          recommendable: true,
+        },
+      },
+    } satisfies Ritual;
+
+    expect(validateRitual(recommendationEligiblePilot).findings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: "availability.recommendationEligible",
+        }),
+      ]),
+    );
+    expect(validateRitual(recommendablePilot).findings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: "recommendationMetadata.eligibility.recommendable",
+        }),
+      ]),
+    );
+  });
+
+  it("requires recommendable status for recommendation-eligible records", () => {
+    const recommendationEligibleDraft = {
+      ...pilotRituals[0],
+      status: "reviewed",
+      availability: {
+        ...pilotRituals[0].availability,
+        recommendationEligible: true,
+      },
+    } satisfies Ritual;
+    const recommendableDraft = {
+      ...pilotRituals[0],
+      status: "reviewed",
+      recommendationMetadata: {
+        ...pilotRituals[0].recommendationMetadata,
+        eligibility: {
+          recommendable: true,
+        },
+      },
+    } satisfies Ritual;
+
+    expect(validateRitual(recommendationEligibleDraft).findings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: "availability.recommendationEligible",
+        }),
+      ]),
+    );
+    expect(validateRitual(recommendableDraft).findings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: "recommendationMetadata.eligibility.recommendable",
+        }),
+      ]),
+    );
+  });
+
+  it("validates source and household origins by origin type", () => {
+    const validSource = pilotRituals[0];
+    const invalidSource = {
+      ...pilotRituals[0],
+      origin: {
+        type: "source",
+        sourceGrounding: [],
+      },
+    } satisfies Ritual;
+    const validHousehold = {
+      ...pilotRituals[0],
+      origin: {
+        type: "household",
+        contributedBy: "Both",
+        householdContext: "Household-approved practice for later review.",
+      },
+    } satisfies Ritual;
+    const invalidHousehold = {
+      ...pilotRituals[0],
+      origin: {
+        type: "household",
+        householdContext: "",
+      },
+    } satisfies Ritual;
+    const invalidOrigin = {
+      ...pilotRituals[0],
+      origin: {
+        type: "library",
+      },
+    } as unknown as Ritual;
+
+    expect(validateRitual(validSource).findings).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: "origin.sourceGrounding",
+        }),
+      ]),
+    );
+    expect(validateRitual(invalidSource).findings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: "origin.sourceGrounding",
+        }),
+      ]),
+    );
+    expect(validateRitual(validHousehold)).toEqual({
+      valid: true,
+      findings: [],
+    });
+    expect(validateRitual(invalidHousehold).findings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: "origin.householdContext",
+        }),
+      ]),
+    );
+    expect(validateRitual(invalidOrigin).findings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: "origin.type",
         }),
       ]),
     );
