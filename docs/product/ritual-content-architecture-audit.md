@@ -1,5 +1,12 @@
 # Ritual Content Architecture Audit
 
+> Status: Current supporting artifact / migration evidence.
+> This audit describes the current runtime architecture. It is not target
+> architecture and is not implementation guidance for new Ritual-first work.
+> For current direction, see `docs/product/moon-and-table-current-direction.md`.
+> Terminology note: this pre-reset audit uses `LibraryRitual` for a possible
+> future model. The current canonical future object name is `Ritual`.
+
 ## 1. Executive summary
 
 Moon & Table does not currently have one single persisted `Ritual` object. A user-facing recommendation is assembled from several layers:

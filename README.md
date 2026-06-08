@@ -8,6 +8,8 @@ The goal is not prediction or mystical certainty. The goal is to surface meaning
 
 ## Core product idea
 
+Current product direction is controlled by `docs/product/moon-and-table-current-direction.md`, `docs/product/app-flow-decisions.md`, and `docs/product/codex-ritual-work-rules.md`.
+
 Moon & Table answers:
 
 > What is symbolically meaningful this week, why might it matter, and what is one simple thing we could do with it?
@@ -70,4 +72,4 @@ See `docs/firebase-setup.md` for the placeholder-only Firebase project setup pat
 
 See `docs/deployment.md` for Vercel deployment, Firebase Auth authorized-domain setup, hosted env vars, and private-data verification.
 
-See `docs/architecture.md` and `docs/data-model.md` for the current app architecture, deployment model, private-data boundary, and data/content model.
+See `docs/product/README.md` for the current product-doc index. Older architecture and content-planning docs have been archived under `docs/archive/` and are historical unless a future issue explicitly revives them.

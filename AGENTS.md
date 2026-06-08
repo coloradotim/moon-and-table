@@ -4,6 +4,19 @@
 
 Moon & Table is a private ritual calendar for meaningful timing, simple home magic, and shared life at home.
 
+## Ritual-first reset
+
+Before product, workflow, data-model, UI, source, recommendation, library, intake, or Ritual work, read the controlling current docs:
+
+1. `docs/product/moon-and-table-current-direction.md`
+2. `docs/product/app-flow-decisions.md`
+3. `docs/product/codex-ritual-work-rules.md`
+4. `docs/product/README.md`
+
+Older docs may provide source trail, historical context, failure evidence, or migration evidence, but they are not implementation instructions unless a future issue explicitly revives them.
+
+The future canonical object is `Ritual`: a whole authored practice with intrinsic purpose. Current `RitualPattern`, `SymbolicCard`, composer logic, and generated `WeeklyBrief` output remain current runtime architecture only. They are not the target product architecture and must not be automatically migrated into future Rituals.
+
 The product is best understood as a curated symbolic knowledge system with a calendar interface. The app should produce one grounded, low-overwhelm recommendation at a time, not a content feed or task list.
 
 ## Absolute privacy boundary
@@ -66,7 +79,7 @@ Real personalization belongs only in Firebase/Firestore for the hosted app, priv
 
 ## Recommendation quality bar
 
-Follow `docs/recommendation-quality-model.md` when changing recommendation output, ritual language, explanations, presentation fields, scoring behavior, or content that can appear in a brief.
+Follow the controlling Ritual-first docs above when changing recommendation output, ritual language, explanations, presentation fields, scoring behavior, or content that can appear in a brief. The archived `docs/archive/old-architecture/recommendation-quality-model.md` may provide historical failure evidence, but it is not current implementation guidance.
 
 Moon & Table should feel like a private household grimoire with a recommendation engine underneath. A recommendation should feel authored, specific, and coherent, not mechanically assembled from a title, steps, timing phrase, and generic explanation.
 
@@ -87,11 +100,11 @@ Diagnostics and passing tests are necessary, but they do not prove recommendatio
 
 ## Curation model
 
-Follow `docs/curation-pipeline.md`.
+Follow `docs/product/codex-ritual-work-rules.md` and `docs/product/ritual-source-index.md`.
 
-For new source-backed content batches, use the content packet workflow in `docs/content-packets/README.md`. A content packet is not active recommendation content unless it has been human-reviewed and marked `approved_for_implementation`.
+Archived content packets under `docs/archive/content-packets/` may contain useful source leads, but they are source research and source trail only. They are not active recommendation content or implementation plans.
 
-Source material should move through this lifecycle:
+For legacy runtime maintenance only, source material previously moved through this lifecycle:
 
 1. Source candidate
 2. Source review
@@ -101,27 +114,19 @@ Source material should move through this lifecycle:
 6. Use in brief synthesis
 7. Feedback from actual practice
 
-Only approved symbolic cards should be used in generated briefs.
+Only approved symbolic cards should be used in current generated briefs. That is current runtime architecture, not the target Ritual-first model.
 
-Draft or `ready_for_review` packets may organize source candidates, proposed notes, cards, ritual patterns, presentations, bridges, and quality scenarios. They must not change active generation, scoring, source registry eligibility, or UI behavior. Codex must not treat random web sources, copied source text, or its own interpretations as approved content.
+Archived draft or `ready_for_review` packets may organize source candidates, proposed notes, cards, ritual patterns, presentations, bridges, and quality scenarios. They must not change active generation, scoring, source registry eligibility, or UI behavior. Codex must not treat random web sources, copied source text, or its own interpretations as approved content.
 
 ## Current implementation sequence
 
-Follow `docs/roadmap.md` and the open GitHub issues.
+Follow the controlling Ritual-first docs and the open GitHub issues. Open issues created before the Ritual-first reset may need revision before implementation.
 
-Current first sequence:
-
-1. Create privacy-safe source review packets.
-2. Add privacy-safe symbolic card model and first generic approved cards.
-3. Build first generic brief generator from seed symbolic cards.
-4. Render privacy-safe weekly brief in initial app shell.
-5. Add privacy-safe capacity modes and manual schedule constraints.
-
-Do not jump ahead to calendar integration, AI generation, full astrology engines, public sharing, or a curation workbench unless an issue explicitly requests it.
+Do not jump ahead to calendar integration, AI generation, full astrology engines, public sharing, a curation workbench, or runtime Ritual integration unless an issue explicitly requests it.
 
 ## Brief format
 
-Follow `docs/brief-format.md`.
+Follow `docs/product/moon-and-table-current-direction.md` for the preserved presentation fields. The archived `docs/archive/old-architecture/brief-format.md` describes historical WeeklyBrief format and is not target architecture.
 
 A default weekly brief should include:
 
