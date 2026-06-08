@@ -66,7 +66,7 @@ Real personalization belongs only in Firebase/Firestore for the hosted app, priv
 - Schedule and capacity constraints override symbolic timing.
 - Explicit check-in answers are recommendation contracts. Visible category/practice type, ritual focus, audience, capacity, time scope, and hard avoid/preference constraints may be shaped by timing and source support, but they should not be overridden without a real safety, source, privacy, or eligibility blocker.
 - The app should avoid deterministic claims.
-- Symbolic meaning should come from reviewed, traceable, approved cards.
+- Symbolic meaning should come from reviewed, traceable source grounding and approved Ritual records. Current `SymbolicCard` records remain part of current runtime architecture only.
 - Source-backed does not mean scientifically proven. It means reviewed lineage, ritual technology, material/action logic, symbolic tradition, timing support, or other approved curation basis.
 - Do not reject content only because it is magical or wooey. Bound the claims, preserve the magic.
 - Magical mechanisms such as presence, attention, embodiment, timing, material action, placing, folding, carrying, returning, washing, extinguishing, sweetening, emptying, threshold crossing, vessel holding, and spoken or written words are valid ritual mechanisms for Moon & Table.
@@ -128,7 +128,16 @@ Do not jump ahead to calendar integration, AI generation, full astrology engines
 
 Follow `docs/product/moon-and-table-current-direction.md` for the preserved presentation fields. The archived `docs/archive/old-architecture/brief-format.md` describes historical WeeklyBrief format and is not target architecture.
 
-A default weekly brief should include:
+The current generated `WeeklyBrief` runtime structure is legacy current-runtime architecture. Future Ritual-first work should preserve the presentation fields from `docs/product/moon-and-table-current-direction.md`:
+
+- `headline`
+- `practice`
+- `intention`
+- `best window`
+- `why this fits`
+- `question to carry`
+
+The legacy current-runtime weekly brief still includes:
 
 - theme
 - best ritual window
