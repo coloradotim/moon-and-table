@@ -685,6 +685,29 @@ describe("app shell rendering", () => {
     expect(html).not.toContain('data-testid="recommended-ritual"');
   });
 
+  it("keeps the I have something in mind entry path renderable before a brief exists", () => {
+    const html = renderSignedInShell(resolvePrivateBriefData({}), {
+      activeView: "search_rituals",
+      brief: undefined,
+    });
+    const mainSource = readFileSync(
+      new URL("../../src/main.ts", import.meta.url),
+      "utf8",
+    );
+    const renderSearchRitualsSource =
+      mainSource.match(/function renderSearchRituals\(\): void \{[\s\S]+?\n\}/)?.[0] ??
+      "";
+
+    expect(html).toContain("Search rituals");
+    expect(html).toContain("I have something in mind.");
+    expect(html).toContain("Wet the seed and wait.");
+    expect(html).not.toContain('data-testid="recommended-ritual"');
+    expect(renderSearchRitualsSource).toContain(
+      "if (activePrivateBriefData) {\n    renderActiveSignedInShell();",
+    );
+    expect(renderSearchRitualsSource).not.toContain("activeBrief");
+  });
+
   it("filters the Search rituals view by query and chips", () => {
     const seedHtml = renderSearchRitualsSection({ query: "seed" });
     const tableHtml = renderSearchRitualsSection({

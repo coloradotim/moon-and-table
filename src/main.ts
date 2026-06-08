@@ -187,13 +187,13 @@ function renderActiveSignedInShell(options: {
   selectedFeedbackType?: BriefFeedbackType;
   savingFeedbackType?: BriefFeedbackType;
 } = {}): void {
-  if (!activePrivateBriefData || !activeBrief) {
+  if (!activePrivateBriefData) {
     return;
   }
 
   appRoot.innerHTML = renderSignedInShell(activePrivateBriefData, {
     activeView: activeSignedInView,
-    brief: activeBrief,
+    brief: activeBrief ?? undefined,
     feedbackStatus: options.feedbackStatus,
     tryAgainStatus: options.tryAgainStatus,
     selectedFeedbackType: options.selectedFeedbackType,
@@ -738,7 +738,7 @@ function renderSearchRituals(): void {
   activeSignedInView = "search_rituals";
   activeProfileSettingsTabId = null;
 
-  if (activePrivateBriefData && activeBrief) {
+  if (activePrivateBriefData) {
     renderActiveSignedInShell();
   }
 }

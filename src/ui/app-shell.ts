@@ -1632,9 +1632,13 @@ export function renderSignedInShell(
   options: SignedInShellOptions = {},
 ): string {
   const activeView = options.activeView ?? "this_week";
-  const brief = options.brief ?? generateWeeklyBrief(privateBriefData.input);
-  const debugTrace = options.showDebugTrace ? renderDeveloperDecision(brief) : "";
-  const weeklyBrief = `
+  const weeklyBrief = (() => {
+    const brief = options.brief ?? generateWeeklyBrief(privateBriefData.input);
+    const debugTrace = options.showDebugTrace
+      ? renderDeveloperDecision(brief)
+      : "";
+
+    return `
     <article class="brief" aria-label="Weekly brief">
       <section class="brief__core" aria-label="Weekly practice">
         <h2 class="brief__theme">${renderBriefTheme(brief.theme)}</h2>
@@ -1695,6 +1699,7 @@ export function renderSignedInShell(
       ${debugTrace}
     </article>
   `;
+  });
   const profileSettings = renderProfileTuningSection(
     privateBriefData,
     options.activeProfileSettingsTabId,
@@ -1712,7 +1717,7 @@ export function renderSignedInShell(
         ? searchRituals
       : activeView === "how_it_works"
         ? howItWorks
-      : weeklyBrief;
+      : weeklyBrief();
 
   return `
     <section class="shell" aria-labelledby="app-title">
