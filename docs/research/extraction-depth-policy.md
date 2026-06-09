@@ -49,8 +49,25 @@ An extraction packet is not complete until it includes:
 
 Every extraction packet must include this table:
 
-| Source item | Source pages | Type | Brief source description | Likely carriers | Likely purposes | Exact text importance | Disposition | Reason | Future action |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Source item | Source pages | Source location precision | Type | Research use | Brief source description | Likely carriers | Likely purposes | Exact text importance | Disposition | Reason | Future action |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+
+Allowed source location precision values:
+
+- `exact_page`
+- `page_range`
+- `chapter_range`
+- `needs_tightening`
+
+Allowed research use values:
+
+- `ritual_candidate`
+- `product_followup_pattern`
+- `both`
+- `source_note_only`
+- `context_only`
+- `hold`
+- `reject`
 
 Allowed item types include:
 
@@ -79,6 +96,7 @@ source_items_inventoried:
 candidate_extract_now:
 candidate_extract_later:
 private_excerpt_reference:
+items_with_private_excerpt_recommended:
 source_note_only:
 context_only:
 hold:
@@ -86,6 +104,59 @@ reject:
 remaining_unreviewed_source_sections:
 remaining_extraction_backlog:
 ```
+
+`private_excerpt_reference` counts source items whose main disposition is private excerpt reference.
+
+`items_with_private_excerpt_recommended` counts any inventoried source item or candidate where exact prayers, blessings, spoken cues, prompts, recipes, meditations, charms, spells, or distinctive wording should be reviewed privately by Tim, even if the item’s disposition is also `candidate_extract_now` or `candidate_extract_later`.
+
+## Coverage accounting rule
+
+Only primary carrier/purpose cells count toward coverage satisfaction.
+
+Secondary carriers and purposes may be listed when genuinely source-supported, but they must not be used to claim a coverage cell is solved.
+
+Do not let a rich Ritual candidate make the coverage matrix lie. A source item that touches a doorway, a candle, words, and a vessel may still have only one primary carrier and one primary purpose for recommendation-driving coverage.
+
+## Variant / split ledger
+
+Every extraction packet must include a variant / split ledger when a source item could reasonably support multiple future Ritual variants or product patterns.
+
+Use this format:
+
+```text
+Variant / split candidates:
+- keep together now:
+- split later:
+- reason:
+- trigger for split:
+```
+
+Use the ledger instead of bloating one candidate or silently losing future variants.
+
+Examples include:
+
+- house blessing vs room blessing;
+- threshold wash vs whole-house circuit;
+- kitchen candle vs oil lamp;
+- cauldron vs bowl/jar;
+- spell bottle variants;
+- food awareness vs recipe-specific rituals;
+- grimoire entry as ritual vs product follow-up.
+
+## Ritual candidate vs product follow-up pattern
+
+Some source-backed practices may be Ritual candidates, product follow-up patterns, or both.
+
+Extraction packets must explicitly classify this using:
+
+```text
+researchUse:
+  - ritual_candidate
+  - product_followup_pattern
+  - both
+```
+
+A product follow-up pattern may be useful for Moon & Table without being a runtime Ritual. Do not force it into the Ritual model merely to preserve it.
 
 ## Anti-under-extraction rule
 
@@ -114,6 +185,33 @@ A batch must include:
 Reviewers must check whether the packet under-extracted the source.
 
 If a source contains many rituals but the packet only extracts a small sample without an inventory/backlog, return it for revision.
+
+Reviewers must also check:
+
+- whether primary coverage claims are inflated by secondary support;
+- whether private excerpt recommendations are counted even when the item is also a candidate;
+- whether broad candidates need variant/split tracking;
+- whether rough source locations are marked `needs_tightening` or `chapter_range` rather than treated as exact page support;
+- whether product follow-up patterns have been wrongly forced into Ritual candidate status.
+
+## Runtime / schema normalization wall
+
+Extraction is not runtime integration.
+
+No extraction packet may mark any candidate reviewed, recommendable, findable, direct-use eligible, recommendation eligible, or runtime-ready.
+
+Every extraction candidate must remain research-only until later human review and source verification:
+
+```text
+status: draft
+findable: false
+directUseEligible: false
+recommendationEligible: false
+recommendable: false
+missing: ["human_review", "source_verification"]
+```
+
+Schema normalization belongs in a later issue after human review. Do not use extraction to quietly import research candidates into runtime data.
 
 ## Relationship to private source text policy
 
