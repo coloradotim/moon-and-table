@@ -25,6 +25,8 @@ Do not approve runtime use.
 Do not mark anything `reviewed`, `recommendable`, `findable`, `directUseEligible`, or `recommendationEligible`.
 Do not skip source material just because you already found several strong candidates.
 Do not flatten magical practice into generic wellness mechanics.
+Do not use secondary carrier/purpose support to claim coverage cells are solved.
+Do not force product follow-up patterns into Ritual candidates merely to preserve them.
 
 Words, blessings, prayers, invocations, prompts, meditations, spells, charms, spoken formulas, recipes, and exact questions are valid Ritual mechanics and may be central to a Ritual.
 
@@ -77,8 +79,25 @@ If the packet becomes too large, split the candidate records into batches, but s
 
 Include this table:
 
-| Source item | Source pages | Type | Brief source description | Likely carriers | Likely purposes | Exact text importance | Disposition | Reason | Future action |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Source item | Source pages | Source location precision | Type | Research use | Brief source description | Likely carriers | Likely purposes | Exact text importance | Disposition | Reason | Future action |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+
+Allowed source location precision values:
+
+- `exact_page`
+- `page_range`
+- `chapter_range`
+- `needs_tightening`
+
+Allowed research use values:
+
+- `ritual_candidate`
+- `product_followup_pattern`
+- `both`
+- `source_note_only`
+- `context_only`
+- `hold`
+- `reject`
 
 Allowed item types:
 
@@ -107,6 +126,7 @@ source_items_inventoried:
 candidate_extract_now:
 candidate_extract_later:
 private_excerpt_reference:
+items_with_private_excerpt_recommended:
 source_note_only:
 context_only:
 hold:
@@ -114,6 +134,32 @@ reject:
 remaining_unreviewed_source_sections:
 remaining_extraction_backlog:
 ```
+
+`private_excerpt_reference` counts source items whose main disposition is private excerpt reference.
+
+`items_with_private_excerpt_recommended` counts any inventoried source item or candidate where exact prayers, blessings, spoken cues, prompts, recipes, meditations, charms, spells, or distinctive wording should be reviewed privately by Tim, even when that item is also a candidate.
+
+## Coverage accounting
+
+Use primary coverage conservatively.
+
+Each candidate must have:
+
+```text
+primaryCarrier:
+primaryPurpose:
+```
+
+Secondary support may be listed only when genuinely source-supported:
+
+```text
+secondaryCarriers:
+secondaryPurposes:
+```
+
+Only primary carrier/purpose cells count toward coverage satisfaction. Secondary cells may help review and search later, but they must not be used to claim the matrix is solved.
+
+If a source item touches multiple carriers or purposes, choose the recommendation-driving primary cell and preserve the rest as secondary support or variant/split backlog.
 
 ## Candidate requirements
 
@@ -130,6 +176,17 @@ Each candidate needs:
 - enough presentation copy to preview;
 - metadata aligned to Moon & Table’s Ritual model;
 - private source text handling when exact words/questions/blessings/prompts matter.
+
+Each candidate or source item must also classify research use:
+
+```text
+researchUse:
+  - ritual_candidate
+  - product_followup_pattern
+  - both
+```
+
+Use `product_followup_pattern` when the source-backed practice is useful for app behavior, post-ritual reflection, logging, household grimoire entries, or review flow but is not itself a standalone Ritual candidate.
 
 ## Default status
 
@@ -154,6 +211,8 @@ recommendationMetadata: {
 }
 ```
 
+Do not normalize into runtime data during extraction. Schema normalization belongs in a later issue after human review and source verification.
+
 ## Source text support
 
 Where relevant, include:
@@ -177,6 +236,7 @@ sourceTextUse?: {
     | "ritual_sequence"
     | "other";
   sourceLocation: string;
+  sourceLocationPrecision: "exact_page" | "page_range" | "chapter_range" | "needs_tightening";
   whyExactTextMatters?: string;
   agentUseLimit:
     | "short_phrases_only"
@@ -192,6 +252,32 @@ sourceTextUse?: {
   ];
 }
 ```
+
+## Variant / split ledger
+
+Include a variant / split ledger for broad or high-yield source items.
+
+Use:
+
+```text
+Variant / split candidates:
+- keep together now:
+- split later:
+- reason:
+- trigger for split:
+```
+
+Use this ledger instead of either bloating one candidate or silently losing useful future variants.
+
+Examples:
+
+- house blessing vs room blessing;
+- threshold wash vs whole-house circuit;
+- kitchen candle vs oil lamp;
+- cauldron vs bowl/jar;
+- spell bottle variants;
+- food awareness vs recipe-specific rituals;
+- grimoire entry as ritual vs product follow-up.
 
 ## Output format
 
@@ -215,11 +301,12 @@ Include:
 10. Candidate research records.
 11. Source notes.
 12. Coverage records.
-13. Rejected / held leads.
-14. Duplicate check.
-15. Gap notes.
-16. Remaining extraction backlog.
-17. Validation checklist.
-18. Open questions / Tim decisions.
+13. Variant / split ledger.
+14. Rejected / held leads.
+15. Duplicate check.
+16. Gap notes.
+17. Remaining extraction backlog.
+18. Validation checklist.
+19. Open questions / Tim decisions.
 
 Do not produce a small sample and stop. The inventory must account for the source’s usable ritual material.
