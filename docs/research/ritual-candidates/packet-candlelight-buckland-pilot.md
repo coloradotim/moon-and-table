@@ -1222,13 +1222,24 @@ export const packetCoverage = [
 | candlelight + protecting | product-voice review       | Source supports spiritual protection, but final wording must avoid guarantee claims and imported anti-evil/uncrossing language.                | Review product voice for spiritual protection language.                         |
 | candlelight + marking    | source-purpose adaptation  | Best multi-day source is “increase power,” which includes power/occult claims.                                                                 | Use repeated-session and candle-sequence mechanics only; avoid source purpose.  |
 
-## Open questions
+## Resolved review decisions
 
-1. Should `Boundary Light` allow explicit language like “spiritual protection,” or should it stay with “protective boundary” in user-facing copy?
-2. Should `Seven Marks of Readiness` require seven real candles, or allow fewer candles moved/reused over seven sessions?
-3. Should `Object in the Light` require two candles, or allow one candle depending on space and safety?
-4. Should `Remembering Light` require a separate peace candle, or keep it optional when the user has capacity and a safe surface?
-5. Should candle dressing be part of every Buckland-derived candlelight candidate, or only those where preparation is central?
+Tim has resolved the prior open questions for this packet. Apply these as defaults during review and schema normalization.
+
+1. **Boundary Light / protection language:** use explicit spiritual protection language where it fits the product voice. “Protective boundary” is also acceptable, but do not over-secularize the candidate. Keep the no-guarantee rule.
+2. **Seven Marks of Readiness:** keep the seven-real-candle version as the primary source-faithful form. A lower-capacity adaptation may be authored later, but the research candidate should preserve the seven-candle sequence.
+3. **Object in the Light:** allow one candle as a valid form and two candles as an enhanced form when space/capacity support it. Do not require two candles by default.
+4. **Remembering Light:** prefer a separate peace candle because it is source-backed and strengthens the ritual shape. Allow a one-candle adaptation when capacity or space is low.
+5. **Candle dressing:** include dressing/anointing in Buckland-derived candidates where preparation, intention, protection, blessing, releasing, marking, or multi-session work is central. It may be omitted for the simplest steadying meditation.
+
+## Remaining review questions
+
+These are not blockers to preserving the packet. They should be handled during review/schema normalization:
+
+1. Does `Settle the House Light` need support from a second domestic source before becoming review-ready?
+2. Does `Seven Marks of Readiness` need tighter authoring because the source purpose was “increase power”?
+3. Does `Boundary Light` need final product-voice tuning for how direct the spiritual protection language should be?
+4. Does `Object in the Light` read better as a one-candle default with optional second candle, or should the final reviewed version choose one form only?
 
 ## Tim product decisions
 
@@ -1313,8 +1324,8 @@ These decisions supersede earlier softened draft language and should guide revie
 
 ## Review notes / next actions
 
-1. Preserve this packet as Markdown research content first.
-2. Review candidate wording and source support before schema normalization.
+1. Packet preservation is complete; this file is the tracked Markdown research packet.
+2. Review candidate wording, source support, and resolved Tim decisions before schema normalization.
 3. Normalize against the actual repo `Ritual` model only after review.
 4. Do not add any candidate to runtime data until Tim approves it.
 5. Do not mark any candidate reviewed, recommendable, findable, or direct-use eligible from this packet alone.
