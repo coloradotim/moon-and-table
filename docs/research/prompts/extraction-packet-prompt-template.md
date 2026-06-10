@@ -31,11 +31,11 @@ Do not skip source material just because you already found several strong candid
 Do not flatten magical practice into generic wellness mechanics.
 Do not use secondary carrier/purpose support to claim coverage cells are solved.
 Do not force product follow-up patterns into Ritual candidates merely to preserve them.
-Do not add props, materials, closing gestures, correspondences, deity/spirit elements, or symbolic mechanics unless source-supported.
+Do not add props, materials, decorative closing gestures, correspondences, deity/spirit elements, or symbolic mechanics unless source-supported or Tim-approved.
 
 Words, blessings, prayers, invocations, prompts, meditations, spells, charms, spoken formulas, recipes, and exact questions are valid Ritual mechanics and may be central to a Ritual.
 
-You may extract exact short phrase anchors, exact questions, rite titles, spoken cues, blessing names, invocation cues, and wording anchors when ritually important.
+## Exact wording rule
 
 Definition:
 
@@ -43,11 +43,23 @@ Definition:
 short source phrase = 20 words or fewer
 ```
 
-Short source phrases used in rituals should be included inline in the ritual body / practice and classified as `ritualWords.mode = "source_exact_short"` with source location.
+If exact operative source wording is 20 words or fewer:
+
+- include it inline in the ritual body / practice where it is used;
+- add `ritualWords` metadata with `mode: "source_exact_short"`;
+- include source location, citation label, use context, and note if needed.
+
+If exact operative source wording is more than 20 words:
+
+- do not reproduce it in the public packet;
+- add `ritualWords` metadata with `mode: "private_source_excerpt"`;
+- include source location, citation label, use context, and a note explaining why the exact words matter.
+
+If the source provides usable operative words, do not create a generic Moon & Table replacement unless Tim explicitly approves adaptation.
+
+Do not create separate `sourceTextUse` or `privateExcerptSupport` objects. `ritualWords` is the operative-word tracking surface.
 
 Do not reproduce long copyrighted passages, full rituals, full prayers, full guided meditations, full prompt sets, full recipes, or whole distinctive spell texts.
-
-When exact wording matters but is longer/substantial, use `privateExcerptSupport` and `ritualWords.mode = "private_source_excerpt"`; point Tim to the source page/section for private review.
 
 ## Core import-readiness rule
 
@@ -203,8 +215,10 @@ source_backed_moon_and_table_form:
   The source gives a practice family or ritual pattern but not a precise step-by-step ritual. Moon & Table may author a simple household form only from source-supported actions, locations, timing, and materials. Separate source-backed core from Moon & Table-authored ritual form.
 
 metadata_symbolism_only:
-  The source gives symbolism, correspondences, theory, or timing context but not enough action to support a whole Ritual. Do not produce an importable Ritual candidate from this alone.
+  The source gives symbolism, correspondences, theory, or timing context but not enough action to support a whole Ritual.
 ```
+
+`metadata_symbolism_only` may appear in the source inventory, source notes, or `candidate_extract_later` backlog. It must not be used for `candidate_extract_now`.
 
 ## Candidate requirements
 
@@ -217,8 +231,8 @@ headline:
 ritual body / practice:
 intention:
 bestWindow:
-whyThisFits generation ingredients:
-howThisWasChosen generation ingredients:
+whyThisFitsIngredients:
+howThisWasChosenIngredients:
 questionToCarry:
 source grounding:
 recommendation metadata:
@@ -237,7 +251,8 @@ ritual body / practice -> presentation.practice
 intention -> presentation.intention
 bestWindow -> presentation.bestWindow
 questionToCarry -> presentation.questionToCarry
-whyThisFits base/ingredients -> presentation.whyThisFits or runtime generation inputs, as applicable
+whyThisFitsIngredients -> presentation.whyThisFits or runtime generation inputs, as applicable
+howThisWasChosenIngredients -> packet/recommendation inputs only unless a later runtime schema issue adds a field
 source grounding -> origin.sourceGrounding[]
 purpose/carrier/capacity/audience/timing/eligibility -> recommendationMetadata
 materials/places/tags/keywords/source labels -> searchMetadata
@@ -250,32 +265,44 @@ The ritual body / practice must read as a complete practice on its own. It must 
 ```text
 intentional open
 concrete source-supported action / sequence
-spoken or written ritual words where source-supported or Moon & Table-authored
-intentional source-supported close
+spoken or written ritual words where source-supported or Moon & Table-authored under the operative-words rule
+intentional close
 ```
 
 Do not add separate required `opening` or `closing` fields unless the runtime model changes in a later product issue.
 
-For direct source rituals, use the source close.
+For direct source rituals, preserve the source close when given.
 
-For source-backed Moon & Table forms, author a close only from source-supported actions, locations, timing, or materials.
+If the source does not give a close, author a simple close that completes the source-supported action without adding unsupported props, materials, deity/spirit elements, correspondences, or symbolic mechanics.
+
+Do not invent a decorative close.
 
 ## Why-this-fits / how-this-was-chosen ingredients
 
 Do not treat `whyThisFits` as a static source-summary paragraph when the ritual is selected through Choose with me.
 
-Provide structured generation ingredients, including:
+Use this structure:
 
 ```text
-check-in hooks:
-timing hooks:
-lunar / planetary / seasonal influence notes, where source-supported:
-capacity notes:
-audience notes:
-material/place/carrier/purpose fit notes:
-source-backed rationale:
-not-for / hold notes:
+whyThisFitsIngredients:
+  checkInHooks:
+  timingHooks:
+  lunarPlanetarySeasonalHooks:
+  capacityHooks:
+  audienceHooks:
+  materialPlaceCarrierPurposeFit:
+  sourceBackedRationale:
+  notForOrHoldNotes:
+
+howThisWasChosenIngredients:
+  primarySelectionSignals:
+  secondarySelectionSignals:
+  exclusionSignals:
+  timingSignal:
+  confidenceNotes:
 ```
+
+`howThisWasChosenIngredients` is packet/recommendation input only unless a later runtime schema issue adds a field.
 
 ## Default status and import readiness
 
@@ -337,48 +364,6 @@ Spoken or written words that the user should say or write belong inline in `ritu
 `ritualWords` is not the authoring surface for Ritual copy. It is provenance/review metadata.
 
 Use `moon_and_table_original` only when the source supports spoken/written ritual mechanics but does not provide operative words, or when Tim explicitly chooses adaptation over source wording.
-
-## Source text support
-
-Where relevant, include:
-
-```ts
-sourceTextUse?: {
-  exactPhraseAnchors?: string[];
-  exactQuestions?: string[];
-  exactSpokenCues?: string[];
-  privateExcerptRecommended: boolean;
-  excerptType?:
-    | "blessing"
-    | "prayer"
-    | "invocation"
-    | "prompt"
-    | "meditation"
-    | "recipe"
-    | "spell"
-    | "charm"
-    | "spoken_formula"
-    | "ritual_sequence"
-    | "other";
-  sourceLocation: string;
-  sourceLocationPrecision: "exact_page" | "page_range" | "chapter_range" | "needs_tightening";
-  whyExactTextMatters?: string;
-  agentUseLimit:
-    | "short_phrases_only"
-    | "close_paraphrase_allowed"
-    | "mechanics_only"
-    | "do_not_use";
-  storagePolicy: [
-    "private_app_only",
-    "cited",
-    "not_public_repo",
-    "unavailable_by_default",
-    "not_recommendation_eligible_until_human_review"
-  ];
-}
-```
-
-`sourceTextUse` is source-text handling support. It does not replace `ritualWords` metadata, and neither replaces the ritual body.
 
 ## Variant / split ledger
 
@@ -445,13 +430,15 @@ Every packet must validate:
 - [ ] Source inventory accounts for assigned source sections.
 - [ ] Every inventory item has a disposition.
 - [ ] Every `candidate_extract_now` has `ritualizationType`.
+- [ ] No `metadata_symbolism_only` item is marked `candidate_extract_now`.
 - [ ] Every `candidate_extract_now` has full runtime-mapped fields.
 - [ ] Ritual body / practice reads as a complete ritual on its own.
-- [ ] Ritual body includes open, source-supported action/sequence, operative words where needed, and source-supported close.
-- [ ] No props/materials/closing gestures are added unless source-supported.
+- [ ] Ritual body includes open, source-supported action/sequence, operative words where needed, and close.
+- [ ] No props/materials/decorative closing gestures are added unless source-supported or Tim-approved.
 - [ ] `ritualWords` is metadata only and does not replace the ritual body.
-- [ ] Short source phrases are 20 words or fewer and tracked as `source_exact_short`.
-- [ ] Longer/substantial exact text is handled through private excerpt support.
-- [ ] Why-this-fits / how-this-was-chosen ingredients are structured for runtime use.
+- [ ] Short source phrases are 20 words or fewer, inline in the ritual body, and tracked as `source_exact_short`.
+- [ ] Longer/substantial exact text is handled through `private_source_excerpt` ritualWords metadata.
+- [ ] No generic Moon & Table replacement words are created where usable source words exist.
+- [ ] Why-this-fits / how-this-was-chosen ingredients use the required structure.
 - [ ] Candidate import readiness label is present.
 - [ ] No candidate is marked reviewed/findable/direct-use eligible/recommendation eligible/recommendable/runtime-ready.
