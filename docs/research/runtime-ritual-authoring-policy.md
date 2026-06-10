@@ -320,7 +320,7 @@ Direct-use review should also remove unnecessary safety boilerplate, preserve ma
 
 ```text
 preserved as exact short words inline and tracked as source_exact_short
-stored as private excerpt key / private_source_excerpt metadata
+tracked as private excerpt key / private_source_excerpt metadata
 kept as source-attributed wording anchor
 authored as Moon & Table original only when the source did not provide operative words or Tim explicitly chose adaptation
 ```
