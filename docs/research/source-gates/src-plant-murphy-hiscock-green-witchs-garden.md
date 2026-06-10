@@ -4,214 +4,112 @@
 
 ```text
 Source ID: SRC-PLANT-MURPHY-HISCOCK-GREEN-WITCHS-GARDEN
-Gate outcome: hold
-Registry status: hold
-Extraction status: blocked_pending_source_gate
-May appear in candidate sourceIds: no
-Mechanics source: unknown_pending_source_copy
-Safety constraint source: no
-Canonical citation: Murphy-Hiscock, Arin. The Green Witch's Garden: Your Complete Guide to Creating and Cultivating a Magical Garden Space. Adams Media / Simon & Schuster, 2021. Bibliographic details require verification from lawful source copy.
-Edition / translation: English; edition not verified from source copy.
-Access location: No lawful source copy was available in the review workspace for this gate.
-Legal copy reviewed: no
-Review depth: source-discovery / metadata-only gate. Used issue #323, prior source discovery from #295, and prior research notes. No page-level source copy, TOC, index, or interior preview was reviewed.
-Page count and page-numbering notes: not verified. Must be verified from a lawful source copy before extraction.
-TOC reviewed: no
-Excerpt boundaries reviewed: no
-Approved extraction ranges: none yet
-Excluded extraction ranges: all ranges blocked pending lawful source copy and page-level source gate
-Allowed use: Planning only. May remain in the source-gate queue as a high-priority candidate for plant-driven household ritual once a lawful copy is available.
-Forbidden use: Do not extract Ritual candidates; do not create runtime data; do not mark any plant practice reviewed, findable, direct-use eligible, recommendation eligible, or runtime-ready from this source; do not use unverified online summaries as extraction evidence.
+Gate outcome: approved_for_extraction_with_limits
+Registry status: approved
+Extraction status: extraction_ready
+May appear in candidate sourceIds: yes
+Mechanics source: yes
+Safety constraint source: yes
+Canonical citation: Murphy-Hiscock, Arin. The Green Witch's Garden: Your Complete Guide to Creating and Cultivating a Magical Garden Space. Adams Media, an imprint of Simon & Schuster, 2021. ISBN 978-1-5072-1587-6; ebook ISBN 978-1-5072-1588-3.
+Edition / translation: English; first Adams Media hardcover edition December 2021; ebook/PDF review copy.
+Access location: `/mnt/data/The_Green_Witchs_Garden_-_Arin_Murphy-Hiscock.pdf`
+Legal copy reviewed: yes, source copy provided by Tim in review workspace.
+Review depth: full-source gate review from available 267-page PDF, including cover/title/copyright, introduction, how-to-use section, navigable TOC, chapter-level review, targeted review for plant-as-primary-carrier mechanics, houseplant/container/window/table/threshold practices, plant spirits, garden journal, garden cleansing/blessing, seasonal garden ritual, drawing garden energy, harvest use, and safety boundaries. This is source gate only, not extraction.
+Page count and page-numbering notes: PDF has 267 pages. Navigable PDF TOC gives: Title Page p.3; Dedication p.4; Introduction p.6; How to Use This Book p.8; Ch.1 Green Witchcraft in the Garden p.10; Ch.2 Magical Goals for Your Garden p.27; Ch.3 Kinds of Witch Gardens p.40; Ch.4 Plant Your Witch's Garden p.64; Ch.5 Prepare Your Sacred Space p.95; Ch.6 Choose What to Plant p.117; Ch.7 Magic for a Healthy Garden p.184; Ch.8 Make Magic with Your Harvest p.210; Ch.9 Practice Witchcraft in the Garden p.230; Conclusion p.249; Hardiness Zones p.250; Acknowledgments p.252; About the Author p.253; Bibliography p.255; Index p.258; Copyright p.266. PDF page numbers are used in this gate.
+TOC reviewed: yes.
+Excerpt boundaries reviewed: yes. Use no full modern prayers, blessings, exercises, rituals, recipes, planting words, meditations, or distinctive source prose in runtime. Runtime ritual text must be newly written Moon & Table language unless Tim manually stores private excerpts later.
+Approved extraction ranges: see approved extraction ranges below.
+Excluded extraction ranges: see excluded extraction ranges below.
+Allowed use: Source-backed extraction of plant-as-primary-carrier ritual mechanics: living plant tending, garden/plant observation, container/window/table plant practice, plant witnessing, plant blessing, plant-care-as-ritual, plant journal/memory, seasonal plant markers, plant placement, garden cleansing, garden dedication, safe plant offerings, harvest gratitude, drawing on living garden energy in a non-depleting way, and household-scale adaptations.
+Forbidden use: Do not turn Moon & Table into a gardening manual, herbal medicine source, essential oil app, ingestion/smoke/topical recipe app, outdoor-only garden tracker, plant correspondence database, spirit/deity obligation system, or guaranteed magical-result system. Do not use medicinal claims, herbal dosing, ingestion/smoke/oil/bath/topical instructions, toxic plant handling, culturally specific spirit-house/deity material, or outdoor-only gardening procedures as direct runtime practice without separate review.
 Verbal / expressive / charm / spell handling:
   direct_use_allowed: no
-  brief_quote_allowed: no source copy reviewed; no quotes available
-  paraphrase_required: yes, if later approved
-  mechanics_only: likely preferred if later approved
-  do_not_use: exact spells, charms, prayers, invocations, recipes, plant-care instructions, plant-spirit language, medicinal claims, ingestion/topical/smoke/oil instructions, and distinctive author wording until reviewed from the source copy
-Citation requirement: If later approved, every extracted candidate must cite source ID, section/chapter title, page range, and extraction note.
+  brief_quote_allowed: internal review anchors only; no runtime direct quotes
+  paraphrase_required: yes, for all blessings, exercises, spoken words, charms, rituals, and recipes
+  mechanics_only: yes, preferred extraction mode
+  do_not_use: full exercises, full blessings, full prayers/invocations, full recipes, exact plant-spirit dialogue prompts, full ritual text, distinctive author prose, medicinal instructions, smoke/oil/topical/ingestion instructions, and culturally specific spirit/deity material unless separately reviewed
+Citation requirement: Every extracted candidate derived from this source must cite source ID, chapter/section title, PDF page range, and extraction note.
 Reviewer required: yes
-Required reviewer expertise: Moon & Table product/content reviewer with plant safety/source-boundary awareness.
-Specific extraction cautions: See sections below.
+Required reviewer expertise: Moon & Table product/content reviewer with plant safety, household adaptation, and source-boundary awareness.
+Specific extraction cautions: Treat plants as living carriers, not inert ingredients. Require plant-specific safety screening before runtime. Prefer observe/water/place/turn/prune-dead-leaf/plant/repot/write/mark-growth mechanics over ingestion, smoke, oils, topical, or medicinal uses.
 Approval authority: Tim
-Approved date:
-Required changes before approval: Obtain lawful source copy; verify publisher/date/edition/page count/TOC; review page-level mechanics; identify approved/excluded ranges; review plant safety and exact-text boundaries.
+Approved date: 2026-06-10
+Required changes before approval: none before research extraction; extraction must stay research-only and apply limits below.
 ```
 
-## Gate outcome
+## Approved extraction ranges
 
-`hold`
+- **Introduction and How to Use This Book, PDF pp.6-9:** approve framing around hands-on plant relationship, indoor/outdoor garden flexibility, existing plants as valid practice, local energies, and plant life-cycle awareness.
+- **Chapter 1, Green Witchcraft in the Garden, PDF pp.10-26:** approve plant care as spiritual check-in, garden as spiritual reflection, houseplant/window cycles, element-sensing in garden, plant life/decomposition reflection, plant-spirit greeting with boundaries, eco-awareness, regenerative gardening, and alternative garden forms. Hold medical/health claims and guerrilla-gardening/legal-risk material.
+- **Chapter 2, Magical Goals for Your Garden, PDF pp.27-39:** approve magical planning, existing garden review/rededication, magical garden goals, magical oasis framing, and rewilding/native-species awareness as source context. Extract only household-scale, plant-centered ritual mechanics.
+- **Chapter 3, Kinds of Witch Gardens, PDF pp.40-63:** approve living-garden energy, astrological/moon/solar/elemental garden concepts as planning and timing context. Use only where plant remains primary carrier. Avoid turning source into astrology implementation.
+- **Chapter 4, Plant Your Witch's Garden, PDF pp.64-94:** approve indoor plants, houseplants, terrariums, winter gardening, kitchen-scrap growing, windowsill/window box, container gardening, outdoor garden basics, and safety notes for pets/children/toxicity as household adaptation support.
+- **Chapter 5, Prepare Your Sacred Space, PDF pp.95-116:** approve garden tool dedication mechanics only as secondary; approve garden cleansing, plant welcome/purification, garden blessing, planting-cycle/design selection, garden journal, pressed samples, plant records, and seasonal planning. Exact blessings/exercises must be private-excerpt reviewed and rewritten for Moon & Table.
+- **Chapter 6, Choose What to Plant, PDF pp.117-183:** approve as source-note/correspondence support and safety/context source only. Use to select plant categories and understand plant traits, not as primary ritual extraction unless a section includes action. Hold medical, ingestion, smoke, and topical plant uses.
+- **Chapter 7, Magic for a Healthy Garden, PDF pp.184-209:** approve selected mechanics for charm/tool support, garden protection/health, welcoming new plants, garden blessing, genius loci as hold/limited, offerings as limited, garden charms, magical care tips, decor/altar/table support. Hold deity/spirit obligations, fire, smoke, open flame, oils, and culturally specific spirit-house material unless separately reviewed.
+- **Chapter 8, Make Magic with Your Harvest, PDF pp.210-229:** approve limited mechanics for harvest gratitude, preserving/recording, garden oracle, wands/wreaths/paper/twigs/rainwater/tool material as craft/source-note support. Hold recipes, ingestion, infused oils, body care, smoke cleansing, and medicinal claims.
+- **Chapter 9, Practice Witchcraft in the Garden, PDF pp.230-248:** approve garden-as-ritual-space framing, drawing living plant/garden energy with consent and non-depletion, seasonal celebrations, intuitive/responsive garden magic, garden meditation, and winter garden/snow-water symbolism with safety limits. Hold full spells, full meditations, water use as ingestion, and outdoor-only or weather-dependent procedures.
+- **Hardiness Zones, Bibliography, Index, Copyright, PDF pp.250-267:** approve metadata, navigation, and safety/citation context only.
 
-This source should not move to extraction yet. It remains a strong source-gate candidate, but this gate cannot responsibly approve extraction without an actual source copy or reliable preview with TOC/interior page evidence.
+## Excluded or held extraction ranges
 
-The prior discovery report and issue #323 both make a strong case that this title is probably the best first plant-driven source to review, but source-gate approval requires source-level evidence, not inference from title, series, publisher, or general author fit.
+- **Chapter 6 plant lists, PDF pp.117-183:** generally hold as correspondence-only unless paired with an approved plant-carrier mechanic from another section. Do not extract a plant correspondence database.
+- **Cooking/recipes/produce use, PDF pp.210-219 and related entries:** hold recipes, ingestion, preservation, herbal salts/butters/jams/soups, and food use for separate kitchen/food safety review.
+- **Infused oils/body care/smoke cleansing/incense, PDF pp.188-193 and related references:** hold. Do not use as runtime plant ritual without separate essential-oil/smoke/topical safety review.
+- **Medicinal or health claims throughout:** exclude as guidance. May be noted only as source caution when relevant to safety screening.
+- **Deities, genius loci, spirit houses, plant familiars, and plant-spirit work:** limited/hold. Mechanics may inform plant witnessing or respectful greeting, but any spirit/deity/familiar commitment, offering obligation, trance/contact, or culturally specific practice requires separate source-boundary review.
+- **Guerrilla gardening / public land practices, PDF pp.24-26:** hold/reject for normal Moon & Table; legal/property concerns and outdoor-only fit.
+- **Fire/open-flame/cauldron/fire-pit work:** hold unless later normalized under candle/fire safety.
+- **Toxic, psychoactive, thorny, irritating, invasive, pet-unsafe, child-unsafe, or pregnancy-concerning plants:** hold until plant-specific safety review.
 
 ## Gate answers
 
-### 1. Does this source provide plant-as-primary-carrier ritual mechanics, or mostly gardening/correspondence material?
+1. **Does this source provide plant-as-primary-carrier ritual mechanics, or mostly gardening/correspondence material?** Yes, it provides plant-as-primary-carrier mechanics, especially in Chapters 1, 4, 5, 7, and 9. It also contains gardening instruction and correspondence/reference material. The strongest Moon & Table material is not the plant lists; it is the lived practice of tending, observing, blessing, welcoming, placing, journaling, harvesting, and working beside living plants.
 
-Unknown pending source copy.
+2. **Does it support household/container/window/table/threshold adaptations?** Yes. The source explicitly treats indoor and outdoor gardens as valid, covers houseplants, terrariums, winter indoor gardening, kitchen-scrap growing, windowsill/window box gardens, container gardening, grow racks, multiple indoor plant areas, plant stands/tables, and entry/threshold-adjacent garden placement. This is one of the best reasons to approve it with limits.
 
-The title and prior discovery suggest it may provide plant-as-primary-carrier mechanics: magical garden design, plant tending, container or garden-space practice, and growth/seasonal care. But no TOC or interior pages were reviewed, so the gate cannot distinguish whether the book contains actual ritual mechanics or mostly gardening advice, magical correspondences, and general green-witch framing.
+3. **Does it include planting, tending, blessing, growth-marking, plant witnessing, harvest/seasonal reflection, or plant care as ritual?** Yes. The source strongly supports daily or repeated tending as spiritual practice, plant observation and journaling, plant-spirit greeting, garden blessing, plant welcoming, seasonal celebrations, garden meditation, and drawing on living plant/garden energy. Growth-marking and remembering are supported through garden journals, plant records, pressed samples, photos, seasonal observation, and harvest tracking.
 
-### 2. Does it support household/container/window/table/threshold adaptations?
+4. **Which plant practices translate to private household ritual rather than outdoor garden planning?** Best translation targets: tending one potted plant; watering as check-in; turning a plant toward light; welcoming/purifying a new plant; planting a seed/cutting with intention; windowsill/window box tending; terrarium observation; pruning dead matter as release; repotting as marking change; recording plant growth in a household grimoire; using a plant as witness at a table/window; small seasonal blessing at a houseplant/container; observing living vs dried plant energy; and closing with a journal note.
 
-Unknown pending source copy.
+5. **Which sections should be approved for extraction?** Approve with limits: Introduction/How to Use pp.6-9; Chapter 1 pp.10-26; Chapter 2 pp.27-39; selected Chapter 3 pp.40-63; Chapter 4 pp.64-94; selected Chapter 5 pp.95-116; selected Chapter 7 pp.184-209; selected Chapter 8 pp.210-229; selected Chapter 9 pp.230-248. Chapter 6 is mostly support/correspondence, not primary extraction.
 
-This remains the key source-gate question. Moon & Table needs household-scale plant practice, not outdoor-only garden planning. The likely useful range would include container plants, windowsill herbs, potted plants, cut flowers, small garden objects, plant placement, plant care, and seasonal markers that can be adapted indoors.
+6. **Which sections should be excluded or held?** Hold/exclude recipes, herbal medicine claims, ingestion, essential oils, smoke/incense, body care/topicals, plant lists as standalone correspondences, culturally specific spirit/deity work, plant-familiar obligations, guerrilla gardening, open fire/cauldron work, toxic plant handling, and outdoor-only garden planning that cannot become a small private household ritual.
 
-### 3. Does it include planting, tending, blessing, growth-marking, plant witnessing, harvest/seasonal reflection, or plant care as ritual?
+7. **What exact-text/private-excerpt handling is needed?** Exact blessings, exercises, ritual steps, plant-spirit prompts, tool dedication language, garden blessings, seasonal blessings, charms, prayers/invocations, and recipes should not be reproduced in runtime. Research extraction may use exact titles/short anchors and close paraphrase of mechanics. Moon & Table runtime should use newly written language unless Tim manually enters private excerpts from his copy under private source text policy.
 
-Unknown pending source copy.
+8. **What plant safety, material, pet, child, pregnancy, allergy, toxicity, ingestion, smoke, oil, bath, or topical boundaries are needed?** Strong boundaries are required. Default approved mechanics should be low-risk: observe, water, place, turn, journal, plant, repot, prune ordinary dead matter, mark growth, harvest with gratitude, and use non-toxic plant/object symbolism. Hold ingestion, medicinal use, smoke, oils, diffusers, bath/topical preparations, plant water for drinking, toxic plants, pet/child/pregnancy risks, and fire until separately reviewed.
 
-These are the exact mechanics that would justify approval. A future gate must specifically inspect for:
+## Carrier assessment
 
-- planting with intention;
-- watering/tending as ritual rather than chore;
-- pruning/dead-leaf handling;
-- repotting or propagation as marking/change;
-- seasonal care and dormancy;
-- plant blessing;
-- plant witness/companion language;
-- harvest or first-growth reflection;
-- plant placement at window, table, threshold, or altar.
+- `plant`: strong support. Living plants, houseplants, containers, window boxes, seeds, cuttings, harvest, plant spirits, and plant care are central.
+- `vessel`: strong support. Pots, planters, terrariums, jars, bowls, containers, rainwater vessels, seed trays, and plant records support vessel-as-plant-carrier.
+- `table`: moderate-to-strong support. Potting table, plant table/stand, altar/workspace, journal table, indoor plant placement, and small household setup are adaptable.
+- `doorway`: moderate support. Threshold/entry garden, protective placement, and garden entry/gates appear but are less central than plant/vessel/table.
+- `words`: strong support. Garden journal, plant records, spoken/unspoken greetings, blessings, intentions, observations, seasonal notes, and plant communication are meaningful mechanics.
+- `body`: limited support. Gardening as embodied care, grounding, sensing, and meditation is present, but body is secondary.
+- `candlelight`: weak support. Candles/fire appear in tool dedication and decor, but this is not a candle source.
 
-### 4. Which plant practices translate to private household ritual rather than outdoor garden planning?
+## Purpose assessment
 
-Not determinable from available evidence.
+- `opening`: strong support through planting, seeds, new plants, spring/new growth, welcome/purification, and garden dedication.
+- `marking`: strong support through plant growth, repotting, seasonal shifts, garden journal, first shoots, harvest, and annual records.
+- `tending`: very strong support. Repeated plant care is the core practice lane.
+- `blessing`: strong support through garden blessing, seasonal blessings, plant welcome, tool dedication, and plant/space purification.
+- `remembering`: strong support through garden journal, plant records, pressed samples, photos, seasonal comparison, harvest notes, and memory plants.
+- `steadying`: strong support through grounding, garden meditation, element-sensing, watering/tending routine, and plant observation.
+- `protecting`: moderate support through garden protection, plant purification, protective charms, threshold/garden decor, and plant safety cautions. Avoid guaranteed protection claims.
+- `releasing`: moderate support through compost/decomposition, pruning/dead matter, autumn/winter cycle, clearing unwanted energy, and old harvest disposal with thanks.
+- `voicing`: moderate support through spoken/unspoken plant greetings, garden blessings, journal prompts, intention, and plant communication. Runtime must rewrite.
 
-Likely translation targets, if source-supported, would be:
+## Safety and source-boundary notes
 
-- tending one potted plant;
-- planting one seed or herb in a small vessel;
-- placing a plant at a window or table as a witness;
-- blessing a plant before a season or household transition;
-- pruning one dead leaf as release;
-- noticing new growth as marking;
-- returning a plant to its usual place after ritual;
-- recording plant changes in a household grimoire.
-
-These are planning hypotheses only, not approved extraction ranges.
-
-### 5. Which sections should be approved for extraction?
-
-None yet.
-
-No sections are approved because no source copy was reviewed. A future gate should approve only page-verified sections that contain plant-as-primary-carrier ritual mechanics.
-
-### 6. Which sections should be excluded or held?
-
-All sections are held pending source copy.
-
-The following material should be excluded or held even if present:
-
-- medicinal/herbal-health claims;
-- plant ingestion, herbal dosing, tinctures, teas as medicine, or supplements;
-- essential oil use, diffusers, aromatherapy claims, or topical oil instructions;
-- smoke, incense, burning herbs, smudging-style instructions, or respiratory exposure;
-- bath or topical plant preparations unless separately safety-reviewed;
-- poisonous, thorny, irritating, or psychoactive plant handling;
-- plant-spirit/deity practices that require commitment, trance, possession, spirit contact, or culturally specific framing;
-- outdoor-only garden plans that do not translate to private household ritual;
-- correspondence tables without practice mechanics;
-- claims that a plant guarantees love, money, protection, fertility, healing, legal outcomes, safety, or spiritual result.
-
-### 7. What exact-text/private-excerpt handling is needed?
-
-Unknown pending source copy, but likely strict.
-
-If the source includes prayers, blessings, invocations, charms, spells, planting words, plant-spirit dialogue prompts, or distinctive ritual phrasing, exact text should not be reproduced in repo research packets or runtime. Future extraction should record source location and private-excerpt need, then use Moon & Table-authored language unless Tim manually selects exact wording for private app storage under the private source text policy.
-
-Recommended future policy:
-
-```text
-direct_use_allowed: no, unless Tim later approves source-direct private use by title/page
-brief_quote_allowed: internal review anchors only
-paraphrase_required: yes
-mechanics_only: preferred default
-do_not_use: full spells, prayers, invocations, plant-spirit dialogue scripts, recipes, and distinctive author prose
-```
-
-### 8. What plant safety, material, pet, child, pregnancy, allergy, toxicity, ingestion, smoke, oil, bath, or topical boundaries are needed?
-
-Strong safety boundary needed before extraction.
-
-Default future restrictions:
-
-- no ingestion unless the action is ordinary culinary use and separately safety-reviewed;
-- no medicinal claims;
-- no herbal dosing;
-- no essential oils or diffusers;
-- no smoke, burning herbs, incense, or smudging-style practices by default;
-- no topical plant preparations, baths, tinctures, salves, poultices, or oils without separate safety review;
-- no pregnancy/fertility/sleep/anxiety/pain/digestion/illness claims;
-- no plant-water, elixirs, infused water, or crystal/herb water ingestion;
-- no toxic plant recommendations without plant-specific safety review;
-- no plant recommendations around pets or children without toxicity screening;
-- no thorn, spine, irritant, or poisonous plant handling unless explicitly restricted to symbolic/non-contact use;
-- no culturally specific plant practice unless intentionally reviewed and contextualized.
-
-Preferred safe action families, if source-supported:
-
-- water;
-- observe;
-- turn toward light;
-- place;
-- return;
-- prune dead leaf only when ordinary plant care calls for it;
-- repot only when plant care calls for it;
-- plant a seed or cutting;
-- write a plant note;
-- mark growth or dormancy;
-- place a non-toxic plant at a table/window/threshold.
-
-## Product fit assessment
-
-### Potentially supported carriers
-
-These are not approved; they are likely review targets.
-
-- `plant`: strong likely fit, pending source copy.
-- `vessel`: likely via pot, planter, seed tray, jar, vase, or container garden.
-- `table`: likely via plant altar/table placement or potted plant as household witness.
-- `doorway`: possible through threshold planting or entryway plant, but must be verified.
-- `words`: possible through blessing, naming, intention, plant journal, or plant-spirit dialogue, but exact-text handling required.
-
-### Potentially supported purposes
-
-These are not approved; they are likely review targets.
-
-- `opening`: planting, first watering, new growth, seed/cutting, seasonal beginning.
-- `marking`: growth marker, repotting, seasonal change, first sprout, harvest.
-- `tending`: watering, observing, pruning, repotting, routine care as ritual.
-- `blessing`: plant blessing, garden blessing, home/window/table blessing.
-- `remembering`: plant as memory object, rosemary/evergreen/kept plant, seasonal return.
-- `steadying`: grounding through care, soil, routine, plant observation.
-- `protecting`: possible threshold/protective planting, but must avoid guaranteed safety/warding claims.
-- `releasing`: dead leaf, pruning, composting, dormancy, seasonal letting-go, if source-supported.
-
-## Extraction approval status
-
-No extraction is approved from this source yet.
-
-A later gate may approve extraction if a lawful source copy shows enough plant-as-primary-carrier ritual mechanics and clear household-scale adaptation potential.
-
-## Required future source-gate checks
-
-When source copy is available, inspect and record:
-
-- complete bibliographic data;
-- edition and publisher;
-- page count;
-- internal page numbering offset, if any;
-- full TOC;
-- chapter/section ranges;
-- whether sections contain ritual mechanics vs gardening advice vs correspondences;
-- source-text/private-excerpt boundaries;
-- plant safety risk categories;
-- indoor/container/window/table/threshold adaptability;
-- whether plant is primary carrier or merely ingredient;
-- whether practices are 5-30 minute household rituals or larger outdoor projects;
-- whether plant-spirit/deity/cultural material needs hold/exclusion.
+- The source itself warns that plant toxicity/warnings should be recorded, including touch, sap, scent, smoke, and ingestion risks; Moon & Table should preserve this safety posture at extraction.
+- The source contains medicinal references for many plants. These must not become Moon & Table guidance.
+- The source includes smoke cleansing, infused oils, body care, recipes, and water preparations. These should be held unless separately reviewed.
+- Houseplant safety around pets and children is especially relevant. Do not recommend a plant by name in runtime without a toxicity screen.
+- Avoid salt-water plant practices unless plant-safe; the source notes sodium buildup can harm soil/plants.
+- Plant-spirit and genius-loci material can support respectful plant witnessing, but stronger spirit/deity/familiar commitments should be held.
 
 ## Follow-on source queue from #295
 
@@ -226,16 +124,12 @@ Preserved for planning memory only. These sources are not gated here.
 6. Christopher Penczak — The Plant Spirit Familiar
 7. Sandra Kynes — Tree Magic
 8. Arin Murphy-Hiscock — The Green Witch
-9. Scott Cunningham — Cunningham’s Encyclopedia of Magical Herbs
+9. Scott Cunningham — Cunningham's Encyclopedia of Magical Herbs
 10. Robin Wall Kimmerer — Braiding Sweetgrass — hold/source-note only, not extraction
 ```
 
-## Recommended next step
-
-Obtain a lawful copy or reliable preview of *The Green Witch's Garden* and rerun this gate from actual source text. The source remains the recommended first plant-driven gate candidate, but it should not be extracted from yet.
-
 ## Final recommendation
 
-`hold`
+`approve_for_extraction_with_limits`
 
-Why: The title and prior source discovery make this a strong candidate for Moon & Table’s plant-driven household ritual gap, but no actual source copy, TOC, page ranges, or interior mechanics were available for review. Source-gate approval would be premature. Hold until lawful source access allows page-level verification.
+Why: This source directly supports Moon & Table's plant-driven household ritual gap. It offers actual plant-as-primary-carrier mechanics: indoor/outdoor/container/window plant practice, plant tending, plant welcome, plant blessing, plant observation, plant journaling, seasonal plant marking, harvest gratitude, garden meditation, and living plant energy work. The limits are necessary because the source also contains gardening manual content, plant correspondences, recipes, smoke/oil/topical/ingestion material, medicinal claims, outdoor-only practices, and spirit/deity/familiar material that should not move directly into normal Moon & Table rituals without review.
