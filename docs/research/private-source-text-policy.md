@@ -37,6 +37,33 @@ There are five different uses of source text:
 
 A modern authored blessing, prompt, invocation, spell, meditation, charm, recipe, or prayer may be valid for private household use even when a generated research packet should not reproduce the whole passage.
 
+## Simple exact wording rule
+
+Do not create a separate `sourceTextUse` or `privateExcerptSupport` block for normal extraction.
+
+Use the ritual body plus `ritualWords`:
+
+```text
+If exact operative source wording is 20 words or fewer:
+  - include it inline in the ritual body / practice where it is used;
+  - add ritualWords metadata with mode: source_exact_short;
+  - include source location, citation label, use context, and note if needed.
+
+If exact operative source wording is more than 20 words:
+  - do not reproduce it in the public packet;
+  - add ritualWords metadata with mode: private_source_excerpt;
+  - include source location, citation label, use context, and a note explaining why the exact words matter.
+
+If the source provides usable operative words:
+  - do not create a generic Moon & Table replacement unless Tim explicitly approves adaptation.
+```
+
+Definition:
+
+```text
+short source phrase = 20 words or fewer
+```
+
 ## Ritual body and `ritualWords`
 
 Spoken or written words that the user should say or write belong inline in the ritual body / practice where they are used.
@@ -55,16 +82,6 @@ private_source_excerpt
 moon_and_table_original
 ```
 
-Definition:
-
-```text
-short source phrase = 20 words or fewer
-```
-
-Short source phrases used in rituals should be included inline in the ritual body and classified as `source_exact_short` with source location.
-
-Longer blessings, prayers, incantations, scripts, prompt sets, meditations, recipes, or distinctive passages over 20 words should use `private_source_excerpt`.
-
 Moon & Table original operative words are allowed only when the source supports a spoken or written action but does not supply short usable words, or when Tim explicitly approves an adaptation. They must still follow the source's magical function.
 
 ## Agent extraction posture
@@ -72,15 +89,14 @@ Moon & Table original operative words are allowed only when the source supports 
 Agents may extract:
 
 - exact rite titles;
-- exact short operative words;
-- exact short phrases;
-- exact short questions;
-- exact spoken cues;
+- exact short operative words of 20 words or fewer;
+- exact short phrases of 20 words or fewer;
+- exact short questions of 20 words or fewer;
+- exact spoken cues of 20 words or fewer;
 - exact blessing names;
 - exact material/action labels;
 - short wording anchors that help preserve ritual force;
 - close summaries of the source ritual’s structure, materials, sequence, purpose, and magical function;
-- notes that exact source wording is ritually important and should be preserved inline in the ritual body when short enough, or through private excerpt support when longer/substantial;
 - `ritualWords` metadata that tracks the operative wording mode, source location, context, and review dependency.
 
 Agents should not reproduce in generated public repo files:
@@ -93,7 +109,7 @@ Agents should not reproduce in generated public repo files:
 - whole distinctive spell texts;
 - long copyrighted passages.
 
-The fallback for longer exact wording is not generic paraphrase. The fallback is private excerpt support with a source location and a clear note about why the exact words matter.
+The fallback for longer exact wording is not generic paraphrase. The fallback is `ritualWords.mode = "private_source_excerpt"` with a source location and a clear note about why the exact words matter.
 
 ## Runtime handling
 
@@ -139,7 +155,7 @@ use_directly_from_source:
   Tim and Jessica can perform the rite directly from the purchased/provided source. The app may recommend the source rite by title, page, and section without reproducing the full text.
 
 private_excerpt_allowed:
-  Exact modern source wording may be stored through approved private excerpt support with citation. Research agents identify source locations and importance; longer/substantial passages use private excerpt keys rather than public repo reproduction.
+  Exact modern source wording may be stored through approved private excerpt support with citation. Research agents identify source locations and importance; longer/substantial passages use private_source_excerpt ritualWords metadata rather than public repo reproduction.
 
 private_recipe_excerpt_allowed:
   Exact recipes may be stored through approved private excerpt support for private household use. Research agents classify the recipe’s ritual role and boundary context, but should not reproduce full recipes in public repo files.
@@ -206,9 +222,11 @@ sourceTextPolicy: {
     "unavailable_by_default",
     "not_recommendation_eligible_until_human_review"
   ];
-  notes: "Author-provided operative ritual words should be preserved when feasible. Short operative wording may be stored directly in presentation.practice and tracked as ritualWords.source_exact_short when non-substitutive and attributed. Longer or substantial source wording should use private excerpt support rather than generic paraphrase."
+  notes: "Author-provided operative ritual words should be preserved when feasible. Short operative wording of 20 words or fewer may be stored directly in presentation.practice and tracked as ritualWords.source_exact_short when non-substitutive and attributed. Longer or substantial source wording should use ritualWords.private_source_excerpt rather than generic paraphrase."
 }
 ```
+
+`sourceTextPolicy` is a source-gate policy block. It is not a candidate-level extraction object and does not replace `ritualWords`.
 
 ## Anti-sanitizing rule
 
@@ -247,11 +265,11 @@ For modern copyrighted sources, distinguish between:
 1. mechanics extraction;
 2. non-operative surrounding instructions rewritten into Moon & Table voice;
 3. exact short operative ritual words preserved directly in the ritual body where feasible and tracked as ritualWords.source_exact_short;
-4. longer or substantial exact wording handled through private excerpt support and tracked as ritualWords.private_source_excerpt.
+4. longer or substantial exact wording handled through ritualWords.private_source_excerpt.
 
-Research agents should not reproduce long copyrighted passages in generated public repo files. However, agents must not erase, downgrade, or generically paraphrase verbal, recipe, prayer, blessing, invocation, incantation, spell, prompt, or meditation material. Instead, classify it and preserve it inline when short enough or through private excerpt support when longer/substantial.
+Research agents should not reproduce long copyrighted passages in generated public repo files. However, agents must not erase, downgrade, or generically paraphrase verbal, recipe, prayer, blessing, invocation, incantation, spell, prompt, or meditation material. Instead, classify it and preserve it inline when short enough or through private_source_excerpt metadata when longer/substantial.
 
-Agents may extract exact short phrases, questions, rite titles, spoken cues, blessing names, invocation cues, and wording anchors when they are ritually important.
+Agents may extract exact short phrases, questions, rite titles, spoken cues, blessing names, invocation cues, and wording anchors when they are ritually important and 20 words or fewer.
 
 Agents may closely summarize or rewrite surrounding instructions while preserving the source’s structure, materials, sequence, carrier, purpose, operative words, and magical force.
 
@@ -270,6 +288,6 @@ The correct handling is:
 - track operative wording with `ritualWords` metadata;
 - closely summarize the ritual structure and magical function;
 - identify exact-wording locations when exact phrasing matters;
-- use private excerpt keys for longer/substantial wording;
+- use `private_source_excerpt` ritualWords metadata for longer/substantial wording;
 - avoid agent-generated long reproduction of copyrighted text in public repo files;
 - keep private exact excerpts cited, unavailable by default, and human-reviewed before any recommendation path.
