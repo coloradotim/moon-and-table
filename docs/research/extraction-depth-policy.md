@@ -131,10 +131,10 @@ source_backed_moon_and_table_form:
   The source gives a practice family or ritual pattern but not a precise step-by-step ritual. Moon & Table may author a simple household form only from source-supported actions, locations, timing, and materials.
 
 metadata_symbolism_only:
-  The source gives symbolism, correspondences, theory, or timing context but not enough action to support a whole Ritual. Do not produce an importable Ritual candidate from this alone.
+  The source gives symbolism, correspondences, theory, or timing context but not enough action to support a whole Ritual.
 ```
 
-A `metadata_symbolism_only` item may support recommendation metadata, timing hooks, source notes, or future extraction leads. It should not be marked `candidate_extract_now` by itself.
+`metadata_symbolism_only` may appear in the source inventory, source notes, or `candidate_extract_later` backlog. It must not be used for `candidate_extract_now`.
 
 ## Required candidate authoring fields
 
@@ -145,8 +145,8 @@ headline
 ritual body / practice
 intention
 bestWindow
-whyThisFits generation ingredients
-howThisWasChosen generation ingredients
+whyThisFitsIngredients
+howThisWasChosenIngredients
 questionToCarry
 source grounding
 recommendation metadata
@@ -165,7 +165,8 @@ ritual body / practice -> presentation.practice
 intention -> presentation.intention
 bestWindow -> presentation.bestWindow
 questionToCarry -> presentation.questionToCarry
-whyThisFits base/ingredients -> presentation.whyThisFits or runtime generation inputs, as applicable
+whyThisFitsIngredients -> presentation.whyThisFits or runtime generation inputs, as applicable
+howThisWasChosenIngredients -> packet/recommendation inputs only unless a later runtime schema issue adds a field
 source grounding -> origin.sourceGrounding[]
 purpose/carrier/capacity/audience/timing/eligibility -> recommendationMetadata
 materials/places/tags/keywords/source labels -> searchMetadata
@@ -180,15 +181,25 @@ The ritual body / practice must read as a complete practice on its own. It must 
 ```text
 intentional open
 concrete source-supported action / sequence
-spoken or written ritual words where source-supported or Moon & Table-authored
-intentional source-supported close
+spoken or written ritual words where source-supported or Moon & Table-authored under the operative-words rule
+intentional close
 ```
 
 Do not add separate required `opening` or `closing` fields unless the runtime model changes in a later product issue.
 
-For direct source rituals, use the source close.
+For direct source rituals, preserve the source close when given.
 
-For source-backed Moon & Table forms, author a close only from source-supported actions, locations, timing, or materials.
+If the source does not give a close, the extractor may author a simple close that completes the source-supported action without adding unsupported props, materials, deity/spirit elements, correspondences, or symbolic mechanics.
+
+Allowed authored closes complete something already present in the source-backed practice, such as:
+
+- pouring out a wash when wash water was used;
+- letting a doorway dry after threshold washing;
+- closing a journal when writing was used;
+- extinguishing a candle when candle flame was used;
+- thanking a partner when shared witnessing was source-supported.
+
+Do not invent a decorative close.
 
 ## Operative words and `ritualWords`
 
@@ -210,24 +221,40 @@ Definition:
 short source phrase = 20 words or fewer
 ```
 
-Short source phrases used in rituals should be included inline in the ritual body and classified as `source_exact_short` with source location. Longer blessings, prayers, incantations, scripts, prompt sets, meditations, recipes, or distinctive passages over 20 words should use `private_source_excerpt`.
+If the exact operative source phrase is 20 words or fewer, include it inline in the ritual body and add `ritualWords` metadata with `mode: source_exact_short`, source location, use context, and citation label.
+
+If the exact operative source wording is more than 20 words, do not reproduce it in the public packet. Add a `ritualWords` record with `mode: private_source_excerpt`, source location, use context, citation label, and a note explaining why the exact words matter.
+
+Do not create a generic Moon & Table replacement for source-provided operative words unless the source does not provide usable words or Tim explicitly approves adaptation.
+
+No separate `sourceTextUse` or `privateExcerptSupport` block is required for normal extraction. `ritualWords` is the operative-word tracking surface.
 
 ## Why-this-fits / how-this-was-chosen ingredients
 
 Do not treat `whyThisFits` as a static source-summary paragraph when the ritual is selected through Choose with me.
 
-The extraction packet should provide structured generation ingredients, including:
+Every `candidate_extract_now` record must use this structure:
 
 ```text
-check-in hooks
-timing hooks
-lunar / planetary / seasonal influence notes, where source-supported
-capacity notes
-audience notes
-material/place/carrier/purpose fit notes
-source-backed rationale
-not-for / hold notes
+whyThisFitsIngredients:
+  checkInHooks:
+  timingHooks:
+  lunarPlanetarySeasonalHooks:
+  capacityHooks:
+  audienceHooks:
+  materialPlaceCarrierPurposeFit:
+  sourceBackedRationale:
+  notForOrHoldNotes:
+
+howThisWasChosenIngredients:
+  primarySelectionSignals:
+  secondarySelectionSignals:
+  exclusionSignals:
+  timingSignal:
+  confidenceNotes:
 ```
+
+`howThisWasChosenIngredients` is packet/recommendation input only unless a later runtime schema issue adds a field.
 
 ## Import readiness labels
 
@@ -351,6 +378,37 @@ Reviewers must also check:
 - whether product follow-up patterns have been wrongly forced into Ritual candidate status;
 - whether `ritualizationType` is correct;
 - whether source architecture, props/materials, timing, operative words, and close are preserved according to the house voice guide.
+
+## QA reviewer baseline
+
+A QA reviewer must read:
+
+```text
+source gate record
+source PDF/material
+extraction packet PR diff
+docs/research/voice/moon-and-table-house-voice-guide.md
+docs/research/extraction-depth-policy.md
+docs/research/private-source-text-policy.md
+docs/research/runtime-ritual-authoring-policy.md
+src/data/rituals/types.ts
+```
+
+QA must verify:
+
+- source architecture is preserved;
+- no source-supported props/materials/counts/steps are omitted without explicit reason;
+- no unsupported props/materials/closing gestures are added;
+- `ritualizationType` is correct;
+- no `metadata_symbolism_only` item is marked `candidate_extract_now`;
+- every `candidate_extract_now` record is complete enough for mechanical import;
+- `ritual body / practice` contains open, action/sequence, operative words where needed, and close;
+- `ritualWords` is metadata only;
+- exact short source words are inline, 20 words or fewer, and tracked as `source_exact_short`;
+- longer exact wording uses `private_source_excerpt` metadata;
+- no generic Moon & Table replacement words are created where usable source words exist;
+- `whyThisFitsIngredients` and `howThisWasChosenIngredients` use the required structure;
+- no runtime eligibility flags are changed.
 
 ## Runtime / schema normalization wall
 
