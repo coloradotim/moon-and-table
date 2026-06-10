@@ -87,6 +87,52 @@ export type RitualPresentation = {
   questionToCarry: string;
 };
 
+export const RITUAL_WORD_MODES = [
+  "source_exact_short",
+  "private_source_excerpt",
+  "moon_and_table_original",
+] as const;
+
+export type RitualWordMode = (typeof RITUAL_WORD_MODES)[number];
+
+export const RITUAL_WORD_USE_CONTEXTS = [
+  "spoken",
+  "written",
+  "chanted",
+  "prayer",
+  "blessing",
+  "incantation",
+  "invocation",
+  "petition",
+  "closing",
+  "question",
+  "vow",
+  "song",
+  "other",
+] as const;
+
+export type RitualWordUseContext =
+  (typeof RITUAL_WORD_USE_CONTEXTS)[number];
+
+export type RitualWords = {
+  mode: RitualWordMode;
+  text?: string;
+  privateExcerptKey?: string;
+  citationLabel?: string;
+  sourceLocation?: string;
+  useContext: RitualWordUseContext;
+  note?: string;
+};
+
+export type RitualReviewFlags = {
+  privateExcerptRequired?: boolean;
+  sourceTextReviewRequired?: boolean;
+  materialSafetyReviewRequired?: boolean;
+  sourceVerificationRequired?: boolean;
+  productBoundaryReviewRequired?: boolean;
+  notes?: string[];
+};
+
 export type RitualRecommendationMetadata = {
   purposes: {
     primary: RitualPurpose;
@@ -151,5 +197,7 @@ export type Ritual = {
   recommendationMetadata: RitualRecommendationMetadata;
   searchMetadata: RitualSearchMetadata;
   availability: RitualAvailability;
+  ritualWords?: RitualWords[];
+  reviewFlags?: RitualReviewFlags;
   adaptationPolicy?: RitualAdaptationPolicy;
 };
