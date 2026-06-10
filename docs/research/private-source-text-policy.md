@@ -7,10 +7,13 @@ This policy exists so research agents stop flattening rituals into generic mecha
 This policy works with:
 
 ```text
+docs/research/voice/moon-and-table-house-voice-guide.md
 docs/research/runtime-ritual-authoring-policy.md
+docs/research/extraction-depth-policy.md
+src/data/rituals/types.ts
 ```
 
-The runtime authoring policy controls how source material becomes app `Ritual` records.
+The runtime authoring policy controls how source material becomes app `Ritual` records. The extraction depth policy controls how source material is inventoried and converted into import-ready candidate packets.
 
 ## Core rule
 
@@ -24,14 +27,45 @@ The task is to classify and preserve source text use, not erase it.
 
 ## Distinction to preserve
 
-There are four different uses of source text:
+There are five different uses of source text:
 
 1. **Mechanics extraction** — source-backed ritual structure, materials, sequence, timing, carrier, purpose, and boundary context.
 2. **Surrounding runtime instructions** — Moon & Table-authored instructions that may be rewritten into product voice.
 3. **Operative ritual words** — source-provided words used inside the rite. These should be preserved when feasible.
 4. **Private exact-text use** — exact wording stored through approved private excerpt support and cited to the source.
+5. **Operative words metadata** — `ritualWords` records that classify and prove how operative words are handled.
 
 A modern authored blessing, prompt, invocation, spell, meditation, charm, recipe, or prayer may be valid for private household use even when a generated research packet should not reproduce the whole passage.
+
+## Ritual body and `ritualWords`
+
+Spoken or written words that the user should say or write belong inline in the ritual body / practice where they are used.
+
+The complete ritual must read correctly from `presentation.practice` alone.
+
+`ritualWords` is not the authoring surface for user-facing Ritual copy.
+
+Use `ritualWords` only as provenance/review metadata for operative words already present in, or required by, the ritual body.
+
+Allowed modes:
+
+```text
+source_exact_short
+private_source_excerpt
+moon_and_table_original
+```
+
+Definition:
+
+```text
+short source phrase = 20 words or fewer
+```
+
+Short source phrases used in rituals should be included inline in the ritual body and classified as `source_exact_short` with source location.
+
+Longer blessings, prayers, incantations, scripts, prompt sets, meditations, recipes, or distinctive passages over 20 words should use `private_source_excerpt`.
+
+Moon & Table original operative words are allowed only when the source supports a spoken or written action but does not supply short usable words, or when Tim explicitly approves an adaptation. They must still follow the source's magical function.
 
 ## Agent extraction posture
 
@@ -46,7 +80,8 @@ Agents may extract:
 - exact material/action labels;
 - short wording anchors that help preserve ritual force;
 - close summaries of the source ritual’s structure, materials, sequence, purpose, and magical function;
-- notes that exact source wording is ritually important and should be preserved through runtime `ritualWords` or private excerpt support.
+- notes that exact source wording is ritually important and should be preserved inline in the ritual body when short enough, or through private excerpt support when longer/substantial;
+- `ritualWords` metadata that tracks the operative wording mode, source location, context, and review dependency.
 
 Agents should not reproduce in generated public repo files:
 
@@ -89,7 +124,7 @@ ritualWords?: {
 }[];
 ```
 
-Use `source_exact_short` when a short operative wording can be preserved directly in the committed record with attribution and without substituting for the source.
+Use `source_exact_short` when a short operative wording of 20 words or fewer can be preserved directly in the committed record with attribution and without substituting for the source.
 
 Use `private_source_excerpt` when the exact source wording is longer, distinctive, or substantially the source’s authored ritual text.
 
@@ -171,7 +206,7 @@ sourceTextPolicy: {
     "unavailable_by_default",
     "not_recommendation_eligible_until_human_review"
   ];
-  notes: "Author-provided operative ritual words should be preserved when feasible. Short operative wording may be stored directly when non-substitutive and attributed. Longer or substantial source wording should use private excerpt support rather than generic paraphrase."
+  notes: "Author-provided operative ritual words should be preserved when feasible. Short operative wording may be stored directly in presentation.practice and tracked as ritualWords.source_exact_short when non-substitutive and attributed. Longer or substantial source wording should use private excerpt support rather than generic paraphrase."
 }
 ```
 
@@ -211,16 +246,16 @@ For modern copyrighted sources, distinguish between:
 
 1. mechanics extraction;
 2. non-operative surrounding instructions rewritten into Moon & Table voice;
-3. exact short operative ritual words preserved directly where feasible;
-4. longer or substantial exact wording handled through private excerpt support.
+3. exact short operative ritual words preserved directly in the ritual body where feasible and tracked as ritualWords.source_exact_short;
+4. longer or substantial exact wording handled through private excerpt support and tracked as ritualWords.private_source_excerpt.
 
-Research agents should not reproduce long copyrighted passages in generated public repo files. However, agents must not erase, downgrade, or generically paraphrase verbal, recipe, prayer, blessing, invocation, incantation, spell, prompt, or meditation material. Instead, classify it and preserve it through `ritualWords` or private excerpt support.
+Research agents should not reproduce long copyrighted passages in generated public repo files. However, agents must not erase, downgrade, or generically paraphrase verbal, recipe, prayer, blessing, invocation, incantation, spell, prompt, or meditation material. Instead, classify it and preserve it inline when short enough or through private excerpt support when longer/substantial.
 
 Agents may extract exact short phrases, questions, rite titles, spoken cues, blessing names, invocation cues, and wording anchors when they are ritually important.
 
 Agents may closely summarize or rewrite surrounding instructions while preserving the source’s structure, materials, sequence, carrier, purpose, operative words, and magical force.
 
-When exact wording is important but too long or substantial for direct public repo storage, use `ritualWords.mode = "private_source_excerpt"`, give the source page/section, and explain why the exact wording matters.
+When exact wording is important but too long or substantial for direct public repo storage, use ritualWords.mode = "private_source_excerpt", give the source page/section, and explain why the exact wording matters.
 ```
 
 ## Coordinator instruction
@@ -231,7 +266,8 @@ The correct handling is:
 
 - preserve words as valid Ritual mechanics;
 - preserve recipes as valid Ritual mechanics;
-- preserve short exact operative wording where feasible;
+- preserve short exact operative wording inline where feasible;
+- track operative wording with `ritualWords` metadata;
 - closely summarize the ritual structure and magical function;
 - identify exact-wording locations when exact phrasing matters;
 - use private excerpt keys for longer/substantial wording;
