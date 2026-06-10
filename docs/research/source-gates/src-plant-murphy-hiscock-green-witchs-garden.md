@@ -130,6 +130,6 @@ Preserved for planning memory only. These sources are not gated here.
 
 ## Final recommendation
 
-`approve_for_extraction_with_limits`
+`approved_for_extraction_with_limits`
 
 Why: This source directly supports Moon & Table's plant-driven household ritual gap. It offers actual plant-as-primary-carrier mechanics: indoor/outdoor/container/window plant practice, plant tending, plant welcome, plant blessing, plant observation, plant journaling, seasonal plant marking, harvest gratitude, garden meditation, and living plant energy work. The limits are necessary because the source also contains gardening manual content, plant correspondences, recipes, smoke/oil/topical/ingestion material, medicinal claims, outdoor-only practices, and spirit/deity/familiar material that should not move directly into normal Moon & Table rituals without review.
