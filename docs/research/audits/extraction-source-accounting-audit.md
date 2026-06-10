@@ -2,7 +2,7 @@
 
 Date: 2026-06-10
 
-Parent issue: TBD
+Parent issue: #335
 
 ## Why this audit exists
 
@@ -63,254 +63,196 @@ connecting
 
 Do not force unsupported cells. Do record weak/unsupported cells honestly.
 
-## Packets in scope
+## Verified decisions
 
-### Active packets being repaired in-place
+### #331 — Green Witch's Garden plant household practice
 
-These are already active and should be fixed inside their existing issues before PM closeout:
-
-| Issue | Packet | Current action |
-| ---: | --- | --- |
-| #331 | `docs/research/ritual-candidates/packet-green-witchs-garden-plant-household-practice.md` | Send back for complete approved-scope accounting. |
-| #333 | `docs/research/ritual-candidates/packet-woodward-kitchen-vessel-magic.md` | Send back for complete approved-scope accounting. |
-| #334 | `docs/research/ritual-candidates/packet-whitehurst-flower-table-magic.md` | Send back for complete approved-scope accounting. |
-
-### Older completed packets to audit/repair
-
-| Issue | Packet | Source |
-| ---: | --- | --- |
-| #276 | `docs/research/ritual-candidates/packet-candlelight-buckland-pilot.md` | Raymond Buckland, *Practical Candleburning Rituals* |
-| #278 | House Witch packet path to verify from issue/file | Arin Murphy-Hiscock, *The House Witch* |
-| #285 | `docs/research/ritual-candidates/packet-moon-book-lunar-cycle.md` | Sarah Faith Gottesdiener, *The Moon Book* |
-| #291 | `docs/research/ritual-candidates/packet-magical-household-domestic-threshold-altar.md` | Scott Cunningham & David Harrington, *The Magical Household* |
-| #298 | `docs/research/ritual-candidates/packet-anand-connection.md` | Margot Anand, *The Art of Sexual Magic* |
-| #300 | `docs/research/ritual-candidates/packet-saint-thomas-sex-witch.md` | Sophie Saint Thomas, *Sex Witch* |
-| #315 | `docs/research/ritual-candidates/packet-dominguez-practical-astrology.md` | Ivo Dominguez Jr., *Practical Astrology for Witches and Pagans* |
-
-## Preliminary classifications
-
-These are PM triage classifications based on prior reviews, issue scope, and packet behavior. They should be verified by reading each packet and its controlling source gate before creating repair issues.
-
-### #276 — Buckland candlelight pilot
-
-Preliminary classification: `supplemental_accounting_likely`
+Verified decision: `no_action`
 
 Reason:
 
-The Buckland packet began as a candlelight carrier pilot. It may be broad across candlelight purposes, but it was still carrier-pilot framed rather than full approved-source accounting. It likely accounts for candlelight well, but may not fully account for non-candle ritual mechanics, words, table, vessel, body, or threshold elements that appear inside the approved source.
+The supplemented packet has been accepted as complete approved-scope source accounting for the living plant / tending / household plant practice lane.
 
-Likely missing / under-accounted families to verify:
+Authoring/import prep:
 
 ```text
-non-candle ritual containers
-spoken/prayer/charm structures as private excerpts
-paper/petition mechanics
-object/table setup mechanics
-closing/integration patterns
-held/rejected coercive/prosperity/protection variants by source family
-all approved source ranges beyond the pilot carrier cells
+All candidate_extract_now records move into Ritual authoring/import prep.
+Candidate_extract_later records remain in the later queue.
+Held/rejected/source-note-only records keep their dispositions.
 ```
 
-Recommended action: `audit_then_supplement_if_needed`
+### #333 — Woodward kitchen vessel magic
 
-### #278 — House Witch hearth/home/kitchen/threshold
-
-Preliminary classification: `supplemental_accounting_likely`
+Verified decision: `no_action`
 
 Reason:
 
-House Witch was an early pilot and may not have been held to the now-corrected complete-accounting standard. It likely covered hearth/home/kitchen/threshold well enough for pilot purposes, but may under-account household memory, vessel/kept-object practices, table practices, doorway routines, repeated household tending, and source-note/private-excerpt rows.
+The supplemented packet has been accepted as complete approved-scope source accounting for the kitchen / vessel / table / everyday domestic magic lane.
 
-Likely missing / under-accounted families to verify:
+Authoring/import prep:
 
 ```text
-household memory / hearth memory
-kept objects and household vessels
-doorway/threshold routines beyond protection
-words/spoken blessing mechanics
-seasonal/repeated home-tending patterns
-kitchen table/vessel overlap with Woodward
-held/rejected oil/smoke/ingestion/fire material
+All candidate_extract_now records move into Ritual authoring/import prep.
+Candidate_extract_later records remain in the later queue.
+Held/rejected/source-note-only records keep their dispositions.
 ```
 
-Recommended action: `audit_then_supplement_if_needed`
+### #334 — Whitehurst flower table magic
 
-### #285 — Moon Book lunar-cycle source
-
-Preliminary classification: `supplemental_accounting_needed`
+Verified decision: `no_action`
 
 Reason:
 
-Moon Book is timing-rich and ritual-rich. It almost certainly needs both complete ritual-source accounting and reusable lunar timing/source-note cards. #319 already exists to retrofit Moon Book into lunar timing cards, but that does not necessarily repair candidate-source accounting.
+The supplemented packet has been accepted as complete approved-scope source accounting for the flower / table / vase / message / memory / blessing lane.
 
-Likely missing / under-accounted families to verify:
-
-```text
-full moon phase / lunation ritual arc
-phase-specific practices beyond representative candidates
-journaling/reflection prompts
-body/words/table/vessel/candle practices by phase
-repetition and cycle follow-up practices
-private-excerpt prompts / exact wording needs
-lunar timing cards and why-this-moment patterns
-held/rejected manifestation, therapy, medical, or deterministic claims
-```
-
-Recommended action: `supplemental_accounting_needed`, coordinated with #319.
-
-### #291 — Magical Household domestic / threshold / altar
-
-Preliminary classification: `supplemental_accounting_likely`
-
-Reason:
-
-Magical Household is a rich domestic ritual source. The packet was accepted as an inventory-aware extraction packet, but its title/scope suggest domestic/threshold/altar emphasis rather than full approved-source accounting. Needs verification before runtime import.
-
-Likely missing / under-accounted families to verify:
+Authoring/import prep:
 
 ```text
-household blessing and clearing
-threshold/doorway rites
-altar/table setup
-vessel/bowl/cup practices
-spoken charms/prayers/private excerpt references
-repeated home-care rituals
-object placement/return
-held/rejected herb/incense/oil/fire practices
-all source items with dispositions
+All candidate_extract_now records move into Ritual authoring/import prep.
+Candidate_extract_later records remain in the later queue.
+Held/rejected/source-note-only records keep their dispositions.
+Material-form choices are user/household choices; do not turn them into blanket product prohibitions.
 ```
-
-Recommended action: `audit_then_supplement_if_needed`
-
-### #298 — Anand connection
-
-Preliminary classification: `supplemental_accounting_likely`
-
-Reason:
-
-The Anand packet was accepted for connection/intimacy ritual work, but review notes emphasized selected ritual containers: Magic Circle, altar/candle/table setup, shared symbol, shared intention, spoken purpose, witnessing, greeting, closing, and journal/memory. It likely did not fully account for all approved connection ritual mechanics within the source limits.
-
-Likely missing / under-accounted families to verify:
-
-```text
-all approved ritual container structures
-shared intention and spoken purpose variants
-altar/candle/table/symbol variants
-heart-connection and witnessing mechanics
-ritual greeting/closing/integration patterns
-repeated practice/journal follow-up
-body/energy practices held or converted to source notes
-private-excerpt references for exact practices
-held/rejected workshop/neotantra/technique-heavy material
-```
-
-Recommended action: `audit_then_supplement_if_needed`
 
 ### #300 — Saint Thomas connection source
 
-Preliminary classification: `supplemental_accounting_needed`
+Verified decision: `no_action`
 
 Reason:
 
-Saint Thomas was accepted as a packet path, but there were known cleanup issues: canonical path mismatch and a typo. More importantly, the source is broad: candle spell architecture, glamour/body blessing, desire voicing, bath/bedroom/love table, relationship repair, vessel/jar work, protection/uncrossing/boundaries. This likely needs stronger source-complete accounting across approved limits.
+The Saint Thomas packet was flagged as likely needing supplemental accounting because the source is broad and had known cleanup issues. After reading the source gate and packet, the packet already accounts for the gate-approved lanes at research level: candle spell architecture, glamour/body blessing, desire voicing, bath/bedroom/love table, relationship repair, vessel/jar work, protection/uncrossing/boundaries, private-excerpt needs, and held/rejected material.
 
-Known cleanup:
-
-```text
-Actual packet path: docs/research/ritual-candidates/packet-saint-thomas-sex-witch.md
-Issue #300 requested: docs/research/ritual-candidates/packet-saint-thomas-connection.md
-Known typo: doorwav -> doorway in coverage table
-```
-
-Likely missing / under-accounted families to verify:
+Metrics from packet:
 
 ```text
-full candle ritual architecture
-beauty/glamour/body blessing
-desire/relationship voicing
-love table/bedroom/bath as ritual settings
-relationship repair and boundaries
-protection/uncrossing/boundary mechanics
-vessel/jar mechanics beyond protection
-private-excerpt references for spells/words
-held/rejected coercive/unsafe/body/oil/bath material
+source_items_inventoried: 98
+candidate_extract_now: 45
+candidate_extract_later: 26
+private_excerpt_reference: 1
+items_with_private_excerpt_recommended: 49
+source_note_only: 3
+context_only: 0
+hold: 19
+reject: 4
 ```
 
-Recommended action: `supplemental_accounting_needed`, plus path/typo cleanup.
+Authoring/import prep:
+
+```text
+All 45 candidate_extract_now records move into Ritual authoring/import prep.
+The 26 candidate_extract_later records remain in the later decision queue.
+The 19 held and 4 rejected records keep their dispositions.
+```
+
+Cleanup:
+
+```text
+Fix `doorwav` -> `doorway` during the next packet cleanup/import-prep edit.
+Canonical path remains: docs/research/ritual-candidates/packet-saint-thomas-sex-witch.md
+```
+
+No supplemental source-accounting issue needed.
+
+### #285 — Moon Book lunar-cycle source
+
+Verified decision: `no_action` for extraction accounting; `separate_timing_card_work` remains.
+
+Reason:
+
+The Moon Book packet is already a repaired expanded inventory. It explicitly replaces an earlier under-extracted packet and treats extraction as inventory-first and depth-seeking. It covers the source-gate lanes for lunar-cycle structure, new/waxing/full/waning/dark moon mechanics, lunar journaling and cycle tracking, intention, release, blessing, gratitude, protection, reflection, moon altar, candle, vessel/water, words, and body-based mechanics.
+
+Metrics from packet:
+
+```text
+source_items_inventoried: 112
+candidate_extract_now: 64
+candidate_extract_later: 10
+private_excerpt_reference: 0
+items_with_private_excerpt_recommended: 61
+source_note_only: 15
+context_only: 8
+hold: 15
+reject: 0
+```
+
+Authoring/import prep:
+
+```text
+All 64 candidate_extract_now records move into Ritual authoring/import prep.
+The 10 candidate_extract_later records remain in the later decision queue.
+The 15 held records keep their dispositions.
+```
+
+Timing-card work:
+
+```text
+Moon Book extraction accounting is accepted.
+Reusable lunar timing/source-note card work remains separate under #319 / #318-style timing model work.
+Do not treat timing-card work as a reason to reopen extraction accounting.
+```
+
+No supplemental source-accounting issue needed.
 
 ### #315 — Dominguez practical astrology
 
-Preliminary classification: `supplemental_accounting_needed_but_split`
+Verified decision: `no_action` for extraction accounting; `separate_timing_card_work` remains.
 
 Reason:
 
-Dominguez produced a good extraction packet with embedded timing/source-note infrastructure, but it did not produce standalone timing-card artifacts. #320 exists to convert Dominguez into astrology timing cards after #318. However, candidate-source accounting may also need supplementation if the packet over-focused on selected timing families.
+Dominguez was flagged as split because it overlaps timing/source-note infrastructure. After reading the source gate and packet, the packet already accounts for the gate-approved extraction lanes at research level: planet families, planetary days/hours, Moon phase/sign/VOC/aspect timing, glyph-as-marking, timing adaptation, retrograde/imperfect timing support, magick squares as source-note/private-excerpt material, aura/body/spirit/talisman boundaries, and held/rejected material.
 
-Likely missing / under-accounted families to verify:
+Metrics from packet:
 
 ```text
-planetary family mechanics beyond selected Sun/Moon/Mercury/Venus/Jupiter/Saturn examples
-planetary day/hour variants
-Moon sign/aspect/VOC/timing adaptation variants
-retrograde and imperfect timing support
-aspect-weather source notes
-glyph-as-marking variants
-magick square source-note/private-excerpt handling
-aura/body/spirit/talisman sections held with explicit dispositions
-all timing source-note records coordinated with #318/#320
+source_items_inventoried: 53
+candidate_extract_now: 22
+candidate_extract_later: 13
+private_excerpt_reference: 2
+items_with_private_excerpt_recommended: 20
+source_note_only: 10
+context_only: 3
+hold: 5
+reject: 0
 ```
 
-Recommended action: `defer_until_318_for_timing_cards`, then `supplemental_accounting_if_candidate_packet_still_thin`.
-
-## Recommended repair order
-
-1. Finish active packet supplements first: #333, #331, #334.
-2. Do not advance #287 bulk import until this audit is acted on.
-3. Repair highest-risk older packets first:
+Authoring/import prep:
 
 ```text
-1. #300 Saint Thomas
-2. #285 Moon Book
-3. #315 Dominguez, after #318 timing-card model
-4. #291 Magical Household
-5. #298 Anand
-6. #278 House Witch
-7. #276 Buckland
+All 22 candidate_extract_now records move into Ritual authoring/import prep.
+The 13 candidate_extract_later records remain in the later decision queue.
+The 5 held records keep their dispositions.
 ```
 
-Rationale:
-
-- Saint Thomas has known cleanup issues and broad source scope.
-- Moon Book and Dominguez affect the timing engine and explanation layer.
-- Magical Household is broad domestic infrastructure.
-- Anand and House Witch are important but likely narrower or already partially repaired.
-- Buckland may be mostly adequate for candlelight carrier coverage but should still be audited.
-
-## Standard supplement issue template
-
-Use this pattern for any packet requiring repair:
+Timing-card work:
 
 ```text
-Title: Supplement <SOURCE> packet with complete approved-scope accounting
+Dominguez extraction accounting is accepted.
+Standalone astrology timing/source-note card work remains separate under #318/#320.
+Do not treat #318/#320 as extraction repair.
+```
 
-Scope:
-Do not discard the existing packet. Keep existing candidates. Supplement the packet with complete source accounting across the approved source-gate scope.
+No supplemental source-accounting issue needed.
 
-This is not a representative-sample extraction. This packet must provide a complete accounting of all ritual mechanics within the approved source-gate scope. Candidate activation may be staged later, but source accounting must be complete now.
+## Packets still to verify
 
-Tasks:
-1. Re-read the controlling source gate.
-2. Re-read the existing packet.
-3. Identify all approved-scope source mechanics not yet inventoried.
-4. Add missing source inventory rows with dispositions.
-5. Add missing candidate records only where warranted.
-6. Add candidate_extract_later / source_note_only / private_excerpt_reference / hold / reject rows where runtime candidate extraction is not appropriate.
-7. Update metrics, coverage records, variant/split ledger, rejected/held leads, gap notes, backlog, and validation checklist.
-8. Keep everything research-only/draft.
+| Issue | Packet | Source | Current action |
+| ---: | --- | --- | --- |
+| #291 | `docs/research/ritual-candidates/packet-magical-household-domestic-threshold-altar.md` | Scott Cunningham & David Harrington, *The Magical Household* | Audit against source gate. |
+| #298 | `docs/research/ritual-candidates/packet-anand-connection.md` | Margot Anand, *The Art of Sexual Magic* | Audit against source gate. |
+| #278 | House Witch packet path to verify from issue/file | Arin Murphy-Hiscock, *The House Witch* | Audit against source gate. |
+| #276 | `docs/research/ritual-candidates/packet-candlelight-buckland-pilot.md` | Raymond Buckland, *Practical Candleburning Rituals* | Audit against source gate; supplement only if evidence supports it. |
 
-Do not create runtime Ritual records. Do not mark anything reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.
+## Current repair order
+
+```text
+1. #291 Magical Household
+2. #298 Anand
+3. #278 House Witch
+4. #276 Buckland
 ```
 
 ## Operating decision
 
-Until this audit is resolved, #287 should be considered blocked or at least unsafe to execute broadly. It can be revised later to import only packets that pass the source-accounting check.
+Do not advance #287 bulk import broadly until this audit is resolved. It can be revised later to import only packets that pass the source-accounting check.
+
+Accepted source-accounting packets should feed a separate Ritual authoring/import-prep queue. That queue should carry all `candidate_extract_now` records forward, not a hand-picked subset.
