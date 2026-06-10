@@ -226,7 +226,7 @@ sourceTextPolicy: {
 }
 ```
 
-`sourceTextPolicy` is a source-gate policy block. It is not a candidate-level extraction object and does not replace `ritualWords`.
+`sourceTextPolicy` is a source-gate policy block only. It is not a candidate-level extraction object, does not belong in candidate records, and does not replace `ritualWords`.
 
 ## Anti-sanitizing rule
 
