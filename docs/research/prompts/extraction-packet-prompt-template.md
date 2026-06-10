@@ -94,7 +94,7 @@ The source rite inventory must list every ritual-like item you find in the appro
 - cleansing practices;
 - consecrations;
 - correspondence material that includes action;
-- source material that should become private excerpt references.
+- source material whose longer exact wording should be tracked through `ritualWords.mode = "private_source_excerpt"`.
 
 For every source item, assign a disposition:
 
@@ -105,6 +105,8 @@ For every source item, assign a disposition:
 - `context_only`
 - `hold`
 - `reject`
+
+`private_excerpt_reference` is an inventory disposition. It is not a candidate-level object and does not replace `ritualWords`.
 
 If the packet becomes too large, split the candidate records into batches, but still provide the source rite inventory and remaining extraction backlog.
 
