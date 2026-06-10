@@ -1,6 +1,6 @@
 # Moon & Table house voice guide
 
-Status: `working_v0.1`
+Status: `working_v0.2`
 
 Parent issue: #344
 
@@ -105,14 +105,8 @@ For direct source rituals:
 ```text
 Preserve the source architecture closely.
 Do not simplify unless the source itself provides an adaptation or Tim explicitly approves one.
-Use the source's close.
+Preserve the source close when given.
 ```
-
-Examples:
-
-- House Witch hearth recognition.
-- House Witch doorstep cleansing.
-- Buckland candle release / bad-habit ritual.
 
 ### 2. `source_backed_moon_and_table_form`
 
@@ -127,31 +121,15 @@ Moon & Table-authored ritual form:
 
 The Ritual may be usable and source-backed, but it must not pretend that every step, phrase, prop, or close came directly from the source.
 
-For source-backed Moon & Table forms, Moon & Table may author sequence, framing, and a close only from actions, locations, timing, or materials already supported by the source.
+For source-backed Moon & Table forms, Moon & Table may author sequence and framing from actions, locations, timing, or materials already supported by the source.
 
-Do not add new props, materials, correspondences, ritual objects, deity/spirit elements, closing gestures, or symbolic mechanics unless the source supports them.
-
-Example:
-
-- Moon Book full moon gathering/witnessing: source-backed core includes full moon gathering, sharing/listening, being lovingly witnessed, and honoring growth and dreams. A compact two-person household form may be Moon & Table-authored, but it must not add a center object, table prop, candle, phrase, or close unless the source supports that action or object.
+Do not add new props, materials, correspondences, ritual objects, deity/spirit elements, or symbolic mechanics unless the source supports them.
 
 ### 3. `metadata_symbolism_only`
 
 Use when the source provides symbolism, correspondences, theory, or timing context but not enough action to support a whole Ritual.
 
-These items may become:
-
-```text
-recommendation metadata
-timing hooks
-why-this-fits ingredients
-source notes
-future extraction leads
-```
-
-They should not become Rituals unless another source-backed action makes them whole.
-
-A `metadata_symbolism_only` item should not produce an importable runtime Ritual candidate by itself.
+`metadata_symbolism_only` may appear in the source inventory, source notes, or `candidate_extract_later` backlog. It must not be used for `candidate_extract_now`.
 
 ## Ritual body rule
 
@@ -168,7 +146,7 @@ The ritual body must read as a complete practice on its own. It must include:
 ```text
 intentional open
 concrete action or sequence
-spoken or written words where source-supported or Moon & Table-authored
+spoken or written words where source-supported or Moon & Table-authored under the operative-words rule
 intentional close
 ```
 
@@ -176,21 +154,19 @@ Do not create separate required `opening` or `closing` fields unless the runtime
 
 The opening and close live inside the ritual body.
 
-A close may be simple, but it must be source-supported for source-backed extraction:
+For direct source rituals, preserve the source close when given.
 
-```text
-snuff the candle
-bow
-pour out the wash
-turn off the light
-close the door
-leave the threshold alone
-record the memory
-```
+If the source does not give a close, the extractor may author a simple close that completes the source-supported action without adding unsupported props, materials, correspondences, deity/spirit elements, or symbolic mechanics.
 
-For direct source rituals, use the source close.
+Allowed authored closes complete something already present in the source-backed practice, such as:
 
-For source-backed Moon & Table forms, author a close only from source-supported actions, locations, timing, or materials.
+- pouring out a wash when wash water was used;
+- letting a doorway dry after threshold washing;
+- closing a journal when writing was used;
+- extinguishing a candle when candle flame was used;
+- thanking a partner when shared witnessing was source-supported.
+
+Do not invent a decorative close.
 
 Without a close, the candidate reads like an activity, not a Ritual.
 
@@ -216,25 +192,23 @@ Definition:
 short source phrase = 20 words or fewer
 ```
 
-Short source phrases used inside Rituals may be brought directly into the ritual body and classified as `source_exact_short` with source location.
+If the exact operative source phrase is 20 words or fewer, include it inline in the ritual body and add `ritualWords` metadata with `mode: source_exact_short`, source location, use context, and citation label.
 
-Longer blessings, prayers, incantations, full scripts, prompt sets, meditations, recipes, or distinctive passages over 20 words should use `private_source_excerpt`.
+If the exact operative source wording is more than 20 words, do not reproduce it in the public packet. Add a `ritualWords` record with `mode: private_source_excerpt`, source location, use context, citation label, and a note explaining why the exact words matter.
 
-Do not route short source phrases into private excerpt handling by default.
+Do not create a generic Moon & Table replacement for source-provided operative words unless the source does not provide usable words or Tim explicitly approves adaptation.
 
-Do not remove source-provided operative words merely because they are exact words.
+Do not create a separate `sourceTextUse` or `privateExcerptSupport` block for normal extraction. `ritualWords` is the operative-word tracking surface.
 
 Do not flatten prayer, blessing, charm, incantation, petition, or spoken formula into "state an intention."
 
 Moon & Table original operative words are allowed only when the source supports a spoken or written action but does not supply short usable words, or when Tim explicitly approves an adaptation. They must still follow the source's magical function.
 
-## Props, materials, and closing gestures rule
+## Props, materials, and decorative close rule
 
-Do not add props, objects, table items, candles, bowls, stones, flowers, vessels, written notes, center objects, materials, or closing gestures unless they are backed by the source.
+Do not add props, objects, table items, candles, bowls, stones, flowers, vessels, written notes, center objects, materials, correspondences, deity/spirit elements, or symbolic mechanics unless they are backed by the source or Tim explicitly approves a separate adaptation.
 
 Moon & Table likes tables, vessels, candles, flowers, and household objects, but those should not be added just because they fit the product aesthetic.
-
-If the source does not support a prop, material, or closing gesture, do not add it.
 
 If a new prop or close would make the Ritual better, hold it as a possible future household adaptation rather than including it in the source-backed candidate.
 
@@ -383,21 +357,28 @@ Do not use the question field for multi-part reflection prompts unless the sourc
 
 For Choose with me, why-this-fits should be assembled from actual runtime context.
 
-Extraction packets should provide ingredients, not a generic static paragraph.
-
-Ingredients may include:
+Extraction packets should use this structure:
 
 ```text
-check-in hooks
-timing hooks
-lunar / planetary / seasonal influence notes
-capacity notes
-audience notes
-material / place / carrier fit
-purpose fit
-source-backed rationale
-not-for / hold notes
+whyThisFitsIngredients:
+  checkInHooks:
+  timingHooks:
+  lunarPlanetarySeasonalHooks:
+  capacityHooks:
+  audienceHooks:
+  materialPlaceCarrierPurposeFit:
+  sourceBackedRationale:
+  notForOrHoldNotes:
+
+howThisWasChosenIngredients:
+  primarySelectionSignals:
+  secondarySelectionSignals:
+  exclusionSignals:
+  timingSignal:
+  confidenceNotes:
 ```
+
+`howThisWasChosenIngredients` is packet/recommendation input only unless a later runtime schema issue adds a field.
 
 Do not use why-this-fits as a source summary.
 
@@ -596,8 +577,7 @@ Use this checklist before merging any source-specific re-extraction packet.
 - [ ] Is this candidate classified with `ritualizationType`: `direct_source_ritual`, `source_backed_moon_and_table_form`, or `metadata_symbolism_only`?
 - [ ] If it is a direct source ritual, are all source materials, counts, placements, words, sequence, timing, repetition, and close preserved?
 - [ ] If it is a source-backed Moon & Table form, does the packet clearly separate source-backed core from Moon & Table-authored ritual form?
-- [ ] If it is a source-backed Moon & Table form, are all authored sequence/close choices grounded in source-supported actions, locations, timing, or materials?
-- [ ] If it is metadata/symbolism only, has it been kept out of Ritual candidate status?
+- [ ] If it is metadata/symbolism only, has it been kept out of `candidate_extract_now`?
 
 ### Runtime field completeness
 
@@ -606,19 +586,19 @@ Use this checklist before merging any source-specific re-extraction packet.
 - [ ] Ritual body includes an intentional open.
 - [ ] Ritual body includes concrete source-supported action / sequence.
 - [ ] Ritual body includes spoken/written words where appropriate.
-- [ ] Ritual body includes an intentional source-supported close.
+- [ ] Ritual body includes an intentional close.
 - [ ] Intention is source-shaped and not pejorative/generic.
 - [ ] BestWindow preserves required timing and does not weaken core timing.
 - [ ] QuestionToCarry is simple and tied to the ritual action.
-- [ ] Why-this-fits / how-this-was-chosen ingredients are structured for runtime use.
+- [ ] WhyThisFitsIngredients and howThisWasChosenIngredients use the required structure.
 
 ### Source fidelity
 
 - [ ] No source material counts were reduced without explicit source support or Tim approval.
 - [ ] No source materials or props were omitted without reason.
-- [ ] No props/materials/closing gestures were added unless backed by the source.
+- [ ] No props/materials/decorative closing gestures were added unless backed by the source or Tim-approved.
 - [ ] Source-provided short phrases of 20 words or fewer are preserved inline where useful.
-- [ ] Longer source wording uses private excerpt support.
+- [ ] Longer source wording uses `private_source_excerpt` ritualWords metadata.
 - [ ] Moon & Table original operative words are used only when the source supports spoken/written action but does not supply usable short words, or when Tim has approved adaptation.
 - [ ] Source magical logic is preserved.
 - [ ] Approved examples in this guide are not being copied as complete candidate records.
