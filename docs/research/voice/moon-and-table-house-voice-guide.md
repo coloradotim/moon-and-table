@@ -1,12 +1,24 @@
 # Moon & Table house voice guide
 
-Status: `working_v0`
+Status: `working_v0.1`
 
 Parent issue: #344
 
 This guide captures Tim's reviewed house-voice decisions for Moon & Table source-backed Ritual writing and extraction QA.
 
 It is allowed to evolve, but it controls re-extraction work unless Tim explicitly overrides it.
+
+## How to use this guide
+
+This guide controls voice and extraction QA. It does not replace the canonical extraction packet model created under #345.
+
+Use this guide before #345 and before any source-specific re-extraction issue.
+
+Approved examples in this guide are voice, architecture, and QA examples. They are not complete import-ready candidate records unless explicitly labeled as such.
+
+Do not copy a partial approved example as a complete extraction packet.
+
+Do not force every source into candle, threshold, table, vessel, or house-light language. Use the source's own carriers, objects, actions, and ritual logic.
 
 ## One-sentence standard
 
@@ -26,6 +38,8 @@ Use this order when extracting, writing, reviewing, or importing Ritual candidat
 ```
 
 Do not use house voice as permission to replace source ritual structure with atmosphere, wellness phrasing, relationship advice, or symbolic summary.
+
+If source architecture is unsafe, coercive, medical/legal/financial, culturally sensitive, or outside Moon & Table's product lane, do not silently adapt around it. Mark the candidate `hold_before_import` or split a clearly supported safe variant only if the source supports that variant.
 
 ## Source architecture rule
 
@@ -73,9 +87,16 @@ If the magical logic is unclear, hold the candidate for source review rather tha
 
 ## Three source types
 
-Extraction packets and QA should classify each Ritual candidate as one of these source types.
+Extraction packets and QA must classify each Ritual candidate with `ritualizationType`:
 
-### 1. Direct source ritual
+```text
+ritualizationType:
+  direct_source_ritual
+  source_backed_moon_and_table_form
+  metadata_symbolism_only
+```
+
+### 1. `direct_source_ritual`
 
 Use when the source gives a concrete rite with materials, steps, words, gestures, timing, repetition, or close.
 
@@ -84,6 +105,7 @@ For direct source rituals:
 ```text
 Preserve the source architecture closely.
 Do not simplify unless the source itself provides an adaptation or Tim explicitly approves one.
+Use the source's close.
 ```
 
 Examples:
@@ -92,7 +114,7 @@ Examples:
 - House Witch doorstep cleansing.
 - Buckland candle release / bad-habit ritual.
 
-### 2. Source-backed Moon & Table form
+### 2. `source_backed_moon_and_table_form`
 
 Use when the source gives a practice family, ritual pattern, or set of practices but not a single precise step-by-step ritual.
 
@@ -105,11 +127,15 @@ Moon & Table-authored ritual form:
 
 The Ritual may be usable and source-backed, but it must not pretend that every step, phrase, prop, or close came directly from the source.
 
+For source-backed Moon & Table forms, Moon & Table may author sequence, framing, and a close only from actions, locations, timing, or materials already supported by the source.
+
+Do not add new props, materials, correspondences, ritual objects, deity/spirit elements, closing gestures, or symbolic mechanics unless the source supports them.
+
 Example:
 
-- Moon Book full moon gathering/witnessing: source-backed core includes full moon gathering, sharing/listening, being lovingly witnessed, and honoring growth and dreams. A compact two-person table practice is Moon & Table-authored form.
+- Moon Book full moon gathering/witnessing: source-backed core includes full moon gathering, sharing/listening, being lovingly witnessed, and honoring growth and dreams. A compact two-person household form may be Moon & Table-authored, but it must not add a center object, table prop, candle, phrase, or close unless the source supports that action or object.
 
-### 3. Metadata / symbolism only
+### 3. `metadata_symbolism_only`
 
 Use when the source provides symbolism, correspondences, theory, or timing context but not enough action to support a whole Ritual.
 
@@ -124,6 +150,8 @@ future extraction leads
 ```
 
 They should not become Rituals unless another source-backed action makes them whole.
+
+A `metadata_symbolism_only` item should not produce an importable runtime Ritual candidate by itself.
 
 ## Ritual body rule
 
@@ -148,7 +176,7 @@ Do not create separate required `opening` or `closing` fields unless the runtime
 
 The opening and close live inside the ritual body.
 
-A close may be simple:
+A close may be simple, but it must be source-supported for source-backed extraction:
 
 ```text
 snuff the candle
@@ -156,12 +184,15 @@ bow
 pour out the wash
 turn off the light
 close the door
-touch the table once
 leave the threshold alone
 record the memory
 ```
 
-But it must be intentional. Without a close, the candidate reads like an activity, not a Ritual.
+For direct source rituals, use the source close.
+
+For source-backed Moon & Table forms, author a close only from source-supported actions, locations, timing, or materials.
+
+Without a close, the candidate reads like an activity, not a Ritual.
 
 ## Operative words and `ritualWords`
 
@@ -195,15 +226,17 @@ Do not remove source-provided operative words merely because they are exact word
 
 Do not flatten prayer, blessing, charm, incantation, petition, or spoken formula into "state an intention."
 
-## Props and materials rule
+Moon & Table original operative words are allowed only when the source supports a spoken or written action but does not supply short usable words, or when Tim explicitly approves an adaptation. They must still follow the source's magical function.
 
-Do not add props, objects, table items, candles, bowls, stones, flowers, vessels, written notes, or center objects unless they are backed by the source.
+## Props, materials, and closing gestures rule
+
+Do not add props, objects, table items, candles, bowls, stones, flowers, vessels, written notes, center objects, materials, or closing gestures unless they are backed by the source.
 
 Moon & Table likes tables, vessels, candles, flowers, and household objects, but those should not be added just because they fit the product aesthetic.
 
-If the source does not support a prop, do not add it.
+If the source does not support a prop, material, or closing gesture, do not add it.
 
-If a new prop would make the Ritual better, hold it as a possible future household adaptation rather than including it in the source-backed candidate.
+If a new prop or close would make the Ritual better, hold it as a possible future household adaptation rather than including it in the source-backed candidate.
 
 ## Timing rule
 
@@ -370,7 +403,25 @@ Do not use why-this-fits as a source summary.
 
 Do not say the ritual fits because it is generally nice, grounding, or meaningful. Explain the real match: purpose, carrier, timing, capacity, audience, and source architecture.
 
+## Import readiness labels
+
+Extraction QA may use these packet-level candidate labels:
+
+```text
+approved_for_mechanical_import
+needs_packet_correction
+hold_before_import
+```
+
+`approved_for_mechanical_import` means Codex may mechanically import the packet-approved text as a draft source-backed Ritual record under #287.
+
+It does not mean reviewed, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.
+
+Do not treat import approval as product approval.
+
 ## Approved examples
+
+Approved examples are not full candidate records. They show voice, source architecture preservation, and QA direction.
 
 ### Cleanse the Doorstep
 
@@ -542,9 +593,10 @@ Use this checklist before merging any source-specific re-extraction packet.
 
 ### Source classification
 
-- [ ] Is this candidate classified as `direct_source_ritual`, `source_backed_moon_and_table_form`, or `metadata_symbolism_only`?
+- [ ] Is this candidate classified with `ritualizationType`: `direct_source_ritual`, `source_backed_moon_and_table_form`, or `metadata_symbolism_only`?
 - [ ] If it is a direct source ritual, are all source materials, counts, placements, words, sequence, timing, repetition, and close preserved?
 - [ ] If it is a source-backed Moon & Table form, does the packet clearly separate source-backed core from Moon & Table-authored ritual form?
+- [ ] If it is a source-backed Moon & Table form, are all authored sequence/close choices grounded in source-supported actions, locations, timing, or materials?
 - [ ] If it is metadata/symbolism only, has it been kept out of Ritual candidate status?
 
 ### Runtime field completeness
@@ -554,7 +606,7 @@ Use this checklist before merging any source-specific re-extraction packet.
 - [ ] Ritual body includes an intentional open.
 - [ ] Ritual body includes concrete source-supported action / sequence.
 - [ ] Ritual body includes spoken/written words where appropriate.
-- [ ] Ritual body includes an intentional close.
+- [ ] Ritual body includes an intentional source-supported close.
 - [ ] Intention is source-shaped and not pejorative/generic.
 - [ ] BestWindow preserves required timing and does not weaken core timing.
 - [ ] QuestionToCarry is simple and tied to the ritual action.
@@ -564,10 +616,13 @@ Use this checklist before merging any source-specific re-extraction packet.
 
 - [ ] No source material counts were reduced without explicit source support or Tim approval.
 - [ ] No source materials or props were omitted without reason.
-- [ ] No props/materials were added unless backed by the source.
+- [ ] No props/materials/closing gestures were added unless backed by the source.
 - [ ] Source-provided short phrases of 20 words or fewer are preserved inline where useful.
 - [ ] Longer source wording uses private excerpt support.
+- [ ] Moon & Table original operative words are used only when the source supports spoken/written action but does not supply usable short words, or when Tim has approved adaptation.
 - [ ] Source magical logic is preserved.
+- [ ] Approved examples in this guide are not being copied as complete candidate records.
+- [ ] Source architecture that is unsafe, coercive, medical/legal/financial, culturally sensitive, or outside product boundaries is held rather than laundered into a softer ritual.
 
 ### House voice
 
@@ -576,6 +631,7 @@ Use this checklist before merging any source-specific re-extraction packet.
 - [ ] The candidate avoids generic wellness, therapy, productivity, horoscope, or relationship-advice voice.
 - [ ] The candidate avoids fake antiquarian/purple-prose grimoire voice.
 - [ ] The candidate avoids vague intention-setting when source-backed action exists.
+- [ ] The candidate does not force candle, threshold, table, vessel, or house-light language onto a source that uses other carriers.
 
 ### Metadata / import readiness
 
@@ -587,6 +643,7 @@ Use this checklist before merging any source-specific re-extraction packet.
 - [ ] Search metadata includes real materials, places, tags, and keywords.
 - [ ] Review flags capture private excerpt, source verification, material review, or product-boundary needs.
 - [ ] Candidate is explicitly marked `approved_for_mechanical_import`, `needs_packet_correction`, or `hold_before_import`.
+- [ ] `approved_for_mechanical_import` is not treated as direct-use, recommendation, reviewed, recommendable, or runtime-ready approval.
 
 ## Coordinator note
 
