@@ -4,226 +4,250 @@
 
 ```text
 Source ID: SRC-CONNECTION-ANAND-ART-SEXUAL-MAGIC
-Gate outcome: keep_candidate
-Registry status: candidate
-Extraction status: blocked_pending_source_gate
-May appear in candidate sourceIds: no
+Gate outcome: approved_for_extraction_with_limits
+Registry status: approved
+Extraction status: extraction_ready
+May appear in candidate sourceIds: yes
 Mechanics source: yes
 Safety constraint source: yes
-Canonical citation: Margot Anand, The Art of Sexual Magic. Tarcher, 1996. Exact edition and pagination must be verified from a legal full source copy before extraction.
-Edition / translation: English; edition not verified from the uploaded file.
-Access location: uploaded file 893961920-The-Art-of-Sexual-Magic-PDF.pdf.
-Legal copy reviewed: no. The uploaded file appears to be a Bookey summary / preview / quote / Q&A packet, not the full Margot Anand source text.
-Review depth: metadata, summary, preview, quote-list, and Q&A material only. No full source text reviewed.
-Page count and page-numbering notes: uploaded PDF has 136 PDF pages, but they are not original book pages. The file includes Bookey branding, ads, QR-code pages, summary sections, quotes, quizzes, and Q&A. Some quote sections refer to original page ranges, but those are not sufficient for extraction pagination.
-TOC reviewed: preview TOC reviewed from uploaded summary material.
-Excerpt boundaries reviewed: partial only. Exact full-source excerpt boundaries cannot be reviewed until Tim provides a legal full copy.
-Approved extraction ranges: none yet for extraction. Candidate ranges to inspect in a future full-source gate are listed below.
-Excluded extraction ranges: all extraction is blocked until full source copy review. Summary/preview material may be used only to decide whether to pursue the source.
-Allowed use: source-discovery and preliminary source-gate assessment only.
-Forbidden use: extraction, candidate creation, runtime use, direct-use eligibility, recommendation eligibility, copying exact practices from summary pages, relying on Bookey summary as source authority, medical/therapy claims, coercive romantic magic, target-specific attraction work, fertility claims, guaranteed manifestation claims, non-consensual or pressure-based partner practice.
+Canonical citation: Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, New York, 1996.
+Edition / translation: English; first Jeremy P. Tarcher / Putnam edition visible in uploaded scan; illustrated by Atma Priti.
+Access location: user-provided working PDF, _OceanofPDF.com_The_Art_of_Sexual_Magic_-_Margot_Anand.pdf.
+Legal copy reviewed: user-provided working copy reviewed; legal status not independently verified. The file includes OceanofPDF watermarking and an Internet Archive digitization page, so treat as a review copy.
+Review depth: full text / TOC / selected close inspection. Full PDF available with parsed text and rendered pages. Gate reviewed front matter, TOC, preface, Hints on Using This Book, and chapters relevant to ritual mechanics and connection/intimacy gaps.
+Page count and page-numbering notes: uploaded PDF has 494 PDF pages. Printed title/copyright/front matter appear on PDF pp. 1-15; printed page 1 begins around PDF p. 16. TOC lists printed ranges: Preface p. 1; Hints p. 5; Ch. 1 p. 11; Ch. 2 p. 39; Ch. 3 p. 81; Ch. 4 p. 119; Ch. 5 p. 155; Ch. 6 p. 197; Ch. 7 p. 239; Ch. 8 p. 279; Ch. 9 p. 319; Epilogue p. 363; Resources p. 369; Index p. 373. Future extraction should cite both PDF page and printed/chapter location where possible.
+TOC reviewed: yes.
+Excerpt boundaries reviewed: yes, at source-gate level. The source contains long exercises, staged rituals, partner scripts, guided imagery, practice menus, and explicit adult material that require private-excerpt handling and careful paraphrase.
+Approved extraction ranges: approved with limits; see approved ranges below.
+Excluded extraction ranges: explicit adult technique sections, therapy/healing-wound material, guaranteed manifestation claims, target-specific attraction/control, gender-essentialist or culturally sensitive tantric framing unless carefully adapted; see excluded/limited ranges below.
+Allowed use: mechanics extraction, ritual-container extraction, close paraphrase of non-explicit sequence, short anchors, source notes, safety/consent constraints, and private excerpt review. Future extraction may use this source for adult opt-in partner connection rituals, not ordinary default recommendations without Tim review.
+Forbidden use: runtime use, direct-use eligibility, recommendation eligibility, copied full exercises, copied scripts, copied guided meditations, copied prompts, explicit adult technique instructions, medical/therapy/fertility claims, guaranteed manifestation claims, target-specific attraction/control, pressure-based partner practice, unreviewed tantra/neotantra/Shiva/Shakti/chakra language, or exact source text in public repo/runtime.
 Verbal / expressive / charm / practice handling:
-  direct_use_allowed: no, not from this uploaded summary/preview material.
-  brief_quote_allowed: short title/chapter/section anchors only.
-  paraphrase_required: yes for any future app-facing notes; but no extraction yet.
-  mechanics_only: yes for preliminary assessment; future source gate should separate mechanics from exact exercises and language.
-  do_not_use: full exercises, exact meditations, explicit technique instructions, healing claims, manifestation guarantees, target-specific attraction material, or anything requiring consent/safety review until a full source copy is gated.
-Citation requirement: future extraction must cite source ID, full title/author, verified edition, and original book page/chapter from the legal source copy.
+  direct_use_allowed: no for generated app text. Tim/Jessica may privately use the source from their copy, but Moon & Table candidates must remain draft until human review.
+  brief_quote_allowed: exact title/chapter/short phrase anchors only.
+  paraphrase_required: all app-facing ritual language, partner invitations, consent/comfort language, Magic Circle setup, shared-symbol wording, and integration language.
+  mechanics_only: explicit adult partner practices, body/energy exercises, chakra movement, Magic Symbol charging, Magical Congress, and gendered Shakti/Shiva material unless reviewed for private exact excerpt use.
+  do_not_use: explicit adult technique instructions, non-consensual/pressure material, therapy/healing claims, fertility/health claims, guaranteed manifestation, target-specific attraction/control, copied guided exercises, copied practice sequences, copied diagrams/illustrations.
+Citation requirement: future extraction must cite source ID, title, author, edition, PDF page, printed page/chapter where visible, and private-excerpt status.
 Reviewer required: yes.
-Required reviewer expertise: Tim; plus adult intimacy/consent review, trauma/therapy boundary review, sexual-health/safety review, and cultural/source-boundary review for tantra/neotantra/chakra/SkyDancing framing.
+Required reviewer expertise: Tim; plus consent/intimacy review, adult-content boundary review, trauma/therapy boundary review, safety review, and cultural/source-boundary review for tantra/neotantra/chakra/Shiva/Shakti/SkyDancing/Osho framing.
 Specific extraction cautions: see below.
 Approval authority: Tim
-Approved date: not approved for extraction
-Required changes before approval: provide/review legal full source copy; rerun full source gate against original text; verify edition and page ranges; confirm consent/safety/adaptation policy for explicit adult partner material.
+Approved date: pending Tim approval
+Required changes before approval: Tim should confirm whether this source may enter ordinary recommendation candidates, opt-in intimate-only candidates, or private grimoire-only candidates before extraction output is promoted beyond research.
 ```
 
-Final recommendation: `hold`
+Final recommendation: `approve_for_extraction_with_limits`
 
-Reason: the source looks highly promising for Moon & Table's connection/intimacy gap, but the available uploaded file is not the actual full source. It is a Bookey summary/preview packet. The correct decision is to hold extraction until a legal full copy is reviewed. After that, this may become `approved_for_extraction_with_limits` if the full source confirms the previewed mechanics and can be adapted under strict consent, safety, and source-expression limits.
+Reason: the actual source copy contains substantial ritual/practice mechanics for Magic Circle setup, altar, shared symbols, partner communication, partner ritual preparation, body/energy practice, shared vision, and a culminating partner ritual. It directly addresses the connection/intimacy gap. It should be extracted only under strict limits: adult opt-in posture, consent/comfort boundaries, mechanics-only handling for explicit material, no therapy/medical/guarantee claims, and careful handling of tantra/neotantra/gendered polarity language.
 
-## Uploaded file assessment
+## Source assessment
 
-The uploaded file is useful for preliminary assessment, but not sufficient for extraction approval.
+The new uploaded file is the actual book scan, not merely the Bookey summary. Visible details include:
 
-Observed file characteristics:
-
-- Cover/title page reads `The Art of Sexual Magic PDF` and includes Bookey branding.
-- Page 2 says `The Art of Sexual Magic: Transforming Intimacy into Empowerment Through Ancient Rituals. Written by Bookey`.
-- The file contains chapter summaries, quote lists, Q&A sections, quiz/test material, ads, QR codes, and Bookey app promotional pages.
-- It does not appear to contain the full Margot Anand source text.
-- Several pages prompt the reader to install Bookey to unlock full text/audio.
-
-Therefore:
-
-- this file is not a legal full source copy for extraction;
-- it can support preliminary source-gate judgment only;
-- exact source wording, page ranges, and extraction boundaries remain unverified.
+- cover title: The Art of Sexual Magic;
+- cover subtitle: Cultivating Sexual Energy to Transform Your Life;
+- author: Margot Anand;
+- title page: Margot Anand, illustrated by Atma Priti;
+- publisher: Jeremy P. Tarcher / Putnam, New York;
+- copyright page: copyright 1995 by Margo Anand, first published by G. P. Putnam's Sons, first Jeremy P. Tarcher / Putnam edition 1996;
+- ISBN visible on copyright page: 0-87477-814-X;
+- Library of Congress metadata visible;
+- table of contents visible with printed page ranges.
 
 ## Gate questions
 
 ### 1. Is this source appropriate for Moon & Table extraction?
 
-Likely yes in concept, but not yet approved. It should remain held/candidate until a legal full copy is reviewed.
+Yes, with limits.
 
-Based on the available summary/preview material, the source directly targets partner intimacy, shared symbols, ritual preparation, touch, breath, visualization, and a culminating partner ritual called Magical Congress. That makes it strongly relevant to Moon & Table's `body + connecting`, `words + voicing`, intimate two-person ritual, private adult partner ritual, and possibly `candlelight + connecting` gaps.
+It is appropriate for the connection/intimacy source lane because it is a practical training in adult intimate magic, includes partner and solo practice, gives staged rituals, supports shared symbols, Magic Circle, altar, body/energy work, shared intention, partner feedback, and an extended culminating partner ritual.
+
+It is not appropriate for broad/default recommendation without opt-in and human review. It should not be used as a technique manual, therapy guide, medical source, or relationship-repair tool.
 
 ### 2. Does it provide actual ritual/practice mechanics, or mostly theory?
 
-The preview suggests actual mechanics, not just theory.
+It provides actual practice mechanics.
 
-Previewed mechanics include:
+Examples from inspected source material:
 
-- creating a vision of the goal;
-- transforming the vision into a Magic Symbol;
-- moving energy through body centers;
-- creating a Magic Circle;
-- establishing an altar;
-- invoking elements;
-- remembering personal experiences of magic;
-- initiation visualization;
-- sensual preparation;
-- partner feedback;
-- laughter, Fire Meditation, movement, breath, sound, and dance;
-- wild animal visualization and partner encounter;
-- shared vision;
-- Magic Symbol imprinting;
-- partner practice with Magic Symbol;
-- chakra-based alchemy;
-- preparing a space with candles, incense, soft lighting, and personal items;
-- Magical Congress as a partner ritual.
-
-Those are practice mechanics. The exact sequence, wording, consent framing, safety posture, and page locations must be verified from the original source.
+- Hints on Using This Book identifies the book as a step-by-step training manual and describes monthly or weekly practice cadence.
+- It provides practice instructions for working alone or with a partner, including same-sex couples and singles.
+- Chapter 2 includes Creating Your Magic Circle, altar setup, markers, power objects, candle, bell/chime/drum, room cleaning, showering, Magician's Posture, spoken purpose, Melting Hug, Heart Salutation, and storage of circle materials.
+- Chapter 5 includes creating a vision, expressing it, creating a Magic Symbol, shared partner vision, accepting/imprinting a shared symbol, and partner practice with that symbol.
+- Chapter 9 includes Magical Congress, preparation of ritual atmosphere, Magic Circle, symbol, water, timing, partner roles, and a menu of preparatory choices including physical transition, heart connection, intent clarification, and ritual greeting.
 
 ### 3. Does it support mutual connection, intimacy, erotic ritual, desire, devotion, shared attention, touch, witnessing, invitation, or closeness?
 
-Likely yes.
+Yes, strongly.
 
-The preview repeatedly emphasizes partner practice, shared energy, communication, touch, mutual exploration, feedback, shared Magic Symbols, preparing an intimate atmosphere, and deepening closeness. The strongest support appears in:
+Strong support appears in:
 
-- Chapter 3: partner feedback and sensual preparation;
-- Chapter 5: shared vision and enhancing relationship;
-- Chapters 7 and 8: partner pleasure and communication practices;
-- Chapter 9: Magical Congress as a prepared partner ritual;
-- Chapter 10: ongoing shared symbol/intimacy practice.
-
-Future extraction should focus on ritual containers, consent-aware invitation, shared attention, symbols, atmosphere, witnessing, and closing. It should not turn Moon & Table into a technique app.
+- Hints on Using This Book: partner commitment, regular practice, reading/discussing exercises together, boundaries, singles and same-sex inclusion, magical journal.
+- Chapter 2: Magic Circle as shared protected space, Melting Hug, Heart Salutation, remembering magic with partner.
+- Chapter 3: preparation and partner feedback, but much of this is explicit/body-wound material and should be limited.
+- Chapter 5: shared vision for an existing relationship, mutually acceptable visions, shared Magic Symbol, acceptance/imprinting, and partner dedication of a session.
+- Chapter 9: Magical Congress, shared symbol, atmosphere, ritual greeting, heart connection, clarified intent, and shared closing/integration.
+- Epilogue: ongoing shared symbols and repeated practice as relationship-deepening context.
 
 ### 4. Does it support candle, altar, vessel, words, body, bedroom, or table as ritual carriers?
 
-| Carrier | Support level | Preview basis | Gate note |
+| Carrier | Support level | Source basis | Gate note |
 | --- | --- | --- | --- |
-| body | strong | touch, breath, movement, body-based partner practices, Magic Congress | Strongest carrier; needs consent/safety/explicitness review. |
-| words | strong | desire statements, affirmations, feedback, symbol naming, partner communication | Exact prompts private-only. |
-| candlelight | moderate | Chapter 9 preview mentions candles and sensual atmosphere; Magic Circle/altar preparation may include candles | Needs full source verification before claiming candlelight + connecting. |
-| table | thin/moderate | altar setup and Magic Circle preparation; possible symbol/altar work | More altar than table. Needs source verification. |
-| vessel | possible/thin | Chapter 9 Q&A names a shared Magic Symbol involving an overflowing silver cup | May be symbolic rather than an actual vessel ritual. |
-| doorway | absent | no meaningful preview support | Do not pad. |
-| plant | absent | no meaningful preview support | Do not pad. |
+| body | strong | breath, touch, movement, energy centers, partner exercises, Magic Congress | Primary carrier; explicit practice material must be held/mechanics-only. |
+| words | strong | spoken purpose, feedback, partner questions, desire statements, ritual greetings, intent clarification | Exact prompts private excerpt only. |
+| candlelight | strong/limited | Magic Circle altar requires a candle; Magical Congress menu includes soft lighting/candles; atmosphere preparation uses candlelight | Strong for candlelight + connecting after authoring, but flame/atmosphere not full candle spellcraft. |
+| table | moderate | altar/low table/box, Magic Circle altar, symbol placement, power objects, practice menu | More altar/table support than ordinary dining table. |
+| vessel | moderate/thin | water for ritual support; shared Magic Symbol may use cup imagery; cups/bowls are not a major source mechanics carrier | Can support vessel + connecting only if adapted carefully; not the strongest lane. |
+| doorway | absent | no meaningful support | Do not pad. |
+| plant | absent/thin | occasional garden/outdoor setting only; not plant ritual | Do not count plant coverage. |
 
-### 5. Does it support `candlelight + connecting` or `vessel + connecting`, or is it mostly body/words?
+### 5. Does it support candlelight + connecting or vessel + connecting, or is it mostly body/words?
 
-Mostly body/words, with possible candlelight support and thin vessel support.
-
-- `body + connecting`: likely strong.
-- `words + voicing`: likely strong.
-- `candlelight + connecting`: plausible, because Chapter 9 preview references candles, incense, soft lighting, personal items, Magic Circle, and sensual atmosphere for a couple's Magical Congress. Do not count as approved until the original chapter is reviewed.
-- `vessel + connecting`: possible but not yet proven. The summary/Q&A mentions a shared symbol involving a silver cup, but that may be symbolic rather than an actual vessel ritual.
+- body + connecting: strong.
+- words + voicing: strong.
+- candlelight + connecting: yes, with limits. Candlelight appears as part of Magic Circle/altar preparation and Magical Congress atmosphere rather than as independent candle magic. It can support intimate candlelit connection ritual if extracted as atmosphere/altar/light mechanics, not as result-guarantee spellcraft.
+- vessel + connecting: moderate/thin. The source includes water as practical support and symbolic cup imagery in a shared Magic Symbol example, but does not appear to make vessel work the central carrier. It may support shared-symbol/vessel adaptation, but this should not be overclaimed.
 
 ### 6. Is the tone compatible with Moon & Table?
 
-Partly compatible, with significant adaptation.
+Partly, with major adaptation.
 
-Compatible elements:
+Compatible:
 
 - private adult practice;
-- intimacy and mutual attention;
-- ritual preparation;
-- sacred space / Magic Circle;
-- shared symbols;
-- candle/atmosphere/altar possibilities;
-- embodied practice;
-- desire, devotion, and connection as chosen work.
+- partner-centered ritual;
+- mutual attention and shared intention;
+- Magic Circle, altar, candle, symbol, and closing gestures;
+- grimoire/journal use;
+- warm, intimate, magical tone;
+- body/words/candle/table source support for connection.
 
-Tone risks:
+Needs adaptation:
 
-- neotantra / tantra-adjacent cultural framing;
-- manifestation and universal-energy claims;
-- therapy/healing language around wounds and sexuality;
+- workshop/seminar tone;
+- manifestation and success language;
+- therapeutic/healing-wound language;
 - explicit practice material;
-- gendered Shakti/Shiva framing and possible polarity essentialism;
-- workshop/self-help tone rather than domestic grimoire tone;
-- goal-manifestation framing that could overpower mutual connection.
+- gendered Shakti/Shiva/Vajra/Yoni language;
+- neotantra/SkyDancing/Osho lineage material;
+- chakra/Astral Network claims;
+- broad claims about transformation, fertility, health, career, or guaranteed outcomes.
 
-Future extraction should preserve intimate ritual mechanics while rewriting app-facing language into Moon & Table's private, warm, adult, source-backed, domestic/grimoire voice.
+## Approved extraction ranges
 
-## Candidate future full-source inspection ranges
+### Front matter, Preface, and Hints on Using This Book — PDF pp. 6-23 / printed front matter and pp. 1-10
 
-These are not approved extraction ranges yet. They are candidate ranges to inspect during a full source gate using the original book.
+Approved mechanics: practice cadence, partner commitment, reading/discussing exercises together, journaling, singles and same-sex inclusion, honoring boundaries and not pushing past discomfort, music/atmosphere as ritual support.
 
-| Uploaded summary pages | Original chapter/page hints from summary | Section | Preliminary extraction interest | Gate decision now | Notes |
-| ---: | --- | --- | --- | --- | --- |
-| 6-12 | Chapter 1 / quote list says pp. 24-58 | Sexual Magic: My Journey and Yours | Vision, symbol, energy, manifestation framework | hold pending full text | Useful mechanics but manifestation claims need limits. |
-| 13-21 | Chapter 2 / quote list says pp. 59-145 | Empowering Your Inner Magician | Magic Circle, altar, elements, ritual preparation, remembering magic | hold pending full text | Likely strong opening/words/body source. |
-| 22-24 | Chapter 3 / quote list says pp. 146-182 | Preparing the Magician's Crucible | sensual preparation, feedback, body naming, wound material | hold pending full text | Therapy/explicitness caution. |
-| 25-28 | Chapter 4 / quote list says pp. 183-219 | Awakening the Wild Self | laughter, fire meditation, wild animal visualization, partner encounter | hold pending full text | Body/connecting possible; animal/mating/gender-role material needs care. |
-| 29-33 | Chapter 5 / quote list says pp. 220-261 | Creating Your Magic Vision | desire statement, Magic Symbol, shared partner vision, symbol in partner practice | hold pending full text | Strong candidate for words/body/connecting. Manifestation caution. |
-| 34-35 | Chapter 6 / quote list says pp. 262-305 | Sexual Alchemy | chakras, body centers, symbol and energy | hold pending full text | Chakra/neotantra and body/energy caution. |
-| 37-39 | Chapter 7 / quote list says pp. 306-356 | Shakti's Magic | partner communication and pleasure | hold pending full text | Explicit technique; extract only ritual container/communication if approved. |
-| 40-44 | Chapter 8 / quote list says pp. 357-410 | Shiva's Magic | partner communication and receptive practice | hold pending full text | Likely too explicit for standard recommendation; heavy safety/consent review. |
-| 45-46 | Chapter 9 / quote list says pp. 411-464 | Magical Congress | environment, Magic Circle, candles, incense, Magic Symbol, couple ritual | hold pending full text | Most promising for candlelight + connecting if full text supports it. |
-| 48-52 | Chapter 10 / quote list says pp. 465-505 | Epilogue | shared symbol, ongoing practice, intimacy over time | hold pending full text | Good context; probably not extraction-heavy. |
+Allowed use: source notes and consent/practice constraints; mechanics-only extraction of practice container.
 
-## Excluded / held areas for any future extraction
+### Chapter 1 — printed pp. 11-38 / approx. PDF pp. 23-50
 
-These should be excluded or held unless Tim explicitly approves and a full-source gate supports them:
+Approved mechanics: adult intimate energy as creative/magical force, vision + symbol + energy + release framework, love/respect principle, magic ethics around control vs love.
 
-- explicit technique instructions;
-- therapeutic/healing-wound material;
-- trauma/shame processing as app-guided practice;
-- fertility, career, money, or guaranteed manifestation claims;
-- target-specific relationship attraction work;
-- pressure, persuasion, fidelity-control, jealousy, or relationship-control work;
-- deity, Shiva/Shakti, chakra, tantra, or neotantra framing copied uncritically;
-- exact guided meditations, prompts, exercises, invocations, or ritual scripts;
-- any practice lacking explicit mutual consent, ability to pause, and partner comfort checks.
+Allowed carriers: words, body.
+Allowed purposes: opening, marking, voicing, connecting.
 
-## Allowed future use if full source is approved
+Limits: manifestation claims, fertility/career/money stories, Tantric history, deity/religious framing, and guaranteed outcomes should be source-note-only or held.
 
-If a legal full copy is later reviewed and Tim approves extraction, likely allowed use should be:
+### Chapter 2 — printed pp. 39-80 / approx. PDF pp. 51-92
 
-- mechanics-only extraction of ritual containers;
-- paraphrase into Moon & Table voice;
-- private excerpt support for exact exercises/prompts;
-- adult opt-in/intimate practice classification;
-- body/words/table/candlelight carriers where source-supported;
-- mutual attention, shared symbol, atmosphere preparation, communication, witnessing, and closure;
-- no direct app reproduction of explicit source exercises.
+Approved mechanics: Magic Circle setup, altar/table setup, candle on altar, power objects, Magician's Posture, spoken purpose, Melting Hug, Heart Salutation, remembering moments of magic, initiation/inner magician as private symbolic practice.
 
-## Forbidden future use
+Allowed carriers: words, body, candlelight, table, vessel.
+Allowed purposes: opening, steadying, voicing, marking, connecting, remembering, blessing.
 
-- app-generated sexual technique instructions;
-- medical, therapeutic, fertility, or trauma-processing advice;
-- guaranteed manifestation claims;
-- target-specific attraction/relationship-control workings;
-- non-consensual or pressure-based partner practice;
-- cultural borrowing of tantra/neotantra/Shiva/Shakti/chakra material without review;
-- exact source text copied into public repo or runtime;
-- runtime recommendation without human review and opt-in boundary.
+### Chapter 3 — printed pp. 81-118 / approx. PDF pp. 93-130
+
+Approved mechanics: preparing for intimacy, partner feedback, creating safety/trust before deeper work.
+
+Allowed carriers: body, words.
+Allowed purposes: opening, connecting, voicing, steadying.
+
+Limits: much of this chapter is explicit, shame/wound/healing-heavy, and not suitable for standard recommendation. Future extraction should use only non-explicit consent, preparation, and partner-feedback mechanics unless Tim approves a private adult grimoire lane.
+
+### Chapter 4 — printed pp. 119-154 / approx. PDF pp. 131-166
+
+Approved mechanics: laughter as energy release, Fire Meditation as movement/breath/visualization, playful partner mirroring and instinctive movement, returning and sharing experience.
+
+Allowed carriers: body, words.
+Allowed purposes: releasing, opening, steadying, connecting, marking.
+
+Limits: animal-role/mating/gender-role material should be heavily limited or held; avoid therapy claims.
+
+### Chapter 5 — printed pp. 155-195 / approx. PDF pp. 167-207
+
+Approved mechanics: choosing a desire, expressing it clearly, creating a Magic Symbol, accepting/imprinting the symbol, creating a shared vision for relationship, creating a shared symbol, placing the symbol on altar, dedicating a particular intimate session to a mutual goal.
+
+Allowed carriers: words, table, body, candlelight, vessel where symbol/object support exists.
+Allowed purposes: voicing, opening, connecting, marking, blessing, remembering.
+
+Limits: avoid target-specific new-lover attraction; avoid manifestation guarantees; exact prompts and symbol stages private excerpt only; shared goals must be mutually acceptable.
+
+### Chapter 6 — printed pp. 197-237 / approx. PDF pp. 209-249
+
+Approved mechanics: body/energy visualization as source context, grounding and moving attention through the body, partner preparation, table/mattress/candle/incense/music/oil atmosphere from Chakra Rub, gentle mechanics of attention.
+
+Allowed carriers: body, words, candlelight, table, vessel.
+Allowed purposes: steadying, opening, marking, connecting.
+
+Limits: chakra and Astral Network claims; therapeutic/health claims; body/oil safety; do not copy explicit exercise sequence.
+
+### Chapters 7 and 8 — printed pp. 239-318 / approx. PDF pp. 251-330
+
+Approved mechanics: partner communication, attention to comfort and feedback, mutual receiving/giving structure, breath synchronization and presence, non-goal-oriented mutual exploration if adapted.
+
+Allowed carriers: body, words.
+Allowed purposes: connecting, voicing, steadying, tending.
+
+Limits: explicit adult technique material should not be extracted into ordinary candidate packets. Treat detailed body instructions as do_not_use for app text unless Tim creates a separate private adult grimoire lane. Gendered polarity language needs review.
+
+### Chapter 9 — printed pp. 319-362 / approx. PDF pp. 331-374
+
+Approved mechanics: transition from daily life into ritual state, setting atmosphere with soft lighting/candles/incense/music/markers/power objects, connecting through the heart before practice, clarifying intent and choosing a symbol, ritual greeting/invocation, shared symbol work, grounding after peak experience, Melting Hug and Heart Salutation close, selecting a personalized practice menu.
+
+Allowed carriers: body, words, candlelight, table, vessel.
+Allowed purposes: connecting, voicing, opening, marking, blessing, steadying, remembering.
+
+Limits: explicit intimate sequence, climax/release instructions, chakra-leader roles, and manifestation claims should not become app instructions. Extract the ritual container and partner connection mechanics only.
+
+### Epilogue / Resources / Index — printed pp. 363 onward / approx. PDF pp. 375-494
+
+Approved mechanics: ongoing practice context, integration and reflection, index support for locating source items.
+
+Allowed carriers: words.
+Allowed purposes: remembering, marking.
+
+## Excluded or limited ranges
+
+| Range / topic | Decision | Reason |
+| --- | --- | --- |
+| Explicit adult technique instructions | do_not_use for ordinary app/extraction | Moon & Table is not a technique app. |
+| Detailed body/anatomy practice in Chs. 7-8 | hold / mechanics_only | Requires opt-in private adult lane and safety review. |
+| Therapy/healing wound material | hold | Therapy boundary. |
+| Fertility, health, career, money, manifestation stories | source_note_only / hold | No medical/financial/fertility/guarantee claims. |
+| Target-specific new-lover attraction | hold | Consent/relationship ethics. |
+| Chakra/Astral Network claims | mechanics_only / source_note_only | Do not present as factual or guaranteed mechanism. |
+| Shiva/Shakti/Vajra/Yoni terminology | hold or adapt | Cultural/gender/polarity review required. |
+| Osho/Rajneesh lineage context | source_note_only | Cultural/source-boundary caution. |
+| Exact guided exercises, scripts, prompts | private_excerpt_allowed | No full reproduction in repo/app. |
+| Illustrations/diagrams | do_not_use as copied assets | Do not copy visuals. |
 
 ## Exact-text / private-excerpt handling
 
-This source would likely need substantial private excerpt handling after full-source review.
+High private-excerpt need.
 
-Potential exact-text areas:
+Future extraction should flag, but not reproduce wholesale:
 
-- Magic Circle setup;
-- altar and element wording;
-- desire/symbol prompts;
-- Magic Symbol creation stages;
-- shared vision and partner exercises;
-- Magical Congress setup and transition language;
-- ritual closing/integration language;
-- any exact affirmations or invocation-like language.
+- Magic Circle setup and spoken purpose;
+- Melting Hug and Heart Salutation wording;
+- Magician's Posture guidance;
+- Remembering Times of Magic prompt structure;
+- shared vision questions;
+- Magic Symbol acceptance and imprinting language;
+- Magical Congress setup, menu, invocation, grounding, and closing language;
+- partner feedback and comfort language.
 
 Agent use limit:
 
@@ -234,70 +258,115 @@ no full exercises
 no full meditations
 no full prompts
 no full scripts
-no explicit technique reproduction
+no explicit adult technique reproduction
 ```
 
 ## Specific extraction cautions
 
-- Treat the source as adult opt-in material.
+- Treat this source as adult opt-in material.
 - Extract connection rituals, not technique lessons.
-- Require clear mutual consent, partner comfort, and pause/stop boundaries in authoring policy.
-- Avoid therapeutic claims around wounds, trauma, shame, fertility, illness, or relationship repair.
+- Require mutual consent, partner comfort, pause/stop boundaries, and non-pressure framing in future authoring.
+- Avoid therapeutic claims around wounds, shame, fertility, health, or relationship repair.
 - Avoid guaranteed manifestation claims.
 - Avoid target-specific attraction or partner-control material.
 - Be careful with gender polarity and Shiva/Shakti framing.
-- Be careful with tantra/neotantra cultural framing and Rajneesh/Osho lineage context.
-- Keep explicit body-practice sections source-note-only or hold unless Tim specifically requests a private adult grimoire lane separate from ordinary recommendation.
-- Do not count `vessel + connecting` as covered until the full source confirms actual vessel mechanics.
-- Do not count `candlelight + connecting` as approved until the full source confirms candle/altar mechanics beyond atmosphere.
+- Be careful with tantra/neotantra/chakra/SkyDancing/Osho context.
+- Prefer domestic/grimoire language over workshop training language.
+- Keep detailed explicit sections source-note-only or hold unless Tim explicitly approves a private adult grimoire lane.
+- candlelight + connecting is supported, but as atmosphere/altar/light mechanics, not candle spellcraft.
+- vessel + connecting is only moderate/thin and should not be overclaimed.
 
 ## Best-fit carriers
 
-| Carrier | Support level | Basis from uploaded preview | Notes |
+| Carrier | Support level | Source basis | Notes |
 | --- | --- | --- | --- |
-| body | strong | touch, breath, movement, partner exercises, Magic Congress | Strongest potential carrier; explicit/safety/consent limits. |
-| words | strong | desire statements, affirmations, feedback, symbol language, partner communication | Exact prompts private-only. |
-| candlelight | moderate | Magic Circle / atmosphere / Chapter 9 candles | Needs full source verification. |
-| table | thin/moderate | altar, symbol, preparation space | More altar than table. |
-| vessel | thin | silver cup Magic Symbol mentioned in Q&A | Symbolic only in preview; needs full source. |
-| doorway | absent | no support | Do not pad. |
-| plant | absent | no support | Do not pad. |
+| body | strong | breath, touch, movement, partner practice, energy/body attention, Magical Congress | Main carrier; highest safety/consent burden. |
+| words | strong | spoken purpose, partner questions, shared vision, feedback, affirmations, journaling | Exact prompts private-only. |
+| candlelight | strong/limited | Magic Circle altar candle; Magical Congress atmosphere with candles/soft lighting | Strong for connection atmosphere, not candle-spell mechanics. |
+| table | moderate | altar/low table/box, symbol placement, power objects | Mostly altar/table setup. |
+| vessel | moderate/thin | water in Magical Congress; cup imagery in shared symbol example | Mostly support/symbolic, not central. |
+| doorway | absent | no meaningful support | Do not pad. |
+| plant | absent/thin | garden/outdoor setting appears as optional setting only | Do not count as plant ritual source. |
 
 ## Best-fit purposes
 
-| Purpose | Support level | Basis from uploaded preview | Notes |
+| Purpose | Support level | Source basis | Notes |
 | --- | --- | --- | --- |
-| connecting | strong | partner practice, shared symbol, communication, Magical Congress | Main reason to keep candidate. |
-| voicing | strong | desire statements, feedback, affirmations, communication | Private excerpt/prompt-heavy. |
-| opening | moderate/strong | Magic Circle, ritual preparation, entering practice, vision choice | Needs full text. |
-| steadying | moderate | centering, clearing daily stress, breath, relaxation | Avoid therapy/wellness flattening. |
-| blessing | moderate | intimacy, devotion, shared symbol, sacred framing | Needs Moon & Table authoring. |
-| marking | moderate | Magic Symbol, repeated practice, ritual transition | More symbol than date/season marker. |
-| remembering | thin/moderate | personal magic memories, reflection, epilogue integration | Mostly words/product follow-up. |
-| releasing | fragile | laughter, fire meditation, wound material | Therapy-adjacent; hold or careful adaptation. |
-| tending | thin | ongoing practice and preparation | Not the main source strength. |
-| protecting | thin/fragile | Magic Circle as protective space | Not a main extraction purpose. |
+| connecting | strong | shared vision, partner exercises, Magical Congress, heart connection | Main source value. |
+| voicing | strong | partner questions, spoken purpose, feedback, affirmations | Private excerpt/prompt-heavy. |
+| opening | strong | Magic Circle, altar setup, preparation, transition into ritual | Good extraction lane. |
+| steadying | moderate | centering, clearing daily stress, breath, grounding | Avoid generic wellness. |
+| blessing | moderate | Heart Salutation, love/devotion framing, sacred space | Needs authoring. |
+| marking | moderate | Magic Symbol, repeated practice, ritual transition | Symbol-based marking. |
+| remembering | moderate | magical journal, remembering times of magic, integration/reflection | Good follow-up pattern. |
+| releasing | fragile | laughter, fire meditation, wound/shame work | Therapy-adjacent. |
+| tending | thin/moderate | ongoing practice, preparation, relationship attention | Not primary source strength. |
+| protecting | thin/fragile | Magic Circle as protected space | Do not overclaim. |
+
+## Answers to gate questions
+
+1. Is this source appropriate for Moon & Table extraction?
+
+Yes, with limits. It should be extracted only as adult opt-in research material and only after Tim confirms the product boundary for intimate recommendations.
+
+2. Does it provide actual ritual/practice mechanics, or mostly theory?
+
+It provides substantial ritual and practice mechanics: Magic Circle, altar/candle, shared vision, shared symbol, partner feedback, heart connection, ritual greeting, grounding, and closure.
+
+3. Does it support mutual connection, intimacy, erotic ritual, desire, devotion, shared attention, touch, witnessing, invitation, or closeness?
+
+Yes. This is the strongest reason to approve it with limits.
+
+4. Does it support candle, altar, vessel, words, body, bedroom, or table as ritual carriers?
+
+Yes for body and words; yes for candlelight/altar/table with limits; moderate/thin for vessel; absent for doorway and plant.
+
+5. Does it support candlelight + connecting or vessel + connecting, or is it mostly body/words?
+
+It is mostly body/words, but it does support candlelight + connecting as ritual atmosphere/altar/light mechanics. It only weakly supports vessel + connecting through water and shared-symbol imagery.
+
+6. Is the tone compatible with Moon & Table?
+
+Partly. The intimacy, ritual, symbol, and partner practice tone is compatible. The workshop, manifestation, neotantra, explicit-technique, and therapy/healing tone must be adapted or held.
+
+7. What ranges or chapters should be approved for extraction?
+
+Approve with limits: Hints; Chapters 1-2; Chapter 5; Chapter 9; selected context from Epilogue; limited mechanics-only extraction from Chapters 3-4 and 6-8.
+
+8. What ranges or chapters should be excluded or held?
+
+Hold explicit technique sections, therapy/wound material, target-specific attraction, fertility/health/money/career manifestation claims, and culturally sensitive tantra/chakra/Shiva/Shakti material unless reviewed.
+
+9. What exact-text/private-excerpt handling is needed?
+
+High. Exact exercises, prompts, stage language, Magic Circle wording, Magic Symbol instructions, and Magical Congress language should be private-excerpt only.
+
+10. What source-boundary or adaptation limits should future extraction follow?
+
+Mechanics-only, adult opt-in, consent-centered, no explicit technique instructions, no therapy/medical/guarantee claims, no target-specific attraction/control, careful cultural/gender-language handling, original Moon & Table app wording only.
 
 ## Tim approval decision
 
-If Tim accepts this gate as written, he is approving only this status:
+If Tim accepts this source gate, he is approving:
 
-```text
-keep_candidate / hold pending legal full source copy
-```
+- future inventory-first extraction from approved ranges;
+- use as an adult opt-in connection/intimacy mechanics source;
+- draft candidates around Magic Circle, shared symbol, partner vision, candlelit intimate atmosphere, heart connection, consent-aware invitation, and closing/integration;
+- private excerpt support for exact exercises and prompts.
 
-Tim is not approving extraction yet.
+Tim is not approving:
 
-Tim would later need to approve:
-
-- use of a legal full copy;
-- a full source gate against the original text;
-- whether explicit adult partner practice may enter Moon & Table as ordinary recommendations or only opt-in/private grimoire material;
-- whether neotantra/chakra/Shiva/Shakti language can be used, adapted, or held;
-- whether `candlelight + connecting` and/or `vessel + connecting` are actually supported by original source mechanics.
+- runtime use;
+- direct-use eligibility;
+- recommendation eligibility;
+- public storage of long excerpts;
+- explicit adult technique instruction in generated app text;
+- therapeutic/medical/fertility/guaranteed outcome claims;
+- unreviewed tantra/chakra/Shiva/Shakti terminology;
+- non-consensual or pressure-based practice.
 
 ## Final recommendation
 
-`hold`
+`approve_for_extraction_with_limits`
 
-This is a highly promising candidate for Moon & Table's connection/intimacy gap, especially `body + connecting`, `words + voicing`, and intimate two-person ritual. It may also help with `candlelight + connecting`, but that is not yet proven. Because the uploaded file is a Bookey summary/preview rather than the full source, it should not be approved for extraction yet. Provide or review a legal full copy, then rerun a full source gate. Then the likely outcome may become `approved_for_extraction_with_limits`.
+This source directly addresses Moon & Table's connection/intimacy gap. It has real ritual mechanics, especially for body + connecting, words + voicing, intimate two-person ritual, Magic Circle, shared symbol, and candlelit ritual atmosphere. It should move to extraction only under strict adult opt-in, consent, private-excerpt, safety, and cultural/source-boundary limits.
