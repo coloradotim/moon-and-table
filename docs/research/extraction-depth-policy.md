@@ -398,7 +398,7 @@ QA must verify:
 
 - source architecture is preserved;
 - no source-supported props/materials/counts/steps are omitted without explicit reason;
-- no unsupported props/materials/closing gestures are added;
+- no unsupported props/materials/decorative closing gestures are added;
 - `ritualizationType` is correct;
 - no `metadata_symbolism_only` item is marked `candidate_extract_now`;
 - every `candidate_extract_now` record is complete enough for mechanical import;
