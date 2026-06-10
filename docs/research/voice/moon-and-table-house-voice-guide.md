@@ -568,6 +568,37 @@ Good within the full moon window, after a shared meal, or whenever connection fe
 On the night of the full moon.
 ```
 
+## QA reviewer baseline
+
+A QA reviewer must read:
+
+```text
+source gate record
+source PDF/material
+extraction packet PR diff
+docs/research/voice/moon-and-table-house-voice-guide.md
+docs/research/extraction-depth-policy.md
+docs/research/private-source-text-policy.md
+docs/research/runtime-ritual-authoring-policy.md
+src/data/rituals/types.ts
+```
+
+QA must verify:
+
+- source architecture is preserved;
+- no source-supported props/materials/counts/steps are omitted without explicit reason;
+- no unsupported props/materials/decorative closing gestures are added;
+- `ritualizationType` is correct;
+- no `metadata_symbolism_only` item is marked `candidate_extract_now`;
+- every `candidate_extract_now` record is complete enough for mechanical import;
+- `ritual body / practice` contains open, action/sequence, operative words where needed, and close;
+- `ritualWords` is metadata only;
+- exact short source words are inline, 20 words or fewer, and tracked as `source_exact_short`;
+- longer exact wording uses `private_source_excerpt` metadata;
+- no generic Moon & Table replacement words are created where usable source words exist;
+- `whyThisFitsIngredients` and `howThisWasChosenIngredients` use the required structure;
+- no runtime eligibility flags are changed.
+
 ## QA checklist for re-extraction PRs
 
 Use this checklist before merging any source-specific re-extraction packet.
