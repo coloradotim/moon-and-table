@@ -80,11 +80,29 @@ magical logic
 
 If the source uses seven candles, the Ritual uses seven candles.
 
-If the source uses a specific close, use the source close.
+If the source gives a specific close, preserve the source close.
 
 If the source gives a practice family rather than a precise ritual, Moon & Table may author a simple household form only from source-supported actions, locations, timing, and materials.
 
-Do not add props, materials, closing gestures, correspondences, deity/spirit elements, or symbolic mechanics unless the source supports them or Tim explicitly approves a separate adaptation.
+Do not add props, materials, correspondences, deity/spirit elements, or symbolic mechanics unless the source supports them or Tim explicitly approves a separate adaptation.
+
+## Close rule
+
+Every runtime Ritual must include an intentional close inside `presentation.practice`.
+
+For direct source rituals, preserve the source close when given.
+
+If the source does not give a close, the extractor or author may create a simple close that completes the source-supported action without adding unsupported props, materials, correspondences, deity/spirit elements, or symbolic mechanics.
+
+Allowed authored closes complete something already present in the source-backed practice, such as:
+
+- pouring out a wash when wash water was used;
+- letting a doorway dry after threshold washing;
+- closing a journal when writing was used;
+- extinguishing a candle when candle flame was used;
+- thanking a partner when shared witnessing was source-supported.
+
+Do not invent decorative closes.
 
 ## Safety posture
 
@@ -136,8 +154,8 @@ headline
 ritual body / practice
 intention
 bestWindow
-whyThisFits generation ingredients
-howThisWasChosen generation ingredients
+whyThisFitsIngredients
+howThisWasChosenIngredients
 questionToCarry
 source grounding
 recommendation metadata
@@ -156,7 +174,8 @@ ritual body / practice -> presentation.practice
 intention -> presentation.intention
 bestWindow -> presentation.bestWindow
 questionToCarry -> presentation.questionToCarry
-whyThisFits base/ingredients -> presentation.whyThisFits or runtime generation inputs, as applicable
+whyThisFitsIngredients -> presentation.whyThisFits or runtime generation inputs, as applicable
+howThisWasChosenIngredients -> packet/recommendation inputs only unless a later runtime schema issue adds a field
 source grounding -> origin.sourceGrounding[]
 purpose/carrier/capacity/audience/timing/eligibility -> recommendationMetadata
 materials/places/tags/keywords/source labels -> searchMetadata
@@ -173,8 +192,8 @@ The ritual body / practice must include:
 ```text
 intentional open
 concrete source-supported action / sequence
-spoken or written ritual words where source-supported or Moon & Table-authored
-intentional source-supported close
+spoken or written ritual words where source-supported or Moon & Table-authored under the operative-words rule
+intentional close
 ```
 
 Do not add separate required `opening` or `closing` fields unless the runtime model is deliberately changed in a later product issue.
@@ -191,10 +210,11 @@ Default runtime authoring posture:
 
 1. Preserve source architecture and operative ritual words when feasible.
 2. Rewrite only the surrounding instructions into Moon & Table voice.
-3. Do not paraphrase source-provided spell words, blessings, prayers, incantations, petitions, or written ritual words by default.
-4. If exact source wording cannot be stored directly in a committed public repo file, preserve the dependency with a private excerpt key rather than replacing the words with generic original copy.
-5. Do not block draft/findable import merely because exact ritual words exist.
-6. Do not flatten prayer, blessing, charm, incantation, spell, petition, or spoken formula into “state an intention.”
+3. If exact operative source words are 20 words or fewer, include them inline in `presentation.practice` and track them with `ritualWords.mode = "source_exact_short"`.
+4. If exact operative source wording is more than 20 words, do not reproduce it in public repo prose; track it with `ritualWords.mode = "private_source_excerpt"`, source location, use context, and a note explaining why it matters.
+5. Do not create a generic Moon & Table replacement for source-provided operative words unless the source does not provide usable words or Tim explicitly approves adaptation.
+6. Do not block draft mechanical import merely because exact ritual words exist.
+7. Do not flatten prayer, blessing, charm, incantation, spell, petition, or spoken formula into “state an intention.”
 
 ## Source text handling
 
@@ -209,12 +229,12 @@ Moon & Table distinguishes between:
 For modern copyrighted sources:
 
 - do not reproduce full copyrighted rituals, full chapters, full scripts, full prompt sets, full meditations, full recipes, full poems, full prayers, full invocations, or long distinctive passages in public committed repo files;
-- do preserve exact short operative words when they are necessary, attributed, and not a substitute for the source;
-- do use private excerpt support for longer or substantial operative wording;
+- do preserve exact short operative words of 20 words or fewer when they are necessary, attributed, and not a substitute for the source;
+- do use `ritualWords.mode = "private_source_excerpt"` for longer or substantial operative wording;
 - do record source location and why the exact words matter;
 - do not convert exact ritual words into bland Moon & Table original text just because they are exact words.
 
-The correct fallback for long source wording is a private excerpt placeholder/key, not generic paraphrase.
+The correct fallback for long source wording is private excerpt tracking in `ritualWords`, not generic paraphrase and not a separate source-text mini-schema.
 
 ## Runtime schema expectations
 
@@ -299,8 +319,8 @@ Direct-use review should confirm that a Ritual is complete, source-grounded, usa
 Direct-use review should also remove unnecessary safety boilerplate, preserve magical force, and verify that operative words were handled intentionally:
 
 ```text
-preserved as exact short words
-stored as private excerpt key
+preserved as exact short words inline and tracked as source_exact_short
+stored as private excerpt key / private_source_excerpt metadata
 kept as source-attributed wording anchor
 authored as Moon & Table original only when the source did not provide operative words or Tim explicitly chose adaptation
 ```
@@ -325,8 +345,8 @@ Then the prompt should restate:
 Do not over-warn.
 Do not flatten magic.
 Do not replace operative ritual words by default.
-Do not add props/materials/closing gestures unless source-backed.
+Do not add props/materials/decorative closing gestures unless source-backed or Tim-approved.
 Do not narrow accepted packets editorially.
-Use private excerpt keys for longer exact source wording instead of generic paraphrase.
+Use ritualWords.private_source_excerpt for longer exact source wording instead of generic paraphrase.
 Ritual words belong inline in presentation.practice; ritualWords is provenance/review metadata only.
 ```
