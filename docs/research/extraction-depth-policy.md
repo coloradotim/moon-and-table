@@ -1,8 +1,29 @@
 # Extraction depth policy
 
-Moon & Table extraction is inventory-first.
+Moon & Table extraction is inventory-first **and** import-ready for selected candidates.
 
 The goal is ritual depth and variety, not a small polished sample. Agents must not stop after finding a few strong Ritual candidates. A source extraction packet must account for the source’s usable ritual material, even when only some items become draft Moon & Table Ritual candidates in the first pass.
+
+For any item marked `candidate_extract_now`, the packet must also provide complete, source-backed Ritual authoring content mapped to the current runtime schema. Codex should not have to invent user-facing Ritual prose during import.
+
+Controls:
+
+```text
+docs/research/voice/moon-and-table-house-voice-guide.md
+src/data/rituals/types.ts
+docs/research/private-source-text-policy.md
+docs/research/runtime-ritual-authoring-policy.md
+```
+
+## Core import-readiness rule
+
+A complete extraction packet is the canonical Ritual authoring artifact.
+
+```text
+If Codex must invent user-facing Ritual prose during #287, the extraction packet is not complete enough for import.
+```
+
+Extraction still does not create runtime records. It produces packet-approved draft Ritual content that Codex can later import mechanically.
 
 ## Pilot does not mean small sample
 
@@ -19,6 +40,7 @@ Every approved extraction source requires three layers:
 
 2. **Candidate extraction packet**
    - Moon & Table-shaped draft Ritual candidates derived from selected inventory items.
+   - Every `candidate_extract_now` record must be complete enough for mechanical import after PR-gated QA.
 
 3. **Disposition tracking**
    - Every inventoried source item must receive a disposition:
@@ -37,6 +59,7 @@ An extraction packet is not complete until it includes:
 - source sections reviewed;
 - source rite inventory;
 - candidate research records;
+- complete runtime-mapped authoring fields for every `candidate_extract_now` item;
 - source notes;
 - coverage records;
 - rejected / held leads;
@@ -86,6 +109,139 @@ Allowed item types include:
 - `consecration`
 - `correspondence_with_action`
 - `context_only`
+
+## Required candidate classification
+
+Every Ritual candidate must include:
+
+```text
+ritualizationType:
+  direct_source_ritual
+  source_backed_moon_and_table_form
+  metadata_symbolism_only
+```
+
+Use:
+
+```text
+direct_source_ritual:
+  The source gives concrete rite architecture: materials, steps, words, gestures, timing, repetition, or close. Preserve it closely.
+
+source_backed_moon_and_table_form:
+  The source gives a practice family or ritual pattern but not a precise step-by-step ritual. Moon & Table may author a simple household form only from source-supported actions, locations, timing, and materials.
+
+metadata_symbolism_only:
+  The source gives symbolism, correspondences, theory, or timing context but not enough action to support a whole Ritual. Do not produce an importable Ritual candidate from this alone.
+```
+
+A `metadata_symbolism_only` item may support recommendation metadata, timing hooks, source notes, or future extraction leads. It should not be marked `candidate_extract_now` by itself.
+
+## Required candidate authoring fields
+
+Every `candidate_extract_now` record must include these human-facing fields:
+
+```text
+headline
+ritual body / practice
+intention
+bestWindow
+whyThisFits generation ingredients
+howThisWasChosen generation ingredients
+questionToCarry
+source grounding
+recommendation metadata
+search metadata
+review flags
+adaptation policy notes, if needed
+operative words metadata
+import readiness label
+```
+
+Runtime mapping:
+
+```text
+headline -> presentation.headline
+ritual body / practice -> presentation.practice
+intention -> presentation.intention
+bestWindow -> presentation.bestWindow
+questionToCarry -> presentation.questionToCarry
+whyThisFits base/ingredients -> presentation.whyThisFits or runtime generation inputs, as applicable
+source grounding -> origin.sourceGrounding[]
+purpose/carrier/capacity/audience/timing/eligibility -> recommendationMetadata
+materials/places/tags/keywords/source labels -> searchMetadata
+private excerpt/material/source/product-boundary dependencies -> reviewFlags
+operative words metadata -> ritualWords[]
+```
+
+## Ritual body requirement
+
+The ritual body / practice must read as a complete practice on its own. It must contain:
+
+```text
+intentional open
+concrete source-supported action / sequence
+spoken or written ritual words where source-supported or Moon & Table-authored
+intentional source-supported close
+```
+
+Do not add separate required `opening` or `closing` fields unless the runtime model changes in a later product issue.
+
+For direct source rituals, use the source close.
+
+For source-backed Moon & Table forms, author a close only from source-supported actions, locations, timing, or materials.
+
+## Operative words and `ritualWords`
+
+Spoken or written words that the user should say or write belong inline in the ritual body where they are used.
+
+`ritualWords` is not the authoring surface for Ritual copy. Use it only as provenance/review metadata for operative words already present in, or required by, the ritual body.
+
+Allowed modes:
+
+```text
+source_exact_short
+private_source_excerpt
+moon_and_table_original
+```
+
+Definition:
+
+```text
+short source phrase = 20 words or fewer
+```
+
+Short source phrases used in rituals should be included inline in the ritual body and classified as `source_exact_short` with source location. Longer blessings, prayers, incantations, scripts, prompt sets, meditations, recipes, or distinctive passages over 20 words should use `private_source_excerpt`.
+
+## Why-this-fits / how-this-was-chosen ingredients
+
+Do not treat `whyThisFits` as a static source-summary paragraph when the ritual is selected through Choose with me.
+
+The extraction packet should provide structured generation ingredients, including:
+
+```text
+check-in hooks
+timing hooks
+lunar / planetary / seasonal influence notes, where source-supported
+capacity notes
+audience notes
+material/place/carrier/purpose fit notes
+source-backed rationale
+not-for / hold notes
+```
+
+## Import readiness labels
+
+Each candidate must be marked:
+
+```text
+approved_for_mechanical_import
+needs_packet_correction
+hold_before_import
+```
+
+`approved_for_mechanical_import` means Codex may mechanically import the packet-approved text as a draft source-backed Ritual record under #287.
+
+It does not mean reviewed, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.
 
 ## Required packet metrics
 
@@ -192,13 +348,15 @@ Reviewers must also check:
 - whether private excerpt recommendations are counted even when the item is also a candidate;
 - whether broad candidates need variant/split tracking;
 - whether rough source locations are marked `needs_tightening` or `chapter_range` rather than treated as exact page support;
-- whether product follow-up patterns have been wrongly forced into Ritual candidate status.
+- whether product follow-up patterns have been wrongly forced into Ritual candidate status;
+- whether `ritualizationType` is correct;
+- whether source architecture, props/materials, timing, operative words, and close are preserved according to the house voice guide.
 
 ## Runtime / schema normalization wall
 
 Extraction is not runtime integration.
 
-No extraction packet may mark any candidate reviewed, recommendable, findable, direct-use eligible, recommendation eligible, or runtime-ready.
+No extraction packet may create runtime records or mark any candidate reviewed, recommendable, findable, direct-use eligible, recommendation eligible, or runtime-ready.
 
 Every extraction candidate must remain research-only until later human review and source verification:
 
@@ -211,7 +369,24 @@ recommendable: false
 missing: ["human_review", "source_verification"]
 ```
 
-Schema normalization belongs in a later issue after human review. Do not use extraction to quietly import research candidates into runtime data.
+Schema-aware extraction is required. Runtime import still belongs in a later issue after PR-gated extraction QA. Do not use extraction to quietly import research candidates into runtime data.
+
+## PR-gated QA model
+
+Future source extraction/re-extraction work should use PR review as the QA gate.
+
+Default flow:
+
+```text
+source-specific extraction/re-extraction issue
+→ PR updates packet
+→ separate QA review in PR using source PDF/material + #344 + #345 + runtime model
+→ rework in same PR
+→ merge only after QA pass
+→ merged packet marked approved_for_mechanical_import
+```
+
+Separate QA issues should not be created by default. Create a separate QA/rework issue only if PR review uncovers work too large to resolve in the extraction PR.
 
 ## Relationship to private source text policy
 
@@ -225,6 +400,6 @@ Agents should inventory and classify exact wording, blessings, prayers, invocati
 
 ## Coordinator instruction
 
-No extraction packet should be treated as complete unless it accounts for the source’s ritual material through inventory and disposition tracking.
+No extraction packet should be treated as complete unless it accounts for the source’s ritual material through inventory and disposition tracking **and** includes import-ready runtime-mapped fields for every `candidate_extract_now` item.
 
-Depth and variety are required outcomes, not nice-to-have extras.
+Depth, variety, and mechanical-import readiness are required outcomes, not nice-to-have extras.
