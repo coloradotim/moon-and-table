@@ -38,9 +38,26 @@ Words, prayers, blessings, invocations, prompts, meditations, spells, charms, an
 
 Do not erase or downgrade verbal, recipe, prayer, blessing, invocation, spell, prompt, or meditation material. Classify it.
 
-Research agents should not reproduce long copyrighted passages in generated packets. However, exact short phrase anchors, exact questions, rite titles, spoken cues, blessing names, invocation cues, and wording anchors may be extracted when ritually important.
+The default Moon & Table exact-wording rule is:
 
-When exact wording is important, mark it for Tim private excerpt review with source page/section.
+```text
+If exact operative source wording is 20 words or fewer:
+  - it may be used inline in the ritual body during later extraction;
+  - it must be tracked as ritualWords.mode = "source_exact_short";
+  - it must be source-attributed and non-substitutive for the source.
+
+If exact operative source wording is more than 20 words:
+  - it should not be reproduced in generated public repo prose;
+  - it should be tracked as ritualWords.mode = "private_source_excerpt" with source location and a note explaining why the words matter.
+```
+
+A source gate may impose stricter limits only for source-specific reasons, such as explicit sexualized commands, coercive wording, revenge/hex language, distinctive author voice, culturally sensitive language, medical/legal/therapy claims, or other product-boundary concerns.
+
+Do not write a blanket ban on exact short operative phrases unless the source-specific reason is explicit.
+
+Research agents should not reproduce long copyrighted passages in generated packets. However, exact short phrase anchors, exact questions, rite titles, spoken cues, blessing names, invocation cues, and wording anchors of 20 words or fewer may be extracted when ritually important and not source-prohibited.
+
+When exact wording is important but longer than 20 words, mark it for Tim private excerpt review with source page/section.
 
 ## Required tasks
 
@@ -136,7 +153,7 @@ Include the source’s specific exact-text handling using:
 ```ts
 sourceTextPolicy: {
   exactTextUse: "private_excerpt_allowed";
-  assistantMayReproduce: "brief_quote_only";
+  assistantMayReproduce: "brief_quote_or_short_operative_words_only";
   timManualEntry: "allowed_for_private_app";
   storageLimits: [
     "private_app_only",
@@ -148,9 +165,11 @@ sourceTextPolicy: {
     "unavailable_by_default",
     "not_recommendation_eligible_until_human_review"
   ];
-  notes: "Tim may manually enter exact source wording from his copy for private household use. Research agents should identify important exact wording and source location but should not reproduce long copyrighted passages."
+  notes: "Default rule: exact operative source wording of 20 words or fewer may be used inline during extraction when source-attributed, non-substitutive, ritually important, and not source-prohibited. Longer/substantial exact wording uses private_source_excerpt metadata. Add stricter limits only for source-specific product-boundary reasons."
 }
 ```
+
+`sourceTextPolicy` is a source-gate policy block only. It is not a candidate-level extraction object and does not replace `ritualWords`.
 
 ## Reviewed source material
 
@@ -241,7 +260,7 @@ Keep concise. Do not overbuild safety.
 
 ## Copyright / source-expression cautions
 
-Be explicit about what may be privately excerpted and what agents should not reproduce wholesale.
+Be explicit about what may be privately excerpted, what exact short operative wording may be extracted under the 20-word rule, and what agents should not reproduce wholesale.
 
 ## Cultural / living-practice cautions
 
@@ -257,37 +276,3 @@ Identify carriers/purposes this source does not support well.
 | --- | --- | --- | --- | --- | --- |
 
 Do not create candidate rituals. Just name lanes.
-
-## Expected future inventory scope
-
-Estimate likely source rite inventory size for extraction:
-
-```text
-expected_source_items_to_inventory:
-likely_candidate_extract_now:
-likely_candidate_extract_later:
-likely_private_excerpt_references:
-likely_context_only_or_source_notes:
-likely_hold_or_reject:
-```
-
-## Tim approval decision
-
-State exactly what Tim would be approving.
-
-## Final checklist
-
-- Used only provided source file:
-- Exact source details captured:
-- PDF/page notes captured:
-- Approved ranges page-referenced:
-- Excluded/limited ranges page-referenced:
-- No Ritual candidates extracted:
-- No matrix filled:
-- No runtime approval:
-- Words treated as valid mechanics:
-- Recipes classified:
-- Private source text policy applied:
-- Expected future inventory scope estimated:
-- Adult-use cautions concise:
-- Tim approval decision clear:
