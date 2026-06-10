@@ -154,7 +154,7 @@ Inventory is intentionally broad. Every item has a disposition. Source page numb
 | Plant familiars | 236-239 | page_range | ritual | hold | Ongoing plant familiar relationship. | plant, words | voicing, protecting | high | hold | Familiar/commitment boundary. | Separate source-boundary review. |
 | Seasonal rituals | 239-244 | page_range | ritual | ritual_candidate | Garden seasonal observance and seasonal moons. | plant, words | marking, blessing | high | candidate_extract_now | Good plant + marking/blessing. | Candidate: Small Seasonal Green Rite. |
 | Intuitive/responsive garden magic | 244-246 | page_range | prompt | ritual_candidate | Let garden condition guide responsive spellwork. | plant, words | voicing, tending | medium | candidate_extract_now | Strong plant witnessing if not predictive. | Candidate: Ask What the Plant Is Showing. |
-| Ideas for garden spellwork | 246-248 | page_range | prompt | candidate_extract_later | Spell ideas using earth/water/winter/garden conditions. | plant, vessel | opening, releasing | medium | candidate_extract_later | Needs safety and weather adaptation. | Backlog. |
+| Ideas for garden spellwork | 246-248 | page_range | prompt | ritual_candidate | Spell ideas using earth/water/winter/garden conditions. | plant, vessel | opening, releasing | medium | candidate_extract_later | Needs safety and weather adaptation. | Backlog. |
 | Winter garden/snow-water symbolism | 247-248 | page_range | ritual | hold | Winter magic and snow/water use. | vessel, plant | marking, releasing | medium | hold | Weather/water use and outdoor-only boundary. | Later seasonal variant. |
 
 ## Packet metrics
@@ -360,7 +360,7 @@ Variant / split candidates:
 - Offerings to garden/spirits: adapt only as water/song/attention/thanks, no obligation.
 - Garden charms / magical care tips: needs charm/exact-text and material safety review.
 - Garden oracle deck: potentially useful but too large for low-overwhelm first pass.
-- Wands/wreaths/botanical craft: requires harvesting and object safety review.
+- Wands/wreaths/botanical craft: requires harvesting and plant selection safety review.
 - Ideas for garden spellwork / earth-water spells: needs source-boundary and weather adaptation.
 
 ### Held unless Tim changes boundary
