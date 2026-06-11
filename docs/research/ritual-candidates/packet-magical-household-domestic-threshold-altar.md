@@ -45,7 +45,7 @@ The approved source gate for this source is `docs/research/source-gates/src-mod-
 | 18-21 | Thresholds of Power | candidate_extract_now / later / hold | Door, window, key, lock, and threshold mechanics. |
 | 21-25 | Furnishings | candidate_extract_now / later / source_note_only | Table, rug, mirror, light, and room arrangement. |
 | 26-31 | Dreaming | hold / later | Bedroom and dream material mostly predictive, medical, sex/love, or herb-sensitive. |
-| 32-37 | Stove and Spoon | candidate_extract_now / hold | Kitchen, stove, salt, table, eating, and spoon mechanics; food/herb claims limited. |
+| 32-37 | Stove and Spoon | candidate_extract_later / hold | Kitchen/table/salt/spoon mechanics; food/herb claims limited. |
 | 37-42 | Bathing and Brushing | hold / later | Bath/body/grooming material requires topical, herb, medical, and appearance boundary review. |
 | 42-45 | The Indoor Garden | candidate_extract_now / hold | Houseplant tending and atmosphere, with pet/toxicity review. |
 | 45-52 | Fur, Fins and Feathers | hold / source_note_only | Animal material held except broad animal-welfare notes. |
@@ -54,7 +54,7 @@ The approved source gate for this source is `docs/research/source-gates/src-mod-
 | 62-66 | Protection | candidate_extract_later / hold | Amulets, bottles, sachets, stones, mirrors; many technical charm mechanics held. |
 | 67-75 | By Broom and Rag / Household Purifications | candidate_extract_now / later | Sweeping, washing, physical cleaning, elemental and infusion purification. |
 | 75-78 | Moving | candidate_extract_now / later | New-home and old-home transition mechanics. |
-| 78-84 | The Magical Year | candidate_extract_now / later | New-year and seasonal household markers. |
+| 78-84 | The Magical Year | candidate_extract_later / hold | Seasonal household markers. |
 | 84-89 | House Spells | later / hold | House protection and peace/harmony structures; exact spells private-only. |
 | 89-96 | Omens / Household Altar | candidate_extract_now / hold | Omen lane held; household altar setup and tending approved. |
 | 96-104 | Back matter | context_only | Glossary, bibliography, index, ads. |
@@ -65,9 +65,8 @@ The approved source gate for this source is `docs/research/source-gates/src-mod-
 | --- | ---: | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Front matter / edition / TOC | 1-7 | page_range | context | source_note_only | Source identity and chapter map. | words | remembering | citation | context_only | Metadata only. | Preserve citation. |
 | Domestic magical framing | 8-10 | page_range | frame | source_note_only | Home as magical environment and everyday practice. | words, body | marking | brief | source_note_only | Rationale, not standalone ritual. | Use as context. |
-| Visualization and concentration method | 10-11 | page_range | ritual_method | ritual_candidate | Rub hands, visualize, focus attention. | body, words | opening, steadying | substantial | candidate_extract_now | Source gives general magical method usable as opening. | Candidate below. |
+| Visualization and concentration method | 10-11 | page_range | ritual_method | ritual_candidate | Rub hands, visualize, focus attention. | body, words | opening, steadying | substantial | candidate_extract_now | General source method usable as opening. | Candidate below. |
 | House lore and household spirits | 11-14 | page_range | context/invocation | source_note_only | House signs, spirits, deities, protective folklore. | doorway, words | remembering, protecting | substantial | source_note_only | Deity/spirit material held. | Context only. |
-| Gentle house mark | 13-14 | page_range | mark | ritual_candidate | Private domestic sign or marker for the home. | doorway, words | marking | brief | candidate_extract_later | Needs symbol/provenance review. | Later. |
 | Hearth as household center | 15-18 | page_range | ritual_family | ritual_candidate | Hearth, flame, warmth, fire-gazing, household center. | candlelight, body | steadying, blessing | substantial | candidate_extract_now | Safe candle/lamp adaptation can stand alone. | Candidate below. |
 | Fire-gazing | 17 | exact_page | meditation | ritual_candidate | Looking into flame to settle fear/attention. | candlelight, body | steadying | substantial | candidate_extract_now | Remove prediction/guarantee framing. | Candidate below. |
 | Hearth ash/smoke/ember material | 16-18 | page_range | charm/material | product_followup_pattern | Ash, smoke, ember, and wood materials. | vessel, candlelight | protecting, releasing | substantial | hold_before_import | Fire/smoke/ash handling unresolved. | Hold. |
@@ -76,24 +75,21 @@ The approved source gate for this source is `docs/research/source-gates/src-mod-
 | Old key at the door | 20 | exact_page | charm | ritual_candidate | Key repetition/protection mechanics. | doorway, vessel, words | protecting | substantial | candidate_extract_now | Exact charm private; safe key placement. | Candidate below. |
 | Window washing | 20 | exact_page | cleansing | ritual_candidate | Window washing as clearing away unwanted influence. | doorway, body, vessel | releasing | brief | candidate_extract_now | Strong household action; chemical/glass notes. | Candidate below. |
 | Pins, horseshoe, cock, lemon/salt/iron threshold practices | 19 | exact_page | charm | ritual_candidate | Folk threshold objects and under-threshold practices. | doorway, vessel | protecting | substantial | hold_before_import | Sharp objects, property placement, pet/child risk, provenance. | Hold. |
-| Rug/floor freshness | 23 | exact_page | cleansing | ritual_candidate | Floor/rug purification with scent/salt action. | body, vessel, plant | releasing | brief | candidate_extract_later | Pet/allergy/surface review. | Later. |
 | Working rug or mat | 23 | exact_page | ritual_space | ritual_candidate | Rug or marked textile as working space. | table, body | opening, marking | brief | candidate_extract_now | Complete portable space marker. | Candidate below. |
 | Table as altar and stabilizer | 24-25 | page_range | table_ritual | ritual_candidate | Table symbolism, climbing beneath, table blessing logic. | table, body | blessing, steadying | brief | candidate_extract_now | Use table corners/legs without unsafe crawling. | Candidate below. |
 | Room light and living-room plants | 25, 42-45 | page_range | room_tending | ritual_candidate | Light and safe houseplants shape room atmosphere. | candlelight, plant | blessing, tending | brief | candidate_extract_now | Keep plant safety and candle/electric notes. | Candidate below. |
 | Dream, omen, sex/love, sleep, and predictive material | 26-31, 89-91 | chapter_range | divination/bedroom | product_followup_pattern | Dreams, omens, sleep, sex/love, psychic practices. | words, body | remembering, steadying | substantial | hold_before_import | Omen/sleep/sex/medical boundaries unresolved. | Hold. |
-| Stove and spoon kitchen protection | 32-37 | page_range | kitchen_ritual | ritual_candidate | Kitchen and table actions, salt, stove, spoon. | table, vessel, body | tending, blessing | substantial | candidate_extract_later | Food/herb/salt safety and exact-text review. | Later. |
-| Dining-table arrangement and meal blessing | 35-36 | page_range | table_ritual | ritual_candidate | Table direction, candle/altar-like table, passing food. | table, vessel | blessing, connecting | brief | candidate_extract_later | Food/direct-use review. | Later. |
+| Stove, spoon, kitchen protection, table meal blessing | 32-37 | page_range | kitchen_ritual | ritual_candidate | Kitchen and table actions, salt, stove, spoon. | table, vessel, body | tending, blessing | substantial | candidate_extract_later | Food/herb/salt safety and exact-text review. | Later. |
 | By broom and rag | 67-70 | page_range | cleansing | ritual_candidate | Sweeping and cleaning as magical household action. | body, doorway | releasing, tending | brief | candidate_extract_now | Strong source-backed form. | Candidate below. |
-| Open and clean before purification | 70-72 | page_range | purification_prep | ritual_candidate | Open doors/windows, physically clean, prepare house. | doorway, body | opening, releasing | brief | candidate_extract_now | Complete preparatory rite. | Candidate below. |
+| Open and clean before purification | 70-72 | page_range | purification_prep | ritual_candidate | Open doors/windows, physically clean, prepare house. | doorway, body | opening, releasing | brief | candidate_extract_later | Integrated into purification candidate here. | Later split. |
 | Elemental household purification | 72-73 | page_range | purification | ritual_candidate | Salt, incense, candle, water, and house circuit. | vessel, candlelight, body | releasing, protecting | substantial | candidate_extract_now | Complete direct rite; smoke/fire/salt notes. | Candidate below. |
 | Herbal infusion purification | 73 | exact_page | purification | ritual_candidate | Infusion sprinkled through house. | vessel, plant | releasing | substantial | candidate_extract_later | Herb/surface/pet review. | Later. |
-| Moving first things into new home | 2, 75-76 | page_range | moving_rite | ritual_candidate | Salt/bread/cheese, fire/heat, seating, first entrance. | doorway, table, candlelight | opening, blessing | brief | candidate_extract_now | Good moving rite with food/fire notes. | Candidate below. |
+| Moving first things into new home | 2, 75-76 | page_range | moving_rite | ritual_candidate | Salt/bread/cheese, fire/heat, seating, first entrance. | doorway, table, candlelight | opening, blessing | brief | candidate_extract_later | Good later moving variant; food/fire review. | Later. |
 | Old-home clearing after moving | 76-77 | page_range | moving_close | ritual_candidate | Sweep/clear old rooms and leave. | body, doorway | releasing, marking | brief | candidate_extract_now | Complete transition close. | Candidate below. |
-| New-year broom sweeping | 78-80 | page_range | seasonal | ritual_candidate | Sweep old year out and new year in. | doorway, body | releasing, opening | brief | candidate_extract_now | Complete seasonal household action. | Candidate below. |
-| Spring household balance | 81 | exact_page | seasonal | ritual_candidate | Spring cleaning/balance home renewal. | body, table | marking, tending | brief | candidate_extract_later | Seasonal variant later. | Later. |
+| New-year and seasonal sweeping | 78-84 | chapter_range | seasonal | ritual_candidate | Year/seasonal household sweeping and marking. | doorway, body, table | releasing, opening, marking | brief | candidate_extract_later | Seasonal variants later. | Later. |
 | House protection / peace spells | 84-86 | page_range | spell | private_excerpt_reference | Protection and peace/harmony house spells. | words, vessel, table | protecting, steadying | substantial | candidate_extract_later | Exact spells private and formulaic. | Later private review. |
 | Prosperity/luck, theft, adversarial, and target-control spells | 86-89 | page_range | spell | source_note_only | Luck/prosperity/theft/visitor/social spells. | words, vessel | blessing, protecting | substantial | hold_before_import | Guaranteed/adversarial/coercive boundaries. | Hold. |
-| Household altar location | 91-93 | page_range | altar | ritual_candidate | Choose a household altar place and protect privacy. | table, words | opening, protecting | brief | candidate_extract_now | Strong table/altar candidate. | Candidate below. |
+| Household altar location and privacy | 91-93 | page_range | altar | ritual_candidate | Choose a household altar place and protect privacy. | table, words | opening, protecting | brief | candidate_extract_now | Strong table/altar candidate. | Candidate below. |
 | Household altar objects and tending | 93-95 | page_range | altar_tending | ritual_candidate | Place, tend, clean, refresh altar objects. | table, vessel, plant | tending, remembering | brief | candidate_extract_now | Complete ongoing practice. | Candidate below. |
 | Seasonal altar changes and altar words | 94-96 | page_range | altar/seasonal | product_followup_pattern | Seasonal altar and exact prayers/spells. | table, candlelight, words | marking, blessing | substantial | candidate_extract_later | Private exact-text and seasonal review. | Later. |
 | Animal and pet charms | 45-52 | chapter_range | animal_practice | source_note_only | Pet charms, feeding/objects, animal lore. | body, vessel | protecting | substantial | hold_before_import | Animal welfare and unsafe materials. | Hold. |
@@ -104,14 +100,14 @@ The approved source gate for this source is `docs/research/source-gates/src-mod-
 ## Packet metrics
 
 ```text
-source_items_inventoried: 35
+source_items_inventoried: 31
 candidate_extract_now: 14
 candidate_extract_later: 8
 private_excerpt_reference: 1
-items_with_private_excerpt_recommended: 5
+items_with_private_excerpt_recommended: 4
 source_note_only: 4
 context_only: 1
-hold_before_import_candidate_records: 7
+hold_before_import_candidate_records: 6
 reject: 1
 runtime_records_created: no
 direct_use_eligibility_changed: no
@@ -143,13 +139,13 @@ Primary coverage only counts candidates marked `approved_for_mechanical_import`.
 | --- | --- | ---: | --- |
 | body | opening | 1 | `ritual-magical-household-center-house-mind` |
 | candlelight | steadying | 2 | `ritual-magical-household-return-hearth`; `ritual-magical-household-sit-beside-flame` |
-| doorway | opening | 2 | `ritual-magical-household-threshold-stand`; `ritual-magical-household-first-things-in` |
+| doorway | opening | 1 | `ritual-magical-household-threshold-stand` |
 | doorway | protecting | 2 | `ritual-magical-household-door-guardian-object`; `ritual-magical-household-key-door` |
 | doorway | releasing | 2 | `ritual-magical-household-wash-windows-clear`; `ritual-magical-household-leave-old-rooms-clear` |
-| table | opening | 1 | `ritual-magical-household-working-rug` |
+| table | opening | 2 | `ritual-magical-household-working-rug`; `ritual-magical-household-altar-place` |
 | table | blessing | 1 | `ritual-magical-household-table-legs` |
 | plant | tending | 1 | `ritual-magical-household-green-living-room` |
-| body | releasing | 2 | `ritual-magical-household-sweep-house-clean`; `ritual-magical-household-sweep-year-open` |
+| body | releasing | 1 | `ritual-magical-household-sweep-house-clean` |
 | vessel | releasing | 1 | `ritual-magical-household-four-elements-purification` |
 | table | tending | 1 | `ritual-magical-household-household-altar-tending` |
 
@@ -719,53 +715,6 @@ operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: 
 
 import readiness label: `approved_for_mechanical_import`
 
-### `ritual-magical-household-first-things-in` — First Things In
-
-disposition: `candidate_extract_now`
-
-ritualizationType: `source_backed_moon_and_table_form`
-
-headline: First Things In
-
-ritual body / practice: Use this when entering a new home, apartment, or room for the first household setting-apart. Before bringing in ordinary boxes, carry in three simple household signs: a small dish of salt, a piece of bread or other safe table food, and one source of warmth such as a candle in a holder or a lamp. Set them on the table, counter, or clean floor near the center of the home. Say the Moon & Table line: "Salt, bread, and warmth enter first." Sit briefly in one chair or stand still for three breaths. Close by moving the food, salt, and warmth source to their real household places.
-
-intention: Let protection, food, and warmth enter before the moving-in rush begins.
-
-bestWindow: First arrival in a new home or after a major room reset.
-
-questionToCarry: What should enter this home before the boxes do?
-
-whyThisFitsIngredients:
-  checkInHooks: [new home, moving, room reset]
-  timingHooks: [before unpacking, first entry]
-  lunarPlanetarySeasonalHooks: []
-  capacityHooks: [enough_to_participate]
-  audienceHooks: [me, both_of_us]
-  materialPlaceCarrierPurposeFit: [doorway, salt, bread/food, candle or lamp, chair/table]
-  sourceBackedRationale: [The source frontispiece and moving chapter describe first household objects carried into a new home]
-  notForOrHoldNotes: [no food sharing without safety; no unattended flame]
-
-howThisWasChosenIngredients:
-  primarySelectionSignals: [new home opening]
-  secondarySelectionSignals: [table blessing, doorway]
-  exclusionSignals: [unsafe flame, unsafe food, no private access]
-  timingSignal: before ordinary moving-in
-  confidenceNotes: complete source-backed Moon & Table form from moving-in mechanics
-
-source grounding: `The Magical Household`, Moving into a Magical Household front material, PDF p. 2; Moving, PDF pp. 75-76.
-
-recommendation metadata: primaryPurpose opening; secondaryPurposes [blessing, marking]; primaryCarrier doorway; secondaryCarriers [table, candlelight, vessel, words]; capacity [enough_to_participate]; audience [me, both_of_us]; timing required at first entry/reset; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
-
-search metadata: tags [magical-household, moving, new home, first things]; keywords [salt, bread, warmth, chair, new home]; materials [salt, bread or safe food, candle or lamp, chair/table]; places [new home, doorway, table]
-
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Food/allergy, gluten, pets, children, flame/electrical, rental/property, and moving-trip hazards.]
-
-adaptation policy notes: source_backed_moon_and_table_form; substitutes safe table food for strict source food item if needed after review.
-
-operative words metadata: [{ mode: `moon_and_table_original`, text: `Salt, bread, and warmth enter first.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF p. 2 and PDF pp. 75-76`, useContext: `spoken`, note: `Moon & Table line for source-supported first-things-in moving mechanics.` }]
-
-import readiness label: `approved_for_mechanical_import`
-
 ### `ritual-magical-household-leave-old-rooms-clear` — Leave the Old Rooms Clear
 
 disposition: `candidate_extract_now`
@@ -813,50 +762,50 @@ operative words metadata: [{ mode: `moon_and_table_original`, text: `This room i
 
 import readiness label: `approved_for_mechanical_import`
 
-### `ritual-magical-household-sweep-year-open` — Sweep the Year Open
+### `ritual-magical-household-altar-place` — Choose the Household Altar Place
 
 disposition: `candidate_extract_now`
 
 ritualizationType: `source_backed_moon_and_table_form`
 
-headline: Sweep the Year Open
+headline: Choose the Household Altar Place
 
-ritual body / practice: On New Year's Day, or another personally chosen household year-beginning, stand near the main door with a broom. Sweep from inside toward the threshold and out through the doorway if the doorway allows it. Name one thing from the old year that is leaving. Turn back inward and sweep once toward the center of the room. Name one quality being welcomed in. Say the Moon & Table line: "The old leaves; the new has room." Put the broom away cleanly to close.
+ritual body / practice: Walk through the home and choose one small surface that can hold household magic without being in the way: a shelf, table corner, windowsill, cabinet top, or tray. Clear it completely. Touch the surface and name the work it will hold: blessing, remembering, protection, seasonal turning, or quiet. Say the Moon & Table line: "This place is set apart for the house." Put one simple object there to mark the place. Step back, look once, and leave it undisturbed until it is time to tend it.
 
-intention: Mark the turn of the year with one clear household sweep.
+intention: Set apart one household surface as the center for small private workings.
 
-bestWindow: New Year's Day, the first morning after returning home, or a private household new beginning.
+bestWindow: When beginning household altar practice, after moving, or after clearing a room.
 
-questionToCarry: What leaves, and what has room now?
+questionToCarry: What work does this place belong to now?
 
 whyThisFitsIngredients:
-  checkInHooks: [new year, reset, old cycle finished]
-  timingHooks: [year turn, personal new beginning]
-  lunarPlanetarySeasonalHooks: [new year/seasonal threshold]
-  capacityHooks: [only_a_little, enough_to_participate]
+  checkInHooks: [needs home center, altar beginning, room reset]
+  timingHooks: [new altar, after move, after room clearing]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [enough_to_participate]
   audienceHooks: [me, both_of_us]
-  materialPlaceCarrierPurposeFit: [broom, doorway, room center]
-  sourceBackedRationale: [The source's magical-year material includes broom/sweeping practices for old and new year transition]
-  notForOrHoldNotes: [no burning or burying broom in this draft]
+  materialPlaceCarrierPurposeFit: [shelf/table/windowsill/tray, one object]
+  sourceBackedRationale: [The source discusses choosing a household altar place and keeping it distinct for domestic magical work]
+  notForOrHoldNotes: [no deity/spirit/ancestor obligation imported]
 
 howThisWasChosenIngredients:
-  primarySelectionSignals: [body releasing, year turn]
-  secondarySelectionSignals: [doorway opening]
-  exclusionSignals: [unsafe doorway, physically difficult sweeping]
-  timingSignal: year beginning
-  confidenceNotes: complete source-backed Moon & Table form using safe sweeping mechanics
+  primarySelectionSignals: [table opening, household altar]
+  secondarySelectionSignals: [marking, protecting]
+  exclusionSignals: [no safe/private surface]
+  timingSignal: beginning altar practice
+  confidenceNotes: complete source-backed Moon & Table form from household altar chapter
 
-source grounding: `The Magical Household`, The Magical Year, PDF pp. 78-80.
+source grounding: `The Magical Household`, The Household Altar, PDF pp. 91-93.
 
-recommendation metadata: primaryPurpose releasing; secondaryPurposes [opening, marking]; primaryCarrier body; secondaryCarriers [doorway, words]; capacity [only_a_little, enough_to_participate]; audience [me, both_of_us]; timing preferred at year turn; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+recommendation metadata: primaryPurpose opening; secondaryPurposes [marking, protecting]; primaryCarrier table; secondaryCarriers [vessel, words]; capacity [enough_to_participate]; audience [me, both_of_us]; timing required when beginning altar practice; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
-search metadata: tags [magical-household, new year, broom, sweeping]; keywords [new year, broom, sweep, doorway, old and new]; materials [broom]; places [main door, room center]
+search metadata: tags [magical-household, household altar, altar place]; keywords [altar, shelf, table, tray, household center]; materials [small surface, one household object]; places [shelf, table, windowsill, tray]
 
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [Trip, weather, shared-building, dust/allergy, and no fire/disposal variant review.]
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Pet/child, privacy, object stability, candle/plant if later added, and deity/spirit/ancestor boundary review.]
 
-adaptation policy notes: source_backed_moon_and_table_form; burning/burying variants held.
+adaptation policy notes: source_backed_moon_and_table_form; no prayer or deity/spirit obligation imported.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `The old leaves; the new has room.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF pp. 78-80`, useContext: `spoken`, note: `Moon & Table line for source-supported broom/year-turn mechanics.` }]
+operative words metadata: [{ mode: `moon_and_table_original`, text: `This place is set apart for the house.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF pp. 91-93`, useContext: `spoken`, note: `Moon & Table line for source-supported altar-place selection.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -899,7 +848,7 @@ recommendation metadata: primaryPurpose tending; secondaryPurposes [remembering,
 
 search metadata: tags [magical-household, household altar, altar tending]; keywords [altar, shelf, table, objects, household memory]; materials [altar surface, household altar objects]; places [household altar, shelf, table]
 
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Candle, plant toxicity, small objects, photos/privacy, deity/spirit/ancestor boundary, pet/child, and cultural/provenance review.]
+review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Candle, plant toxicity, small objects, photos/privacy, deity/spirit/ancestor boundary, pet/child, and cultural/provenance review.]
 
 adaptation policy notes: source_backed_moon_and_table_form; altar prayer/spell text remains private or held.
 
@@ -911,7 +860,7 @@ import readiness label: `approved_for_mechanical_import`
 
 | Candidate or source item | Import readiness | Reason |
 | --- | --- | --- |
-| `ritual-magical-household-mark-house-gently` | candidate_extract_later | House signs are useful but symbol/provenance review is needed before a public packet body can define the mark. |
+| House sign / gentle mark | candidate_extract_later | House signs are useful but symbol/provenance review is needed before a public packet body can define the mark. |
 | Hearth chalk marks, ash, smoke, ember, wood, and fire-material variants | hold_before_import | Fire/smoke/ash/plant/disposal mechanics need material safety and source-boundary review. |
 | Threshold pins, powders, lemons, iron, salt, animal-symbol, and under-threshold charms | hold_before_import | Sharp objects, pet/child risk, property damage, folk provenance, and exact charm handling. |
 | Rug/floor salt/herb purification | candidate_extract_later | Useful cleaning rite but pet/allergy/surface review needed before import approval. |
@@ -924,7 +873,7 @@ import readiness label: `approved_for_mechanical_import`
 | Garage/car practices | hold_before_import | Car/road/garage safety and product fit are weaker. |
 | House protection and peace/harmony spells | candidate_extract_later | Mechanics promising, exact spell wording private and guarantee/coercion review needed. |
 | Household altar seasonal changes and prayers | candidate_extract_later | Strong table/seasonal lane; exact words and cultural/source-boundary review needed. |
-| Prosperity, luck, theft, adversarial, coercive, medical, healing, fertility, pest-poison, and guaranteed-outcome claims | hold_before_import | Product boundary. |
+| Medical, healing, fertility, coercive love/sex, prosperity/luck guarantees, theft/adversarial, pest-poison, and guaranteed-outcome claims | hold_before_import | Product boundary. |
 
 ## Coverage records
 
@@ -942,22 +891,21 @@ import readiness label: `approved_for_mechanical_import`
 | `ritual-magical-household-green-living-room` | plant | tending | body, words, vessel | blessing, steadying | approved_for_mechanical_import |
 | `ritual-magical-household-sweep-house-clean` | body | releasing | doorway, vessel, words | tending, protecting | approved_for_mechanical_import |
 | `ritual-magical-household-four-elements-purification` | vessel | releasing | body, doorway, candlelight, words | protecting, opening | approved_for_mechanical_import |
-| `ritual-magical-household-first-things-in` | doorway | opening | table, candlelight, vessel, words | blessing, marking | approved_for_mechanical_import |
 | `ritual-magical-household-leave-old-rooms-clear` | doorway | releasing | body, words | marking, remembering | approved_for_mechanical_import |
-| `ritual-magical-household-sweep-year-open` | body | releasing | doorway, words | opening, marking | approved_for_mechanical_import |
+| `ritual-magical-household-altar-place` | table | opening | vessel, words | marking, protecting | approved_for_mechanical_import |
 | `ritual-magical-household-household-altar-tending` | table | tending | vessel, candlelight, plant, words | remembering, blessing, marking | approved_for_mechanical_import |
 
 ## Variant / split ledger
 
-- Threshold mechanics split into stand-at-threshold, doorway object, key, window washing, moving-in, and moving-out because each has a different source architecture and safety posture.
+- Threshold mechanics split into stand-at-threshold, doorway object, key, window washing, and moving-out because each has a different source architecture and safety posture.
 - Hearth work uses candle/lamp stand-ins for draft import; fireplace, ash, smoke, and ember variants remain held.
 - Cleaning work is split into a small sweeping rite and a full elemental purification because one is a household action and the other is a multi-material circuit.
-- The altar candidate is ongoing tending only; altar prayers, deity/spirit obligations, and seasonal altar text remain later/private.
+- The altar candidates cover place-setting and ongoing tending only; altar prayers, deity/spirit obligations, and seasonal altar text remain later/private.
 - Kitchen, bath, plant, animal, garden, garage, and house-spell material has not been discarded. It is held or later where material safety, exact text, product fit, or cultural/source-boundary review is needed.
 
 ## Required self-check results
 
-Checked the revised packet for blocking placeholder mechanics and invalid runtime posture. No approved candidate body uses source pattern, source period, source close, source layout, source diagram, as the source shows, as the diagram shows, chosen version, source-supported order, source charm, source placement, source disposal, review must decide, direct-use review must decide, appropriate household object, or internal process language. Approved candidates use only runtime-valid carriers and capacity values. Specific safety concerns are preserved under valid review flags and notes. The source-exact wording posture cites the approved source gate path and explains why exact source formulas are generally private/held. No runtime records or eligibility flags are changed.
+Checked the revised packet for blocking placeholder mechanics and invalid runtime posture. No approved candidate body uses placeholder source-reference language, internal review-process language, informal capacity values, or invalid review flag names. Approved candidates use only runtime-valid carriers and capacity values. Specific safety concerns are preserved under valid review flags and notes. The source-exact wording posture cites the approved source gate path and explains why exact source formulae are generally private/held. No runtime records or eligibility flags are changed.
 
 ## Validation checklist
 
