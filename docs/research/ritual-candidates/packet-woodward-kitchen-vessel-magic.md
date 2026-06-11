@@ -4,163 +4,107 @@
 
 Packet ID: `packet-woodward-kitchen-vessel-magic`
 
-Packet status: `complete_source_accounting_ready_for_pm_review`
+Packet status: `canonical_reextraction_pr_for_qa`
 
-Researcher: ChatGPT
+Parent issue: #351
 
-Date created: 2026-06-10
-
-Date supplemented: 2026-06-10
-
-Parent issue: #333
-
-Related issues: #330, #296, #325, #326, #292, #268
+Related issues: #344, #345, #287, #333, #335, #336
 
 Output path: `docs/research/ritual-candidates/packet-woodward-kitchen-vessel-magic.md`
 
 Source ID: `SRC-VESSEL-WOODWARD-KITCHEN-WITCHERY`
 
-This packet is Markdown research content only. It does not approve runtime use. It does not mark any Ritual reviewed, findable, direct-use eligible, direct-use ready, recommendation eligible, recommendable, or runtime-ready.
+Source used: Laurel Woodward, *Kitchen Witchery: Unlocking the Magick in Everyday Ingredients*. Llewellyn Publications, 2021. First e-book edition, 2021.
 
-## Assignment
+This packet is Markdown research content only. It does not create runtime Ritual records. It does not mark any Ritual or candidate reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.
 
-Assigned source mode: single approved source only.
+## Controlling model
 
-Assigned source: Laurel Woodward, *Kitchen Witchery: Unlocking the Magick in Everyday Ingredients*.
+This packet has been re-run under #345 and the #344 house voice guide. The packet, not Codex, is the future mechanical-import authoring artifact.
 
-Assigned extraction lane: complete approved-scope Woodward kitchen/vessel accounting, with Batch A emphasis on kitchen vessel/shared-object magic; vessel + connecting; vessel + remembering; table + blessing; seasonal marking; shared cup/shared bowl/shared meal mechanics; kitchen-table intention and closing; candle + table + vessel atmosphere where fire-safe and secondary.
-
-Product boundary: preserve magical intent, symbolic action, blessing, sweetness, attraction-as-invitation, abundance-as-warmth/enoughness, protection-as-boundary, release, and transformation. Do not flatten this into mindful cooking, chores, nutrition, or generic domestic advice. Do not claim outcomes.
-
-## Required correction from PM / Tim
-
-The original version of this packet is accepted as a strong **Batch A vessel/shared-object packet**, but it is not accepted as complete Woodward source accounting.
-
-This supplement keeps the original candidates and adds a complete accounting pass.
+Core rule:
 
 ```text
-This is not a representative-sample extraction.
-This packet must provide a complete accounting of all ritual mechanics within the approved source-gate scope.
-Candidate activation may be staged later, but source accounting must be complete now.
+If Codex must invent user-facing Ritual prose during #287, the extraction packet is not complete enough for import.
 ```
 
-## Allowed source / source policy note
+Every `approved_for_mechanical_import` record below has a complete `ritual body / practice` that can be mechanically imported as draft/unavailable Ritual copy after PR-gated QA. `approved_for_mechanical_import` does not mean reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.
 
-Allowed source: Laurel Woodward, *Kitchen Witchery: Unlocking the Magick in Everyday Ingredients*. Llewellyn Publications, 2021. ISBN 978-0-7387-6784-0; first e-book edition ISBN 9780738768045.
+## Source text posture
 
-Controlling gate: `docs/research/source-gates/src-vessel-woodward-kitchen-witchery.md`
-
-Gate verdict: `approved_for_extraction_with_limits`.
-
-Source copy used: Tim-supplied 399-page PDF, `Kitchen_Witchery_-_Laurel_Woodward(1).pdf`. Page references use PDF pages.
-
-Policy files:
-
-```text
-docs/research/private-source-text-policy.md
-docs/research/extraction-depth-policy.md
-docs/research/prompts/extraction-packet-prompt-template.md
-```
-
-Recipes, blessings, prayers, charms, petitions, meditations, spoken words, formulae, measurements, temperatures, and distinctive source prose are not runtime text. This packet records mechanics, source locations, carriers, purposes, safety boundaries, private-excerpt needs, and Moon & Table-shaped candidate drafts without reproducing recipes or full ritual scripts.
-
-Every candidate remains draft research only.
-
-## Controlling source-gate limits applied
-
-- Use mechanics and symbolic architecture: clear intention, centering, stirring/chopping/kneading/mixing as ritual action, shared cup/bowl/pot/serving dish/table practices, kitchen-table blessing, meal-as-connection, seasonal food-as-marker, water vessel reflection, safe pantry/kitchen object preparation, ordinary ingredient-as-symbol, making/serving/sharing/clearing/remembering.
-- Do not copy exact recipes, ingredient lists, measurements, cooking temperatures, cooking steps, spells, charms, prayers, blessings, chants, petitions, meditations, or source spell titles.
-- Do not extract coercive love/attraction, domination, compulsion, truth-forcing, target-control, hex, curse, binding, guaranteed outcomes, or prosperity/luck spell database material.
-- Do not use medical, nutrition, organic, pesticide, detox, fertility, pregnancy, beauty, cancer, cholesterol, ADHD, immune, sleep, mood, depression, weight-loss, treatment, or health claims.
-- Do not default to smoke/incense, essential oils, topical oils, perfumes, bath oils, anointing oils, body rubs, hand powders, dream pillows, wild water, non-potable water, raw/foraged/unsafe plants, edible flowers, cannabis/psychoactive material, alcohol, caffeine, allergen-risk foods, pet-unsafe foods, pregnancy/medication-sensitive herbs, or risky ingredients.
-- Do not feed or expose another person to an ingredient without consent and allergy/dietary screening.
+The approved source gate for this source is `docs/research/source-gates/src-vessel-woodward-kitchen-witchery.md`. That gate is stricter than the general 20-word rule: it allows mechanics extraction and private exact-text handling, but says runtime text should not reproduce direct source quotes from recipes, recipe headnotes, exercises, blessings, charms, meditations, petitions, or distinctive prose. Therefore this packet does not use `source_exact_short` for this source. Where exact wording matters, it is tracked as `private_source_excerpt`; where a complete public packet body needs spoken or written words, the line is `moon_and_table_original` and the note explains the source-supported action it completes.
 
 ## Source sections used
 
-| PDF pages | Section | Extraction decision | Notes |
+| PDF pages | Source section | Extraction decision | Notes |
 | ---: | --- | --- | --- |
-| 4-8 | Copyright, disclaimer, contents | context_with_limits | Citation, TOC, and safety posture; food sensitivities/restrictions warning. |
-| 9-10 | Introduction | approved_with_limits | Kitchen as sacred household space; everyday ingredients; attention and intention. |
-| 11-19 | Ch. 1: Why Food Matters | context_with_limits | Seasonal food and household context only; health/organic/pesticide claims excluded. |
-| 20-41 | Ch. 2: The Magick of Everyday Things | approved_with_limits | Intention, centering, ordinary kitchen actions as ritual actions, table/candle, bowl/water reflection, moon/day timing, tool/object blessing. |
-| 42-120 | Chs. 3-6: Flours, groats, beans, nuts, seeds | approved_with_limits | Bread/dough/bowl/kneading/table; hearty bowl/meal; beginnings. No recipes or allergen defaults. |
-| 121-136 | Ch. 7: Oils and Vinegars | limited_support | Food-safe cooking/finishing only. Topical/anointing/essential oils held. |
-| 137-164 | Ch. 8: Sugars and Sweets | approved_with_limits | Sweetness, jar/cup/dish/table symbolism. Coercive sweetening and prosperity spell material rejected/held. |
-| 165-221 | Ch. 9: Vegetables | approved_with_limits | Soup/stew/bowl/table, seasonal produce, shared household offering. Health/prosperity/compulsion claims held. |
-| 222-224 | Ch. 10: Fungi | source_note_only | Minimal support only; no foraging or medicinal use. |
-| 225-253 | Ch. 11: Fruits | approved_with_limits | Fruit as seasonal marker, table blessing, sharing, offering, memory symbol. Love-control/fertility/beauty/medicinal claims held. |
-| 254-268 | Ch. 12: Hydration and What We Drink | approved_with_limits | Shared cup, pitcher, glass, jar, water vessel, drink-as-carrier. Alcohol/caffeine/wild water/non-potable water held. |
-| 269-332 | Ch. 13: Spices and Herbs | support_only | Safe culinary scent/taste symbolism only when paired with a vessel mechanic. Medicinal/smoke/topical material held. |
-| 333-343 | Ch. 14: Dairy and Eggs | support_only | Nourishment/table/seasonal support only; dairy/egg allergy and raw egg boundaries. |
-| 344-381 | Ch. 15: Recipes for the Seasons | approved_with_limits | Seasonal table marking, shared meal, food memory, wheel-of-year atmosphere. Recipes and culturally specific obligations held. |
-| 382-399 | Bibliography and acknowledgments | context_only | Citation/provenance only. |
+| 4-8 | Copyright, disclaimer, contents | context_only / source_note_only | Citation, TOC, food sensitivity and allergy boundary. |
+| 9-10 | Introduction | candidate_extract_now / source_note_only | Kitchen as sacred space; attention, intention, everyday ingredients. |
+| 11-19 | Ch. 1, Why Food Matters | context_only / hold | Seasonal household food context; health/organic/pesticide claims excluded. |
+| 20-41 | Ch. 2, The Magick of Everyday Things | candidate_extract_now / hold | Intention, centering, kitchen action as ritual, table candle, bowl/water reflection, moon timing, object blessing. |
+| 42-120 | Chs. 3-6, grains/flours/beans/nuts/seeds | candidate_extract_now / source_note_only / hold | Bread/dough/bowl/kneading/table and hearty bowl mechanics; no recipes or allergen defaults. |
+| 121-136 | Ch. 7, Oils and Vinegars | candidate_extract_later / hold | Food-safe finishing mechanics only; topical/anointing/essential-oil material held. |
+| 137-164 | Ch. 8, Sugars and Sweets | candidate_extract_now / reject | Sweetness as invitation/warmth; coercive sweetening/prosperity spell database rejected. |
+| 165-221 | Ch. 9, Vegetables | candidate_extract_now / source_note_only / hold | Soup/stew/bowl/table, seasonal produce, shared household offering; health/prosperity/compulsion claims held. |
+| 222-224 | Ch. 10, Fungi | source_note_only | Minimal support only; no foraging or medicinal use. |
+| 225-253 | Ch. 11, Fruits | candidate_extract_now / hold | Fruit as seasonal marker, table blessing, sharing, memory symbol; love-control/fertility/beauty/medicinal claims held. |
+| 254-268 | Ch. 12, Hydration and What We Drink | candidate_extract_now / hold | Shared cup, pitcher, glass, jar, water vessel, drink-as-carrier; alcohol/caffeine/wild water held. |
+| 269-332 | Ch. 13, Spices and Herbs | source_note_only / hold | Safe culinary scent/taste symbolism as support; medicinal/smoke/topical material held. |
+| 333-343 | Ch. 14, Dairy and Eggs | source_note_only / hold | Nourishment/table/seasonal support only; dairy/egg safety boundaries. |
+| 344-381 | Ch. 15, Recipes for the Seasons | candidate_extract_now / hold | Seasonal table marking, shared meal, food memory; no recipes or culturally specific obligations. |
+| 382-399 | Bibliography / acknowledgments | context_only | Citation/provenance only. |
 
-## Source rite inventory
+## Source rite inventory and disposition
 
-Inventory is intentionally broad. Every inventoried item has a disposition. Candidate records are draft research records only.
+| Source item | Source pages | Source location precision | Type | Research use | Brief source description | Likely carriers | Likely purposes | Exact text importance | Disposition | Reason | Future action |
+| --- | ---: | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Citation / copyright / disclaimer | 4-8 | page_range | context | source_note_only | Copyright, source identity, medical and food sensitivity disclaimer. | words | protecting | high | context_only | Metadata/safety context only. | Preserve citation and safety boundary. |
+| Kitchen as sacred household space | 9-10 | page_range | framing | source_note_only | Kitchen work becomes ritual through attention, intention, ingredients, and care. | table, vessel, body | blessing, tending | medium | source_note_only | Voice/context only; do not copy author prose. | Use as rationale. |
+| Intention before kitchen action | 20-28 | page_range | ritual_mechanic | ritual_candidate | Choose a clear purpose before/during a kitchen act. | words, table, vessel, body | opening, voicing, blessing | high | candidate_extract_now | Core mechanic; public wording must be Moon & Table original. | Candidate below. |
+| Coming to center | 27-30 | page_range | meditation | ritual_candidate | Pause, breathe, gather attention before acting. | body, words, table | steadying, opening | high | candidate_extract_now | Complete kitchen opening if kept simple. | Candidate below. |
+| Bowl as focus while mixing/stirring | 21-28 | page_range | ritual_mechanic | ritual_candidate | Vessel receives attention, intention, and action. | vessel, body, words | tending, connecting | medium | candidate_extract_now | Strong vessel mechanic, not recipe. | Candidate below. |
+| Candle at the table while cooking | 23-25 | page_range | ritual_mechanic | ritual_candidate | Candle and prepared food share table/working space. | candlelight, table, vessel | opening, blessing, marking | medium | candidate_extract_now | Fire-safe table variant can stand alone. | Candidate below. |
+| Spoken petitions over food | 21-28 | page_range | words | private_excerpt_reference | Source examples use voiced petitions while preparing food. | words, vessel | voicing, blessing | high | hold_before_import | Exact text excluded; coercive examples rejected. | Use only private/source-reviewed text later. |
+| Moon phase kitchen wording | 30-36 | page_range | timing_context | product_followup_pattern | Waxing/full/waning timing shapes the verb of a kitchen/table act. | words, table | opening, marking, releasing | medium | candidate_extract_later | Useful timing layer, not enough by itself. | Later timing variant. |
+| Dark moon water bowl reflection | 33-34 | exact_page | ritual_mechanic | ritual_candidate | Water bowl/window reflection and written noticing. | vessel, words, body | remembering, releasing, voicing | medium | candidate_extract_now | Strong vessel + remembering; underworld/mediumship softened. | Candidate below. |
+| Tool/object cleansing and consecration | 38-41 | page_range | object_ritual | ritual_candidate | Cleanse/bless/charge a kitchen or ritual object. | vessel, table, words, body | blessing, marking, protecting | high | candidate_extract_now | Use food-safe cleaning; smoke/oil/deity material held. | Candidate below. |
+| Elemental object blessing | 39-40 | page_range | invocation | private_excerpt_reference | Elemental blessing over an object. | table, vessel, words | blessing, marking | high | hold_before_import | Exact invocation, smoke/oil/deity options, and ritual complexity require review. | Hold. |
+| Bread/dough/kneading as intention work | 42-71 | chapter_range | ritual_mechanic | ritual_candidate | Bread/dough/kneading/bowl/table as embodied intention and offering. | vessel, body, table | tending, blessing, remembering | medium | candidate_extract_now | No recipe; raw flour/gluten boundary. | Candidate below. |
+| Bread as household offering | 42-71, 344-381 | chapter_range | food_symbol | ritual_candidate | Bread/loaf as household offering or table sign. | table, vessel, body | blessing, remembering | medium | candidate_extract_now | Can use already-planned bread without recipe. | Candidate below. |
+| Beans/lentils/vegetable soup or stew bowl | 92-107, 165-221 | chapter_range | meal_vessel | ritual_candidate | Hearty bowl/pot/serving vessel as tending and steadiness. | vessel, table, body | tending, steadying | medium | candidate_extract_now | No recipe or nutrition claim. | Candidate below. |
+| Nuts/seeds as ingredient symbols | 108-120 | chapter_range | correspondence_support | source_note_only | Seeds/nuts as beginning/abundance symbols. | vessel, table | opening, marking | medium | hold_before_import | Allergy/choking/pet boundaries. | Hold. |
+| Food-safe finishing oil / vinegar gesture | 121-136 | page_range | kitchen_action | product_followup_pattern | Finishing/serving gesture can mark completion. | vessel, table, body | blessing, tending | high | candidate_extract_later | Oil safety and recipe boundary require variant. | Later. |
+| Sweetness bowl / welcome dish | 137-164 | chapter_range | vessel_symbol | ritual_candidate | Sweetness as warmth, welcome, and invitation. | vessel, table, words | blessing, connecting | medium | candidate_extract_now | Coercive sweetening rejected; use enoughness/welcome. | Candidate below. |
+| Coercive love/attraction/sweetening | 21-25, 137-164, 225-253 | chapter_range | spell | source_note_only | Food used to compel love, favor, or desire. | vessel, words | connecting | high | reject | Target-control boundary. | Do not import. |
+| Seasonal fruit or food marker | 225-253, 344-381 | chapter_range | seasonal_marker | ritual_candidate | One seasonal food object marks the moment at the table. | table, vessel, plant | marking, blessing, remembering | medium | candidate_extract_now | No fertility/beauty/health claims. | Candidate below. |
+| Shared cup / pitcher / drink pause | 254-268 | page_range | drink_vessel | ritual_candidate | Cup, pitcher, glass, jar, water/drink as carrier. | vessel, table, body | connecting, steadying | medium | candidate_extract_now | Ordinary safe drink only; no alcohol/caffeine default. | Candidate below. |
+| Herbal/spice correspondences | 269-332 | chapter_range | correspondence_support | source_note_only | Culinary scent/taste symbolism. | vessel, plant, words | blessing, protecting | medium | source_note_only | Support only; no database, medicine, smoke, or topical use. | Use as support only. |
+| Dairy/egg seasonal/nourishment support | 333-343 | chapter_range | correspondence_support | source_note_only | Nourishment and seasonal context. | table, vessel | tending, marking | medium | source_note_only | Allergy/raw-egg boundaries. | Use as support only. |
+| Seasonal recipes and table rites | 344-381 | chapter_range | seasonal_food | ritual_candidate | Seasonal table marking and repeated household food memory. | table, vessel, words | marking, remembering, connecting | high | candidate_extract_now | Recipes and cultural obligations excluded. | Candidates below. |
+| Repeated food memory | 344-381 | chapter_range | memory_practice | ritual_candidate | Record the spell around a repeated household food, not the recipe. | words, table, vessel | remembering, marking | medium | candidate_extract_now | Good grimoire pattern; no recipe text. | Candidate below. |
+| Culturally specific/deity/ancestor holiday foodways | 344-381 | chapter_range | seasonal_context | source_note_only | Seasonal food traditions and ritual associations. | table, words | remembering, blessing | high | hold_before_import | Provenance and obligations require review. | Hold. |
+| Recipes, ingredient lists, temperatures, methods | throughout | chapter_range | recipe | source_note_only | Exact recipes and cooking directions. | vessel, table, body | tending | high | hold_before_import | Moon & Table is not a recipe app. | Hold unless private safe lane created. |
+| Health/nutrition/organic/pesticide/medicinal claims | throughout | chapter_range | claim | source_note_only | Food health, purity, medical, diet, or treatment claims. | words | protecting | medium | reject | Outside product lane. | Do not import. |
+| Smoke, incense, oils, perfumes, baths, hand powders | multiple | chapter_range | material_ritual | source_note_only | Non-food material preparations. | vessel, body, candlelight | blessing, protecting | high | hold_before_import | Material safety and source boundary. | Hold. |
 
-| Source item | Source pages | Type | Brief source description | Likely carriers | Likely purposes | Exact text importance | Disposition | Reason / future action |
-| --- | ---: | --- | --- | --- | --- | --- | --- | --- |
-| Copyright / use restriction | 4-5 | metadata | Modern copyrighted ebook restrictions. | words | — | high | context_only | Preserve no-copy posture. |
-| Medical/allergy disclaimer | 6 | safety | Avoid medical use; check sensitivities/restrictions before food exposure. | food, body | protecting | low | source_note_only | Carry into all food candidates. |
-| Kitchen as sacred household space | 9-10 | framing | Kitchen work becomes ritual through attention, intention, ingredients, and care. | table, vessel, body | blessing, tending | medium | source_note_only | Atmosphere only; voice not copied. |
-| Seasonal food life | 11-17 | framing | Food tied to season, household, land, and embodied care. | plant, table | marking, remembering | low | context_only | Use symbolic/seasonal context only. |
-| Organic/pesticide/nutrition advocacy | 12-16 | claim | Health and food purity claims. | food | protecting | medium | reject | Not Moon & Table guidance. |
-| Intention before cooking | 20-28 | ritual_mechanic | Choose purpose before/during kitchen action. | words, vessel, body | opening, voicing, blessing | medium | candidate_extract_now | Core approved mechanic. Candidate 13 expands the original packet's intention handling. |
-| Friendship/hospitality meal example | 21-27 | example_recipe | Food prepared for welcome, friendship, and table connection. | table, vessel, food | connecting, blessing | high | candidate_extract_now | Mechanics translate; recipe/spoken text not copied. |
-| Coercive love/attraction examples | 21-25, 137-164, 225-253 | spell/example | Make someone love, desire, favor, or change opinion. | food, words, vessel | connecting | high | reject | Coercive/target-control barred. |
-| Bowl as focus while mashing/stirring | 22-26 | ritual_mechanic | Bowl receives attention, intention, and action. | bowl, body, words | tending, connecting | medium | candidate_extract_now | Strong vessel + tending. |
-| Candle at the table while cooking | 23-25 | ritual_mechanic | Candle and prepared food share table/working space. | candlelight, table, food | blessing, marking | medium | candidate_extract_later | Atmosphere only; fire-safe variant. Candidate 22. |
-| Spoken petition over food | 21-28 | words | Spoken purpose directs kitchen work. | words, food | voicing, blessing | high | private_excerpt_reference | Exact text not usable; rewrite all language. |
-| Centering before kitchen action | 27-30 | meditation | Pause, breathe, come to center. | body, words | steadying, opening | high | candidate_extract_now | Use as short original opening step. Candidate 14. |
-| Moon phase intention wording | 30-32 | timing_correspondence | Waxing/waning language shapes how intention is framed. | words, table | opening, releasing, marking | medium | candidate_extract_later | Useful timing add-on; avoid spell-list claims. Candidate 17. |
-| Dark moon water bowl reflection | 33-34 | ritual_mechanic | Water bowl reflects sky; notice and write what arises. | bowl, water, window, words | remembering, releasing, voicing | medium | candidate_extract_now | Strong vessel + remembering; soften underworld/mediumship framing. |
-| New moon greeting | 34 | timing_action | Greet moonrise with body/voice and make it a power time. | words, body | opening, marking | medium | candidate_extract_later | Useful lunar add-on, not vessel-first. Candidate 17. |
-| Waxing moon action check-in | 34-35 | timing_action | Revisit an intention set at new moon and do the work to build it. | words, body, table | tending, opening | medium | candidate_extract_later | Good follow-through mechanic; avoid outcome claims. Candidate 17 variant. |
-| Full moon celebration / moon cake | 35-36 | seasonal_food | Food preparation and sharing marks full moon. | table, food, candlelight | marking, blessing, connecting | medium | candidate_extract_later | Good timing variant; recipe not copied. Candidate 18. |
-| Waning moon release / clearing framing | 36 | timing_action | Use waning phase to clear, release, and remove blocks. | words, body, table | releasing, protecting | medium | candidate_extract_later | Use only self/household release; no banishing others, hexes, or binding. Candidate 23. |
-| Days-of-week ritual timing | 36-38 | timing_correspondence | Weekday planetary framing for intention timing. | words | marking, opening | medium | source_note_only | Support metadata only; too correspondence-heavy for standalone extraction. |
-| Tool/object cleansing and charging | 38-41 | object_ritual | Cleanse/bless/charge a kitchen or ritual object. | vessel, table, words | blessing, marking, protecting | high | candidate_extract_later | Good kept-vessel candidate; smoke/oil/deity language held. Candidate 19. |
-| Breath over object / activation | 39-40 | ritual_mechanic | Breath seals or activates a blessed object. | body, words, vessel | blessing, opening | high | candidate_extract_later | Useful, but needs original wording and no guaranteed activation claim. Candidate 19 variant. |
-| Elemental blessing pattern | 39-40 | invocation | Elemental representations arranged around object. | table, vessel, words | blessing, marking | high | private_excerpt_reference | Exact invocation not used; cultural/ritual complexity. Hold for later. |
-| Bread/dough/kneading as intention work | 42-71 | ritual_mechanic | Kneading/resting bread as embodied intention and offering. | bowl, body, table | tending, blessing, remembering | medium | candidate_extract_now | Strong but gluten/raw flour boundaries. |
-| Bread as offering | 42-71, 344-381 | food_symbol | Bread/loaf as household offering or table sign. | table, plant, body | blessing, remembering | medium | candidate_extract_now | No recipe. Candidate 5. |
-| Alternative flours/groats | 72-91 | correspondence_support | Alternative grain/meal carriers. | bowl, food | tending, marking | medium | source_note_only | Support only; no recipes/health claims. |
-| Beans/lentils/peas | 92-107 | correspondence_support | Hearty bowl/meal carriers. | bowl, pot, table | steadying, tending | medium | source_note_only | Support soup/bowl candidate. |
-| Nuts/seeds | 108-120 | correspondence_support | Seeds/nuts as beginnings/abundance carriers. | bowl, plant | opening, marking | medium | hold | Allergy/choking/pet boundaries. |
-| Seed-as-beginning symbolism | 108-120 | ingredient_symbol | Seed form suggests beginnings and growth. | plant, vessel | opening, marking | medium | source_note_only | Use only as optional non-ingested symbol after safety review. |
-| Oils/vinegars | 121-136 | kitchen_object | Cooking oils/vinegars as finishing/preserving/blending. | bottle, jar, bowl | blessing, tending | high | hold | Topical/anointing/essential-oil and oil safety issues. |
-| Food-safe finishing oil / vinegar as table blessing | 121-136 | kitchen_action | A safe dressing/finishing gesture can mark completion or blessing. | vessel, table, body | blessing, closing, tending | high | candidate_extract_later | No measurements or recipes; oil safety required. Candidate 24. |
-| Sweetness / honey / syrup | 137-164 | ingredient_symbol | Sweetness and jars/cups as warmth and welcome. | cup, jar, table | connecting, blessing | high | candidate_extract_now | Strong table/sweetness candidate; coercive material rejected. |
-| Honey jar / target sweetening | 137-164 | spell | Jar petition links people/objects to sweeten favor. | jar, words | connecting, prospering | high | reject | Coercive/target-control and spell-database risk. |
-| Abundance-as-enoughness bowl | 137-164, 165-221, 225-253 | adapted_mechanic | Use sweetness/fruit/bowl as enoughness and welcome rather than guaranteed prosperity. | bowl, table, plant | blessing, steadying, connecting | medium | candidate_extract_now | Needed to preserve magic without prosperity spell database. Candidate 15. |
-| Hospitality / welcome table | 21-27, 137-164, 225-253 | ritual_mechanic | Prepare and place something as welcome, not as coercion. | table, vessel, plant | connecting, blessing | medium | candidate_extract_now | Strong relationship invitation mechanic. Candidate 16. |
-| Vegetables/soup/stew bowl | 165-221 | food_vessel | Produce, soup/stew, shared bowl as seasonal household vessel. | bowl, pot, table | tending, connecting, marking | medium | candidate_extract_now | Strong with safety limits. |
-| Pot as working vessel | 165-221 | vessel_action | Pot/pan/bowl carries the work while stirring, warming, serving. | vessel, body, table | tending, steadying, connecting | medium | candidate_extract_now | Expands beyond original bowl-only framing. Candidate 20. |
-| Chopping/washing/prepping as magical action | 165-221, 269-332 | body_action | Ordinary prep actions become focused ritual work. | body, plant, table | tending, releasing, blessing | medium | candidate_extract_later | Use only safe knife/sanitation framing; no recipes. Candidate 25. |
-| Fungi | 222-224 | ingredient_note | Mushroom/fungi entries. | food | transformation | medium | hold | Foraging/medicinal/pet risk. |
-| Transformation symbolism from fungi | 222-224 | correspondence_support | Fungi can imply transformation. | plant | transformation | medium | source_note_only | Not enough safe ritual mechanics; do not extract. |
-| Fruit as table marker | 225-253 | food_symbol | Fruit marks season, affection, offering, memory. | bowl, table, plant | marking, blessing, remembering | medium | candidate_extract_now | Strong if stripped of health/fertility/love-control. |
-| Fruit peel/seed/pit handling | 225-253 | safety_sensitive | Fruit parts may carry symbolic meaning but have choking/toxicity/pet issues. | plant, vessel | marking | medium | hold | Safety review required; use whole safe fruit/object instead. |
-| Hydration / drink vessel | 254-268 | vessel_ritual | Cup, pitcher, glass, jar, water, tea/drink pause. | cup, jar, water, table | connecting, steadying, marking | medium | candidate_extract_now | Best vessel lane support; hold alcohol/caffeine/wild water. |
-| Water as non-drinking reflective vessel | 33-34, 254-268 | water_vessel | Bowl/jar of water can witness, reflect, and be poured away. | vessel, water, words | remembering, releasing, voicing | medium | candidate_extract_now | Candidate 8; supplement with non-drinking jar variant. Candidate 21. |
-| Moon water / charged water | 254-268 | water_vessel | Water may be placed under moonlight or used symbolically. | vessel, water, table | marking, blessing | high | hold | Drinking/wild water/topical use held; non-drinking symbolic vessel only. Candidate 21 variant. |
-| Pitcher / serving water at table | 254-268 | serving_vessel | Pitcher or shared water service as table connection. | vessel, table | connecting, tending | medium | candidate_extract_later | Good shared-meal support; no health claims. Candidate 16 variant. |
-| Spices/herbs | 269-332 | correspondence_support | Culinary herbs/spices as scent/taste symbolism. | plant, bowl | blessing, tending | high | source_note_only | Support only; medicinal/smoke/topical/pregnancy material held. |
-| Scent/taste as atmosphere | 269-332 | sensory_mechanic | Safe culinary scent/taste can color the table's symbolic mood. | plant, body, table | blessing, steadying | high | candidate_extract_later | No dosing, smoke, topical, or medical use. Candidate 24 variant. |
-| Salt / clearing ingredient symbolism | 269-332 | ingredient_symbol | Salt/culinary ingredients may suggest clearing/protection. | plant, vessel, table | protecting, releasing | high | hold | Risk of protection jar/database behavior; use only generic boundary after review. Candidate 23 variant. |
-| Dairy/eggs | 333-343 | food_symbol | Nourishment/seasonal symbolism. | bowl, table | blessing, marking | medium | hold | Allergy/intolerance/vegan/raw egg/pregnancy boundaries. |
-| Imbolc / dairy seasonal context | 333-343, 349-351 | seasonal_context | Seasonal dairy/egg associations. | table, plant | marking, blessing | medium | hold | Cultural/seasonal/provenance and dietary review. |
-| Seasonal recipes / Wheel foods | 344-381 | seasonal_table | Seasonal dishes and feast-table symbolism. | table, vessel, food | marking, remembering, blessing | high | candidate_extract_now | Strong seasonal marking; no recipes/cultural obligations. |
-| Sabbat / Wheel seasonal table | 344-381 | seasonal_table | Seasonal table can mark ritual time. | table, vessel, plant | marking, remembering | high | candidate_extract_later | Use generic season, not copied holiday obligations. Candidate 18 variant. |
-| Holiday place setting / food memory | 344-381 | memory_table | Table/food memory can preserve season, kin, tradition, and repeated practice. | table, words, vessel | remembering, connecting | high | candidate_extract_later | User-private memory only; no copied ancestor/deity claims. Candidate 26. |
-| Yule log / fire-heritage symbolism | 344-381 | seasonal_symbol | Fire/log/cake history and protection/luck customs. | candlelight, food | marking, protecting | high | hold | Fire, talisman/protection claims, recipe, cultural specificity. |
-| Ancestor/deity/holiday food claims | 344-381 | cultural_material | Holiday tables, offerings, deities, ancestors. | table, food | remembering, blessing | high | hold | Provenance/adaptation review required. |
-| Seasonal leftovers / closing the feast | 344-381 | meal_closing | Finishing, clearing, saving, or remembering a seasonal meal closes the table. | table, body, vessel | releasing, remembering, marking | medium | candidate_extract_later | No recipes; fits closing. Candidate 9/26 variant. |
+## Packet metrics
 
-## Candidate research records
+```text
+source_items_inventoried: 26
+candidate_extract_now: 14
+candidate_extract_later: 3
+private_excerpt_reference: 3
+items_with_private_excerpt_recommended: 4
+source_note_only: 5
+context_only: 1
+hold_before_import_candidate_records: 7
+reject: 3
+runtime_records_created: no
+direct_use_eligibility_changed: no
+recommendation_eligibility_changed: no
+```
 
-All candidate records below are draft research records only. Standard status for every record:
+## Common runtime posture for every candidate
 
 ```ts
 status: "draft"
@@ -172,664 +116,742 @@ availability: {
 recommendationMetadata: {
   eligibility: {
     recommendable: false,
-    missing: ["human_review", "source_verification"],
+    missing: ["human_review", "source_verification", "direct_use_review"],
   },
 }
 ```
 
-### Candidate 1: Shared Cup of Intention
+## Coverage summary
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-001`
+Primary coverage only counts candidates marked `approved_for_mechanical_import`.
 
-Source sections: Ch. 2, PDF pp.20-41; Ch. 12, PDF pp.254-268.
+| Primary carrier | Primary purpose | Candidate count | Primary candidates |
+| --- | --- | ---: | --- |
+| body | opening | 1 | `ritual-woodward-center-at-counter` |
+| words | opening | 1 | `ritual-woodward-kitchen-table-intention` |
+| vessel | tending | 2 | `ritual-woodward-bowl-focus-stirring`; `ritual-woodward-pot-of-tending` |
+| table | blessing | 2 | `ritual-woodward-bread-table-offering`; `ritual-woodward-seasonal-food-marker` |
+| vessel | remembering | 2 | `ritual-woodward-window-water-bowl`; `ritual-woodward-repeated-recipe-memory` |
+| vessel | blessing | 3 | `ritual-woodward-kept-kitchen-object`; `ritual-woodward-enoughness-bowl`; `ritual-woodward-candle-beside-bowl` |
+| vessel | connecting | 2 | `ritual-woodward-shared-cup-pause`; `ritual-woodward-welcome-served-simply` |
+| table | releasing | 1 | `ritual-woodward-clear-table-closing` |
 
-Carriers: `vessel`, `table`, `words`.
+## Candidate records
 
-Purposes: `connecting`, `opening`, `voicing`.
+### `ritual-woodward-center-at-counter` — Come to Center at the Counter
 
-Research shape: Place one shared cup or two matching cups on the table. Name the intention for the conversation or evening. Touch the cup, breathe, and let the vessel hold the purpose before either person drinks or before the cup simply remains between them.
+disposition: `candidate_extract_now`
 
-Moon & Table draft direction: Let the cup hold the beginning. Name what you want this hour to feed, then share the first quiet sip or leave the cup between you as witness.
+ritualizationType: `direct_source_ritual`
 
-Safety/source notes: Do not default to alcohol, caffeine, medicinal teas, herbal dosing, wild water, moon water intended for drinking, allergens, pregnancy/medication-sensitive herbs, or any drink without consent. Plain water or a known safe household drink is preferred. No recipe.
+headline: Come to Center at the Counter
 
-Private excerpt needs: none.
+ritual body / practice: Stand or sit at the kitchen counter, table, or sink before beginning the kitchen act. Put both feet on the floor. Let your hands rest on the counter edge, the table, or your own body. Take three slow breaths. On each breath, draw your attention away from the rest of the day and into the kitchen. Notice your body, your hands, and the object or vessel you are about to touch. Say the Moon & Table line: "I am here, and the work begins here." Begin the next kitchen action only after that pause.
 
-### Candidate 2: Bowl Between Us
+intention: Arrive fully before asking the kitchen action to carry meaning.
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-002`
+bestWindow: Before cooking, setting a table, preparing a bowl, speaking an intention, or blessing a kitchen object.
 
-Source sections: Ch. 2, PDF pp.20-28; Ch. 8, PDF pp.137-164; Ch. 11, PDF pp.225-253.
+questionToCarry: What changes when I arrive before I act?
 
-Carriers: `vessel`, `table`, `plant`.
+whyThisFitsIngredients:
+  checkInHooks: [scattered, rushed, needs beginning]
+  timingHooks: [before kitchen action]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [only_a_little, enough_to_participate]
+  audienceHooks: [me]
+  materialPlaceCarrierPurposeFit: [counter, table, sink, body, breath]
+  sourceBackedRationale: [Woodward gives coming to center as the way to gather attention before a kitchen magical act]
+  notForOrHoldNotes: [not breathwork therapy, anxiety treatment, or productivity prep]
 
-Purposes: `connecting`, `blessing`, `tending`.
+howThisWasChosenIngredients:
+  primarySelectionSignals: [opening, centering]
+  secondarySelectionSignals: [supports other kitchen/vessel candidates]
+  exclusionSignals: [needs immediate practical action instead]
+  timingSignal: before kitchen work
+  confidenceNotes: complete direct source mechanic paraphrased under source-gate limits
 
-Research shape: Set a small bowl between Tim and Jessica. Put one ordinary safe symbol in it: fruit, bread, wrapped sweet, clean stone, folded note, or another household object. Each person names one thing they want to tend. The bowl remains between them through the meal or conversation.
+source grounding: `Kitchen Witchery`, Ch. 2, PDF pp. 27-30. Supports centering before kitchen magical work.
 
-Moon & Table draft direction: Set the bowl where both of you can see it. Let it hold the thing you are feeding together. No forcing, no fixing — just the small spell of choosing to tend.
+recommendation metadata: primaryPurpose opening; secondaryPurposes [steadying, tending]; primaryCarrier body; secondaryCarriers [table, words]; capacity [only_a_little, enough_to_participate]; audience [me]; timing required before kitchen ritual; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
-Safety/source notes: Use non-risky objects if food safety is unclear. Screen allergies/dietary restrictions if edible. No cherry pits, edible flowers, nuts, dairy/egg/gluten defaults, pet-unsafe foods, or target-control love magic.
+search metadata: tags [woodward, kitchen, counter, centering]; keywords [center, breath, counter, kitchen opening]; materials []; places [kitchen counter, table, sink]
 
-Private excerpt needs: none.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired false; notes [No medical, therapy, or nervous-system claim.]
 
-### Candidate 3: Stirring What We Tend
+adaptation policy notes: direct_source_ritual paraphrased; source gate requires rewritten runtime wording.
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-003`
+operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `woodward-centering-meditation-pp27-30`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 27-30`, useContext: `spoken`, note: `The source centering meditation is substantial and remains private; public body preserves the mechanics.` }, { mode: `moon_and_table_original`, text: `I am here, and the work begins here.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 27-30`, useContext: `spoken`, note: `Moon & Table line completing the source-supported centering action.` }]
 
-Source sections: Ch. 2, PDF pp.20-28; Chs. 5-6, PDF pp.92-120; Ch. 9, PDF pp.165-221.
+import readiness label: `approved_for_mechanical_import`
 
-Carriers: `vessel`, `body`, `table`.
+### `ritual-woodward-kitchen-table-intention` — Set the Kitchen-Table Intention
 
-Purposes: `tending`, `connecting`, `steadying`.
+disposition: `candidate_extract_now`
 
-Research shape: During ordinary preparation of something already being made, pause over the pot, bowl, or pan. Stir clockwise while holding one household intention: warmth, steadiness, repair, welcome, courage, patience, or care. Serve or set aside as the closing gesture.
+ritualizationType: `source_backed_moon_and_table_form`
 
-Moon & Table draft direction: Stir the thing you are already making as if you are feeding the shape of the evening. Let the motion say: this is what we tend.
+headline: Set the Kitchen-Table Intention
 
-Safety/source notes: No recipe. No medicinal soup/food claims. Heat, steam, knife, sanitation, allergies, raw food, and surface contamination review required. Do not feed someone without consent.
+ritual body / practice: Clear a small space on the kitchen table or counter. Set down the empty bowl, cup, pot, plate, or serving dish that will hold the work. Place one small paper beside it. Write one plain, non-coercive sentence naming what this kitchen act is for: welcome, steadiness, repair, warmth, courage, patience, release, or blessing. Read the sentence once. Say the Moon & Table line: "This is what the work is for." Put the paper under or beside the vessel while the kitchen action begins. Close by folding the paper and putting it in the household record, recycling it, or placing it under the vessel until the table is cleared.
 
-Private excerpt needs: none.
+intention: Give the vessel a clear household purpose before the kitchen action begins.
 
-### Candidate 4: Sweetness on the Table
+bestWindow: Before a meal, tea, bowl, bread, table blessing, or shared kitchen act.
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-004`
+questionToCarry: What is this kitchen work actually for?
 
-Source sections: Ch. 8, PDF pp.137-164.
+whyThisFitsIngredients:
+  checkInHooks: [needs purpose, wants to make the kitchen act meaningful]
+  timingHooks: [before kitchen or table work]
+  lunarPlanetarySeasonalHooks: [moon phase may shape wording later]
+  capacityHooks: [only_a_little, enough_to_participate]
+  audienceHooks: [me, both_of_us]
+  materialPlaceCarrierPurposeFit: [table, vessel, written words]
+  sourceBackedRationale: [Woodward treats clear intention as the first step of magical cooking and supports written or spoken intention]
+  notForOrHoldNotes: [no target-control, health claim, guaranteed outcome, or covert food magic]
 
-Carriers: `table`, `vessel`, `plant`.
+howThisWasChosenIngredients:
+  primarySelectionSignals: [opening, voicing]
+  secondarySelectionSignals: [vessel, table, written purpose]
+  exclusionSignals: [coercive or medical intention]
+  timingSignal: before vessel work begins
+  confidenceNotes: complete source-backed Moon & Table form from source mechanics
 
-Purposes: `blessing`, `connecting`, `opening`.
+source grounding: `Kitchen Witchery`, Ch. 2, PDF pp. 20-28. Supports intention before kitchen magical action.
 
-Research shape: Place something sweet on the table as a sign of warmth and welcome. It may be edible only if safe for both people; otherwise it may be a symbolic closed jar, wrapped item, or written word. Each person speaks one way they want to sweeten the room.
+recommendation metadata: primaryPurpose opening; secondaryPurposes [voicing, blessing]; primaryCarrier words; secondaryCarriers [table, vessel]; capacity [only_a_little, enough_to_participate]; audience [me, both_of_us]; timing required before kitchen work; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
-Moon & Table draft direction: Put sweetness where the room can see it. Let it bless the tone between you, not control either heart.
+search metadata: tags [woodward, intention, kitchen table, vessel]; keywords [intention, written purpose, bowl, cup, table]; materials [paper, pen, bowl/cup/pot/plate/serving dish]; places [kitchen table, counter]
 
-Safety/source notes: Reject honey-jar target-control mechanics. Screen sugar, allergies, pets, sticky surfaces, ants, and child access. No prosperity/luck claims; no copied sweetening spell.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; productBoundaryReviewRequired true; notes [Reject coercive food/drink magic, medical/health claims, guaranteed outcomes, and serving ritual food to another person without consent.]
 
-Private excerpt needs: none.
+adaptation policy notes: source_backed_moon_and_table_form; no exact source petition copied.
 
-### Candidate 5: Bread Without the Recipe
+operative words metadata: [{ mode: `moon_and_table_original`, text: `This is what the work is for.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 20-28`, useContext: `spoken`, note: `Moon & Table line for the source-supported intention-setting action.` }]
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-005`
+import readiness label: `approved_for_mechanical_import`
 
-Source sections: Ch. 2, PDF pp.20-28; Ch. 3, PDF pp.42-71; Ch. 15, PDF pp.344-381.
+### `ritual-woodward-bowl-focus-stirring` — Stir the Bowl With Purpose
 
-Carriers: `body`, `vessel`, `table`.
+disposition: `candidate_extract_now`
 
-Purposes: `blessing`, `remembering`, `tending`.
+ritualizationType: `source_backed_moon_and_table_form`
 
-Research shape: Use bread as a household offering without providing a recipe. The ritual may use bought bread, toast, a roll, or already-planned baking. Place it on the table, name what the home is being fed, share or save a piece, and note the memory afterward.
+headline: Stir the Bowl With Purpose
 
-Moon & Table draft direction: Let bread be enough. Set it down like a small offering to the household you are making together.
+ritual body / practice: Set one bowl on the counter or table. Put into it only food or ingredients that are already part of the planned kitchen work. Come to center. Hold the bowl steady. Name the household quality the bowl is meant to carry: warmth, welcome, patience, courage, sweetness, repair, steadiness, or enoughness. Stir, mash, fold, or mix slowly for nine turns. Keep your attention on the bowl and the action rather than on a promised result. Say the Moon & Table line: "Let this bowl hold the work cleanly." Continue the ordinary kitchen preparation or close by washing the bowl if the food will not be used.
 
-Safety/source notes: Gluten/wheat allergy, celiac, cross-contamination, raw flour/dough, yeast dough, pets, and dietary consent. No baking instructions, measurements, or health claims.
+intention: Let a real bowl action carry the purpose without turning the meal into a spell database.
 
-Private excerpt needs: none.
+bestWindow: During already-planned mixing, mashing, stirring, or folding.
 
-### Candidate 6: Kitchen-Table Blessing
+questionToCarry: What is this bowl holding besides ingredients?
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-006`
+whyThisFitsIngredients:
+  checkInHooks: [wants ordinary kitchen action to carry meaning]
+  timingHooks: [during planned preparation]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [enough_to_participate]
+  audienceHooks: [me, both_of_us]
+  materialPlaceCarrierPurposeFit: [bowl, spoon/fork/hand, planned ingredients]
+  sourceBackedRationale: [Woodward's examples repeatedly make mashing, stirring, chopping, and mixing the way intention enters the food]
+  notForOrHoldNotes: [no recipe, no coercive target, no hidden food magic for another person]
 
-Source sections: Introduction, PDF pp.9-10; Ch. 2, PDF pp.20-41; Ch. 15, PDF pp.344-381.
+howThisWasChosenIngredients:
+  primarySelectionSignals: [vessel, tending, kitchen action]
+  secondarySelectionSignals: [spoken purpose, table]
+  exclusionSignals: [unsafe food, allergy issue, covert serving]
+  timingSignal: during planned kitchen preparation
+  confidenceNotes: complete source-backed form; nine turns are Moon & Table structure, not claimed as source count
 
-Carriers: `table`, `words`, `candlelight`, `vessel`.
+source grounding: `Kitchen Witchery`, Ch. 2, PDF pp. 20-28; Chs. 3-15 for kitchen action examples.
 
-Purposes: `blessing`, `opening`, `marking`.
+recommendation metadata: primaryPurpose tending; secondaryPurposes [blessing, voicing]; primaryCarrier vessel; secondaryCarriers [body, words, table]; capacity [enough_to_participate]; audience [me, both_of_us]; timing helpful during food preparation; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
-Research shape: Clear a small space on the kitchen table. Place one vessel, one safe symbol, and optionally one candle. Name the table as the place where care gathers. Close by removing the items or blowing out the candle safely.
+search metadata: tags [woodward, bowl, stirring, kitchen action]; keywords [stir, mix, mash, bowl, intention]; materials [bowl, spoon or fork, planned ingredients]; places [kitchen counter, table]
 
-Moon & Table draft direction: Clear the table as if making a little altar. Put one vessel there and let it gather the blessing before the meal begins.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Food allergy, dietary consent, raw ingredients, sanitation, sharp/hot tools, and covert serving review required before direct use.]
 
-Safety/source notes: Candle optional and secondary. No unattended flame. No smoke/incense. No deity/element invocation copied. No direct blessing text. Food safety if edible objects are used.
+adaptation policy notes: source_backed_moon_and_table_form; no recipe or exact petition reproduced.
 
-Private excerpt needs: optional only if Tim later wants private blessing language; not needed for draft.
+operative words metadata: [{ mode: `moon_and_table_original`, text: `Let this bowl hold the work cleanly.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 20-28`, useContext: `spoken`, note: `Moon & Table line for source-supported bowl-as-focus action.` }]
 
-### Candidate 7: Seasonal Food Marker
+import readiness label: `approved_for_mechanical_import`
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-007`
+### `ritual-woodward-bread-table-offering` — Bread on the Table
 
-Source sections: Ch. 1, PDF pp.11-19; Ch. 11, PDF pp.225-253; Ch. 15, PDF pp.344-381.
+disposition: `candidate_extract_now`
 
-Carriers: `plant`, `table`, `vessel`.
+ritualizationType: `source_backed_moon_and_table_form`
 
-Purposes: `marking`, `remembering`, `blessing`.
+headline: Bread on the Table
 
-Research shape: Choose one ordinary seasonal food as a marker of the moment. Set it in a bowl or on a plate. Name what season is arriving, ripening, fading, or being remembered. Eat/share only if safe; otherwise leave it as a symbol and compost/discard respectfully.
+ritual body / practice: Use bread that is already safe for the household: a slice, roll, small loaf, toast, or bread already being prepared. Do not add baking instructions to this ritual. Place the bread on a plate at the center of the table. Touch the plate and name what the household is being fed tonight: steadiness, welcome, repair, patience, warmth, or memory. Say the Moon & Table line: "Let this be enough for the table." Share the bread only with people who know what is being offered and can safely eat it. If it is not eaten, wrap it for later or compost/discard it according to household practice.
 
-Moon & Table draft direction: Let one seasonal thing mark the turn. Put it on the table and ask what this season is asking you to notice.
+intention: Make bread a visible household offering without turning Moon & Table into a recipe source.
 
-Safety/source notes: No culturally specific holiday claims copied. No deity/ancestor obligations. No foraging or edible flowers by default. Screen allergies, pets, pregnancy-sensitive herbs, raw foods, and spoilage.
+bestWindow: Before a simple meal, after baking already planned bread, or when the table needs a small sign of enoughness.
 
-Private excerpt needs: none.
+questionToCarry: What does this table need to be fed?
 
-### Candidate 8: Water Bowl at the Window
+whyThisFitsIngredients:
+  checkInHooks: [table needs warmth, meal needs blessing]
+  timingHooks: [before meal, after planned baking]
+  lunarPlanetarySeasonalHooks: [seasonal grain/bread context if already present]
+  capacityHooks: [only_a_little, enough_to_participate]
+  audienceHooks: [me, both_of_us]
+  materialPlaceCarrierPurposeFit: [bread, plate, table]
+  sourceBackedRationale: [Woodward treats bread, grains, dough, and seasonal foods as carriers of household care and offering]
+  notForOrHoldNotes: [no recipe, gluten/wheat/celiac/allergy review, no deity obligation]
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-008`
+howThisWasChosenIngredients:
+  primarySelectionSignals: [table blessing, bread]
+  secondarySelectionSignals: [remembering, enoughness]
+  exclusionSignals: [gluten/celiac concern, dietary mismatch, no consent to share]
+  timingSignal: before or during meal
+  confidenceNotes: complete source-backed Moon & Table form from bread/seasonal food mechanics
 
-Source sections: Ch. 2, PDF pp.33-34; Ch. 12, PDF pp.254-268.
+source grounding: `Kitchen Witchery`, Ch. 3, PDF pp. 42-71; Ch. 15, PDF pp. 344-381.
 
-Carriers: `vessel`, `water`, `words`.
+recommendation metadata: primaryPurpose blessing; secondaryPurposes [remembering, tending]; primaryCarrier table; secondaryCarriers [vessel, body, words]; capacity [only_a_little, enough_to_participate]; audience [me, both_of_us]; timing helpful before a meal; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
-Purposes: `remembering`, `releasing`, `voicing`.
+search metadata: tags [woodward, bread, table, offering]; keywords [bread, plate, table, household offering]; materials [bread, plate]; places [kitchen table]
 
-Research shape: Fill a clean bowl with tap water and place it near a window or dark reflective surface. Sit quietly. Let the water hold what is being noticed. Write down a few words afterward, then pour the water away as the closing.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Gluten, wheat, celiac, cross-contamination, raw dough/flour if baking, pets, dietary consent, and recipe-copying review.]
 
-Moon & Table draft direction: Let the water be the quiet witness. Look until one true word rises, then write it before the bowl is emptied.
+adaptation policy notes: source_backed_moon_and_table_form; no measurements, temperature, recipe steps, or exact blessing copied.
 
-Safety/source notes: Do not drink the water. Do not use outdoor/wild/non-potable water. Keep away from pets/electronics/children. Avoid mediumship/underworld/deity framing unless separately reviewed.
+operative words metadata: [{ mode: `moon_and_table_original`, text: `Let this be enough for the table.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 3 / PDF pp. 42-71 and Ch. 15 / PDF pp. 344-381`, useContext: `spoken`, note: `Moon & Table line for source-supported bread/table offering mechanics.` }]
 
-Private excerpt needs: none.
+import readiness label: `approved_for_mechanical_import`
 
-### Candidate 9: Clearing the Table as Closing
+### `ritual-woodward-window-water-bowl` — Water Bowl at the Window
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-009`
+disposition: `candidate_extract_now`
 
-Source sections: Introduction, PDF pp.9-10; Ch. 2, PDF pp.20-28; Ch. 15, PDF pp.344-381.
+ritualizationType: `source_backed_moon_and_table_form`
 
-Carriers: `table`, `body`, `vessel`.
+headline: Water Bowl at the Window
 
-Purposes: `releasing`, `tending`, `marking`.
+ritual body / practice: Fill a clean bowl with tap water. Place it on a stable table, counter, or windowsill where it can reflect the room, sky, or dark glass without spilling. Sit beside the bowl. Come to center. Look into the water without trying to force a message. Let one word, image, or feeling rise. Write that one thing on a small paper. Say the Moon & Table line: "The bowl has shown enough." Pour the water down the sink. Dry the bowl and put it away.
 
-Research shape: After a meal or table ritual, clear the table slowly and deliberately. Each item removed closes one part of the working: what was fed, what was released, what will be remembered. The last wipe of the table is the seal.
+intention: Let a simple water vessel hold what is ready to be noticed and released.
 
-Moon & Table draft direction: Clear the table like closing a circle. What leaves the table is done; what remains in memory is kept.
+bestWindow: Evening, dark moon, or any quiet window moment when a reflective vessel fits the mood.
 
-Safety/source notes: Use ordinary cleaning safety. No smoke, salt water on surfaces, essential oils, or unsafe cleaners. Watch food waste, pets, hot dishes, sharp knives, and sanitation.
+questionToCarry: What does the water let me notice without chasing it?
 
-Private excerpt needs: none.
+whyThisFitsIngredients:
+  checkInHooks: [needs reflection, release, or voicing]
+  timingHooks: [evening, dark moon, quiet moment]
+  lunarPlanetarySeasonalHooks: [dark moon if intentionally chosen]
+  capacityHooks: [enough_to_participate]
+  audienceHooks: [me]
+  materialPlaceCarrierPurposeFit: [bowl, tap water, window, written word]
+  sourceBackedRationale: [Woodward gives a dark-moon water-bowl meditation with reflection and writing afterward; hydration chapter supports water vessels]
+  notForOrHoldNotes: [no drinking, wild water, underworld obligation, mediumship, or deity contact]
 
-### Candidate 10: Repeated Recipe Memory
+howThisWasChosenIngredients:
+  primarySelectionSignals: [vessel, remembering]
+  secondarySelectionSignals: [release, written word]
+  exclusionSignals: [spill risk, unsafe location, desire for mediumship]
+  timingSignal: quiet reflective window period
+  confidenceNotes: complete source-backed form; source text and meditation details remain private
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-010`
+source grounding: `Kitchen Witchery`, Ch. 2, PDF pp. 33-34; Ch. 12, PDF pp. 254-268.
 
-Source sections: Ch. 1, PDF pp.11-19; Ch. 3, PDF pp.42-71; Ch. 15, PDF pp.344-381.
+recommendation metadata: primaryPurpose remembering; secondaryPurposes [releasing, voicing]; primaryCarrier vessel; secondaryCarriers [words, body]; capacity [enough_to_participate]; audience [me]; timing preferred during evening/dark moon; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
-Carriers: `words`, `table`, `vessel`.
+search metadata: tags [woodward, water bowl, window, dark moon]; keywords [bowl, water, window, reflection, written word]; materials [bowl, tap water, paper, pen]; places [window, table, counter]
 
-Purposes: `remembering`, `marking`, `connecting`.
+review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Use potable tap water only; do not drink ritual water; manage spill, pet, child, electronics, and mediumship/deity framing boundaries.]
 
-Research shape: Choose a food already meaningful to the household. Do not write the recipe into Moon & Table. Instead, record the moment: when it was made or shared, who was present, what season or feeling it marked, and what should be remembered next time.
+adaptation policy notes: source_backed_moon_and_table_form; mediumship/underworld details softened under source gate.
 
-Moon & Table draft direction: Do not preserve the recipe here. Preserve the spell around it: the room, the season, the person, the feeling you want to find again.
+operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `woodward-dark-moon-water-bowl-pp33-34`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 33-34`, useContext: `spoken`, note: `The source meditation and exact wording are private; packet preserves the water-bowl reflection mechanics.` }, { mode: `moon_and_table_original`, text: `The bowl has shown enough.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 33-34`, useContext: `closing`, note: `Moon & Table close for the source-supported water-bowl reflection.` }]
 
-Safety/source notes: No recipe reproduction. Allergy/dietary consent if shared. Cultural/family provenance should be user-provided, not invented. No ancestor/deity claims copied.
+import readiness label: `approved_for_mechanical_import`
 
-Private excerpt needs: user-private memory entry may be useful later; source excerpt not needed.
+### `ritual-woodward-shared-cup-pause` — Share the Cup Pause
 
-### Candidate 11: Fruit on the Table
+disposition: `candidate_extract_now`
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-011`
+ritualizationType: `source_backed_moon_and_table_form`
 
-Source sections: Ch. 11, PDF pp.225-253; Ch. 15, PDF pp.344-381.
+headline: Share the Cup Pause
 
-Carriers: `plant`, `vessel`, `table`.
+ritual body / practice: Choose a safe ordinary drink already suitable for everyone present: water, herbal-free warm water, juice, milk, or tea only if already known to be safe. Pour it into one shared pitcher or two separate cups. Set the cup or cups on the table. Come to center. Name the purpose of the pause: welcome, patience, repair, listening, or simple company. Say the Moon & Table line: "Let the cup slow us down." Drink only if everyone knows what is being served and wants to participate. Close by washing the cup or cups and returning them to their place.
 
-Purposes: `blessing`, `marking`, `connecting`.
+intention: Let a safe shared drink become a small vessel for connection.
 
-Research shape: Place one safe fruit in a bowl as a small visible blessing for affection, ripeness, seasonal sweetness, or decision. It may be shared, saved, or simply witnessed. Record why that fruit was chosen.
+bestWindow: Before a conversation, after work, after a meal, or when the table needs a quiet shared pause.
 
-Moon & Table draft direction: Let the fruit be the bright thing on the table: ripe, temporary, enough for tonight.
+questionToCarry: What can slow down enough to be shared?
 
-Safety/source notes: No fertility, beauty, medicinal, love-control, or attraction claims. Avoid grapes/raisins around pets. Avoid pits/seeds as choking risks. Screen allergies and dietary preferences.
+whyThisFitsIngredients:
+  checkInHooks: [connection, shared pause, table reset]
+  timingHooks: [before conversation, after meal, evening]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [only_a_little, enough_to_participate]
+  audienceHooks: [both_of_us]
+  materialPlaceCarrierPurposeFit: [cup, pitcher, table, safe drink]
+  sourceBackedRationale: [Woodward supports cup, glass, pitcher, water, tea-like pause, and drink-as-ritual-carrier mechanics]
+  notForOrHoldNotes: [no alcohol/caffeine default, no medicinal tea, no covert serving]
 
-Private excerpt needs: none.
+howThisWasChosenIngredients:
+  primarySelectionSignals: [vessel, connecting]
+  secondarySelectionSignals: [table, shared drink]
+  exclusionSignals: [dietary uncertainty, no consent, unsafe ingredient]
+  timingSignal: shared pause
+  confidenceNotes: complete source-backed Moon & Table form around safe vessel sharing
 
-### Candidate 12: Candle Beside the Bowl
+source grounding: `Kitchen Witchery`, Ch. 12, PDF pp. 254-268; Ch. 2 table/vessel mechanics, PDF pp. 20-28.
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-012`
+recommendation metadata: primaryPurpose connecting; secondaryPurposes [steadying, blessing]; primaryCarrier vessel; secondaryCarriers [table, body, words]; capacity [only_a_little, enough_to_participate]; audience [both_of_us]; timing helpful; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
-Source sections: Ch. 2, PDF pp.23-41; Ch. 15, PDF pp.344-381.
+search metadata: tags [woodward, cup, shared drink, table pause]; keywords [cup, pitcher, drink, table, connection]; materials [cup or pitcher, safe drink]; places [kitchen table]
 
-Carriers: `candlelight`, `table`, `vessel`.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Allergy/dietary consent, caffeine/alcohol exclusion, herbal/medicinal tea boundary, pregnancy/medication concerns, hot liquid, pets, children, and sanitation review.]
 
-Purposes: `blessing`, `marking`, `opening`.
+adaptation policy notes: source_backed_moon_and_table_form; shared participation must be explicit.
 
-Research shape: Place a candle near, not inside, a bowl or serving vessel to give the table a spell-container atmosphere. Light it only if safe. Name the candle's job in plain Moon & Table language, then extinguish it as the closing.
+operative words metadata: [{ mode: `moon_and_table_original`, text: `Let the cup slow us down.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 12 / PDF pp. 254-268`, useContext: `spoken`, note: `Moon & Table line for source-supported cup/drink carrier mechanics.` }]
 
-Moon & Table draft direction: The candle is not the whole spell. It is the little light beside the vessel, showing what the bowl is here to hold.
+import readiness label: `approved_for_mechanical_import`
 
-Safety/source notes: Optional battery candle may be default. No unattended flame. No oil anointing, herbs near flame, smoke/incense, or deity/element invocation copied. Keep away from pets/children/curtains.
+### `ritual-woodward-enoughness-bowl` — Enoughness Bowl
 
-Private excerpt needs: none.
+disposition: `candidate_extract_now`
 
-## Supplemental candidate research records
+ritualizationType: `source_backed_moon_and_table_form`
 
-The following candidates complete the approved-scope Woodward accounting beyond the original Batch A vessel/shared-object set. They remain research-only drafts.
+headline: Enoughness Bowl
 
-### Candidate 13: Kitchen-Table Intention
+ritual body / practice: Set an empty bowl at the center of the table. Choose one safe, ordinary object already in the kitchen: a piece of fruit, wrapped sweet, clean spoon, folded note, bread end, or pantry object. Place it in the bowl. Name one way the household has enough for this hour. Say the Moon & Table line: "Enough is allowed to be small." Leave the bowl on the table through the meal, conversation, or quiet hour. Close by eating, saving, washing, composting, or returning the object according to what it is.
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-013`
+intention: Give enoughness a visible vessel without promising wealth, luck, or more.
 
-Source sections: Ch. 2, PDF pp.20-28.
+bestWindow: When the house needs warmth, steadiness, or a small sign that tonight is enough.
 
-Carriers: `words`, `table`, `vessel`, `body`.
+questionToCarry: What is already enough for this hour?
 
-Purposes: `opening`, `voicing`, `blessing`, `tending`.
+whyThisFitsIngredients:
+  checkInHooks: [scarcity feeling, wants steadiness, table needs warmth]
+  timingHooks: [before meal, evening, household reset]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [only_a_little, enough_to_participate]
+  audienceHooks: [me, both_of_us]
+  materialPlaceCarrierPurposeFit: [bowl, table, safe kitchen object]
+  sourceBackedRationale: [Woodward supports sweets, fruit, bowls, and table objects as carriers of warmth, welcome, and household blessing when separated from coercive/prosperity claims]
+  notForOrHoldNotes: [no prosperity/luck spell database, no target sweetening, no eating if unsafe]
 
-Research shape: Before any kitchen act, name one clear intention in plain language. Let the intention belong to the household moment, not to control another person. Place the words beside or beneath the vessel as the work begins.
+howThisWasChosenIngredients:
+  primarySelectionSignals: [vessel blessing, enoughness]
+  secondarySelectionSignals: [table, sweetness, fruit]
+  exclusionSignals: [coercive target, unsafe edible item]
+  timingSignal: before table time
+  confidenceNotes: complete source-backed Moon & Table form adapting approved sweetness/bowl mechanics away from rejected spell-list material
 
-Moon & Table draft direction: Before the bowl is touched, say what this little working is for. Keep it clean, mutual, and possible: warmth, welcome, patience, courage, repair, steadiness, blessing.
+source grounding: `Kitchen Witchery`, Ch. 8, PDF pp. 137-164; Ch. 11, PDF pp. 225-253.
 
-Safety/source notes: No coercive petitions, target names, health claims, or guaranteed results. Written words must be original Moon & Table language or user-entered private text.
+recommendation metadata: primaryPurpose blessing; secondaryPurposes [steadying, connecting]; primaryCarrier vessel; secondaryCarriers [table, words, plant]; capacity [only_a_little, enough_to_participate]; audience [me, both_of_us]; timing helpful; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
-Private excerpt needs: none.
+search metadata: tags [woodward, bowl, enoughness, sweetness]; keywords [bowl, fruit, sweet, table, enough]; materials [bowl, safe kitchen object]; places [kitchen table]
 
-### Candidate 14: Come to Center at the Counter
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Allergy/dietary screening, pet/child risk, choking, spoilage, and coercive sweetening/prosperity boundary review.]
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-014`
+adaptation policy notes: source_backed_moon_and_table_form; abundance is narrowed to sufficiency and warmth.
 
-Source sections: Ch. 2, PDF pp.27-30.
+operative words metadata: [{ mode: `moon_and_table_original`, text: `Enough is allowed to be small.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 8 / PDF pp. 137-164 and Ch. 11 / PDF pp. 225-253`, useContext: `spoken`, note: `Moon & Table line for source-supported sweetness/fruit/bowl blessing mechanics.` }]
 
-Carriers: `body`, `words`, `table`.
+import readiness label: `approved_for_mechanical_import`
 
-Purposes: `opening`, `steadying`, `tending`.
+### `ritual-woodward-seasonal-food-marker` — Mark the Season at the Table
 
-Research shape: Pause at the counter or table before the ritual. Put both feet down. Take a few breaths. Let attention gather before stirring, setting the bowl, lighting the candle, or speaking the intention.
+disposition: `candidate_extract_now`
 
-Moon & Table draft direction: Come back into your body before you ask the kitchen to hold anything. Let the first spell be arriving.
+ritualizationType: `source_backed_moon_and_table_form`
 
-Safety/source notes: Not breathwork therapy. Keep simple; no medical, anxiety, nervous-system, or treatment claims.
+headline: Mark the Season at the Table
 
-Private excerpt needs: none.
+ritual body / practice: Choose one safe seasonal food already in the kitchen or already planned for the table. Place it on a plate or in a bowl. Name what the season is doing: arriving, ripening, resting, darkening, brightening, returning, or letting go. Say the Moon & Table line: "This is what the season has brought to the table." Let the food or object remain through the meal or quiet moment. If it is eaten, share it only with consent and safety. If it is not eaten, save, compost, or discard it according to what it is.
 
-### Candidate 15: Enoughness Bowl
+intention: Let one safe seasonal thing mark the moment without importing a recipe or holiday obligation.
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-015`
+bestWindow: At a seasonal turn, before a seasonal meal, or when the household wants to notice what the year is doing.
 
-Source sections: Ch. 8, PDF pp.137-164; Ch. 9, PDF pp.165-221; Ch. 11, PDF pp.225-253.
+questionToCarry: What has the season actually put on the table?
 
-Carriers: `vessel`, `table`, `plant`, `words`.
+whyThisFitsIngredients:
+  checkInHooks: [seasonal marker, table blessing, remembering]
+  timingHooks: [seasonal turn, planned seasonal meal]
+  lunarPlanetarySeasonalHooks: [seasonal food, wheel-of-year context if already appropriate]
+  capacityHooks: [only_a_little, enough_to_participate]
+  audienceHooks: [me, both_of_us]
+  materialPlaceCarrierPurposeFit: [seasonal food/object, bowl or plate, table]
+  sourceBackedRationale: [Woodward's seasonal chapter uses food and table practices to mark turns of the year while the gate bars recipe copying]
+  notForOrHoldNotes: [no culturally specific obligation, no recipe, no foraging, no edible flower default]
 
-Purposes: `blessing`, `steadying`, `connecting`, `marking`.
+howThisWasChosenIngredients:
+  primarySelectionSignals: [seasonal marking]
+  secondarySelectionSignals: [table, food memory]
+  exclusionSignals: [unsafe food, cultural/provenance concern, no consent]
+  timingSignal: seasonal table moment
+  confidenceNotes: complete source-backed Moon & Table form from seasonal food mechanics
 
-Research shape: Set a bowl with one safe, ordinary symbol of enoughness: a fruit, wrapped sweet, folded note, clean spoon, or pantry object. Name one way the household already has enough for tonight. Let abundance mean warmth and sufficiency, not money or guaranteed luck.
+source grounding: `Kitchen Witchery`, Ch. 1, PDF pp. 11-19; Ch. 15, PDF pp. 344-381.
 
-Moon & Table draft direction: Put enoughness in a bowl. Not more, not winning, not proof — enough warmth to feed this hour.
+recommendation metadata: primaryPurpose blessing; secondaryPurposes [marking, remembering]; primaryCarrier table; secondaryCarriers [vessel, plant, words]; capacity [only_a_little, enough_to_participate]; audience [me, both_of_us]; timing preferred at seasonal table moments; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
-Safety/source notes: Avoid prosperity/luck spell database behavior. Screen edible items; non-edible symbol preferred if safety is uncertain.
+search metadata: tags [woodward, seasonal food, table marker]; keywords [season, seasonal food, bowl, plate, table]; materials [safe seasonal food or object, bowl/plate]; places [kitchen table]
 
-Private excerpt needs: none.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Allergy/dietary consent, raw food, spoilage, pets, children, pregnancy, cultural/provenance review, and no recipe copying.]
 
-### Candidate 16: Welcome Served Simply
+adaptation policy notes: source_backed_moon_and_table_form; no culturally specific ritual claim is imported.
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-016`
+operative words metadata: [{ mode: `moon_and_table_original`, text: `This is what the season has brought to the table.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 15 / PDF pp. 344-381`, useContext: `spoken`, note: `Moon & Table line for source-supported seasonal food marking.` }]
 
-Source sections: Ch. 2, PDF pp.21-27; Ch. 8, PDF pp.137-164; Ch. 11, PDF pp.225-253; Ch. 12, PDF pp.254-268.
+import readiness label: `approved_for_mechanical_import`
 
-Carriers: `table`, `vessel`, `plant`, `body`.
+### `ritual-woodward-clear-table-closing` — Clear the Table as Closing
 
-Purposes: `connecting`, `blessing`, `opening`, `tending`.
+disposition: `candidate_extract_now`
 
-Research shape: Serve one safe, simple thing as welcome: water, fruit, bread, a small sweet, or a non-edible token on a plate. The act of serving is the spell. The guest or partner remains free; the table is an invitation, not a lever.
+ritualizationType: `source_backed_moon_and_table_form`
 
-Moon & Table draft direction: Make welcome visible. Let the table say, you are invited here, without asking the food to make anyone feel anything.
+headline: Clear the Table as Closing
 
-Safety/source notes: Consent and dietary/allergy screening required. No recipe, hospitality manipulation, or coercive sweetening.
+ritual body / practice: After a meal, table blessing, shared cup, or bowl ritual, pause before clearing. Name what the table held: welcome, release, repair, enoughness, steadiness, or memory. Remove the vessels first. Remove plates, cups, utensils, food, paper, or candle holders next. Wipe the table once from far edge to near edge. Say the Moon & Table line: "What leaves the table is finished; what remains is memory." Wash, store, compost, or discard the materials according to ordinary household practice.
 
-Private excerpt needs: none.
+intention: Let clearing the table close the work instead of letting it trail off.
 
-### Candidate 17: Moon-Timed Kitchen Opening
+bestWindow: After a meal, shared drink, seasonal marker, or table-based kitchen ritual.
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-017`
+questionToCarry: What is finished, and what should be remembered?
 
-Source sections: Ch. 2, PDF pp.30-36.
+whyThisFitsIngredients:
+  checkInHooks: [needs closure, after shared table time]
+  timingHooks: [after meal or table ritual]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [only_a_little, enough_to_participate]
+  audienceHooks: [me, both_of_us]
+  materialPlaceCarrierPurposeFit: [table, dishes, vessels, cloth, disposal/washing]
+  sourceBackedRationale: [Woodward frames kitchen tasks as ritual actions; clearing and washing can complete the kitchen/table working]
+  notForOrHoldNotes: [no unsafe cleaners, no smoke/oil/salt water surface work]
 
-Carriers: `words`, `body`, `table`, `vessel`.
+howThisWasChosenIngredients:
+  primarySelectionSignals: [releasing, closing]
+  secondarySelectionSignals: [table, vessel care]
+  exclusionSignals: [hot dishes/sharp knives need ordinary handling]
+  timingSignal: after table work
+  confidenceNotes: complete source-backed Moon & Table closing form from approved kitchen-action mechanics
 
-Purposes: `opening`, `marking`, `tending`, `releasing`.
+source grounding: `Kitchen Witchery`, Introduction, PDF pp. 9-10; Ch. 2, PDF pp. 20-28; Ch. 15, PDF pp. 344-381.
 
-Research shape: Use the moon phase to shape the wording of an existing kitchen/table ritual. New/waxing: begin, feed, grow, welcome. Full: illuminate, bless, mark, share. Waning: clear, simplify, release, close. The kitchen act stays ordinary and safe.
+recommendation metadata: primaryPurpose releasing; secondaryPurposes [tending, remembering]; primaryCarrier table; secondaryCarriers [body, vessel, words]; capacity [only_a_little, enough_to_participate]; audience [me, both_of_us]; timing required after table ritual; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
-Moon & Table draft direction: Let the moon choose the verb, not the outcome. Begin, feed, bless, clear, remember.
+search metadata: tags [woodward, table clearing, kitchen closing]; keywords [clear table, close, wash, dishes, memory]; materials [table, dishes, cloth]; places [kitchen table, sink]
 
-Safety/source notes: Do not claim moon effects. Do not use banishing, binding, hex, curse-breaking, sickness-ending, or target-control language. This is a timing/wording layer, not a standalone guarantee.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [Ordinary kitchen heat, knives, sanitation, food waste, pets, children, and surface-safety review.]
 
-Private excerpt needs: none.
+adaptation policy notes: source_backed_moon_and_table_form; close completes source-supported kitchen action.
 
-### Candidate 18: Full Moon Table Sharing
+operative words metadata: [{ mode: `moon_and_table_original`, text: `What leaves the table is finished; what remains is memory.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Introduction / PDF pp. 9-10 and Ch. 2 / PDF pp. 20-28`, useContext: `closing`, note: `Moon & Table close for source-supported kitchen action as ritual.` }]
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-018`
+import readiness label: `approved_for_mechanical_import`
 
-Source sections: Ch. 2, PDF pp.35-36; Ch. 15, PDF pp.344-381.
+### `ritual-woodward-kept-kitchen-object` — Bless the Kept Kitchen Object
 
-Carriers: `table`, `vessel`, `candlelight`, `plant`.
+disposition: `candidate_extract_now`
 
-Purposes: `marking`, `blessing`, `connecting`, `remembering`.
+ritualizationType: `source_backed_moon_and_table_form`
 
-Research shape: At or near the full moon, place one safe shared food or symbolic object on the table to mark fullness. Share, witness, or record what has come into view since the last beginning.
+headline: Bless the Kept Kitchen Object
 
-Moon & Table draft direction: Put one bright thing on the table for the full moon. Let it mark what is visible now.
+ritual body / practice: Choose one ordinary kitchen object that will keep being used: a cup, bowl, spoon, jar, cloth, serving dish, pot, or pan. Clean it with the ordinary method that is safe for the object. Set it on the table. Come to center. Put one hand near or on the object. Name the household job it is being given: hold welcome, remember this season, steady the table, bless a shared drink, or serve the next meal cleanly. Say the Moon & Table line: "You are kept for this work." Breathe once over or near the object without touching your mouth to it. Return it to use or storage.
 
-Safety/source notes: No moon cake recipe, edible flowers, lunar health claims, or fire defaults. Candle optional and fire-safe.
+intention: Give one kitchen object a clear household role.
 
-Private excerpt needs: none.
+bestWindow: When a new object enters the kitchen, after cleaning a meaningful vessel, or before using a kept cup, bowl, spoon, jar, or serving dish.
 
-### Candidate 19: Bless the Kept Kitchen Object
+questionToCarry: What work is this object being asked to hold?
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-019`
+whyThisFitsIngredients:
+  checkInHooks: [new object, meaningful object, kitchen reset]
+  timingHooks: [before first use, after cleaning]
+  lunarPlanetarySeasonalHooks: [full moon charge held for later]
+  capacityHooks: [enough_to_participate]
+  audienceHooks: [me]
+  materialPlaceCarrierPurposeFit: [kitchen object, table, hand, breath]
+  sourceBackedRationale: [Woodward gives mechanics for cleansing, consecrating, and charging objects, including holding the object and telling it its purpose]
+  notForOrHoldNotes: [no smoke, oil, deity/element invocation, or unsafe surface treatment]
 
-Source sections: Ch. 2, PDF pp.38-41.
+howThisWasChosenIngredients:
+  primarySelectionSignals: [vessel blessing, kept object]
+  secondarySelectionSignals: [marking, remembering]
+  exclusionSignals: [object unsafe to handle or clean]
+  timingSignal: before object is used or returned to place
+  confidenceNotes: source-backed Moon & Table form preserves object-role mechanics while holding excluded materials
 
-Carriers: `vessel`, `table`, `words`, `body`.
+source grounding: `Kitchen Witchery`, Ch. 2, PDF pp. 38-41.
 
-Purposes: `blessing`, `marking`, `remembering`, `protecting`.
+recommendation metadata: primaryPurpose blessing; secondaryPurposes [marking, remembering, protecting]; primaryCarrier vessel; secondaryCarriers [table, body, words]; capacity [enough_to_participate]; audience [me]; timing helpful before use; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
-Research shape: Choose a kept kitchen object — cup, bowl, spoon, jar, cloth, serving dish. Clean it safely, place it at the table, speak its household job in original words, breathe over or near it, and return it to use or storage.
+search metadata: tags [woodward, kitchen object, object blessing, vessel]; keywords [cup, bowl, spoon, jar, serving dish, consecrate]; materials [kitchen object]; places [kitchen table, counter]
 
-Moon & Table draft direction: Give one ordinary object a job: hold welcome, remember this season, steady the table, bless the next meal.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Food-safe cleaning, hygiene, object material, heat/sharp edges, smoke/oil/deity/element exclusion, and storage/use review.]
 
-Safety/source notes: No smoke, essential oils, deity obligations, elemental invocation text, or unsafe surface treatment. Use food-safe cleaning only. Breath over object should not create hygiene issues if food-contact use follows.
+adaptation policy notes: source_backed_moon_and_table_form; source's smoke/oil/elemental options are held.
 
-Private excerpt needs: optional if Tim later wants source-adjacent blessing language; not needed now.
+operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `woodward-object-consecration-pp38-41`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 38-41`, useContext: `blessing`, note: `Source object-consecration language and elemental material remain private/held; packet preserves object-role mechanics.` }, { mode: `moon_and_table_original`, text: `You are kept for this work.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 38-41`, useContext: `spoken`, note: `Moon & Table line for source-supported object purpose-giving.` }]
 
-### Candidate 20: Pot as Household Vessel
+import readiness label: `approved_for_mechanical_import`
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-020`
+### `ritual-woodward-pot-of-tending` — Tend the Pot
 
-Source sections: Ch. 2, PDF pp.20-28; Ch. 9, PDF pp.165-221.
+disposition: `candidate_extract_now`
 
-Carriers: `vessel`, `body`, `table`.
+ritualizationType: `source_backed_moon_and_table_form`
 
-Purposes: `tending`, `steadying`, `connecting`, `blessing`.
+headline: Tend the Pot
 
-Research shape: Treat the pot, pan, or mixing bowl already in use as the ritual vessel. Hold one intention while stirring, warming, or serving. The vessel carries the care until the food reaches the table or is set aside.
+ritual body / practice: Use a pot, pan, or serving bowl already involved in a planned soup, stew, grain, beans, lentils, vegetables, or warm dish. Do not add a recipe to the ritual. Stand at the stove, counter, or table. Come to center. Place one hand near the pot or bowl where it is safe. Name the kind of tending being asked of the meal: steadiness, warmth, patience, repair, or nourishment. Stir or fold three slow times if stirring is part of the actual preparation. Say the Moon & Table line: "This pot tends what it holds." Continue cooking or serving according to the recipe you already know. Close by covering the pot, serving the food, or washing the vessel when the meal is done.
 
-Moon & Table draft direction: The pot is the cauldron only because you are tending something inside it. Let the motion be care, not performance.
+intention: Let an ordinary pot or bowl hold steady household tending.
 
-Safety/source notes: No recipes or medical food claims. Heat/steam/knife/sanitation review required. Do not romanticize unsafe cooking conditions.
+bestWindow: During already-planned soup, stew, beans, grain, vegetable, or warm bowl preparation.
 
-Private excerpt needs: none.
+questionToCarry: What kind of tending is the pot holding tonight?
 
-### Candidate 21: Window Jar That Is Not for Drinking
+whyThisFitsIngredients:
+  checkInHooks: [needs steadiness, household tending, simple meal]
+  timingHooks: [during planned cooking or serving]
+  lunarPlanetarySeasonalHooks: [seasonal produce only if already present]
+  capacityHooks: [enough_to_participate, room_for_something_deeper]
+  audienceHooks: [me, both_of_us]
+  materialPlaceCarrierPurposeFit: [pot, pan, serving bowl, stove/counter/table]
+  sourceBackedRationale: [Woodward supports soups, vegetables, grains, legumes, and ordinary cooking actions as carriers of intention]
+  notForOrHoldNotes: [no recipe, no nutrition/health claim, no unsafe serving]
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-021`
+howThisWasChosenIngredients:
+  primarySelectionSignals: [vessel tending, warm food]
+  secondarySelectionSignals: [table, body]
+  exclusionSignals: [unsafe ingredient, no consent to share, hot stove risk]
+  timingSignal: during planned cooking
+  confidenceNotes: complete source-backed Moon & Table form from food/vessel/kitchen action mechanics
 
-Source sections: Ch. 2, PDF pp.33-34; Ch. 12, PDF pp.254-268.
+source grounding: `Kitchen Witchery`, Chs. 3-6, PDF pp. 42-120; Ch. 9, PDF pp. 165-221.
 
-Carriers: `vessel`, `water`, `words`, `table`.
+recommendation metadata: primaryPurpose tending; secondaryPurposes [steadying, blessing]; primaryCarrier vessel; secondaryCarriers [table, body, words]; capacity [enough_to_participate, room_for_something_deeper]; audience [me, both_of_us]; timing helpful during cooking; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
-Purposes: `marking`, `remembering`, `releasing`, `voicing`.
+search metadata: tags [woodward, pot, soup, stew, kitchen tending]; keywords [pot, pan, bowl, soup, stew, stir, tend]; materials [pot/pan/serving bowl, planned food]; places [stove, counter, kitchen table]
 
-Research shape: Fill a clean jar or glass with tap water and place it near a window as a witness to the moon, weather, or evening. Do not drink it. Use it to hold a written word, reflect light, or mark what will be poured away.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Heat, boiling water, sharp knives, allergies, gluten, legumes, nuts/seeds, dairy/egg, pets, children, pregnancy, storage/spoilage, sanitation, and food consent review.]
 
-Moon & Table draft direction: Let the jar be moon-touched without becoming medicine. It is here to witness, not to be consumed.
+adaptation policy notes: source_backed_moon_and_table_form; no cooking instructions, measurements, or health claims imported.
 
-Safety/source notes: Non-drinking only. No wild water, storm water, outdoor contaminants, essential oils, herbs, crystals, or elixir claims. Keep away from pets, kids, and electronics.
+operative words metadata: [{ mode: `moon_and_table_original`, text: `This pot tends what it holds.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Chs. 3-6 / PDF pp. 42-120 and Ch. 9 / PDF pp. 165-221`, useContext: `spoken`, note: `Moon & Table line for source-supported pot/bowl tending mechanics.` }]
 
-Private excerpt needs: none.
+import readiness label: `approved_for_mechanical_import`
 
-### Candidate 22: Candlelit Vessel Container
+### `ritual-woodward-welcome-served-simply` — Welcome Served Simply
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-022`
+disposition: `candidate_extract_now`
 
-Source sections: Ch. 2, PDF pp.23-41; Ch. 15, PDF pp.344-381.
+ritualizationType: `source_backed_moon_and_table_form`
 
-Carriers: `candlelight`, `table`, `vessel`, `words`.
+headline: Welcome Served Simply
 
-Purposes: `opening`, `marking`, `blessing`, `steadying`.
+ritual body / practice: Choose one safe, simple thing already appropriate to offer: water, a piece of fruit, bread, a small sweet, or a non-edible token on a plate. Set it on the table between you and the person being welcomed, or in the place where welcome is being made. Say the Moon & Table line: "This is an invitation, not a claim." Offer it openly. The other person may eat, drink, touch, decline, or leave it alone. Close by clearing the plate or cup and putting the table back in order.
 
-Research shape: Use a candle, preferably battery by default, to define the boundary of a kitchen-table vessel ritual. The candle opens the container; the vessel holds the work; extinguishing or switching off closes it.
+intention: Make welcome visible without asking food to control anyone.
 
-Moon & Table draft direction: Light beside the bowl. Let the table know the spell has begun. Close it cleanly when the vessel has done its work.
+bestWindow: Before a visit, before sitting down together, or when the table needs to show invitation.
 
-Safety/source notes: Battery candle preferred. No anointing oil, herbs near flame, smoke/incense, unattended flame, or fire festival claims.
+questionToCarry: How can welcome be offered without pressure?
 
-Private excerpt needs: none.
+whyThisFitsIngredients:
+  checkInHooks: [welcome, partner/shared connection, guest at table]
+  timingHooks: [before shared table time]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [only_a_little, enough_to_participate]
+  audienceHooks: [both_of_us]
+  materialPlaceCarrierPurposeFit: [table, plate/cup, safe simple offering]
+  sourceBackedRationale: [Woodward's hospitality examples use prepared food and table service to foster welcome; source gate excludes coercive influence]
+  notForOrHoldNotes: [consent, allergy/dietary screen, no sweetening/attraction manipulation]
 
-### Candidate 23: Clearing Bowl for What Leaves
+howThisWasChosenIngredients:
+  primarySelectionSignals: [vessel connecting, welcome]
+  secondarySelectionSignals: [table, blessing]
+  exclusionSignals: [covert intent, unsafe food, dietary uncertainty]
+  timingSignal: before shared table moment
+  confidenceNotes: complete source-backed Moon & Table form preserving hospitality mechanics with non-coercive boundary
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-023`
+source grounding: `Kitchen Witchery`, Ch. 2, PDF pp. 21-27; Ch. 8, PDF pp. 137-164; Ch. 11, PDF pp. 225-253; Ch. 12, PDF pp. 254-268.
 
-Source sections: Ch. 2, PDF pp.36-41; Ch. 13, PDF pp.269-332.
+recommendation metadata: primaryPurpose connecting; secondaryPurposes [blessing, opening]; primaryCarrier vessel; secondaryCarriers [table, body, words]; capacity [only_a_little, enough_to_participate]; audience [both_of_us]; timing helpful before shared table time; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
-Carriers: `vessel`, `table`, `words`, `body`.
+search metadata: tags [woodward, welcome, hospitality, table]; keywords [welcome, plate, cup, fruit, bread, sweet]; materials [plate/cup, safe offering or token]; places [kitchen table]
 
-Purposes: `releasing`, `protecting`, `steadying`, `voicing`.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Consent, allergy/dietary restrictions, gluten/nuts/dairy/eggs/soy, pets/children, choking, spoilage, and coercive food magic review.]
 
-Research shape: Set an empty bowl on the table and name one thing the household is releasing: clutter, sharp words, stale mood, old story, overfullness. Clear one object from the table or write one word and remove it. The bowl remains empty or is emptied at the close.
+adaptation policy notes: source_backed_moon_and_table_form; hospitality mechanics are retained, target-control is rejected.
 
-Moon & Table draft direction: Let the empty bowl be the place where the old thing does not have to stay.
+operative words metadata: [{ mode: `moon_and_table_original`, text: `This is an invitation, not a claim.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 21-27`, useContext: `spoken`, note: `Moon & Table line for non-coercive source-supported hospitality mechanics.` }]
 
-Safety/source notes: No hex, curse, binding, banishing another person, salt damage to surfaces, smoke, or cleansing claims. Protection means boundary and household steadiness only.
+import readiness label: `approved_for_mechanical_import`
 
-Private excerpt needs: none.
+### `ritual-woodward-repeated-recipe-memory` — Remember the Repeated Dish
 
-### Candidate 24: Finish the Dish, Bless the Table
+disposition: `candidate_extract_now`
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-024`
+ritualizationType: `source_backed_moon_and_table_form`
 
-Source sections: Ch. 7, PDF pp.121-136; Ch. 13, PDF pp.269-332.
+headline: Remember the Repeated Dish
 
-Carriers: `body`, `plant`, `table`, `vessel`.
+ritual body / practice: Choose one food, drink, or table object already meaningful to the household. Do not copy the recipe into this packet or into the public ritual record. Open the household grimoire, notebook, or Moon & Table note. Record the name of the dish or object, the date, who was present, where it was served, what season or moon moment surrounded it, and one sentence about what the table held. Say the Moon & Table line: "The recipe stays private; the spell is what we remember." Close the record and return it to its place.
 
-Purposes: `blessing`, `tending`, `steadying`, `marking`.
+intention: Preserve the household memory around food without turning the app into a recipe book.
 
-Research shape: Use one safe, already-normal finishing gesture — setting the lid, placing the serving spoon, adding a known-safe garnish, setting a napkin, or touching the bowl — as the moment of blessing. The emphasis is completion, not a recipe step.
+bestWindow: After a seasonal meal, shared cup, repeated household dish, birthday/holiday table, or meaningful kitchen act.
 
-Moon & Table draft direction: Finish the dish like sealing a small household blessing. The table does not need more; it needs your attention to arrive.
+questionToCarry: What should we remember the next time this appears on the table?
 
-Safety/source notes: No oil dosing, essential oils, medicinal herbs, edible flowers, unfamiliar spices, smoke, topical use, or measurements. Screen allergens and dietary restrictions.
+whyThisFitsIngredients:
+  checkInHooks: [memory, repeated dish, household grimoire]
+  timingHooks: [after meal or table moment]
+  lunarPlanetarySeasonalHooks: [seasonal or lunar timing if actually present]
+  capacityHooks: [only_a_little, enough_to_participate]
+  audienceHooks: [me, both_of_us]
+  materialPlaceCarrierPurposeFit: [grimoire/notebook/Moon & Table note, table memory, dish name]
+  sourceBackedRationale: [Woodward's seasonal chapter and kitchen framing support repeated food practices as seasonal and household memory]
+  notForOrHoldNotes: [do not copy recipes, culturally specific claims, or private family details without user entry]
 
-Private excerpt needs: none.
+howThisWasChosenIngredients:
+  primarySelectionSignals: [remembering, repeated table practice]
+  secondarySelectionSignals: [seasonal marking, connection]
+  exclusionSignals: [privacy concern, no meaningful table event]
+  timingSignal: after table event
+  confidenceNotes: complete source-backed Moon & Table form; no recipe text included
 
-### Candidate 25: Chopping and Washing as Release
+source grounding: `Kitchen Witchery`, Ch. 1, PDF pp. 11-19; Ch. 15, PDF pp. 344-381.
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-025`
+recommendation metadata: primaryPurpose remembering; secondaryPurposes [marking, connecting]; primaryCarrier vessel; secondaryCarriers [words, table]; capacity [only_a_little, enough_to_participate]; audience [me, both_of_us]; timing required after meaningful table event; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
-Source sections: Ch. 2, PDF pp.20-28; Ch. 9, PDF pp.165-221; Ch. 13, PDF pp.269-332.
+search metadata: tags [woodward, recipe memory, grimoire, seasonal table]; keywords [dish memory, recipe, table, grimoire, seasonal meal]; materials [notebook or Moon & Table note]; places [kitchen table]
 
-Carriers: `body`, `plant`, `vessel`.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; productBoundaryReviewRequired true; notes [No recipe reproduction, no invented family/cultural provenance, privacy review for household memory.]
 
-Purposes: `tending`, `releasing`, `steadying`.
+adaptation policy notes: source_backed_moon_and_table_form; record memory, not recipe instructions.
 
-Research shape: During ordinary safe prep, let washing, trimming, chopping, or sorting represent clearing what is stale and tending what remains. This is not a recipe; it is a short embodied spell layered onto a normal kitchen action.
+operative words metadata: [{ mode: `moon_and_table_original`, text: `The recipe stays private; the spell is what we remember.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 15 / PDF pp. 344-381`, useContext: `spoken`, note: `Moon & Table line for source-supported seasonal/repeated-food memory.` }]
 
-Moon & Table draft direction: Wash away what does not belong at the table. Chop only what is already safe to prepare. Let the clean pieces become what you are choosing to keep.
+import readiness label: `approved_for_mechanical_import`
 
-Safety/source notes: Knife safety, sanitation, cutting-board separation, raw food handling, pet/child access, and allergen review required. No foraging, toxic plants, medicinal claims, or unsafe raw foods.
+### `ritual-woodward-candle-beside-bowl` — Candle Beside the Bowl
 
-Private excerpt needs: none.
+disposition: `candidate_extract_now`
 
-### Candidate 26: Seasonal Table Memory
+ritualizationType: `source_backed_moon_and_table_form`
 
-Candidate ID: `CAND-WOODWARD-KITCHEN-VESSEL-026`
+headline: Candle Beside the Bowl
 
-Source sections: Ch. 1, PDF pp.11-19; Ch. 15, PDF pp.344-381.
+ritual body / practice: Set a bowl, cup, plate, or serving dish on the table. Place a small candle beside it, not inside it, or use an unlit candle as the fire symbol if flame is not appropriate. Name what the vessel is here to hold: welcome, enoughness, courage, blessing, memory, or release. Say the Moon & Table line: "The light shows what the vessel holds." If a flame is lit, keep it attended and extinguish it when the vessel is cleared. If the candle remains unlit, put it away when the table is cleared.
 
-Carriers: `table`, `words`, `vessel`, `plant`.
+intention: Let candlelight show the vessel's job without making the candle the whole ritual.
 
-Purposes: `remembering`, `marking`, `connecting`, `blessing`.
+bestWindow: Before a table blessing, shared cup, enoughness bowl, seasonal marker, or kitchen-table intention.
 
-Research shape: After a seasonal meal or table moment, record what marked the season: what was served or symbolized, who was present, what the table felt like, what should be repeated. Do not record source recipes.
+questionToCarry: What does the light reveal about the vessel?
 
-Moon & Table draft direction: Keep the season by keeping the memory of the table, not the recipe. What should this household remember when the wheel turns here again?
+whyThisFitsIngredients:
+  checkInHooks: [needs small table opening, wants visible ritual atmosphere]
+  timingHooks: [before vessel/table ritual]
+  lunarPlanetarySeasonalHooks: [full moon or seasonal table only if already relevant]
+  capacityHooks: [only_a_little, enough_to_participate]
+  audienceHooks: [me, both_of_us]
+  materialPlaceCarrierPurposeFit: [candle, vessel, table]
+  sourceBackedRationale: [Woodward uses table candle, prepared food, and vessel-centered kitchen work as part of magical preparation]
+  notForOrHoldNotes: [no unattended flame, smoke, herbs near flame, oil anointing, or deity/element invocation]
 
-Safety/source notes: User-private memory only. No copied holiday/deity/ancestor claims; provenance review required for named traditions.
+howThisWasChosenIngredients:
+  primarySelectionSignals: [vessel blessing, candle/table atmosphere]
+  secondarySelectionSignals: [opening, marking]
+  exclusionSignals: [unsafe flame context]
+  timingSignal: before or during table/vessel ritual
+  confidenceNotes: complete fire-safe source-backed Moon & Table form; candle is secondary to vessel
 
-Private excerpt needs: user-private memory entry may be valuable; source excerpt not needed.
+source grounding: `Kitchen Witchery`, Ch. 2, PDF pp. 23-41; Ch. 15, PDF pp. 344-381.
 
-## 7x10 coverage matrix
+recommendation metadata: primaryPurpose blessing; secondaryPurposes [opening, marking]; primaryCarrier vessel; secondaryCarriers [candlelight, table, words]; capacity [only_a_little, enough_to_participate]; audience [me, both_of_us]; timing helpful before vessel work; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
-Legend: `strong` = Woodward genuinely supports this carrier/purpose in approved scope; `moderate` = supported with adaptation or safety limits; `weak` = only indirect support or later/backlog; `held` = source contains material but gate limits block or require separate review; `unsupported` = no useful approved-scope support.
+search metadata: tags [woodward, candle, bowl, table]; keywords [candle, bowl, vessel, table, light]; materials [bowl/cup/plate/serving dish, candle or unlit candle]; places [kitchen table]
 
-| Carrier \ Purpose | opening | marking | tending | blessing | remembering | steadying | protecting | releasing | voicing | connecting |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| candlelight | moderate | moderate | weak | moderate | weak | moderate | held | weak | weak | weak |
-| plant | moderate | strong | moderate | strong | moderate | moderate | held | moderate | unsupported | moderate |
-| table | strong | strong | strong | strong | strong | strong | moderate | moderate | moderate | strong |
-| vessel | strong | strong | strong | strong | strong | strong | moderate | strong | strong | strong |
-| words | strong | moderate | moderate | strong | strong | moderate | moderate | strong | strong | moderate |
-| body | strong | moderate | strong | moderate | moderate | strong | weak | strong | moderate | moderate |
-| doorway | weak | weak | unsupported | unsupported | unsupported | unsupported | unsupported | unsupported | unsupported | weak |
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [Fire safety, pets, children, curtains, table surface, hot wax, no oil/herb anointing, and no smoke/incense review.]
 
-### Matrix notes
+adaptation policy notes: source_backed_moon_and_table_form; ordinary candle table support only.
 
-- `vessel`, `table`, `words`, and `body` are the strongest Woodward carriers inside approved scope.
-- `plant` is valid only as everyday ingredient-symbol, seasonal marker, or safe sensory/table support; it is not an herb medicine, edible-flower, foraging, essential-oil, or correspondence-card lane.
-- `candlelight` is real but secondary: table atmosphere, opening/marking/blessing. Fire-safe only, battery candle acceptable. No anointing oil or herbs near flame.
-- `doorway` is mostly unsupported. Moon greeting and seasonal threshold feeling can be a later cross-source add-on, but Woodward is not a doorway source.
-- `protecting` exists only as household boundary/steadiness after adaptation. Protection jars, hex/binding/target-control, and smoke cleansing are held or rejected.
-- `abundance` is supported only as enoughness, welcome, warmth, and table blessing, not as guaranteed prosperity or luck.
+operative words metadata: [{ mode: `moon_and_table_original`, text: `The light shows what the vessel holds.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 23-41`, useContext: `spoken`, note: `Moon & Table line for source-supported candle/table/vessel atmosphere.` }]
 
-## Packet metrics
+import readiness label: `approved_for_mechanical_import`
 
-```yaml
-sourceCount: 1
-sourceIds:
-  - SRC-VESSEL-WOODWARD-KITCHEN-WITCHERY
-inventoriedSourceItems: 57
-candidateResearchRecords: 26
-candidateExtractNow: 23
-candidateExtractLater: 13
-privateExcerptReferences: 2
-sourceNoteOnly: 8
-contextOnly: 3
-holdItems: 13
-rejectedItems: 5
-runtimeRecordsCreated: 0
-recommendationLogicUpdated: false
-uiUpdated: false
-```
+## Held / later records
+
+| Candidate or source item | Import readiness | Reason |
+| --- | --- | --- |
+| Moon-timed kitchen wording layer | candidate_extract_later | Strong timing support but should be applied after lunar/timing product rules decide how to shape wording. |
+| Food-safe finishing oil / vinegar blessing | candidate_extract_later | Promising table/vessel close; needs oil safety and recipe boundary review. |
+| Full moon table sharing | candidate_extract_later | Useful, but should be split after lunar timing and fire/food boundaries are reviewed. |
+| Exact recipes and formulae | hold_before_import | Moon & Table should not reproduce recipe steps, measurements, temperatures, or ingredient formulas. |
+| Exact spells, charms, prayers, petitions, meditations, and chants | hold_before_import | Source gate requires paraphrase/private exact-text handling only. |
+| Coercive love/attraction/sweetening/target-control examples | reject | Outside product boundary. |
+| Health/nutrition/organic/pesticide/medical claims | reject | Not Moon & Table guidance. |
+| Prosperity/luck spell database material | hold_before_import | May become enoughness/warmth only after product review; no guaranteed outcomes. |
+| Smoke/incense/essential oils/topical oils/baths/hand powders | hold_before_import | Separate material safety review required. |
+| Alcohol/caffeine/cannabis/psychoactive defaults | hold_before_import | Separate review required. |
+| Culturally specific/deity/ancestor holiday foodways | hold_before_import | Provenance and adaptation review required. |
 
 ## Coverage records
 
-| Coverage target | Status before supplement | Status after supplement | Candidate IDs | Notes |
-| --- | --- | --- | --- | --- |
-| vessel + connecting | strong | strong | 001, 002, 003, 004, 011, 016, 020 | Shared cup, bowl, sweetness, fruit, pot, serving. |
-| vessel + remembering | strong | strong | 008, 010, 007, 019, 021, 026 | Water bowl, kept object, repeated recipe memory, seasonal memory. |
-| table + blessing | strong | strong | 004, 006, 011, 012, 015, 016, 018, 024 | Sweetness/table/candle/bowl/blessing/finish. |
-| table + connecting | strong | strong | 001, 002, 004, 006, 016, 018, 020 | Table as witness and shared surface. |
-| shared cup | strong | strong | 001, 016 | Adds pitcher/service variant. |
-| shared bowl | strong | strong | 002, 003, 011, 015, 020, 023 | Adds enoughness, pot/bowl, clearing bowl. |
-| shared meal mechanics | strong | strong | 003, 005, 006, 009, 010, 016, 020, 024, 026 | Expanded beyond original set. |
-| words + voicing | strong | strong | 001, 006, 008, 010, 013, 017, 021, 023 | Adds intention wording and moon-timed verbs. |
-| body + tending | strong | strong | 003, 005, 009, 014, 020, 024, 025 | Adds centering, finishing, washing/chopping. |
-| seasonal marking | strong | strong | 007, 010, 011, 012, 017, 018, 026 | Adds moon timing and seasonal memory. |
-| candlelight + table atmosphere | moderate | stronger_moderate | 006, 012, 018, 022 | Still fire-safe and secondary. |
-| plant + blessing/remembering/tending | moderate | strong_with_safety_limits | 007, 011, 015, 016, 024, 025, 026 | Ingredient-symbol, not herb medicine/cards. |
-| protection-as-boundary | light/held | moderate_with_limits | 019, 022, 023 | Boundary/steadiness only; no protection jars. |
-| abundance/enoughness | light/held | moderate_with_limits | 004, 007, 015, 016 | Warmth/enoughness only; no prosperity spell database. |
-| lunar timing add-ons | under-accounted | accounted_for_later | 017, 018, 021 | New moon/full moon/water vessel/timing layer. |
-| kept kitchen object blessing | under-accounted | accounted_for_later | 019 | Tool/object blessing without smoke/oil/deity text. |
-| ordinary kitchen actions | partial | strong | 003, 009, 014, 020, 024, 025 | Stirring, centering, clearing, finishing, washing/chopping. |
-| safe symbolic ingredient mechanics | partial | accounted_with_limits | 004, 007, 011, 015, 016, 024, 025 | No ingredient database. |
-| doorway | unsupported | weak/unsupported | none | Not a Woodward strength; do not force. |
+| Candidate ID | Primary carrier | Primary purpose | Secondary carriers | Secondary purposes | Import readiness |
+| --- | --- | --- | --- | --- | --- |
+| `ritual-woodward-center-at-counter` | body | opening | table, words | steadying, tending | approved_for_mechanical_import |
+| `ritual-woodward-kitchen-table-intention` | words | opening | table, vessel | voicing, blessing | approved_for_mechanical_import |
+| `ritual-woodward-bowl-focus-stirring` | vessel | tending | body, words, table | blessing, voicing | approved_for_mechanical_import |
+| `ritual-woodward-bread-table-offering` | table | blessing | vessel, body, words | remembering, tending | approved_for_mechanical_import |
+| `ritual-woodward-window-water-bowl` | vessel | remembering | words, body | releasing, voicing | approved_for_mechanical_import |
+| `ritual-woodward-shared-cup-pause` | vessel | connecting | table, body, words | steadying, blessing | approved_for_mechanical_import |
+| `ritual-woodward-enoughness-bowl` | vessel | blessing | table, words, plant | steadying, connecting | approved_for_mechanical_import |
+| `ritual-woodward-seasonal-food-marker` | table | blessing | vessel, plant, words | marking, remembering | approved_for_mechanical_import |
+| `ritual-woodward-clear-table-closing` | table | releasing | body, vessel, words | tending, remembering | approved_for_mechanical_import |
+| `ritual-woodward-kept-kitchen-object` | vessel | blessing | table, body, words | marking, remembering, protecting | approved_for_mechanical_import |
+| `ritual-woodward-pot-of-tending` | vessel | tending | table, body, words | steadying, blessing | approved_for_mechanical_import |
+| `ritual-woodward-welcome-served-simply` | vessel | connecting | table, body, words | blessing, opening | approved_for_mechanical_import |
+| `ritual-woodward-repeated-recipe-memory` | vessel | remembering | words, table | marking, connecting | approved_for_mechanical_import |
+| `ritual-woodward-candle-beside-bowl` | vessel | blessing | candlelight, table, words | opening, marking | approved_for_mechanical_import |
 
 ## Variant / split ledger
 
-| Base candidate | Variant idea | Split status | Reason |
-| --- | --- | --- | --- |
-| Shared Cup of Intention | Two cups instead of one shared cup | keep_as_variant | Better for illness/allergy/boundary comfort. |
-| Shared Cup of Intention | Plain water / safe drink / no-drink symbolic cup | keep_as_variant | Avoid caffeine/alcohol/herb safety. |
-| Bowl Between Us | Edible symbol / non-edible household object | keep_as_variant | Safety and dietary flexibility. |
-| Stirring What We Tend | Soup / sauce / dry bowl stirring | keep_as_variant | Avoid recipe dependence. |
-| Sweetness on the Table | Edible sweet / symbolic sealed jar / written word | keep_as_variant | Avoid allergen/pet/sugar issues. |
-| Bread Without the Recipe | Purchased bread / toast / gluten-free alternative / symbolic napkin | keep_as_variant | Avoid gluten and recipe extraction. |
-| Water Bowl at the Window | Dark moon / any quiet evening | keep_as_variant | Dark moon timing useful but not required. |
-| Seasonal Food Marker | Actual food / photo / market item / pantry object | keep_as_variant | Keeps seasonal marking without risky food use. |
-| Candle Beside the Bowl | Flame candle / battery candle / no candle | keep_as_variant | Fire safety. |
-| Repeated Recipe Memory | Tim/Jessica private memory / family food memory / seasonal return | split_later_if_needed | May need privacy model and memory schema. |
-| Kitchen-Table Intention | Spoken / written / silently held | keep_as_variant | Different privacy and comfort levels. |
-| Moon-Timed Kitchen Opening | New / waxing / full / waning variants | split_later_if_needed | Timing engine may generate phase-specific language. |
-| Bless the Kept Kitchen Object | Cup / bowl / spoon / serving dish / cloth | keep_as_variant | Same mechanic; different object carriers. |
-| Clearing Bowl for What Leaves | Empty bowl / written word / object removal | keep_as_variant | Different safety and privacy profiles. |
-| Seasonal Table Memory | private household memory / seasonal marker / repeated meal memory | split_later_if_needed | May need private memory schema. |
+- Table/vessel work should stay separate from recipes. A Ritual may name bread, cup, bowl, pot, plate, or seasonal food, but it must not include recipe steps.
+- Shared food and drink candidates require explicit consent/allergy/dietary review before direct use; they remain draft/unavailable/not recommendable here.
+- Moon-timed kitchen variants are held/later because lunar timing should shape selection and wording only after timing rules are reviewed.
+- Object blessing is narrowed to food-safe kitchen objects; smoke/oil/elemental/deity variants are held.
+- Sweetness and abundance material is narrowed to warmth/enoughness/welcome; coercive sweetening and prosperity spell-list material are rejected or held.
+- Seasonal table work is approved only as household marking; culturally specific obligations and exact seasonal recipes remain held.
 
-## Rejected / held leads
+## Required self-check results
 
-| Lead | Source pages | Disposition | Why |
-| --- | ---: | --- | --- |
-| Exact recipes, measurements, temperatures, cooking instructions | throughout | reject | Issue and gate prohibit recipe packet. |
-| Exact prayers, charms, petitions, meditations, blessings | throughout | reject | Copyright and voice boundary. |
-| Health/nutrition/organic/pesticide claims | 11-19, throughout | reject | Not a medical/nutrition app. |
-| Coercive love/attraction/target-control examples | 21-25, 137-164, 225-253 | reject | Violates consent and gate boundary. |
-| Honey jar to change someone's favor/opinion | 137-164 | reject | Coercive target-linking; wrong vessel lane. |
-| Prosperity/luck spell database extraction | throughout | hold/reject | Abundance may be symbolic atmosphere only. |
-| Smoke/incense/sage cleansing | 38-40 and elsewhere | hold | Smoke safety and cultural/provenance boundary. |
-| Essential oils/topicals/perfumes/bath/body rubs/hand powders | oils/herbs sections | hold | Requires separate topical/essential-oil safety review. |
-| Moon water for drinking or wild water use | 254-268 | hold | Non-potable/water safety. Use only non-drinking vessel if adapted. |
-| Alcohol/caffeine-centered drink rituals | 254-268 | hold | Do not default to alcohol/caffeine. |
-| Edible flowers / foraged plants / mushrooms | 222-253, herbs sections | hold | Identification/toxicity/pet/child/pregnancy risk. |
-| Deity/ancestor/holiday obligations | 344-381 | hold | Requires provenance/adaptation review. |
-| Fire festival / Yule log luck/protection customs | 344-381 | hold | Fire, talisman/protection claims, recipe, cultural specificity. |
-| Dairy/egg-specific rituals | 333-343 | hold | Allergy, intolerance, vegan, raw egg, pregnancy, foodborne illness. |
-| Weekday/planetary correspondence tables as standalone logic | 36-38 | source_note_only | Can inform symbolic timing later, but not standalone ritual content. |
-| Elemental invocation text | 39-40 | private_excerpt_reference | Exact words and ritual frame require separate review; do not copy. |
-
-## Duplicate check
-
-- General kitchen magic research: this packet contributes vessel/shared-object mechanics and table actions, not recipes or ingredient cards.
-- Plant source gates: plant-as-ingredient stays secondary; living plant/witness work belongs to plant packets.
-- Candle packets: candle appears only as optional table atmosphere or vessel companion.
-- Saint Thomas packet: shared sweetness/jars/table/connection may overlap, but Woodward is kitchen/vessel/food-centered and non-erotic.
-- Future House Witch vessel/memory re-review: repeated recipe memory, kept kitchen object blessing, and table clearing may overlap; Woodward can seed the kitchen version.
-- Lunar/candle packets: Woodward supports moon-timed kitchen openings and full moon table sharing, but stronger lunar/candle sources should control final timing language if conflicts arise.
-
-No duplicate runtime records exist because no runtime records were created.
-
-## Gap notes
-
-- Need private-source-text policy decision for user-entered family recipes or household food memories.
-- Need food safety defaults in ritual schema: allergens, dietary restrictions, pets, children, pregnancy, caffeine, alcohol, raw flour/dough, raw egg, heat/knife/steam/sanitation.
-- Need safe default vessels: cup, bowl, plate, jar, pitcher, serving dish, pan/pot only if already in safe use.
-- Need provenance review before named holiday/deity/ancestor food claims.
-- Need tone pass to keep magical kitchen vessel language without drifting into generic mindfulness or guaranteed spell outcomes.
-- Need decision on whether abundance can mean enoughness/welcome/warmth rather than prosperity spellwork.
-- Need a non-drinking water-vessel safety pattern for moon/window/water bowl practices.
-- Need a kept-household-object data model if Moon & Table will remember blessed cups, bowls, spoons, or serving dishes.
-- Need explicit recommendation-safety gate for food rituals: allergy/dietary/pet/child/pregnancy/medication check-in before recommending edible components.
-
-## Remaining extraction backlog
-
-| Backlog item | Priority | Reason |
-| --- | --- | --- |
-| Human review of complete Woodward accounting | high | Needed before any staged activation issue. |
-| Draft Woodward Batch A activation issue | high | Recommended first set: 001, 002, 003, 004, 008, 009, 013, 014, 015, 016. |
-| Safety copy pattern for food/vessel rituals | high | Needed before any runtime activation. |
-| Non-drinking water-vessel safety pattern | high | Needed for water bowl/window jar candidates. |
-| Pet-safe kitchen ritual defaults | high | Jessica has cats; kitchen/food rituals must avoid pet-unsafe foods and accessible vessels. |
-| House Witch vessel/memory re-review | medium | Could strengthen kept-object and repeated-household-memory lanes. |
-| Rachel Patterson / Dawn Aurora Hunt kitchen source gates | medium | May add non-recipe kitchen ritual mechanics. |
-| Greenleaf source verification (#326) | medium | Only if lawful source copy can be verified. |
-| Moon/candle kitchen-table variants | medium | Woodward supports timing but should pair with stronger lunar/candle sources. |
-| Cultural/provenance review for seasonal food markers | medium | Required before named holiday/ancestor/deity variants. |
-| Doorway carrier source search | low | Woodward does not meaningfully support doorway mechanics. |
+Checked the revised packet for blocking placeholder mechanics and invalid runtime posture. No approved candidate body uses source pattern, source period, source close, source layout, source diagram, as the source shows, as the diagram shows, chosen version, source-supported order, source recipe, use the source recipe, source ingredients, source cooking time, source kitchen action, source vessel, source preparation, source words, food safety review must decide, kitchen safety review must decide, review must decide, not needed, QA/process text, low, medium, high, foodSafetyReviewRequired, kitchenSafetyReviewRequired, vesselSafetyReviewRequired, or ingestionReviewRequired. Approved candidates use only runtime-valid carriers (`candlelight`, `table`, `doorway`, `plant`, `words`, `vessel`, `body`) and capacity values (`only_a_little`, `enough_to_participate`, `room_for_something_deeper`). Kitchen/food/vessel safety concerns are preserved under valid review flags and notes. The source-exact wording posture cites the approved Woodward source gate path and follows that source-specific gate. No runtime records or eligibility flags are changed.
 
 ## Validation checklist
 
-- [x] Uses only the approved Woodward source gate and source copy.
-- [x] Keeps original Batch A candidates and good work.
-- [x] Adds supplemental complete-accounting pass.
-- [x] Uses the 7x10 carrier/purpose matrix as a coverage lens.
-- [x] Produces the requested Markdown packet at the output path.
-- [x] Keeps all candidates research-only/draft.
-- [x] Does not create runtime Ritual records.
-- [x] Does not mark any candidate reviewed, findable, direct-use eligible, recommendation eligible, or runtime-ready.
-- [x] Includes broad source rite inventory with dispositions.
-- [x] Every inventoried source item has a disposition.
-- [x] Includes candidate records focused on magical kitchen/vessel/shared-object mechanics and under-accounted approved mechanics.
-- [x] Preserves magical intent and kitchen-witch feel.
-- [x] Does not flatten source into generic cooking advice.
-- [x] Does not create recipes, ingredient cards, health advice, coercive magic, or guaranteed-outcome claims.
-- [x] Includes coverage records and gap notes.
-- [x] Includes rejected/held leads for unsafe/off-product material.
-- [x] Preserves approved source-gate boundaries.
-- [x] Notes human review required before activation.
-
-## Open questions / Tim decisions
-
-1. Confirm canonical source ID remains `SRC-VESSEL-WOODWARD-KITCHEN-WITCHERY`.
-2. Confirm actual source recipes are categorically excluded from runtime. Recommendation: yes; use ordinary actions and symbolic containers only.
-3. Decide whether Batch A activation should include all high-confidence candidates or start with a smaller set: 001 Shared Cup, 002 Bowl Between Us, 003 Stirring What We Tend, 004 Sweetness on the Table, 008 Water Bowl at the Window, 009 Clearing the Table, 013 Kitchen-Table Intention, 014 Come to Center, 015 Enoughness Bowl, 016 Welcome Served Simply.
-4. Decide whether abundance is allowed as warmth/enoughness/table blessing, while excluding prosperity/luck spell database behavior.
-5. Decide whether Moon & Table should support private household recipe memories as user-entered private content separate from source-derived recipe text.
-6. Confirm whether any food-based ritual should require an explicit check-in question: `Any allergies, dietary limits, pets, kids, pregnancy, or medication-sensitive ingredients to avoid?`
-7. Decide whether kept kitchen objects should become a first-class memory object in Moon & Table.
-8. Decide whether moon-timed Woodward variants should wait for candle/moon source packets before activation.
-
-## Final packet status
-
-`complete_source_accounting_ready_for_pm_review`
-
-Why: The original packet is preserved as a strong Batch A vessel/shared-object set, and this supplement adds the missing approved-scope Woodward mechanics: moon timing add-ons, full moon table sharing, tool/object blessing and charging, kept-vessel blessing, broader candle/table containers, enoughness/abundance-as-warmth, welcome/service mechanics, pot-as-vessel, washing/chopping/finishing as ordinary magical actions, non-drinking water/jar practices, and seasonal table memory. The packet now accounts for the approved Woodward source scope without creating recipes, ingredient cards, medical/nutrition advice, coercive magic, unsafe ingestion/smoke/oil/topical practices, or runtime eligibility. Human review is required before any candidate can move toward staged activation.
+- [x] Every `candidate_extract_now` has a complete operational ritual body / practice.
+- [x] No approved candidate requires source lookup for materials, food/vessel/place, placement, sequence, timing, repetition, wording handling, close, disposal, washing, serving, rest, or recordkeeping.
+- [x] Long/substantial source wording uses `private_source_excerpt`.
+- [x] Woodward source-gate direct-quote restrictions are cited and honored.
+- [x] Kitchen/food/vessel safety and product-boundary notes are explicit under valid review flags.
+- [x] Components/mechanics are held unless made into complete source-backed forms.
+- [x] Packet metrics and coverage are internally consistent.
+- [x] Runtime enum values are valid.
+- [x] Common runtime posture remains draft/unavailable/not recommendable.
