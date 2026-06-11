@@ -15,13 +15,13 @@ describe("Ritual readiness report", () => {
     expect(report.byStatus).toEqual({
       pilot: 0,
       draft: 0,
-      reviewed: 218,
-      recommendable: 0,
+      reviewed: 36,
+      recommendable: 182,
     });
     expect(report.availability).toEqual({
       findable: 218,
       directUseEligible: 218,
-      recommendationEligible: 0,
+      recommendationEligible: 182,
     });
     expect(report.validation).toEqual({
       valid: true,
@@ -29,27 +29,37 @@ describe("Ritual readiness report", () => {
     });
   });
 
-  it("reports zero recommendation-eligible records in formatted output", () => {
+  it("reports recommendation-eligible records in formatted output", () => {
     const formatted = formatRitualReadinessReport(
       createRitualReadinessReport(sourceBackedRituals),
     );
 
     expect(formatted).toContain("Ritual readiness report");
-    expect(formatted).toContain("- recommendation eligible: 0");
+    expect(formatted).toContain("- recommendation eligible: 182");
     expect(formatted).toContain("- valid: true");
     expect(formatted).toContain("- findings: 0");
     expect(formatted).not.toContain("undefined");
   });
 
-  it("keeps recommendation review missing while removing direct-use review from promoted records", () => {
+  it("keeps explicit missing reasons only on held recommendation records", () => {
     const report = createRitualReadinessReport(sourceBackedRituals);
     const formatted = formatRitualReadinessReport(report);
 
     expect(report.records).toHaveLength(218);
 
-    for (const record of report.records) {
-      expect(record.missing).toContain("recommendation_review");
-      expect(record.recommendationEligible).toBe(false);
+    for (const record of report.records.filter(
+      (candidate) => candidate.recommendationEligible,
+    )) {
+      expect(record.missing).toEqual([]);
+      expect(record.recommendable).toBe(true);
+      expect(formatted).toContain(`${record.id} | ${record.status}`);
+      expect(formatted).toContain(`${record.id}`);
+    }
+
+    for (const record of report.records.filter(
+      (candidate) => !candidate.recommendationEligible,
+    )) {
+      expect(record.missing.length).toBeGreaterThan(0);
       expect(record.recommendable).toBe(false);
       expect(formatted).toContain(`${record.id} | ${record.status}`);
       expect(formatted).toContain(`${record.id}`);
@@ -61,6 +71,11 @@ describe("Ritual readiness report", () => {
           record.directUseEligible && !record.missing.includes("direct_use_review"),
       ),
     ).toHaveLength(218);
+    expect(
+      report.records.filter((record) =>
+        record.missing.includes("timing_engine_wiring"),
+      ),
+    ).toHaveLength(22);
   });
 
   it("surfaces validation findings when invalid data is passed", () => {
