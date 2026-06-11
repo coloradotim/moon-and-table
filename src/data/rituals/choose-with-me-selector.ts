@@ -107,6 +107,16 @@ const carrierLabels: Record<RitualCarrier, string> = {
   body: "the body",
 };
 
+const carrierFormLabels: Record<RitualCarrier, string> = {
+  candlelight: "candlelight form",
+  table: "table form",
+  doorway: "doorway form",
+  plant: "plant form",
+  words: "word form",
+  vessel: "vessel form",
+  body: "body form",
+};
+
 const capacityLabels: Record<RitualCheckInEnergyCapacity, string> = {
   barely_any: "barely any capacity",
   a_little: "a little capacity",
@@ -143,7 +153,10 @@ function emptyBreakdown(): ChooseWithMeScoreBreakdown {
   };
 }
 
-function addExclusion(exclusions: Record<string, number>, reason: string): void {
+function addExclusion(
+  exclusions: Record<string, number>,
+  reason: string,
+): void {
   exclusions[reason] = (exclusions[reason] ?? 0) + 1;
 }
 
@@ -176,17 +189,23 @@ function getSearchableText(ritual: Ritual): string {
     ...ritual.searchMetadata.keywords,
     ...(ritual.searchMetadata.materials ?? []),
     ...(ritual.searchMetadata.places ?? []),
-  ].join(" ").toLowerCase();
+  ]
+    .join(" ")
+    .toLowerCase();
 }
 
-function countQueryMatches(text: string, query: string | null | undefined): number {
+function countQueryMatches(
+  text: string,
+  query: string | null | undefined,
+): number {
   if (!query) {
     return 0;
   }
 
-  const terms = query.toLowerCase().split(/[^a-z0-9]+/).filter(
-    (term) => term.length > 2,
-  );
+  const terms = query
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter((term) => term.length > 2);
 
   return terms.filter((term) => text.includes(term)).length;
 }
@@ -221,12 +240,18 @@ function scoreRitual(
   ) {
     breakdown.carrier += 10;
     evidence.push(`secondary carrier matched ${request.carrier}`);
-  } else if (!request.carrier && metadata.capacity.supports.includes("only_a_little")) {
+  } else if (
+    !request.carrier &&
+    metadata.capacity.supports.includes("only_a_little")
+  ) {
     breakdown.carrier += 5;
     evidence.push("carrier inferred from a low-capacity ritual");
   }
 
-  const refinementMatches = countQueryMatches(searchableText, request.refinement);
+  const refinementMatches = countQueryMatches(
+    searchableText,
+    request.refinement,
+  );
   if (refinementMatches > 0) {
     breakdown.refinement += Math.min(12, refinementMatches * 4);
     evidence.push(`refinement matched ${request.refinement}`);
@@ -234,12 +259,16 @@ function scoreRitual(
 
   if (request.audience && metadata.audience.default === request.audience) {
     breakdown.audience += 8;
-  } else if (request.audience && metadata.audience.supports.includes(request.audience)) {
+  } else if (
+    request.audience &&
+    metadata.audience.supports.includes(request.audience)
+  ) {
     breakdown.audience += 5;
   }
 
   const highestAllowed = getHighestAllowedCapacity(allowedCapacities);
-  const defaultCapacity = metadata.capacity.default ?? metadata.capacity.supports[0];
+  const defaultCapacity =
+    metadata.capacity.default ?? metadata.capacity.supports[0];
   if (defaultCapacity && allowedCapacities.includes(defaultCapacity)) {
     breakdown.capacity += defaultCapacity === highestAllowed ? 12 : 8;
   } else {
@@ -260,14 +289,19 @@ function scoreRitual(
       ...(ritual.searchMetadata.materials ?? []),
       ...(ritual.searchMetadata.places ?? []),
       ...ritual.searchMetadata.tags,
-    ].join(" ").toLowerCase();
+    ]
+      .join(" ")
+      .toLowerCase();
     const matches = availableMaterials.filter((material) =>
       materialText.includes(material.toLowerCase()),
     );
     breakdown.materialPlaceFit += Math.min(8, matches.length * 3);
   }
 
-  const freeTextMatches = countQueryMatches(searchableText, request.freeTextIntent);
+  const freeTextMatches = countQueryMatches(
+    searchableText,
+    request.freeTextIntent,
+  );
   if (freeTextMatches > 0) {
     breakdown.freeText += Math.min(8, freeTextMatches * 2);
   }
@@ -314,7 +348,10 @@ function getEligibleRituals(
       return false;
     }
 
-    if (request.audience && !metadata.audience.supports.includes(request.audience)) {
+    if (
+      request.audience &&
+      !metadata.audience.supports.includes(request.audience)
+    ) {
       addExclusion(exclusions, "audience_mismatch");
       return false;
     }
@@ -344,44 +381,100 @@ function getEligibleRituals(
 }
 
 function sortScoredRituals(a: ScoredRitual, b: ScoredRitual): number {
-  return b.breakdown.total - a.breakdown.total ||
-    a.ritual.presentation.headline.localeCompare(b.ritual.presentation.headline);
+  return (
+    b.breakdown.total - a.breakdown.total ||
+    a.ritual.presentation.headline.localeCompare(b.ritual.presentation.headline)
+  );
 }
 
-function describeRequest(request: ChooseWithMeRequest): string {
+function joinNaturalList(items: string[]): string {
+  if (items.length <= 1) {
+    return items[0] ?? "";
+  }
+
+  if (items.length === 2) {
+    return `${items[0]} and ${items[1]}`;
+  }
+
+  return `${items.slice(0, -1).join(", ")}, and ${items[items.length - 1]}`;
+}
+
+function getFirstSentence(text: string): string {
+  const normalized = text.replace(/\s+/g, " ").trim();
+  const sentenceMatch = normalized.match(/^.+?[.!?](?=\s|$)/);
+
+  return sentenceMatch?.[0] ?? normalized;
+}
+
+function describeRequestForReader(request: ChooseWithMeRequest): string {
   const pieces = [
-    capacityLabels[request.energyCapacity],
-    request.audience === "both_of_us" ? "for both of you" : "for you",
-    request.purpose ? `for ${purposeLabels[request.purpose]}` : undefined,
+    request.purpose ? purposeLabels[request.purpose] : "the work you named",
     request.carrier ? `in ${carrierLabels[request.carrier]}` : undefined,
-    request.refinement ? `around ${request.refinement.toLowerCase()}` : undefined,
-  ].filter(Boolean);
+    request.audience === "both_of_us" ? "for both of you" : "for you",
+    `with ${capacityLabels[request.energyCapacity]}`,
+  ].filter(Boolean) as string[];
 
   return pieces.join(", ");
+}
+
+function describeSelectionLane(
+  request: ChooseWithMeRequest,
+  ritual?: Ritual,
+): string {
+  const pieces = [
+    capacityLabels[request.energyCapacity],
+    request.audience === "both_of_us" ? "both of you" : "one person",
+    request.purpose ? purposeLabels[request.purpose] : undefined,
+    request.carrier ? carrierLabels[request.carrier] : undefined,
+  ].filter(Boolean) as string[];
+  const base = joinNaturalList(pieces);
+
+  if (request.carrier || !ritual) {
+    return base;
+  }
+
+  const carrierForm =
+    carrierFormLabels[ritual.recommendationMetadata.carriers.primary];
+
+  return `${base}, with the ritual's own ${carrierForm} leading`;
+}
+
+function describePracticeFit(ritual: Ritual): string {
+  const practiceOpening = getFirstSentence(ritual.presentation.practice);
+
+  if (practiceOpening.length > 0) {
+    return practiceOpening;
+  }
+
+  return ritual.presentation.intention;
 }
 
 function buildWhyThisFits(
   ritual: Ritual,
   request: ChooseWithMeRequest,
-  evidence: string[],
 ): string {
-  const requestDescription = describeRequest(request);
-  const evidenceSentence = evidence.length > 0
-    ? ` It keeps ${evidence.slice(0, 2).join(" and ")}.`
-    : "";
+  const requestDescription = describeRequestForReader(request);
+  const practiceFit = describePracticeFit(ritual);
+  const fitLanguage =
+    request.energyCapacity === "room_for_something_deeper"
+      ? "a fuller shape"
+      : "a small, concrete shape";
 
-  return `You asked for ${requestDescription}. ${ritual.presentation.whyThisFits}${evidenceSentence}`;
+  return `You asked for ${requestDescription}. This ritual gives that request ${fitLanguage}: ${practiceFit}`;
 }
 
-function buildHowThisWasChosen(request: ChooseWithMeRequest, debug: ChooseWithMeDebug): string {
-  const preserved = [
-    request.purpose ? purposeLabels[request.purpose] : undefined,
-    request.carrier ? carrierLabels[request.carrier] : "an inferred carrier",
-    request.audience === "both_of_us" ? "both of you" : "you",
-    capacityLabels[request.energyCapacity],
-  ].filter(Boolean);
+function buildHowThisWasChosen(
+  request: ChooseWithMeRequest,
+  ritual?: Ritual,
+): string {
+  const timingPhrase =
+    request.timeScope === "today" ? "for today" : "for this week";
+  const selectionLane = describeSelectionLane(request, ritual);
+  const closing = ritual
+    ? "This one stayed inside those answers without asking for more energy than you offered."
+    : "Moon & Table did not choose a ritual outside that request.";
 
-  return `Moon & Table preserved ${preserved.join(", ")} and filtered out rituals that were not recommendation-ready, did not fit the audience, or asked for more capacity than you offered.`;
+  return `Moon & Table looked at approved rituals ${timingPhrase} and kept the choice inside ${selectionLane}. ${closing}`;
 }
 
 function buildDebug(
@@ -402,15 +495,23 @@ function buildDebug(
   return {
     normalizedRequest: request,
     eligibleCount: eligible.length,
-    excludedCount: Object.values(exclusions).reduce((sum, count) => sum + count, 0),
+    excludedCount: Object.values(exclusions).reduce(
+      (sum, count) => sum + count,
+      0,
+    ),
     selectedRitualId: selected?.ritual.id,
     selectedScore: selected?.breakdown.total,
     selectedBreakdown: selected?.breakdown,
     topCandidates,
     exclusions,
-    fallback: eligible.length === 0 ? "no_eligible_ritual_for_requested_cell" : undefined,
+    fallback:
+      eligible.length === 0
+        ? "no_eligible_ritual_for_requested_cell"
+        : undefined,
     timingEvidence: request.timingContext?.timingWindowCandidateIds?.length
-      ? [`${request.timingContext.timingWindowCandidateIds.length} timing windows available`]
+      ? [
+          `${request.timingContext.timingWindowCandidateIds.length} timing windows available`,
+        ]
       : ["timing did not override the selected carrier and purpose"],
     explanationEvidence: selected?.evidence ?? [],
   };
@@ -430,7 +531,8 @@ export function chooseWithMeRitual(
     timingContext: request.timingContext ?? {},
   };
   const exclusions: Record<string, number> = {};
-  const allowedCapacities = allowedCapacityByMode[normalizedRequest.capacityMode];
+  const allowedCapacities =
+    allowedCapacityByMode[normalizedRequest.capacityMode];
   const eligible = getEligibleRituals(rituals, normalizedRequest, exclusions);
   const scored = eligible
     .map((ritual) => scoreRitual(ritual, normalizedRequest, allowedCapacities))
@@ -441,8 +543,9 @@ export function chooseWithMeRitual(
   if (!selected) {
     return {
       status: "no_result",
-      whyThisFits: "I could not find a recommendation-ready ritual for that exact carrier, purpose, audience, and capacity.",
-      howThisWasChosen: buildHowThisWasChosen(normalizedRequest, debug),
+      whyThisFits:
+        "I could not find a recommendation-ready ritual for that exact carrier, purpose, audience, and capacity.",
+      howThisWasChosen: buildHowThisWasChosen(normalizedRequest),
       debug,
     };
   }
@@ -450,12 +553,8 @@ export function chooseWithMeRitual(
   return {
     status: "selected",
     selectedRitual: selected.ritual,
-    whyThisFits: buildWhyThisFits(
-      selected.ritual,
-      normalizedRequest,
-      selected.evidence,
-    ),
-    howThisWasChosen: buildHowThisWasChosen(normalizedRequest, debug),
+    whyThisFits: buildWhyThisFits(selected.ritual, normalizedRequest),
+    howThisWasChosen: buildHowThisWasChosen(normalizedRequest, selected.ritual),
     debug,
   };
 }
