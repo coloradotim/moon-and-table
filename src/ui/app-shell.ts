@@ -1545,6 +1545,7 @@ function renderAppMenu(activeView: SignedInView): string {
       </summary>
       <div class="app-menu__panel" role="menu" aria-label="App menu">
         <button type="button" role="menuitem" data-menu-action="this_week" aria-pressed="${thisWeekPressed}">Current ritual</button>
+        <button type="button" role="menuitem" data-menu-action="choose_ritual">Choose a ritual</button>
         <button type="button" role="menuitem" data-menu-action="search_rituals" aria-pressed="${searchRitualsPressed}">Search rituals</button>
         <button type="button" role="menuitem" data-menu-action="manage_rituals" aria-pressed="${manageRitualsPressed}">Manage rituals</button>
         <button type="button" role="menuitem" data-menu-action="profile_settings" aria-pressed="${profilePressed}">Profile settings</button>

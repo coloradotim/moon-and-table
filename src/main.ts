@@ -1001,6 +1001,15 @@ appRoot.addEventListener("click", (event) => {
     return;
   }
 
+  if (menuAction === "choose_ritual") {
+    event.preventDefault();
+    menuActionTarget
+      ?.closest("details[data-app-menu='true']")
+      ?.removeAttribute("open");
+    startCheckInOver();
+    return;
+  }
+
   if (
     menuAction === "this_week" ||
     menuAction === "search_rituals" ||
