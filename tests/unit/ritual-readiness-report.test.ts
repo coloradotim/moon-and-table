@@ -14,13 +14,13 @@ describe("Ritual readiness report", () => {
     expect(report.total).toBe(218);
     expect(report.byStatus).toEqual({
       pilot: 0,
-      draft: 218,
-      reviewed: 0,
+      draft: 0,
+      reviewed: 218,
       recommendable: 0,
     });
     expect(report.availability).toEqual({
       findable: 218,
-      directUseEligible: 0,
+      directUseEligible: 218,
       recommendationEligible: 0,
     });
     expect(report.validation).toEqual({
@@ -41,25 +41,26 @@ describe("Ritual readiness report", () => {
     expect(formatted).not.toContain("undefined");
   });
 
-  it("includes direct-use and recommendation review as missing readiness for all source-backed records", () => {
+  it("keeps recommendation review missing while removing direct-use review from promoted records", () => {
     const report = createRitualReadinessReport(sourceBackedRituals);
     const formatted = formatRitualReadinessReport(report);
 
     expect(report.records).toHaveLength(218);
 
     for (const record of report.records) {
-      expect(record.missing).toEqual([
-        "direct_use_review",
-        "recommendation_review",
-      ]);
+      expect(record.missing).toContain("recommendation_review");
       expect(record.recommendationEligible).toBe(false);
       expect(record.recommendable).toBe(false);
-      expect(formatted).toContain(`${record.id} | draft`);
+      expect(formatted).toContain(`${record.id} | ${record.status}`);
       expect(formatted).toContain(`${record.id}`);
-      expect(formatted).toContain(
-        "missing: direct_use_review, recommendation_review",
-      );
     }
+
+    expect(
+      report.records.filter(
+        (record) =>
+          record.directUseEligible && !record.missing.includes("direct_use_review"),
+      ),
+    ).toHaveLength(218);
   });
 
   it("surfaces validation findings when invalid data is passed", () => {
