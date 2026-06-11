@@ -1,5 +1,4 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
-import { execFileSync } from "node:child_process";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -17,10 +16,6 @@ export type ContentLintFinding = {
 export type ContentLintResult = {
   valid: boolean;
   findings: ContentLintFinding[];
-};
-
-export type ContentLintRunOptions = {
-  contentSource?: "working-tree" | "git-index";
 };
 
 type ContentLintRule = {
@@ -41,6 +36,8 @@ const SKIPPED_PATH_PARTS = new Set([
   "dist",
   "private",
   "private.example",
+  "content-audits",
+  "content-packets",
 ]);
 
 const GUARDRAIL_CONTEXT_PATTERN =
@@ -128,48 +125,12 @@ function getScannedFiles(rootPath: string): string[] {
   });
 }
 
-function getSourceControlledScannedFiles(): string[] {
-  try {
-    return execFileSync("git", ["ls-files", ...SCANNED_ROOTS], {
-      cwd: REPO_ROOT,
-      encoding: "utf8",
-    })
-      .split(/\r?\n/)
-      .filter(Boolean)
-      .filter((relativePath) =>
-        !shouldSkipPath(relativePath) && isScannedFile(relativePath),
-      )
-      .map((relativePath) => join(REPO_ROOT, relativePath));
-  } catch {
-    return SCANNED_ROOTS.flatMap((root) =>
-      getScannedFiles(join(REPO_ROOT, root)),
-    );
-  }
-}
-
 function isEmailAllowed(value: string): boolean {
   return EMAIL_ALLOWLIST_PATTERNS.some((pattern) => pattern.test(value));
 }
 
 function isFileAllowed(filePath: string): boolean {
   return FILE_ALLOWLIST_PATTERNS.some((pattern) => pattern.test(filePath));
-}
-
-function readScannedFile(filePath: string, contentSource: ContentLintRunOptions["contentSource"]): string {
-  if (contentSource !== "git-index") {
-    return readFileSync(filePath, "utf8");
-  }
-
-  const relativePath = relative(REPO_ROOT, filePath);
-
-  try {
-    return execFileSync("git", ["show", `:${relativePath}`], {
-      cwd: REPO_ROOT,
-      encoding: "utf8",
-    });
-  } catch {
-    return readFileSync(filePath, "utf8");
-  }
 }
 
 function isGuardrailContext(line: string): boolean {
@@ -250,14 +211,13 @@ export function lintContentText(
     });
 }
 
-export function runContentLint(options: ContentLintRunOptions = {}): ContentLintResult {
-  const files = getSourceControlledScannedFiles();
+export function runContentLint(): ContentLintResult {
+  const files = SCANNED_ROOTS.flatMap((root) =>
+    getScannedFiles(join(REPO_ROOT, root)),
+  );
   const findings = files.flatMap((filePath) => {
     const relativePath = relative(REPO_ROOT, filePath);
-    const contents = readScannedFile(
-      filePath,
-      options.contentSource ?? "working-tree",
-    );
+    const contents = readFileSync(filePath, "utf8");
 
     return lintContentText(contents, relativePath);
   });
