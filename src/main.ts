@@ -54,6 +54,7 @@ import {
   renderRitualCheckInLoadingShell,
   renderRitualCheckInShell,
   renderSignedInShell,
+  type RitualSearchSort,
   type SignedInView,
 } from "./ui/app-shell";
 import { ritualFocusOptions } from "./data/ritual-focus-options";
@@ -79,6 +80,7 @@ let activeFirstLoginCheckIn = false;
 let checkInLoadingTimeout: number | null = null;
 let activeRitualSearchQuery = "";
 let activeRitualSearchChips: string[] = [];
+let activeRitualSearchSort: RitualSearchSort = "match";
 let activeSelectedRitualId: string | null = null;
 const showDebugTrace = new URLSearchParams(window.location.search).get("debug") === "true";
 
@@ -202,6 +204,7 @@ function renderActiveSignedInShell(options: {
     activeProfileSettingsTabId,
     ritualSearchQuery: activeRitualSearchQuery,
     selectedRitualSearchChips: activeRitualSearchChips,
+    ritualSearchSort: activeRitualSearchSort,
     selectedRitualId: activeSelectedRitualId,
   });
 }
@@ -383,6 +386,15 @@ function handleCheckInAction(action: string, value: string): void {
     return;
   }
 
+  if (action === "start_guided" && value === "choose_with_me") {
+    activeCheckInDraft = {
+      ...activeCheckInDraft,
+      step: "time_scope",
+    };
+    renderActiveCheckInShell();
+    return;
+  }
+
   if (action === "time_scope" && isTimeScope(value)) {
     activeCheckInDraft = {
       ...activeCheckInDraft,
@@ -475,6 +487,8 @@ function handleCheckInAction(action: string, value: string): void {
 
 function getPreviousCheckInStep(draft: RitualCheckInDraft): RitualCheckInStep {
   switch (draft.step) {
+    case "time_scope":
+      return "entry_path";
     case "energy_capacity":
       return "time_scope";
     case "audience":
@@ -489,9 +503,9 @@ function getPreviousCheckInStep(draft: RitualCheckInDraft): RitualCheckInStep {
       return draft.ritualFocusKey === "something_else"
         ? "ritual_focus_text"
         : "ritual_focus";
-    case "time_scope":
+    case "entry_path":
     default:
-      return "time_scope";
+      return "entry_path";
   }
 }
 
@@ -800,6 +814,11 @@ appRoot.addEventListener("click", (event) => {
     return;
   }
 
+  if (target.closest("[data-ritual-search-back='true']")) {
+    startCheckInOver();
+    return;
+  }
+
   if (target.closest("[data-check-in-start-over='true']")) {
     startCheckInOver();
     return;
@@ -917,6 +936,19 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+appRoot.addEventListener("change", (event) => {
+  const target = event.target;
+
+  if (
+    target instanceof HTMLSelectElement &&
+    target.matches("[data-ritual-search-sort='true']")
+  ) {
+    activeRitualSearchSort = target.value as RitualSearchSort;
+    activeSelectedRitualId = null;
+    renderSearchRituals();
+  }
+});
+
 subscribeToAuthState(firebaseServices, (state) => {
   if (state.status === "signed_in") {
     renderSignedInState(state);
@@ -930,6 +962,7 @@ subscribeToAuthState(firebaseServices, (state) => {
   activeProfileSettingsTabId = null;
   activeRitualSearchQuery = "";
   activeRitualSearchChips = [];
+  activeRitualSearchSort = "match";
   activeSelectedRitualId = null;
   activeCurrentRitualCheckIn = null;
   activeCheckInDraft = createInitialRitualCheckInDraft();
@@ -959,6 +992,9 @@ appRoot.addEventListener("submit", (event) => {
     event.preventDefault();
     const formData = new FormData(target);
     activeRitualSearchQuery = String(formData.get("ritualSearchQuery") ?? "");
+    activeRitualSearchSort = String(
+      formData.get("ritualSearchSort") ?? activeRitualSearchSort,
+    ) as RitualSearchSort;
     activeSelectedRitualId = null;
     renderSearchRituals();
   }

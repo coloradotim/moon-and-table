@@ -43,7 +43,7 @@ describe("app shell rendering", () => {
 
   it("renders the pre-brief check-in before a generated brief", () => {
     const html = renderRitualCheckInShell({
-      draft: { step: "time_scope" },
+      draft: { step: "entry_path" },
       displayName: "Morgan Example",
     });
 
@@ -52,11 +52,14 @@ describe("app shell rendering", () => {
     );
     expect(html).toContain("Choose with me");
     expect(html).toContain("I have something in mind");
+    expect(html).toContain('aria-label="Choose how to find a ritual"');
+    expect(html).toContain('data-check-in-action="start_guided"');
+    expect(html).toContain('data-check-in-value="choose_with_me"');
     expect(html).toContain('data-search-rituals-entry="true"');
     expect(html).toContain("Today’s shape");
-    expect(html).toContain("Are you wanting something for today, or looking across the week?");
-    expect(html).toContain("For today");
-    expect(html).toContain("Across the week");
+    expect(html).not.toContain("Are you wanting something for today, or looking across the week?");
+    expect(html).not.toContain("For today");
+    expect(html).not.toContain("Across the week");
     expect(html).not.toContain("Go back");
     expect(html).not.toContain("Use this moment and keep the ritual close at hand.");
     expect(html).not.toContain("Let the timing layer look for a stronger fit.");
@@ -72,9 +75,25 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("generated");
   });
 
-  it("renders Today's shape near the first check-in question with curated timing copy", () => {
+  it("renders the guided check-in first question after the entry path is chosen", () => {
     const html = renderRitualCheckInShell({
       draft: { step: "time_scope" },
+      displayName: "Morgan Example",
+    });
+
+    expect(html).not.toContain("Welcome back, Morgan.");
+    expect(html).not.toContain("Today’s shape");
+    expect(html).not.toContain("Choose with me");
+    expect(html).not.toContain("I have something in mind");
+    expect(html).toContain("Are you wanting something for today, or looking across the week?");
+    expect(html).toContain("For today");
+    expect(html).toContain("Across the week");
+    expect(html).toContain("Go back");
+  });
+
+  it("renders Today's shape near the first check-in question with curated timing copy", () => {
+    const html = renderRitualCheckInShell({
+      draft: { step: "entry_path" },
       displayName: "Morgan Example",
       todaysShapeBrief: {
         title: "Today’s shape",
@@ -99,7 +118,7 @@ describe("app shell rendering", () => {
     });
 
     expect(html.indexOf("Today’s shape")).toBeLessThan(
-      html.indexOf("Are you wanting something for today"),
+      html.indexOf("Choose with me"),
     );
     expect(html).toContain("Waning gibbous moon");
     expect(html).toContain("Next lunar milestone: Last quarter moon on Sunday");
@@ -119,7 +138,7 @@ describe("app shell rendering", () => {
 
   it("can show a major event in Today's shape without making it the ritual", () => {
     const html = renderRitualCheckInShell({
-      draft: { step: "time_scope" },
+      draft: { step: "entry_path" },
       todaysShapeBrief: {
         title: "Today’s shape",
         summary: "New moon today, with a 1 note in the date. Good weather for a small beginning, first light, or one phrase that does not need to become a plan.",
@@ -135,15 +154,15 @@ describe("app shell rendering", () => {
 
     expect(html).toContain("New moon today");
     expect(html).toContain("Good weather for a small beginning");
-    expect(html).toContain("For today");
-    expect(html).toContain("Across the week");
+    expect(html).toContain("Choose with me");
+    expect(html).toContain("I have something in mind");
     expect(html).not.toContain("Choose ritual");
     expect(html).not.toContain("This timing overrides");
   });
 
   it("renders first-login check-in copy without a welcome-back greeting", () => {
     const html = renderRitualCheckInShell({
-      draft: { step: "time_scope" },
+      draft: { step: "entry_path" },
       displayName: "Morgan Example",
       introMode: "first_login",
     });
@@ -151,7 +170,8 @@ describe("app shell rendering", () => {
     expect(html).toContain("Let&rsquo;s choose your first ritual.");
     expect(html).not.toContain("Welcome back");
     expect(html).not.toContain("Morgan");
-    expect(html).toContain("Are you wanting something for today, or looking across the week?");
+    expect(html).toContain("Choose with me");
+    expect(html).not.toContain("Are you wanting something for today, or looking across the week?");
   });
 
   it("renders exact energy labels and no follow-up content before energy is chosen", () => {
@@ -453,7 +473,6 @@ describe("app shell rendering", () => {
     expect(html).toContain("moon-phase-tooltip");
     expect(html).toContain("Current phase:");
     expect(html).toContain("Next lunar milestone:");
-    expect(html).toContain("Last quarter moon");
     expect(html).toContain("New moon on");
     expect(html).toContain('class="masthead__home"');
     expect(html).toContain('data-home-action="this_week"');
@@ -659,7 +678,9 @@ describe("app shell rendering", () => {
 
     expect(html).toContain('data-menu-action="search_rituals"');
     expect(html).toContain('aria-pressed="true">Search rituals</button>');
-    expect(html).toContain("I have something in mind.");
+    expect(html).toContain("&larr; Go back</button>");
+    expect(html).toContain('data-ritual-search-back="true"');
+    expect(html).not.toContain("I have something in mind.");
     expect(html).toContain("Search by material, mood, purpose, place, or phrase.");
     expect(html).toContain('data-ritual-search-form="true"');
     expect(html).toContain('type="search"');
@@ -675,7 +696,14 @@ describe("app shell rendering", () => {
     expect(html).toContain("Wet the seed and wait.");
     expect(html).toContain("Set grain at the table.");
     expect(html).toContain("Kindle the first household light.");
-    expect(html).toContain("Pilot · Preview only");
+    expect(html).toContain("Select a ritual");
+    expect(html).toContain("rituals available");
+    expect(html).toContain('name="ritualSearchSort"');
+    expect(html).toContain("Best match");
+    expect(html).not.toContain("Preview only");
+    expect(html).not.toContain("Pilot · Preview only");
+    expect(html).not.toContain("Browse the pilot ritual library");
+    expect(html).not.toContain("Reach by one word");
     expect(html).toContain("Recommendation eligible");
     expect(html).toContain("pilot_review");
     expect(html).toContain("Readiness and source details");
@@ -685,7 +713,7 @@ describe("app shell rendering", () => {
     expect(html).not.toContain('data-testid="recommended-ritual"');
   });
 
-  it("keeps the I have something in mind entry path renderable before a brief exists", () => {
+  it("keeps the search ritual path renderable before a brief exists", () => {
     const html = renderSignedInShell(resolvePrivateBriefData({}), {
       activeView: "search_rituals",
       brief: undefined,
@@ -699,7 +727,8 @@ describe("app shell rendering", () => {
       "";
 
     expect(html).toContain("Search rituals");
-    expect(html).toContain("I have something in mind.");
+    expect(html).toContain("&larr; Go back</button>");
+    expect(html).not.toContain("I have something in mind.");
     expect(html).toContain("Wet the seed and wait.");
     expect(html).not.toContain('data-testid="recommended-ritual"');
     expect(renderSearchRitualsSource).toContain(
@@ -722,7 +751,7 @@ describe("app shell rendering", () => {
     expect(seedHtml).not.toContain("Set grain at the table.");
     expect(tableHtml).toContain("Set grain at the table.");
     expect(tableHtml).not.toContain("Wet the seed and wait.");
-    expect(emptyHtml).toContain("No rituals matched that search.");
+    expect(emptyHtml).toContain("Nothing matched that exact reach.");
   });
 
   it("renders the shared Ritual preview from presentation fields", () => {

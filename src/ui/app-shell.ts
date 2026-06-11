@@ -87,6 +87,8 @@ export type SignedInView =
   | "profile_settings"
   | "how_it_works";
 
+export type RitualSearchSort = "match" | "title" | "purpose" | "material";
+
 export type SignedInShellOptions = {
   activeView?: SignedInView;
   brief?: WeeklyBrief;
@@ -99,6 +101,7 @@ export type SignedInShellOptions = {
   ritualSearchQuery?: string;
   selectedRitualSearchChips?: string[];
   selectedRitualId?: string | null;
+  ritualSearchSort?: RitualSearchSort;
 };
 
 function escapeHtml(value: string): string {
@@ -825,10 +828,6 @@ function formatRitualLabel(value: string): string {
     .join(" ");
 }
 
-function getRitualStatusLabel(ritual: Ritual): string {
-  return ritual.status === "pilot" ? "Pilot" : formatRitualLabel(ritual.status);
-}
-
 function getRitualSearchSummary(ritual: Ritual): string {
   return ritual.presentation.intention || ritual.presentation.questionToCarry;
 }
@@ -837,7 +836,6 @@ export function renderRitualPreview(ritual: Ritual): string {
   return `
     <article class="ritual-preview" aria-label="${escapeHtml(ritual.presentation.headline)}">
       <div class="ritual-preview__header">
-        <p class="ritual-preview__badge">${escapeHtml(getRitualStatusLabel(ritual))} · Preview only</p>
         <h2>${escapeHtml(ritual.presentation.headline)}</h2>
         <p class="ritual-preview__intention">${escapeHtml(ritual.presentation.intention)}</p>
       </div>
@@ -917,7 +915,6 @@ function renderRitualResultCard(ritual: Ritual, selectedRitualId: string): strin
       data-ritual-select="${escapeHtml(ritual.id)}"
       aria-pressed="${isSelected ? "true" : "false"}"
     >
-      <span class="ritual-result-card__badge">${escapeHtml(getRitualStatusLabel(ritual))} · Preview only</span>
       <strong>${escapeHtml(ritual.presentation.headline)}</strong>
       <span>${escapeHtml(getRitualSearchSummary(ritual))}</span>
       <small>${escapeHtml([
@@ -929,19 +926,98 @@ function renderRitualResultCard(ritual: Ritual, selectedRitualId: string): strin
   `;
 }
 
+function getPrimaryRitualMaterial(ritual: Ritual): string {
+  return ritual.searchMetadata.materials?.[0] ??
+    ritual.searchMetadata.tags[0] ??
+    ritual.recommendationMetadata.carriers.primary;
+}
+
+function sortRitualSearchResults(
+  results: Ritual[],
+  sort: RitualSearchSort,
+): Ritual[] {
+  const sorted = [...results];
+
+  if (sort === "title") {
+    return sorted.sort((a, b) =>
+      a.presentation.headline.localeCompare(b.presentation.headline),
+    );
+  }
+
+  if (sort === "purpose") {
+    return sorted.sort((a, b) =>
+      a.recommendationMetadata.purposes.primary.localeCompare(
+        b.recommendationMetadata.purposes.primary,
+      ) || a.presentation.headline.localeCompare(b.presentation.headline),
+    );
+  }
+
+  if (sort === "material") {
+    return sorted.sort((a, b) =>
+      getPrimaryRitualMaterial(a).localeCompare(getPrimaryRitualMaterial(b)) ||
+      a.presentation.headline.localeCompare(b.presentation.headline),
+    );
+  }
+
+  return sorted;
+}
+
+function renderRitualSearchSortOption(
+  value: RitualSearchSort,
+  label: string,
+  selectedSort: RitualSearchSort,
+): string {
+  return `<option value="${value}"${selectedSort === value ? " selected" : ""}>${label}</option>`;
+}
+
+const ritualSearchStarterChipValues = [
+  "candlelight",
+  "plant",
+  "table",
+  "vessel",
+  "beginning",
+  "bread",
+  "grain",
+  "household light",
+  "first light",
+  "water",
+  "opening",
+  "tending",
+] as const;
+
+function getVisibleRitualSearchChips(
+  chips: ReturnType<typeof getRitualSearchChips>,
+  selectedChips: string[],
+): ReturnType<typeof getRitualSearchChips> {
+  const chipByValue = new Map(chips.map((chip) => [chip.value, chip]));
+  const visibleValues = [
+    ...ritualSearchStarterChipValues,
+    ...selectedChips,
+  ];
+  const visibleChips = visibleValues
+    .map((value) => chipByValue.get(value))
+    .filter((chip): chip is NonNullable<typeof chip> => Boolean(chip));
+
+  return [...new Map(visibleChips.map((chip) => [chip.value, chip])).values()];
+}
+
 export function renderSearchRitualsSection(options: {
   query?: string;
   selectedChips?: string[];
   selectedRitualId?: string | null;
+  sort?: RitualSearchSort;
 } = {}): string {
   const query = options.query ?? "";
   const selectedChips = options.selectedChips ?? [];
+  const selectedSort = options.sort ?? "match";
   const selectedChipSet = new Set(selectedChips);
   const chips = getRitualSearchChips(pilotRituals);
-  const results = searchRituals(pilotRituals, {
+  const visibleChips = getVisibleRitualSearchChips(chips, selectedChips);
+  const results = sortRitualSearchResults(searchRituals(pilotRituals, {
     query,
     selectedChips,
-  });
+  }), selectedSort);
+  const hasSearchCriteria = query.trim().length > 0 || selectedChips.length > 0;
   const selectedRitual =
     results.find((ritual) => ritual.id === options.selectedRitualId) ??
     results[0];
@@ -949,15 +1025,19 @@ export function renderSearchRitualsSection(options: {
   return `
     <article class="ritual-search" aria-label="Search rituals">
       <header class="ritual-search__header">
-        <p class="eyebrow">I have something in mind.</p>
+        <button
+          class="check-in__back"
+          type="button"
+          data-ritual-search-back="true"
+        >&larr; Go back</button>
         <h2>Search rituals</h2>
         <p>Search by material, mood, purpose, place, or phrase.</p>
       </header>
 
-      <form class="ritual-search__controls" data-ritual-search-form="true">
+      <form id="ritual-search-form" class="ritual-search__controls" data-ritual-search-form="true">
         <div class="ritual-search__field">
           <label>
-            <span>Search rituals</span>
+            <span>What are you looking for?</span>
             <input
               name="ritualSearchQuery"
               type="search"
@@ -966,10 +1046,10 @@ export function renderSearchRitualsSection(options: {
               placeholder="seed, bread, lamp, opening..."
             />
           </label>
-          <button class="primary-action" type="submit">Search</button>
+          <button class="ritual-search__submit" type="submit">Search</button>
         </div>
-        <div class="ritual-search__chips" aria-label="Filter chips">
-          ${chips.map((chip) => {
+        <div class="ritual-search__chips" aria-label="Search filters">
+          ${visibleChips.map((chip) => {
             const selected = selectedChipSet.has(chip.value);
 
             return `
@@ -986,21 +1066,44 @@ export function renderSearchRitualsSection(options: {
 
       <div class="ritual-search__body">
         <section class="ritual-search__results" aria-label="Ritual results">
-          <p class="ritual-search__count">${results.length === 1 ? "1 ritual" : `${results.length} rituals`}</p>
+          <div class="ritual-search__results-header">
+            <div>
+              <h3>Select a ritual</h3>
+              <p>${results.length === 1 ? "1 ritual" : `${results.length} rituals`}${hasSearchCriteria ? " found" : " available"}</p>
+            </div>
+            <label class="ritual-search__sort">
+              <span>Sort</span>
+              <select
+                name="ritualSearchSort"
+                form="ritual-search-form"
+                data-ritual-search-sort="true"
+              >
+                ${renderRitualSearchSortOption("match", "Best match", selectedSort)}
+                ${renderRitualSearchSortOption("title", "Title", selectedSort)}
+                ${renderRitualSearchSortOption("purpose", "Purpose", selectedSort)}
+                ${renderRitualSearchSortOption("material", "Material", selectedSort)}
+              </select>
+            </label>
+          </div>
           ${results.length > 0
             ? results.map((ritual) => renderRitualResultCard(ritual, selectedRitual?.id ?? "")).join("")
             : `
               <div class="ritual-search__empty" role="status">
-                <p>No rituals matched that search.</p>
-                <p>Try a material, purpose, place, or phrase from the ritual you are reaching for.</p>
+                <p>Nothing matched that exact reach.</p>
+                <p>Try one material, purpose, place, or phrase from the ritual you are reaching for.</p>
               </div>
             `}
         </section>
 
-        <section class="ritual-search__preview" aria-label="Ritual preview">
+        <section class="ritual-search__preview" aria-label="Selected ritual">
           ${selectedRitual
             ? renderRitualPreview(selectedRitual)
-            : '<p class="ritual-search__empty">Choose a ritual to preview it here.</p>'}
+            : `
+              <div class="ritual-search__preview-empty">
+                <p>Selected ritual</p>
+                <p>Choose a ritual from the left to see its shape here.</p>
+              </div>
+            `}
         </section>
       </div>
     </article>
@@ -1472,13 +1575,18 @@ function renderTodaysShapeBrief(brief: TodaysShapeBrief): string {
 
 function renderRitualEntryPaths(): string {
   return `
-    <section class="ritual-entry-paths" aria-label="Ritual paths">
-      <div>
-        <p class="brief__section-label">Choose with me</p>
-        <p>Answer a few questions and let Moon &amp; Table choose one ritual.</p>
-      </div>
+    <section class="ritual-entry-paths" aria-label="Choose how to find a ritual">
       <button
-        class="secondary-path-action"
+        class="ritual-entry-action"
+        type="button"
+        data-check-in-action="start_guided"
+        data-check-in-value="choose_with_me"
+      >
+        <span>Choose with me</span>
+        <small>Answer a few questions and let Moon &amp; Table choose one ritual.</small>
+      </button>
+      <button
+        class="ritual-entry-action"
         type="button"
         data-search-rituals-entry="true"
       >
@@ -1490,7 +1598,7 @@ function renderRitualEntryPaths(): string {
 }
 
 function renderCheckInBackControl(draft: RitualCheckInDraft): string {
-  if (draft.step === "time_scope") {
+  if (draft.step === "entry_path") {
     return "";
   }
 
@@ -1573,7 +1681,7 @@ export function renderRitualCheckInShell({
   introMode?: "returning" | "first_login";
   todaysShapeBrief?: TodaysShapeBrief | null;
 }): string {
-  const intro = draft.step === "time_scope"
+  const intro = draft.step === "entry_path"
     ? `
         <header class="check-in__header">
           <p>${introMode === "first_login"
@@ -1583,10 +1691,15 @@ export function renderRitualCheckInShell({
         </header>
       `
     : "";
-  const todaysShape = draft.step === "time_scope"
+  const todaysShape = draft.step === "entry_path"
     ? renderTodaysShapeBrief(todaysShapeBrief ?? createTodaysShapeBrief())
     : "";
-  const entryPaths = draft.step === "time_scope" ? renderRitualEntryPaths() : "";
+  const entryPaths = draft.step === "entry_path" ? renderRitualEntryPaths() : "";
+  const checkInContent = draft.step === "entry_path"
+    ? ""
+    : draft.step === "review"
+      ? renderCheckInReview(draft)
+      : renderCheckInQuestion(draft);
 
   return `
     <section class="shell shell--check-in" aria-labelledby="app-title">
@@ -1603,7 +1716,7 @@ export function renderRitualCheckInShell({
         ${renderCheckInBackControl(draft)}
         ${renderCheckInAcknowledgement(draft)}
 
-        ${draft.step === "review" ? renderCheckInReview(draft) : renderCheckInQuestion(draft)}
+        ${checkInContent}
       </article>
     </section>
   `;
@@ -1708,6 +1821,7 @@ export function renderSignedInShell(
     query: options.ritualSearchQuery,
     selectedChips: options.selectedRitualSearchChips,
     selectedRitualId: options.selectedRitualId,
+    sort: options.ritualSearchSort,
   });
   const howItWorks = renderHowItWorksSection();
   const activeContent =
