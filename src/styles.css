@@ -459,6 +459,10 @@ h2 {
   justify-content: space-between;
 }
 
+.check-in__header + .todays-shape {
+  margin-top: -10px;
+}
+
 .check-in__header .app-menu {
   margin-left: auto;
 }
@@ -485,7 +489,7 @@ h2 {
 
 .todays-shape__body {
   display: grid;
-  gap: 7px;
+  gap: 10px;
 }
 
 .todays-shape p {
