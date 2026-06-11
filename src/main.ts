@@ -452,14 +452,15 @@ function maybeCompleteCheckIn(
   }
 
   return addTimingWindowCandidateIds({
-    timeScope: draft.timeScope,
+    timeScope: draft.timeScope ?? "today",
     energyCapacity: draft.energyCapacity,
     capacityMode: draft.capacityMode,
-    ...(draft.audience ? { audience: draft.audience } : {}),
+    audience: draft.audience ?? "me",
     ...(draft.practiceTypeHints ? { practiceTypeHints: draft.practiceTypeHints } : {}),
     ...(draft.practiceTypeLabel ? { practiceTypeLabel: draft.practiceTypeLabel } : {}),
     ...(draft.carrier ? { carrier: draft.carrier } : {}),
     ...(draft.carrierLabel ? { carrierLabel: draft.carrierLabel } : {}),
+    ...(draft.carrierOpen ? { carrierOpen: draft.carrierOpen } : {}),
     ...(draft.purpose ? { purpose: draft.purpose } : {}),
     ...(draft.purposeLabel ? { purposeLabel: draft.purposeLabel } : {}),
     ...(draft.refinement ? { refinement: draft.refinement } : {}),
@@ -480,7 +481,7 @@ function handleCheckInAction(action: string, value: string): void {
   if (action === "start_guided" && value === "choose_with_me") {
     activeCheckInDraft = {
       ...activeCheckInDraft,
-      step: "time_scope",
+      step: "energy_capacity",
     };
     renderActiveCheckInShell();
     return;
@@ -490,7 +491,15 @@ function handleCheckInAction(action: string, value: string): void {
     activeCheckInDraft = {
       ...activeCheckInDraft,
       timeScope: value,
-      step: "energy_capacity",
+      audience: undefined,
+      purpose: undefined,
+      purposeLabel: undefined,
+      carrier: undefined,
+      carrierLabel: undefined,
+      carrierOpen: undefined,
+      refinement: undefined,
+      refinementLabel: undefined,
+      step: "audience",
     };
     renderActiveCheckInShell();
     return;
@@ -502,6 +511,16 @@ function handleCheckInAction(action: string, value: string): void {
       ...activeCheckInDraft,
       energyCapacity: value,
       capacityMode,
+      ...(value === "barely_any"
+        ? { timeScope: "today" as const, audience: "me" as const }
+        : { timeScope: undefined, audience: undefined }),
+      purpose: undefined,
+      purposeLabel: undefined,
+      carrier: undefined,
+      carrierLabel: undefined,
+      carrierOpen: undefined,
+      refinement: undefined,
+      refinementLabel: undefined,
       step: getNextStepAfterEnergy(value),
     };
 
@@ -518,9 +537,40 @@ function handleCheckInAction(action: string, value: string): void {
     activeCheckInDraft = {
       ...activeCheckInDraft,
       audience: value,
+      purpose: undefined,
+      purposeLabel: undefined,
+      carrier: undefined,
+      carrierLabel: undefined,
+      carrierOpen: undefined,
+      refinement: undefined,
+      refinementLabel: undefined,
       step: getNextStepAfterAudience(activeCheckInDraft.energyCapacity),
     };
     renderActiveCheckInShell();
+    return;
+  }
+
+  if (
+    action === "carrier" &&
+    activeCheckInDraft.energyCapacity &&
+    value === "open"
+  ) {
+    const nextDraft: RitualCheckInDraft = {
+      ...activeCheckInDraft,
+      carrier: undefined,
+      carrierLabel: "I'm open",
+      carrierOpen: true,
+      practiceTypeHints: [],
+      practiceTypeLabel: "I'm open",
+      refinement: undefined,
+      refinementLabel: undefined,
+      step: "carrier",
+    };
+    activeCheckInDraft = nextDraft;
+    const completed = maybeCompleteCheckIn(nextDraft);
+    if (completed) {
+      showCheckInLoadingThenComplete(completed);
+    }
     return;
   }
 
@@ -535,13 +585,19 @@ function handleCheckInAction(action: string, value: string): void {
       ...activeCheckInDraft,
       carrier: value,
       carrierLabel: option.label,
+      carrierOpen: false,
       practiceTypeHints: [value],
       practiceTypeLabel: option.label,
-      step: "purpose",
+      refinement: undefined,
+      refinementLabel: undefined,
+      step: "carrier",
     };
 
     activeCheckInDraft = nextDraft;
-    renderActiveCheckInShell();
+    const completed = maybeCompleteCheckIn(nextDraft);
+    if (completed) {
+      showCheckInLoadingThenComplete(completed);
+    }
     return;
   }
 
@@ -551,18 +607,33 @@ function handleCheckInAction(action: string, value: string): void {
     }
 
     const option = purposeOptions.find((candidate) => candidate.key === value);
-    const nextStep = activeCheckInDraft.energyCapacity === "enough_to_engage" ||
-      activeCheckInDraft.energyCapacity === "room_for_something_deeper"
-      ? "refinement"
-      : "review";
+    const nextStep = activeCheckInDraft.energyCapacity === "barely_any"
+      ? "purpose"
+      : "carrier";
 
-    activeCheckInDraft = {
+    const nextDraft: RitualCheckInDraft = {
       ...activeCheckInDraft,
       purpose: value,
       purposeLabel: option?.label,
       ...(option ? { ritualFocusLabel: option.label } : {}),
+      carrier: undefined,
+      carrierLabel: undefined,
+      carrierOpen: undefined,
+      refinement: undefined,
+      refinementLabel: undefined,
       step: nextStep,
     };
+
+    activeCheckInDraft = nextDraft;
+
+    if (activeCheckInDraft.energyCapacity === "barely_any") {
+      const completed = maybeCompleteCheckIn(nextDraft);
+      if (completed) {
+        showCheckInLoadingThenComplete(completed);
+      }
+      return;
+    }
+
     renderActiveCheckInShell();
     return;
   }
@@ -597,25 +668,19 @@ function handleCheckInAction(action: string, value: string): void {
 function getPreviousCheckInStep(draft: RitualCheckInDraft): RitualCheckInStep {
   switch (draft.step) {
     case "time_scope":
-      return "entry_path";
-    case "energy_capacity":
-      return "time_scope";
-    case "audience":
       return "energy_capacity";
+    case "energy_capacity":
+      return "entry_path";
+    case "audience":
+      return "time_scope";
     case "carrier":
-      return "audience";
+      return "purpose";
     case "purpose":
-      return draft.energyCapacity === "barely_any" ? "audience" : "carrier";
+      return draft.energyCapacity === "barely_any" ? "energy_capacity" : "audience";
     case "refinement":
       return "purpose";
     case "review":
-      if (
-        draft.energyCapacity === "enough_to_engage" ||
-        draft.energyCapacity === "room_for_something_deeper"
-      ) {
-        return "refinement";
-      }
-      return "purpose";
+      return draft.energyCapacity === "barely_any" ? "purpose" : "carrier";
     case "entry_path":
     default:
       return "entry_path";

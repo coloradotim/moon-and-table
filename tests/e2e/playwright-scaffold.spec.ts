@@ -54,23 +54,14 @@ test("dev visual QA mode recommends a Ritual through Choose with me", async ({ p
   }
 
   await choose("start_guided", "choose_with_me");
-  await choose("time_scope", "best_moment_this_week");
   await choose("energy_capacity", "enough_to_engage");
+  await choose("time_scope", "best_moment_this_week");
   await choose("audience", "both_of_us");
-  await choose("carrier", "words");
   await choose("purpose", "voicing");
-  await choose("refinement", "a_clear_sentence");
-
-  await expect(page.getByText("with enough to engage")).toBeVisible();
-  await expect(page.getByText("living in words")).toBeVisible();
-  await expect(page.getByText("holding voicing")).toBeVisible();
-  await expect(page.getByText("around a clear sentence")).toBeVisible();
-
-  await choose("confirm_review", "confirm");
+  await choose("carrier", "words");
 
   const result = page.locator("article.choose-result");
   await expect(result).toBeVisible();
-  await expect(result.getByText("Chosen ritual", { exact: true })).toBeVisible();
   await expect(result.locator('section[aria-label="Practice"]')).toBeVisible();
   await expect(result.locator('section[aria-label="Why this fits now"]')).toBeVisible();
   await expect(result.locator('section[aria-label="How this was chosen"]')).toBeVisible();

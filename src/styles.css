@@ -485,7 +485,7 @@ h2 {
 
 .todays-shape__body {
   display: grid;
-  gap: 6px;
+  gap: 7px;
 }
 
 .todays-shape p {
@@ -501,7 +501,7 @@ h2 {
 
 .todays-shape__synthesis {
   max-width: 430px;
-  margin-top: 6px;
+  margin-top: 12px;
   padding-left: 12px;
   border-left: 2px solid rgba(102, 123, 92, 0.3);
   color: #3f5048;
@@ -1400,8 +1400,8 @@ h2 {
   display: grid;
   max-width: 455px;
   gap: 10px;
-  padding: 14px 0;
-  border-block: 1px solid rgba(217, 208, 193, 0.72);
+  padding: 20px 0 0;
+  border-top: 1px solid rgba(217, 208, 193, 0.72);
 }
 
 .ritual-entry-action {

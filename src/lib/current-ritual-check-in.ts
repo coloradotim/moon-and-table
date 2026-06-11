@@ -47,6 +47,7 @@ export type CurrentRitualCheckIn = {
   practiceTypeLabel?: string;
   carrier?: RitualCarrier;
   carrierLabel?: string;
+  carrierOpen?: boolean;
   purpose?: RitualPurpose;
   purposeLabel?: string;
   refinement?: string;
@@ -312,15 +313,15 @@ export function getCapacityModeForEnergy(
 }
 
 export function getNextStepAfterEnergy(
-  _energyCapacity: RitualCheckInEnergyCapacity,
+  energyCapacity: RitualCheckInEnergyCapacity,
 ): RitualCheckInStep {
-  return "audience";
+  return energyCapacity === "barely_any" ? "purpose" : "time_scope";
 }
 
 export function getNextStepAfterAudience(
-  energyCapacity: RitualCheckInEnergyCapacity,
+  _energyCapacity: RitualCheckInEnergyCapacity,
 ): RitualCheckInStep {
-  return energyCapacity === "barely_any" ? "purpose" : "carrier";
+  return "purpose";
 }
 
 export function getPracticeOptionsForEnergy(
@@ -339,9 +340,9 @@ export function getPracticeOptionsForEnergy(
 }
 
 export function getNextStepAfterPractice(
-  energyCapacity: RitualCheckInEnergyCapacity,
+  _energyCapacity: RitualCheckInEnergyCapacity,
 ): RitualCheckInStep {
-  return energyCapacity === "a_little" ? "review" : "refinement";
+  return "review";
 }
 
 export function getRefinementGroupForPurpose(

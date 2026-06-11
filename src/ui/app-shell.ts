@@ -973,7 +973,6 @@ function renderChooseWithMeResult(result: ChooseWithMeResult): string {
   return `
     <article class="choose-result" aria-label="Chosen ritual">
       <section class="brief__core choose-result__intro" aria-label="Ritual summary">
-        <p class="brief__section-label">Chosen ritual</p>
         <h2 class="brief__theme">${escapeHtml(ritual.presentation.headline)}</h2>
         <p class="brief__practice" data-testid="recommended-ritual">${escapeHtml(ritual.presentation.intention)}</p>
       </section>
@@ -1703,27 +1702,28 @@ const energyReviewLabels: Record<RitualCheckInEnergyCapacity, string> = {
 function renderCheckInAcknowledgement(draft: RitualCheckInDraft): string {
   const acknowledgement = (() => {
     switch (draft.step) {
-      case "energy_capacity":
-        return draft.timeScope
-          ? timeScopeAcknowledgements[draft.timeScope]
-          : undefined;
-      case "audience":
+      case "time_scope":
         return draft.energyCapacity
           ? energyAcknowledgements[draft.energyCapacity]
           : undefined;
-      case "carrier":
+      case "audience":
+        return draft.timeScope
+          ? timeScopeAcknowledgements[draft.timeScope]
+          : undefined;
+      case "purpose":
+        if (draft.energyCapacity === "barely_any") {
+          return undefined;
+        }
+
         return draft.audience
           ? audienceOptions.find((option) => option.key === draft.audience)?.label
           : undefined;
-      case "purpose":
-        return draft.carrierLabel ??
-          (draft.audience
-            ? audienceOptions.find((option) => option.key === draft.audience)?.label
-            : undefined);
+      case "carrier":
+        return draft.purposeLabel;
       case "refinement":
         return draft.purposeLabel;
       case "entry_path":
-      case "time_scope":
+      case "energy_capacity":
       case "review":
       default:
         return undefined;
@@ -1783,10 +1783,18 @@ function renderCheckInQuestion(draft: RitualCheckInDraft): string {
   }
 
   if (draft.step === "carrier") {
+    const openOption = renderCheckInOptionButton({
+      action: "carrier",
+      value: "open",
+      label: "I'm open",
+      description: "Let Moon & Table choose the carrier.",
+    });
+
     return `
       <section class="check-in-step" aria-label="Carrier">
         <h3>Where should the ritual live?</h3>
         <div class="check-in-options">
+          ${openOption}
           ${carrierOptions.map((option) => renderCheckInOptionButton({
             action: "carrier",
             value: option.key,
@@ -1953,10 +1961,12 @@ function renderReviewBullets(draft: RitualCheckInDraft): string {
       : "for you"
     : undefined;
   const carrier = draft.carrierLabel
-    ? `living ${lowercaseFirst(draft.carrierLabel)}`
+    ? draft.carrierOpen
+      ? "with Moon & Table choosing where it lives"
+      : `living ${lowercaseFirst(draft.carrierLabel)}`
     : undefined;
   const purpose = draft.purposeLabel
-    ? `holding ${lowercaseFirst(draft.purposeLabel)}`
+    ? lowercaseFirst(draft.purposeLabel)
     : undefined;
   const refinement = draft.refinementLabel
     ? `around ${lowercaseFirst(draft.refinementLabel)}`

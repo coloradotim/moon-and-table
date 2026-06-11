@@ -244,22 +244,13 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("What work should the ritual hold?");
   });
 
-  it("renders audience, carrier, purpose, and deeper refinement steps", () => {
+  it("renders audience, purpose, and carrier steps", () => {
     const audienceHtml = renderRitualCheckInShell({
       draft: {
         step: "audience",
         timeScope: "best_moment_this_week",
         energyCapacity: "room_for_something_deeper",
         capacityMode: "high",
-      },
-    });
-    const carrierHtml = renderRitualCheckInShell({
-      draft: {
-        step: "carrier",
-        timeScope: "best_moment_this_week",
-        energyCapacity: "room_for_something_deeper",
-        capacityMode: "high",
-        audience: "both_of_us",
       },
     });
     const purposeHtml = renderRitualCheckInShell({
@@ -269,19 +260,15 @@ describe("app shell rendering", () => {
         energyCapacity: "room_for_something_deeper",
         capacityMode: "high",
         audience: "both_of_us",
-        carrier: "table",
-        carrierLabel: "At the table",
       },
     });
-    const refinementHtml = renderRitualCheckInShell({
+    const carrierHtml = renderRitualCheckInShell({
       draft: {
-        step: "refinement",
+        step: "carrier",
         timeScope: "best_moment_this_week",
         energyCapacity: "room_for_something_deeper",
         capacityMode: "high",
         audience: "both_of_us",
-        carrier: "table",
-        carrierLabel: "At the table",
         purpose: "connecting",
         purposeLabel: "Connecting",
       },
@@ -291,9 +278,6 @@ describe("app shell rendering", () => {
     expect(audienceHtml).toContain("Go back");
     expect(audienceHtml).toContain("Me");
     expect(audienceHtml).toContain("Both of us");
-    expect(carrierHtml).toContain("Go back");
-    expect(carrierHtml).toContain("Where should the ritual live?");
-    expect(carrierHtml).toContain("At the table");
     expect(purposeHtml).toContain("Go back");
     expect(purposeHtml).toContain("What work should the ritual hold?");
     expect(purposeHtml).toContain("Steadying");
@@ -306,11 +290,11 @@ describe("app shell rendering", () => {
     expect(purposeHtml).toContain("Blessing");
     expect(purposeHtml).toContain("Protecting");
     expect(purposeHtml).toContain("Remembering");
-    expect(refinementHtml).toContain("What kind of connection?");
-    expect(refinementHtml).toContain("Touch");
-    expect(refinementHtml).toContain("Sensuality");
-    expect(refinementHtml).toContain("Tenderness");
-    expect(refinementHtml).toContain("Desire");
+    expect(carrierHtml).toContain("Go back");
+    expect(carrierHtml).toContain("Where should the ritual live?");
+    expect(carrierHtml).toContain("I'm open");
+    expect(carrierHtml).toContain("Let Moon &amp; Table choose the carrier.");
+    expect(carrierHtml).toContain("At the table");
   });
 
   it("renders a purpose step even for barely-any capacity", () => {
@@ -352,7 +336,7 @@ describe("app shell rendering", () => {
     expect(html).toContain("<li>for both of you</li>");
     expect(html).toContain("<li>with a little capacity</li>");
     expect(html).toContain("<li>living with a plant</li>");
-    expect(html).toContain("<li>holding tending</li>");
+    expect(html).toContain("<li>tending</li>");
     expect(html).not.toContain("for both of us");
     expect(html).toContain(
       "I’ll use this with your saved profile to recommend one ritual.",

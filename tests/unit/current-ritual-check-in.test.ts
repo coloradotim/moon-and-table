@@ -36,19 +36,19 @@ describe("current ritual check-in", () => {
   });
 
   it("adapts follow-up steps by energy", () => {
-    expect(getNextStepAfterEnergy("barely_any")).toBe("audience");
-    expect(getNextStepAfterEnergy("a_little")).toBe("audience");
-    expect(getNextStepAfterEnergy("enough_to_engage")).toBe("audience");
-    expect(getNextStepAfterEnergy("room_for_something_deeper")).toBe("audience");
+    expect(getNextStepAfterEnergy("barely_any")).toBe("purpose");
+    expect(getNextStepAfterEnergy("a_little")).toBe("time_scope");
+    expect(getNextStepAfterEnergy("enough_to_engage")).toBe("time_scope");
+    expect(getNextStepAfterEnergy("room_for_something_deeper")).toBe("time_scope");
     expect(getNextStepAfterAudience("barely_any")).toBe("purpose");
-    expect(getNextStepAfterAudience("a_little")).toBe("carrier");
-    expect(getNextStepAfterAudience("enough_to_engage")).toBe("carrier");
+    expect(getNextStepAfterAudience("a_little")).toBe("purpose");
+    expect(getNextStepAfterAudience("enough_to_engage")).toBe("purpose");
     expect(getNextStepAfterAudience("room_for_something_deeper")).toBe(
-      "carrier",
+      "purpose",
     );
     expect(getNextStepAfterPractice("a_little")).toBe("review");
-    expect(getNextStepAfterPractice("enough_to_engage")).toBe("refinement");
-    expect(getNextStepAfterPractice("room_for_something_deeper")).toBe("refinement");
+    expect(getNextStepAfterPractice("enough_to_engage")).toBe("review");
+    expect(getNextStepAfterPractice("room_for_something_deeper")).toBe("review");
   });
 
   it("uses exact carrier labels from the 7x10 flow", () => {
