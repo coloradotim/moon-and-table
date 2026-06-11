@@ -1258,11 +1258,11 @@ export function renderManageRitualsSection(options: {
                 <span class="manage-rituals__ritual-cell">
                   <span class="manage-rituals__ritual-title">${escapeHtml(row.headline)}</span>
                 </span>
-                <span>${escapeHtml(row.status)}</span>
-                <span>${escapeHtml(row.origin)}</span>
-                <span>${renderYesNo(row.directUseEligible)}</span>
-                <span>${row.recommendable ? "ready" : row.recommendationEligible ? "eligible" : "no"}</span>
-                <span>${escapeHtml(formatManageList(row.issues))}</span>
+                <span class="manage-rituals__record-status">${escapeHtml(row.status)}</span>
+                <span class="manage-rituals__record-origin">${escapeHtml(row.origin)}</span>
+                <span class="manage-rituals__record-direct-use">${renderYesNo(row.directUseEligible)}</span>
+                <span class="manage-rituals__record-recommendation">${row.recommendable ? "ready" : row.recommendationEligible ? "eligible" : "no"}</span>
+                <span class="manage-rituals__record-issues">${escapeHtml(formatManageList(row.issues))}</span>
               </summary>
               <div class="manage-rituals__record-detail">
                       <div class="manage-rituals__detail-grid">

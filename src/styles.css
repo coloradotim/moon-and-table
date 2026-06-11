@@ -2569,8 +2569,113 @@ fieldset {
     padding: 24px;
   }
 
+  .manage-rituals__header {
+    max-width: 100%;
+  }
+
+  .manage-rituals__header h2 {
+    font-size: clamp(2rem, 12vw, 2.7rem);
+  }
+
+  .manage-rituals__header p {
+    font-size: 1.05rem;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  .manage-rituals__filters {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+
+  .manage-rituals__filters label {
+    min-width: 0;
+  }
+
+  .manage-rituals__filters select {
+    width: 100%;
+    min-width: 0;
+  }
+
   .manage-rituals__table-heading {
     display: grid;
+  }
+
+  .manage-rituals__records {
+    overflow-x: visible;
+  }
+
+  .manage-rituals__record-head {
+    display: none;
+  }
+
+  .manage-rituals__record-summary {
+    min-width: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 14px;
+    padding: 14px;
+    font-size: 0.95rem;
+  }
+
+  .manage-rituals__ritual-cell {
+    grid-column: 1 / -1;
+    padding-left: 22px;
+  }
+
+  .manage-rituals__ritual-title {
+    margin-bottom: 0;
+    font-size: 1rem;
+  }
+
+  .manage-rituals__record-status,
+  .manage-rituals__record-origin,
+  .manage-rituals__record-direct-use,
+  .manage-rituals__record-recommendation,
+  .manage-rituals__record-issues {
+    display: grid;
+    gap: 2px;
+    color: #26312c;
+    overflow-wrap: anywhere;
+  }
+
+  .manage-rituals__record-status::before,
+  .manage-rituals__record-origin::before,
+  .manage-rituals__record-direct-use::before,
+  .manage-rituals__record-recommendation::before,
+  .manage-rituals__record-issues::before {
+    color: #66736a;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .manage-rituals__record-status::before {
+    content: "Status";
+  }
+
+  .manage-rituals__record-origin::before {
+    content: "Origin";
+  }
+
+  .manage-rituals__record-direct-use::before {
+    content: "Direct use";
+  }
+
+  .manage-rituals__record-recommendation::before {
+    content: "Recommendation";
+  }
+
+  .manage-rituals__record-issues {
+    grid-column: 1 / -1;
+  }
+
+  .manage-rituals__record-issues::before {
+    content: "Issues";
+  }
+
+  .manage-rituals__record-detail {
+    min-width: 0;
+    padding: 0 14px 16px;
   }
 
   .manage-rituals__detail-grid {
