@@ -63,8 +63,8 @@ test("dev visual QA mode recommends a Ritual through Choose with me", async ({ p
   const result = page.locator("article.choose-result");
   await expect(result).toBeVisible();
   await expect(result.locator('section[aria-label="Practice"]')).toBeVisible();
-  await expect(result.locator('section[aria-label="Why this fits now"]')).toBeVisible();
-  await expect(result.locator('section[aria-label="How this was chosen"]')).toBeVisible();
+  await expect(result.locator('details[aria-label="Why this fits now"]')).toBeVisible();
+  await expect(result.locator('details[aria-label="How this was chosen"]')).toBeVisible();
   await expect(result.locator('section[aria-label="Question to carry"]')).toBeVisible();
 
   const hasHorizontalOverflow = await page.evaluate(() => {

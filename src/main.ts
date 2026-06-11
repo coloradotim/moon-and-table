@@ -993,12 +993,9 @@ appRoot.addEventListener("click", (event) => {
 
   if (homeAction === "this_week") {
     event.preventDefault();
-    activeSignedInView = "this_week";
 
-    if (activePrivateBriefData && (activeBrief || activeChooseWithMeResult)) {
-      renderActiveSignedInShell();
-    } else if (activePrivateBriefData) {
-      renderActiveCheckInShell();
+    if (activePrivateBriefData) {
+      startCheckInOver();
     }
 
     return;

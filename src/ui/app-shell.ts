@@ -982,14 +982,14 @@ function renderChooseWithMeResult(result: ChooseWithMeResult): string {
       </section>
 
       <section class="brief__depth choose-result__reasoning" aria-label="Why this ritual">
-        <section class="ritual-preview__section" aria-label="Why this fits now">
-          <p class="brief__section-label">Why this fits</p>
+        <details class="choose-result__reason" aria-label="Why this fits now">
+          <summary>Why this fits</summary>
           <p>${escapeHtml(result.whyThisFits)}</p>
-        </section>
-        <section class="ritual-preview__section" aria-label="How this was chosen">
-          <p class="brief__section-label">How this was chosen</p>
+        </details>
+        <details class="choose-result__reason" aria-label="How this was chosen">
+          <summary>How this was chosen</summary>
           <p>${escapeHtml(result.howThisWasChosen)}</p>
-        </section>
+        </details>
       </section>
 
       <section class="brief__actions" aria-label="Ritual actions">

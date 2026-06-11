@@ -1725,7 +1725,7 @@ h2 {
 
 .choose-result__body {
   max-width: 760px;
-  padding: 24px 0;
+  padding: 24px 0 14px;
   border-top: 1px solid rgba(217, 208, 193, 0.72);
 }
 
@@ -1738,7 +1738,35 @@ h2 {
 }
 
 .choose-result__reasoning {
-  padding-top: 0;
+  gap: 10px;
+  padding: 12px 0 18px;
+}
+
+.choose-result__reason {
+  display: grid;
+  max-width: 720px;
+  gap: 8px;
+}
+
+.choose-result__reason summary {
+  width: fit-content;
+  color: #5f6f65;
+  cursor: pointer;
+  font-size: var(--text-label);
+  font-weight: 700;
+}
+
+.choose-result__reason summary:focus-visible {
+  outline: 2px solid #667b5c;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.choose-result__reason p {
+  margin: 0;
+  color: #435349;
+  font-size: var(--text-body);
+  line-height: 1.64;
 }
 
 .choose-result__debug {
