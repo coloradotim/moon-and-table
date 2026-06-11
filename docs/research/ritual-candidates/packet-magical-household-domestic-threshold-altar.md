@@ -101,7 +101,7 @@ The approved source gate for this source is `docs/research/source-gates/src-mod-
 
 ```text
 source_items_inventoried: 31
-candidate_extract_now: 14
+candidate_extract_now: 15
 candidate_extract_later: 8
 private_excerpt_reference: 1
 items_with_private_excerpt_recommended: 4
