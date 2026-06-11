@@ -23,6 +23,26 @@ test("home page fits a phone-sized viewport", async ({ page }) => {
   expect(hasHorizontalOverflow).toBe(false);
 });
 
+test("dev visual QA mode renders signed-in Manage rituals on mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/?dev_visual_qa=signed_in&view=manage_rituals");
+
+  await expect(page.getByRole("heading", { name: "Manage rituals" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Sign in with Google" })).toHaveCount(0);
+  await expect(page.getByText("Imported Ritual records")).toBeVisible();
+  await expect(
+    page.locator(".manage-rituals__ritual-title", {
+      hasText: "Wet the seed and wait.",
+    }),
+  ).toBeVisible();
+
+  const hasHorizontalOverflow = await page.evaluate(() => {
+    return document.documentElement.scrollWidth > window.innerWidth + 1;
+  });
+
+  expect(hasHorizontalOverflow).toBe(false);
+});
+
 test("home page exposes production favicon assets", async ({ page }) => {
   await page.goto("/");
 
