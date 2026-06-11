@@ -1,5 +1,7 @@
 import {
+  getRedirectResult,
   onAuthStateChanged,
+  signInWithRedirect,
   signInWithPopup,
   signOut,
   type Unsubscribe,
@@ -19,6 +21,8 @@ export type AppAuthState =
   | { status: "signed_out"; configReady: boolean }
   | { status: "unauthorized"; configReady: boolean }
   | { status: "signed_in"; user: AuthenticatedUser };
+
+export type GoogleSignInMode = "popup" | "redirect";
 
 export function toAuthenticatedUser(user: User): AuthenticatedUser {
   return { uid: user.uid, email: user.email, displayName: user.displayName };
@@ -44,12 +48,28 @@ export function subscribeToAuthState(
 
 export async function signInWithGoogle(
   services: FirebaseServices | null,
+  mode: GoogleSignInMode = "popup",
 ): Promise<void> {
   if (!services) {
     throw new Error("Firebase is not configured.");
   }
 
+  if (mode === "redirect") {
+    await signInWithRedirect(services.auth, services.googleProvider);
+    return;
+  }
+
   await signInWithPopup(services.auth, services.googleProvider);
+}
+
+export async function completeRedirectSignIn(
+  services: FirebaseServices | null,
+): Promise<void> {
+  if (!services) {
+    return;
+  }
+
+  await getRedirectResult(services.auth);
 }
 
 export async function signOutOfFirebase(

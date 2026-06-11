@@ -1,4 +1,5 @@
 import {
+  completeRedirectSignIn,
   signInWithGoogle,
   signOutOfFirebase,
   subscribeToAuthState,
@@ -9,6 +10,7 @@ import {
   dismissPrivateFirstLoginWelcome,
   hasLoadedPrivateData,
   loadPrivateBriefData,
+  resolvePrivateBriefData,
   shouldShowPrivateFirstLoginWelcome,
   updatePrivateProfileTuning,
   type PrivateBriefData,
@@ -77,6 +79,10 @@ if (!app) {
 
 const appRoot = app;
 const firebaseServices = getFirebaseServices();
+const googleSignInMode = import.meta.env.DEV ? "redirect" : "popup";
+const devVisualQaMode =
+  import.meta.env.DEV &&
+  new URLSearchParams(window.location.search).get("dev_visual_qa") === "signed_in";
 let privateDataRequestId = 0;
 let activeSignedInState: Extract<AppAuthState, { status: "signed_in" }> | null = null;
 let activePrivateBriefData: PrivateBriefData | null = null;
@@ -297,6 +303,37 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         });
       }
     });
+}
+
+function renderDevVisualQaState(): void {
+  activeSignedInState = {
+    status: "signed_in",
+    user: {
+      uid: "dev_visual_qa",
+      email: null,
+      displayName: "Dev QA",
+    },
+  };
+  activePrivateBriefData = resolvePrivateBriefData({});
+  activeSignedInView = getRequestedSignedInView() ?? "this_week";
+  activeProfileSettingsTabId = null;
+  activeRitualSearchQuery = "";
+  activeRitualSearchChips = [];
+  activeRitualSearchSort = "match";
+  activeSelectedRitualId = null;
+  activeManageRitualFilters = { ...defaultManageRitualFilters };
+  activeCurrentRitualCheckIn = null;
+  activeFirstLoginCheckIn = false;
+  activeCheckInDraft = createInitialRitualCheckInDraft();
+
+  if (activeSignedInView !== "this_week") {
+    activeBrief = generateWeeklyBrief(getActiveBriefInput());
+    renderActiveSignedInShell();
+    return;
+  }
+
+  activeBrief = null;
+  renderPrivateWelcomeOrCheckIn();
 }
 
 async function handlePrivateWelcomeDismiss(): Promise<void> {
@@ -915,7 +952,7 @@ appRoot.addEventListener("click", (event) => {
   }
 
   if (action === "sign-in") {
-    void signInWithGoogle(firebaseServices).catch(() => {
+    void signInWithGoogle(firebaseServices, googleSignInMode).catch(() => {
       render({ status: "signed_out", configReady: Boolean(firebaseServices) });
     });
   }
@@ -1008,28 +1045,36 @@ appRoot.addEventListener("change", (event) => {
   }
 });
 
-subscribeToAuthState(firebaseServices, (state) => {
-  if (state.status === "signed_in") {
-    renderSignedInState(state);
-    return;
-  }
+if (devVisualQaMode) {
+  renderDevVisualQaState();
+} else {
+  void completeRedirectSignIn(firebaseServices).catch(() => {
+    render({ status: "signed_out", configReady: Boolean(firebaseServices) });
+  });
 
-  activeSignedInState = null;
-  activePrivateBriefData = null;
-  activeBrief = null;
-  activeSignedInView = "this_week";
-  activeProfileSettingsTabId = null;
-  activeRitualSearchQuery = "";
-  activeRitualSearchChips = [];
-  activeRitualSearchSort = "match";
-  activeSelectedRitualId = null;
-  activeManageRitualFilters = { ...defaultManageRitualFilters };
-  activeCurrentRitualCheckIn = null;
-  activeCheckInDraft = createInitialRitualCheckInDraft();
-  clearCheckInLoadingTimeout();
-  privateDataRequestId += 1;
-  render(state);
-});
+  subscribeToAuthState(firebaseServices, (state) => {
+    if (state.status === "signed_in") {
+      renderSignedInState(state);
+      return;
+    }
+
+    activeSignedInState = null;
+    activePrivateBriefData = null;
+    activeBrief = null;
+    activeSignedInView = "this_week";
+    activeProfileSettingsTabId = null;
+    activeRitualSearchQuery = "";
+    activeRitualSearchChips = [];
+    activeRitualSearchSort = "match";
+    activeSelectedRitualId = null;
+    activeManageRitualFilters = { ...defaultManageRitualFilters };
+    activeCurrentRitualCheckIn = null;
+    activeCheckInDraft = createInitialRitualCheckInDraft();
+    clearCheckInLoadingTimeout();
+    privateDataRequestId += 1;
+    render(state);
+  });
+}
 
 appRoot.addEventListener("submit", (event) => {
   const target = event.target;
