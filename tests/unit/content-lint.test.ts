@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 
 import {
   formatContentLintResult,
@@ -10,8 +11,42 @@ describe("content lint", () => {
   it("passes the current source-controlled content library", () => {
     const result = runContentLint();
 
+    if (!result.valid || result.findings.length > 0) {
+      throw new Error(formatContentLintResult(result));
+    }
+
     expect(result.valid).toBe(true);
     expect(result.findings).toEqual([]);
+  });
+
+  it("does not scan review packets as active content", () => {
+    const auditFixture = new URL(
+      "../../docs/content-audits/__content-lint-skip-test.md",
+      import.meta.url,
+    );
+    const packetFixture = new URL(
+      "../../docs/content-packets/__content-lint-skip-test.md",
+      import.meta.url,
+    );
+    const researchFixture = new URL(
+      "../../docs/research/__content-lint-skip-test.md",
+      import.meta.url,
+    );
+
+    try {
+      mkdirSync(new URL("../../docs/research/", import.meta.url), {
+        recursive: true,
+      });
+      writeFileSync(auditFixture, "This guarantees an outcome.");
+      writeFileSync(packetFixture, "Use smoke cleansing here.");
+      writeFileSync(researchFixture, "Use smoke cleansing here.");
+
+      expect(runContentLint().findings).toEqual([]);
+    } finally {
+      rmSync(auditFixture, { force: true });
+      rmSync(packetFixture, { force: true });
+      rmSync(researchFixture, { force: true });
+    }
   });
 
   it("flags non-placeholder emails and private-data markers", () => {

@@ -36,6 +36,12 @@ import {
   type ProfileTuningProfile,
   type ProfileTuningSettings,
 } from "../lib/profile-tuning";
+import { pilotRituals } from "../data/rituals/pilot-rituals";
+import {
+  getRitualSearchChips,
+  searchRituals,
+} from "../data/rituals/search-rituals";
+import type { Ritual } from "../data/rituals/types";
 
 const feedbackLabels: Record<BriefFeedbackType, string> = {
   good: "This feels right.",
@@ -75,7 +81,13 @@ const profileWorksOptions = [
   { value: "seasonal", label: "Seasonal" },
 ];
 
-export type SignedInView = "this_week" | "profile_settings" | "how_it_works";
+export type SignedInView =
+  | "this_week"
+  | "search_rituals"
+  | "profile_settings"
+  | "how_it_works";
+
+export type RitualSearchSort = "match" | "title" | "purpose" | "material";
 
 export type SignedInShellOptions = {
   activeView?: SignedInView;
@@ -86,6 +98,10 @@ export type SignedInShellOptions = {
   savingFeedbackType?: BriefFeedbackType;
   showDebugTrace?: boolean;
   activeProfileSettingsTabId?: string | null;
+  ritualSearchQuery?: string;
+  selectedRitualSearchChips?: string[];
+  selectedRitualId?: string | null;
+  ritualSearchSort?: RitualSearchSort;
 };
 
 function escapeHtml(value: string): string {
@@ -805,6 +821,295 @@ function renderProfileSettingsPanel(profile: ProfileTuningProfile): string {
   `;
 }
 
+function formatRitualLabel(value: string): string {
+  return value
+    .split("_")
+    .map((part) => `${part.slice(0, 1).toUpperCase()}${part.slice(1)}`)
+    .join(" ");
+}
+
+function getRitualSearchSummary(ritual: Ritual): string {
+  return ritual.presentation.intention || ritual.presentation.questionToCarry;
+}
+
+export function renderRitualPreview(ritual: Ritual): string {
+  return `
+    <article class="ritual-preview" aria-label="${escapeHtml(ritual.presentation.headline)}">
+      <div class="ritual-preview__header">
+        <h2>${escapeHtml(ritual.presentation.headline)}</h2>
+        <p class="ritual-preview__intention">${escapeHtml(ritual.presentation.intention)}</p>
+      </div>
+
+      <section class="ritual-preview__section" aria-label="Practice">
+        <p class="brief__section-label">Practice</p>
+        <p>${escapeHtml(ritual.presentation.practice)}</p>
+      </section>
+
+      <section class="ritual-preview__section" aria-label="Best window">
+        <p class="brief__section-label">Best window</p>
+        <p>${escapeHtml(ritual.presentation.bestWindow)}</p>
+      </section>
+
+      <section class="ritual-preview__section" aria-label="Why this fits">
+        <p class="brief__section-label">Why this fits</p>
+        <p>${escapeHtml(ritual.presentation.whyThisFits)}</p>
+      </section>
+
+      <section class="ritual-preview__section" aria-label="Question to carry">
+        <p class="brief__section-label">Question to carry</p>
+        <p>${escapeHtml(ritual.presentation.questionToCarry)}</p>
+      </section>
+
+      <details class="ritual-readiness-details" aria-label="Readiness and source details">
+        <summary>Readiness and source details</summary>
+        <dl>
+          <div>
+            <dt>Status</dt>
+            <dd>${escapeHtml(ritual.status)}</dd>
+          </div>
+          <div>
+            <dt>Findable</dt>
+            <dd>${ritual.availability.findable ? "yes" : "no"}</dd>
+          </div>
+          <div>
+            <dt>Direct-use eligible</dt>
+            <dd>${ritual.availability.directUseEligible ? "yes" : "no"}</dd>
+          </div>
+          <div>
+            <dt>Recommendation eligible</dt>
+            <dd>${ritual.availability.recommendationEligible ? "yes" : "no"}</dd>
+          </div>
+          <div>
+            <dt>Missing readiness</dt>
+            <dd>${escapeHtml(ritual.recommendationMetadata.eligibility.missing?.join(", ") || "none")}</dd>
+          </div>
+          <div>
+            <dt>Origin</dt>
+            <dd>${escapeHtml(ritual.origin.type)}</dd>
+          </div>
+          <div>
+            <dt>Source</dt>
+            <dd>${escapeHtml(ritual.searchMetadata.sourceLabel ?? "none")}</dd>
+          </div>
+          <div>
+            <dt>Source cluster</dt>
+            <dd>${escapeHtml(ritual.searchMetadata.originLabel ?? "none")}</dd>
+          </div>
+        </dl>
+      </details>
+    </article>
+  `;
+}
+
+function renderRitualResultCard(ritual: Ritual, selectedRitualId: string): string {
+  const isSelected = ritual.id === selectedRitualId;
+  const materialsAndTags = [
+    ...(ritual.searchMetadata.materials ?? []),
+    ...ritual.searchMetadata.tags.slice(0, 3),
+  ].slice(0, 5);
+
+  return `
+    <button
+      class="ritual-result-card${isSelected ? " ritual-result-card--selected" : ""}"
+      type="button"
+      data-ritual-select="${escapeHtml(ritual.id)}"
+      aria-pressed="${isSelected ? "true" : "false"}"
+    >
+      <strong>${escapeHtml(ritual.presentation.headline)}</strong>
+      <span>${escapeHtml(getRitualSearchSummary(ritual))}</span>
+      <small>${escapeHtml([
+        formatRitualLabel(ritual.recommendationMetadata.purposes.primary),
+        formatRitualLabel(ritual.recommendationMetadata.carriers.primary),
+      ].join(" · "))}</small>
+      <small>${escapeHtml(materialsAndTags.join(" · ") || "No materials listed")}</small>
+    </button>
+  `;
+}
+
+function getPrimaryRitualMaterial(ritual: Ritual): string {
+  return ritual.searchMetadata.materials?.[0] ??
+    ritual.searchMetadata.tags[0] ??
+    ritual.recommendationMetadata.carriers.primary;
+}
+
+function sortRitualSearchResults(
+  results: Ritual[],
+  sort: RitualSearchSort,
+): Ritual[] {
+  const sorted = [...results];
+
+  if (sort === "title") {
+    return sorted.sort((a, b) =>
+      a.presentation.headline.localeCompare(b.presentation.headline),
+    );
+  }
+
+  if (sort === "purpose") {
+    return sorted.sort((a, b) =>
+      a.recommendationMetadata.purposes.primary.localeCompare(
+        b.recommendationMetadata.purposes.primary,
+      ) || a.presentation.headline.localeCompare(b.presentation.headline),
+    );
+  }
+
+  if (sort === "material") {
+    return sorted.sort((a, b) =>
+      getPrimaryRitualMaterial(a).localeCompare(getPrimaryRitualMaterial(b)) ||
+      a.presentation.headline.localeCompare(b.presentation.headline),
+    );
+  }
+
+  return sorted;
+}
+
+function renderRitualSearchSortOption(
+  value: RitualSearchSort,
+  label: string,
+  selectedSort: RitualSearchSort,
+): string {
+  return `<option value="${value}"${selectedSort === value ? " selected" : ""}>${label}</option>`;
+}
+
+const ritualSearchStarterChipValues = [
+  "candlelight",
+  "plant",
+  "table",
+  "vessel",
+  "beginning",
+  "bread",
+  "grain",
+  "household light",
+  "first light",
+  "water",
+  "opening",
+  "tending",
+] as const;
+
+function getVisibleRitualSearchChips(
+  chips: ReturnType<typeof getRitualSearchChips>,
+  selectedChips: string[],
+): ReturnType<typeof getRitualSearchChips> {
+  const chipByValue = new Map(chips.map((chip) => [chip.value, chip]));
+  const visibleValues = [
+    ...ritualSearchStarterChipValues,
+    ...selectedChips,
+  ];
+  const visibleChips = visibleValues
+    .map((value) => chipByValue.get(value))
+    .filter((chip): chip is NonNullable<typeof chip> => Boolean(chip));
+
+  return [...new Map(visibleChips.map((chip) => [chip.value, chip])).values()];
+}
+
+export function renderSearchRitualsSection(options: {
+  query?: string;
+  selectedChips?: string[];
+  selectedRitualId?: string | null;
+  sort?: RitualSearchSort;
+} = {}): string {
+  const query = options.query ?? "";
+  const selectedChips = options.selectedChips ?? [];
+  const selectedSort = options.sort ?? "match";
+  const selectedChipSet = new Set(selectedChips);
+  const chips = getRitualSearchChips(pilotRituals);
+  const visibleChips = getVisibleRitualSearchChips(chips, selectedChips);
+  const results = sortRitualSearchResults(searchRituals(pilotRituals, {
+    query,
+    selectedChips,
+  }), selectedSort);
+  const hasSearchCriteria = query.trim().length > 0 || selectedChips.length > 0;
+  const selectedRitual =
+    results.find((ritual) => ritual.id === options.selectedRitualId) ??
+    results[0];
+
+  return `
+    <article class="ritual-search" aria-label="Search rituals">
+      <header class="ritual-search__header">
+        <button
+          class="check-in__back"
+          type="button"
+          data-ritual-search-back="true"
+        >&larr; Go back</button>
+        <h2>Search rituals</h2>
+        <p>Search by material, mood, purpose, place, or phrase.</p>
+      </header>
+
+      <form id="ritual-search-form" class="ritual-search__controls" data-ritual-search-form="true">
+        <div class="ritual-search__field">
+          <label>
+            <span>What are you looking for?</span>
+            <input
+              name="ritualSearchQuery"
+              type="search"
+              value="${escapeHtml(query)}"
+              autocomplete="off"
+              placeholder="seed, bread, lamp, opening..."
+            />
+          </label>
+          <button class="ritual-search__submit" type="submit">Search</button>
+        </div>
+        <div class="ritual-search__chips" aria-label="Search filters">
+          ${visibleChips.map((chip) => {
+            const selected = selectedChipSet.has(chip.value);
+
+            return `
+              <button
+                class="ritual-search-chip${selected ? " ritual-search-chip--selected" : ""}"
+                type="button"
+                data-ritual-search-chip="${escapeHtml(chip.value)}"
+                aria-pressed="${selected ? "true" : "false"}"
+              >${escapeHtml(chip.label)}</button>
+            `;
+          }).join("")}
+        </div>
+      </form>
+
+      <div class="ritual-search__body">
+        <section class="ritual-search__results" aria-label="Ritual results">
+          <div class="ritual-search__results-header">
+            <div>
+              <h3>Select a ritual</h3>
+              <p>${results.length === 1 ? "1 ritual" : `${results.length} rituals`}${hasSearchCriteria ? " found" : " available"}</p>
+            </div>
+            <label class="ritual-search__sort">
+              <span>Sort</span>
+              <select
+                name="ritualSearchSort"
+                form="ritual-search-form"
+                data-ritual-search-sort="true"
+              >
+                ${renderRitualSearchSortOption("match", "Best match", selectedSort)}
+                ${renderRitualSearchSortOption("title", "Title", selectedSort)}
+                ${renderRitualSearchSortOption("purpose", "Purpose", selectedSort)}
+                ${renderRitualSearchSortOption("material", "Material", selectedSort)}
+              </select>
+            </label>
+          </div>
+          ${results.length > 0
+            ? results.map((ritual) => renderRitualResultCard(ritual, selectedRitual?.id ?? "")).join("")
+            : `
+              <div class="ritual-search__empty" role="status">
+                <p>Nothing matched that exact reach.</p>
+                <p>Try one material, purpose, place, or phrase from the ritual you are reaching for.</p>
+              </div>
+            `}
+        </section>
+
+        <section class="ritual-search__preview" aria-label="Selected ritual">
+          ${selectedRitual
+            ? renderRitualPreview(selectedRitual)
+            : `
+              <div class="ritual-search__preview-empty">
+                <p>Selected ritual</p>
+                <p>Choose a ritual from the left to see its shape here.</p>
+              </div>
+            `}
+        </section>
+      </div>
+    </article>
+  `;
+}
+
 export function renderProfileTuningSection(
   privateBriefData: PrivateBriefData,
   activeTabId?: string | null,
@@ -924,6 +1229,8 @@ function renderHowItWorksSection(): string {
 
 function renderAppMenu(activeView: SignedInView): string {
   const thisWeekPressed = activeView === "this_week" ? "true" : "false";
+  const searchRitualsPressed =
+    activeView === "search_rituals" ? "true" : "false";
   const profilePressed = activeView === "profile_settings" ? "true" : "false";
   const howItWorksPressed = activeView === "how_it_works" ? "true" : "false";
 
@@ -945,6 +1252,7 @@ function renderAppMenu(activeView: SignedInView): string {
       </summary>
       <div class="app-menu__panel" role="menu" aria-label="App menu">
         <button type="button" role="menuitem" data-menu-action="this_week" aria-pressed="${thisWeekPressed}">Current ritual</button>
+        <button type="button" role="menuitem" data-menu-action="search_rituals" aria-pressed="${searchRitualsPressed}">Search rituals</button>
         <button type="button" role="menuitem" data-menu-action="how_it_works" aria-pressed="${howItWorksPressed}">How it works</button>
         <button type="button" role="menuitem" data-menu-action="profile_settings" aria-pressed="${profilePressed}">Profile settings</button>
         <button type="button" role="menuitem" data-auth-action="sign-out">Sign out</button>
@@ -1265,8 +1573,32 @@ function renderTodaysShapeBrief(brief: TodaysShapeBrief): string {
   `;
 }
 
+function renderRitualEntryPaths(): string {
+  return `
+    <section class="ritual-entry-paths" aria-label="Choose how to find a ritual">
+      <button
+        class="ritual-entry-action"
+        type="button"
+        data-check-in-action="start_guided"
+        data-check-in-value="choose_with_me"
+      >
+        <span>Choose with me</span>
+        <small>Answer a few questions and let Moon &amp; Table choose one ritual.</small>
+      </button>
+      <button
+        class="ritual-entry-action"
+        type="button"
+        data-search-rituals-entry="true"
+      >
+        <span>I have something in mind</span>
+        <small>Search by material, mood, purpose, place, or phrase.</small>
+      </button>
+    </section>
+  `;
+}
+
 function renderCheckInBackControl(draft: RitualCheckInDraft): string {
-  if (draft.step === "time_scope") {
+  if (draft.step === "entry_path") {
     return "";
   }
 
@@ -1349,7 +1681,7 @@ export function renderRitualCheckInShell({
   introMode?: "returning" | "first_login";
   todaysShapeBrief?: TodaysShapeBrief | null;
 }): string {
-  const intro = draft.step === "time_scope"
+  const intro = draft.step === "entry_path"
     ? `
         <header class="check-in__header">
           <p>${introMode === "first_login"
@@ -1359,9 +1691,15 @@ export function renderRitualCheckInShell({
         </header>
       `
     : "";
-  const todaysShape = draft.step === "time_scope"
+  const todaysShape = draft.step === "entry_path"
     ? renderTodaysShapeBrief(todaysShapeBrief ?? createTodaysShapeBrief())
     : "";
+  const entryPaths = draft.step === "entry_path" ? renderRitualEntryPaths() : "";
+  const checkInContent = draft.step === "entry_path"
+    ? ""
+    : draft.step === "review"
+      ? renderCheckInReview(draft)
+      : renderCheckInQuestion(draft);
 
   return `
     <section class="shell shell--check-in" aria-labelledby="app-title">
@@ -1374,10 +1712,11 @@ export function renderRitualCheckInShell({
       <article class="check-in" aria-label="Ritual check-in">
         ${intro}
         ${todaysShape}
+        ${entryPaths}
         ${renderCheckInBackControl(draft)}
         ${renderCheckInAcknowledgement(draft)}
 
-        ${draft.step === "review" ? renderCheckInReview(draft) : renderCheckInQuestion(draft)}
+        ${checkInContent}
       </article>
     </section>
   `;
@@ -1406,9 +1745,13 @@ export function renderSignedInShell(
   options: SignedInShellOptions = {},
 ): string {
   const activeView = options.activeView ?? "this_week";
-  const brief = options.brief ?? generateWeeklyBrief(privateBriefData.input);
-  const debugTrace = options.showDebugTrace ? renderDeveloperDecision(brief) : "";
-  const weeklyBrief = `
+  const weeklyBrief = (() => {
+    const brief = options.brief ?? generateWeeklyBrief(privateBriefData.input);
+    const debugTrace = options.showDebugTrace
+      ? renderDeveloperDecision(brief)
+      : "";
+
+    return `
     <article class="brief" aria-label="Weekly brief">
       <section class="brief__core" aria-label="Weekly practice">
         <h2 class="brief__theme">${renderBriefTheme(brief.theme)}</h2>
@@ -1469,17 +1812,26 @@ export function renderSignedInShell(
       ${debugTrace}
     </article>
   `;
+  });
   const profileSettings = renderProfileTuningSection(
     privateBriefData,
     options.activeProfileSettingsTabId,
   );
+  const searchRituals = renderSearchRitualsSection({
+    query: options.ritualSearchQuery,
+    selectedChips: options.selectedRitualSearchChips,
+    selectedRitualId: options.selectedRitualId,
+    sort: options.ritualSearchSort,
+  });
   const howItWorks = renderHowItWorksSection();
   const activeContent =
     activeView === "profile_settings"
       ? profileSettings
+      : activeView === "search_rituals"
+        ? searchRituals
       : activeView === "how_it_works"
         ? howItWorks
-      : weeklyBrief;
+      : weeklyBrief();
 
   return `
     <section class="shell" aria-labelledby="app-title">

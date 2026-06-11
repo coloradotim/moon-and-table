@@ -23,6 +23,7 @@ export const RITUAL_CHECK_IN_AUDIENCES = ["me", "both_of_us"] as const;
 export type RitualCheckInAudience = (typeof RITUAL_CHECK_IN_AUDIENCES)[number];
 
 export type RitualCheckInStep =
+  | "entry_path"
   | "time_scope"
   | "energy_capacity"
   | "audience"
@@ -118,7 +119,7 @@ const deeperPracticeOptions: RitualCheckInOption[] = [
 ];
 
 export function createInitialRitualCheckInDraft(): RitualCheckInDraft {
-  return { step: "time_scope" };
+  return { step: "entry_path" };
 }
 
 export function getCapacityModeForEnergy(

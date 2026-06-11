@@ -14,8 +14,8 @@ import {
 } from "../../src/lib/current-ritual-check-in";
 
 describe("current ritual check-in", () => {
-  it("starts at time scope and exposes exact time-scope labels", () => {
-    expect(createInitialRitualCheckInDraft()).toEqual({ step: "time_scope" });
+  it("starts at the entry path and exposes exact time-scope labels", () => {
+    expect(createInitialRitualCheckInDraft()).toEqual({ step: "entry_path" });
     expect(timeScopeOptions.map((option) => option.label)).toEqual([
       "For today",
       "Best moment this week",

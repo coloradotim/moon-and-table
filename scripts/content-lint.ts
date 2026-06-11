@@ -36,6 +36,9 @@ const SKIPPED_PATH_PARTS = new Set([
   "dist",
   "private",
   "private.example",
+  "content-audits",
+  "content-packets",
+  "research",
 ]);
 
 const GUARDRAIL_CONTEXT_PATTERN =
