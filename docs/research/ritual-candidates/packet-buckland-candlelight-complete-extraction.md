@@ -27,6 +27,7 @@ This revision addresses the PR-gated QA request for changes.
 - Corrected coverage accounting so `Remembering Light` is primary `remembering` only.
 - Reassessed shared mechanics candidates; several are now held before import rather than treated as standalone approved Rituals.
 - Normalized `whyThisFitsIngredients` and `howThisWasChosenIngredients` child fields.
+- Cleared `Boundary Light` for draft mechanical import after explicit placement was added and Tim approved the burn-down close for draft import only.
 
 ## Source text rule for this packet
 
@@ -42,7 +43,7 @@ Where this packet uses Moon & Table original words, it states why: either the so
 | PDF pp. 19-21 | To Overcome a Bad Habit | candidate_extract_now | Black candle, four white candles, weekly movement, black-first close. |
 | PDF pp. 21-23 | To Settle a Disturbed Condition in the Home | candidate_extract_now | Petitioner, light-blue, pink, orange candles; three repetitions; three consecutive nights. |
 | PDF pp. 23-26 | For the Dead | candidate_extract_now | Photo/astral/light-blue remembrance rite; half-hour burn; at least nine nights. |
-| PDF pp. 30-32 | To Protect Against Evil / Uncross | hold_before_import | Protection architecture is clear, but the source close lets candles burn down; direct import held pending safety/product review. |
+| PDF pp. 30-32 | To Protect Against Evil / Uncross | candidate_extract_now | Protection architecture is now explicit enough for draft mechanical import; Tim approved the burn-down close for draft import only. |
 | PDF pp. 33-36 | To Conquer Fear | candidate_extract_now | Petitioner, one white, three orange; five-minute concentration; nine nights. |
 | PDF pp. 36-37 | To Win or Hold Happiness | candidate_extract_now | Gold, orange, two red moved inward; fifteen minutes; successive nights. |
 | PDF pp. 65-67 | To Purify Oneself | candidate_extract_now | Petitioner, pink, white; Psalm/private words repeated three times with five-minute contemplations; every three days. |
@@ -65,7 +66,7 @@ Where this packet uses Moon & Table original words, it states why: either the so
 | Bad habit / pattern release | PDF pp. 19-21 | ritual | candidate_extract_now | Complete direct candle rite. |
 | Disturbed condition in home | PDF pp. 21-23 | ritual | candidate_extract_now | Complete direct candle rite. |
 | For the Dead | PDF pp. 23-26 | ritual | candidate_extract_now | Complete direct candle rite; private long passage. |
-| Protection / uncrossing | PDF pp. 30-32 | ritual | hold | Burn-down close and uncrossing overlap need review. |
+| Protection / uncrossing | PDF pp. 30-32 | ritual | candidate_extract_now | Complete direct candle rite; explicit placement added and burn-down close approved for draft mechanical import only. |
 | Conquer Fear | PDF pp. 33-36 | ritual | candidate_extract_now | Complete direct candle rite, reframed as symbolic courage. |
 | Win or Hold Happiness | PDF pp. 36-37 | ritual | candidate_extract_now | Complete direct candle rite, no guarantee. |
 | Purify Oneself | PDF pp. 65-67 | ritual | candidate_extract_now | Complete direct candle rite, no shame/health claim. |
@@ -81,10 +82,10 @@ Where this packet uses Moon & Table original words, it states why: either the so
 
 ```text
 source_items_inventoried: 20
-candidate_extract_now: 12
-hold_before_import_candidate_records: 8
+candidate_extract_now: 13
+hold_before_import_candidate_records: 7
 rejected_or_policy-held_clusters: 1
-items_with_private_excerpt_recommended: 10
+items_with_private_excerpt_recommended: 11
 remaining_unreviewed_source_sections: none known within approved candlelight scope
 remaining_extraction_backlog: none; held items require Tim/product/source-boundary decisions
 ```
@@ -101,7 +102,7 @@ Primary coverage counts only candidates marked `approved_for_mechanical_import`.
 | candlelight | blessing | 2 | `ritual-buckland-candle-welcome-joy`; `ritual-candlelight-buckland-blessing-object-in-light` |
 | candlelight | remembering | 2 | `ritual-candlelight-buckland-remembering-photo-peace-light`; `ritual-buckland-candle-dream-door` |
 | candlelight | steadying | 2 | `ritual-candlelight-buckland-steadying-blue-meditation`; `ritual-buckland-candle-courage-circle` |
-| candlelight | protecting | 0 | protection candidate held before import |
+| candlelight | protecting | 1 | `ritual-candlelight-buckland-protecting-boundary-circle` |
 | candlelight | releasing | 2 | `ritual-candlelight-buckland-releasing-habit-surrounded`; `ritual-buckland-candle-purify-self` |
 | candlelight | voicing | 1 | `ritual-buckland-candle-clear-words` |
 | candlelight | connecting | 0 | Buckland connection material remains held/rejected |
@@ -374,17 +375,17 @@ import readiness label: `approved_for_mechanical_import`
 
 ### `ritual-candlelight-buckland-protecting-boundary-circle` — Boundary Light
 
-disposition: `hold`
+disposition: `candidate_extract_now`
 
 ritualizationType: `direct_source_ritual`
 
 headline: Boundary Light
 
-ritual body / practice: Hold before import. If later approved, use the first protection version: set two altar candles, the petitioner candle in the center, four white candles and four red candles around it as the diagram shows, light altar candles, incense, petitioner candle, white candles Nos. 1-4, then red candles Nos. 1-4. Use the private Psalm/prayer from the source copy. The source close is to let the candles burn down until they go out; this is explicit source architecture but not yet approved for mechanical import.
+ritual body / practice: Use the first protection version. Orient the table so the altar candles are at the back edge and the book or working text rests at the front edge. Set two altar candles at the back of the table, with any altar figure between them. Set the incense or censer forward of the altar figure, between the altar candles and the working candles. Set the petitioner candle in the center. Place white candle No. 1 above and to the right of the petitioner candle, white candle No. 2 immediately left of the petitioner candle, white candle No. 3 immediately right of the petitioner candle, and white candle No. 4 below and to the left of the petitioner candle. Place red candle No. 1 above and to the left of the petitioner candle, red candle No. 2 outside white candle No. 2 on the left, red candle No. 3 outside white candle No. 3 on the right, and red candle No. 4 below and to the right of the petitioner candle. Light altar candles Nos. 1 and 2. Light incense, preferably frankincense after material review. Light the petitioner candle while picturing the petitioner dressed in white. Light white candles Nos. 1, 2, 3, and 4 while thinking of purity and truth. Light red candles Nos. 1, 2, 3, and 4 while thinking of strength, health, and power. Use the private Psalm/prayer from the source copy. The source close is to let the candles burn down until they go out.
 
 intention: Place the named self or purpose inside a circle of protective candlelight.
 
-bestWindow: Hold before import pending safety/product review.
+bestWindow: Only in a reviewed draft-import context; direct-use presentation still requires material/fire-safety review.
 
 questionToCarry: What belongs inside this circle of light?
 
@@ -396,28 +397,30 @@ whyThisFitsIngredients:
   audienceHooks: [me]
   materialPlaceCarrierPurposeFit: [petitioner candle, four white candles, four red candles]
   sourceBackedRationale: [Buckland gives complete protection architecture]
-  notForOrHoldNotes: [burn-down close and uncrossing overlap require review]
+  notForOrHoldNotes: [Tim approved burn-down close for draft mechanical import only; direct-use presentation still requires material/fire-safety review]
 
 howThisWasChosenIngredients:
   primarySelectionSignals: [protection]
   secondarySelectionSignals: [strong candle circle]
   exclusionSignals: [direct-use safety not resolved]
-  timingSignal: hold
-  confidenceNotes: architecture clear, import readiness held
+  timingSignal: uninterrupted burn-down period
+  confidenceNotes: architecture clear; explicit placement verified from source; approved for draft mechanical import only
 
 source grounding: `Buckland, Practical Candleburning Rituals`, PDF pp. 30-32.
 
-recommendation metadata: primaryPurpose `protecting`; secondaryPurposes [`blessing`]; primaryCarrier `candlelight`; held, not counted in coverage.
+recommendation metadata: primaryPurpose `protecting`; secondaryPurposes [`blessing`]; primaryCarrier `candlelight`; secondaryCarriers [`table`, `words`]; capacity [`room_for_something_deeper`]; audience [`me`]; timing `required`; recommendable false.
 
 search metadata: tags [buckland, protection, red white candles]; materials [two altar candles, incense, petitioner candle, four white candles, four red candles].
 
 review flags: privateExcerptRequired true; sourceTextReviewRequired true; materialSafetyReviewRequired true; sourceVerificationRequired true; productBoundaryReviewRequired true.
 
-adaptation policy notes: do not import until burn-down close and uncrossing boundary are reviewed.
+review note: Tim approved the burn-down close for draft mechanical import. Direct-use presentation still requires material/fire-safety review.
+
+adaptation policy notes: direct source ritual; draft mechanical import only. Tim approved the burn-down close for draft mechanical import. Direct-use presentation still requires material/fire-safety review.
 
 operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `buckland-protection-psalm-pp30-32`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF pp. 30-32`, useContext: `prayer`, note: `Long prayer/Psalm remains private.` }]
 
-import readiness label: `hold_before_import`
+import readiness label: `approved_for_mechanical_import`
 
 ### `ritual-candlelight-buckland-remembering-photo-peace-light` — Remembering Light
 
@@ -757,7 +760,7 @@ import readiness label: `approved_for_mechanical_import`
 | `ritual-candlelight-buckland-releasing-habit-surrounded` | candlelight | releasing | table, words | tending | approved_for_mechanical_import |
 | `ritual-candlelight-buckland-tending-home-settling` | candlelight | tending | table, words | steadying | approved_for_mechanical_import |
 | `ritual-candlelight-buckland-marking-seven-night-increase` | candlelight | marking | table, words | opening | approved_for_mechanical_import |
-| `ritual-candlelight-buckland-protecting-boundary-circle` | candlelight | protecting | table, words | blessing | hold_before_import |
+| `ritual-candlelight-buckland-protecting-boundary-circle` | candlelight | protecting | table, words | blessing | approved_for_mechanical_import |
 | `ritual-candlelight-buckland-remembering-photo-peace-light` | candlelight | remembering | table, words | blessing | approved_for_mechanical_import |
 | `ritual-candlelight-buckland-blessing-object-in-light` | candlelight | blessing | vessel, words | marking | approved_for_mechanical_import |
 | `ritual-buckland-candle-courage-circle` | candlelight | steadying | table, body, words | protecting | approved_for_mechanical_import |
@@ -769,7 +772,7 @@ import readiness label: `approved_for_mechanical_import`
 
 ## Variant / split ledger
 
-- `Boundary Light`: hold before import because the selected direct source version closes by letting the candles burn down. A later QA pass may approve a safer Moon & Table-authored close only with Tim approval.
+- `Boundary Light`: approved for draft mechanical import only after explicit placement was added. Tim approved the source burn-down close for draft mechanical import. Direct-use presentation still requires material/fire-safety review.
 - `Remembering Light`: this packet chooses the first version, with a half-hour burn and at least nine nights. Other remembrance wording/version material remains a private variant.
 - `Dream Door Candle`: direct-source body does not include morning writing. Optional morning memory follow-up may be considered later as a Moon & Table product pattern.
 - `Readiness Flame`: remains held. Use `Seven Marks of Readiness` for the direct source seven-night form.
