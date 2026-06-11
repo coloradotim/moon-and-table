@@ -31,9 +31,9 @@ This revision addresses the PR-gated QA request for changes.
 
 ## Source text rule for this packet
 
-Exact operative source wording of 20 words or fewer is used inline when it is ritually useful, product-safe, and non-substitutive. Longer prayers, Psalms, poems, scripts, consecrations, and substantial ritual wording are not automatically rewritten. This packet keeps `ritualWords.mode = "adapted_source_words"` only where a specific candidate audit confirms that the longer source-word function is structurally necessary to the candle rite; otherwise source-supported speech uses functional instruction or the candidate stays held.
+Exact operative source wording of 20 words or fewer is used inline when it is ritually useful, product-safe, and non-substitutive. Longer prayers, Psalms, poems, scripts, consecrations, and substantial ritual wording are not automatically rewritten. After #379 review, this packet uses functional instruction for longer source-word functions; no active adapted long-word entries remain.
 
-Where this packet uses functional instruction or justified adapted wording, it states why: either the source gives mechanics without a short usable line, the exact source line is gendered/targeted/outcome-forcing, or the candidate is a held adaptation pending Tim approval.
+Where this packet uses functional instruction, it states why: either the source gives mechanics without a short usable line, or the exact source line is longer, gendered, targeted, or outcome-forcing.
 
 ## Source sections used
 
@@ -240,7 +240,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Surround the Pattern
 
-ritual body / practice: Set two altar candles at the back of the table. Set one black candle in the center. Set white candle No. 1 above the black candle, white candle No. 4 below it, white candle No. 2 to the left, and white candle No. 3 to the right. Light the altar candles. Light incense, preferably frankincense if approved. Sit for a moment thinking of the pattern fading away. Light the black candle and say: "Here is that which holds me back." Light white candles Nos. 1, 2, 3, and 4 and say: "Here is my strength; here is my courage; here is my fortitude; here is my victory." Picture the surrounding white candles advancing on the black candle. Say: "The old pattern is surrounded; the way out is already known." After a few more moments picturing the pattern overcome, extinguish the black candle first, then white candles 4, 3, 2, and 1, then the altar candles. Repeat at the same time seven days later, first moving white candles Nos. 2 and 3 one inch inward toward the black candle. Continue weekly until those two white candles touch the black candle.
+ritual body / practice: Set two altar candles at the back of the table. Set one black candle in the center. Set white candle No. 1 above the black candle, white candle No. 4 below it, white candle No. 2 to the left, and white candle No. 3 to the right. Light the altar candles. Light incense, preferably frankincense if approved. Sit for a moment thinking of the pattern fading away. Light the black candle and say: "Here is that which holds me back." Light white candles Nos. 1, 2, 3, and 4 and say: "Here is my strength; here is my courage; here is my fortitude; here is my victory." Picture the surrounding white candles advancing on the black candle. Pause and name, in your own words, that the surrounding candles are closing around the old pattern. After a few more moments picturing the pattern overcome, extinguish the black candle first, then white candles 4, 3, 2, and 1, then the altar candles. Repeat at the same time seven days later, first moving white candles Nos. 2 and 3 one inch inward toward the black candle. Continue weekly until those two white candles touch the black candle.
 
 intention: Give the pattern a visible form, then surround it with the light needed to loosen it.
 
@@ -263,7 +263,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [repetition and visible movement]
   exclusionSignals: [medical/addiction/self-harm framing]
   timingSignal: weekly at same time
-  confidenceNotes: complete direct source architecture; short source lines usable; long poem adapted
+  confidenceNotes: complete direct source architecture; short source lines usable; long poem replaced with functional instruction
 
 source grounding: `Buckland, Practical Candleburning Rituals`, PDF pp. 19-21.
 
@@ -275,7 +275,7 @@ review flags: sourceTextReviewRequired true; materialSafetyReviewRequired true; 
 
 adaptation policy notes: direct source ritual; do not reduce candle count or movement.
 
-operative words metadata: [{ mode: `source_exact_short`, text: `Here is that which holds me back.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF p. 20`, useContext: `spoken`, note: `Short source line preserved verbatim.` }, { mode: `source_exact_short`, text: `Here is my strength; here is my courage; here is my fortitude; here is my victory.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF p. 20`, useContext: `spoken`, note: `Short source line preserved verbatim.` }, { mode: `adapted_source_words`, text: `The old pattern is surrounded; the way out is already known.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF pp. 20-21`, useContext: `spoken`, note: `Adapted from the longer source poem/script that follows the short candle lines.` }]
+operative words metadata: [{ mode: `source_exact_short`, text: `Here is that which holds me back.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF p. 20`, useContext: `spoken`, note: `Short source line preserved verbatim.` }, { mode: `source_exact_short`, text: `Here is my strength; here is my courage; here is my fortitude; here is my victory.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF p. 20`, useContext: `spoken`, note: `Short source line preserved verbatim.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -287,7 +287,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Settle the House Light
 
-ritual body / practice: Set two altar candles at the back of the table. Set the petitioner candle in the center. Set the pink candle above the petitioner candle. Set the light-blue candle at the lower left and the orange candle at the lower right. Light the altar candles. Light incense. Sit for a moment and get clear about the disturbed condition being tended. Light the petitioner candle and say: "This candle represents [Name]. As it burns, so burns his spirit." Light the light-blue, pink, and orange candles in that order. Say: "Let peace return to this house; let patience and warmth take root here." End by saying: "The home is peace; peace is the home." Sit for three to five minutes concentrating on settling the condition. Say both spoken lines a second time, sit for three to five minutes, say them a third time, and sit for three to five minutes again. Extinguish the candles. Repeat on three consecutive nights.
+ritual body / practice: Set two altar candles at the back of the table. Set the petitioner candle in the center. Set the pink candle above the petitioner candle. Set the light-blue candle at the lower left and the orange candle at the lower right. Light the altar candles. Light incense. Sit for a moment and get clear about the disturbed condition being tended. Light the petitioner candle and say: "This candle represents [Name]. As it burns, so burns his spirit." Light the light-blue, pink, and orange candles in that order. Name, in your own words, the peace, patience, affection, and warmth being called back into the house. End by saying: "The home is peace; peace is the home." Sit for three to five minutes concentrating on settling the condition. Repeat your own wording and the final exact source line a second time, sit for three to five minutes, repeat them a third time, and sit for three to five minutes again. Extinguish the candles. Repeat on three consecutive nights.
 
 intention: Tend a disturbed home condition by giving peace, patience, affection, and warmth a visible candle form.
 
@@ -310,7 +310,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [three-night repetition]
   exclusionSignals: [coercive interpersonal control]
   timingSignal: three consecutive nights
-  confidenceNotes: complete direct source architecture; long paragraph adapted; two short source anchors usable
+  confidenceNotes: complete direct source architecture; long repeated paragraph replaced with functional instruction; two short source anchors usable
 
 source grounding: `Buckland, Practical Candleburning Rituals`, PDF pp. 21-23.
 
@@ -322,7 +322,7 @@ review flags: sourceTextReviewRequired true; materialSafetyReviewRequired true; 
 
 adaptation policy notes: direct source ritual; no guarantee or conflict-resolution promise.
 
-operative words metadata: [{ mode: `source_exact_short`, text: `This candle represents [Name]. As it burns, so burns his spirit.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF p. 22`, useContext: `spoken`, note: `Short source line preserved verbatim; gendered source wording requires direct-use review.` }, { mode: `adapted_source_words`, text: `Let peace return to this house; let patience and warmth take root here.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF pp. 22-23`, useContext: `spoken`, note: `Adapted from the longer repeated home-settling paragraph.` }, { mode: `source_exact_short`, text: `The home is peace; peace is the home.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF pp. 22-23`, useContext: `spoken`, note: `Short source line preserved verbatim.` }]
+operative words metadata: [{ mode: `source_exact_short`, text: `This candle represents [Name]. As it burns, so burns his spirit.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF p. 22`, useContext: `spoken`, note: `Short source line preserved verbatim; gendered source wording requires direct-use review.` }, { mode: `source_exact_short`, text: `The home is peace; peace is the home.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF pp. 22-23`, useContext: `spoken`, note: `Short source line preserved verbatim.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -334,7 +334,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Seven Marks of Readiness
 
-ritual body / practice: Begin seven days before the full moon. Set two altar candles at the back of the table. Set the petitioner candle in the center. Set the gold candle below the petitioner candle. Set purple candle No. 1 above the petitioner candle. Set purple candle No. 2 above-right of the petitioner candle. Set purple candle No. 3 lower-right of the petitioner candle, to the right of the gold candle. Set purple candle No. 4 below-right/front-right of the petitioner candle. Set purple candle No. 5 below-left/front-left of the petitioner candle. Set purple candle No. 6 lower-left of the petitioner candle, to the left of the gold candle. Set purple candle No. 7 above-left of the petitioner candle. Set the day candle at the front right. Each night, light the altar candles, incense, petitioner candle, gold candle, and day candle. On night one, light purple candle No. 1. On night two, light purple candles Nos. 1 and 2. Continue adding one purple candle each night until all seven purple candles are lit on night seven. Say: "Let readiness gather one flame at a time." Sit or kneel comfortably and meditate on readiness building. Extinguish the candles in reverse order of lighting.
+ritual body / practice: Begin seven days before the full moon. Set two altar candles at the back of the table. Set the petitioner candle in the center. Set the gold candle below the petitioner candle. Set purple candle No. 1 above the petitioner candle. Set purple candle No. 2 above-right of the petitioner candle. Set purple candle No. 3 lower-right of the petitioner candle, to the right of the gold candle. Set purple candle No. 4 below-right/front-right of the petitioner candle. Set purple candle No. 5 below-left/front-left of the petitioner candle. Set purple candle No. 6 lower-left of the petitioner candle, to the left of the gold candle. Set purple candle No. 7 above-left of the petitioner candle. Set the day candle at the front right. Each night, light the altar candles, incense, petitioner candle, gold candle, and day candle. On night one, light purple candle No. 1. On night two, light purple candles Nos. 1 and 2. Continue adding one purple candle each night until all seven purple candles are lit on night seven. Name, in your own words, the readiness being gathered by the added flame. Sit or kneel comfortably and meditate on readiness building. Extinguish the candles in reverse order of lighting.
 
 intention: Mark readiness over seven nights by increasing the candle pattern one flame at a time.
 
@@ -357,7 +357,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [full-moon lead-in]
   exclusionSignals: [low capacity, one-night request, power-over intent]
   timingSignal: seven days before full moon
-  confidenceNotes: complete source architecture; source purpose narrowed to readiness for product boundary
+  confidenceNotes: complete source architecture; source purpose narrowed to readiness for product boundary; long power wording replaced with functional instruction
 
 source grounding: `Buckland, Practical Candleburning Rituals`, PDF pp. 90-93.
 
@@ -369,7 +369,7 @@ review flags: sourceTextReviewRequired true; materialSafetyReviewRequired true; 
 
 adaptation policy notes: direct source ritual with product-boundary narrowing; do not simplify the seven-night architecture.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `Let readiness gather one flame at a time.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF pp. 90-93`, useContext: `spoken`, note: `Adapted from longer source wording for increasing power, narrowed to readiness for product boundary.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -381,7 +381,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Boundary Light
 
-ritual body / practice: Use the first protection version. Orient the table so the altar candles are at the back edge and the book or working text rests at the front edge. Set two altar candles at the back of the table, with any altar figure between them. Set the incense or censer forward of the altar figure, between the altar candles and the working candles. Set the petitioner candle in the center. Place white candle No. 1 above and to the right of the petitioner candle, white candle No. 2 immediately left of the petitioner candle, white candle No. 3 immediately right of the petitioner candle, and white candle No. 4 below and to the left of the petitioner candle. Place red candle No. 1 above and to the left of the petitioner candle, red candle No. 2 outside white candle No. 2 on the left, red candle No. 3 outside white candle No. 3 on the right, and red candle No. 4 below and to the right of the petitioner candle. Light altar candles Nos. 1 and 2. Light incense, preferably frankincense after material review. Light the petitioner candle while picturing the petitioner dressed in white. Light white candles Nos. 1, 2, 3, and 4 while thinking of purity and truth. Light red candles Nos. 1, 2, 3, and 4 while thinking of strength, health, and power. Say: "Let this circle hold what belongs within it." Let the candles burn down until they go out.
+ritual body / practice: Use the first protection version. Orient the table so the altar candles are at the back edge and the book or working text rests at the front edge. Set two altar candles at the back of the table, with any altar figure between them. Set the incense or censer forward of the altar figure, between the altar candles and the working candles. Set the petitioner candle in the center. Place white candle No. 1 above and to the right of the petitioner candle, white candle No. 2 immediately left of the petitioner candle, white candle No. 3 immediately right of the petitioner candle, and white candle No. 4 below and to the left of the petitioner candle. Place red candle No. 1 above and to the left of the petitioner candle, red candle No. 2 outside white candle No. 2 on the left, red candle No. 3 outside white candle No. 3 on the right, and red candle No. 4 below and to the right of the petitioner candle. Light altar candles Nos. 1 and 2. Light incense, preferably frankincense after material review. Light the petitioner candle while picturing the petitioner dressed in white. Light white candles Nos. 1, 2, 3, and 4 while thinking of purity and truth. Light red candles Nos. 1, 2, 3, and 4 while thinking of strength, health, and power. Name, in your own words, what the circle is being asked to hold within it. Let the candles burn down until they go out.
 
 intention: Place the named self or purpose inside a circle of protective candlelight.
 
@@ -404,7 +404,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [strong candle circle]
   exclusionSignals: [direct-use safety not resolved]
   timingSignal: uninterrupted burn-down period
-  confidenceNotes: architecture clear; explicit placement verified from source; approved for draft mechanical import only
+  confidenceNotes: architecture clear; explicit placement verified from source; long protection prayer replaced with functional instruction; approved for draft mechanical import only
 
 source grounding: `Buckland, Practical Candleburning Rituals`, PDF pp. 30-32.
 
@@ -418,7 +418,7 @@ review note: Tim approved the burn-down close for draft mechanical import. Direc
 
 adaptation policy notes: direct source ritual; draft mechanical import only. Tim approved the burn-down close for draft mechanical import. Direct-use presentation still requires material/fire-safety review.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `Let this circle hold what belongs within it.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF pp. 30-32`, useContext: `prayer`, note: `Adapted from the longer source protection prayer/Psalm.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -430,7 +430,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Remembering Light
 
-ritual body / practice: Use the first version for this candidate. Set two altar candles at the back of the table. Place a photograph of the deceased before the astral candle if one is being used. Set the astral candle for the deceased and one light-blue candle. Light the altar candles. Light incense. Light the astral candle while remembering the person as you knew them best. Light the light-blue candle while thinking of peace and tranquility. Say: "Let memory be held in peace tonight." Let the candles burn for a half hour, then extinguish them. Repeat every night for at least nine nights; continue longer only if Tim approves that as a direct-use variant.
+ritual body / practice: Use the first version for this candidate. Set two altar candles at the back of the table. Place a photograph of the deceased before the astral candle if one is being used. Set the astral candle for the deceased and one light-blue candle. Light the altar candles. Light incense. Light the astral candle while remembering the person as you knew them best. Light the light-blue candle while thinking of peace and tranquility. Name, in your own words, the peaceful memory the light is being asked to hold. Let the candles burn for a half hour, then extinguish them. Repeat every night for at least nine nights; continue longer only if Tim approves that as a direct-use variant.
 
 intention: Hold remembrance in candlelight without making claims about the dead.
 
@@ -453,7 +453,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [photo/object marker and repeated candle period]
   exclusionSignals: [afterlife-contact claim]
   timingSignal: half hour nightly for at least nine nights
-  confidenceNotes: complete direct source architecture; chosen first version; second version remains later variant
+  confidenceNotes: complete direct source architecture; long Song of Solomon passage replaced with functional instruction; chosen first version; second version remains later variant
 
 source grounding: `Buckland, Practical Candleburning Rituals`, PDF pp. 23-26.
 
@@ -465,7 +465,7 @@ review flags: sourceTextReviewRequired true; materialSafetyReviewRequired true; 
 
 adaptation policy notes: direct source ritual; primary purpose is remembering only; blessing remains secondary.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `Let memory be held in peace tonight.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF pp. 23-26`, useContext: `prayer`, note: `Adapted from the longer source Song of Solomon passage for remembrance.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -477,7 +477,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Object in the Light
 
-ritual body / practice: Set two altar candles at the back of the table. Set one white candle to the left, the talisman or object in the center, and the purpose-colored candle to the right. Light the altar candles. Light incense, with frankincense preferred only after material review. Light the white candle. Light the purpose-colored candle. Take up the object by the edge. Pass it three times through the white candle flame, turning it so both sides are touched by flame, and say: "By fire do I cleanse this Talisman." Pass it three times through the incense smoke. Hold it firmly in the dominant hand and say: "This object receives its work and rests in the light." Pass it three times through the purpose candle flame. Lay it between the white candle and the purpose candle. Extinguish the flames. Let the object remain undisturbed for three hours before it is carried, worn, or returned to its place.
+ritual body / practice: Set two altar candles at the back of the table. Set one white candle to the left, the talisman or object in the center, and the purpose-colored candle to the right. Light the altar candles. Light incense, with frankincense preferred only after material review. Light the white candle. Light the purpose-colored candle. Take up the object by the edge. Pass it three times through the white candle flame, turning it so both sides are touched by flame, and say: "By fire do I cleanse this Talisman of any and all impurities that may dwell within it." Pass it three times through the incense smoke and say: "And by the Gods I cense and cleanse it to be ready for my purpose." Hold it firmly in the dominant hand and name, in your own words, the work the object is being consecrated to carry. Pass it three times through the purpose candle flame. Lay it between the white candle and the purpose candle. Extinguish the flames. Let the object remain undisturbed for three hours before it is carried, worn, or returned to its place.
 
 intention: Bless a chosen object by passing it through fire, smoke, word, and rest.
 
@@ -500,7 +500,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [strong fire/smoke/word sequence]
   exclusionSignals: [unsafe material, guaranteed charm outcome]
   timingSignal: three-hour rest
-  confidenceNotes: complete direct source architecture; material review important
+  confidenceNotes: complete direct source architecture; consecration words handled with exact short line plus functional instruction; material review important
 
 source grounding: `Buckland, Practical Candleburning Rituals`, PDF pp. 93-94.
 
@@ -512,7 +512,7 @@ review flags: sourceTextReviewRequired true; materialSafetyReviewRequired true; 
 
 adaptation policy notes: direct source ritual; direct-use QA may require a safer variant but extraction preserves source architecture.
 
-operative words metadata: [{ mode: `source_exact_short`, text: `By fire do I cleanse this Talisman.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF p. 94`, useContext: `spoken`, note: `Short source line preserved verbatim.` }, { mode: `adapted_source_words`, text: `This object receives its work and rests in the light.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF pp. 93-94`, useContext: `blessing`, note: `Adapted from the longer source consecration wording.` }]
+operative words metadata: [{ mode: `source_exact_short`, text: `By fire do I cleanse this Talisman of any and all impurities that may dwell within it.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF p. 94`, useContext: `spoken`, note: `Short source line preserved verbatim.` }, { mode: `source_exact_short`, text: `And by the Gods I cense and cleanse it to be ready for my purpose.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF p. 94`, useContext: `spoken`, note: `Short source line preserved verbatim.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -524,7 +524,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Courage in the Candle Circle
 
-ritual body / practice: Use the first version for this candidate. Set two altar candles at the back of the table. Set the petitioner candle in the center. Set the white candle above the petitioner candle. Set orange candle No. 1 to the left, orange candle No. 2 below, and orange candle No. 3 to the right. Light the altar candles. Light incense. Concentrate on conquering fear. Light the petitioner candle while thinking of the petitioner. Light the white candle while thinking of strength and purity. Light orange candles Nos. 1, 2, and 3 while thinking of self-confidence, ability to overcome fear, and strength of personality. Say: "Let courage take its place around this fear." Sit for five minutes in meditation. Extinguish the flames. Repeat every night for nine nights.
+ritual body / practice: Use the first version for this candidate. Set two altar candles at the back of the table. Set the petitioner candle in the center. Set the white candle above the petitioner candle. Set orange candle No. 1 to the left, orange candle No. 2 below, and orange candle No. 3 to the right. Light the altar candles. Light incense. Concentrate on conquering fear. Light the petitioner candle while thinking of the petitioner. Light the white candle while thinking of strength and purity. Light orange candles Nos. 1, 2, and 3 while thinking of self-confidence, ability to overcome fear, and strength of personality. Name, in your own words, the courage being placed around the fear. Sit for five minutes in meditation. Extinguish the flames. Repeat every night for nine nights.
 
 intention: Put fear inside a visible circle of courage and support without treating the rite as therapy.
 
@@ -547,7 +547,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [nine-night practice]
   exclusionSignals: [medical/therapy framing]
   timingSignal: every night for nine nights
-  confidenceNotes: complete direct source architecture; long prayer adapted
+  confidenceNotes: complete direct source architecture; long prayer/Psalm replaced with functional instruction
 
 source grounding: `Buckland, Practical Candleburning Rituals`, PDF pp. 33-36.
 
@@ -559,7 +559,7 @@ review flags: sourceTextReviewRequired true; materialSafetyReviewRequired true; 
 
 adaptation policy notes: direct source ritual; symbolic courage only.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `Let courage take its place around this fear.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF pp. 33-36`, useContext: `prayer`, note: `Adapted from the longer source prayer/Psalm for courage.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -571,7 +571,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Welcome the Joy Light
 
-ritual body / practice: Set two altar candles at the back of the table. Set the petitioner candle in the center. Set the gold candle above it, the orange candle below it, red candle No. 1 to the left, and red candle No. 2 to the right. Light the altar candles. Light incense. Light the petitioner candle. Light the gold and orange candles. Light the two red candles. Say: "Let warmth move closer to the center." Sit for fifteen minutes thinking of happiness coming to the petitioner. Extinguish the candles. Repeat on successive nights, each time moving the two red candles two inches inward toward the petitioner candle. Continue until the two red candles touch the petitioner candle.
+ritual body / practice: Set two altar candles at the back of the table. Set the petitioner candle in the center. Set the gold candle above it, the orange candle below it, red candle No. 1 to the left, and red candle No. 2 to the right. Light the altar candles. Light incense. Light the petitioner candle. Light the gold and orange candles. Light the two red candles. Name, in your own words, the warmth or happiness being invited toward the center. Sit for fifteen minutes thinking of happiness coming to the petitioner. Extinguish the candles. Repeat on successive nights, each time moving the two red candles two inches inward toward the petitioner candle. Continue until the two red candles touch the petitioner candle.
 
 intention: Invite joy and warmth inward by moving the red candles closer over repeated nights.
 
@@ -594,7 +594,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [movement toward center]
   exclusionSignals: [guaranteed emotional outcome]
   timingSignal: successive nights until red candles touch center
-  confidenceNotes: complete direct source architecture; longer source wording adapted to avoid outcome guarantee
+  confidenceNotes: complete direct source architecture; longer source wording replaced with functional instruction to avoid outcome guarantee
 
 source grounding: `Buckland, Practical Candleburning Rituals`, PDF pp. 36-37.
 
@@ -606,7 +606,7 @@ review flags: sourceTextReviewRequired true; materialSafetyReviewRequired true; 
 
 adaptation policy notes: direct source ritual; no promise of happiness.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `Let warmth move closer to the center.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF pp. 36-37`, useContext: `spoken`, note: `Adapted from longer source wording for happiness while removing guaranteed-outcome force.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -618,7 +618,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Purify the Self Candle
 
-ritual body / practice: Use the first version for this candidate. Set two altar candles at the back of the table. Set the petitioner candle in the center. Set the pink candle above it and the white candle below it. Light the altar candles. Light incense. Light the petitioner candle and think of the petitioner. Light the pink candle and think of honor, uprightness, and morality. Light the white candle and think of sincerity, truth, and purity. Say: "Let what is sincere grow brighter than what is heavy." Sit quietly for five minutes thinking of symbolic purification. Say the same line a second time. Sit quietly for five minutes. Say it a third time. Sit quietly for five minutes again. Extinguish the candles. Repeat every three days for as long as desired.
+ritual body / practice: Use the first version for this candidate. Set two altar candles at the back of the table. Set the petitioner candle in the center. Set the pink candle above it and the white candle below it. Light the altar candles. Light incense. Light the petitioner candle and think of the petitioner. Light the pink candle and think of honor, uprightness, and morality. Light the white candle and think of sincerity, truth, and purity. Name, in your own words, the sincerity, truth, and symbolic purification the candles are holding. Sit quietly for five minutes thinking of symbolic purification. Say the same line a second time. Sit quietly for five minutes. Say it a third time. Sit quietly for five minutes again. Extinguish the candles. Repeat every three days for as long as desired.
 
 intention: Use the self candle, pink candle, and white candle to mark symbolic purification without shame or health claims.
 
@@ -641,7 +641,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [three-day repetition]
   exclusionSignals: [health/detox/shame request]
   timingSignal: every three days
-  confidenceNotes: complete direct source architecture; longer prayer adapted to avoid shame or health claims
+  confidenceNotes: complete direct source architecture; longer prayer/Psalm replaced with functional instruction to avoid shame or health claims
 
 source grounding: `Buckland, Practical Candleburning Rituals`, PDF pp. 65-67.
 
@@ -653,7 +653,7 @@ review flags: sourceTextReviewRequired true; materialSafetyReviewRequired true; 
 
 adaptation policy notes: direct source ritual; no shame/health claim.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `Let what is sincere grow brighter than what is heavy.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF pp. 65-67`, useContext: `prayer`, note: `Adapted from the longer source prayer/Psalm for symbolic purification while removing shame and health claims.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -665,7 +665,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Flame for Clear Words
 
-ritual body / practice: Set two altar candles at the back of the table. Set the petitioner candle in the center. Set white candle No. 1 above it, white candle No. 2 below-left, and white candle No. 3 below-right. Light the altar candles. Light incense. Concentrate on the subject where truth or clarity is wanted. Light the petitioner candle. Light white candle No. 1 and say: "Let the clear word come forward without force." Light white candle No. 2 and repeat the same line. Light white candle No. 3 and repeat it a third time. Sit for a half hour in quiet contemplation. Extinguish the candles. Keep the rite focused on clear words and clear seeing, not forcing another person to disclose or change.
+ritual body / practice: Set two altar candles at the back of the table. Set the petitioner candle in the center. Set white candle No. 1 above it, white candle No. 2 below-left, and white candle No. 3 below-right. Light the altar candles. Light incense. Concentrate on the subject where truth or clarity is wanted. Light the petitioner candle. Light white candle No. 1 and name, in your own words, the truth or clear words each white candle is being lit to hold. Light white candle No. 2 and repeat the same line. Light white candle No. 3 and repeat it a third time. Sit for a half hour in quiet contemplation. Extinguish the candles. Keep the rite focused on clear words and clear seeing, not forcing another person to disclose or change.
 
 intention: Ask for clarity in speech or writing without turning the candle toward control of another person.
 
@@ -688,7 +688,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [white candles, half-hour contemplation]
   exclusionSignals: [coercive truth request]
   timingSignal: before speaking/writing/reflection
-  confidenceNotes: complete direct source architecture; long prayer adapted
+  confidenceNotes: complete direct source architecture; long prayer/Psalm replaced with functional instruction
 
 source grounding: `Buckland, Practical Candleburning Rituals`, PDF pp. 75-76 / printed pp. 131-133.
 
@@ -698,9 +698,9 @@ search metadata: tags [buckland, truth, clear words, white candles]; materials [
 
 review flags: sourceTextReviewRequired true; materialSafetyReviewRequired true; sourceVerificationRequired true; productBoundaryReviewRequired true.
 
-adaptation policy notes: direct source ritual, narrowed to clear words.
+adaptation policy notes: direct source ritual, narrowed to clear words; long prayer/Psalm replaced with functional instruction.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `Let the clear word come forward without force.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF pp. 75-76 / printed pp. 131-133`, useContext: `prayer`, note: `Adapted from the longer source prayer/Psalm for truth.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -712,7 +712,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Dream Door Candle
 
-ritual body / practice: Use the second version for this candidate. Set two altar candles at the back of the table. Set the day candle at the front right. Set the petitioner candle in the center. Set the light-blue candle above-left of the petitioner candle. Set the white candle above-right of the petitioner candle. Set the orange candle below the petitioner candle. Light the altar candles. Light the day candle. Light incense. Light the petitioner candle and say: "Here is [Name], the subject of this rite." Light the light-blue candle and say: "Here burn Tranquility and Patience." Light the orange candle and say: "Let the dream draw near without being forced." Light the white candle and say: "For Truth in all that he sees, is this flame lit." Close your eyes for a few minutes and picture the petitioner or yourself surrounded by white light. Open your eyes and say: "Let the night show only what can be carried back." Sit quietly for a few moments. Extinguish the candles. Perform at night before going to bed, when dreams are desired.
+ritual body / practice: Use the second version for this candidate. Set two altar candles at the back of the table. Set the day candle at the front right. Set the petitioner candle in the center. Set the light-blue candle above-left of the petitioner candle. Set the white candle above-right of the petitioner candle. Set the orange candle below the petitioner candle. Light the altar candles. Light the day candle. Light incense. Light the petitioner candle and say: "Here is [Name], the subject of this rite." Light the light-blue candle and say: "Here burn Tranquility and Patience, necessary for the accomplishment of the desire." Light the orange candle and name, in your own words, the dream subject or desire it is being lit to hold. Light the white candle and say: "For Truth in all that he sees, is this flame lit." Close your eyes for a few minutes and picture the petitioner or yourself surrounded by white light. Open your eyes and name, in your own words, what may be shown in the dream and carried back safely. Sit quietly for a few moments. Extinguish the candles. Perform at night before going to bed, when dreams are desired.
 
 intention: Open a dream container with candlelight, then close the flame before sleep.
 
@@ -747,7 +747,7 @@ review flags: sourceTextReviewRequired true; materialSafetyReviewRequired true; 
 
 adaptation policy notes: direct source ritual; no journal added to body or materials.
 
-operative words metadata: [{ mode: `source_exact_short`, text: `Here is [Name], the subject of this rite.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF p. 89`, useContext: `spoken`, note: `Short source line preserved verbatim.` }, { mode: `source_exact_short`, text: `Here burn Tranquility and Patience.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF p. 89`, useContext: `spoken`, note: `Short source line preserved verbatim.` }, { mode: `adapted_source_words`, text: `Let the dream draw near without being forced.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF p. 89`, useContext: `spoken`, note: `Adapted from the source attraction line to remove outcome force.` }, { mode: `source_exact_short`, text: `For Truth in all that he sees, is this flame lit.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF p. 89`, useContext: `spoken`, note: `Short source line preserved verbatim; gendered source wording requires direct-use review.` }, { mode: `adapted_source_words`, text: `Let the night show only what can be carried back.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF pp. 89-90`, useContext: `spoken`, note: `Adapted from the longer source dream passage.` }]
+operative words metadata: [{ mode: `source_exact_short`, text: `Here is [Name], the subject of this rite.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF p. 89`, useContext: `spoken`, note: `Short source line preserved verbatim.` }, { mode: `source_exact_short`, text: `Here burn Tranquility and Patience, necessary for the accomplishment of the desire.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF p. 89`, useContext: `spoken`, note: `Short source line preserved verbatim.` }, { mode: `source_exact_short`, text: `For Truth in all that he sees, is this flame lit.`, citationLabel: `Buckland, Practical Candleburning Rituals`, sourceLocation: `PDF p. 89`, useContext: `spoken`, note: `Short source line preserved verbatim; gendered source wording requires direct-use review.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -783,7 +783,7 @@ import readiness label: `approved_for_mechanical_import`
 - [x] No approved candidate body contains placeholder language for duration, sequence, repetition, candle placement, lighting order, extinguishing order, movement pattern, source-word handling, or close.
 - [x] Short exact wording posture corrected.
 - [x] Usable short source wording is included inline and tracked as `source_exact_short` where appropriate.
-- [x] Longer prayers, Psalms, poems, scripts, and consecrations are handled by functional instruction or justified candidate-level `adapted_source_words` entries.
+- [x] Longer prayers, Psalms, poems, scripts, and consecrations are handled by functional instruction in this packet after #379 review; no active adapted long-word entries remain.
 - [x] `Dream Door Candle` no longer includes unsupported morning journaling or journal materials.
 - [x] Coverage summary counts only primary purposes from approved candidates.
 - [x] Mechanics-only candidates are held before import unless complete as standalone forms.

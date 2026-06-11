@@ -130,3 +130,15 @@ Result: the active contract now says exact short words, functional instruction, 
 ## Merge Recommendation
 
 Merge after validation if tests pass. This PR removes the systemic invented-word contract, repairs required packets in place, and leaves only candidate-audited adapted-word exceptions where the source-word function is tied to the preserved ritual sequence.
+
+## Post-#379 Buckland update
+
+Issue #379 supersedes the Buckland adapted-word exception table above for current packet state.
+
+Current review note:
+
+```text
+docs/research/reviews/buckland-adapted-ritual-words-review.md
+```
+
+Outcome: all 12 Buckland adapted-word exceptions were converted to functional instruction in `docs/research/ritual-candidates/packet-buckland-candlelight-complete-extraction.md`. No active Buckland candidate now uses adapted long-word metadata. Exact short source words remain where already cited and tracked.
