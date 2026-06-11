@@ -3757,7 +3757,7 @@ Speak Before the Circle
 
 #### Ritual body / practice
 
-Before lighting the candle or entering the circle, each partner names one thing that might make connection harder tonight. The other partner answers only by saying that they heard it. Place both named things outside the circle, literally or with a gesture, then enter.
+Before lighting the candle or entering the circle, each partner names one thing that might complicate connection tonight. The other partner answers only by saying that they heard it. Place both named things outside the circle, literally or with a gesture, then enter.
 
 #### Intention
 

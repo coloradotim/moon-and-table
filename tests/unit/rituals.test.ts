@@ -17,8 +17,8 @@ import {
 } from "../../src/data/rituals/validate-rituals";
 
 describe("source-backed Ritual import data", () => {
-  it("contains the seven-packet mechanical import batch as draft records", () => {
-    expect(sourceBackedRituals).toHaveLength(156);
+  it("contains the source-backed mechanical import batch as draft records", () => {
+    expect(sourceBackedRituals).toHaveLength(218);
     expect(sourceBackedRituals.map((ritual) => ritual.id)).toEqual(
       expect.arrayContaining([
         "ritual-buckland-candle-prepare-table",
@@ -28,6 +28,9 @@ describe("source-backed Ritual import data", () => {
         "whitehurst-flower-on-the-table",
         "candidate.saint_thomas.intimate_altar_table",
         "ritual-woodward-center-at-counter",
+        "candidate.moon_book.new_moon_table_seed",
+        "candidate.anand.practice_night_commitment",
+        "candidate.dominguez.glyph-as-mark",
       ]),
     );
     expect(sourceBackedRituals.every((ritual) => ritual.status === "draft")).toBe(true);

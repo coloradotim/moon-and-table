@@ -10,30 +10,33 @@ describe("Manage Rituals view model", () => {
   it("summarizes imported Ritual records without changing eligibility", () => {
     const viewModel = createManageRitualsViewModel(sourceBackedRituals);
 
-    expect(viewModel.total).toBe(156);
-    expect(viewModel.filteredTotal).toBe(156);
+    expect(viewModel.total).toBe(218);
+    expect(viewModel.filteredTotal).toBe(218);
     expect(viewModel.filters).toEqual(defaultManageRitualFilters);
     expect(viewModel.counts.byStatus).toEqual({
       pilot: 0,
-      draft: 156,
+      draft: 218,
       reviewed: 0,
       recommendable: 0,
     });
     expect(viewModel.counts.byOrigin).toEqual({
-      source: 156,
+      source: 218,
       household: 0,
     });
-    expect(viewModel.counts.findable).toBe(156);
+    expect(viewModel.counts.findable).toBe(218);
     expect(viewModel.counts.directUseEligible).toBe(0);
     expect(viewModel.counts.recommendationEligible).toBe(0);
     expect(viewModel.counts.recommendable).toBe(0);
     expect(viewModel.counts.withValidationFindings).toBe(0);
-    expect(viewModel.counts.withMissingReadiness).toBe(156);
+    expect(viewModel.counts.withMissingReadiness).toBe(218);
     expect(viewModel.rows.map((row) => row.id)).toEqual(
       expect.arrayContaining([
         "ritual-buckland-candle-prepare-table",
         "whitehurst-flower-on-the-table",
         "candidate.saint_thomas.intimate_altar_table",
+        "candidate.moon_book.new_moon_table_seed",
+        "candidate.anand.practice_night_commitment",
+        "candidate.dominguez.glyph-as-mark",
       ]),
     );
     expect(
@@ -48,7 +51,7 @@ describe("Manage Rituals view model", () => {
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { status: "draft" })
         .filteredTotal,
-    ).toBe(156);
+    ).toBe(218);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { status: "reviewed" })
         .filteredTotal,
@@ -56,7 +59,7 @@ describe("Manage Rituals view model", () => {
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { origin: "source" })
         .filteredTotal,
-    ).toBe(156);
+    ).toBe(218);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { origin: "household" })
         .filteredTotal,
@@ -65,7 +68,7 @@ describe("Manage Rituals view model", () => {
       createManageRitualsViewModel(sourceBackedRituals, {
         readiness: "missing_readiness",
       }).filteredTotal,
-    ).toBe(156);
+    ).toBe(218);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, {
         readiness: "validation_findings",
@@ -74,7 +77,7 @@ describe("Manage Rituals view model", () => {
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { validation: "valid" })
         .filteredTotal,
-    ).toBe(156);
+    ).toBe(218);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { validation: "findings" })
         .filteredTotal,
