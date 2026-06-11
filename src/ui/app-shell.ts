@@ -1702,35 +1702,32 @@ const energyReviewLabels: Record<RitualCheckInEnergyCapacity, string> = {
 
 function renderCheckInAcknowledgement(draft: RitualCheckInDraft): string {
   const acknowledgement = (() => {
-    if (draft.step === "review") {
-      return undefined;
+    switch (draft.step) {
+      case "energy_capacity":
+        return draft.timeScope
+          ? timeScopeAcknowledgements[draft.timeScope]
+          : undefined;
+      case "audience":
+        return draft.energyCapacity
+          ? energyAcknowledgements[draft.energyCapacity]
+          : undefined;
+      case "carrier":
+        return draft.audience
+          ? audienceOptions.find((option) => option.key === draft.audience)?.label
+          : undefined;
+      case "purpose":
+        return draft.carrierLabel ??
+          (draft.audience
+            ? audienceOptions.find((option) => option.key === draft.audience)?.label
+            : undefined);
+      case "refinement":
+        return draft.purposeLabel;
+      case "entry_path":
+      case "time_scope":
+      case "review":
+      default:
+        return undefined;
     }
-
-    if (draft.refinementLabel) {
-      return draft.refinementLabel;
-    }
-
-    if (draft.purposeLabel) {
-      return draft.purposeLabel;
-    }
-
-    if (draft.carrierLabel) {
-      return draft.carrierLabel;
-    }
-
-    if (draft.audience) {
-      return audienceOptions.find((option) => option.key === draft.audience)?.label;
-    }
-
-    if (draft.energyCapacity) {
-      return energyAcknowledgements[draft.energyCapacity];
-    }
-
-    if (draft.timeScope) {
-      return timeScopeAcknowledgements[draft.timeScope];
-    }
-
-    return undefined;
   })();
 
   return acknowledgement
