@@ -244,6 +244,8 @@ Timing cards must not say:
 
 These are research schemas, not TypeScript source files.
 
+Runtime-facing fields must use the current Ritual vocabulary. Extra timing language such as "beginning", "resting", "clearing", "threshold", "kitchen", "home", or "object" belongs in `symbolicPurposeQualities`, `symbolicCarrierQualities`, `symbolicQualities`, or `softRitualShapeHints`, not in runtime-purpose or runtime-carrier arrays.
+
 ### Shared types
 
 ```ts
@@ -266,32 +268,26 @@ type TimingFactKind =
   | "imperfect_timing"
   | "custom";
 
-type RitualPurposeHint =
+type RitualPurpose =
   | "opening"
-  | "beginning"
   | "marking"
   | "voicing"
   | "tending"
   | "connecting"
   | "steadying"
-  | "resting"
-  | "clearing"
   | "releasing"
   | "remembering"
-  | "blessing";
+  | "blessing"
+  | "protecting";
 
-type RitualCarrierHint =
+type RitualCarrier =
   | "words"
   | "table"
   | "candlelight"
   | "vessel"
   | "body"
   | "plant"
-  | "doorway"
-  | "threshold"
-  | "kitchen"
-  | "home"
-  | "object";
+  | "doorway";
 
 type SourceGroundingRef = {
   packetId: string;
@@ -318,6 +314,7 @@ type TimingSourceNoteCard = {
   id: string;
   label: string;
   cardKind:
+    | "timing_feature"
     | "moon_phase"
     | "lunation_cycle"
     | "planetary_family"
@@ -341,14 +338,16 @@ type TimingSourceNoteCard = {
   runtimeInfluenceEligible: boolean;
 
   symbolicQualities: string[];
-  preferredPurposes: RitualPurposeHint[];
-  preferredCarriers: RitualCarrierHint[];
-  discouragedPurposes?: RitualPurposeHint[];
-  discouragedCarriers?: RitualCarrierHint[];
+  preferredRuntimePurposes: RitualPurpose[];
+  preferredRuntimeCarriers: RitualCarrier[];
+  symbolicPurposeQualities: string[];
+  symbolicCarrierQualities: string[];
+  discouragedRuntimePurposes?: RitualPurpose[];
+  discouragedRuntimeCarriers?: RitualCarrier[];
 
   softRitualShapeHints: {
     actionVerbs: string[];
-    materialHints: RitualCarrierHint[];
+    materialHints: RitualCarrier[];
     closureHints: string[];
     capacityHints?: {
       low?: string[];
@@ -372,6 +371,26 @@ type TimingSourceNoteCard = {
     hintSummary: string;
     notARecommendation: string;
   }[];
+};
+```
+
+### TimingFeatureCard
+
+Generic card for timing features that are not cleanly a Moon phase, lunation cycle, planetary family, or adaptation rule.
+
+```ts
+type TimingFeatureCard = TimingSourceNoteCard & {
+  cardKind: "timing_feature";
+  timingFeature:
+    | "planetary_day"
+    | "planetary_hour"
+    | "void_moon"
+    | "retrograde"
+    | "aspect_condition"
+    | "imperfect_timing"
+    | "custom";
+  featureFamily?: string;
+  featureLabel: string;
 };
 ```
 
@@ -607,6 +626,8 @@ Recommendation logic must not use timing cards to:
 
 All examples below are draft research examples. They are not runtime data.
 
+Example source locations are illustrative until #349/#355 verify them against the approved packet/source material during timing-card extraction. Do not treat the examples as reviewed timing cards.
+
 ### New moon
 
 ```ts
@@ -634,9 +655,11 @@ const newMoonCard: MoonPhaseCard = {
   reviewStatus: "draft_research",
   runtimeInfluenceEligible: false,
   symbolicQualities: ["seed", "space", "beginning", "quiet start"],
-  preferredPurposes: ["beginning", "opening", "voicing", "marking"],
-  preferredCarriers: ["words", "table", "vessel", "candlelight", "plant"],
-  discouragedPurposes: ["clearing"],
+  preferredRuntimePurposes: ["opening", "voicing", "marking"],
+  preferredRuntimeCarriers: ["words", "table", "vessel", "candlelight", "plant"],
+  symbolicPurposeQualities: ["beginning", "seeded start", "quiet start"],
+  symbolicCarrierQualities: ["seed", "small held object", "place for the beginning"],
+  discouragedRuntimePurposes: ["releasing"],
   softRitualShapeHints: {
     actionVerbs: ["name", "place", "begin", "wait"],
     materialHints: ["table", "vessel", "plant", "words"],
@@ -681,8 +704,10 @@ const fullMoonCard: MoonPhaseCard = {
   reviewStatus: "draft_research",
   runtimeInfluenceEligible: false,
   symbolicQualities: ["visibility", "witness", "culmination", "naming"],
-  preferredPurposes: ["marking", "voicing", "blessing", "remembering"],
-  preferredCarriers: ["candlelight", "table", "words", "vessel"],
+  preferredRuntimePurposes: ["marking", "voicing", "blessing", "remembering"],
+  preferredRuntimeCarriers: ["candlelight", "table", "words", "vessel"],
+  symbolicPurposeQualities: ["witnessing", "culmination", "naming what is visible"],
+  symbolicCarrierQualities: ["visible light", "table witness", "held line"],
   softRitualShapeHints: {
     actionVerbs: ["witness", "name", "hold up", "mark"],
     materialHints: ["candlelight", "table", "words"],
@@ -722,8 +747,10 @@ const waningMoonCard: MoonPhaseCard = {
   reviewStatus: "draft_research",
   runtimeInfluenceEligible: false,
   symbolicQualities: ["lowering", "return", "release", "lessening"],
-  preferredPurposes: ["clearing", "releasing", "resting", "steadying"],
-  preferredCarriers: ["vessel", "candlelight", "body", "words"],
+  preferredRuntimePurposes: ["releasing", "steadying"],
+  preferredRuntimeCarriers: ["vessel", "candlelight", "body", "words"],
+  symbolicPurposeQualities: ["clearing", "lowering", "resting by setting down"],
+  symbolicCarrierQualities: ["empty bowl", "lowered light", "returned object"],
   softRitualShapeHints: {
     actionVerbs: ["lower", "empty", "return", "set down"],
     materialHints: ["vessel", "candlelight", "words"],
@@ -765,8 +792,10 @@ const venusFamilyCard: PlanetaryFamilyCard = {
   reviewStatus: "draft_research",
   runtimeInfluenceEligible: false,
   symbolicQualities: ["warmth", "harmony", "sweetness", "beauty", "shared value"],
-  preferredPurposes: ["connecting", "tending", "blessing", "voicing"],
-  preferredCarriers: ["table", "candlelight", "words", "kitchen"],
+  preferredRuntimePurposes: ["connecting", "tending", "blessing", "voicing"],
+  preferredRuntimeCarriers: ["table", "candlelight", "words"],
+  symbolicPurposeQualities: ["warmth", "harmony", "sweetening", "shared value"],
+  symbolicCarrierQualities: ["cup", "kitchen warmth", "shared table"],
   softRitualShapeHints: {
     actionVerbs: ["sweeten", "warm", "offer", "soften"],
     materialHints: ["table", "candlelight", "words"],
@@ -811,11 +840,13 @@ const mercuryRetrogradeRule: TimingAdaptationRule = {
   reviewStatus: "draft_research",
   runtimeInfluenceEligible: false,
   symbolicQualities: ["review", "retracing", "foundation", "repair"],
-  preferredPurposes: ["remembering", "tending", "steadying", "voicing"],
-  preferredCarriers: ["words", "table", "object"],
+  preferredRuntimePurposes: ["remembering", "tending", "steadying", "voicing"],
+  preferredRuntimeCarriers: ["words", "table"],
+  symbolicPurposeQualities: ["review", "retracing", "repair", "foundation"],
+  symbolicCarrierQualities: ["ordinary object", "written note", "table record"],
   softRitualShapeHints: {
     actionVerbs: ["review", "rename", "return to", "repair"],
-    materialHints: ["words", "table", "object"],
+    materialHints: ["words", "table"],
     closureHints: ["close with one thing clarified, not completed"]
   },
   explanationBoundaries: {
@@ -864,8 +895,10 @@ const voidMoonRule: TimingAdaptationRule = {
   reviewStatus: "draft_research",
   runtimeInfluenceEligible: false,
   symbolicQualities: ["softening", "pause", "containment", "low stakes"],
-  preferredPurposes: ["resting", "steadying", "remembering"],
-  preferredCarriers: ["body", "words", "vessel", "candlelight"],
+  preferredRuntimePurposes: ["steadying", "remembering"],
+  preferredRuntimeCarriers: ["body", "words", "vessel", "candlelight"],
+  symbolicPurposeQualities: ["rest", "pause", "containment", "low-stakes holding"],
+  symbolicCarrierQualities: ["held question", "small vessel", "quiet body"],
   softRitualShapeHints: {
     actionVerbs: ["pause", "hold", "set down", "contain"],
     materialHints: ["vessel", "body", "words"],
@@ -910,8 +943,10 @@ const imperfectTimingRule: TimingAdaptationRule = {
   reviewStatus: "draft_research",
   runtimeInfluenceEligible: false,
   symbolicQualities: ["adaptation", "honesty", "available support"],
-  preferredPurposes: ["steadying", "tending", "marking"],
-  preferredCarriers: ["words", "table", "candlelight", "object"],
+  preferredRuntimePurposes: ["steadying", "tending", "marking"],
+  preferredRuntimeCarriers: ["words", "table", "candlelight"],
+  symbolicPurposeQualities: ["adaptation", "honest timing", "available support"],
+  symbolicCarrierQualities: ["available object", "borrowed light", "table mark"],
   softRitualShapeHints: {
     actionVerbs: ["adapt", "name", "borrow", "keep"],
     materialHints: ["words", "table", "candlelight"],
