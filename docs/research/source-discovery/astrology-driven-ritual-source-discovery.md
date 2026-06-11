@@ -205,7 +205,7 @@ The source appears practical and planet-focused. It likely provides more direct 
 Reasons to be cautious or reject:
 
 - Western Mystery Tradition may include deity/angel/spirit invocation;
-- exact invocations and ritual scripts likely require private excerpt handling;
+- exact invocations and ritual scripts likely require operative text review handling;
 - may be less domestic and more ceremonial than Moon & Table's ideal tone.
 
 Recommended next action: `source_gate_now`

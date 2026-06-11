@@ -92,7 +92,7 @@ Reasons to be cautious or reject:
 
 - may lean recipes more than rituals;
 - ingestion/allergy/pet/food safety issues;
-- exact recipes and seasonal rites may require private excerpt handling;
+- exact recipes and seasonal rites may require operative text review handling;
 - may not explicitly frame shared-object ritual outside cooking.
 
 Recommended next action: `source_gate_now`
@@ -150,7 +150,7 @@ Reasons to be cautious or reject:
 
 - may be light/popular and not source-deep enough;
 - recipe/ingredient safety burden;
-- exact recipes/spells private excerpt;
+- exact recipes/spells operative text review;
 - may include prosperity/luck/love claims that need softening or holds.
 
 Recommended next action: `source_gate_now`
@@ -321,7 +321,7 @@ Reasons to be cautious or reject:
 
 - may be tradition-specific and deity/Feri-influenced;
 - may be less domestic/household than Moon & Table wants;
-- exact exercises/invocations likely private excerpt;
+- exact exercises/invocations likely operative text review;
 - may require stronger source-boundary review than kitchen sources.
 
 Recommended next action: `source_gate_now`
@@ -377,7 +377,7 @@ Reasons to be cautious or reject:
 
 - deity/tradition/coven context;
 - communal ritual may not adapt easily to private household Tim/Jessica practice;
-- exact rituals and invocations private excerpt;
+- exact rituals and invocations operative text review;
 - likely higher cultural/religious source-boundary burden.
 
 Recommended next action: `maybe_later`
@@ -512,7 +512,7 @@ Likely Moon & Table use:
 
 - possible vessel + blessing/marking/remembering candidates;
 - source notes for chalice/cauldron tool roles;
-- exact private excerpt support for ritual scripts.
+- exact operative text review support for ritual scripts.
 
 Likely carriers:
 

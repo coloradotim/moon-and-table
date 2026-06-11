@@ -11,7 +11,7 @@ Controls:
 ```text
 docs/research/voice/moon-and-table-house-voice-guide.md
 src/data/rituals/types.ts
-docs/research/private-source-text-policy.md
+docs/research/operative-ritual-words-policy.md
 docs/research/runtime-ritual-authoring-policy.md
 ```
 
@@ -222,13 +222,13 @@ short source phrase = 20 words or fewer
 
 If the exact operative source phrase is 20 words or fewer, include it inline in the ritual body and add `ritualWords` metadata with `mode: source_exact_short`, source location, use context, and citation label.
 
-If the exact operative source wording is more than 20 words, do not reproduce the long passage in the public packet. Write adapted Moon & Table words that preserve the source words' ritual function, include those adapted words inline in the ritual body, and add a `ritualWords` record with `mode: adapted_source_words`, source location, use context, citation label, and a note explaining what function was adapted.
+If the exact operative source wording is more than 20 words, do not reproduce the long passage in the public packet. First decide whether a plain functional instruction preserves the rite honestly. Use adapted Moon & Table words only as a candidate-by-candidate exception when the source words are structurally necessary; include those adapted words inline in the ritual body, and add a `ritualWords` record with `mode: adapted_source_words`, source location, use context, citation label, and a note explaining what function was adapted.
 
 If the source supports a word-shaped action but does not provide operative words, use plain functional instruction in the ritual body, such as "Name the purpose aloud" or "Write the date and one sentence." Do not invent quoted ceremonial speech for that case.
 
 Do not create generic filler, process labels, or private-wording placeholders for source-provided operative words.
 
-No separate `sourceTextUse` or `privateExcerptSupport` block is required for normal extraction. `ritualWords` is the operative-word tracking surface.
+No separate source-text mini-schema is required for normal extraction. `ritualWords` is the operative-word tracking surface.
 
 ## Why-this-fits / how-this-was-chosen ingredients
 
@@ -390,7 +390,7 @@ source PDF/material
 extraction packet PR diff
 docs/research/voice/moon-and-table-house-voice-guide.md
 docs/research/extraction-depth-policy.md
-docs/research/private-source-text-policy.md
+docs/research/operative-ritual-words-policy.md
 docs/research/runtime-ritual-authoring-policy.md
 src/data/rituals/types.ts
 ```
@@ -406,7 +406,7 @@ QA must verify:
 - `ritual body / practice` contains open, action/sequence, operative words where needed, and close;
 - `ritualWords` is metadata only;
 - exact short source words are inline, 20 words or fewer, and tracked as `source_exact_short`;
-- longer exact wording is adapted into inline Moon & Table words and tracked as `adapted_source_words`;
+- longer exact wording is handled by functional instruction or, when justified candidate by candidate, adapted into inline Moon & Table words and tracked as `adapted_source_words`;
 - no generic Moon & Table replacement words are created where usable source words exist;
 - `whyThisFitsIngredients` and `howThisWasChosenIngredients` use the required structure;
 - no runtime eligibility flags are changed.
@@ -447,12 +447,12 @@ source-specific extraction/re-extraction issue
 
 Separate QA issues should not be created by default. Create a separate QA/rework issue only if PR review uncovers work too large to resolve in the extraction PR.
 
-## Relationship to private source text policy
+## Relationship to operative ritual words policy
 
 This policy works together with:
 
 ```text
-docs/research/private-source-text-policy.md
+docs/research/operative-ritual-words-policy.md
 ```
 
 Agents should inventory and classify exact wording, blessings, prayers, invocations, prompts, recipes, spells, charms, and meditations instead of erasing them.

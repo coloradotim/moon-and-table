@@ -105,7 +105,7 @@ Reasons to be cautious or reject:
 - may include spirit communication, offerings, prayers, or religious frameworks that need source-boundary review;
 - family/lineage material can be emotionally complex;
 - not all users have safe relationships with ancestors or family lines;
-- exact prayers/rites private excerpt.
+- exact prayers/rites operative text review.
 
 Recommended next action: `source_gate_now`
 
@@ -165,7 +165,7 @@ Reasons to be cautious or reject:
 
 - grief/death material can become heavy quickly;
 - Reclaiming/Goddess/tradition language needs source-boundary review;
-- exact prayers and meditations require private excerpt handling;
+- exact prayers and meditations require operative text review handling;
 - some material may be for dying, funerals, or community rites rather than ordinary household remembrance.
 
 Recommended next action: `source_gate_now`
@@ -224,7 +224,7 @@ Reasons to be cautious or reject:
 
 - Grimassi's tradition and historical claims often need careful source-boundary review;
 - may involve spirit communication, trance, past-life, or ancestral memory claims;
-- exact rites private excerpt;
+- exact rites operative text review;
 - could become too metaphysical for normal household use.
 
 Recommended next action: `source_gate_now`

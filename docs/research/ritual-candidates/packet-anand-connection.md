@@ -47,12 +47,12 @@ Page references in this packet use PDF pages plus printed page / chapter where u
 Moon & Table follows:
 
 ```text
-docs/research/private-source-text-policy.md
+docs/research/operative-ritual-words-policy.md
 docs/research/extraction-depth-policy.md
 docs/research/prompts/extraction-packet-prompt-template.md
 ```
 
-Words, prompts, spoken purpose, ritual greetings, guided practices, shared-symbol language, partner questions, and exact stage names are valid Ritual mechanics. Exact wording is not contamination. Because this is a modern copyrighted source with staged exercises and distinctive guided language, this packet records source locations, mechanics, carriers, purposes, short anchors, and private-excerpt need without reproducing full exercises, full prompts, full scripts, full meditations, full diagrams, or distinctive long passages.
+Words, prompts, spoken purpose, ritual greetings, guided practices, shared-symbol language, partner questions, and exact stage names are valid Ritual mechanics. Exact wording is not contamination. Because this is a modern copyrighted source with staged exercises and distinctive guided language, this packet records source locations, mechanics, carriers, purposes, short anchors, and operative-text-review need without reproducing full exercises, full prompts, full scripts, full meditations, full diagrams, or distinctive long passages.
 
 All candidates remain draft research only.
 
@@ -109,23 +109,23 @@ Inventory is intentionally broad. Candidate records are draft research records o
 | Music and atmosphere | PDF 23 / Hints | exact_page | ritual | ritual_candidate | Music supports atmosphere and ritual aliveness. | body, candlelight | opening | low | candidate_extract_later | Supportive but not enough alone. | Use in variants. |
 | Vision-symbol-energy framework | PDF 23-25 / Ch. 1 | page_range | context_only | source_note_only | Source's basic four-part magical model. | words, body | marking | high | source_note_only | Foundation; not candidate alone. | Source note. |
 | Love/control ethic | PDF 38-39 / Ch. 1 | page_range | context_only | source_note_only | Magic should root in love, not control. | words | protecting | medium | source_note_only | Sets extraction boundary. | Keep as policy note. |
-| Reclaiming personal power | PDF 25-27 / Ch. 1 | page_range | spoken_formula | ritual_candidate | Personal responsibility and chosen future language. | words | opening | high | candidate_extract_later | Exact language distinctive; may be too self-help. | Later private excerpt review. |
+| Reclaiming personal power | PDF 25-27 / Ch. 1 | page_range | spoken_formula | ritual_candidate | Personal responsibility and chosen future language. | words | opening | high | candidate_extract_later | Exact language distinctive; may be too self-help. | Later operative text review. |
 | Magic Circle overview | PDF 51-68 / Ch. 2 | chapter_range | ritual | ritual_candidate | Create protected ritual space with markers and altar. | table, candlelight, words | opening | high | candidate_extract_now | Foundational container. | Candidate: Make the Circle for Us. |
 | Circle markers and power objects | PDF 51-68 / Ch. 2 | chapter_range | ritual | ritual_candidate | Stones/scarves/power objects define practice space. | table, vessel | marking | medium | candidate_extract_now | Strong domestic adaptation. | Candidate: Lay the Markers. |
 | Altar with candle | PDF 51-68 / Ch. 2 | chapter_range | ritual | ritual_candidate | Altar/low table/box and candle anchor the practice. | candlelight, table | opening | medium | candidate_extract_now | Directly fills candlelit connection lane. | Candidate: Light the Shared Altar. |
 | Magician's Posture | PDF 51-68 / Ch. 2 | chapter_range | ritual | ritual_candidate | Embodied stance before practice. | body | opening | high | candidate_extract_later | Could feel ceremonial/workshop. | Later adaptation. |
 | Spoken purpose in circle | PDF 51-68 / Ch. 2 | chapter_range | spoken_formula | ritual_candidate | State the purpose of the practice aloud. | words | voicing | high | candidate_extract_now | Strong words/voicing candidate. | Candidate: Speak the Purpose. |
-| Melting Hug | PDF 68-69 / Ch. 2 | exact_page | ritual | ritual_candidate | Shared embrace as connection/completion mechanic. | body | connecting | high | candidate_extract_now | Strong but exact wording private. | Candidate: Melt Back Together. |
+| Melting Hug | PDF 68-69 / Ch. 2 | exact_page | ritual | ritual_candidate | Shared embrace as connection/completion mechanic. | body | connecting | high | candidate_extract_now | Strong but exact wording requires operative text review. | Candidate: Melt Back Together. |
 | Heart Salutation | PDF 68-69 / Ch. 2 | exact_page | ritual | ritual_candidate | Bow/heart gesture to partner or self to close. | body, words | blessing | high | candidate_extract_now | Excellent closing mechanic. | Candidate: Close with Heart Salutation. |
 | Store circle materials | PDF 69 / Ch. 2 | exact_page | ritual | product_followup_pattern | Keep circle materials in a special place. | vessel | tending | low | candidate_extract_later | Product/material tracking support. | Later follow-up. |
 | Remembering Times of Magic | PDF 69-73 / Ch. 2 | page_range | prompt | both | Recall, enact, and share a personal moment of magic. | words, body | remembering | high | candidate_extract_now | Strong intimate witnessing candidate. | Candidate: Remember a Time of Magic. |
-| Initiation / Inner Magician | PDF 73-80 / Ch. 2 | page_range | meditation | ritual_candidate | Guided symbolic initiation and talisman. | words, body, vessel | opening | high | candidate_extract_later | Long guided visualization; private excerpt. | Later adapted candidate. |
+| Initiation / Inner Magician | PDF 73-80 / Ch. 2 | page_range | meditation | ritual_candidate | Guided symbolic initiation and talisman. | words, body, vessel | opening | high | candidate_extract_later | Long guided visualization; operative text review. | Later adapted candidate. |
 | Sensual preparation | PDF 93-104 / Ch. 3 | page_range | ritual | ritual_candidate | Prepare body and attention for intimate practice. | body, words | opening | high | candidate_extract_later | Too explicit in source; needs soft adaptation. | Later opt-in candidate. |
 | Partner feedback after preparation | PDF 103-104 / Ch. 3 | page_range | prompt | ritual_candidate | Partners share what they appreciated. | words | connecting | medium | candidate_extract_now | Strong and non-technique. | Candidate: Tell Me What You Noticed. |
 | Body naming/reframing | PDF 104-108 / Ch. 3 | page_range | prompt | hold | Sacred naming of body parts. | words, body | voicing | high | hold | Too explicit for normal library without separate decision. | Hold. |
 | Shame/wound work | PDF 108-118 / Ch. 3 | page_range | meditation | hold | Emotional wound/shame processing. | body, words | releasing | high | hold | Therapy boundary. | Hold. |
 | Laughter practice | PDF 131-136 / Ch. 4 | page_range | ritual | ritual_candidate | Laughter releases stuckness and returns to circle. | body | releasing | medium | candidate_extract_now | Useful if kept simple. | Candidate: Laugh the Room Open. |
-| Fire Meditation | PDF 136-145 / Ch. 4 | page_range | meditation | ritual_candidate | Movement/breath/fire visualization with return/share. | body | opening | high | candidate_extract_later | Long guided practice; private excerpt. | Later adapted candidate. |
+| Fire Meditation | PDF 136-145 / Ch. 4 | page_range | meditation | ritual_candidate | Movement/breath/fire visualization with return/share. | body | opening | high | candidate_extract_later | Long guided practice; operative text review. | Later adapted candidate. |
 | Wild animal visualization | PDF 145-154 / Ch. 4 | page_range | meditation | hold | Instinctive animal embodiment and partner encounter. | body | connecting | high | hold | Role/gender/material too complex. | Hold. |
 | Choose a desire | PDF 167-175 / Ch. 5 | page_range | prompt | ritual_candidate | Choose what the practice is for. | words | opening | high | candidate_extract_now | Key ritual invitation. | Candidate: Choose the Shared Want. |
 | Express desire in sentence | PDF 175-178 / Ch. 5 | page_range | prompt | ritual_candidate | State desire in clear, positive language. | words | voicing | high | candidate_extract_now | Strong verbal mechanic. | Candidate support. |
@@ -150,7 +150,7 @@ Inventory is intentionally broad. Candidate records are draft research records o
 | Magical atmosphere menu | PDF 331-345 / Ch. 9 | page_range | ritual | ritual_candidate | Soft lighting/candles/incense/music/markers/power objects. | candlelight, table | connecting | medium | candidate_extract_now | Key candlelit connection. | Candidate: Prepare the Candlelit Room. |
 | Heart connection talk | PDF 331-345 / Ch. 9 | page_range | prompt | ritual_candidate | Share what might stand in the way before practice. | words | connecting | high | candidate_extract_now | Strong non-generic intimacy. | Candidate: Speak Before the Circle. |
 | Clarifying intent | PDF 331-345 / Ch. 9 | page_range | prompt | ritual_candidate | Define shared goal, symbol, tools, and length. | words | voicing | medium | candidate_extract_now | Excellent prep ritual. | Candidate: Clarify the Night's Work. |
-| Ritual greeting / invocation | PDF 331-345 / Ch. 9 | page_range | invocation | ritual_candidate | Heart Salutation and dedication of practice. | words, body | blessing | high | candidate_extract_now | Exact wording private. | Candidate: Greet Each Other as Sacred. |
+| Ritual greeting / invocation | PDF 331-345 / Ch. 9 | page_range | invocation | ritual_candidate | Heart Salutation and dedication of practice. | words, body | blessing | high | candidate_extract_now | Exact wording requires operative text review. | Candidate: Greet Each Other as Sacred. |
 | Symbol meditation before intimacy | PDF 331-345 / Ch. 9 | page_range | meditation | ritual_candidate | Contemplate symbol to imprint it before practice. | table, words | marking | medium | candidate_extract_now | Strong, non-technique. | Candidate: Gaze at the Symbol Together. |
 | Personalized practice menu | PDF 331-345 / Ch. 9 | page_range | prompt | both | Choose preparation, connection, symbol, closing pieces. | words | tending | medium | candidate_extract_now | Good grimoire/product pattern. | Candidate/follow-up. |
 | Classical Magical Congress sequence | PDF 345-362 / Ch. 9 | page_range | ritual | hold | Full staged partner sequence. | body, words | connecting | high | hold | Too explicit for extraction packet; use container only. | Hold. |
@@ -166,13 +166,13 @@ Inventory is intentionally broad. Candidate records are draft research records o
 source_items_inventoried: 52
 candidate_extract_now: 24
 candidate_extract_later: 12
-private_excerpt_reference: 2
-items_with_private_excerpt_recommended: 28
+operative_text_review_reference: 2
+items_with_operative_text_review: 28
 source_note_only: 5
 context_only: 2
 hold: 6
 reject: 1
-remaining_unreviewed_source_sections: none known within approved source-gate ranges for source-gate-level extraction; exact exercises/stage language still require Tim private review from source copy
+remaining_unreviewed_source_sections: none known within approved source-gate ranges for source-gate-level extraction; exact exercises/stage language still require Tim operative text review from source copy
 remaining_extraction_backlog: 12 candidate_extract_later items plus 6 held items requiring Tim/product/source-boundary decisions
 ```
 
@@ -221,19 +221,19 @@ recommendationMetadata: {
 | `ritual-anand-discuss-the-steps` | Read the Steps Together | PDF 21 / Hints | words | voicing | Read/discuss exercise before practice. | Read source-derived notes together, say what feels clear or unclear, then enter practice without the book. | product_followup_pattern | Better as pre-ritual support. |
 | `ritual-anand-boundary-kindly` | Name the Boundary Kindly | PDF 22-23 / Hints | words | steadying | Discomfort as teacher; do not push past boundaries. | Each partner names one yes, one no, and one maybe before any intimate practice. | draft_record_ready | Do not make it clinical. |
 | `ritual-anand-grimoire-afterglow` | Write the Afterglow | PDF 23 / Hints | words | remembering | Magical journal. | After a connection ritual, each writes one sensation, one image, and one thing to remember. | product_followup_pattern | Strong follow-up. |
-| `ritual-anand-circle-for-us` | Make the Circle for Us | PDF 51-68 / Ch. 2 | table | opening | Magic Circle, altar, candle, markers. | Lay cloth/markers, set one candle and one object, name the room as a circle for the two of you. | draft_record_ready | Exact setup private excerpt. |
-| `ritual-anand-shared-altar-light` | Light the Shared Altar | PDF 51-68 / Ch. 2 | candlelight | opening | Altar candle anchors Magic Circle. | Light one candle on a small altar/table, name the practice, and sit in the shared light. | draft_record_ready | Fire safety; source wording private. |
+| `ritual-anand-circle-for-us` | Make the Circle for Us | PDF 51-68 / Ch. 2 | table | opening | Magic Circle, altar, candle, markers. | Lay cloth/markers, set one candle and one object, name the room as a circle for the two of you. | draft_record_ready | Exact setup operative text review. |
+| `ritual-anand-shared-altar-light` | Light the Shared Altar | PDF 51-68 / Ch. 2 | candlelight | opening | Altar candle anchors Magic Circle. | Light one candle on a small altar/table, name the practice, and sit in the shared light. | draft_record_ready | Fire safety; any exact source wording requires operative text review. |
 | `ritual-anand-lay-markers` | Lay the Markers | PDF 51-68 / Ch. 2 | table | marking | Markers/power objects define ritual area. | Place four simple markers or objects around the practice space, then remove them to close. | draft_record_ready | No rigid ceremonial burden. |
-| `ritual-anand-speak-purpose` | Speak the Purpose | PDF 51-68 / Ch. 2 | words | voicing | Spoken purpose inside circle. | Standing or sitting together, each speaks one sentence about why you are here tonight. | draft_record_ready | Exact spoken formula private. |
+| `ritual-anand-speak-purpose` | Speak the Purpose | PDF 51-68 / Ch. 2 | words | voicing | Spoken purpose inside circle. | Standing or sitting together, each speaks one sentence about why you are here tonight. | draft_record_ready | Exact spoken formula requires operative text review. |
 | `ritual-anand-melting-hug` | Melt Back Together | PDF 68-69 / Ch. 2 | body | connecting | Melting Hug. | Share a quiet embrace long enough to arrive, then separate with thanks. | draft_record_ready | Preserve warmth; no technique framing. |
-| `ritual-anand-heart-salutation` | Close with Heart Salutation | PDF 68-69 / Ch. 2 | body | blessing | Heart Salutation. | Face each other, bow or gesture at the heart, and close the practice with mutual honor. | draft_record_ready | Exact source gesture private excerpt. |
+| `ritual-anand-heart-salutation` | Close with Heart Salutation | PDF 68-69 / Ch. 2 | body | blessing | Heart Salutation. | Face each other, bow or gesture at the heart, and close the practice with mutual honor. | draft_record_ready | Exact source gesture operative text review. |
 | `ritual-anand-remember-magic` | Remember a Time of Magic | PDF 69-73 / Ch. 2 | words | remembering | Remembering Times of Magic. | Each partner tells one moment that felt magical and lets the other witness it. | draft_record_ready | Avoid overacting source exercise. |
 | `ritual-anand-tell-me-noticed` | Tell Me What You Noticed | PDF 103-104 / Ch. 3 | words | connecting | Partner feedback after preparation. | Each partner says one thing they noticed, appreciated, or felt in the other. | draft_record_ready | Keep consent-aware and non-evaluative. |
 | `ritual-anand-laugh-room-open` | Laugh the Room Open | PDF 131-136 / Ch. 4 | body | releasing | Laughter as release and return. | Let laughter or playful sound loosen the room, then return to stillness and share one word. | needs_authoring_revision | Needs careful tone. |
 | `ritual-anand-choose-shared-want` | Choose the Shared Want | PDF 167-175 / Ch. 5 | words | opening | Choose desire/vision. | Together name what you want this practice to serve, using one simple shared phrase. | draft_record_ready | Avoid manifestation guarantees. |
-| `ritual-anand-shared-vision` | Ask the Shared Vision | PDF 186-190 / Ch. 5 | words | connecting | Partners ask what vision each brings to relationship. | One asks, one answers, then switch; find the common ground you both consent to hold. | draft_record_ready | Exact questions private excerpt. |
+| `ritual-anand-shared-vision` | Ask the Shared Vision | PDF 186-190 / Ch. 5 | words | connecting | Partners ask what vision each brings to relationship. | One asks, one answers, then switch; find the common ground you both consent to hold. | draft_record_ready | Exact questions operative text review. |
 | `ritual-anand-draw-shared-sign` | Draw the Shared Sign | PDF 185-190 / Ch. 5 | table | connecting | Shared Magic Symbol. | Draw one symbol together for a mutual intention and place it between you. | draft_record_ready | Strong table + connecting. |
-| `ritual-anand-symbol-altar` | Place the Symbol on the Altar | PDF 190 / Ch. 5 | table | marking | Shared symbol accepted and placed on altar. | Hold the symbol, place it on altar/table, sit with it, and close with a heart gesture. | draft_record_ready | Exact acceptance words private. |
+| `ritual-anand-symbol-altar` | Place the Symbol on the Altar | PDF 190 / Ch. 5 | table | marking | Shared symbol accepted and placed on altar. | Hold the symbol, place it on altar/table, sit with it, and close with a heart gesture. | draft_record_ready | Exact acceptance words require operative text review. |
 | `ritual-anand-tonight-intention` | Name Tonight's Intention | PDF 190 / Ch. 5 | words | voicing | Jointly held vision for one session. | Name the intention for tonight only, not for the whole relationship. | draft_record_ready | Avoid pressure or performance goals. |
 | `ritual-anand-candlelit-room` | Prepare the Candlelit Room | PDF 331-345 / Ch. 9 | candlelight | connecting | Soft lighting/candles/music/markers before Magical Congress. | Set one candle, dim the room, place the shared symbol, and invite the room to soften around you. | draft_record_ready | This is candlelight + connecting gap support. |
 | `ritual-anand-cross-day-night` | Cross from Day to Night | PDF 331-345 / Ch. 9 | body | opening | Transition from daily life into ritual state. | Take a walk, shower, or breath reset, then enter the room as the practice begins. | draft_record_ready | Keep domestic and low-overwhelm. |
@@ -384,12 +384,12 @@ Variant / split candidates:
 - Inventory-first source rite inventory included: yes.
 - Every inventoried source item has disposition: yes.
 - Required metrics included: yes.
-- `items_with_private_excerpt_recommended` included: yes.
+- `items_with_operative_text_review` included: yes.
 - Source-location precision recorded: yes.
 - Research use classified: yes.
 - Primary vs secondary coverage separated: yes.
 - Variant / split ledger included: yes.
-- Exact wording/private excerpt needs flagged: yes.
+- Exact wording/operative text review needs flagged: yes.
 - No full copyrighted exercises, scripts, prompts, meditations, diagrams, or distinctive long passages reproduced: yes.
 - Extracted rituals, not technique lessons: yes.
 - No runtime Ritual data added: yes.
@@ -417,6 +417,6 @@ Variant / split candidates:
 
 `inventory_aware_extraction_ready_for_review`
 
-This packet is ready for human review as a research artifact. It requires source verification, private-excerpt decisions, authoring review, safety/consent review, and schema normalization before any candidate can move beyond draft research status.
+This packet is ready for human review as a research artifact. It requires source verification, operative-text-review decisions, authoring review, safety/consent review, and schema normalization before any candidate can move beyond draft research status.
 
 No runtime integration is recommended.

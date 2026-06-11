@@ -11,7 +11,7 @@ Controls:
 ```text
 docs/research/voice/moon-and-table-house-voice-guide.md
 docs/research/extraction-depth-policy.md
-docs/research/private-source-text-policy.md
+docs/research/operative-ritual-words-policy.md
 src/data/rituals/types.ts
 ```
 
@@ -211,9 +211,9 @@ Default runtime authoring posture:
 1. Preserve source architecture and operative ritual words when feasible.
 2. Rewrite only the surrounding instructions into Moon & Table voice.
 3. If exact operative source words are 20 words or fewer, include them inline in `presentation.practice` and track them with `ritualWords.mode = "source_exact_short"`.
-4. If exact operative source wording is more than 20 words, do not reproduce the long passage in public repo prose; write adapted Moon & Table words that preserve the source words' ritual function, include those words inline in `presentation.practice`, and track them with `ritualWords.mode = "adapted_source_words"`.
+4. If exact operative source wording is more than 20 words, do not reproduce the long passage in public repo prose. First decide whether a plain functional instruction preserves the rite honestly. Use adapted Moon & Table words only as a candidate-by-candidate exception when the source words are structurally necessary; include those words inline in `presentation.practice` and track them with `ritualWords.mode = "adapted_source_words"`.
 5. Do not create generic filler, process labels, or placeholder speech for source-provided operative words.
-6. Do not block draft mechanical import merely because exact ritual words are longer than 20 words; adapt them.
+6. Do not adapt merely because exact ritual words are longer than 20 words. Use functional instruction when that is honest; hold the candidate if unresolved source words are required.
 7. Do not flatten prayer, blessing, charm, incantation, spell, petition, or spoken formula into “state an intention.”
 
 ## Source text handling
@@ -230,11 +230,11 @@ For modern copyrighted sources:
 
 - do not reproduce full copyrighted rituals, full chapters, full scripts, full prompt sets, full meditations, full recipes, full poems, full prayers, full invocations, or long distinctive passages in public committed repo files;
 - do preserve exact short operative words of 20 words or fewer when they are necessary, attributed, and not a substitute for the source;
-- do use `ritualWords.mode = "adapted_source_words"` for operative wording longer than 20 words;
+- do use `ritualWords.mode = "adapted_source_words"` only for justified operative wording longer than 20 words;
 - do record source location and the ritual function being adapted;
 - do not convert exact ritual words into bland copy, process labels, or placeholders.
 
-The correct fallback for long source wording is adapted words in the ritual body, tracked in `ritualWords`, not generic paraphrase, not private-wording process labels, and not a separate source-text mini-schema.
+The correct fallback for long source wording is not automatic adaptation. Use plain functional instruction when the source supports an action but not reusable words. Use adapted words in the ritual body, tracked in `ritualWords`, only when the source words are necessary to preserve the rite. Hold the candidate when neither path is honest.
 
 ## Runtime schema expectations
 
@@ -318,7 +318,7 @@ Direct-use review should also remove unnecessary safety boilerplate, preserve ma
 
 ```text
 preserved as exact short words inline and tracked as source_exact_short
-adapted as Moon & Table words inline and tracked as adapted_source_words when the source wording is longer than 20 words
+adapted as Moon & Table words inline and tracked as adapted_source_words only when longer source wording is necessary and the candidate audit justifies it
 omitted as quoted speech when the source merely asks the practitioner to name, write, thank, ask, or state something without providing words
 ```
 
@@ -331,7 +331,7 @@ Every Moon & Table ritual-content implementation prompt should begin by requirin
 ```text
 docs/research/voice/moon-and-table-house-voice-guide.md
 docs/research/runtime-ritual-authoring-policy.md
-docs/research/private-source-text-policy.md
+docs/research/operative-ritual-words-policy.md
 docs/research/extraction-depth-policy.md
 src/data/rituals/types.ts
 ```
@@ -344,6 +344,6 @@ Do not flatten magic.
 Do not replace operative ritual words by default.
 Do not add props/materials/decorative closing gestures unless source-backed or Tim-approved.
 Do not narrow accepted packets editorially.
-Use ritualWords.adapted_source_words for longer exact source wording instead of generic paraphrase or private-wording placeholders.
+Use ritualWords.adapted_source_words only for justified longer exact source wording; otherwise use functional instruction or hold the candidate.
 Ritual words belong inline in presentation.practice; ritualWords is provenance/review metadata only.
 ```

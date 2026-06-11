@@ -47,12 +47,12 @@ Page references use PDF pages and chapter/section labels. The approved source ga
 Moon & Table follows:
 
 ```text
-docs/research/private-source-text-policy.md
+docs/research/operative-ritual-words-policy.md
 docs/research/extraction-depth-policy.md
 docs/research/prompts/extraction-packet-prompt-template.md
 ```
 
-Words, glyphs, timing instructions, planetary hour language, pathworkings, correspondence/action rules, symbolic marks, and ritual timing cues are valid Ritual mechanics. Because this is a modern copyrighted source with tables, pathworkings, timing methods, and technical procedures, this packet records source locations, mechanics, carriers, purposes, short anchors, and private-excerpt needs without reproducing full pathworkings, full tables, full technical procedures, full ritual scripts, or distinctive long passages.
+Words, glyphs, timing instructions, planetary hour language, pathworkings, correspondence/action rules, symbolic marks, and ritual timing cues are valid Ritual mechanics. Because this is a modern copyrighted source with tables, pathworkings, timing methods, and technical procedures, this packet records source locations, mechanics, carriers, purposes, short anchors, and operative-text-review needs without reproducing full pathworkings, full tables, full technical procedures, full ritual scripts, or distinctive long passages.
 
 All candidates remain draft research only.
 
@@ -98,9 +98,9 @@ The packet does extract:
 | later chapter | Chapter 12: Astrology of the Aura | limited/source_note | Body/energy context; no diagnostic claims. |
 | later chapter | Chapter 13: Astrology of Spirit Work | hold/source_note | Deeper ceremonial contact held by PM decision. |
 | later chapter | Chapter 14: Spiritual Evolution | source_note_only | Returns/long-cycle context; not near-term candidate-heavy. |
-| later chapter | Chapter 15: Magick Squares | source_note/private_excerpt | Symbolic marks and magick squares; technical procedure held. |
+| later chapter | Chapter 15: Magick Squares | source_note/operative_text_review | Symbolic marks and magick squares; technical procedure held. |
 | later chapter | Chapter 16-17 | context/source_note | Great Year / Next Steps. |
-| appendices | Appendices A-F | source_note/private_excerpt | Correspondences, squares, rulerships, signs/body, Three Gates of Moon. |
+| appendices | Appendices A-F | source_note/operative_text_review | Correspondences, squares, rulerships, signs/body, Three Gates of Moon. |
 
 ## Source rite inventory
 
@@ -112,7 +112,7 @@ Every inventoried source item has a disposition. This inventory is intentionally
 | Astrology as sacred language | PDF 7-9 / Ch. 1 | page_range | context_only | source_note_only | Astrology as symbolic language and technology for magick. | words | marking | medium | source_note_only | Foundational product language. | Use in why-this-moment notes. |
 | Keep a study/ritual journal | PDF 8-9 / Ch. 1 | page_range | prompt | product_followup_pattern | Journal questions and insights while learning astrology. | words | remembering | medium | candidate_extract_now | Good grimoire follow-up. | Candidate: Star-Language Journal. |
 | Use calendars/charts/apps as timing tools | PDF 9 / Ch. 1 | exact_page | prompt | product_followup_pattern | Practical support for getting current astrological conditions. | words | marking | low | source_note_only | Product/timing context, not ritual. | Source note. |
-| Celestial Temple pathworking | PDF 14-17 / Ch. 2 | page_range | meditation | ritual_candidate | Guided vision of planetary light through signs/houses. | body, words | opening | high | candidate_extract_later | Long pathworking; private excerpt only. | Later adapted visualization. |
+| Celestial Temple pathworking | PDF 14-17 / Ch. 2 | page_range | meditation | ritual_candidate | Guided vision of planetary light through signs/houses. | body, words | opening | high | candidate_extract_later | Long pathworking; operative text review only. | Later adapted visualization. |
 | As above/so below worldview | PDF 13-14 / Ch. 2 | page_range | context_only | source_note_only | Macrocosm/microcosm as timing logic. | words | marking | medium | source_note_only | Product explanatory language. | Use sparingly. |
 | Planets/signs/houses/aspects as magical grammar | PDF 18-28 / Ch. 3 | page_range | context_only | source_note_only | Planets as sources, signs as modifiers, houses as arenas, aspects as verbs/actions. | words, table | remembering | medium | candidate_extract_now | Useful why-this-moment scaffold. | Candidate: Read the Sky as Grammar. |
 | Planet glyph contemplation | PDF 29 onward / Ch. 4 | chapter_range | meditation | ritual_candidate | Planet glyphs reveal Spirit/Soul/Matter patterning. | words, table | marking | medium | candidate_extract_later | Needs source-specific authoring. | Later candidate. |
@@ -143,11 +143,11 @@ Every inventoried source item has a disposition. This inventory is intentionally
 | Retrograde adaptation | Ch. 11 | chapter_range | ritual | ritual_candidate | Use retrograde for foundations, revision, retracing. | words, table | tending | medium | candidate_extract_now | Strong non-alarmist pattern. | Candidate: Lay the Retrograde Foundation. |
 | Planetary hour support in imperfect timing | Ch. 11 | chapter_range | ritual | ritual_candidate | Add planet-hour support when other timing is imperfect. | candlelight, words | steadying | medium | candidate_extract_now | Good household-scale support. | Candidate: Borrow the Hour's Light. |
 | Physical representation for planetary hour | Ch. 11 | chapter_range | craft | ritual_candidate | Use object/symbol to access planetary hour. | table, vessel | marking | medium | candidate_extract_now | Strong table/vessel candidate. | Candidate: Place the Planet Token. |
-| Verbal calls for planetary hour | Ch. 11 | chapter_range | spoken_formula | ritual_candidate | Naming/calling planetary support. | words | voicing | high | private_excerpt_reference | Exact wording needs source/private authoring. | Tim private excerpt. |
+| Verbal calls for planetary hour | Ch. 11 | chapter_range | spoken_formula | ritual_candidate | Naming/calling planetary support. | words | voicing | high | operative_text_review_reference | Exact wording needs source/private authoring. | Tim operative text review. |
 | Symbolic mark/sigil as focal point | Ch. 11 / Ch. 15 | chapter_range | craft | ritual_candidate | Use symbolic mark as focal point, not technical talisman import. | table, words | marking | high | candidate_extract_now | Strong if simplified. | Candidate: Make a Simple Planet Mark. |
 | Work above astrological turbulence | Ch. 11 | chapter_range | meditation | ritual_candidate | Shift plane of action / perspective under difficult conditions. | body, words | steadying | medium | candidate_extract_later | Could become too ceremonial. | Later adapted candidate. |
 | Sacred space to smooth difficult astrology | Ch. 11 | chapter_range | ritual | ritual_candidate | Create container to reduce rough conditions. | table, body, words | protecting | high | candidate_extract_later | Avoid importing full casting. | Later candidate. |
-| Naming twelve signs for balance | Ch. 11 | chapter_range | spoken_formula | ritual_candidate | Name/scribe signs as balancing field. | words, body | protecting | high | private_excerpt_reference | Exact source handling. | Tim private excerpt. |
+| Naming twelve signs for balance | Ch. 11 | chapter_range | spoken_formula | ritual_candidate | Name/scribe signs as balancing field. | words, body | protecting | high | operative_text_review_reference | Exact source handling. | Tim operative text review. |
 | Astrology of the Aura | Ch. 12 | chapter_range | context_only | source_note_only | Body/subtle field astrology. | body, words | steadying | medium | source_note_only | No diagnostic claims. | Source note only. |
 | Astrology of Spirit Work | Ch. 13 | chapter_range | context_only | hold | Spirit-work astrology. | words, table | marking | high | hold | PM decision: hold ceremonial contact. | Hold. |
 | Sun/Moon/Ascendant growth work | Ch. 14 | chapter_range | prompt | product_followup_pattern | Long-cycle spiritual evolution using chart anchors. | words | remembering | medium | candidate_extract_later | Avoid personality app. | Later source note. |
@@ -155,13 +155,13 @@ Every inventoried source item has a disposition. This inventory is intentionally
 | Venus return near solar return | Ch. 14 | chapter_range | ritual | ritual_candidate | Venus years for harmony/beauty/head-heart concordance. | candlelight, table | connecting | medium | candidate_extract_later | Good Jessica/intimacy fit but needs review. | Later candidate. |
 | Magick Squares overview | Ch. 15 | chapter_range | context_only | source_note_only | Squares as planetary symbolic structures. | table, words | marking | high | source_note_only | Do not import technical system. | Source note. |
 | Simple magick-square attunement | Ch. 15 | chapter_range | meditation | ritual_candidate | Follow numbers with eyes/finger as planetary meditation. | body, table | steadying | medium | candidate_extract_now | Good non-talisman adaptation. | Candidate: Trace the Planet Square. |
-| Sigil creation from squares | Ch. 15 | chapter_range | craft | ritual_candidate | Condense intent, choose planet, derive focal symbol. | table, words | marking | high | candidate_extract_later | Technical/private-excerpt heavy. | Later candidate. |
+| Sigil creation from squares | Ch. 15 | chapter_range | craft | ritual_candidate | Condense intent, choose planet, derive focal symbol. | table, words | marking | high | candidate_extract_later | Technical/operative-text-review heavy. | Later candidate. |
 | Craft permanent magick squares | Ch. 15 | chapter_range | craft | hold | Wooden squares with planetary correspondences and materials. | table, vessel | marking | high | hold | Technical/safety/material burden. | Hold. |
 | Burn/use yarn or wire sigil | Ch. 15 | chapter_range | charm | hold | Remove yarn/wire sigil for amulet/burning. | vessel, candlelight | marking | high | hold | Technical talisman/fire safety. | Hold. |
 | Great Year | Ch. 16 | chapter_range | context_only | context_only | Large astrological age cycle. | words | remembering | low | context_only | Too broad. | Context only. |
 | Next Steps | Ch. 17 | chapter_range | context_only | context_only | Further study. | words | remembering | low | context_only | No extraction. | Context only. |
 | Appendix A correspondences | Appendix A | chapter_range | correspondence_with_action | source_note_only | Planet/sign correspondences. | words, table, plant | marking | high | source_note_only | Do not copy tables; safety needed. | Source note. |
-| Appendix C squares | Appendix C | chapter_range | correspondence_with_action | source_note_only | Magick squares for elder planets. | table | marking | high | source_note_only | Private excerpt only. | Source note. |
+| Appendix C squares | Appendix C | chapter_range | correspondence_with_action | source_note_only | Magick squares for elder planets. | table | marking | high | source_note_only | Operative text review only. | Source note. |
 | Appendix E signs/body | Appendix E | chapter_range | correspondence_with_action | hold | Signs and body. | body | remembering | high | hold | No medical/body claims. | Hold. |
 | Appendix F Three Gates of Moon | Appendix F | chapter_range | correspondence_with_action | ritual_candidate | Moon gate timing framework. | words, vessel | marking | high | candidate_extract_later | Cross-check with Moon Book. | Later candidate. |
 
@@ -171,13 +171,13 @@ Every inventoried source item has a disposition. This inventory is intentionally
 source_items_inventoried: 53
 candidate_extract_now: 22
 candidate_extract_later: 13
-private_excerpt_reference: 2
-items_with_private_excerpt_recommended: 20
+operative_text_review_reference: 2
+items_with_operative_text_review: 20
 source_note_only: 10
 context_only: 3
 hold: 5
 reject: 0
-remaining_unreviewed_source_sections: none known within approved source-gate ranges for source-gate-level extraction; exact tables, procedures, and pathworkings require Tim private review
+remaining_unreviewed_source_sections: none known within approved source-gate ranges for source-gate-level extraction; exact tables, procedures, and pathworkings require Tim operative text review
 remaining_extraction_backlog: 13 candidate_extract_later items plus 5 held items requiring Tim/product/safety/source-boundary decisions
 ```
 
@@ -188,7 +188,7 @@ Primary carrier and primary purpose only count toward coverage satisfaction.
 | Primary carrier | Primary purpose | Draft support | Notes |
 | --- | --- | ---: | --- |
 | words | marking | strong | Timing language, planet families, Moon/aspect conditions, glyphs. |
-| words | voicing | adequate | Planetary hour call / ritual statements; private text needed. |
+| words | voicing | adequate | Planetary hour call / ritual statements; operative wording needed. |
 | words | steadying | adequate | Adapt to imperfect timing; void Moon; retrograde reframing. |
 | table | marking | strong | Glyphs, planet tokens, symbolic marks, square attunement. |
 | table | blessing | adequate | Jupiter/Venus/Sun family candidates. |
@@ -243,7 +243,7 @@ recommendationMetadata: {
 | `ritual-dominguez-borrow-hours-light` | Borrow the Hour's Light | Ch. 11 | candlelight | steadying | Planetary hour adds support when other timing is imperfect. | Add a candle/token for the planetary hour to steady the working. | draft_record_ready | Source text private for calls. |
 | `ritual-dominguez-planet-token` | Place the Planet Token | Ch. 11 | vessel | marking | Physical representation strengthens planetary hour. | Place a safe object for the planet on the table as timing witness. | draft_record_ready | No unsafe metals/herbs. |
 | `ritual-dominguez-simple-planet-mark` | Make a Simple Planet Mark | Ch. 11 / Ch. 15 | table | marking | Symbolic marks/focal points, not technical talisman import. | Create a simple planetary mark for one intent and keep it on the altar. | needs_authoring_revision | Avoid full sigil procedure. |
-| `ritual-dominguez-trace-planet-square` | Trace the Planet Square | Ch. 15 | body | steadying | Magick square attunement by tracing number order. | With a printed/private square, trace the pattern as planetary meditation. | needs_source_verification | Private excerpt and no table reproduction. |
+| `ritual-dominguez-trace-planet-square` | Trace the Planet Square | Ch. 15 | body | steadying | Magick square attunement by tracing number order. | With a printed/private square, trace the pattern as planetary meditation. | needs_source_verification | Operative text review and no table reproduction. |
 | `ritual-dominguez-venus-return-harmony` | Venus Return Harmony Table | Ch. 14 | table | connecting | Venus return/solar return years as harmony/beauty/head-heart concordance. | Mark a Venus year or Venus contact by setting a table for harmony and beauty. | candidate_extract_later | Needs source verification and non-deterministic framing. |
 | `ritual-dominguez-three-gates-moon` | Three Gates of the Moon Note | Appendix F | words | marking | Moon gate framework. | Use as source note for future lunar timing refinement. | product_followup_pattern | Cross-check with Moon Book before candidate. |
 
@@ -253,7 +253,7 @@ recommendationMetadata: {
 - The most useful product language is not `this transit means X about you`, but `this moment asks the ritual to lean toward X`.
 - Dominguez repeatedly supports practical adaptation rather than waiting forever for perfect timing. That is a major fit for Moon & Table.
 - The strongest extractable lanes are planetary hours/days, glyphs, Moon timing, aspect weather, retrograde adaptation, and planet-family ritual tones.
-- Magick squares are useful source context and later private-excerpt material, but should not be imported as technical talisman practice in this packet.
+- Magick squares are useful source context and later operative-text-review material, but should not be imported as technical talisman practice in this packet.
 
 ## Coverage records
 
@@ -264,7 +264,7 @@ recommendationMetadata: {
 | Glyph marking | table, words, body | marking, remembering, voicing | Very strong household-scale symbolic lane. |
 | Timing adaptation | words, body, candlelight | steadying, tending, protecting | Excellent product fit; avoids fatalistic timing. |
 | Moon beyond phase | words, vessel | marking, remembering, releasing/opening | Cross-source with Moon Book. |
-| Magick squares | table, body, words | marking, steadying | Source-note/private-excerpt first. |
+| Magick squares | table, body, words | marking, steadying | Source-note/operative-text-review first. |
 | Plant/oil/herb correspondences | plant, vessel | blessing/protecting | Held pending safety. |
 | Ceremonial contact | words, table | marking | Held by PM decision. |
 
@@ -313,9 +313,9 @@ Variant / split candidates:
 ### Magick squares cluster
 
 Variant / split candidates:
-- keep together now: Trace the Planet Square as source-note/private-excerpt candidate.
+- keep together now: Trace the Planet Square as source-note/operative-text-review candidate.
 - split later: square meditation, simple mark, focal symbol, full technical procedure.
-- reason: high-yield but technical and private-excerpt-heavy.
+- reason: high-yield but technical and operative-text-review-heavy.
 - trigger for split: Tim decides whether magick-square work is extraction-eligible.
 
 ## Rejected / held leads
@@ -323,9 +323,9 @@ Variant / split candidates:
 | Source item | Source pages | Disposition | Reason |
 | --- | ---: | --- | --- |
 | Astrology of Spirit Work | Ch. 13 | hold | Ceremonial contact held by PM decision. |
-| Full pathworkings | Ch. 2 and elsewhere | private_excerpt/hold | Do not reproduce long guided visualization. |
-| Full correspondence tables | Appendices | source_note_only/private_excerpt | Do not copy tables wholesale. |
-| Full magick-square technical procedures | Ch. 15 / Appendix C | hold/private_excerpt | Technical talisman import not approved. |
+| Full pathworkings | Ch. 2 and elsewhere | operative_text_review/hold | Do not reproduce long guided visualization. |
+| Full correspondence tables | Appendices | source_note_only/operative_text_review | Do not copy tables wholesale. |
+| Full magick-square technical procedures | Ch. 15 / Appendix C | hold/operative_text_review | Technical talisman import not approved. |
 | Plant/herb/oil correspondences | Appendix A and formulae | hold | Safety/source-boundary review needed. |
 | Body correspondences | Appendix E | hold | No medical/body claims. |
 | Deterministic natal/transit claims | multiple | reject/hold | Avoid horoscope/personality app drift. |
@@ -367,7 +367,7 @@ Variant / split candidates:
 - Planetary returns as rites of passage.
 - Venus return harmony table.
 - Three Gates of the Moon candidate after Moon Book reconciliation.
-- Simple magick-square symbolic mark after private-excerpt review.
+- Simple magick-square symbolic mark after operative text review.
 
 ### Hold / reject pending Tim decision
 
@@ -387,12 +387,12 @@ Variant / split candidates:
 - Inventory-first source rite inventory included: yes.
 - Every inventoried source item has disposition: yes.
 - Required metrics included: yes.
-- `items_with_private_excerpt_recommended` included: yes.
+- `items_with_operative_text_review` included: yes.
 - Source-location precision recorded: yes.
 - Research use classified: yes.
 - Primary vs secondary coverage separated: yes.
 - Variant / split ledger included: yes.
-- Exact wording/private excerpt needs flagged: yes.
+- Exact wording/operative text review needs flagged: yes.
 - No full copyrighted pathworkings, tables, procedures, scripts, or distinctive long passages reproduced: yes.
 - Extracted astrology-shaped rituals/source notes, not horoscope interpretation: yes.
 - No runtime Ritual data added: yes.
@@ -410,7 +410,7 @@ Variant / split candidates:
 
 1. Should planetary days/hours be treated as recommendation hints or only authoring context for now?
 2. Should glyph-as-marking become a reusable Moon & Table carrier pattern?
-3. Should magick-square work remain source-note/private-excerpt only until a dedicated talisman boundary exists?
+3. Should magick-square work remain source-note/operative-text-review only until a dedicated talisman boundary exists?
 4. Should Venus/Mars timing be allowed for intimate rituals if framed privately and non-deterministically?
 5. Should Moon sign/aspect timing be integrated with Moon Book phase families first, before any runtime use?
 6. Should Dominguez be paired next with Dykes or Rankine/d'Este for stronger ritual mechanics?
@@ -419,6 +419,6 @@ Variant / split candidates:
 
 `inventory_aware_extraction_ready_for_review`
 
-This packet is ready for human review as a research artifact. It requires source verification, private-excerpt decisions, authoring review, safety/source-boundary review, and schema normalization before any candidate can move beyond draft research status.
+This packet is ready for human review as a research artifact. It requires source verification, operative-text-review decisions, authoring review, safety/source-boundary review, and schema normalization before any candidate can move beyond draft research status.
 
 No runtime integration is recommended.

@@ -90,7 +90,7 @@ Reasons to be cautious or reject:
 
 - neotantra / tantra-adjacent cultural handling;
 - possible therapeutic, body-image, breathwork, or healing claims;
-- exact exercises likely require private excerpt handling;
+- exact exercises likely require operative text review handling;
 - may be too explicit or too workshop-oriented for Moon & Table without careful adaptation;
 - may not be witchcraft/grimoire in tone.
 
@@ -151,7 +151,7 @@ Reasons to be cautious or reject:
 
 - ceremonial or technique-heavy material may not feel domestic;
 - may include target-specific, outcome-guarantee, or power-focused workings;
-- exact rituals require private excerpt review;
+- exact rituals require operative text review;
 - consent framing may be dated and must be checked before any extraction;
 - body-fluid or ingestion material, if present, should be held unless Tim explicitly approves.
 
@@ -213,7 +213,7 @@ Reasons to be cautious or reject:
 - could be spell-list heavy rather than ritual-depth rich;
 - love/lust spells may still include target-specific or influence-oriented workings;
 - modern pop-witch tone may not match the private grimoire feel;
-- exact spell wording requires private excerpt handling.
+- exact spell wording requires operative text review handling.
 
 Recommended next action: `source_gate_now`
 
@@ -270,7 +270,7 @@ Reasons to be cautious or reject:
 - likely more advanced/ceremonial than domestic;
 - may include trance, exhaustion, erotic intensity, or body-fluid material that is not appropriate for default recommendation;
 - consent framing and target specificity need careful review;
-- exact techniques and language require private excerpt handling.
+- exact techniques and language require operative text review handling.
 
 Recommended next action: `source_gate_now`
 
@@ -326,7 +326,7 @@ Reasons to be cautious or reject:
 - neotantra/cultural handling;
 - possible therapeutic/healing claims;
 - may be less spell/ritual explicit than *The Art of Sexual Magic*;
-- exact exercises likely require private excerpt handling.
+- exact exercises likely require operative text review handling.
 
 Recommended next action: `maybe_later`
 
@@ -435,7 +435,7 @@ Reasons to be cautious or reject:
 - tradition-specific Wiccan religious material;
 - deity/polarity/coven context may not fit private household app;
 - gender-essentialist polarity risk;
-- exact rite text and ritual structure likely require private excerpt and cultural/religious boundary review.
+- exact rite text and ritual structure likely require operative text review and cultural/religious boundary review.
 
 Recommended next action: `hold`
 

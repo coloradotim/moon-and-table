@@ -59,20 +59,17 @@ SRC-MOD-MOON-GOTTESDIENER-2020
 
 ```ts
 sourceTextPolicy: {
-  exactTextUse: "private_excerpt_allowed";
-  assistantMayReproduce: "brief_quote_only";
-  timManualEntry: "allowed_for_private_app";
+  exactTextUse: "operative_text_review";
+  assistantMayReproduce: "brief_quote_or_short_operative_words_only";
+  storagePosture: "review_before_runtime_use";
   storageLimits: [
-    "private_app_only",
-    "not_public_repo",
-    "not_public_runtime_content",
     "cite_source_id",
     "cite_title_author",
     "cite_page_or_section",
     "unavailable_by_default",
     "not_recommendation_eligible_until_human_review"
   ];
-  notes: "Tim may manually enter exact source wording from his copy for private household use. Research agents should identify important exact wording and source location but should not reproduce long copyrighted passages. Spells, rituals, affirmations, prompts, journaling questions, meditations, altar instructions, and distinctive lunar descriptions should be treated as valid ritual mechanics but not copied wholesale."
+  notes: "Author-provided operative ritual words are ritual materials. Operative wording of 20 words or fewer must be stored directly in presentation.practice and tracked as ritualWords.source_exact_short. Longer operative wording may be adapted into a Moon & Table phrase only as a justified candidate-level exception in presentation.practice and tracked as ritualWords.adapted_source_words; otherwise use functional instruction or hold the candidate."
 }
 ```
 
@@ -83,10 +80,10 @@ Additional source-specific rules:
 | Phase meanings | `paraphrase_required` |
 | Phase timing mechanics | `mechanics_only` |
 | Spell structures | `mechanics_only` |
-| Exact spells | `private_excerpt_allowed` |
-| Journaling prompts | `private_excerpt_allowed`; generated app wording should be original |
-| Affirmations / prayers / invocations | `private_excerpt_allowed` |
-| Meditations / visualizations | `private_excerpt_allowed` |
+| Exact spells | `operative_text_review` |
+| Journaling prompts | `operative_text_review`; generated app wording should be original |
+| Affirmations / prayers / invocations | `operative_text_review` |
+| Meditations / visualizations | `operative_text_review` |
 | Correspondence lists | `mechanics_only`; do not import wholesale |
 | Medical / therapeutic claims | `do_not_use` unless separately reviewed |
 | Cultural/deity/ancestor material | `limited_context_only` unless separately approved |
@@ -102,7 +99,7 @@ Additional source-specific rules:
 | 38–56 | Living in Moontime | Lunar time, cycle structure, phase model | approved with limits | Strong lunar-cycle architecture. |
 | 57–81 | Ways to Work with the Moon | Practice basics, journaling, altar, moon walks, moon water, correspondences, moon signs | approved with limits | High-yield; safety/copyright/cultural filters required. |
 | 82–98 | The New Moon: The Seed and the Space | New moon timing, seed/space framing, intention and visualization | approved with limits | Very strong new moon lane. |
-| 99–107 | New Moon Magic | New moon spells, altar/journaling/tarot/correspondences | approved with limits | Exact text private-only. |
+| 99–107 | New Moon Magic | New moon spells, altar/journaling/tarot/correspondences | approved with limits | Exact text operative-text-review only. |
 | 108–126 | The Waxing Moon: Doing the Work, Following Threads | Waxing cycle, effort, work, growth, following threads | approved with limits | Strong tending/action mechanics. |
 | 127–135 | Waxing Moon Magic | Waxing spells, charms, meditation, journaling, correspondences | approved with limits | Avoid prosperity/health guarantees. |
 | 136–151 | The Full Moon: The Alchemy of Consciousness | Full moon timing, culmination, consciousness, discomfort, harvesting | approved with limits | Strong marking/blessing/witnessing lane. |
@@ -336,7 +333,7 @@ Cautions: case studies are personal narrative and not ritual mechanics by themse
 | Following threads | Waxing Moon, PDF 108–126 | words, body | connecting, tending | `paraphrase_required` | Revoice source language. |
 | Waxing abundance/resource noticing | Waxing Moon Magic, PDF 127–135 | words, table | blessing, remembering | `paraphrase_required` | Avoid prosperity guarantees. |
 | Full moon culmination/harvest | Full Moon, PDF 136–151 | words, candlelight | marking, remembering | `mechanics_only` | Strong phase lane. |
-| Full moon blessing/gratitude | Full Moon Magic, PDF 152–167 | candlelight, table, words | blessing, connecting | `private_excerpt_allowed` | Exact scripts protected. |
+| Full moon blessing/gratitude | Full Moon Magic, PDF 152–167 | candlelight, table, words | blessing, connecting | `operative_text_review` | Exact scripts protected. |
 | Full moon mythology/reflection | Full Moon Magic, PDF 152–167 | words, table | remembering, voicing | `paraphrase_required` | Good reflective lane. |
 | Waning release | Waning Moon, PDF 168–190 | words, body, vessel | releasing, steadying | `mechanics_only` | Strong. |
 | Waning declutter/clearing | Waning Moon Magic, PDF 191–199 | doorway, table, body | releasing, tending | `mechanics_only` | Excellent domestic lane. |
@@ -352,17 +349,17 @@ Do not reproduce the source material itself. These are items Tim/Jessica could u
 
 | Source rite / material | Source pages | Use type | Likely carriers | Likely purposes | Exact text importance | Notes |
 | --- | ---: | --- | --- | --- | --- | --- |
-| Lunar journal practice | 57–81 | `paraphrase_for_app` / `private_excerpt_allowed` | words, table | remembering, steadying | medium | Strong personal-use practice. |
-| Lunar altar setup | 57–81 | `private_excerpt_allowed` | table, candlelight, vessel | marking, connecting | medium | Good private household fit. |
+| Lunar journal practice | 57–81 | `paraphrase_for_app` / `operative_text_review` | words, table | remembering, steadying | medium | Strong personal-use practice. |
+| Lunar altar setup | 57–81 | `operative_text_review` | table, candlelight, vessel | marking, connecting | medium | Good private household fit. |
 | Moon water / charged jar practice | 57–81 | `mechanics_only` | vessel | blessing, marking | low-medium | No ingestion claims. |
-| New moon intention practices | 82–107 | `private_excerpt_allowed` | words, table, candlelight | opening, voicing | high | Strong Jessica-fit lane. |
-| New moon spell material | 99–107 | `private_excerpt_allowed` | candlelight, words, table | opening, blessing | high | Exact source wording protected. |
-| Waxing moon charms/spells | 127–135 | `private_excerpt_allowed` | candlelight, words, body | tending, opening | high | Adapt heavily for runtime. |
-| Waxing moon meditation/journaling | 127–135 | `private_excerpt_allowed` | words, body | tending, connecting | high | Good personal-use source material. |
-| Full moon rituals | 152–167 | `private_excerpt_allowed` | candlelight, table, words | marking, blessing | high | Very high fit, exact text protected. |
-| Full moon journaling / mythology / tarot | 152–167 | `private_excerpt_allowed` | words, table | remembering, voicing | high | Keep tarot separate unless approved. |
-| Waning moon release/clearing practices | 191–199 | `private_excerpt_allowed` | words, doorway, vessel | releasing, protecting | high | Strong, but banishing/hex language limited. |
-| Dark moon rituals/spells | 217–227 | `private_excerpt_allowed` | body, words, candlelight | steadying, releasing | high | Use gently; emotional intensity caution. |
+| New moon intention practices | 82–107 | `operative_text_review` | words, table, candlelight | opening, voicing | high | Strong Jessica-fit lane. |
+| New moon spell material | 99–107 | `operative_text_review` | candlelight, words, table | opening, blessing | high | Exact source wording protected. |
+| Waxing moon charms/spells | 127–135 | `operative_text_review` | candlelight, words, body | tending, opening | high | Adapt heavily for runtime. |
+| Waxing moon meditation/journaling | 127–135 | `operative_text_review` | words, body | tending, connecting | high | Good personal-use source material. |
+| Full moon rituals | 152–167 | `operative_text_review` | candlelight, table, words | marking, blessing | high | Very high fit, exact text protected. |
+| Full moon journaling / mythology / tarot | 152–167 | `operative_text_review` | words, table | remembering, voicing | high | Keep tarot separate unless approved. |
+| Waning moon release/clearing practices | 191–199 | `operative_text_review` | words, doorway, vessel | releasing, protecting | high | Strong, but banishing/hex language limited. |
+| Dark moon rituals/spells | 217–227 | `operative_text_review` | body, words, candlelight | steadying, releasing | high | Use gently; emotional intensity caution. |
 | Eclipse / special moon literacy | 228–245 | `mechanics_only` | words | marking | low | Good context, not direct ritual extraction. |
 | Whole-cycle case studies | 246–262 | `mechanics_only` / `context_only` | words | remembering | low | Do not treat as candidate rituals. |
 
@@ -412,7 +409,7 @@ Keep these concise in future extraction:
 
 This is a modern copyrighted source, and the ebook notice says it is for personal use only and may not be made publicly available.
 
-Do not reproduce full rituals, full spells, full journaling prompt sets, full meditations or visualizations, full correspondence lists, or copied phase descriptions. Internal extraction may note short phrase anchors and page locations. Tim may manually enter exact wording from his own copy for private household use, but it should remain private, source-cited, unavailable by default, and not runtime/recommendation eligible until reviewed.
+Do not reproduce full rituals, full spells, full journaling prompt sets, full meditations or visualizations, full correspondence lists, or copied phase descriptions. Internal extraction may note short phrase anchors and page locations. Operative wording follows the 20-word exact / justified adaptation / functional instruction rule and is not runtime/recommendation eligible until reviewed.
 
 ## Cultural / living-practice cautions
 
@@ -430,7 +427,7 @@ Do not flatten culturally specific moon names, prayers, deity references, or anc
 | Low-overwhelm design | Source is rich and expansive; extraction must compress hard. |
 | Natal astrology contacts | Moon signs and astrology appear, but this is not enough for detailed natal/transit rules. |
 | Computed astronomy | Use this source for symbolic context, not astronomical authority. |
-| Exact candle rituals | Strong potential, but likely embedded in spell language that must be private-excerpt only. |
+| Exact candle rituals | Strong potential, but likely embedded in spell language that must be operative-text-review only. |
 | Medical/therapeutic boundary | The source touches healing, subconscious, trauma, shadow, body, grief, health, addiction, and mental health territory. Moon & Table needs a firm boundary. |
 
 ## Recommended extraction lanes
@@ -449,7 +446,7 @@ Do not start extraction yet. These are future lanes only.
 | Full moon mythology/reflection | 152–167 | words, table | remembering, voicing | Rich reflective material. | Avoid copying prompts. |
 | Waning moon release | 168–199 | words, vessel, body | releasing, steadying | Core lunar practice. | Keep non-therapeutic. |
 | Waning moon declutter/clearing | 191–199 | doorway, table, body | releasing, tending | Excellent household ritual lane. | Keep small and safe. |
-| Waning protection/boundary | 191–199 | doorway, vessel, words | protecting, steadying | Good private household use. | No guaranteed protection. |
+| Waning protection/boundary | 191–199 | doorway, vessel, words | protecting, steadying | Good household fit. | No guaranteed protection. |
 | Dark moon rest | 200–227 | body, words | steadying, remembering | Fills rest/void lane. | Keep emotionally light. |
 | Dark moon intuition/night practice | 217–227 | body, vessel, words | remembering, steadying | Useful but sensitive. | No sleep/mental-health claims. |
 | Moon water / vessel marking | 57–81 | vessel, words | blessing, marking | Strong simple ritual mechanic. | No ingestion, no crystals in water. |
@@ -472,7 +469,7 @@ likely_hold_or_reject: 15-25
 If Tim accepts this source gate, he is approving:
 
 - future mechanics extraction from the specified approved ranges;
-- future private exact-text review from spells, rituals, journaling prompts, meditations, affirmations, altar instructions, and distinctive lunar language;
+- future operative-text review from spells, rituals, journaling prompts, meditations, affirmations, altar instructions, and distinctive lunar language;
 - future extraction lanes around lunar journaling, new moon intention, waxing tending, full moon witnessing/blessing, waning release/protection, dark moon rest, moon water/vessel marking, and monthly lunar review;
 - using *The Moon Book* as a strong candidate for the third extraction packet after Buckland and House Witch repairs/reviews are complete.
 
@@ -500,7 +497,7 @@ He is not approving:
 - No runtime approval: yes.
 - Words treated as valid mechanics: yes.
 - Prompts/meditations/prayers/spells classified: yes.
-- Private source text policy applied: yes.
+- Operative ritual words policy applied: yes.
 - Extraction depth policy applied: yes.
 - Expected future inventory scope estimated: yes.
 - Adult-use cautions concise: yes.
@@ -510,4 +507,4 @@ He is not approving:
 
 This source should be considered a candidate for third extraction after Buckland and House Witch pilot repairs/reviews are complete.
 
-It is probably the strongest lunar-cycle source so far, especially for Jessica’s interest in lunar/candle/astrological timing, but it needs disciplined handling: mechanics first, exact wording private-only, no therapy claims, no guaranteed magic claims, and no runtime eligibility until human review.
+It is probably the strongest lunar-cycle source so far, especially for Jessica’s interest in lunar/candle/astrological timing, but it needs disciplined handling: mechanics first, exact wording operative-text-review only, no therapy claims, no guaranteed magic claims, and no runtime eligibility until human review.

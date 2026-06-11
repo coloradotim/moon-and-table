@@ -32,7 +32,7 @@ Every `approved_for_mechanical_import` record below has a complete `ritual body 
 
 ## Source text posture
 
-The approved source gate for this source is `docs/research/source-gates/src-mod-house-cunningham-harrington-magical-household.md`. It permits brief exact anchors after review, but many short lines in this source are embedded inside charms, spells, predictive practices, deity/spirit material, or guaranteed-protection formulae. This packet preserves exact operative source words only when they are 20 words or fewer and product-safe after review. Longer operative wording is adapted into Moon & Table words in the ritual body and tracked as `adapted_source_words`. Where the source supports a speech act but not reusable wording, the packet uses plain functional instruction instead of invented ceremonial speech.
+The approved source gate for this source is `docs/research/source-gates/src-mod-house-cunningham-harrington-magical-household.md`. It permits brief exact anchors after review, but many short lines in this source are embedded inside charms, spells, predictive practices, deity/spirit material, or guaranteed-protection formulae. This packet preserves exact operative source words only when they are 20 words or fewer and product-safe after review. Where the source supports a speech act but not reusable wording, the packet uses plain functional instruction instead of invented ceremonial speech. No candidate in this packet currently uses `adapted_source_words`.
 
 ## Source sections used
 
@@ -55,7 +55,7 @@ The approved source gate for this source is `docs/research/source-gates/src-mod-
 | 67-75 | By Broom and Rag / Household Purifications | candidate_extract_now / later | Sweeping, washing, physical cleaning, elemental and infusion purification. |
 | 75-78 | Moving | candidate_extract_now / later | New-home and old-home transition mechanics. |
 | 78-84 | The Magical Year | candidate_extract_later / hold | Seasonal household markers. |
-| 84-89 | House Spells | later / hold | House protection and peace/harmony structures; exact spells private-only. |
+| 84-89 | House Spells | later / hold | House protection and peace/harmony structures; exact spells require separate operative-text review. |
 | 89-96 | Omens / Household Altar | candidate_extract_now / hold | Omen lane held; household altar setup and tending approved. |
 | 96-104 | Back matter | context_only | Glossary, bibliography, index, ads. |
 
@@ -72,7 +72,7 @@ The approved source gate for this source is `docs/research/source-gates/src-mod-
 | Hearth ash/smoke/ember material | 16-18 | page_range | charm/material | product_followup_pattern | Ash, smoke, ember, and wood materials. | vessel, candlelight | protecting, releasing | substantial | hold_before_import | Fire/smoke/ash handling unresolved. | Hold. |
 | Threshold standing | 18-19 | page_range | ritual_family | ritual_candidate | Doorway as liminal entrance/exit. | doorway, words | opening, protecting | brief | candidate_extract_now | Strong doorway candidate. | Candidate below. |
 | Door guardian objects | 19 | exact_page | charm | ritual_candidate | Door objects, bells, wreath-like markers. | doorway, plant, vessel | protecting | substantial | candidate_extract_now | Safe object adaptation only. | Candidate below. |
-| Old key at the door | 20 | exact_page | charm | ritual_candidate | Key repetition/protection mechanics. | doorway, vessel, words | protecting | substantial | candidate_extract_now | Exact charm private; safe key placement. | Candidate below. |
+| Old key at the door | 20 | exact_page | charm | ritual_candidate | Key repetition/protection mechanics. | doorway, vessel, words | protecting | substantial | candidate_extract_now | Exact charm wording not imported; safe key placement. | Candidate below. |
 | Window washing | 20 | exact_page | cleansing | ritual_candidate | Window washing as clearing away unwanted influence. | doorway, body, vessel | releasing | brief | candidate_extract_now | Strong household action; chemical/glass notes. | Candidate below. |
 | Pins, horseshoe, cock, lemon/salt/iron threshold practices | 19 | exact_page | charm | ritual_candidate | Folk threshold objects and under-threshold practices. | doorway, vessel | protecting | substantial | hold_before_import | Sharp objects, property placement, pet/child risk, provenance. | Hold. |
 | Working rug or mat | 23 | exact_page | ritual_space | ritual_candidate | Rug or marked textile as working space. | table, body | opening, marking | brief | candidate_extract_now | Complete portable space marker. | Candidate below. |
@@ -91,7 +91,7 @@ The approved source gate for this source is `docs/research/source-gates/src-mod-
 | Prosperity/luck, theft, adversarial, and target-control spells | 86-89 | page_range | spell | source_note_only | Luck/prosperity/theft/visitor/social spells. | words, vessel | blessing, protecting | substantial | hold_before_import | Guaranteed/adversarial/coercive boundaries. | Hold. |
 | Household altar location and privacy | 91-93 | page_range | altar | ritual_candidate | Choose a household altar place and protect privacy. | table, words | opening, protecting | brief | candidate_extract_now | Strong table/altar candidate. | Candidate below. |
 | Household altar objects and tending | 93-95 | page_range | altar_tending | ritual_candidate | Place, tend, clean, refresh altar objects. | table, vessel, plant | tending, remembering | brief | candidate_extract_now | Complete ongoing practice. | Candidate below. |
-| Seasonal altar changes and altar words | 94-96 | page_range | altar/seasonal | product_followup_pattern | Seasonal altar and exact prayers/spells. | table, candlelight, words | marking, blessing | substantial | candidate_extract_later | Private exact-text and seasonal review. | Later. |
+| Seasonal altar changes and altar words | 94-96 | page_range | altar/seasonal | product_followup_pattern | Seasonal altar and exact prayers/spells. | table, candlelight, words | marking, blessing | substantial | candidate_extract_later | Operative text and seasonal review required. | Later. |
 | Animal and pet charms | 45-52 | chapter_range | animal_practice | source_note_only | Pet charms, feeding/objects, animal lore. | body, vessel | protecting | substantial | hold_before_import | Animal welfare and unsafe materials. | Hold. |
 | Bath, hair, cosmetics, oils, body preparations | 37-42 | chapter_range | body_material | source_note_only | Bathing/brushing/cosmetic practices. | body, vessel | releasing, tending | substantial | hold_before_import | Topical, oil, bath, medical, appearance boundaries. | Hold. |
 | Garage/car/pest/poison/wildlife/outdoor property work | 52-62 | chapter_range | boundary_practice | source_note_only | Garage, car, garden, pest and outdoor charms. | doorway, vessel, plant | protecting | substantial | hold_before_import | Property, outdoor, pest, poison, and car safety. | Hold. |
@@ -394,7 +394,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Key at the Door
 
-ritual body / practice: Choose an old key, spare key, or symbolic key that will not compromise actual security. Stand at the doorway. Hold the key in both hands and name what it guards: the privacy of the home, the quiet of the room, or the welcome of the threshold. Say: "This key remembers what opens and what stays closed." Hang or place the key near the entrance where it is secure and not mistaken for an active house key. Touch the door once to close.
+ritual body / practice: Choose an old key, spare key, or symbolic key that will not compromise actual security. Stand at the doorway. Hold the key in both hands and name what it guards: the privacy of the home, the quiet of the room, or the welcome of the threshold. Hang or place the key near the entrance where it is secure and not mistaken for an active house key. Touch the door once to close.
 
 intention: Use a key as a boundary symbol for the household entrance.
 
@@ -417,7 +417,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [vessel/object, marking]
   exclusionSignals: [active key security risk, desire for guarantee]
   timingSignal: threshold privacy moment
-  confidenceNotes: source-backed Moon & Table form; charm wording adapted under the operative-words rule
+  confidenceNotes: source-backed Moon & Table form; exact charm wording not imported
 
 source grounding: `The Magical Household`, Thresholds of Power, PDF p. 20.
 
@@ -427,9 +427,9 @@ search metadata: tags [magical-household, key, door, threshold]; keywords [key, 
 
 review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [No actual security guarantee; active-key storage and child/pet/placement review.]
 
-adaptation policy notes: source_backed_moon_and_table_form; key charm wording adapted because the source formula requires product-boundary review.
+adaptation policy notes: source_backed_moon_and_table_form; key charm wording is not imported because the source formula requires product-boundary review.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `This key remembers what opens and what stays closed.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF p. 20`, useContext: `spoken`, note: `Adapted line for source-supported key/door mechanics from a charm formula requiring boundary review.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -676,7 +676,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Four Elements House Purification
 
-ritual body / practice: Physically clean the rooms first. Open the inside doors and windows that can be opened for the rite. Gather a small bowl of salt, a safe incense or smoke substitute if smoke is not allowed, one candle in a holder, and a small bowl of clean water. Begin near the main room or table. Carry the salt through the rooms and lightly gesture with it as the earth part of the working. Carry the incense or smoke substitute as the air part. Carry the lit candle as the fire part, or carry an unlit candle if flame is not safe. Carry the water as the water part and flick only a few drops where the surface allows it. Say: "Earth, air, fire, and water return the house to itself." Return to the starting place. Close the open windows and doors when the house has aired and settled.
+ritual body / practice: Physically clean the rooms first. Open the inside doors and windows that can be opened for the rite. Gather a small bowl of salt, a safe incense or smoke substitute if smoke is not allowed, one candle in a holder, and a small bowl of clean water. Begin near the main room or table. Carry the salt through the rooms and lightly gesture with it as the earth part of the working. Carry the incense or smoke substitute as the air part. Carry the lit candle as the fire part, or carry an unlit candle if flame is not safe. Carry the water as the water part and flick only a few drops where the surface allows it. Return to the starting place. Close the open windows and doors when the house has aired and settled.
 
 intention: Purify the house by moving earth, air, fire, and water through it in order.
 
@@ -711,7 +711,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: direct_source_ritual; smoke/flame substitutions are draft safety adaptations and must be reviewed before direct use.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `Earth, air, fire, and water return the house to itself.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF pp. 72-73`, useContext: `spoken`, note: `Adapted line for the source-supported elemental house circuit from longer purification wording.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -817,7 +817,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Tend the Household Altar
 
-ritual body / practice: Go to the household altar, shelf, table, or small surface set aside for household magic. Remove anything that no longer belongs there. Dust or wipe the surface. Return the objects that still serve the home: a candle, bowl, stone, key, plant, cloth, photo, seasonal object, or written line, but only if they already belong to this household altar. Place one object at the center and name what it is holding for the home. Say: "This table remembers the house." Close by stepping back and leaving the altar in order.
+ritual body / practice: Go to the household altar, shelf, table, or small surface set aside for household magic. Remove anything that no longer belongs there. Dust or wipe the surface. Return the objects that still serve the home: a candle, bowl, stone, key, plant, cloth, photo, seasonal object, or written line, but only if they already belong to this household altar. Place one object at the center and name what it is holding for the home. Close by stepping back and leaving the altar in order.
 
 intention: Keep the household altar alive through ordinary tending and clear purpose.
 
@@ -852,7 +852,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; altar prayer/spell text is held unless reviewed under the 20-word/adapted-word rule.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `This table remembers the house.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF pp. 91-96`, useContext: `spoken`, note: `Adapted line for source-supported household altar tending from longer altar-practice wording.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -871,7 +871,7 @@ import readiness label: `approved_for_mechanical_import`
 | Animal and pet charms | hold_before_import | Animal-welfare and unsafe-material concerns. |
 | Mystic garden altar/protection/pest work | candidate_extract_later | Good plant/altar lane, but outdoor placement, property, ecology, deity, and pest/poison boundaries need review. |
 | Garage/car practices | hold_before_import | Car/road/garage safety and product fit are weaker. |
-| House protection and peace/harmony spells | candidate_extract_later | Mechanics promising, exact spell wording private and guarantee/coercion review needed. |
+| House protection and peace/harmony spells | candidate_extract_later | Mechanics promising, exact spell wording and guarantee/coercion boundaries need separate review. |
 | Household altar seasonal changes and prayers | candidate_extract_later | Strong table/seasonal lane; exact words and cultural/source-boundary review needed. |
 | Medical, healing, fertility, coercive love/sex, prosperity/luck guarantees, theft/adversarial, pest-poison, and guaranteed-outcome claims | hold_before_import | Product boundary. |
 
@@ -911,7 +911,7 @@ Checked the revised packet for blocking placeholder mechanics and invalid runtim
 
 - [x] Every `candidate_extract_now` has a complete operational ritual body / practice.
 - [x] No approved candidate requires source lookup for materials, place, placement, sequence, timing, repetition, wording handling, close, disposal, storing, burying, washing, leaving-to-work, or recordkeeping.
-- [x] Long/substantial source wording is adapted into ritual-body words and tracked as `adapted_source_words`, or the candidate uses plain functional instruction where no reusable source words are present.
+- [x] No approved candidate in this packet uses `adapted_source_words`; source-supported speech actions use plain functional instruction where no reviewed reusable source words are present.
 - [x] Magical Household source-gate exact-text restrictions are cited and honored.
 - [x] Domestic, threshold, altar, table, plant, vessel, candle, charm, cleaning, moving, and purification safety/product-boundary notes are explicit under valid review flags.
 - [x] Components/mechanics are held unless made into complete source-backed forms.

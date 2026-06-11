@@ -32,7 +32,7 @@ Every `approved_for_mechanical_import` record below has a complete `ritual body 
 
 ## Source text posture
 
-The approved source gate for this source is `docs/research/source-gates/src-plant-murphy-hiscock-green-witchs-garden.md`. That gate is stricter than the general short-quote rule for exercises, blessings, charms, rituals, recipes, and distinctive prose. This packet preserves exact source wording only when a short operative phrase has been exact-text reviewed. Where longer source wording shapes the practice, the packet includes adapted Moon & Table words in the ritual body and tracks them as `adapted_source_words`. Where the source supports a speech act but does not give reusable wording, the body uses plain functional instruction instead of invented ceremonial speech.
+The approved source gate for this source is `docs/research/source-gates/src-plant-murphy-hiscock-green-witchs-garden.md`. That gate is stricter than the general short-quote rule for exercises, blessings, charms, rituals, recipes, and distinctive prose. This packet preserves exact source wording only when a short operative phrase has been exact-text reviewed. Where the source supports a speech act but does not provide reviewed reusable wording, the body uses plain functional instruction instead of invented ceremonial speech. No candidate in this packet currently uses `adapted_source_words`.
 
 ## Source sections used
 
@@ -71,11 +71,11 @@ The approved source gate for this source is `docs/research/source-gates/src-plan
 | Windowsill / window box plant | 187-190, 64-94 | practice_family | ritual_candidate | candidate_extract_now | Household light/threshold placement is explicit. | Candidate below. |
 | Tool dedication | 95-116 | ritual | hold_before_import | hold_before_import | Complete source ritual, but plant is not primary carrier and it uses candle/element mechanics. | Hold for tool packet. |
 | Strewing herbs / smoke or herb-water clearing | 95-116 | ritual | hold_before_import | hold_before_import | Material/smoke/surface/pet safety and recipe-like contents need separate review. | Hold. |
-| Garden blessing | 95-116, 184-209 | ritual | ritual_candidate | candidate_extract_now | Elemental garden blessing architecture can be imported with private exact text. | Candidate below. |
+| Garden blessing | 95-116, 184-209 | ritual | ritual_candidate | candidate_extract_now | Elemental garden blessing architecture can be imported with functional wording until exact short source words are reviewed. | Candidate below. |
 | Garden record / plant page / photos | 95-116, 245-265 | practice_family | ritual_candidate | candidate_extract_now | Recordkeeping is source-backed and mechanically complete. | Candidate below. |
 | Pressed sample / physical harvest record | 253-258 | project | candidate_extract_later | candidate_extract_later | Strong memory mechanic but harvesting and preservation safety need a separate variant. | Later. |
 | Chapter 6 plant categories and correspondences | 117-183 | reference | source_note_only | source_note_only | Safety/context only; no correspondence database. | Use only to support reviewed plant choices. |
-| New plant welcome / purification | 184-190 | ritual_pattern | ritual_candidate | candidate_extract_now | Complete household-scale welcome, with private exact words. | Candidate below. |
+| New plant welcome / purification | 184-190 | ritual_pattern | ritual_candidate | candidate_extract_now | Complete household-scale welcome, using functional wording until exact short source words are reviewed. | Candidate below. |
 | Safe offering of attention | 193-194 | practice_family | ritual_candidate | candidate_extract_now | Source supports attention, song, thanks, and care without obligation. | Candidate below. |
 | Garden charms / decor / spirit houses / genius loci | 190-210 | charm/cosmology | hold_before_import | hold_before_import | Spirit/place obligations, materials, and outdoor structures need separate review. | Hold. |
 | Harvest gratitude | 210-219 | ritual_pattern | ritual_candidate | candidate_extract_now | Harvest gratitude can be complete without recipe/ingestion import. | Candidate below. |
@@ -169,7 +169,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [household plant relationship]
   exclusionSignals: [unsafe or unidentified plant, care need unclear]
   timingSignal: beginning plant practice
-  confidenceNotes: complete source-backed Moon & Table form; no exact source words used because source wording is longer than 20 words or source-shaped action requires adapted app wording
+  confidenceNotes: complete source-backed Moon & Table form; no exact or adapted source words used
 
 source grounding: `The Green Witch's Garden`, Introduction / How to Use This Book, PDF pp. 6-9; Ch. 4, PDF pp. 64-94.
 
@@ -181,7 +181,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no named plant recommendation; no water unless care calls for it.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `You are already part of this house.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `PDF pp. 6-9 and 64-94`, useContext: `spoken`, note: `Source supports recognizing existing plants; source wording is longer than 20 words or source-shaped action requires adapted app wording.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -216,7 +216,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [brief household practice]
   exclusionSignals: [plant care need unknown, unsafe plant]
   timingSignal: routine care moment
-  confidenceNotes: complete source-backed form; source wording is longer than 20 words or source-shaped action requires adapted app wording
+  confidenceNotes: complete source-backed form; no exact or adapted source words used
 
 source grounding: `The Green Witch's Garden`, Ch. 1, PDF pp. 10-14 and 18-19.
 
@@ -228,7 +228,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; care action must be real care.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `Care first, symbol second.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 1 / PDF pp. 10-14`, useContext: `spoken`, note: `adapted line summarizing the source's care-before-symbol posture.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -322,7 +322,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no plant-familiar commitment, no obligation, no guaranteed messages.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `I am here to meet you, not use you.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 1 / PDF pp. 18-19`, useContext: `spoken`, note: `Source supports respectful greeting; source gate requires rewritten runtime words.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -369,7 +369,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no added stones, herbs, smoke, or buried charms from the source examples.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `What served before may leave cleanly; what belongs now may root here.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 2 / PDF pp. 31-32`, useContext: `spoken`, note: `adapted wording for the source-supported rededication action.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -416,7 +416,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no runtime food recommendation.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `What was almost waste may try again.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 4 / PDF pp. 64-94`, useContext: `spoken`, note: `adapted wording for source-supported kitchen-scrap regrowth.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -463,7 +463,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; do not turn this into seasonal therapy or plant shopping advice.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `The outside garden may sleep; this green stays awake with me.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 4 / PDF pp. 64-94 and Ch. 9 / PDF pp. 230-248`, useContext: `spoken`, note: `adapted wording for the source-supported winter indoor plant practice.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -510,7 +510,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; avoids warding/protection guarantees.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `Stand here between house and sky.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 4 / PDF pp. 64-94`, useContext: `spoken`, note: `adapted wording for source-supported window/threshold placement.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -522,7 +522,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Bless the Plant Place
 
-ritual body / practice: Use this for a small indoor plant place, container grouping, balcony planter, or garden bed that has already been physically cleaned and made safe. Gather simple representations of air, fire, water, and earth that are safe for the place: moving air from an open window or fan, sunlight or a safe unlit candle as a fire symbol, a small cup of water, and a small dish of soil or the soil already in the pot. Place the four representations around or beside the plant place. Stand or sit before the plant place. Say: "Air, fire, water, and earth support this green place." Touch or gesture toward air, fire, water, and earth in that order. As each element is acknowledged, picture it supporting the plants in ordinary, plant-safe ways. Close by naming the plant place's purpose in one sentence and putting away any cup, dish, or candle symbol that should not remain there.
+ritual body / practice: Use this for a small indoor plant place, container grouping, balcony planter, or garden bed that has already been physically cleaned and made safe. Gather simple representations of air, fire, water, and earth that are safe for the place: moving air from an open window or fan, sunlight or a safe unlit candle as a fire symbol, a small cup of water, and a small dish of soil or the soil already in the pot. Place the four representations around or beside the plant place. Stand or sit before the plant place. Touch or gesture toward air, fire, water, and earth in that order. As each element is acknowledged, picture it supporting the plants in ordinary, plant-safe ways. Close by naming the plant place's purpose in one sentence and putting away any cup, dish, or candle symbol that should not remain there.
 
 intention: Bless a plant place with the elements that actually sustain it.
 
@@ -545,7 +545,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [elements, plant support]
   exclusionSignals: [unsafe fire, outdoor/ecological claims not reviewed]
   timingSignal: after plant-space setup
-  confidenceNotes: complete direct source ritual paraphrased; blessing wording adapted under the operative-words rule
+  confidenceNotes: complete direct source ritual paraphrased; no exact or adapted blessing words are used
 
 source grounding: `The Green Witch's Garden`, Ch. 5, PDF pp. 95-116; Ch. 7, PDF pp. 184-209.
 
@@ -557,7 +557,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: direct_source_ritual paraphrased; no exact blessing reproduced publicly.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `Air, fire, water, and earth support this green place.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 5 / PDF pp. 95-116`, useContext: `blessing`, note: `Adapted line for the source-supported elemental garden blessing from longer blessing wording.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -604,7 +604,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; do not harvest living material for this rite.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `What is finished can feed what comes next.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 1 / PDF pp. 16-18 and Ch. 7 / PDF pp. 204-205`, useContext: `spoken`, note: `adapted wording for source-supported decomposition/compost logic.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -698,7 +698,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; safe no-obligation offering only.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `Attention is the offering today.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 7 / PDF pp. 193-194`, useContext: `spoken`, note: `adapted wording for source-supported safe offering of attention/care.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -745,7 +745,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no added harvest or food use.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `I take only what is already given.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 8 / PDF pp. 210-229`, useContext: `spoken`, note: `adapted wording for source-supported harvest gratitude and restraint.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -839,7 +839,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no harvest, no offering obligation, no guaranteed message.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `I stand beside your life, and I take nothing from it.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 3 / PDF pp. 40-63 and Ch. 9 / PDF pp. 230-236`, useContext: `spoken`, note: `adapted wording for source-supported non-depleting plant energy work.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -942,7 +942,7 @@ Checked the revised packet for blocking placeholder mechanics and invalid runtim
 
 - [x] Every `candidate_extract_now` has a complete operational ritual body / practice.
 - [x] No approved candidate requires source lookup for materials, plant/place, placement, sequence, timing, repetition, wording handling, close, disposal, rest, or recordkeeping.
-- [x] Long/substantial source wording is adapted into ritual-body words and tracked as `adapted_source_words`, or the candidate uses plain functional instruction where no reusable source words are present.
+- [x] No approved candidate in this packet uses `adapted_source_words`; source-supported speech actions use plain functional instruction where no reviewed reusable source words are present.
 - [x] Green Witch's Garden source-gate direct-quote restrictions are cited and honored.
 - [x] Plant/garden safety and product-boundary notes are explicit under valid review flags.
 - [x] No invalid `plantSafetyReviewRequired` flag remains.

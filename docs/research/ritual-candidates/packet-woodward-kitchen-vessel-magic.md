@@ -32,7 +32,7 @@ Every `approved_for_mechanical_import` record below has a complete `ritual body 
 
 ## Source text posture
 
-The approved source gate for this source is `docs/research/source-gates/src-vessel-woodward-kitchen-witchery.md`. That gate is stricter than the general 20-word rule for recipes, recipe headnotes, exercises, blessings, charms, meditations, petitions, and distinctive prose. This packet does not preserve source wording unless a short operative phrase has been exact-text reviewed. Where longer source wording shapes the practice, the packet includes adapted Moon & Table words in the ritual body and tracks them as `adapted_source_words`. Where the source supports a speech act but does not give reusable operative words, the body uses plain functional instruction instead of invented ceremonial speech.
+The approved source gate for this source is `docs/research/source-gates/src-vessel-woodward-kitchen-witchery.md`. That gate is stricter than the general 20-word rule for recipes, recipe headnotes, exercises, blessings, charms, meditations, petitions, and distinctive prose. This packet does not preserve source wording unless a short operative phrase has been exact-text reviewed. Where the source supports a speech act but does not give reusable operative words, the body uses plain functional instruction instead of invented ceremonial speech. No approved candidate in this packet currently uses `adapted_source_words`.
 
 ## Source sections used
 
@@ -60,7 +60,7 @@ The approved source gate for this source is `docs/research/source-gates/src-vess
 | --- | ---: | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Citation / copyright / disclaimer | 4-8 | page_range | context | source_note_only | Copyright, source identity, medical and food sensitivity disclaimer. | words | protecting | high | context_only | Metadata/safety context only. | Preserve citation and safety boundary. |
 | Kitchen as sacred household space | 9-10 | page_range | framing | source_note_only | Kitchen work becomes ritual through attention, intention, ingredients, and care. | table, vessel, body | blessing, tending | medium | source_note_only | Voice/context only; do not copy author prose. | Use as rationale. |
-| Intention before kitchen action | 20-28 | page_range | ritual_mechanic | ritual_candidate | Choose a clear purpose before/during a kitchen act. | words, table, vessel, body | opening, voicing, blessing | high | candidate_extract_now | Core mechanic; public wording must be Moon & Table original. | Candidate below. |
+| Intention before kitchen action | 20-28 | page_range | ritual_mechanic | ritual_candidate | Choose a clear purpose before/during a kitchen act. | words, table, vessel, body | opening, voicing, blessing | high | candidate_extract_now | Core mechanic; public wording must be Moon & Table-authored. | Candidate below. |
 | Coming to center | 27-30 | page_range | meditation | ritual_candidate | Pause, breathe, gather attention before acting. | body, words, table | steadying, opening | high | candidate_extract_now | Complete kitchen opening if kept simple. | Candidate below. |
 | Bowl as focus while mixing/stirring | 21-28 | page_range | ritual_mechanic | ritual_candidate | Vessel receives attention, intention, and action. | vessel, body, words | tending, connecting | medium | candidate_extract_now | Strong vessel mechanic, not recipe. | Candidate below. |
 | Candle at the table while cooking | 23-25 | page_range | ritual_mechanic | ritual_candidate | Candle and prepared food share table/working space. | candlelight, table, vessel | opening, blessing, marking | medium | candidate_extract_now | Fire-safe table variant can stand alone. | Candidate below. |
@@ -83,7 +83,7 @@ The approved source gate for this source is `docs/research/source-gates/src-vess
 | Seasonal recipes and table rites | 344-381 | chapter_range | seasonal_food | ritual_candidate | Seasonal table marking and repeated household food memory. | table, vessel, words | marking, remembering, connecting | high | candidate_extract_now | Recipes and cultural obligations excluded. | Candidates below. |
 | Repeated food memory | 344-381 | chapter_range | memory_practice | ritual_candidate | Record the spell around a repeated household food, not the recipe. | words, table, vessel | remembering, marking | medium | candidate_extract_now | Good grimoire pattern; no recipe text. | Candidate below. |
 | Culturally specific/deity/ancestor holiday foodways | 344-381 | chapter_range | seasonal_context | source_note_only | Seasonal food traditions and ritual associations. | table, words | remembering, blessing | high | hold_before_import | Provenance and obligations require review. | Hold. |
-| Recipes, ingredient lists, temperatures, methods | throughout | chapter_range | recipe | source_note_only | Exact recipes and cooking directions. | vessel, table, body | tending | high | hold_before_import | Moon & Table is not a recipe app. | Hold unless private safe lane created. |
+| Recipes, ingredient lists, temperatures, methods | throughout | chapter_range | recipe | source_note_only | Exact recipes and cooking directions. | vessel, table, body | tending | high | hold_before_import | Moon & Table is not a recipe app. | Hold unless a separate recipe review lane is approved. |
 | Health/nutrition/organic/pesticide/medicinal claims | throughout | chapter_range | claim | source_note_only | Food health, purity, medical, diet, or treatment claims. | words | protecting | medium | reject | Outside product lane. | Do not import. |
 | Smoke, incense, oils, perfumes, baths, hand powders | multiple | chapter_range | material_ritual | source_note_only | Non-food material preparations. | vessel, body, candlelight | blessing, protecting | high | hold_before_import | Material safety and source boundary. | Hold. |
 
@@ -146,7 +146,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Come to Center at the Counter
 
-ritual body / practice: Stand or sit at the kitchen counter, table, or sink before beginning the kitchen act. Put both feet on the floor. Let your hands rest on the counter edge, the table, or your own body. Take three slow breaths. On each breath, draw your attention away from the rest of the day and into the kitchen. Notice your body, your hands, and the object or vessel you are about to touch. Say: "I am here, and the work begins here." Begin the next kitchen action only after that pause.
+ritual body / practice: Stand or sit at the kitchen counter, table, or sink before beginning the kitchen act. Put both feet on the floor. Let your hands rest on the counter edge, the table, or your own body. Take three slow breaths. On each breath, draw your attention away from the rest of the day and into the kitchen. Notice your body, your hands, and the object or vessel you are about to touch. Name that you are here before the work begins. Begin the next kitchen action only after that pause.
 
 intention: Arrive fully before asking the kitchen action to carry meaning.
 
@@ -179,9 +179,9 @@ search metadata: tags [woodward, kitchen, counter, centering]; keywords [center,
 
 review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired false; notes [No medical, therapy, or nervous-system claim.]
 
-adaptation policy notes: direct_source_ritual paraphrased; source wording is longer than 20 words or source-shaped action requires adapted app wording.
+adaptation policy notes: direct_source_ritual paraphrased; source supports the centering action, but no operative source words are used.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `I am here, and the work begins here.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 27-30`, useContext: `spoken`, note: `Adapted line completing the source-supported centering action from a longer meditation.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -334,7 +334,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Water Bowl at the Window
 
-ritual body / practice: Fill a clean bowl with tap water. Place it on a stable table, counter, or windowsill where it can reflect the room, sky, or dark glass without spilling. Sit beside the bowl. Come to center. Look into the water without trying to force a message. Let one word, image, or feeling rise. Write that one thing on a small paper. Say: "The bowl has shown enough." Pour the water down the sink. Dry the bowl and put it away.
+ritual body / practice: Fill a clean bowl with tap water. Place it on a stable table, counter, or windowsill where it can reflect the room, sky, or dark glass without spilling. Sit beside the bowl. Come to center. Look into the water without trying to force a message. Let one word, image, or feeling rise. Write that one thing on a small paper. Close when the bowl has shown enough. Pour the water down the sink. Dry the bowl and put it away.
 
 intention: Let a simple water vessel hold what is ready to be noticed and released.
 
@@ -357,7 +357,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [release, written word]
   exclusionSignals: [spill risk, unsafe location, desire for mediumship]
   timingSignal: quiet reflective window period
-  confidenceNotes: complete source-backed form; source text and meditation details are adapted rather than copied
+  confidenceNotes: complete source-backed form; source text and meditation details are paraphrased as mechanics, with no operative source words used
 
 source grounding: `Kitchen Witchery`, Ch. 2, PDF pp. 33-34; Ch. 12, PDF pp. 254-268.
 
@@ -369,7 +369,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; mediumship/underworld details softened under source gate.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `The bowl has shown enough.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 33-34`, useContext: `closing`, note: `Adapted close for the source-supported water-bowl reflection from longer meditation wording.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -569,7 +569,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Bless the Kept Kitchen Object
 
-ritual body / practice: Choose one ordinary kitchen object that will keep being used: a cup, bowl, spoon, jar, cloth, serving dish, pot, or pan. Clean it with the ordinary method that is safe for the object. Set it on the table. Come to center. Put one hand near or on the object. Name the household job it is being given: hold welcome, remember this season, steady the table, bless a shared drink, or serve the next meal cleanly. Say: "You are kept for this work." Breathe once over or near the object without touching your mouth to it. Return it to use or storage.
+ritual body / practice: Choose one ordinary kitchen object that will keep being used: a cup, bowl, spoon, jar, cloth, serving dish, pot, or pan. Clean it with the ordinary method that is safe for the object. Set it on the table. Come to center. Put one hand near or on the object. Name the household job it is being given: hold welcome, remember this season, steady the table, bless a shared drink, or serve the next meal cleanly. Breathe once over or near the object without touching your mouth to it. Return it to use or storage.
 
 intention: Give one kitchen object a clear household role.
 
@@ -604,7 +604,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; source's smoke/oil/elemental options are held.
 
-operative words metadata: [{ mode: `adapted_source_words`, text: `You are kept for this work.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 38-41`, useContext: `spoken`, note: `Adapted line for source-supported object purpose-giving from longer consecration wording.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -804,7 +804,7 @@ import readiness label: `approved_for_mechanical_import`
 | Food-safe finishing oil / vinegar blessing | candidate_extract_later | Promising table/vessel close; needs oil safety and recipe boundary review. |
 | Full moon table sharing | candidate_extract_later | Useful, but should be split after lunar timing and fire/food boundaries are reviewed. |
 | Exact recipes and formulae | hold_before_import | Moon & Table should not reproduce recipe steps, measurements, temperatures, or ingredient formulas. |
-| Exact spells, charms, prayers, petitions, meditations, and chants | hold_before_import | Source gate requires paraphrase/private exact-text handling only. |
+| Exact spells, charms, prayers, petitions, meditations, and chants | hold_before_import | Source gate requires mechanics extraction, functional instruction, or separate operative-text review. |
 | Coercive love/attraction/sweetening/target-control examples | reject | Outside product boundary. |
 | Health/nutrition/organic/pesticide/medical claims | reject | Not Moon & Table guidance. |
 | Prosperity/luck spell database material | hold_before_import | May become enoughness/warmth only after product review; no guaranteed outcomes. |
@@ -848,7 +848,7 @@ Checked the revised packet for blocking placeholder mechanics and invalid runtim
 
 - [x] Every `candidate_extract_now` has a complete operational ritual body / practice.
 - [x] No approved candidate requires source lookup for materials, food/vessel/place, placement, sequence, timing, repetition, wording handling, close, disposal, washing, serving, rest, or recordkeeping.
-- [x] Long/substantial source wording is either adapted into ritual-body words and tracked as `adapted_source_words`, or converted to plain functional instruction when the source supports speech without reusable wording.
+- [x] No approved candidate in this packet uses `adapted_source_words`; source-supported speech actions use plain functional instruction where no reviewed reusable source words are present.
 - [x] Woodward source-gate direct-quote restrictions are cited and honored.
 - [x] Kitchen/food/vessel safety and product-boundary notes are explicit under valid review flags.
 - [x] Components/mechanics are held unless made into complete source-backed forms.

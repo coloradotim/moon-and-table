@@ -26,9 +26,9 @@ Verbal / expressive / charm / practice handling:
   direct_use_allowed: no for generated app text. Tim/Jessica may privately use the source from their copy, but Moon & Table candidates must remain draft until human review.
   brief_quote_allowed: exact title/chapter/short phrase anchors only.
   paraphrase_required: all app-facing ritual language, partner invitations, consent/comfort language, Magic Circle setup, shared-symbol wording, and integration language.
-  mechanics_only: explicit adult partner practices, body/energy exercises, chakra movement, Magic Symbol charging, Magical Congress, and gendered Shakti/Shiva material unless reviewed for private exact excerpt use.
+  mechanics_only: explicit adult partner practices, body/energy exercises, chakra movement, Magic Symbol charging, Magical Congress, and gendered Shakti/Shiva material unless reviewed for operative text review.
   do_not_use: explicit adult technique instructions, non-consensual/pressure material, therapy/healing claims, fertility/health claims, guaranteed manifestation, target-specific attraction/control, copied guided exercises, copied practice sequences, copied diagrams/illustrations.
-Citation requirement: future extraction must cite source ID, title, author, edition, PDF page, printed page/chapter where visible, and private-excerpt status.
+Citation requirement: future extraction must cite source ID, title, author, edition, PDF page, printed page/chapter where visible, and operative-text-review status.
 Reviewer required: yes.
 Required reviewer expertise: Tim; plus consent/intimacy review, adult-content boundary review, trauma/therapy boundary review, safety review, and cultural/source-boundary review for tantra/neotantra/chakra/Shiva/Shakti/SkyDancing/Osho framing.
 Specific extraction cautions: see below.
@@ -231,12 +231,12 @@ Allowed purposes: remembering, marking.
 | Chakra/Astral Network claims | mechanics_only / source_note_only | Do not present as factual or guaranteed mechanism. |
 | Shiva/Shakti/Vajra/Yoni terminology | hold or adapt | Cultural/gender/polarity review required. |
 | Osho/Rajneesh lineage context | source_note_only | Cultural/source-boundary caution. |
-| Exact guided exercises, scripts, prompts | private_excerpt_allowed | No full reproduction in repo/app. |
+| Exact guided exercises, scripts, prompts | operative_text_review | No full reproduction in repo/app. |
 | Illustrations/diagrams | do_not_use as copied assets | Do not copy visuals. |
 
-## Exact-text / private-excerpt handling
+## Exact-text / operative-text-review handling
 
-High private-excerpt need.
+High operative-text-review need.
 
 Future extraction should flag, but not reproduce wholesale:
 
@@ -281,7 +281,7 @@ no explicit adult technique reproduction
 | Carrier | Support level | Source basis | Notes |
 | --- | --- | --- | --- |
 | body | strong | breath, touch, movement, partner practice, energy/body attention, Magical Congress | Main carrier; highest safety/consent burden. |
-| words | strong | spoken purpose, partner questions, shared vision, feedback, affirmations, journaling | Exact prompts private-only. |
+| words | strong | spoken purpose, partner questions, shared vision, feedback, affirmations, journaling | Exact prompts operative-text-review only. |
 | candlelight | strong/limited | Magic Circle altar candle; Magical Congress atmosphere with candles/soft lighting | Strong for connection atmosphere, not candle-spell mechanics. |
 | table | moderate | altar/low table/box, symbol placement, power objects | Mostly altar/table setup. |
 | vessel | moderate/thin | water in Magical Congress; cup imagery in shared symbol example | Mostly support/symbolic, not central. |
@@ -293,7 +293,7 @@ no explicit adult technique reproduction
 | Purpose | Support level | Source basis | Notes |
 | --- | --- | --- | --- |
 | connecting | strong | shared vision, partner exercises, Magical Congress, heart connection | Main source value. |
-| voicing | strong | partner questions, spoken purpose, feedback, affirmations | Private excerpt/prompt-heavy. |
+| voicing | strong | partner questions, spoken purpose, feedback, affirmations | Operative text review/prompt-heavy. |
 | opening | strong | Magic Circle, altar setup, preparation, transition into ritual | Good extraction lane. |
 | steadying | moderate | centering, clearing daily stress, breath, grounding | Avoid generic wellness. |
 | blessing | moderate | Heart Salutation, love/devotion framing, sacred space | Needs authoring. |
@@ -337,9 +337,9 @@ Approve with limits: Hints; Chapters 1-2; Chapter 5; Chapter 9; selected context
 
 Hold explicit technique sections, therapy/wound material, target-specific attraction, fertility/health/money/career manifestation claims, and culturally sensitive tantra/chakra/Shiva/Shakti material unless reviewed.
 
-9. What exact-text/private-excerpt handling is needed?
+9. What exact-text/operative-text-review handling is needed?
 
-High. Exact exercises, prompts, stage language, Magic Circle wording, Magic Symbol instructions, and Magical Congress language should be private-excerpt only.
+High. Exact exercises, prompts, stage language, Magic Circle wording, Magic Symbol instructions, and Magical Congress language should be operative-text-review only.
 
 10. What source-boundary or adaptation limits should future extraction follow?
 
@@ -369,4 +369,4 @@ Tim is not approving:
 
 `approve_for_extraction_with_limits`
 
-This source directly addresses Moon & Table's connection/intimacy gap. It has real ritual mechanics, especially for body + connecting, words + voicing, intimate two-person ritual, Magic Circle, shared symbol, and candlelit ritual atmosphere. It should move to extraction only under strict adult opt-in, consent, private-excerpt, safety, and cultural/source-boundary limits.
+This source directly addresses Moon & Table's connection/intimacy gap. It has real ritual mechanics, especially for body + connecting, words + voicing, intimate two-person ritual, Magic Circle, shared symbol, and candlelit ritual atmosphere. It should move to extraction only under strict adult opt-in, consent, operative-text-review, safety, and cultural/source-boundary limits.

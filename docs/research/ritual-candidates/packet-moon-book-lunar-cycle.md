@@ -56,12 +56,12 @@ Gate verdict: `approved_for_extraction_with_limits`.
 Moon & Table follows:
 
 ```text
-docs/research/private-source-text-policy.md
+docs/research/operative-ritual-words-policy.md
 docs/research/extraction-depth-policy.md
 docs/research/prompts/extraction-packet-prompt-template.md
 ```
 
-Words, prompts, meditations, spells, affirmations, questions, altar instructions, journaling structures, and lunar ritual language are valid Ritual mechanics. Exact wording is not contamination, but this is a modern copyrighted source. This packet therefore records source locations, short anchors, mechanics, sequence, purpose, and private-excerpt need without reproducing full spells, full prompts, full meditations, full prayers, full rituals, or distinctive long passages.
+Words, prompts, meditations, spells, affirmations, questions, altar instructions, journaling structures, and lunar ritual language are valid Ritual mechanics. Exact wording is not contamination, but this is a modern copyrighted source. This packet therefore records source locations, short anchors, mechanics, sequence, purpose, and operative-text-review need without reproducing full spells, full prompts, full meditations, full prayers, full rituals, or distinctive long passages.
 
 All candidate records remain draft research only.
 
@@ -81,14 +81,14 @@ Do not import into generated app or repo text:
 
 ## Repair note: why this version exists
 
-The first packet was useful but under-extracted. It created a narrow set of app-shaped candidates and left too much usable ritual material in `candidate_extract_later`. This repair expands candidate extraction without relaxing safety, source-boundary, copyright, private-excerpt, or runtime-status rules.
+The first packet was useful but under-extracted. It created a narrow set of app-shaped candidates and left too much usable ritual material in `candidate_extract_later`. This repair expands candidate extraction without relaxing safety, source-boundary, copyright, operative-text-review, or runtime-status rules.
 
 The repair changes are:
 
 - increases draft candidate records from 15 to 46;
 - treats phase altars, moon-water/vessel work, prompt structures, practical action practices, kitchen/table material, grimoire records, and daily/everyday magic as candidate-worthy rather than merely backlog;
 - keeps genuinely risky material held rather than deleted;
-- keeps exact prompts/spells/meditations private-only;
+- keeps exact prompts/spells/meditations operative-text-review only;
 - keeps all candidates unavailable and not recommendable.
 
 ## Source sections used
@@ -101,7 +101,7 @@ The repair changes are:
 | 23-37 | Witches, Magic, and the Moon | approved_with_limits | Strong spell architecture, grimoire, preparation, cleanup, intention/action mechanics. |
 | 38-56 | Living in Moontime | approved_with_limits | Core phase framework and lunar-cycle practice. |
 | 57-81 | Ways to Work with the Moon | approved_with_limits | Lunar journaling, altar, moon walks, moon water, purpose-setting, astrology context. |
-| 82-107 | New Moon / New Moon Magic | approved_with_limits | Intention, seed/space, altar, spells, ritual, journaling; exact text private-only. |
+| 82-107 | New Moon / New Moon Magic | approved_with_limits | Intention, seed/space, altar, spells, ritual, journaling; exact text operative-text-review only. |
 | 108-135 | Waxing Moon / Waxing Moon Magic | approved_with_limits | Tending, growth, following threads, charms, energy work, journaling. |
 | 136-167 | Full Moon / Full Moon Magic | approved_with_limits | Witnessing, culmination, blessing, harvest, table/kitchen, altar, prompts. |
 | 168-199 | Waning Moon / Waning Moon Magic | approved_with_limits | Release, clearing, protection, boundaries, rest, shadow caution. |
@@ -112,7 +112,7 @@ The repair changes are:
 
 ## Source rite inventory
 
-The inventory is now intentionally aggressive. Candidate records are still draft research records. Exact source text remains private-only.
+The inventory is now intentionally aggressive. Candidate records are still draft research records. Exact source text remains operative-text-review only.
 
 | Source item | Source pages | Source location precision | Type | Research use | Brief source description | Likely carriers | Likely purposes | Exact text importance | Disposition | Reason | Future action |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -150,7 +150,7 @@ The inventory is now intentionally aggressive. Candidate records are still draft
 | New moon seed/space frame | 82-98 | page_range | ritual | ritual_candidate | New moon as space, seed, beginning, intention. | words, table, candlelight | opening | high | candidate_extract_now | Highest-yield lane. | Candidate: Set the Seed in the Dark. |
 | New moon timing ambiguity | 82-98 | page_range | context_only | source_note_only | Dark astronomical new moon vs visible crescent. | words | marking | low | source_note_only | App timing context. | Source note. |
 | Little activities at new moon | 82-98 | page_range | ritual | ritual_candidate | Small beginnings, experiments, slow start, creative beginnings. | body, words | opening | medium | candidate_extract_now | Very usable low-overwhelm lane. | Candidate: Begin Very Small. |
-| New moon visualization | 82-98 | page_range | meditation | ritual_candidate | Visualizing a desired beginning. | body, words | opening | high | candidate_extract_now | Exact meditation private-only. | Candidate: Picture the First Light. |
+| New moon visualization | 82-98 | page_range | meditation | ritual_candidate | Visualizing a desired beginning. | body, words | opening | high | candidate_extract_now | Exact meditation operative-text-review only. | Candidate: Picture the First Light. |
 | New moon altar | 99-100 | page_range | ritual | ritual_candidate | Table/altar setup for beginning work. | table, candlelight | opening | high | candidate_extract_now | Strong domestic table ritual. | Candidate: Build the New Moon Altar. |
 | New moon spell structure | 101-102 | page_range | spell | ritual_candidate | Seed/attraction spell architecture. | candlelight, table, words | opening | high | candidate_extract_now | Use mechanics only; no attraction guarantees. | Candidate: Seed Spell Without Promise. |
 | Attraction spell | 102 | exact_page | spell | ritual_candidate | Attraction-specific spell architecture. | candlelight, words | opening | high | candidate_extract_later | Can be heavily reframed as attraction-to-quality, not person/outcome. | Later adapted candidate. |
@@ -158,7 +158,7 @@ The inventory is now intentionally aggressive. Candidate records are still draft
 | New moon rituals | 104 | exact_page | ritual | ritual_candidate | New moon ritual examples and structure. | table, words, candlelight | opening | high | candidate_extract_now | Strong candidate support. | Candidate: New Moon Ritual Container. |
 | New moon cleansing bath | 105 | exact_page | cleansing | ritual_candidate | Bath/cleansing ritual. | body, vessel | releasing | high | candidate_extract_later | Can become non-bath handwashing/body-clearing variant. | Later safety-adapted candidate. |
 | New moon awareness ritual | 106 | exact_page | ritual | ritual_candidate | Awareness cup/container ritual around beginning. | vessel, words | opening | high | candidate_extract_now | Good vessel candidate. | Candidate: A Cup for What Is Beginning. |
-| New moon journaling prompts | 107 | exact_page | prompt | both | New moon prompt set. | words | voicing | high | candidate_extract_now | Exact questions private-only; app wording original. | Candidate/follow-up: New Moon Questions. |
+| New moon journaling prompts | 107 | exact_page | prompt | both | New moon prompt set. | words | voicing | high | candidate_extract_now | Exact questions operative-text-review only; app wording original. | Candidate/follow-up: New Moon Questions. |
 | Waxing moon phase overview | 108-113 | page_range | context_only | source_note_only | Waxing crescent/quarter/gibbous growth pattern. | words | tending | medium | source_note_only | Supports phase interpretation. | Source note. |
 | Fine-tune energy | 114 | exact_page | prompt | ritual_candidate | Adjust effort and energy as moon grows. | body, words | tending | medium | candidate_extract_now | Good low-overwhelm tending practice. | Candidate: Tune the Growing Light. |
 | Do the work | 115-118 | page_range | ritual | ritual_candidate | Take practical action toward intention. | body, words | tending | medium | candidate_extract_now | Strong weekly rec fit. | Candidate: Do the Next Moon Work. |
@@ -166,7 +166,7 @@ The inventory is now intentionally aggressive. Candidate records are still draft
 | Waxing moon everyday magic | 124-126 | page_range | ritual | ritual_candidate | Small everyday magic, symbolic actions, morning drink, shower, pocket object. | body, words, vessel | tending | high | candidate_extract_now | Rich source yield; do not flatten. | Multiple candidates. |
 | Waxing moon altar | 127-129 | page_range | ritual | ritual_candidate | Table/altar support for growing intention. | table, candlelight | tending | high | candidate_extract_now | Strong altar lane. | Candidate: Build the Waxing Altar. |
 | Waxing energy spell | 130 | exact_page | spell | ritual_candidate | Energy-building spell mechanics. | candlelight, body, words | tending | high | candidate_extract_now | Exact wording protected; avoid health claims. | Candidate: Raise One Candle of Effort. |
-| Waxing meditation | 130-131 | page_range | meditation | ritual_candidate | Waxing meditation support. | body, words | steadying | high | candidate_extract_now | Exact meditation private-only. | Candidate: Sit with the Growing Thread. |
+| Waxing meditation | 130-131 | page_range | meditation | ritual_candidate | Waxing meditation support. | body, words | steadying | high | candidate_extract_now | Exact meditation operative-text-review only. | Candidate: Sit with the Growing Thread. |
 | Waxing tarot pull | 131-132 | page_range | prompt | hold | Tarot spread/pull. | words, table | marking | high | hold | Divination lane not approved. | Hold. |
 | Waxing charms | 133-135 | page_range | charm | ritual_candidate | Charm/talisman style support for intention. | vessel, words | blessing | high | candidate_extract_later | Ingredient/safety/provenance review before direct use. | Later safe charm candidate. |
 | Full moon timing and culmination | 136-151 | page_range | ritual | ritual_candidate | Culmination, witnessing, harvest, illumination. | words, candlelight | marking | high | candidate_extract_now | Core full moon candidate. | Candidate: Witness the Harvest. |
@@ -184,7 +184,7 @@ The inventory is now intentionally aggressive. Candidate records are still draft
 | Full moon tarot | 161-162 | page_range | prompt | hold | Tarot pull/spread. | words, table | marking | high | hold | Divination not approved. | Hold. |
 | Mythology as spell work | 162-165 | page_range | prompt | ritual_candidate | Personal mythology and meaning-making exercise. | words | remembering | high | candidate_extract_now | Use only personally authored myth; no borrowing. | Candidate: Tell the Moon Story. |
 | Consciousness check-in ritual | 165-166 | page_range | ritual | ritual_candidate | Check conscious/subconscious relation around full moon. | words, body | steadying | high | candidate_extract_now | Therapy-adjacent but can be symbolic/check-in. | Candidate: Check the Lit Mind. |
-| Full moon prompts | 166-167 | page_range | prompt | both | Full moon question set. | words | remembering | high | candidate_extract_now | Exact prompts private-only. | Candidate/follow-up: Full Moon Questions. |
+| Full moon prompts | 166-167 | page_range | prompt | both | Full moon question set. | words | remembering | high | candidate_extract_now | Exact prompts operative-text-review only. | Candidate/follow-up: Full Moon Questions. |
 | Waning phase overview | 168-172 | page_range | context_only | source_note_only | Disseminating, last quarter, balsamic, waning/dark movement. | words | releasing | medium | source_note_only | Supports phase logic. | Source note. |
 | Second harvest | 173-174 | page_range | prompt | ritual_candidate | Review what to keep, compost, learn from. | words, table | remembering | high | candidate_extract_now | Strong waning review. | Candidate: Gather the Second Harvest. |
 | Clearing and releasing | 174-178 | page_range | cleansing | ritual_candidate | Release/declutter/clear space and emotional residue. | body, table, doorway | releasing | high | candidate_extract_now | Strong domestic practice. | Candidate: Clear One Small Place. |
@@ -194,10 +194,10 @@ The inventory is now intentionally aggressive. Candidate records are still draft
 | Grounding | 183-185 | page_range | meditation | ritual_candidate | Grounding/body practice. | body | steadying | medium | candidate_extract_now | Good simple candidate. | Candidate: Ground the Waning Body. |
 | Shadow work | 185-190 | page_range | prompt | hold | Shadow/reflection material. | words | remembering | high | hold | Therapy-adjacent; needs policy. | Hold. |
 | Waning altar | 191-193 | page_range | ritual | ritual_candidate | Altar/table for waning release/protection. | table, candlelight | releasing | high | candidate_extract_now | Strong phase altar lane. | Candidate: Build the Waning Altar. |
-| Protection spell | 193-195 | page_range | spell | ritual_candidate | Protection spell mechanics. | candlelight, words, vessel | protecting | high | candidate_extract_now | Exact text private-only; no guarantees. | Candidate support. |
+| Protection spell | 193-195 | page_range | spell | ritual_candidate | Protection spell mechanics. | candlelight, words, vessel | protecting | high | candidate_extract_now | Exact text operative-text-review only; no guarantees. | Candidate support. |
 | Uncrossing ritual | 195-197 | page_range | ritual | hold | Uncrossing/clearing ritual. | words, vessel | releasing | high | hold | Provenance/adversarial/source-boundary review. | Hold. |
 | Waning tarot | 197-198 | page_range | prompt | hold | Tarot pull/spread. | words, table | marking | high | hold | Divination not approved. | Hold. |
-| Waning prompts | 199 | exact_page | prompt | both | Waning question set. | words | releasing | high | candidate_extract_now | Exact prompts private-only. | Candidate/follow-up: Waning Questions. |
+| Waning prompts | 199 | exact_page | prompt | both | Waning question set. | words | releasing | high | candidate_extract_now | Exact prompts operative-text-review only. | Candidate/follow-up: Waning Questions. |
 | Dark moon overview | 200-203 | page_range | context_only | source_note_only | Dark moon rest, quiet, emotional sensitivity. | words, body | steadying | medium | source_note_only | Useful but gentle. | Source note. |
 | Underworld / hard stuff | 204-208 | page_range | context_only | hold | Underworld, death, shame, grief-heavy frame. | words | remembering | high | hold | Emotional safety/therapy boundary. | Hold. |
 | Ego death/rebirth | 209-213 | page_range | prompt | hold | Death/rebirth identity work. | words, body | releasing | high | hold | Too heavy for default recommendation. | Hold. |
@@ -221,17 +221,17 @@ The inventory is now intentionally aggressive. Candidate records are still draft
 source_items_inventoried: 112
 candidate_extract_now: 64
 candidate_extract_later: 10
-private_excerpt_reference: 0
-items_with_private_excerpt_recommended: 61
+operative_text_review_reference: 0
+items_with_operative_text_review: 61
 source_note_only: 15
 context_only: 8
 hold: 15
 reject: 0
-remaining_unreviewed_source_sections: none known within approved source-gate ranges; exact spell/prompt wording still requires Tim private review from source copy
+remaining_unreviewed_source_sections: none known within approved source-gate ranges; exact spell/prompt wording still requires Tim operative text review from source copy
 remaining_extraction_backlog: 10 candidate_extract_later items plus 15 held items requiring product/source-boundary decisions
 ```
 
-Note: `private_excerpt_reference: 0` means no source item is only a private excerpt reference. Many source items and candidate records still recommend private excerpt review; these are counted under `items_with_private_excerpt_recommended`.
+Note: `operative_text_review_reference: 0` means no source item is only an operative text review reference. Many source items and candidate records still recommend operative text review; these are counted under `items_with_operative_text_review`.
 
 ## Coverage summary
 
@@ -240,7 +240,7 @@ Primary coverage only counts toward coverage satisfaction. Secondary carriers/pu
 | Primary carrier | Primary purpose | Current draft candidate support | Notes |
 | --- | --- | ---: | --- |
 | words | opening | 7 | Strong new moon, purpose, intention, spell-motive, and planning lanes. |
-| words | voicing | 5 | Prompt/question/formula lanes are valid; exact wording private-only. |
+| words | voicing | 5 | Prompt/question/formula lanes are valid; exact wording operative-text-review only. |
 | words | remembering | 13 | Strong lunar journal, harvest, myth, prompts, monthly review, grimoire. |
 | words | marking | 3 | Phase mapping and special timing mostly source notes, but some candidate support. |
 | words | releasing | 4 | Sacrifice/surrender, waning prompts, second harvest, input reduction. |
@@ -308,12 +308,12 @@ Candidate records are compact in this repaired packet. Each requires authoring e
 | `ritual-moon-book-feed-practice` | Feed the Moon Practice | 78-81 | body | tending | Nourishing/supporting lunar practice. | Choose one supportive act for practice continuity. | `needs_authoring_revision` | Avoid wellness prescription. |
 | `ritual-moon-book-set-seed-dark` | Set the Seed in the Dark | 82-107 | words | opening | New moon seed/space/intention. | Candle/table; write one seed intention; close. | `draft_record_ready` | Strong candidate. |
 | `ritual-moon-book-begin-very-small` | Begin Very Small | 82-98 | body | opening | New moon little activities and beginnings. | Do one tiny beginning action; mark it in grimoire. | `draft_record_ready` | Strong low-capacity candidate. |
-| `ritual-moon-book-first-light-visualization` | Picture the First Light | 82-98 | body | opening | New moon visualization. | Brief generated visualization; exact source private-only. | `needs_authoring_revision` | Keep concise; no copied meditation. |
+| `ritual-moon-book-first-light-visualization` | Picture the First Light | 82-98 | body | opening | New moon visualization. | Brief generated visualization; exact source operative-text-review only. | `needs_authoring_revision` | Keep concise; no copied meditation. |
 | `ritual-moon-book-new-moon-altar` | Build the New Moon Altar | 99-100 | table | opening | New moon altar setup. | Sparse table/altar for new beginning. | `draft_record_ready` | Very strong table candidate. |
 | `ritual-moon-book-seed-spell-no-promise` | Seed Spell Without Promise | 101-102 | candlelight | opening | New moon spell architecture. | Light, write seed, place, close; no result claim. | `draft_record_ready` | Avoid attraction/person-specific wording. |
 | `ritual-moon-book-new-moon-container` | New Moon Ritual Container | 104 | table | opening | New moon ritual structures. | Prepare, name, place, close. | `draft_record_ready` | May merge with seed/altar candidate. |
 | `ritual-moon-book-awareness-cup` | A Cup for What Is Beginning | 106 | vessel | opening | Awareness ritual / vessel. | Cup or bowl holds beginning symbolically; pour out after. | `draft_record_ready` | No ingestion. |
-| `ritual-moon-book-new-moon-questions` | New Moon Questions | 107 | words | voicing | New moon journaling prompts. | 3 original questions for beginning. | `product_followup_pattern` | Exact prompts private-only. |
+| `ritual-moon-book-new-moon-questions` | New Moon Questions | 107 | words | voicing | New moon journaling prompts. | 3 original questions for beginning. | `product_followup_pattern` | Exact prompts operative-text-review only. |
 | `ritual-moon-book-tune-growing-light` | Tune the Growing Light | 114 | body | tending | Waxing energy tuning. | Notice effort level; adjust one thing. | `needs_authoring_revision` | Needs more ritual texture. |
 | `ritual-moon-book-next-moon-work` | Do the Next Moon Work | 115-118 | body | tending | Waxing moon action. | Choose one concrete action and do it. | `draft_record_ready` | Strong weekly rec candidate. |
 | `ritual-moon-book-follow-one-thread` | Follow One Thread | 119-123 | body | tending | Following threads / clues. | Follow one invitation/action without prediction. | `draft_record_ready` | Avoid synchronicity guarantees. |
@@ -322,7 +322,7 @@ Candidate records are compact in this repaired packet. Each requires authoring e
 | `ritual-moon-book-pocket-protection` | Carry One Protective Sign | 124-126 | vessel | protecting | Everyday pocket protection object. | Choose one safe object as reminder/boundary. | `draft_record_ready` | No guarantee. |
 | `ritual-moon-book-symbolic-actions` | List the Symbolic Actions | 124-126 | words | tending | Waxing symbolic action list. | Write three symbolic actions for the week. | `both` | Product follow-up likely. |
 | `ritual-moon-book-waxing-altar` | Build the Waxing Altar | 127-129 | table | tending | Waxing altar for growth/action. | Add object representing action/growth. | `draft_record_ready` | Strong table candidate. |
-| `ritual-moon-book-raise-effort-candle` | Raise One Candle of Effort | 130 | candlelight | tending | Waxing energy spell mechanics. | Candle + one action vow; no result guarantee. | `draft_record_ready` | Exact spell private-only. |
+| `ritual-moon-book-raise-effort-candle` | Raise One Candle of Effort | 130 | candlelight | tending | Waxing energy spell mechanics. | Candle + one action vow; no result guarantee. | `draft_record_ready` | Exact spell operative-text-review only. |
 | `ritual-moon-book-growing-thread-meditation` | Sit with the Growing Thread | 130-131 | body | steadying | Waxing meditation. | Short generated meditation; no copied text. | `needs_authoring_revision` | Needs source verification. |
 | `ritual-moon-book-waxing-safe-charm` | Make a Simple Waxing Charm | 133-135 | vessel | blessing | Waxing charm mechanics. | Non-ingested, non-herbal symbolic charm. | `needs_source_verification` | Ingredient safety/provenance. |
 | `ritual-moon-book-witness-harvest` | Witness the Harvest | 136-167 | table | marking | Full moon culmination/harvest. | Candle/table/object; name what has ripened. | `draft_record_ready` | Strong candidate. |
@@ -337,7 +337,7 @@ Candidate records are compact in this repaired packet. Each requires authoring e
 | `ritual-moon-book-mirror-reflection` | Mirror What Is Lit | 160-161 | vessel | remembering | Mirror magic. | Non-divinatory mirror reflection. | `needs_source_boundary_review` | Avoid scrying/divination. |
 | `ritual-moon-book-tell-moon-story` | Tell the Moon Story | 162-165 | words | remembering | Mythology as spell work. | Write personal story only. | `needs_authoring_revision` | Cultural/religious caution. |
 | `ritual-moon-book-lit-mind-check` | Check the Lit Mind | 165-166 | words | steadying | Consciousness check-in ritual. | Name one conscious thought and one quieter feeling. | `needs_authoring_revision` | Therapy boundary. |
-| `ritual-moon-book-full-moon-questions` | Full Moon Questions | 166-167 | words | remembering | Full moon prompts. | 3 original questions for review. | `product_followup_pattern` | Exact prompts private-only. |
+| `ritual-moon-book-full-moon-questions` | Full Moon Questions | 166-167 | words | remembering | Full moon prompts. | 3 original questions for review. | `product_followup_pattern` | Exact prompts operative-text-review only. |
 | `ritual-moon-book-second-harvest` | Gather the Second Harvest | 173-174 | words | remembering | Waning second harvest. | Keep/compost/learn. | `draft_record_ready` | Strong candidate. |
 | `ritual-moon-book-clear-one-place` | Clear One Small Place | 174-178 | body | releasing | Clearing/decluttering release. | Clear one drawer/corner/surface ritually. | `draft_record_ready` | Avoid chore tone. |
 | `ritual-moon-book-reduce-one-input` | Reduce One Input | 178-179 | words | releasing | Consumption/input reduction. | Name one input to reduce until next phase. | `draft_record_ready` | Avoid productivity/diet framing. |
@@ -345,7 +345,7 @@ Candidate records are compact in this repaired packet. Each requires authoring e
 | `ritual-moon-book-shield-fading-light` | Shield the Fading Light | 182-195 | candlelight | protecting | Protection/boundary spell mechanics. | Candle + boundary statement; close. | `draft_record_ready` | No guaranteed protection; no uncrossing. |
 | `ritual-moon-book-ground-waning-body` | Ground the Waning Body | 183-185 | body | steadying | Grounding. | Touch floor/table/body; return attention. | `draft_record_ready` | No energy diagnosis. |
 | `ritual-moon-book-waning-altar` | Build the Waning Altar | 191-193 | table | releasing | Waning altar. | Table for release/protection. | `draft_record_ready` | Avoid burn/bury defaults. |
-| `ritual-moon-book-waning-questions` | Waning Questions | 199 | words | releasing | Waning prompts. | 3 original questions for release. | `product_followup_pattern` | Exact prompts private-only. |
+| `ritual-moon-book-waning-questions` | Waning Questions | 199 | words | releasing | Waning prompts. | 3 original questions for release. | `product_followup_pattern` | Exact prompts operative-text-review only. |
 | `ritual-moon-book-dark-quiet` | Hold the Dark Quiet | 213-216 | body | steadying | Void/stillness. | Empty bowl + quiet sitting. | `draft_record_ready_with_capacity_gate` | Capacity-gated. |
 | `ritual-moon-book-dark-moon-altar` | Build the Dark Moon Altar | 219-220 | table | steadying | Dark moon altar. | Minimal table with empty space/dark cloth/cup. | `draft_record_ready_with_capacity_gate` | Keep gentle. |
 | `ritual-moon-book-listening-in-dark` | Listen in the Dark | 220-225 | words | remembering | Intuition spell material, softened. | Ask one non-divinatory listening question. | `needs_source_boundary_review` | Avoid divination/psychic claims. |
@@ -355,7 +355,7 @@ Candidate records are compact in this repaired packet. Each requires authoring e
 ## Source notes
 
 - Moon Book is strongest as a lunar-cycle architecture source, not as an astronomy authority. Computed phase/timing should come from Moon & Table's app layer or astronomy sources.
-- The source gives rich exact prompts, spells, meditations, and ritual language. These should be handled through private excerpt review, not generated repo text.
+- The source gives rich exact prompts, spells, meditations, and ritual language. These should be handled through operative text review, not generated repo text.
 - The source's political, feminist, queer, ancestral, cultural, and spiritual worldview is important to the book's voice but should not be copied into Moon & Table's product voice.
 - Tarot/divination appears repeatedly, but should remain held unless Tim approves a divination lane.
 - The source contains body, trauma, shame, grief, healing, menstrual, fertility, and subconscious/reprogramming language. Moon & Table should keep all of this symbolic and non-clinical.
@@ -460,7 +460,7 @@ No source items are permanently rejected in this packet. Many are held because t
 | Altars/table setup | New, waxing, full, waning, dark moon magic | Keep phase-specific altar candidates; do not merge. |
 | Candle/light | New, full, waxing, waning, dark | Use phase-specific candle practices; do not duplicate Buckland candle mechanics. |
 | Vessel/water | Ways to Work, new moon, waning release, full moon, dark moon | Keep symbolic; no ingestion/crystal elixir. |
-| Prompt sets | Every phase | Do not copy; use private excerpt support and original app wording. |
+| Prompt sets | Every phase | Do not copy; use operative text review support and original app wording. |
 | Release/clearing | New moon clearing, waning release, dark moon release | Keep phase distinctions: opening-clear, waning-release, dark-rest. |
 | Protection | Waxing everyday magic, waning protection, dark moon | Keep conservative; no guaranteed protection. |
 | Full moon witnessing/blessing | Full moon harvest, table blessing, feast, myth, expansion | Keep distinct for marking, blessing, connecting, remembering. |
@@ -514,12 +514,12 @@ No source items are permanently rejected in this packet. Many are held because t
 - Repair corrected prior under-extraction: yes.
 - Every inventoried source item has disposition: yes.
 - Required metrics included: yes.
-- `items_with_private_excerpt_recommended` included: yes.
+- `items_with_operative_text_review` included: yes.
 - Source location precision recorded: yes.
 - Research use classified: yes.
 - Primary vs secondary coverage separated: yes.
 - Variant / split ledger included: yes.
-- Exact wording/private excerpt needs flagged: yes.
+- Exact wording/operative text review needs flagged: yes.
 - No full copyrighted spells, prompts, meditations, prayers, rituals, or distinctive long passages reproduced: yes.
 - No runtime Ritual data added: yes.
 - No recommendation logic added: yes.
@@ -548,6 +548,6 @@ No source items are permanently rejected in this packet. Many are held because t
 
 `repaired_expanded_inventory_ready_for_review`
 
-This repaired packet is ready for human review as a research artifact. It still requires source verification, authoring review, private-excerpt decisions, and schema normalization before any candidate can move beyond draft research status.
+This repaired packet is ready for human review as a research artifact. It still requires source verification, authoring review, operative-text-review decisions, and schema normalization before any candidate can move beyond draft research status.
 
 No runtime integration is recommended.

@@ -34,7 +34,7 @@ Path note: `docs/research/ritual-candidates/packet-house-witch-pilot.md` was not
 - `adequate`: usable coverage exists, but not deep.
 - `thin`: only one weak/narrow candidate, or coverage depends on later authoring.
 - `empty`: no real candidate coverage by primary carrier + primary purpose.
-- `fragile`: appears covered, but mostly depends on held, safety-heavy, private-excerpt-heavy, culturally sensitive, exact-text-heavy, or otherwise difficult material.
+- `fragile`: appears covered, but mostly depends on held, safety-heavy, operative-text-review-heavy, culturally sensitive, exact-text-heavy, or otherwise difficult material.
 
 ## 1. Executive summary: biggest gaps
 
@@ -198,15 +198,15 @@ Herb waters, washes, purification, and some garden practices create potential co
 
 ### `vessel + protecting`
 
-There is a lot of coverage: spell bottles, sachets, stones, bowls, jars, house amulets, moon vessels, and threshold bottles. The problem is fragility: many candidates require private excerpt support and safety review for contents, placement, pets, glass, powders, herbs, and exact charm wording.
+There is a lot of coverage: spell bottles, sachets, stones, bowls, jars, house amulets, moon vessels, and threshold bottles. The problem is fragility: many candidates require operative text review support and safety review for contents, placement, pets, glass, powders, herbs, and exact charm wording.
 
 ### `vessel + remembering`
 
-Moon Book mirror/remembering and House Witch/altar/grimoire material touch this, but vessel + remembering is often private-excerpt-heavy, scrying-adjacent, or secondary. Fragile rather than strong.
+Moon Book mirror/remembering and House Witch/altar/grimoire material touch this, but vessel + remembering is often operative-text-review-heavy, scrying-adjacent, or secondary. Fragile rather than strong.
 
 ### `words + voicing`
 
-There is abundant source support across House Witch, Moon Book, Buckland, and Magical Household, but the cell is fragile because exact prayers, charms, spell formulas, spoken cues, and prompt sets require private excerpt handling. It is not weak, but it has a bottleneck.
+There is abundant source support across House Witch, Moon Book, Buckland, and Magical Household, but the cell is fragile because exact prayers, charms, spell formulas, spoken cues, and prompt sets require operative text review handling. It is not weak, but it has a bottleneck.
 
 ### `words + protecting`
 
@@ -214,11 +214,11 @@ Protection words, house spells, threshold lines, charms, and spoken formulas are
 
 ### `words + blessing`
 
-Altar words, prayers, blessings, and table language exist, but many require private excerpt review and authoring rather than direct generated text.
+Altar words, prayers, blessings, and table language exist, but many require operative text review and authoring rather than direct generated text.
 
 ### `candlelight + protecting`
 
-Coverage is real across Buckland, Moon Book, Magical Household, and House Witch, but much of it depends on exact spell text, protection claims, flame safety, and private excerpt review. Fragile, not empty.
+Coverage is real across Buckland, Moon Book, Magical Household, and House Witch, but much of it depends on exact spell text, protection claims, flame safety, and operative text review. Fragile, not empty.
 
 ### `candlelight + blessing`
 
@@ -294,7 +294,7 @@ These need magical/domestic language and source grounding, not self-care filler.
 - Magical Household charms/formulas.
 - Moon Book prompts and meditations.
 
-These are valid ritual mechanics but need private excerpt support before product use.
+These are valid ritual mechanics but need operative text review support before product use.
 
 ## 8. Jessica-interest gaps
 
@@ -425,7 +425,7 @@ Tim decisions needed:
 ```text
 Whether candlelight + connecting should remain empty unless a consent-safe source lane appears.
 Whether plant candidates need a safety matrix before authoring.
-Whether exact charms/prayers/spells move through private excerpt support before any direct-use review.
+Whether exact charms/prayers/spells move through operative text review support before any direct-use review.
 Whether omen/divination, deity/spirit, ancestor/remembrance, and astrological contact lanes remain held.
 Whether intimate two-person home ritual needs its own review lens separate from general connecting coverage.
 ```

@@ -50,7 +50,7 @@ Gate verdict: `approved_for_extraction_with_limits`.
 
 Page references use PDF pages. The source gate records the uploaded PDF as 394 pages: front matter and TOC pp. 1-10; Introduction pp. 11-12; Orientation pp. 13-19; Author's Notes pp. 20-21; flower entries pp. 24-360; Appendix A pp. 361-363; Appendix B pp. 364-383; Appendix C pp. 384-386; Appendix D pp. 387-389.
 
-Words, blessings, charms, spoken formulas, exact questions, meditations, recipes, and distinctive ritual sequences are valid ritual mechanics. This packet preserves flower-first mechanics, source locations, private-excerpt needs, carriers, purposes, and Moon & Table-shaped draft candidates without reproducing full flower entries, full charms, full prayers/blessings, full meditations, full recipes, full correspondence tables, or distinctive long source passages.
+Words, blessings, charms, spoken formulas, exact questions, meditations, recipes, and distinctive ritual sequences are valid ritual mechanics. This packet preserves flower-first mechanics, source locations, operative-text review needs, carriers, purposes, and Moon & Table-shaped draft candidates without reproducing full flower entries, full charms, full prayers/blessings, full meditations, full recipes, full correspondence tables, or distinctive long source passages.
 
 Default adaptation: safe, external, household flower mechanics. Look at the flower; place it on the table, altar, or in a vase/bowl; speak or silently hold an intention; use it as witness, message, marker, or memory token; press or dry a safe flower; return spent flowers to compost or earth where appropriate; journal the memory.
 
@@ -161,7 +161,7 @@ Inventory is complete for approved-scope accounting. It is not a runtime databas
 | Jasmine entry mechanics | 197-199 | page_range | ritual | hold | romance, prosperity, luxury. | plant, body, vessel | connecting, blessing, opening | high | hold | Fragrance/direct-contact/attraction lane. | Hold. |
 | Kalanchoe entry mechanics | 200-202 | page_range | ritual | ritual_candidate | resilience, cheer, everyday houseplant magic. | plant, table | tending, steadying, blessing | low | candidate_extract_later | Good household presence; more living-plant lane. | Later small-home resilience. |
 | Lantana entry mechanics | 203-207 | page_range | ritual | ritual_candidate | boundaries, adaptability, protection. | plant, doorway, table | protecting, steadying | medium | candidate_extract_later | Boundary/protection but household safety review. | Later source note. |
-| Lavender entry mechanics | 208-216 | page_range | ritual | ritual_candidate | calm, love, relationship repair, jar/altar/dried flower. | plant, vessel, table, words | steadying, connecting, releasing, blessing | high | candidate_extract_later | Strong mechanics but exact relationship sequence/private review. | Later mutual connection ritual. |
+| Lavender entry mechanics | 208-216 | page_range | ritual | ritual_candidate | calm, love, relationship repair, jar/altar/dried flower. | plant, vessel, table, words | steadying, connecting, releasing, blessing | high | candidate_extract_later | Strong mechanics but exact relationship sequence/operative text review. | Later mutual connection ritual. |
 | Lilac entry mechanics | 217-219 | page_range | ritual | ritual_candidate | memory, home, first love, nostalgia. | plant, table, vessel, words | remembering, connecting, blessing | medium | candidate_extract_now | Strong memory/home scent lane without preparation. | Candidate: Lilac Remembers the House. |
 | Lily entry mechanics | 220-224 | page_range | ritual | hold | purity, angels, grace. | plant, table | blessing, remembering | medium | hold | Safety concern, especially pets; spirit language. | Symbolic-only unless reviewed safe. |
 | Lupine entry mechanics | 225-227 | page_range | ritual | ritual_candidate | confidence, imagination, liminal courage. | plant, words, table | opening, steadying, blessing | medium | candidate_extract_later | Good opening/courage candidate; safety review. | Later. |
@@ -205,7 +205,7 @@ candidate_records: 36
 candidate_extract_now: 31
 candidate_extract_later: 37
 adapted_or_exact_text_review: 0
-items_with_private_excerpt_recommended: 25
+items_with_operative_text_review: 25
 source_note_only: 6
 context_only: 1
 hold: 18
