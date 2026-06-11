@@ -19,6 +19,10 @@ export type ContentLintResult = {
   findings: ContentLintFinding[];
 };
 
+export type ContentLintRunOptions = {
+  contentSource?: "working-tree" | "git-index";
+};
+
 type ContentLintRule = {
   id: string;
   message: string;
@@ -151,6 +155,23 @@ function isFileAllowed(filePath: string): boolean {
   return FILE_ALLOWLIST_PATTERNS.some((pattern) => pattern.test(filePath));
 }
 
+function readScannedFile(filePath: string, contentSource: ContentLintRunOptions["contentSource"]): string {
+  if (contentSource !== "git-index") {
+    return readFileSync(filePath, "utf8");
+  }
+
+  const relativePath = relative(REPO_ROOT, filePath);
+
+  try {
+    return execFileSync("git", ["show", `:${relativePath}`], {
+      cwd: REPO_ROOT,
+      encoding: "utf8",
+    });
+  } catch {
+    return readFileSync(filePath, "utf8");
+  }
+}
+
 function isGuardrailContext(line: string): boolean {
   return GUARDRAIL_CONTEXT_PATTERN.test(line);
 }
@@ -229,11 +250,14 @@ export function lintContentText(
     });
 }
 
-export function runContentLint(): ContentLintResult {
+export function runContentLint(options: ContentLintRunOptions = {}): ContentLintResult {
   const files = getSourceControlledScannedFiles();
   const findings = files.flatMap((filePath) => {
     const relativePath = relative(REPO_ROOT, filePath);
-    const contents = readFileSync(filePath, "utf8");
+    const contents = readScannedFile(
+      filePath,
+      options.contentSource ?? "working-tree",
+    );
 
     return lintContentText(contents, relativePath);
   });

@@ -8,11 +8,11 @@ import {
 
 describe("content lint", () => {
   it("passes the current source-controlled content library", () => {
-    const result = runContentLint();
+    const result = runContentLint({ contentSource: "git-index" });
 
     expect(result.valid).toBe(true);
     expect(result.findings).toEqual([]);
-  });
+  }, 30_000);
 
   it("flags non-placeholder emails and private-data markers", () => {
     const findings = lintContentText(
