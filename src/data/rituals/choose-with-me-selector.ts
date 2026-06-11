@@ -406,17 +406,6 @@ function getFirstSentence(text: string): string {
   return sentenceMatch?.[0] ?? normalized;
 }
 
-function describeRequestForReader(request: ChooseWithMeRequest): string {
-  const pieces = [
-    request.purpose ? purposeLabels[request.purpose] : "the work you named",
-    request.carrier ? `in ${carrierLabels[request.carrier]}` : undefined,
-    request.audience === "both_of_us" ? "for both of you" : "for you",
-    `with ${capacityLabels[request.energyCapacity]}`,
-  ].filter(Boolean) as string[];
-
-  return pieces.join(", ");
-}
-
 function describeSelectionLane(
   request: ChooseWithMeRequest,
   ritual?: Ritual,
@@ -453,14 +442,20 @@ function buildWhyThisFits(
   ritual: Ritual,
   request: ChooseWithMeRequest,
 ): string {
-  const requestDescription = describeRequestForReader(request);
   const practiceFit = describePracticeFit(ritual);
-  const fitLanguage =
+  const purpose = request.purpose
+    ? purposeLabels[request.purpose]
+    : "the work";
+  const capacityShape =
     request.energyCapacity === "room_for_something_deeper"
-      ? "a fuller shape"
-      : "a small, concrete shape";
+      ? "with room to unfold"
+      : "without making the moment larger";
+  const audienceShape =
+    request.audience === "both_of_us"
+      ? "something both of you can enter"
+      : "something one person can do";
 
-  return `You asked for ${requestDescription}. This ritual gives that request ${fitLanguage}: ${practiceFit}`;
+  return `This ritual turns ${purpose} into ${audienceShape}: ${practiceFit} It keeps the work concrete ${capacityShape}.`;
 }
 
 function buildHowThisWasChosen(
@@ -471,10 +466,10 @@ function buildHowThisWasChosen(
     request.timeScope === "today" ? "for today" : "for this week";
   const selectionLane = describeSelectionLane(request, ritual);
   const closing = ritual
-    ? "This one stayed inside those answers without asking for more energy than you offered."
+    ? "Moon & Table did not widen the audience, raise the capacity, or swap the work to make an easier match."
     : "Moon & Table did not choose a ritual outside that request.";
 
-  return `Moon & Table looked at approved rituals ${timingPhrase} and kept the choice inside ${selectionLane}. ${closing}`;
+  return `Inputs honored: ${timingPhrase}, ${selectionLane}. ${closing}`;
 }
 
 function buildDebug(
