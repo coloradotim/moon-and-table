@@ -1680,8 +1680,8 @@ function renderCheckInOptionButton({
 }
 
 const timeScopeAcknowledgements: Record<RitualCheckInTimeScope, string> = {
-  today: "For today.",
-  best_moment_this_week: "Looking across the week.",
+  today: "For today",
+  best_moment_this_week: "Looking across the week",
 };
 
 const timeScopeReviewLabels: Record<RitualCheckInTimeScope, string> = {
@@ -1690,10 +1690,10 @@ const timeScopeReviewLabels: Record<RitualCheckInTimeScope, string> = {
 };
 
 const energyAcknowledgements: Record<RitualCheckInEnergyCapacity, string> = {
-  barely_any: "Barely any capacity.",
-  a_little: "A little capacity.",
-  enough_to_engage: "Enough to engage.",
-  room_for_something_deeper: "Room for something deeper.",
+  barely_any: "Barely any capacity",
+  a_little: "A little capacity",
+  enough_to_engage: "Enough to engage",
+  room_for_something_deeper: "Room for something deeper",
 };
 
 const energyReviewLabels: Record<RitualCheckInEnergyCapacity, string> = {

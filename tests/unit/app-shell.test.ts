@@ -192,7 +192,7 @@ describe("app shell rendering", () => {
     expect(html).toContain("Go back");
     expect(html).toContain('data-check-in-action="go_back"');
     expect(html).not.toContain("Welcome back");
-    expect(html).toContain("For today.");
+    expect(html).toContain("For today");
     expect(html).toContain("Barely any");
     expect(html).toContain("A pause, a noticing, or one tiny act.");
     expect(html).toContain("A little");
@@ -215,7 +215,7 @@ describe("app shell rendering", () => {
       displayName: "Morgan Example",
     });
 
-    expect(html).toContain("Looking across the week.");
+    expect(html).toContain("Looking across the week");
     expect(html).toContain("How much energy or capacity do you have?");
     expect(html).not.toContain("Welcome back");
   });
@@ -309,7 +309,7 @@ describe("app shell rendering", () => {
     });
 
     expect(html).toContain("Me");
-    expect(html).not.toContain("Barely any capacity.");
+    expect(html).not.toContain("Barely any capacity");
     expect(html).toContain("What work should the ritual hold?");
     expect(html).toContain("Steadying");
     expect(html).toContain("Remembering");
