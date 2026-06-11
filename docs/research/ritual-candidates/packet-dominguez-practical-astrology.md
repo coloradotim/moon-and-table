@@ -1,424 +1,2636 @@
-# Ritual candidate packet: Dominguez practical astrology
+# Source Packet: Dominguez, *Practical Astrology for Witches and Pagans* — Practical Astrology Ritual Candidates
 
 ## Packet metadata
 
-Packet ID: `packet-dominguez-practical-astrology`
+- packet ID: `packet.dominguez.practical_astrology.reextract`
+- issue: `#355`
+- source ID: `SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS`
+- source gate: `docs/research/source-gates/src-astrology-dominguez-practical-astrology-witches-pagans.md`
+- source status: approved for extraction with limits
+- extraction mode: canonical re-extraction from uploaded review PDF and source gate
+- output status: extraction packet only; no runtime Ritual records, UI copy, selection logic, scoring, timing-card runtime data, or eligibility changes
+- source text posture: no copied pathworkings, no copied tables, no copied technical procedures, no exact ritual scripts, no deterministic timing claims
+- source PDF used: user-provided working PDF, `_OceanofPDF.com_Practical_Astrology_for_Witches_and_Pagans_-_Ivo_Dominguez.pdf`
 
-Packet status: `inventory_aware_extraction_ready_for_review`
+## Scope and boundaries
 
-Researcher: ChatGPT
+This packet re-runs the Dominguez practical astrology extraction under the current canonical extraction model. The source is a timing-heavy astrology-for-magick source; many useful artifacts belong in timing/source-note cards rather than runtime Ritual candidates.
 
-Date created: 2026-06-10
+This packet preserves practical astrology mechanics where they can be made household-scale: glyphs as marks, planetary cards, planetary day/hour support, Moon phase direction, Moon sign tone, void Moon softening, aspect-before-culmination planning, retrograde foundation work, and adapting fixed ritual details to the sky available.
 
-Parent issue: #315
-
-Related issues: #312, #294, #292, #268
-
-Output path: `docs/research/ritual-candidates/packet-dominguez-practical-astrology.md`
-
-Source ID: `SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS`
-
-This packet is Markdown research content only. It does not approve runtime use. It does not mark any Ritual reviewed, recommendable, findable, direct-use eligible, recommendation eligible, or runtime-ready.
-
-## Assignment
-
-Assigned source mode: single approved source only.
-
-Assigned source: Ivo Dominguez Jr., *Practical Astrology for Witches and Pagans: Using the Planets and the Stars for Effective Spellwork, Rituals, and Magick*.
-
-Assigned extraction lane: astrology-driven ritual candidates and source notes that help Moon & Table answer: `Why does this astrological moment give this ritual its shape?`
-
-Focus: ritual timing and household-scale mechanics, not chart reading, horoscope interpretation, deterministic prediction, relationship compatibility, ceremonial contact systems, or technical talisman/electional app behavior.
-
-## Allowed source
-
-Source: Ivo Dominguez Jr., *Practical Astrology for Witches and Pagans: Using the Planets and the Stars for Effective Spellwork, Rituals, and Magick*. Weiser Books / Red Wheel/Weiser, 2016.
-
-Source copy reviewed: uploaded PDF `_OceanofPDF.com_Practical_Astrology_for_Witches_and_Pagans_-_Ivo_Dominguez.pdf`, 194 PDF pages.
-
-Source gate: `docs/research/source-gates/src-astrology-dominguez-practical-astrology-witches-pagans.md`
-
-Gate verdict: `approved_for_extraction_with_limits`.
-
-Page references use PDF pages and chapter/section labels. The approved source gate states that cover/title/copyright/TOC occupy PDF pp. 1-6 and Chapter 1 begins PDF p. 7.
-
-## Source policy note
-
-Moon & Table follows:
-
-```text
-docs/research/operative-ritual-words-policy.md
-docs/research/extraction-depth-policy.md
-docs/research/prompts/extraction-packet-prompt-template.md
-```
-
-Words, glyphs, timing instructions, planetary hour language, pathworkings, correspondence/action rules, symbolic marks, and ritual timing cues are valid Ritual mechanics. Because this is a modern copyrighted source with tables, pathworkings, timing methods, and technical procedures, this packet records source locations, mechanics, carriers, purposes, short anchors, and operative-text-review needs without reproducing full pathworkings, full tables, full technical procedures, full ritual scripts, or distinctive long passages.
-
-All candidates remain draft research only.
-
-## Disallowed / limited source material
-
-This packet does not extract:
-
-- horoscope/personality/chart-reading content as Ritual candidates;
-- deterministic transits, predictions, or compatibility claims;
-- ceremonial contact systems as normal Moon & Table content;
-- technical talisman/electional systems as app logic;
-- copied pathworkings, copied tables, copied procedures, or copied ritual scripts;
-- medical/body-diagnosis claims;
-- plant/herb/oil material before safety review;
-- recommendation logic or hard timing rules.
-
-The packet does extract:
-
-- planetary timing as ritual support;
-- glyph-as-marking practices;
-- planet-specific ritual families;
-- Moon phase/sign/aspect timing beyond Moon Book;
-- timing adaptation when conditions are imperfect;
-- household table/altar, words, candlelight, vessel, and body practices shaped by astrology;
-- source notes for magick squares and symbolic marks without importing technical talisman procedure.
+This packet does not make any candidate reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready. `approved_for_mechanical_import` means only that the packet block is complete enough for a later importer to mechanically create a draft Ritual record for human review.
 
 ## Source sections used
 
-| PDF pages | Section | Extraction decision | Notes |
-| ---: | --- | --- | --- |
-| 1-6 | Front matter / TOC | metadata/context | Publication data and chapter map. |
-| 7-9 | Chapter 1: Introduction | approved_with_limits | Astrology as sacred symbolic language for magickal practice. |
-| 10-17 | Chapter 2: The Worldview of Astrology | approved_with_limits | Sacred science, as above/so below, Celestial Temple pathworking. |
-| 18-28 | Chapter 3: Core Concepts | approved_with_limits | Planets/signs/houses/aspects as magical language. |
-| 29 onward | Chapter 4: The Planets | approved_with_limits | Planet-by-planet ritual logic. |
-| later chapter | Chapter 5: The Signs | approved_with_limits | Sign qualities as ritual tone/modifiers. |
-| later chapter | Chapter 6: The Houses | approved_with_limits | Houses as arenas of action; mostly source notes. |
-| later chapter | Chapter 7: The Aspects | approved_with_limits | Aspects as interaction/timing conditions. |
-| later chapter | Chapter 8: Using the Glyphs for Magick | approved_with_limits | Glyphs as magical alphabet and marking mechanics. |
-| later chapter | Chapter 9: The Astrology of Time | approved_with_limits | Sacred time, cycles, wheels, planetary order. |
-| later chapter | Chapter 10: Choosing the When | approved_with_limits | Moon phase/sign, aspects, planetary days/hours. |
-| later chapter | Chapter 11: Adapting to the When | approved_with_limits | Imperfect timing, planetary hours, representations, verbal calls, symbolic marks, sacred space. |
-| later chapter | Chapter 12: Astrology of the Aura | limited/source_note | Body/energy context; no diagnostic claims. |
-| later chapter | Chapter 13: Astrology of Spirit Work | hold/source_note | Deeper ceremonial contact held by PM decision. |
-| later chapter | Chapter 14: Spiritual Evolution | source_note_only | Returns/long-cycle context; not near-term candidate-heavy. |
-| later chapter | Chapter 15: Magick Squares | source_note/operative_text_review | Symbolic marks and magick squares; technical procedure held. |
-| later chapter | Chapter 16-17 | context/source_note | Great Year / Next Steps. |
-| appendices | Appendices A-F | source_note/operative_text_review | Correspondences, squares, rulerships, signs/body, Three Gates of Moon. |
+- Front matter and TOC, PDF pp. 1-6: source identity and chapter map.
+- Chapter 1, PDF pp. 7-9: astrology as sacred symbolic language and applied ritual technology.
+- Chapter 2, PDF pp. 10-17: sacred science, as above/so below, Celestial Temple pathworking; source-note only.
+- Chapter 3, PDF pp. 18-28: planets/signs/houses/aspects as symbolic language; source-note scaffolding.
+- Chapter 4, PDF pp. 29-45: planet-family logic, especially seven elder planets; timing-card source support.
+- Chapters 5-7, PDF pp. 46-79: signs, houses, aspects; source-note/timing-card support, not horoscope copy.
+- Chapter 8, PDF pp. 80-90: glyphs for magick, planetary attunement, seven-day planetary cycle, glyph marks.
+- Chapter 9, PDF pp. 91-104: astrology of time, planetary days/hours, timing sequences.
+- Chapter 10, PDF pp. 105-117: choosing timing by Moon phase, Moon sign, void Moon, aspects, retrogrades.
+- Chapter 11, PDF pp. 118-125: adapting to imperfect or fixed timing.
+- Chapters 12-17 and appendices, PDF pp. 126-194: aura, spirit work, magick squares, Great Year, correspondences; mostly source-note, hold, or later specialized review.
 
-## Source rite inventory
+## Coverage and accounting metrics
 
-Every inventoried source item has a disposition. This inventory is intentionally broad across approved ranges.
-
-| Source item | Source pages | Source location precision | Type | Research use | Brief source description | Likely carriers | Likely purposes | Exact text importance | Disposition | Reason | Future action |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Source metadata and TOC | PDF 1-6 | page_range | context_only | context_only | Publication data and chapter map. | words | remembering | low | context_only | Metadata only. | Preserve source details. |
-| Astrology as sacred language | PDF 7-9 / Ch. 1 | page_range | context_only | source_note_only | Astrology as symbolic language and technology for magick. | words | marking | medium | source_note_only | Foundational product language. | Use in why-this-moment notes. |
-| Keep a study/ritual journal | PDF 8-9 / Ch. 1 | page_range | prompt | product_followup_pattern | Journal questions and insights while learning astrology. | words | remembering | medium | candidate_extract_now | Good grimoire follow-up. | Candidate: Star-Language Journal. |
-| Use calendars/charts/apps as timing tools | PDF 9 / Ch. 1 | exact_page | prompt | product_followup_pattern | Practical support for getting current astrological conditions. | words | marking | low | source_note_only | Product/timing context, not ritual. | Source note. |
-| Celestial Temple pathworking | PDF 14-17 / Ch. 2 | page_range | meditation | ritual_candidate | Guided vision of planetary light through signs/houses. | body, words | opening | high | candidate_extract_later | Long pathworking; operative text review only. | Later adapted visualization. |
-| As above/so below worldview | PDF 13-14 / Ch. 2 | page_range | context_only | source_note_only | Macrocosm/microcosm as timing logic. | words | marking | medium | source_note_only | Product explanatory language. | Use sparingly. |
-| Planets/signs/houses/aspects as magical grammar | PDF 18-28 / Ch. 3 | page_range | context_only | source_note_only | Planets as sources, signs as modifiers, houses as arenas, aspects as verbs/actions. | words, table | remembering | medium | candidate_extract_now | Useful why-this-moment scaffold. | Candidate: Read the Sky as Grammar. |
-| Planet glyph contemplation | PDF 29 onward / Ch. 4 | chapter_range | meditation | ritual_candidate | Planet glyphs reveal Spirit/Soul/Matter patterning. | words, table | marking | medium | candidate_extract_later | Needs source-specific authoring. | Later candidate. |
-| Sun as purpose/vitality/integration | PDF 30 / Ch. 4 | exact_page | correspondence_with_action | ritual_candidate | Sun source logic for purpose, power, vitality, integration. | candlelight, words | blessing | medium | candidate_extract_now | Strong planetary family. | Candidate: Sun Purpose Light. |
-| Moon as vessel/memory/story/astral | PDF 31 / Ch. 4 | exact_page | correspondence_with_action | ritual_candidate | Moon source logic for memory, emotion, story, astral work. | vessel, words | remembering | medium | candidate_extract_now | Connects to Moon Book. | Candidate: Moon Story Vessel. |
-| Mercury as thought/communication/intermediary | PDF 32 / Ch. 4 | exact_page | correspondence_with_action | ritual_candidate | Mercury source logic for messages, speech, naming, systems. | words | voicing | medium | candidate_extract_now | Strong words carrier. | Candidate: Mercury Word Thread. |
-| Venus as beauty/harmony/value/love | PDF 33 / Ch. 4 | exact_page | correspondence_with_action | ritual_candidate | Venus source logic for harmony, values, beauty, love. | table, candlelight | connecting | medium | candidate_extract_now | Private/non-deterministic. | Candidate: Venus Harmony Table. |
-| Mars as directed will/assertion/force | PDF 34 / Ch. 4 | exact_page | correspondence_with_action | ritual_candidate | Mars source logic for drive, assertion, enthusiasm, force. | body, words | protecting | medium | candidate_extract_later | Avoid aggression/adversarial work. | Later candidate. |
-| Jupiter as vision/trust/opportunity | PDF 35 / Ch. 4 | exact_page | correspondence_with_action | ritual_candidate | Jupiter source logic for expansion, trust, wisdom, risk. | table, words | blessing | medium | candidate_extract_now | Strong blessing/tending family. | Candidate: Jupiter Wide Table. |
-| Saturn as structure/limit/teacher | PDF 36 / Ch. 4 | exact_page | correspondence_with_action | ritual_candidate | Saturn source logic for limits, structure, discipline, material boundary. | body, table | steadying | medium | candidate_extract_now | Strong household grounding. | Candidate: Saturn Boundary Stone. |
-| Outer planets as generational/transpersonal | PDF 37 onward / Ch. 4 | chapter_range | context_only | source_note_only | Uranus/Neptune/Pluto broader forces. | words | marking | low | source_note_only | Too broad for near-term rituals. | Use later. |
-| Sign qualities as ritual modifiers | Ch. 5 | chapter_range | correspondence_with_action | ritual_candidate | Signs color planetary force and ritual tone. | words | marking | medium | candidate_extract_later | Need source-page tightening. | Later sign-shaping notes. |
-| Houses as arenas of action | Ch. 6 | chapter_range | context_only | source_note_only | Houses show where energy expresses. | words, table | marking | medium | source_note_only | Avoid chart-reading app. | Use only as context. |
-| Aspects as planetary interactions | Ch. 7 | chapter_range | context_only | source_note_only | Aspects describe relationships between planetary powers. | words | marking | medium | candidate_extract_now | Good timing explanation. | Candidate: Name the Aspect Weather. |
-| Glyphs as magical alphabet | Ch. 8 | chapter_range | craft | ritual_candidate | Astrological glyphs can be used as symbols of power. | words, table | marking | high | candidate_extract_now | Strong glyph-as-marking lane. | Candidate: Draw the Planet Glyph. |
-| Doodling/writing glyphs | Ch. 8 | chapter_range | craft | ritual_candidate | Repeated drawing internalizes glyphs. | body, words | remembering | medium | candidate_extract_now | Simple household practice. | Candidate: Trace the Glyph Three Times. |
-| Planets always present | Ch. 8 | chapter_range | context_only | source_note_only | Planet powers are within/around, even when timing varies. | words | steadying | medium | source_note_only | Useful anti-anxiety timing note. | Source note. |
-| Astrology of Time overview | Ch. 9 | chapter_range | context_only | source_note_only | Cycles nested within cycles; sacred time logic. | words | marking | medium | source_note_only | Product explanatory language. | Source note. |
-| Planetary order sequence | Ch. 10 | chapter_range | prompt | product_followup_pattern | Planet order sequence can describe cycles of change. | words | remembering | high | candidate_extract_later | Natal pattern; avoid chart app drift. | Later follow-up. |
-| Planetary days | Ch. 10 | chapter_range | ritual | ritual_candidate | Days ruled by planets support timing. | words, candlelight | marking | medium | candidate_extract_now | Good timing support. | Candidate: Mark the Planetary Day. |
-| Planetary hours | Ch. 10 | chapter_range | ritual | ritual_candidate | Sunrise/sunset-based planetary hours support work. | words, candlelight | opening | high | candidate_extract_now | No hard rules yet. | Candidate: Open in the Planetary Hour. |
-| Moon phase timing | Ch. 10 | chapter_range | ritual | ritual_candidate | Moon phase shapes increase/decrease/emphasis. | words, vessel | marking | medium | candidate_extract_now | Cross-source with Moon Book. | Candidate: Let the Moon Shape the Work. |
-| Moon sign timing | Ch. 10 | chapter_range | ritual | ritual_candidate | Moon sign colors practice. | words | marking | medium | candidate_extract_later | Need authoring and source tightening. | Later candidate. |
-| Void-of-course Moon caution | Ch. 10 | chapter_range | context_only | source_note_only | Void Moon as timing condition. | words | steadying | medium | candidate_extract_now | Good pause/soften pattern. | Candidate: Soften Under the Void Moon. |
-| Aspects before culmination | Ch. 10 | chapter_range | context_only | source_note_only | Work before aspect perfection/cycle culmination. | words | marking | medium | candidate_extract_later | Avoid hard rules. | Later timing note. |
-| Adapt to available timing | Ch. 11 | chapter_range | ritual | ritual_candidate | Use conditions as starting point rather than wait for perfect chart. | words | steadying | medium | candidate_extract_now | Excellent product fit. | Candidate: Work With the Sky You Have. |
-| Waxing/waning adaptation | Ch. 11 | chapter_range | ritual | ritual_candidate | Match focus to lunar growth/removal. | words, body | opening/releasing | medium | candidate_extract_now | Cross-source with Moon Book. | Candidate: Turn the Work With the Moon. |
-| Retrograde adaptation | Ch. 11 | chapter_range | ritual | ritual_candidate | Use retrograde for foundations, revision, retracing. | words, table | tending | medium | candidate_extract_now | Strong non-alarmist pattern. | Candidate: Lay the Retrograde Foundation. |
-| Planetary hour support in imperfect timing | Ch. 11 | chapter_range | ritual | ritual_candidate | Add planet-hour support when other timing is imperfect. | candlelight, words | steadying | medium | candidate_extract_now | Good household-scale support. | Candidate: Borrow the Hour's Light. |
-| Physical representation for planetary hour | Ch. 11 | chapter_range | craft | ritual_candidate | Use object/symbol to access planetary hour. | table, vessel | marking | medium | candidate_extract_now | Strong table/vessel candidate. | Candidate: Place the Planet Token. |
-| Verbal calls for planetary hour | Ch. 11 | chapter_range | spoken_formula | ritual_candidate | Naming/calling planetary support. | words | voicing | high | operative_text_review_reference | Exact wording needs source/private authoring. | Tim operative text review. |
-| Symbolic mark/sigil as focal point | Ch. 11 / Ch. 15 | chapter_range | craft | ritual_candidate | Use symbolic mark as focal point, not technical talisman import. | table, words | marking | high | candidate_extract_now | Strong if simplified. | Candidate: Make a Simple Planet Mark. |
-| Work above astrological turbulence | Ch. 11 | chapter_range | meditation | ritual_candidate | Shift plane of action / perspective under difficult conditions. | body, words | steadying | medium | candidate_extract_later | Could become too ceremonial. | Later adapted candidate. |
-| Sacred space to smooth difficult astrology | Ch. 11 | chapter_range | ritual | ritual_candidate | Create container to reduce rough conditions. | table, body, words | protecting | high | candidate_extract_later | Avoid importing full casting. | Later candidate. |
-| Naming twelve signs for balance | Ch. 11 | chapter_range | spoken_formula | ritual_candidate | Name/scribe signs as balancing field. | words, body | protecting | high | operative_text_review_reference | Exact source handling. | Tim operative text review. |
-| Astrology of the Aura | Ch. 12 | chapter_range | context_only | source_note_only | Body/subtle field astrology. | body, words | steadying | medium | source_note_only | No diagnostic claims. | Source note only. |
-| Astrology of Spirit Work | Ch. 13 | chapter_range | context_only | hold | Spirit-work astrology. | words, table | marking | high | hold | PM decision: hold ceremonial contact. | Hold. |
-| Sun/Moon/Ascendant growth work | Ch. 14 | chapter_range | prompt | product_followup_pattern | Long-cycle spiritual evolution using chart anchors. | words | remembering | medium | candidate_extract_later | Avoid personality app. | Later source note. |
-| Planetary returns as rites of passage | Ch. 14 | chapter_range | ritual | ritual_candidate | Returns as benchmarks/initiations. | words, table | marking | medium | candidate_extract_later | Needs careful, non-deterministic framing. | Later candidate. |
-| Venus return near solar return | Ch. 14 | chapter_range | ritual | ritual_candidate | Venus years for harmony/beauty/head-heart concordance. | candlelight, table | connecting | medium | candidate_extract_later | Good Jessica/intimacy fit but needs review. | Later candidate. |
-| Magick Squares overview | Ch. 15 | chapter_range | context_only | source_note_only | Squares as planetary symbolic structures. | table, words | marking | high | source_note_only | Do not import technical system. | Source note. |
-| Simple magick-square attunement | Ch. 15 | chapter_range | meditation | ritual_candidate | Follow numbers with eyes/finger as planetary meditation. | body, table | steadying | medium | candidate_extract_now | Good non-talisman adaptation. | Candidate: Trace the Planet Square. |
-| Sigil creation from squares | Ch. 15 | chapter_range | craft | ritual_candidate | Condense intent, choose planet, derive focal symbol. | table, words | marking | high | candidate_extract_later | Technical/operative-text-review heavy. | Later candidate. |
-| Craft permanent magick squares | Ch. 15 | chapter_range | craft | hold | Wooden squares with planetary correspondences and materials. | table, vessel | marking | high | hold | Technical/safety/material burden. | Hold. |
-| Burn/use yarn or wire sigil | Ch. 15 | chapter_range | charm | hold | Remove yarn/wire sigil for amulet/burning. | vessel, candlelight | marking | high | hold | Technical talisman/fire safety. | Hold. |
-| Great Year | Ch. 16 | chapter_range | context_only | context_only | Large astrological age cycle. | words | remembering | low | context_only | Too broad. | Context only. |
-| Next Steps | Ch. 17 | chapter_range | context_only | context_only | Further study. | words | remembering | low | context_only | No extraction. | Context only. |
-| Appendix A correspondences | Appendix A | chapter_range | correspondence_with_action | source_note_only | Planet/sign correspondences. | words, table, plant | marking | high | source_note_only | Do not copy tables; safety needed. | Source note. |
-| Appendix C squares | Appendix C | chapter_range | correspondence_with_action | source_note_only | Magick squares for elder planets. | table | marking | high | source_note_only | Operative text review only. | Source note. |
-| Appendix E signs/body | Appendix E | chapter_range | correspondence_with_action | hold | Signs and body. | body | remembering | high | hold | No medical/body claims. | Hold. |
-| Appendix F Three Gates of Moon | Appendix F | chapter_range | correspondence_with_action | ritual_candidate | Moon gate timing framework. | words, vessel | marking | high | candidate_extract_later | Cross-check with Moon Book. | Later candidate. |
-
-## Packet metrics
-
-```text
-source_items_inventoried: 53
-candidate_extract_now: 22
-candidate_extract_later: 13
-operative_text_review_reference: 2
-items_with_operative_text_review: 20
-source_note_only: 10
-context_only: 3
-hold: 5
-reject: 0
-remaining_unreviewed_source_sections: none known within approved source-gate ranges for source-gate-level extraction; exact tables, procedures, and pathworkings require Tim operative text review
-remaining_extraction_backlog: 13 candidate_extract_later items plus 5 held items requiring Tim/product/safety/source-boundary decisions
+```yaml
+source_items_inventoried: 43
+source_inventory_coverage_counts_nonexclusive:
+  ritual_candidate_extract_now: 13
+  timing_card_extract_now: 21
+  source_note_or_boundary_record: 16
+  context_only: 2
+  hold_before_import: 2
+  reject: 0
+candidate_records:
+  total: 14
+  approved_for_mechanical_import: 13
+  hold_before_import: 1
+timing_card_records:
+  total: 21
+  draft_research_only: 21
+source_note_coverage_records:
+  total: 16
+remaining_unreviewed_source_sections: "none within approved gate ranges for research extraction; ceremonial/spirit/magick-square lanes remain intentionally held from runtime import"
+remaining_extraction_backlog: "runtime-ready planet-family Ritual variants, sign-family tone variants, magick-square specialized-review lane, spirit-work lane, and direct correspondence tables remain future product decisions rather than missing #355 extraction"
 ```
 
-## Coverage summary
+## Source rite / item inventory
 
-Primary carrier and primary purpose only count toward coverage satisfaction.
+| Source item ID | Source location | Disposition | Notes |
+|---|---|---|---|
+| `frontmatter` | PDF pp. 1-6 | `context_only` | publication/citation data only |
+| `ch1.introduction` | PDF pp. 7-9 | `ritual_candidate_extract_now` + `source_note_or_boundary_record` | astrology as sacred symbolic language for magic; candidate 1 plus source-note coverage |
+| `ch2.worldview` | PDF pp. 10-17 | `source_note_or_boundary_record` | sacred science, as above/so below, Celestial Temple pathworking held |
+| `ch3.core-concepts` | PDF pp. 18-28 | `source_note_or_boundary_record` | planet/sign/house/aspect language framework |
+| `ch4.planets-sun` | PDF pp. 29-30 | `timing_card_extract_now` | Sun family timing card and source-note support |
+| `ch4.planets-moon` | PDF pp. 31-32 | `timing_card_extract_now` | Moon family timing card and source-note support |
+| `ch4.planets-mercury` | PDF pp. 32-33 | `timing_card_extract_now` | Mercury family timing card and source-note support |
+| `ch4.planets-venus` | PDF pp. 33-34 | `timing_card_extract_now` | Venus family timing card and source-note support |
+| `ch4.planets-mars` | PDF pp. 34-35 | `timing_card_extract_now` | Mars family timing card and source-note support; care with power/adversarial framing |
+| `ch4.planets-jupiter` | PDF pp. 35-36 | `timing_card_extract_now` | Jupiter family timing card and source-note support |
+| `ch4.planets-saturn` | PDF pp. 36-37 | `timing_card_extract_now` | Saturn family timing card and source-note support |
+| `ch4.outer-planets` | PDF pp. 37-45 | `source_note_or_boundary_record` | outer planet context not first runtime lane |
+| `ch5.signs` | PDF pp. 46-60 | `source_note_or_boundary_record` | sign qualities as modifiers, not horoscope copy |
+| `ch6.houses` | PDF pp. 61-72 | `source_note_or_boundary_record` | houses as arenas; not personality reading |
+| `ch7.aspects` | PDF pp. 73-79 | `source_note_or_boundary_record` | aspect theory supports aspect timing card and boundaries |
+| `ch8.glyphs-overview` | PDF pp. 80-84 | `ritual_candidate_extract_now` + `timing_card_extract_now` | glyphs as magical alphabet and simple scribing; candidate 2 plus glyph timing feature |
+| `ch8.planetary-attunement` | PDF pp. 84-87 | `ritual_candidate_extract_now` | planetary card/day attunement |
+| `ch8.seven-day-cycle` | PDF pp. 86-88 | `ritual_candidate_extract_now` | seven elder planets through week cycle |
+| `ch8.glyphs-on-objects` | PDF pp. 87-88 | `ritual_candidate_extract_now` | glyphs on candles/objects/tools held household-scale |
+| `ch8.bind-glyphs` | PDF pp. 88-89 | `source_note_or_boundary_record` | combined glyph mechanics inventoried; runtime ritual variant deferred for review |
+| `ch8.sign-glyphs` | PDF pp. 89-90 | `source_note_or_boundary_record` | sign glyph circle support inventoried; ceremonial complexity deferred |
+| `ch9.time-overview` | PDF pp. 91-97 | `source_note_or_boundary_record` + `timing_card_extract_now` | astrology of time and Qabala context; planetary day/hour cards |
+| `ch9.planetary-hours` | PDF pp. 96-97 | `ritual_candidate_extract_now` + `timing_card_extract_now` | planetary hour and day support |
+| `ch9.planetary-order` | PDF pp. 97-100 | `source_note_or_boundary_record` | cycle sequence source note; not first import |
+| `ch9.star-of-time` | PDF pp. 100-104 | `source_note_or_boundary_record` | symbolic timing model; not runtime |
+| `ch10.moon-phase` | PDF pp. 105-108 | `ritual_candidate_extract_now` + `timing_card_extract_now` | waxing/waning/full/dark/quarter timing logic |
+| `ch10.moon-sign` | PDF pp. 108-112 | `ritual_candidate_extract_now` + `timing_card_extract_now` | Moon sign as tone/rhythm |
+| `ch10.void-moon` | PDF pp. 112-114 | `ritual_candidate_extract_now` + `timing_card_extract_now` | void-of-course Moon adaptation/softening |
+| `ch10.aspects` | PDF pp. 114-116 | `ritual_candidate_extract_now` + `timing_card_extract_now` | aspect before culmination timing window |
+| `ch10.retrograde` | PDF pp. 116-117 | `ritual_candidate_extract_now` + `timing_card_extract_now` | retrograde timing support via Chapter 10 and Chapter 11 adaptation |
+| `ch11.conditions-start` | PDF pp. 118-120 | `ritual_candidate_extract_now` + `timing_card_extract_now` | use available conditions as starting point |
+| `ch11.change-details` | PDF pp. 120-122 | `ritual_candidate_extract_now` + `timing_card_extract_now` | change props/pacing/style when date cannot move |
+| `ch11.cycle-correspondence` | PDF pp. 122-123 | `source_note_or_boundary_record` | day/moon/season/zodiac resonance; avoid over-systematizing |
+| `ch11.planetary-hour-support` | PDF pp. 123-124 | `ritual_candidate_extract_now` + `timing_card_extract_now` | represent planetary hour physically/verbally/symbolically |
+| `ch11.plane-casting` | PDF pp. 124-125 | `source_note_or_boundary_record` | planes/castings too ceremonial; source note only for now |
+| `ch12.aura` | PDF pp. 126-142 | `source_note_or_boundary_record` | Moon sign/aura/body content; avoid medical/personality claims |
+| `ch13.spirit-work` | PDF pp. 143-151 | `hold_before_import` + `source_note_or_boundary_record` | spirit work and ceremonial context outside current lane |
+| `ch14.spiritual-evolution` | PDF pp. 152-160 | `source_note_or_boundary_record` | long-cycle context only |
+| `ch15.magick-squares` | PDF pp. 160-170 | `hold_before_import` + `timing_card_extract_now` | magick-square sigil method held from runtime import; timing/source-note hold card included |
+| `ch16.great-year` | PDF pp. 170-180 | `context_only` + `source_note_or_boundary_record` | large-cycle context only |
+| `appendix-a` | Appendix A | `source_note_or_boundary_record` | planet/sign correspondences not copied as tables |
+| `appendix-c` | Appendix C | `hold_before_import` + `source_note_or_boundary_record` | magick squares tables not imported/copied |
+| `appendix-f` | Appendix F | `source_note_or_boundary_record` | Three Gates of the Moon context if later reviewed |
 
-| Primary carrier | Primary purpose | Draft support | Notes |
-| --- | --- | ---: | --- |
-| words | marking | strong | Timing language, planet families, Moon/aspect conditions, glyphs. |
-| words | voicing | adequate | Planetary hour call / ritual statements; operative wording needed. |
-| words | steadying | adequate | Adapt to imperfect timing; void Moon; retrograde reframing. |
-| table | marking | strong | Glyphs, planet tokens, symbolic marks, square attunement. |
-| table | blessing | adequate | Jupiter/Venus/Sun family candidates. |
-| candlelight | opening | adequate | Planetary hour/day candle support. |
-| candlelight | connecting | thin | Venus timing and harmony support; needs careful authoring. |
-| vessel | marking | adequate | Planet token/object and Moon vessel support. |
-| body | steadying | adequate | Pathworking/attunement/adaptation, non-medical. |
-| plant | any | fragile/held | Plant/herb/oil correspondences held until safety review. |
-| doorway | any | empty | Source does not support doorway. |
+## Non-candidate extraction coverage
 
-## Candidate research records
+The source has more extractable ritual technology than can honestly become direct Ritual candidates in this first Dominguez packet. The table below records the non-candidate extraction decisions so "not a Ritual candidate" does not mean "not extracted."
 
-Common status block for every candidate:
+| Coverage ID | Source location | Extracted as | Runtime posture | Boundary |
+|---|---|---|---|---|
+| `source-note.dominguez.worldview-sacred-science` | Chapter 2, PDF pp. 10-17 | source-note / boundary record | no runtime record | Use as metaphysical framing only; do not copy the Celestial Temple pathworking. |
+| `source-note.dominguez.core-symbolic-language` | Chapter 3, PDF pp. 18-28 | source-note / boundary record | no runtime record | Planets, signs, houses, and aspects can structure timing interpretation; do not turn them into chart-reading copy. |
+| `timing-card.dominguez.sun-family` | Chapter 4, PDF pp. 29-30 | timing/source-note card | draft research only | Sun family supports visible center, purpose, and integration without vitality guarantees or destiny claims. |
+| `timing-card.dominguez.moon-family` | Chapter 4, PDF pp. 31-32 | timing/source-note card | draft research only | Moon family supports rhythm, memory, vessel, and reflection without mood prediction. |
+| `timing-card.dominguez.mercury-family` | Chapter 4, PDF pp. 32-33 | timing/source-note card | draft research only | Mercury family supports naming, sorting, speech, and writing without communication-failure prediction. |
+| `timing-card.dominguez.venus-family` | Chapter 4, PDF pp. 33-34 | timing/source-note card | draft research only | Venus family supports joining, beauty, sweetness, and affinity without love, attraction-control, or compatibility claims. |
+| `timing-card.dominguez.mars-family` | Chapter 4, PDF pp. 34-35 | timing/source-note card | draft research only | Mars family supports heat, courage, severing, and directed force without violence, domination, or victory guarantees. |
+| `timing-card.dominguez.jupiter-family` | Chapter 4, PDF pp. 35-36 | timing/source-note card | draft research only | Jupiter family supports blessing, breadth, law/order, and generosity without prosperity, luck, legal, or financial guarantees. |
+| `timing-card.dominguez.saturn-family` | Chapter 4, PDF pp. 36-37 | timing/source-note card | draft research only | Saturn family supports boundary, time, weight, and structure without fear, punishment, or fatalism. |
+| `source-note.dominguez.outer-planets` | Chapter 4, PDF pp. 37-45 | source-note / boundary record | no runtime record | Outer planets remain context for later research; not first-lane household timing. |
+| `source-note.dominguez.signs-as-tone` | Chapter 5, PDF pp. 46-60 | source-note / boundary record plus Moon-sign timing card | no runtime record except draft timing-card hints | Signs may color ritual tone; they must not become personality or horoscope descriptions. |
+| `source-note.dominguez.houses-as-arena` | Chapter 6, PDF pp. 61-72 | source-note / boundary record | no runtime record | Houses may describe arena or placement logic later; do not expose house interpretation as personal diagnosis. |
+| `source-note.dominguez.aspect-theory` | Chapter 7, PDF pp. 73-79 | source-note / boundary record plus aspect timing card | draft research only | Aspects may shape timing windows and relational force between planets; no deterministic prediction. |
+| `source-note.dominguez.bound-glyphs` | Chapter 8, PDF pp. 88-89 | source-note / boundary record | no runtime record | Combined glyph construction is inventoried but deferred until symbol-building review. |
+| `source-note.dominguez.sign-glyph-circle` | Chapter 8, PDF pp. 89-90 | source-note / boundary record | no runtime record | Sign glyph circle support is too ceremonial for V1 import. |
+| `source-note.dominguez.planetary-order` | Chapter 9, PDF pp. 97-100 | source-note / boundary record | no runtime record | Planetary sequence supports timing-card evidence; no table copy. |
+| `source-note.dominguez.star-of-time` | Chapter 9, PDF pp. 100-104 | source-note / boundary record | no runtime record | Symbolic timing model only; Qabala/tree material is not imported into household ritual copy. |
+| `source-note.dominguez.cycle-correspondence` | Chapter 11, PDF pp. 122-123 | source-note / boundary record | no runtime record | Day, Moon, season, and zodiac resonance can inform later timing cards; avoid correspondence-system sprawl. |
+| `source-note.dominguez.plane-casting` | Chapter 11, PDF pp. 124-125 | source-note / boundary record | no runtime record | Plane/casting material is too ceremonial for this first import lane. |
+| `source-note.dominguez.aura` | Chapter 12, PDF pp. 126-142 | source-note / boundary record | no runtime record | Aura/body material is non-medical context only; no diagnosis, healing, or body-claim language. |
+| `source-note.dominguez.spirit-work-boundary` | Chapter 13, PDF pp. 143-151 | held boundary record | no runtime record | Spirit-work material is outside the current Moon & Table lane. |
+| `source-note.dominguez.spiritual-evolution` | Chapter 14, PDF pp. 152-160 | source-note / boundary record | no runtime record | Long-cycle spiritual-development material remains context only. |
+| `timing-card.dominguez.magick-square-hold` | Chapter 15 and Appendix C | timing/source-note hold card | draft research only; no runtime import | Magick-square tables and technical sigil procedure are inventoried but held from runtime use. |
+| `source-note.dominguez.great-year` | Chapter 16, PDF pp. 170-180 | source-note / boundary record | no runtime record | Great Year material remains large-cycle context only. |
+| `source-note.dominguez.appendix-correspondences` | Appendices A-F | source-note / boundary record | no runtime record | Correspondence tables and Three Gates material are not copied; use only for future cross-checking. |
 
-```ts
-status: "draft"
+## Candidate index
 
-availability: {
-  findable: false,
-  directUseEligible: false,
-  recommendationEligible: false,
-}
+| # | Candidate ID | Title | Disposition | Import readiness |
+|---:|---|---|---|---|
+| 1 | `candidate.dominguez.astrology-journal-timing-record` | Keep the Timing in the Grimoire | `candidate_extract_now` | `approved_for_mechanical_import` |
+| 2 | `candidate.dominguez.glyph-as-mark` | Trace One Planetary Glyph | `candidate_extract_now` | `approved_for_mechanical_import` |
+| 3 | `candidate.dominguez.planetary-card-attunement` | Set the Planetary Card | `candidate_extract_now` | `approved_for_mechanical_import` |
+| 4 | `candidate.dominguez.seven-day-planetary-cycle` | Seven-Day Planetary Round | `candidate_extract_now` | `approved_for_mechanical_import` |
+| 5 | `candidate.dominguez.planetary-hour-support` | Add the Planetary Hour | `candidate_extract_now` | `approved_for_mechanical_import` |
+| 6 | `candidate.dominguez.moon-phase-timing-check` | Choose the Moon’s Direction | `candidate_extract_now` | `approved_for_mechanical_import` |
+| 7 | `candidate.dominguez.moon-sign-tone` | Let the Moon Sign Set the Tone | `candidate_extract_now` | `approved_for_mechanical_import` |
+| 8 | `candidate.dominguez.void-moon-softening` | Soften the Void Moon | `candidate_extract_now` | `approved_for_mechanical_import` |
+| 9 | `candidate.dominguez.aspect-before-peak` | Work Before the Aspect Peaks | `candidate_extract_now` | `approved_for_mechanical_import` |
+| 10 | `candidate.dominguez.retrograde-foundation` | Use Retrograde for the Foundations | `candidate_extract_now` | `approved_for_mechanical_import` |
+| 11 | `candidate.dominguez.change-details-not-date` | Change the Details, Not the Date | `candidate_extract_now` | `approved_for_mechanical_import` |
+| 12 | `candidate.dominguez.conditions-as-outline` | Use the Conditions as the Outline | `candidate_extract_now` | `approved_for_mechanical_import` |
+| 13 | `candidate.dominguez.planetary-representation` | Give the Planet a Small Body | `candidate_extract_now` | `approved_for_mechanical_import` |
+| 14 | `candidate.dominguez.magick-square-focal-note` | Name the Square, Hold the Sigil | `hold_before_import` | `hold_before_import` |
 
-recommendationMetadata: {
-  eligibility: {
-    recommendable: false,
-    missing: ["human_review", "source_verification"],
-  },
-}
+## Candidate records
+
+### `candidate.dominguez.astrology-journal-timing-record` — Keep the timing beside the work.
+
+- candidate ID: `candidate.dominguez.astrology-journal-timing-record`
+- disposition: `candidate_extract_now`
+- ritualizationType: `source_backed_moon_and_table_form`
+- import readiness label: `approved_for_mechanical_import`
+
+#### Headline
+
+Keep the timing beside the work.
+
+#### Ritual body / practice
+
+Open the grimoire or ritual notebook before choosing a working. Write the date, the visible timing facts you are using, and the reason those facts matter for this rite. Choose one timing signal to guide the work, then close the notebook until after the ritual.
+
+#### Intention
+
+Let astrology shape the ritual without turning the ritual into a horoscope.
+
+#### Best window
+
+Before selecting or beginning a timed ritual.
+
+#### Question to carry
+
+Which timing fact is actually shaping this work, and which facts are only noise?
+
+#### Why this fits ingredients
+
+```yaml
+whyThisFitsIngredients:
+  checkInHooks:
+    - "check-in asks for meaning, source backing, or timing clarity"
+    - "low capacity: one notebook action"
+    - "works for solo or shared planning"
+    - "keeps computed timing in a source-backed role"
+  timingHooks:
+    - "any computed timing review; pre-ritual planning"
+  lunarPlanetarySeasonalHooks:
+    - "Use only source-backed timing facts already computed by the app; do not calculate astrology inside the Ritual."
+  capacityHooks:
+    - "Capacity support comes from the number of steps and required planning in this candidate."
+  audienceHooks:
+    - "Audience support is limited to what the candidate's structure can honestly carry."
+  materialPlaceCarrierPurposeFit:
+    - "Primary carrier: words; secondary carriers: table; household-scale materials only."
+  sourceBackedRationale:
+    - "Introduction and Chapter 1, PDF pp. 7-9; source frames astrology as a sacred symbolic language useful for magickal practice and recommends journaling/questions while learning."
+  notForOrHoldNotes:
+    - "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
 ```
 
-| Candidate ID | Title | Source pages | Primary carrier | Primary purpose | Source support | Draft practice shape | Status recommendation | Required fixes before any promotion |
-| --- | --- | ---: | --- | --- | --- | --- | --- | --- |
-| `ritual-dominguez-star-language-journal` | Star-Language Journal | PDF 8-9 / Ch. 1 | words | remembering | Journal while learning astrology. | Write the sky condition, one symbol, and one ritual implication. | product_followup_pattern | Keep as follow-up, not standalone if too thin. |
-| `ritual-dominguez-sky-grammar` | Read the Sky as Grammar | PDF 18-28 / Ch. 3 | words | marking | Planets/signs/houses/aspects as magical grammar. | Name the planet, its sign-coloring, and the action/aspect shaping the ritual. | draft_record_ready | Avoid chart-reading depth. |
-| `ritual-dominguez-sun-purpose-light` | Sun Purpose Light | PDF 30 / Ch. 4 | candlelight | blessing | Sun as purpose, vitality, integration. | Light one candle and name the purpose the Sun is clarifying. | draft_record_ready | Cross-check candle safety and source wording. |
-| `ritual-dominguez-moon-story-vessel` | Moon Story Vessel | PDF 31 / Ch. 4 | vessel | remembering | Moon as memory/story/vessel/astral. | Place water or bowl on table and write what the Moon is helping remember. | draft_record_ready | Cross-source with Moon Book. |
-| `ritual-dominguez-mercury-word-thread` | Mercury Word Thread | PDF 32 / Ch. 4 | words | voicing | Mercury as thought, communication, messenger. | Write one message, speak it once, and place it under a Mercury glyph. | draft_record_ready | Avoid deity import. |
-| `ritual-dominguez-venus-harmony-table` | Venus Harmony Table | PDF 33 / Ch. 4 | table | blessing | Venus as harmony, value, beauty, love. | Place one beautiful object on the table and name what harmony means tonight. | draft_record_ready | Non-deterministic, non-manipulative. |
-| `ritual-dominguez-mars-directed-will` | Mars Directed Will | PDF 34 / Ch. 4 | body | protecting | Mars as directed will and careful force. | Stand, name the boundary/action, and choose one disciplined step. | needs_authoring_revision | Avoid aggression/adversarial tone. |
-| `ritual-dominguez-jupiter-wide-table` | Jupiter Wide Table | PDF 35 / Ch. 4 | table | blessing | Jupiter as expansion, trust, wisdom, opportunity. | Set a wider place on the table and name a generous possibility. | draft_record_ready | Avoid prosperity guarantees. |
-| `ritual-dominguez-saturn-boundary-stone` | Saturn Boundary Stone | PDF 36 / Ch. 4 | table | steadying | Saturn as limits, structure, teacher. | Place one stone/weight on the table and name the helpful limit. | draft_record_ready | Strong domestic Saturn ritual. |
-| `ritual-dominguez-aspect-weather` | Name the Aspect Weather | Ch. 7 | words | marking | Aspects as planetary interactions. | Name the aspect as weather shaping the ritual, then choose one adjusted action. | needs_source_verification | Page-tighten in extraction review. |
-| `ritual-dominguez-draw-planet-glyph` | Draw the Planet Glyph | Ch. 8 | table | marking | Glyphs as magical alphabet. | Draw the relevant planet glyph on paper and place it under the ritual object. | draft_record_ready | Strong glyph lane. |
-| `ritual-dominguez-trace-glyph-three-times` | Trace the Glyph Three Times | Ch. 8 | body | remembering | Repeated glyph writing/doodling. | Trace the glyph three times with breath and note what it teaches. | draft_record_ready | Keep simple. |
-| `ritual-dominguez-planetary-day` | Mark the Planetary Day | Ch. 10 | words | marking | Days ruled by planets. | Name the day ruler and let it choose the ritual emphasis. | draft_record_ready | Do not make hard rules. |
-| `ritual-dominguez-planetary-hour` | Open in the Planetary Hour | Ch. 10 | candlelight | opening | Planetary hours as separate pulse of creation. | At a matching hour, light a candle or set a token and begin the work. | draft_record_ready | Timing support only, no hard recommendation logic. |
-| `ritual-dominguez-moon-shapes-work` | Let the Moon Shape the Work | Ch. 10-11 | words | marking | Moon phase/sign timing and waxing/waning adaptation. | State whether the work grows, releases, clarifies, or rests according to Moon condition. | draft_record_ready | Cross-source with Moon Book. |
-| `ritual-dominguez-void-moon-soften` | Soften Under the Void Moon | Ch. 10 | body | steadying | Void-of-course Moon timing caution. | Rather than force a beginning, simplify, tend, or close a loose end. | draft_record_ready | Avoid anxiety/fatalism. |
-| `ritual-dominguez-work-with-sky` | Work With the Sky You Have | Ch. 11 | words | steadying | Use current conditions as starting point. | Name the present sky honestly and adjust the ritual to ride the wave. | draft_record_ready | Excellent product fit. |
-| `ritual-dominguez-retrograde-foundation` | Lay the Retrograde Foundation | Ch. 11 | table | tending | Retrograde as foundation/revision/retracing. | Use retrograde timing to review, sort, and lay a careful base. | draft_record_ready | Avoid dread language. |
-| `ritual-dominguez-borrow-hours-light` | Borrow the Hour's Light | Ch. 11 | candlelight | steadying | Planetary hour adds support when other timing is imperfect. | Add a candle/token for the planetary hour to steady the working. | draft_record_ready | Source text private for calls. |
-| `ritual-dominguez-planet-token` | Place the Planet Token | Ch. 11 | vessel | marking | Physical representation strengthens planetary hour. | Place a safe object for the planet on the table as timing witness. | draft_record_ready | No unsafe metals/herbs. |
-| `ritual-dominguez-simple-planet-mark` | Make a Simple Planet Mark | Ch. 11 / Ch. 15 | table | marking | Symbolic marks/focal points, not technical talisman import. | Create a simple planetary mark for one intent and keep it on the altar. | needs_authoring_revision | Avoid full sigil procedure. |
-| `ritual-dominguez-trace-planet-square` | Trace the Planet Square | Ch. 15 | body | steadying | Magick square attunement by tracing number order. | With a printed/private square, trace the pattern as planetary meditation. | needs_source_verification | Operative text review and no table reproduction. |
-| `ritual-dominguez-venus-return-harmony` | Venus Return Harmony Table | Ch. 14 | table | connecting | Venus return/solar return years as harmony/beauty/head-heart concordance. | Mark a Venus year or Venus contact by setting a table for harmony and beauty. | candidate_extract_later | Needs source verification and non-deterministic framing. |
-| `ritual-dominguez-three-gates-moon` | Three Gates of the Moon Note | Appendix F | words | marking | Moon gate framework. | Use as source note for future lunar timing refinement. | product_followup_pattern | Cross-check with Moon Book before candidate. |
+#### How this was chosen ingredients
 
-## Source notes
+```yaml
+howThisWasChosenIngredients:
+  primarySelectionSignals:
+    - "purpose:remembering"
+    - "carrier:words"
+    - "source signal: astrology as applied symbolic language"
+    - "exclusion: not chart reading or personality interpretation"
+  secondarySelectionSignals:
+    - "source ID: SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS"
+    - "candidate title: Keep the Timing in the Grimoire"
+  exclusionSignals:
+    - "exclude if the request requires a prediction, personality reading, compatibility claim, medical advice, or hard timing rule"
+  timingSignal:
+    - "any computed timing review; pre-ritual planning"
+  confidenceNotes:
+    - "Runtime import still requires mechanical import review and later direct-use/recommendation review."
+```
 
-- This source is the first strong bridge between computed astrology and Moon & Table ritual shape.
-- The most useful product language is not `this transit means X about you`, but `this moment asks the ritual to lean toward X`.
-- Dominguez repeatedly supports practical adaptation rather than waiting forever for perfect timing. That is a major fit for Moon & Table.
-- The strongest extractable lanes are planetary hours/days, glyphs, Moon timing, aspect weather, retrograde adaptation, and planet-family ritual tones.
-- Magick squares are useful source context and later operative-text-review material, but should not be imported as technical talisman practice in this packet.
+#### Source grounding
 
-## Coverage records
+- source ID: `SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS`
+- citation label: Ivo Dominguez Jr., Practical Astrology for Witches and Pagans: Using the Planets and the Stars for Effective Spellwork, Rituals, and Magick. Weiser Books / Red Wheel/Weiser, 2016.
+- source location: Introduction and Chapter 1, PDF pp. 7-9
+- source basis: Introduction and Chapter 1, PDF pp. 7-9; source frames astrology as a sacred symbolic language useful for magickal practice and recommends journaling/questions while learning.
+- source transformation: Converted source timing/glyph mechanics into a small household ritual form without copying long procedures, tables, or pathworking text.
+- excluded source material: no copied pathworkings, no copied tables, no technical magick-square procedure, no deterministic interpretation.
 
-| Candidate family | Strongest carriers | Strongest purposes | Notes |
-| --- | --- | --- | --- |
-| Planet family rituals | words, table, candlelight, body | blessing, protecting, steadying, voicing, connecting | Sun/Moon/Mercury/Venus/Mars/Jupiter/Saturn families. |
-| Planetary day/hour timing | words, candlelight, table | marking, opening, steadying | Strong timing-support lane, not hard app rules. |
-| Glyph marking | table, words, body | marking, remembering, voicing | Very strong household-scale symbolic lane. |
-| Timing adaptation | words, body, candlelight | steadying, tending, protecting | Excellent product fit; avoids fatalistic timing. |
-| Moon beyond phase | words, vessel | marking, remembering, releasing/opening | Cross-source with Moon Book. |
-| Magick squares | table, body, words | marking, steadying | Source-note/operative-text-review first. |
-| Plant/oil/herb correspondences | plant, vessel | blessing/protecting | Held pending safety. |
-| Ceremonial contact | words, table | marking | Held by PM decision. |
+#### Recommendation metadata
 
-## Variant / split ledger
+```yaml
+recommendationMetadata:
+  purposes:
+    primary: remembering
+    secondary: ["marking"]
+    refinement: "Dominguez practical astrology: Keep the Timing in the Grimoire."
+  carriers:
+    primary: words
+    secondary: ["table"]
+  capacity:
+    supports: ["only_a_little", "enough_to_participate"]
+    default: only_a_little
+  audience:
+    supports: ["me", "both_of_us"]
+    default: me
+  timing:
+    relationship: helpful
+    contexts: ["any computed timing review", "pre-ritual planning"]
+  eligibility:
+    recommendable: false
+    missing:
+      - direct_use_review
+      - recommendation_review
+```
 
-### Planet family cluster
+#### Availability
 
-Variant / split candidates:
-- keep together now: Sun Purpose Light, Moon Story Vessel, Mercury Word Thread, Venus Harmony Table, Mars Directed Will, Jupiter Wide Table, Saturn Boundary Stone.
-- split later: inner/outer planet families; benefic vs challenging planet; contact-specific variants.
-- reason: planet family notes are foundational to astrology-shaped ritual.
-- trigger for split: when product needs planet-specific recommendation copy.
+```yaml
+availability:
+  findable: false
+  directUseEligible: false
+  recommendationEligible: false
+```
 
-### Planetary day/hour cluster
+#### Search metadata
 
-Variant / split candidates:
-- keep together now: Mark the Planetary Day, Open in the Planetary Hour, Borrow the Hour's Light.
-- split later: day-only, hour-only, day+hour alignment, mismatched hour compensation.
-- reason: timing support must stay flexible rather than become hard rules.
-- trigger for split: after recommendation timing policy is reviewed.
+```yaml
+searchMetadata:
+  tags:
+    - dominguez
+    - astrology
+    - timing
+    - remembering
+    - words
+  keywords:
+    - "astrology"
+    - "timing"
+    - "glyph"
+    - "planetary"
+    - "moon"
+  materials:
+    - "paper"
+    - "pen"
+    - "table"
+  places:
+    - "table"
+    - "altar"
+    - "ritual notebook"
+  sourceLabel: "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans"
+  originLabel: source
+```
 
-### Glyph/symbol cluster
+#### Review flags
 
-Variant / split candidates:
-- keep together now: Draw the Planet Glyph, Trace the Glyph Three Times, Make a Simple Planet Mark.
-- split later: glyph on paper, glyph under candle, glyph in journal, glyph as table mark.
-- reason: strong household-scale ritual language.
-- trigger for split: if symbolic marking becomes a reusable carrier pattern.
+```yaml
+reviewFlags:
+  sourceTextReviewRequired: true
+  materialSafetyReviewRequired: false
+  sourceVerificationRequired: true
+  productBoundaryReviewRequired: true
+  notes:
+    - "Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready."
+    - "Keep timing symbolic and source-backed; do not convert into prediction or hard rule."
+```
 
-### Moon timing cluster
+#### Adaptation policy notes
 
-Variant / split candidates:
-- keep together now: Let the Moon Shape the Work, Soften Under the Void Moon, Three Gates note.
-- split later: phase, sign, aspect, void, gate.
-- reason: Moon Book covers phase; Dominguez adds astrological timing.
-- trigger for split: after Moon Book and Dominguez timing rules are reconciled.
+- The candidate preserves source timing, glyph, or adaptation mechanics first.
+- Runtime import must mechanically import the candidate wording above or skip the candidate if the packet is judged incomplete.
+- No user-facing ritual words are hidden in metadata.
 
-### Imperfect timing cluster
+#### Operative words metadata
 
-Variant / split candidates:
-- keep together now: Work With the Sky You Have, Lay the Retrograde Foundation, Borrow the Hour's Light.
-- split later: retrograde, difficult aspect, void Moon, poor election, practical urgency.
-- reason: this source helps avoid timing anxiety.
-- trigger for split: if timing warnings need balanced ritual support.
+```yaml
+ritualWords: []
+operativeWordsNotes:
+  status: functional_instruction_only
+  reason: "This candidate uses functional instructions rather than source-provided spell wording."
+```
 
-### Magick squares cluster
+### `candidate.dominguez.glyph-as-mark` — Trace one planetary mark cleanly.
 
-Variant / split candidates:
-- keep together now: Trace the Planet Square as source-note/operative-text-review candidate.
-- split later: square meditation, simple mark, focal symbol, full technical procedure.
-- reason: high-yield but technical and operative-text-review-heavy.
-- trigger for split: Tim decides whether magick-square work is extraction-eligible.
+- candidate ID: `candidate.dominguez.glyph-as-mark`
+- disposition: `candidate_extract_now`
+- ritualizationType: `direct_source_ritual`
+- import readiness label: `approved_for_mechanical_import`
 
-## Rejected / held leads
+#### Headline
 
-| Source item | Source pages | Disposition | Reason |
-| --- | ---: | --- | --- |
-| Astrology of Spirit Work | Ch. 13 | hold | Ceremonial contact held by PM decision. |
-| Full pathworkings | Ch. 2 and elsewhere | operative_text_review/hold | Do not reproduce long guided visualization. |
-| Full correspondence tables | Appendices | source_note_only/operative_text_review | Do not copy tables wholesale. |
-| Full magick-square technical procedures | Ch. 15 / Appendix C | hold/operative_text_review | Technical talisman import not approved. |
-| Plant/herb/oil correspondences | Appendix A and formulae | hold | Safety/source-boundary review needed. |
-| Body correspondences | Appendix E | hold | No medical/body claims. |
-| Deterministic natal/transit claims | multiple | reject/hold | Avoid horoscope/personality app drift. |
-| Relationship compatibility/determinism | Venus/Mars material | hold | Private/non-deterministic only. |
+Trace one planetary mark cleanly.
 
-## Duplicate check
+#### Ritual body / practice
 
-| Mechanic cluster | Existing overlap | Decision |
-| --- | --- | --- |
-| Moon phase timing | Moon Book | Keep Dominguez distinct: astrological Moon condition and timing adaptation. |
-| Candle timing | Buckland / Moon Book | Keep Dominguez distinct: planetary hour/day shape, not candle spellcraft. |
-| Table/altar symbolic work | Magical Household / Anand | Keep Dominguez distinct: glyph and planetary timing marks. |
-| Grimoire/journal | Moon Book / House Witch / Anand | Keep as follow-up pattern for timing memory. |
-| Planet symbolic language | none strong yet | Dominguez is first strong source. |
+Choose one planet whose quality belongs to the work. Draw its glyph slowly on paper, on an index card, or in the air over the table. Say the planet name once as identification, not invocation. Set the mark beside the ritual object and let it define the tone of the rite.
 
-## Gap notes
+#### Intention
 
-- This packet creates first-pass coverage for astrology-driven ritual timing.
-- `words + marking`, `table + marking`, and `candlelight + opening` are much stronger after this source.
-- Planet-specific ritual families are now source-backed at research level.
-- Doorway remains unsupported by this source.
-- Plant remains fragile/held due correspondences and safety.
-- `vessel + connecting` is not solved here.
-- Relationship/intimacy astrology should remain private, non-deterministic, and non-manipulative.
+Use a single astrological glyph as a focused ritual mark.
 
-## Remaining extraction backlog
+#### Best window
 
-### Candidate extract later
+When a ritual needs one clear planetary emphasis.
 
-- Planet glyph contemplation by planet.
-- Sign-shaped ritual tone notes.
-- House arena source notes, only if product needs chart-area context.
-- Moon sign timing candidate.
-- Aspect-before-culmination timing note.
-- Work above astrological turbulence.
-- Sacred space to smooth difficult astrology.
-- Naming twelve signs as balancing pattern.
-- Sun/Moon/Ascendant growth work.
-- Planetary returns as rites of passage.
-- Venus return harmony table.
-- Three Gates of the Moon candidate after Moon Book reconciliation.
-- Simple magick-square symbolic mark after operative text review.
+#### Question to carry
 
-### Hold / reject pending Tim decision
+What power is this mark holding, and where should it stop?
 
-- Ceremonial contact sections.
-- Full magick-square technical procedures.
-- Plant/herb/oil correspondences.
-- Body correspondences.
-- Deterministic natal/transit interpretation.
-- Relationship compatibility timing.
+#### Why this fits ingredients
 
-## Validation checklist
+```yaml
+whyThisFitsIngredients:
+  checkInHooks:
+    - "check-in asks for one symbol or mark"
+    - "material/place fit: paper, hand, table"
+    - "timing can select the planet but does not have to"
+    - "keeps glyph work household-scale"
+  timingHooks:
+    - "planetary day; planetary hour; planet family chosen by source logic"
+  lunarPlanetarySeasonalHooks:
+    - "Use only source-backed timing facts already computed by the app; do not calculate astrology inside the Ritual."
+  capacityHooks:
+    - "Capacity support comes from the number of steps and required planning in this candidate."
+  audienceHooks:
+    - "Audience support is limited to what the candidate's structure can honestly carry."
+  materialPlaceCarrierPurposeFit:
+    - "Primary carrier: words; secondary carriers: table, body; household-scale materials only."
+  sourceBackedRationale:
+    - "Chapter 8, PDF pp. 80-84; source teaches astrological glyphs as a magical alphabet and gives a simple five-step glyph-scribing method."
+  notForOrHoldNotes:
+    - "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+```
 
-- Used only assigned source and approved source gate: yes.
-- Used uploaded Dominguez source copy: yes.
-- Did not run source gate again: yes.
-- Did not use ungated sources or internet summaries: yes.
-- Inventory-first source rite inventory included: yes.
-- Every inventoried source item has disposition: yes.
-- Required metrics included: yes.
-- `items_with_operative_text_review` included: yes.
-- Source-location precision recorded: yes.
-- Research use classified: yes.
-- Primary vs secondary coverage separated: yes.
-- Variant / split ledger included: yes.
-- Exact wording/operative text review needs flagged: yes.
-- No full copyrighted pathworkings, tables, procedures, scripts, or distinctive long passages reproduced: yes.
-- Extracted astrology-shaped rituals/source notes, not horoscope interpretation: yes.
-- No runtime Ritual data added: yes.
-- No recommendation logic added: yes.
-- No UI updated: yes.
-- No candidate marked reviewed: yes.
-- No candidate marked recommendable: yes.
-- No candidate marked findable: yes.
-- No candidate marked direct-use eligible: yes.
-- No candidate marked recommendation eligible: yes.
-- No candidate marked runtime-ready: yes.
-- Human review required: yes.
+#### How this was chosen ingredients
 
-## Open questions / Tim decisions
+```yaml
+howThisWasChosenIngredients:
+  primarySelectionSignals:
+    - "purpose:marking"
+    - "carrier:words/table"
+    - "source signal:glyphs as magical alphabet"
+    - "exclusion: no technical talisman construction"
+  secondarySelectionSignals:
+    - "source ID: SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS"
+    - "candidate title: Trace One Planetary Glyph"
+  exclusionSignals:
+    - "exclude if the request requires a prediction, personality reading, compatibility claim, medical advice, or hard timing rule"
+  timingSignal:
+    - "planetary day; planetary hour; planet family chosen by source logic"
+  confidenceNotes:
+    - "Runtime import still requires mechanical import review and later direct-use/recommendation review."
+```
 
-1. Should planetary days/hours be treated as recommendation hints or only authoring context for now?
-2. Should glyph-as-marking become a reusable Moon & Table carrier pattern?
-3. Should magick-square work remain source-note/operative-text-review only until a dedicated talisman boundary exists?
-4. Should Venus/Mars timing be allowed for intimate rituals if framed privately and non-deterministically?
-5. Should Moon sign/aspect timing be integrated with Moon Book phase families first, before any runtime use?
-6. Should Dominguez be paired next with Dykes or Rankine/d'Este for stronger ritual mechanics?
+#### Source grounding
 
-## Final packet status
+- source ID: `SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS`
+- citation label: Ivo Dominguez Jr., Practical Astrology for Witches and Pagans: Using the Planets and the Stars for Effective Spellwork, Rituals, and Magick. Weiser Books / Red Wheel/Weiser, 2016.
+- source location: Chapter 8, PDF pp. 80-84
+- source basis: Chapter 8, PDF pp. 80-84; source teaches astrological glyphs as a magical alphabet and gives a simple five-step glyph-scribing method.
+- source transformation: Converted source timing/glyph mechanics into a small household ritual form without copying long procedures, tables, or pathworking text.
+- excluded source material: no copied pathworkings, no copied tables, no technical magick-square procedure, no deterministic interpretation.
 
-`inventory_aware_extraction_ready_for_review`
+#### Recommendation metadata
 
-This packet is ready for human review as a research artifact. It requires source verification, operative-text-review decisions, authoring review, safety/source-boundary review, and schema normalization before any candidate can move beyond draft research status.
+```yaml
+recommendationMetadata:
+  purposes:
+    primary: marking
+    secondary: ["opening"]
+    refinement: "Dominguez practical astrology: Trace One Planetary Glyph."
+  carriers:
+    primary: words
+    secondary: ["table", "body"]
+  capacity:
+    supports: ["only_a_little", "enough_to_participate"]
+    default: only_a_little
+  audience:
+    supports: ["me", "both_of_us"]
+    default: me
+  timing:
+    relationship: helpful
+    contexts: ["planetary day", "planetary hour", "planet family chosen by source logic"]
+  eligibility:
+    recommendable: false
+    missing:
+      - direct_use_review
+      - recommendation_review
+```
 
-No runtime integration is recommended.
+#### Availability
+
+```yaml
+availability:
+  findable: false
+  directUseEligible: false
+  recommendationEligible: false
+```
+
+#### Search metadata
+
+```yaml
+searchMetadata:
+  tags:
+    - dominguez
+    - astrology
+    - timing
+    - marking
+    - words
+  keywords:
+    - "astrology"
+    - "timing"
+    - "glyph"
+    - "planetary"
+    - "moon"
+  materials:
+    - "paper"
+    - "pen"
+    - "table"
+  places:
+    - "table"
+    - "altar"
+    - "ritual notebook"
+  sourceLabel: "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans"
+  originLabel: source
+```
+
+#### Review flags
+
+```yaml
+reviewFlags:
+  sourceTextReviewRequired: true
+  materialSafetyReviewRequired: false
+  sourceVerificationRequired: true
+  productBoundaryReviewRequired: true
+  notes:
+    - "Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready."
+    - "Keep timing symbolic and source-backed; do not convert into prediction or hard rule."
+```
+
+#### Adaptation policy notes
+
+- The candidate preserves source timing, glyph, or adaptation mechanics first.
+- Runtime import must mechanically import the candidate wording above or skip the candidate if the packet is judged incomplete.
+- No user-facing ritual words are hidden in metadata.
+
+#### Operative words metadata
+
+```yaml
+ritualWords: []
+operativeWordsNotes:
+  status: functional_instruction_only
+  reason: "This candidate uses functional instructions rather than source-provided spell wording."
+```
+
+### `candidate.dominguez.planetary-card-attunement` — Set the day’s planet on the table.
+
+- candidate ID: `candidate.dominguez.planetary-card-attunement`
+- disposition: `candidate_extract_now`
+- ritualizationType: `direct_source_ritual`
+- import readiness label: `approved_for_mechanical_import`
+
+#### Headline
+
+Set the day’s planet on the table.
+
+#### Ritual body / practice
+
+Make or choose one small card for the planet of the day. Place it on the table or altar. Trace the glyph with your finger. Name what you notice in the card, then close your eyes and hold its image briefly. Leave the card visible for the day or return it to the grimoire.
+
+#### Intention
+
+Practice relationship with planetary timing through one visible card.
+
+#### Best window
+
+On the day ruled by the planet, near morning or before a related rite.
+
+#### Question to carry
+
+What did this planet make easier to notice today?
+
+#### Why this fits ingredients
+
+```yaml
+whyThisFitsIngredients:
+  checkInHooks:
+    - "check-in asks for repeated practice"
+    - "timing hook: planetary day"
+    - "low/steady capacity: card plus observation"
+    - "good grimoire follow-up"
+  timingHooks:
+    - "planetary day"
+  lunarPlanetarySeasonalHooks:
+    - "Use only source-backed timing facts already computed by the app; do not calculate astrology inside the Ritual."
+  capacityHooks:
+    - "Capacity support comes from the number of steps and required planning in this candidate."
+  audienceHooks:
+    - "Audience support is limited to what the candidate's structure can honestly carry."
+  materialPlaceCarrierPurposeFit:
+    - "Primary carrier: table; secondary carriers: words; household-scale materials only."
+  sourceBackedRationale:
+    - "Chapter 8, PDF pp. 84-87; source gives a seven-day planetary attunement exercise using planetary cards, daily meditation, tracing the glyph, and observation."
+  notForOrHoldNotes:
+    - "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+```
+
+#### How this was chosen ingredients
+
+```yaml
+howThisWasChosenIngredients:
+  primarySelectionSignals:
+    - "purpose:remembering/tending"
+    - "carrier:table"
+    - "source signal: planetary attunement exercise"
+    - "exclusion: no incense/herb additions required"
+  secondarySelectionSignals:
+    - "source ID: SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS"
+    - "candidate title: Set the Planetary Card"
+  exclusionSignals:
+    - "exclude if the request requires a prediction, personality reading, compatibility claim, medical advice, or hard timing rule"
+  timingSignal:
+    - "planetary day"
+  confidenceNotes:
+    - "Runtime import still requires mechanical import review and later direct-use/recommendation review."
+```
+
+#### Source grounding
+
+- source ID: `SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS`
+- citation label: Ivo Dominguez Jr., Practical Astrology for Witches and Pagans: Using the Planets and the Stars for Effective Spellwork, Rituals, and Magick. Weiser Books / Red Wheel/Weiser, 2016.
+- source location: Chapter 8, PDF pp. 84-87
+- source basis: Chapter 8, PDF pp. 84-87; source gives a seven-day planetary attunement exercise using planetary cards, daily meditation, tracing the glyph, and observation.
+- source transformation: Converted source timing/glyph mechanics into a small household ritual form without copying long procedures, tables, or pathworking text.
+- excluded source material: no copied pathworkings, no copied tables, no technical magick-square procedure, no deterministic interpretation.
+
+#### Recommendation metadata
+
+```yaml
+recommendationMetadata:
+  purposes:
+    primary: remembering
+    secondary: ["marking", "tending"]
+    refinement: "Dominguez practical astrology: Set the Planetary Card."
+  carriers:
+    primary: table
+    secondary: ["words"]
+  capacity:
+    supports: ["only_a_little", "enough_to_participate"]
+    default: only_a_little
+  audience:
+    supports: ["me", "both_of_us"]
+    default: me
+  timing:
+    relationship: preferred
+    contexts: ["planetary day"]
+  eligibility:
+    recommendable: false
+    missing:
+      - direct_use_review
+      - recommendation_review
+```
+
+#### Availability
+
+```yaml
+availability:
+  findable: false
+  directUseEligible: false
+  recommendationEligible: false
+```
+
+#### Search metadata
+
+```yaml
+searchMetadata:
+  tags:
+    - dominguez
+    - astrology
+    - timing
+    - remembering
+    - table
+  keywords:
+    - "astrology"
+    - "timing"
+    - "glyph"
+    - "planetary"
+    - "moon"
+  materials:
+    - "paper"
+    - "pen"
+    - "table"
+  places:
+    - "table"
+    - "altar"
+    - "ritual notebook"
+  sourceLabel: "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans"
+  originLabel: source
+```
+
+#### Review flags
+
+```yaml
+reviewFlags:
+  sourceTextReviewRequired: true
+  materialSafetyReviewRequired: false
+  sourceVerificationRequired: true
+  productBoundaryReviewRequired: true
+  notes:
+    - "Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready."
+    - "Keep timing symbolic and source-backed; do not convert into prediction or hard rule."
+```
+
+#### Adaptation policy notes
+
+- The candidate preserves source timing, glyph, or adaptation mechanics first.
+- Runtime import must mechanically import the candidate wording above or skip the candidate if the packet is judged incomplete.
+- No user-facing ritual words are hidden in metadata.
+
+#### Operative words metadata
+
+```yaml
+ritualWords: []
+operativeWordsNotes:
+  status: functional_instruction_only
+  reason: "This candidate uses functional instructions rather than source-provided spell wording."
+```
+
+### `candidate.dominguez.seven-day-planetary-cycle` — Move once through the seven lights.
+
+- candidate ID: `candidate.dominguez.seven-day-planetary-cycle`
+- disposition: `candidate_extract_now`
+- ritualizationType: `source_backed_moon_and_table_form`
+- import readiness label: `approved_for_mechanical_import`
+
+#### Headline
+
+Move once through the seven lights.
+
+#### Ritual body / practice
+
+Choose one simple card, mark, candle color, or table object for each of the seven elder planets. Each day, place that day’s planet at the center, trace its glyph, and write one line about where that quality appeared. At the end of seven days, gather the cards and name the pattern you saw.
+
+#### Intention
+
+Let a week become a planetary teaching cycle.
+
+#### Best window
+
+Begin on any day when seven days of observation are realistic.
+
+#### Question to carry
+
+Which planet kept returning, and which one asked for more attention?
+
+#### Why this fits ingredients
+
+```yaml
+whyThisFitsIngredients:
+  checkInHooks:
+    - "check-in asks for repeated pattern or practice arc"
+    - "timing hook: seven days/planetary days"
+    - "material fit: cards, table, optional candle"
+    - "keeps source’s cycle structure"
+  timingHooks:
+    - "seven-day planetary sequence; planetary days"
+  lunarPlanetarySeasonalHooks:
+    - "Use only source-backed timing facts already computed by the app; do not calculate astrology inside the Ritual."
+  capacityHooks:
+    - "Capacity support comes from the number of steps and required planning in this candidate."
+  audienceHooks:
+    - "Audience support is limited to what the candidate's structure can honestly carry."
+  materialPlaceCarrierPurposeFit:
+    - "Primary carrier: table; secondary carriers: words, candlelight; household-scale materials only."
+  sourceBackedRationale:
+    - "Chapter 8, PDF pp. 84-88; source recommends a seven-day planetary attunement cycle and notes seven-day patterns invoke the seven elder planets."
+  notForOrHoldNotes:
+    - "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+```
+
+#### How this was chosen ingredients
+
+```yaml
+howThisWasChosenIngredients:
+  primarySelectionSignals:
+    - "purpose:tending"
+    - "carrier:table/words"
+    - "source signal: seven-day attunement"
+    - "exclusion: not direct candle spellcraft"
+  secondarySelectionSignals:
+    - "source ID: SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS"
+    - "candidate title: Seven-Day Planetary Round"
+  exclusionSignals:
+    - "exclude if the request requires a prediction, personality reading, compatibility claim, medical advice, or hard timing rule"
+  timingSignal:
+    - "seven-day planetary sequence; planetary days"
+  confidenceNotes:
+    - "Runtime import still requires mechanical import review and later direct-use/recommendation review."
+```
+
+#### Source grounding
+
+- source ID: `SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS`
+- citation label: Ivo Dominguez Jr., Practical Astrology for Witches and Pagans: Using the Planets and the Stars for Effective Spellwork, Rituals, and Magick. Weiser Books / Red Wheel/Weiser, 2016.
+- source location: Chapter 8, PDF pp. 84-88
+- source basis: Chapter 8, PDF pp. 84-88; source recommends a seven-day planetary attunement cycle and notes seven-day patterns invoke the seven elder planets.
+- source transformation: Converted source timing/glyph mechanics into a small household ritual form without copying long procedures, tables, or pathworking text.
+- excluded source material: no copied pathworkings, no copied tables, no technical magick-square procedure, no deterministic interpretation.
+
+#### Recommendation metadata
+
+```yaml
+recommendationMetadata:
+  purposes:
+    primary: tending
+    secondary: ["remembering", "marking"]
+    refinement: "Dominguez practical astrology: Seven-Day Planetary Round."
+  carriers:
+    primary: table
+    secondary: ["words", "candlelight"]
+  capacity:
+    supports: ["enough_to_participate", "room_for_something_deeper"]
+    default: enough_to_participate
+  audience:
+    supports: ["me", "both_of_us"]
+    default: me
+  timing:
+    relationship: preferred
+    contexts: ["seven-day planetary sequence", "planetary days"]
+  eligibility:
+    recommendable: false
+    missing:
+      - direct_use_review
+      - recommendation_review
+```
+
+#### Availability
+
+```yaml
+availability:
+  findable: false
+  directUseEligible: false
+  recommendationEligible: false
+```
+
+#### Search metadata
+
+```yaml
+searchMetadata:
+  tags:
+    - dominguez
+    - astrology
+    - timing
+    - tending
+    - table
+  keywords:
+    - "astrology"
+    - "timing"
+    - "glyph"
+    - "planetary"
+    - "moon"
+  materials:
+    - "paper"
+    - "pen"
+    - "table"
+  places:
+    - "table"
+    - "altar"
+    - "ritual notebook"
+  sourceLabel: "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans"
+  originLabel: source
+```
+
+#### Review flags
+
+```yaml
+reviewFlags:
+  sourceTextReviewRequired: true
+  materialSafetyReviewRequired: false
+  sourceVerificationRequired: true
+  productBoundaryReviewRequired: true
+  notes:
+    - "Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready."
+    - "Keep timing symbolic and source-backed; do not convert into prediction or hard rule."
+```
+
+#### Adaptation policy notes
+
+- The candidate preserves source timing, glyph, or adaptation mechanics first.
+- Runtime import must mechanically import the candidate wording above or skip the candidate if the packet is judged incomplete.
+- No user-facing ritual words are hidden in metadata.
+
+#### Operative words metadata
+
+```yaml
+ritualWords: []
+operativeWordsNotes:
+  status: functional_instruction_only
+  reason: "This candidate uses functional instructions rather than source-provided spell wording."
+```
+
+### `candidate.dominguez.planetary-hour-support` — Let the hour lend one color.
+
+- candidate ID: `candidate.dominguez.planetary-hour-support`
+- disposition: `candidate_extract_now`
+- ritualizationType: `source_backed_moon_and_table_form`
+- import readiness label: `approved_for_mechanical_import`
+
+#### Headline
+
+Let the hour lend one color.
+
+#### Ritual body / practice
+
+Look up the planetary hour for the chosen ritual time. If the hour supports the work, place one matching mark, color, object, or word at the table. If it does not support the work, do not force it; write that the hour is background weather and proceed with the stronger ritual purpose.
+
+#### Intention
+
+Use planetary hour as support, not command.
+
+#### Best window
+
+When a ritual time is known and the planetary hour is available.
+
+#### Question to carry
+
+Is this hour helping the ritual, or should it stay in the background?
+
+#### Why this fits ingredients
+
+```yaml
+whyThisFitsIngredients:
+  checkInHooks:
+    - "check-in asks for timing without overcomplication"
+    - "timing hook: planetary hour"
+    - "source says hour can add a planetary quality"
+    - "keeps timing as soft support"
+  timingHooks:
+    - "planetary hour; planetary day plus hour"
+  lunarPlanetarySeasonalHooks:
+    - "Use only source-backed timing facts already computed by the app; do not calculate astrology inside the Ritual."
+  capacityHooks:
+    - "Capacity support comes from the number of steps and required planning in this candidate."
+  audienceHooks:
+    - "Audience support is limited to what the candidate's structure can honestly carry."
+  materialPlaceCarrierPurposeFit:
+    - "Primary carrier: table; secondary carriers: words, candlelight; household-scale materials only."
+  sourceBackedRationale:
+    - "Chapter 9, PDF pp. 91-97 and Chapter 11, PDF pp. 123-124; source explains planetary hours and recommends physical representations, verbal calls, and symbolic marks to access planetary-hour support."
+  notForOrHoldNotes:
+    - "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+```
+
+#### How this was chosen ingredients
+
+```yaml
+howThisWasChosenIngredients:
+  primarySelectionSignals:
+    - "purpose:marking/steadying"
+    - "carrier:table"
+    - "source signal: government of hours"
+    - "exclusion: no hard electional rule"
+  secondarySelectionSignals:
+    - "source ID: SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS"
+    - "candidate title: Add the Planetary Hour"
+  exclusionSignals:
+    - "exclude if the request requires a prediction, personality reading, compatibility claim, medical advice, or hard timing rule"
+  timingSignal:
+    - "planetary hour; planetary day plus hour"
+  confidenceNotes:
+    - "Runtime import still requires mechanical import review and later direct-use/recommendation review."
+```
+
+#### Source grounding
+
+- source ID: `SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS`
+- citation label: Ivo Dominguez Jr., Practical Astrology for Witches and Pagans: Using the Planets and the Stars for Effective Spellwork, Rituals, and Magick. Weiser Books / Red Wheel/Weiser, 2016.
+- source location: Chapter 9, PDF pp. 91-97 and Chapter 11, PDF pp. 123-124
+- source basis: Chapter 9, PDF pp. 91-97 and Chapter 11, PDF pp. 123-124; source explains planetary hours and recommends physical representations, verbal calls, and symbolic marks to access planetary-hour support.
+- source transformation: Converted source timing/glyph mechanics into a small household ritual form without copying long procedures, tables, or pathworking text.
+- excluded source material: no copied pathworkings, no copied tables, no technical magick-square procedure, no deterministic interpretation.
+
+#### Recommendation metadata
+
+```yaml
+recommendationMetadata:
+  purposes:
+    primary: marking
+    secondary: ["steadying"]
+    refinement: "Dominguez practical astrology: Add the Planetary Hour."
+  carriers:
+    primary: table
+    secondary: ["words", "candlelight"]
+  capacity:
+    supports: ["only_a_little", "enough_to_participate"]
+    default: only_a_little
+  audience:
+    supports: ["me", "both_of_us"]
+    default: me
+  timing:
+    relationship: preferred
+    contexts: ["planetary hour", "planetary day plus hour"]
+  eligibility:
+    recommendable: false
+    missing:
+      - direct_use_review
+      - recommendation_review
+```
+
+#### Availability
+
+```yaml
+availability:
+  findable: false
+  directUseEligible: false
+  recommendationEligible: false
+```
+
+#### Search metadata
+
+```yaml
+searchMetadata:
+  tags:
+    - dominguez
+    - astrology
+    - timing
+    - marking
+    - table
+  keywords:
+    - "astrology"
+    - "timing"
+    - "glyph"
+    - "planetary"
+    - "moon"
+  materials:
+    - "paper"
+    - "pen"
+    - "table"
+  places:
+    - "table"
+    - "altar"
+    - "ritual notebook"
+  sourceLabel: "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans"
+  originLabel: source
+```
+
+#### Review flags
+
+```yaml
+reviewFlags:
+  sourceTextReviewRequired: true
+  materialSafetyReviewRequired: false
+  sourceVerificationRequired: true
+  productBoundaryReviewRequired: true
+  notes:
+    - "Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready."
+    - "Keep timing symbolic and source-backed; do not convert into prediction or hard rule."
+```
+
+#### Adaptation policy notes
+
+- The candidate preserves source timing, glyph, or adaptation mechanics first.
+- Runtime import must mechanically import the candidate wording above or skip the candidate if the packet is judged incomplete.
+- No user-facing ritual words are hidden in metadata.
+
+#### Operative words metadata
+
+```yaml
+ritualWords: []
+operativeWordsNotes:
+  status: functional_instruction_only
+  reason: "This candidate uses functional instructions rather than source-provided spell wording."
+```
+
+### `candidate.dominguez.moon-phase-timing-check` — Choose whether the Moon is building or releasing.
+
+- candidate ID: `candidate.dominguez.moon-phase-timing-check`
+- disposition: `candidate_extract_now`
+- ritualizationType: `source_backed_moon_and_table_form`
+- import readiness label: `approved_for_mechanical_import`
+
+#### Headline
+
+Choose whether the Moon is building or releasing.
+
+#### Ritual body / practice
+
+Before the ritual, name whether the Moon is waxing, waning, full, dark, or at a quarter turn. Match the action to that direction: build, reinforce, dissolve, or change course. If the ritual’s purpose does not match the phase, keep the purpose and adjust the action so it works with the available Moon.
+
+#### Intention
+
+Let the Moon phase shape the action without ruling the choice.
+
+#### Best window
+
+Before any lunar-shaped ritual or recommendation explanation.
+
+#### Question to carry
+
+Is this rite building, revealing, dissolving, or changing direction?
+
+#### Why this fits ingredients
+
+```yaml
+whyThisFitsIngredients:
+  checkInHooks:
+    - "check-in asks for lunar timing"
+    - "timing hook: Moon phase"
+    - "supports choose-with-me explanation later"
+    - "turns phase into ritual shape, not command"
+  timingHooks:
+    - "moon phase; waxing moon; waning moon; full moon; dark moon; quarter moon"
+  lunarPlanetarySeasonalHooks:
+    - "Use only source-backed timing facts already computed by the app; do not calculate astrology inside the Ritual."
+  capacityHooks:
+    - "Capacity support comes from the number of steps and required planning in this candidate."
+  audienceHooks:
+    - "Audience support is limited to what the candidate's structure can honestly carry."
+  materialPlaceCarrierPurposeFit:
+    - "Primary carrier: words; secondary carriers: table, body; household-scale materials only."
+  sourceBackedRationale:
+    - "Chapter 10, PDF pp. 105-108; source presents Moon phase as the first and simplest timing consideration, with waxing for increase/growth, waning for banish/diminish/transform, and full/dark/quarter phases as special conditions."
+  notForOrHoldNotes:
+    - "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+```
+
+#### How this was chosen ingredients
+
+```yaml
+howThisWasChosenIngredients:
+  primarySelectionSignals:
+    - "purpose:marking/timing"
+    - "carrier:words"
+    - "source signal: Moon phase choosing"
+    - "exclusion: no deterministic phase rule"
+  secondarySelectionSignals:
+    - "source ID: SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS"
+    - "candidate title: Choose the Moon’s Direction"
+  exclusionSignals:
+    - "exclude if the request requires a prediction, personality reading, compatibility claim, medical advice, or hard timing rule"
+  timingSignal:
+    - "moon phase; waxing moon; waning moon; full moon; dark moon; quarter moon"
+  confidenceNotes:
+    - "Runtime import still requires mechanical import review and later direct-use/recommendation review."
+```
+
+#### Source grounding
+
+- source ID: `SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS`
+- citation label: Ivo Dominguez Jr., Practical Astrology for Witches and Pagans: Using the Planets and the Stars for Effective Spellwork, Rituals, and Magick. Weiser Books / Red Wheel/Weiser, 2016.
+- source location: Chapter 10, PDF pp. 105-108
+- source basis: Chapter 10, PDF pp. 105-108; source presents Moon phase as the first and simplest timing consideration, with waxing for increase/growth, waning for banish/diminish/transform, and full/dark/quarter phases as special conditions.
+- source transformation: Converted source timing/glyph mechanics into a small household ritual form without copying long procedures, tables, or pathworking text.
+- excluded source material: no copied pathworkings, no copied tables, no technical magick-square procedure, no deterministic interpretation.
+
+#### Recommendation metadata
+
+```yaml
+recommendationMetadata:
+  purposes:
+    primary: marking
+    secondary: ["opening", "releasing", "steadying"]
+    refinement: "Dominguez practical astrology: Choose the Moon’s Direction."
+  carriers:
+    primary: words
+    secondary: ["table", "body"]
+  capacity:
+    supports: ["only_a_little", "enough_to_participate"]
+    default: only_a_little
+  audience:
+    supports: ["me", "both_of_us"]
+    default: me
+  timing:
+    relationship: preferred
+    contexts: ["moon phase", "waxing moon", "waning moon", "full moon", "dark moon", "quarter moon"]
+  eligibility:
+    recommendable: false
+    missing:
+      - direct_use_review
+      - recommendation_review
+```
+
+#### Availability
+
+```yaml
+availability:
+  findable: false
+  directUseEligible: false
+  recommendationEligible: false
+```
+
+#### Search metadata
+
+```yaml
+searchMetadata:
+  tags:
+    - dominguez
+    - astrology
+    - timing
+    - marking
+    - words
+  keywords:
+    - "astrology"
+    - "timing"
+    - "glyph"
+    - "planetary"
+    - "moon"
+  materials:
+    - "paper"
+    - "pen"
+    - "table"
+  places:
+    - "table"
+    - "altar"
+    - "ritual notebook"
+  sourceLabel: "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans"
+  originLabel: source
+```
+
+#### Review flags
+
+```yaml
+reviewFlags:
+  sourceTextReviewRequired: true
+  materialSafetyReviewRequired: false
+  sourceVerificationRequired: true
+  productBoundaryReviewRequired: true
+  notes:
+    - "Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready."
+    - "Keep timing symbolic and source-backed; do not convert into prediction or hard rule."
+```
+
+#### Adaptation policy notes
+
+- The candidate preserves source timing, glyph, or adaptation mechanics first.
+- Runtime import must mechanically import the candidate wording above or skip the candidate if the packet is judged incomplete.
+- No user-facing ritual words are hidden in metadata.
+
+#### Operative words metadata
+
+```yaml
+ritualWords: []
+operativeWordsNotes:
+  status: functional_instruction_only
+  reason: "This candidate uses functional instructions rather than source-provided spell wording."
+```
+
+### `candidate.dominguez.moon-sign-tone` — Let the Moon’s sign choose the accent.
+
+- candidate ID: `candidate.dominguez.moon-sign-tone`
+- disposition: `candidate_extract_now`
+- ritualizationType: `source_backed_moon_and_table_form`
+- import readiness label: `approved_for_mechanical_import`
+
+#### Headline
+
+Let the Moon’s sign choose the accent.
+
+#### Ritual body / practice
+
+Look up the Moon’s sign. Choose one tone from that sign—beauty, detail, hearth, courage, depth, structure, dream, or another source-supported quality. Add that tone through one material, one word, or one gesture. Do not change the ritual’s purpose; let the sign color how it is done.
+
+#### Intention
+
+Use Moon sign as tone and rhythm, not fate.
+
+#### Best window
+
+When the Moon sign is known and a ritual can be gently styled.
+
+#### Question to carry
+
+What accent does this sign add without taking over?
+
+#### Why this fits ingredients
+
+```yaml
+whyThisFitsIngredients:
+  checkInHooks:
+    - "check-in asks why this moment changes the style"
+    - "timing hook: Moon sign"
+    - "keeps sign as accent not prediction"
+    - "fits table/word/material selection"
+  timingHooks:
+    - "moon sign; sign qualities"
+  lunarPlanetarySeasonalHooks:
+    - "Use only source-backed timing facts already computed by the app; do not calculate astrology inside the Ritual."
+  capacityHooks:
+    - "Capacity support comes from the number of steps and required planning in this candidate."
+  audienceHooks:
+    - "Audience support is limited to what the candidate's structure can honestly carry."
+  materialPlaceCarrierPurposeFit:
+    - "Primary carrier: table; secondary carriers: words, body; household-scale materials only."
+  sourceBackedRationale:
+    - "Chapter 10, PDF pp. 108-112; source describes Moon sign as a broad rhythm that shapes action and gives brief qualities for all twelve signs."
+  notForOrHoldNotes:
+    - "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+```
+
+#### How this was chosen ingredients
+
+```yaml
+howThisWasChosenIngredients:
+  primarySelectionSignals:
+    - "purpose:marking/tending"
+    - "carrier:table/words"
+    - "source signal: Moon sign rhythm"
+    - "exclusion: no personality horoscope"
+  secondarySelectionSignals:
+    - "source ID: SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS"
+    - "candidate title: Let the Moon Sign Set the Tone"
+  exclusionSignals:
+    - "exclude if the request requires a prediction, personality reading, compatibility claim, medical advice, or hard timing rule"
+  timingSignal:
+    - "moon sign; sign qualities"
+  confidenceNotes:
+    - "Runtime import still requires mechanical import review and later direct-use/recommendation review."
+```
+
+#### Source grounding
+
+- source ID: `SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS`
+- citation label: Ivo Dominguez Jr., Practical Astrology for Witches and Pagans: Using the Planets and the Stars for Effective Spellwork, Rituals, and Magick. Weiser Books / Red Wheel/Weiser, 2016.
+- source location: Chapter 10, PDF pp. 108-112
+- source basis: Chapter 10, PDF pp. 108-112; source describes Moon sign as a broad rhythm that shapes action and gives brief qualities for all twelve signs.
+- source transformation: Converted source timing/glyph mechanics into a small household ritual form without copying long procedures, tables, or pathworking text.
+- excluded source material: no copied pathworkings, no copied tables, no technical magick-square procedure, no deterministic interpretation.
+
+#### Recommendation metadata
+
+```yaml
+recommendationMetadata:
+  purposes:
+    primary: marking
+    secondary: ["tending", "steadying"]
+    refinement: "Dominguez practical astrology: Let the Moon Sign Set the Tone."
+  carriers:
+    primary: table
+    secondary: ["words", "body"]
+  capacity:
+    supports: ["only_a_little", "enough_to_participate"]
+    default: only_a_little
+  audience:
+    supports: ["me", "both_of_us"]
+    default: me
+  timing:
+    relationship: helpful
+    contexts: ["moon sign", "sign qualities"]
+  eligibility:
+    recommendable: false
+    missing:
+      - direct_use_review
+      - recommendation_review
+```
+
+#### Availability
+
+```yaml
+availability:
+  findable: false
+  directUseEligible: false
+  recommendationEligible: false
+```
+
+#### Search metadata
+
+```yaml
+searchMetadata:
+  tags:
+    - dominguez
+    - astrology
+    - timing
+    - marking
+    - table
+  keywords:
+    - "astrology"
+    - "timing"
+    - "glyph"
+    - "planetary"
+    - "moon"
+  materials:
+    - "paper"
+    - "pen"
+    - "table"
+  places:
+    - "table"
+    - "altar"
+    - "ritual notebook"
+  sourceLabel: "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans"
+  originLabel: source
+```
+
+#### Review flags
+
+```yaml
+reviewFlags:
+  sourceTextReviewRequired: true
+  materialSafetyReviewRequired: false
+  sourceVerificationRequired: true
+  productBoundaryReviewRequired: true
+  notes:
+    - "Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready."
+    - "Keep timing symbolic and source-backed; do not convert into prediction or hard rule."
+```
+
+#### Adaptation policy notes
+
+- The candidate preserves source timing, glyph, or adaptation mechanics first.
+- Runtime import must mechanically import the candidate wording above or skip the candidate if the packet is judged incomplete.
+- No user-facing ritual words are hidden in metadata.
+
+#### Operative words metadata
+
+```yaml
+ritualWords: []
+operativeWordsNotes:
+  status: functional_instruction_only
+  reason: "This candidate uses functional instructions rather than source-provided spell wording."
+```
+
+### `candidate.dominguez.void-moon-softening` — Let the void Moon make the rite smaller.
+
+- candidate ID: `candidate.dominguez.void-moon-softening`
+- disposition: `candidate_extract_now`
+- ritualizationType: `source_backed_moon_and_table_form`
+- import readiness label: `approved_for_mechanical_import`
+
+#### Headline
+
+Let the void Moon make the rite smaller.
+
+#### Ritual body / practice
+
+If the Moon is void-of-course, choose a softer form of the ritual. Favor divination, review, dream, release, quiet disclosure, or a contained symbolic action. Avoid treating the void as failure. Close by naming what may fade and what should wait for firmer timing.
+
+#### Intention
+
+Work with an unsteered Moon by softening the ritual’s ambition.
+
+#### Best window
+
+During a void-of-course Moon when the ritual should still proceed.
+
+#### Question to carry
+
+What should be allowed to drift, and what should wait?
+
+#### Why this fits ingredients
+
+```yaml
+whyThisFitsIngredients:
+  checkInHooks:
+    - "timing hook: void Moon"
+    - "low capacity: smaller/softer form"
+    - "keeps ritual possible without alarm"
+    - "prevents hard no-go timing"
+  timingHooks:
+    - "void-of-course moon"
+  lunarPlanetarySeasonalHooks:
+    - "Use only source-backed timing facts already computed by the app; do not calculate astrology inside the Ritual."
+  capacityHooks:
+    - "Capacity support comes from the number of steps and required planning in this candidate."
+  audienceHooks:
+    - "Audience support is limited to what the candidate's structure can honestly carry."
+  materialPlaceCarrierPurposeFit:
+    - "Primary carrier: words; secondary carriers: vessel, table; household-scale materials only."
+  sourceBackedRationale:
+    - "Chapter 10, PDF pp. 112-114; source distinguishes mundane cautions from magical uses and notes void Moon can support divination, journeying, regression, fading-away, and stealth/low-course actions while weakening manifestation and some boundaries."
+  notForOrHoldNotes:
+    - "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+```
+
+#### How this was chosen ingredients
+
+```yaml
+howThisWasChosenIngredients:
+  primarySelectionSignals:
+    - "purpose:steadying/releasing"
+    - "carrier:words/vessel"
+    - "source signal: void-of-course Moon"
+    - "exclusion: no anxiety-producing warning"
+  secondarySelectionSignals:
+    - "source ID: SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS"
+    - "candidate title: Soften the Void Moon"
+  exclusionSignals:
+    - "exclude if the request requires a prediction, personality reading, compatibility claim, medical advice, or hard timing rule"
+  timingSignal:
+    - "void-of-course moon"
+  confidenceNotes:
+    - "Runtime import still requires mechanical import review and later direct-use/recommendation review."
+```
+
+#### Source grounding
+
+- source ID: `SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS`
+- citation label: Ivo Dominguez Jr., Practical Astrology for Witches and Pagans: Using the Planets and the Stars for Effective Spellwork, Rituals, and Magick. Weiser Books / Red Wheel/Weiser, 2016.
+- source location: Chapter 10, PDF pp. 112-114
+- source basis: Chapter 10, PDF pp. 112-114; source distinguishes mundane cautions from magical uses and notes void Moon can support divination, journeying, regression, fading-away, and stealth/low-course actions while weakening manifestation and some boundaries.
+- source transformation: Converted source timing/glyph mechanics into a small household ritual form without copying long procedures, tables, or pathworking text.
+- excluded source material: no copied pathworkings, no copied tables, no technical magick-square procedure, no deterministic interpretation.
+
+#### Recommendation metadata
+
+```yaml
+recommendationMetadata:
+  purposes:
+    primary: steadying
+    secondary: ["remembering", "releasing"]
+    refinement: "Dominguez practical astrology: Soften the Void Moon."
+  carriers:
+    primary: words
+    secondary: ["vessel", "table"]
+  capacity:
+    supports: ["only_a_little", "enough_to_participate"]
+    default: only_a_little
+  audience:
+    supports: ["me", "both_of_us"]
+    default: me
+  timing:
+    relationship: required
+    contexts: ["void-of-course moon"]
+  eligibility:
+    recommendable: false
+    missing:
+      - direct_use_review
+      - recommendation_review
+```
+
+#### Availability
+
+```yaml
+availability:
+  findable: false
+  directUseEligible: false
+  recommendationEligible: false
+```
+
+#### Search metadata
+
+```yaml
+searchMetadata:
+  tags:
+    - dominguez
+    - astrology
+    - timing
+    - steadying
+    - words
+  keywords:
+    - "astrology"
+    - "timing"
+    - "glyph"
+    - "planetary"
+    - "moon"
+  materials:
+    - "paper"
+    - "pen"
+    - "table"
+  places:
+    - "table"
+    - "altar"
+    - "ritual notebook"
+  sourceLabel: "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans"
+  originLabel: source
+```
+
+#### Review flags
+
+```yaml
+reviewFlags:
+  sourceTextReviewRequired: true
+  materialSafetyReviewRequired: false
+  sourceVerificationRequired: true
+  productBoundaryReviewRequired: true
+  notes:
+    - "Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready."
+    - "Keep timing symbolic and source-backed; do not convert into prediction or hard rule."
+```
+
+#### Adaptation policy notes
+
+- The candidate preserves source timing, glyph, or adaptation mechanics first.
+- Runtime import must mechanically import the candidate wording above or skip the candidate if the packet is judged incomplete.
+- No user-facing ritual words are hidden in metadata.
+
+#### Operative words metadata
+
+```yaml
+ritualWords: []
+operativeWordsNotes:
+  status: functional_instruction_only
+  reason: "This candidate uses functional instructions rather than source-provided spell wording."
+```
+
+### `candidate.dominguez.aspect-before-peak` — Begin while the aspect is still building.
+
+- candidate ID: `candidate.dominguez.aspect-before-peak`
+- disposition: `candidate_extract_now`
+- ritualizationType: `source_backed_moon_and_table_form`
+- import readiness label: `approved_for_mechanical_import`
+
+#### Headline
+
+Begin while the aspect is still building.
+
+#### Ritual body / practice
+
+When using an aspect for ritual timing, identify the faster planet and the exact peak time. Schedule the ritual before culmination, close to the peak if practical. In the grimoire, write the two planets, the aspect, and the ritual quality you are using.
+
+#### Intention
+
+Use aspect timing as a building current rather than an afterthought.
+
+#### Best window
+
+Before a selected planetary aspect culminates.
+
+#### Question to carry
+
+What is still building, and what should not be started after it peaks?
+
+#### Why this fits ingredients
+
+```yaml
+whyThisFitsIngredients:
+  checkInHooks:
+    - "timing hook: aspect weather"
+    - "source supports before-peak timing"
+    - "works as planning/grimoire practice"
+    - "not a compatibility/personality claim"
+  timingHooks:
+    - "planetary aspect; applying aspect; before culmination"
+  lunarPlanetarySeasonalHooks:
+    - "Use only source-backed timing facts already computed by the app; do not calculate astrology inside the Ritual."
+  capacityHooks:
+    - "Capacity support comes from the number of steps and required planning in this candidate."
+  audienceHooks:
+    - "Audience support is limited to what the candidate's structure can honestly carry."
+  materialPlaceCarrierPurposeFit:
+    - "Primary carrier: words; secondary carriers: table; household-scale materials only."
+  sourceBackedRationale:
+    - "Chapter 10, PDF pp. 114-116; source says workings using aspects should occur before the aspect peaks and that the faster planet determines the window of opportunity."
+  notForOrHoldNotes:
+    - "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+```
+
+#### How this was chosen ingredients
+
+```yaml
+howThisWasChosenIngredients:
+  primarySelectionSignals:
+    - "purpose:marking/opening"
+    - "carrier:words/table"
+    - "source signal: aspect timing before culmination"
+    - "exclusion: no relationship prediction"
+  secondarySelectionSignals:
+    - "source ID: SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS"
+    - "candidate title: Work Before the Aspect Peaks"
+  exclusionSignals:
+    - "exclude if the request requires a prediction, personality reading, compatibility claim, medical advice, or hard timing rule"
+  timingSignal:
+    - "planetary aspect; applying aspect; before culmination"
+  confidenceNotes:
+    - "Runtime import still requires mechanical import review and later direct-use/recommendation review."
+```
+
+#### Source grounding
+
+- source ID: `SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS`
+- citation label: Ivo Dominguez Jr., Practical Astrology for Witches and Pagans: Using the Planets and the Stars for Effective Spellwork, Rituals, and Magick. Weiser Books / Red Wheel/Weiser, 2016.
+- source location: Chapter 10, PDF pp. 114-116
+- source basis: Chapter 10, PDF pp. 114-116; source says workings using aspects should occur before the aspect peaks and that the faster planet determines the window of opportunity.
+- source transformation: Converted source timing/glyph mechanics into a small household ritual form without copying long procedures, tables, or pathworking text.
+- excluded source material: no copied pathworkings, no copied tables, no technical magick-square procedure, no deterministic interpretation.
+
+#### Recommendation metadata
+
+```yaml
+recommendationMetadata:
+  purposes:
+    primary: marking
+    secondary: ["opening", "tending"]
+    refinement: "Dominguez practical astrology: Work Before the Aspect Peaks."
+  carriers:
+    primary: words
+    secondary: ["table"]
+  capacity:
+    supports: ["enough_to_participate", "room_for_something_deeper"]
+    default: enough_to_participate
+  audience:
+    supports: ["me", "both_of_us"]
+    default: me
+  timing:
+    relationship: required
+    contexts: ["planetary aspect", "applying aspect", "before culmination"]
+  eligibility:
+    recommendable: false
+    missing:
+      - direct_use_review
+      - recommendation_review
+```
+
+#### Availability
+
+```yaml
+availability:
+  findable: false
+  directUseEligible: false
+  recommendationEligible: false
+```
+
+#### Search metadata
+
+```yaml
+searchMetadata:
+  tags:
+    - dominguez
+    - astrology
+    - timing
+    - marking
+    - words
+  keywords:
+    - "astrology"
+    - "timing"
+    - "glyph"
+    - "planetary"
+    - "moon"
+  materials:
+    - "paper"
+    - "pen"
+    - "table"
+  places:
+    - "table"
+    - "altar"
+    - "ritual notebook"
+  sourceLabel: "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans"
+  originLabel: source
+```
+
+#### Review flags
+
+```yaml
+reviewFlags:
+  sourceTextReviewRequired: true
+  materialSafetyReviewRequired: false
+  sourceVerificationRequired: true
+  productBoundaryReviewRequired: true
+  notes:
+    - "Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready."
+    - "Keep timing symbolic and source-backed; do not convert into prediction or hard rule."
+```
+
+#### Adaptation policy notes
+
+- The candidate preserves source timing, glyph, or adaptation mechanics first.
+- Runtime import must mechanically import the candidate wording above or skip the candidate if the packet is judged incomplete.
+- No user-facing ritual words are hidden in metadata.
+
+#### Operative words metadata
+
+```yaml
+ritualWords: []
+operativeWordsNotes:
+  status: functional_instruction_only
+  reason: "This candidate uses functional instructions rather than source-provided spell wording."
+```
+
+### `candidate.dominguez.retrograde-foundation` — Turn retrograde toward the foundations.
+
+- candidate ID: `candidate.dominguez.retrograde-foundation`
+- disposition: `candidate_extract_now`
+- ritualizationType: `source_backed_moon_and_table_form`
+- import readiness label: `approved_for_mechanical_import`
+
+#### Headline
+
+Turn retrograde toward the foundations.
+
+#### Ritual body / practice
+
+If a related planet is retrograde and the work cannot wait, shift the ritual toward review, preparation, retracing, foundations, or visioning. Write what will be prepared now and what will wait for forward motion. Close by placing one tool or note where it can be returned to later.
+
+#### Intention
+
+Let retrograde timing support review and foundations instead of false forward motion.
+
+#### Best window
+
+When a related planet is retrograde and the work still needs a ritual form.
+
+#### Question to carry
+
+What can be prepared now, and what should not be forced yet?
+
+#### Why this fits ingredients
+
+```yaml
+whyThisFitsIngredients:
+  checkInHooks:
+    - "timing hook: retrograde"
+    - "supports review/return rather than panic"
+    - "keeps work possible but reframed"
+    - "fits grimoire/table action"
+  timingHooks:
+    - "retrograde planet; imperfect timing adaptation"
+  lunarPlanetarySeasonalHooks:
+    - "Use only source-backed timing facts already computed by the app; do not calculate astrology inside the Ritual."
+  capacityHooks:
+    - "Capacity support comes from the number of steps and required planning in this candidate."
+  audienceHooks:
+    - "Audience support is limited to what the candidate's structure can honestly carry."
+  materialPlaceCarrierPurposeFit:
+    - "Primary carrier: words; secondary carriers: table; household-scale materials only."
+  sourceBackedRationale:
+    - "Chapter 11, PDF pp. 118-120; source says retrogrades are weak for forward momentum but useful for carefully crafted foundations, retracing steps, visioning, brainstorming, purification, and uncovering underlying factors."
+  notForOrHoldNotes:
+    - "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+```
+
+#### How this was chosen ingredients
+
+```yaml
+howThisWasChosenIngredients:
+  primarySelectionSignals:
+    - "purpose:steadying/remembering"
+    - "carrier:words/table"
+    - "source signal: retrograde adaptation"
+    - "exclusion: no deterministic do-not-do claim"
+  secondarySelectionSignals:
+    - "source ID: SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS"
+    - "candidate title: Use Retrograde for the Foundations"
+  exclusionSignals:
+    - "exclude if the request requires a prediction, personality reading, compatibility claim, medical advice, or hard timing rule"
+  timingSignal:
+    - "retrograde planet; imperfect timing adaptation"
+  confidenceNotes:
+    - "Runtime import still requires mechanical import review and later direct-use/recommendation review."
+```
+
+#### Source grounding
+
+- source ID: `SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS`
+- citation label: Ivo Dominguez Jr., Practical Astrology for Witches and Pagans: Using the Planets and the Stars for Effective Spellwork, Rituals, and Magick. Weiser Books / Red Wheel/Weiser, 2016.
+- source location: Chapter 11, PDF pp. 118-120
+- source basis: Chapter 11, PDF pp. 118-120; source says retrogrades are weak for forward momentum but useful for carefully crafted foundations, retracing steps, visioning, brainstorming, purification, and uncovering underlying factors.
+- source transformation: Converted source timing/glyph mechanics into a small household ritual form without copying long procedures, tables, or pathworking text.
+- excluded source material: no copied pathworkings, no copied tables, no technical magick-square procedure, no deterministic interpretation.
+
+#### Recommendation metadata
+
+```yaml
+recommendationMetadata:
+  purposes:
+    primary: steadying
+    secondary: ["remembering", "opening"]
+    refinement: "Dominguez practical astrology: Use Retrograde for the Foundations."
+  carriers:
+    primary: words
+    secondary: ["table"]
+  capacity:
+    supports: ["only_a_little", "enough_to_participate"]
+    default: only_a_little
+  audience:
+    supports: ["me", "both_of_us"]
+    default: me
+  timing:
+    relationship: helpful
+    contexts: ["retrograde planet", "imperfect timing adaptation"]
+  eligibility:
+    recommendable: false
+    missing:
+      - direct_use_review
+      - recommendation_review
+```
+
+#### Availability
+
+```yaml
+availability:
+  findable: false
+  directUseEligible: false
+  recommendationEligible: false
+```
+
+#### Search metadata
+
+```yaml
+searchMetadata:
+  tags:
+    - dominguez
+    - astrology
+    - timing
+    - steadying
+    - words
+  keywords:
+    - "astrology"
+    - "timing"
+    - "glyph"
+    - "planetary"
+    - "moon"
+  materials:
+    - "paper"
+    - "pen"
+    - "table"
+  places:
+    - "table"
+    - "altar"
+    - "ritual notebook"
+  sourceLabel: "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans"
+  originLabel: source
+```
+
+#### Review flags
+
+```yaml
+reviewFlags:
+  sourceTextReviewRequired: true
+  materialSafetyReviewRequired: false
+  sourceVerificationRequired: true
+  productBoundaryReviewRequired: true
+  notes:
+    - "Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready."
+    - "Keep timing symbolic and source-backed; do not convert into prediction or hard rule."
+```
+
+#### Adaptation policy notes
+
+- The candidate preserves source timing, glyph, or adaptation mechanics first.
+- Runtime import must mechanically import the candidate wording above or skip the candidate if the packet is judged incomplete.
+- No user-facing ritual words are hidden in metadata.
+
+#### Operative words metadata
+
+```yaml
+ritualWords: []
+operativeWordsNotes:
+  status: functional_instruction_only
+  reason: "This candidate uses functional instructions rather than source-provided spell wording."
+```
+
+### `candidate.dominguez.change-details-not-date` — Adjust the table to the sky you have.
+
+- candidate ID: `candidate.dominguez.change-details-not-date`
+- disposition: `candidate_extract_now`
+- ritualizationType: `source_backed_moon_and_table_form`
+- import readiness label: `approved_for_mechanical_import`
+
+#### Headline
+
+Adjust the table to the sky you have.
+
+#### Ritual body / practice
+
+When the date cannot change, look at the strongest available timing signal. Adjust emphasis, rhythm, pacing, props, colors, flowers, tablecloth, words, or style so the ritual leans with the moment. Keep the original purpose intact and make only one or two changes.
+
+#### Intention
+
+Let astrology shape the ritual details without overtaking the ritual.
+
+#### Best window
+
+When a ritual must happen at a fixed time.
+
+#### Question to carry
+
+What small detail would let this ritual move with the weather?
+
+#### Why this fits ingredients
+
+```yaml
+whyThisFitsIngredients:
+  checkInHooks:
+    - "check-in asks for doable adaptation"
+    - "timing hook: imperfect/fixed timing"
+    - "table/carrier fit: props and presentation"
+    - "low-overwhelm adjustment"
+  timingHooks:
+    - "fixed timing; imperfect timing; Moon sign; aspect condition"
+  lunarPlanetarySeasonalHooks:
+    - "Use only source-backed timing facts already computed by the app; do not calculate astrology inside the Ritual."
+  capacityHooks:
+    - "Capacity support comes from the number of steps and required planning in this candidate."
+  audienceHooks:
+    - "Audience support is limited to what the candidate's structure can honestly carry."
+  materialPlaceCarrierPurposeFit:
+    - "Primary carrier: table; secondary carriers: words, body; household-scale materials only."
+  sourceBackedRationale:
+    - "Chapter 11, PDF pp. 120-122; source recommends changing emphasis, rhythm, pacing, ritual props, and presentation style to align with available astrological conditions when timing cannot be changed."
+  notForOrHoldNotes:
+    - "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+```
+
+#### How this was chosen ingredients
+
+```yaml
+howThisWasChosenIngredients:
+  primarySelectionSignals:
+    - "purpose:tending/marking"
+    - "carrier:table"
+    - "source signal: changing ritual details"
+    - "exclusion: no full electional rescheduling"
+  secondarySelectionSignals:
+    - "source ID: SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS"
+    - "candidate title: Change the Details, Not the Date"
+  exclusionSignals:
+    - "exclude if the request requires a prediction, personality reading, compatibility claim, medical advice, or hard timing rule"
+  timingSignal:
+    - "fixed timing; imperfect timing; Moon sign; aspect condition"
+  confidenceNotes:
+    - "Runtime import still requires mechanical import review and later direct-use/recommendation review."
+```
+
+#### Source grounding
+
+- source ID: `SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS`
+- citation label: Ivo Dominguez Jr., Practical Astrology for Witches and Pagans: Using the Planets and the Stars for Effective Spellwork, Rituals, and Magick. Weiser Books / Red Wheel/Weiser, 2016.
+- source location: Chapter 11, PDF pp. 120-122
+- source basis: Chapter 11, PDF pp. 120-122; source recommends changing emphasis, rhythm, pacing, ritual props, and presentation style to align with available astrological conditions when timing cannot be changed.
+- source transformation: Converted source timing/glyph mechanics into a small household ritual form without copying long procedures, tables, or pathworking text.
+- excluded source material: no copied pathworkings, no copied tables, no technical magick-square procedure, no deterministic interpretation.
+
+#### Recommendation metadata
+
+```yaml
+recommendationMetadata:
+  purposes:
+    primary: tending
+    secondary: ["marking", "steadying"]
+    refinement: "Dominguez practical astrology: Change the Details, Not the Date."
+  carriers:
+    primary: table
+    secondary: ["words", "body"]
+  capacity:
+    supports: ["only_a_little", "enough_to_participate"]
+    default: only_a_little
+  audience:
+    supports: ["me", "both_of_us"]
+    default: me
+  timing:
+    relationship: helpful
+    contexts: ["fixed timing", "imperfect timing", "Moon sign", "aspect condition"]
+  eligibility:
+    recommendable: false
+    missing:
+      - direct_use_review
+      - recommendation_review
+```
+
+#### Availability
+
+```yaml
+availability:
+  findable: false
+  directUseEligible: false
+  recommendationEligible: false
+```
+
+#### Search metadata
+
+```yaml
+searchMetadata:
+  tags:
+    - dominguez
+    - astrology
+    - timing
+    - tending
+    - table
+  keywords:
+    - "astrology"
+    - "timing"
+    - "glyph"
+    - "planetary"
+    - "moon"
+  materials:
+    - "paper"
+    - "pen"
+    - "table"
+  places:
+    - "table"
+    - "altar"
+    - "ritual notebook"
+  sourceLabel: "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans"
+  originLabel: source
+```
+
+#### Review flags
+
+```yaml
+reviewFlags:
+  sourceTextReviewRequired: true
+  materialSafetyReviewRequired: false
+  sourceVerificationRequired: true
+  productBoundaryReviewRequired: true
+  notes:
+    - "Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready."
+    - "Keep timing symbolic and source-backed; do not convert into prediction or hard rule."
+```
+
+#### Adaptation policy notes
+
+- The candidate preserves source timing, glyph, or adaptation mechanics first.
+- Runtime import must mechanically import the candidate wording above or skip the candidate if the packet is judged incomplete.
+- No user-facing ritual words are hidden in metadata.
+
+#### Operative words metadata
+
+```yaml
+ritualWords: []
+operativeWordsNotes:
+  status: functional_instruction_only
+  reason: "This candidate uses functional instructions rather than source-provided spell wording."
+```
+
+### `candidate.dominguez.conditions-as-outline` — Let the timing give you an outline.
+
+- candidate ID: `candidate.dominguez.conditions-as-outline`
+- disposition: `candidate_extract_now`
+- ritualizationType: `source_backed_moon_and_table_form`
+- import readiness label: `approved_for_mechanical_import`
+
+#### Headline
+
+Let the timing give you an outline.
+
+#### Ritual body / practice
+
+When you are out of ideas, list the Moon phase, Moon sign, active aspects, retrogrades, and planetary day or hour. Choose one or two that matter most. Turn them into an outline: one opening, one material gesture, one sentence, and one close.
+
+#### Intention
+
+Use the astrological atmosphere as a creative constraint.
+
+#### Best window
+
+When a regular ritual or gathering needs a shape and the timing is already set.
+
+#### Question to carry
+
+What is the sky already asking this ritual to include?
+
+#### Why this fits ingredients
+
+```yaml
+whyThisFitsIngredients:
+  checkInHooks:
+    - "check-in asks for ritual shape from timing"
+    - "timing hook: multiple computed facts"
+    - "works for scheduled practice"
+    - "good bridge to Choose with me explanation"
+  timingHooks:
+    - "current astrological conditions; scheduled ritual"
+  lunarPlanetarySeasonalHooks:
+    - "Use only source-backed timing facts already computed by the app; do not calculate astrology inside the Ritual."
+  capacityHooks:
+    - "Capacity support comes from the number of steps and required planning in this candidate."
+  audienceHooks:
+    - "Audience support is limited to what the candidate's structure can honestly carry."
+  materialPlaceCarrierPurposeFit:
+    - "Primary carrier: words; secondary carriers: table; household-scale materials only."
+  sourceBackedRationale:
+    - "Chapter 11, PDF pp. 118-120; source recommends looking up Moon sign/phase, aspects, retrogrades, and other conditions for a planned gathering, then using the atmosphere as an outline of ideas or components."
+  notForOrHoldNotes:
+    - "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+```
+
+#### How this was chosen ingredients
+
+```yaml
+howThisWasChosenIngredients:
+  primarySelectionSignals:
+    - "purpose:opening/marking"
+    - "carrier:words/table"
+    - "source signal: conditions as starting point"
+    - "exclusion: not horoscope copy"
+  secondarySelectionSignals:
+    - "source ID: SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS"
+    - "candidate title: Use the Conditions as the Outline"
+  exclusionSignals:
+    - "exclude if the request requires a prediction, personality reading, compatibility claim, medical advice, or hard timing rule"
+  timingSignal:
+    - "current astrological conditions; scheduled ritual"
+  confidenceNotes:
+    - "Runtime import still requires mechanical import review and later direct-use/recommendation review."
+```
+
+#### Source grounding
+
+- source ID: `SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS`
+- citation label: Ivo Dominguez Jr., Practical Astrology for Witches and Pagans: Using the Planets and the Stars for Effective Spellwork, Rituals, and Magick. Weiser Books / Red Wheel/Weiser, 2016.
+- source location: Chapter 11, PDF pp. 118-120
+- source basis: Chapter 11, PDF pp. 118-120; source recommends looking up Moon sign/phase, aspects, retrogrades, and other conditions for a planned gathering, then using the atmosphere as an outline of ideas or components.
+- source transformation: Converted source timing/glyph mechanics into a small household ritual form without copying long procedures, tables, or pathworking text.
+- excluded source material: no copied pathworkings, no copied tables, no technical magick-square procedure, no deterministic interpretation.
+
+#### Recommendation metadata
+
+```yaml
+recommendationMetadata:
+  purposes:
+    primary: opening
+    secondary: ["marking", "tending"]
+    refinement: "Dominguez practical astrology: Use the Conditions as the Outline."
+  carriers:
+    primary: words
+    secondary: ["table"]
+  capacity:
+    supports: ["enough_to_participate", "room_for_something_deeper"]
+    default: enough_to_participate
+  audience:
+    supports: ["me", "both_of_us"]
+    default: me
+  timing:
+    relationship: helpful
+    contexts: ["current astrological conditions", "scheduled ritual"]
+  eligibility:
+    recommendable: false
+    missing:
+      - direct_use_review
+      - recommendation_review
+```
+
+#### Availability
+
+```yaml
+availability:
+  findable: false
+  directUseEligible: false
+  recommendationEligible: false
+```
+
+#### Search metadata
+
+```yaml
+searchMetadata:
+  tags:
+    - dominguez
+    - astrology
+    - timing
+    - opening
+    - words
+  keywords:
+    - "astrology"
+    - "timing"
+    - "glyph"
+    - "planetary"
+    - "moon"
+  materials:
+    - "paper"
+    - "pen"
+    - "table"
+  places:
+    - "table"
+    - "altar"
+    - "ritual notebook"
+  sourceLabel: "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans"
+  originLabel: source
+```
+
+#### Review flags
+
+```yaml
+reviewFlags:
+  sourceTextReviewRequired: true
+  materialSafetyReviewRequired: false
+  sourceVerificationRequired: true
+  productBoundaryReviewRequired: true
+  notes:
+    - "Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready."
+    - "Keep timing symbolic and source-backed; do not convert into prediction or hard rule."
+```
+
+#### Adaptation policy notes
+
+- The candidate preserves source timing, glyph, or adaptation mechanics first.
+- Runtime import must mechanically import the candidate wording above or skip the candidate if the packet is judged incomplete.
+- No user-facing ritual words are hidden in metadata.
+
+#### Operative words metadata
+
+```yaml
+ritualWords: []
+operativeWordsNotes:
+  status: functional_instruction_only
+  reason: "This candidate uses functional instructions rather than source-provided spell wording."
+```
+
+### `candidate.dominguez.planetary-representation` — Give the planet a small body on the table.
+
+- candidate ID: `candidate.dominguez.planetary-representation`
+- disposition: `candidate_extract_now`
+- ritualizationType: `source_backed_moon_and_table_form`
+- import readiness label: `approved_for_mechanical_import`
+
+#### Headline
+
+Give the planet a small body on the table.
+
+#### Ritual body / practice
+
+Choose one physical representation for the planetary power you want to support the ritual: a glyph card, color, stone, metal, written word, or simple object. Place it beside the candle or central object. Name the quality it contributes, then remove it when the ritual is complete.
+
+#### Intention
+
+Anchor timing support in a visible household object.
+
+#### Best window
+
+During a planetary day, planetary hour, or planet-family ritual.
+
+#### Question to carry
+
+What quality does this object carry, and when should it leave?
+
+#### Why this fits ingredients
+
+```yaml
+whyThisFitsIngredients:
+  checkInHooks:
+    - "timing hook: planetary family/hour"
+    - "material fit: simple object"
+    - "keeps timing visible"
+    - "avoids technical sigil/magick square procedure"
+  timingHooks:
+    - "planetary day; planetary hour; planet family"
+  lunarPlanetarySeasonalHooks:
+    - "Use only source-backed timing facts already computed by the app; do not calculate astrology inside the Ritual."
+  capacityHooks:
+    - "Capacity support comes from the number of steps and required planning in this candidate."
+  audienceHooks:
+    - "Audience support is limited to what the candidate's structure can honestly carry."
+  materialPlaceCarrierPurposeFit:
+    - "Primary carrier: table; secondary carriers: candlelight, words, vessel; household-scale materials only."
+  sourceBackedRationale:
+    - "Chapter 11, PDF pp. 123-124 and Chapter 8, PDF pp. 87-88; source recommends physical representations, verbal calls, symbolic marks, and glyphs as supports for planetary hours and planetary work."
+  notForOrHoldNotes:
+    - "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+```
+
+#### How this was chosen ingredients
+
+```yaml
+howThisWasChosenIngredients:
+  primarySelectionSignals:
+    - "purpose:marking/blessing"
+    - "carrier:table"
+    - "source signal: physical representation of planetary power"
+    - "exclusion: no wholesale correspondence table import"
+  secondarySelectionSignals:
+    - "source ID: SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS"
+    - "candidate title: Give the Planet a Small Body"
+  exclusionSignals:
+    - "exclude if the request requires a prediction, personality reading, compatibility claim, medical advice, or hard timing rule"
+  timingSignal:
+    - "planetary day; planetary hour; planet family"
+  confidenceNotes:
+    - "Runtime import still requires mechanical import review and later direct-use/recommendation review."
+```
+
+#### Source grounding
+
+- source ID: `SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS`
+- citation label: Ivo Dominguez Jr., Practical Astrology for Witches and Pagans: Using the Planets and the Stars for Effective Spellwork, Rituals, and Magick. Weiser Books / Red Wheel/Weiser, 2016.
+- source location: Chapter 11, PDF pp. 123-124 and Chapter 8, PDF pp. 87-88
+- source basis: Chapter 11, PDF pp. 123-124 and Chapter 8, PDF pp. 87-88; source recommends physical representations, verbal calls, symbolic marks, and glyphs as supports for planetary hours and planetary work.
+- source transformation: Converted source timing/glyph mechanics into a small household ritual form without copying long procedures, tables, or pathworking text.
+- excluded source material: no copied pathworkings, no copied tables, no technical magick-square procedure, no deterministic interpretation.
+
+#### Recommendation metadata
+
+```yaml
+recommendationMetadata:
+  purposes:
+    primary: marking
+    secondary: ["blessing", "steadying"]
+    refinement: "Dominguez practical astrology: Give the Planet a Small Body."
+  carriers:
+    primary: table
+    secondary: ["candlelight", "words", "vessel"]
+  capacity:
+    supports: ["only_a_little", "enough_to_participate"]
+    default: only_a_little
+  audience:
+    supports: ["me", "both_of_us"]
+    default: me
+  timing:
+    relationship: preferred
+    contexts: ["planetary day", "planetary hour", "planet family"]
+  eligibility:
+    recommendable: false
+    missing:
+      - direct_use_review
+      - recommendation_review
+```
+
+#### Availability
+
+```yaml
+availability:
+  findable: false
+  directUseEligible: false
+  recommendationEligible: false
+```
+
+#### Search metadata
+
+```yaml
+searchMetadata:
+  tags:
+    - dominguez
+    - astrology
+    - timing
+    - marking
+    - table
+  keywords:
+    - "astrology"
+    - "timing"
+    - "glyph"
+    - "planetary"
+    - "moon"
+  materials:
+    - "paper"
+    - "pen"
+    - "table"
+  places:
+    - "table"
+    - "altar"
+    - "ritual notebook"
+  sourceLabel: "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans"
+  originLabel: source
+```
+
+#### Review flags
+
+```yaml
+reviewFlags:
+  sourceTextReviewRequired: true
+  materialSafetyReviewRequired: false
+  sourceVerificationRequired: true
+  productBoundaryReviewRequired: true
+  notes:
+    - "Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready."
+    - "Keep timing symbolic and source-backed; do not convert into prediction or hard rule."
+```
+
+#### Adaptation policy notes
+
+- The candidate preserves source timing, glyph, or adaptation mechanics first.
+- Runtime import must mechanically import the candidate wording above or skip the candidate if the packet is judged incomplete.
+- No user-facing ritual words are hidden in metadata.
+
+#### Operative words metadata
+
+```yaml
+ritualWords: []
+operativeWordsNotes:
+  status: functional_instruction_only
+  reason: "This candidate uses functional instructions rather than source-provided spell wording."
+```
+
+### `candidate.dominguez.magick-square-focal-note` — Hold the planetary square as a later source-note lane.
+
+- candidate ID: `candidate.dominguez.magick-square-focal-note`
+- disposition: `hold_before_import`
+- ritualizationType: `metadata_symbolism_only`
+- import readiness label: `hold_before_import`
+
+#### Headline
+
+Hold the planetary square as a later source-note lane.
+
+#### Ritual body / practice
+
+Do not import this as a runtime ritual yet. Keep magick-square work as a source-note/specialized-review lane until technical procedure, tables, copyright boundaries, and symbol creation are reviewed.
+
+#### Intention
+
+Prevent technical talisman work from becoming casual app content.
+
+#### Best window
+
+Later specialized review only.
+
+#### Question to carry
+
+Is this a household mark, or a technical talismanic method?
+
+#### Why this fits ingredients
+
+```yaml
+whyThisFitsIngredients:
+  checkInHooks:
+    - "source has important technical method but not first import"
+    - "copyright/table procedure risk"
+    - "talisman complexity"
+    - "needs specialized review"
+  timingHooks:
+    - "magick square; specialized review only"
+  lunarPlanetarySeasonalHooks:
+    - "Use only source-backed timing facts already computed by the app; do not calculate astrology inside the Ritual."
+  capacityHooks:
+    - "Capacity support comes from the number of steps and required planning in this candidate."
+  audienceHooks:
+    - "Audience support is limited to what the candidate's structure can honestly carry."
+  materialPlaceCarrierPurposeFit:
+    - "Primary carrier: table; secondary carriers: words; household-scale materials only."
+  sourceBackedRationale:
+    - "Chapter 15 and Appendix C, PDF pp. 152-170 and appendices; source gives magick-square history, squares, and sigil-construction procedure."
+  notForOrHoldNotes:
+    - "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+```
+
+#### How this was chosen ingredients
+
+```yaml
+howThisWasChosenIngredients:
+  primarySelectionSignals:
+    - "purpose:marking"
+    - "carrier:table"
+    - "source signal: magick squares"
+    - "exclusion: not import-ready"
+  secondarySelectionSignals:
+    - "source ID: SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS"
+    - "candidate title: Name the Square, Hold the Sigil"
+  exclusionSignals:
+    - "exclude if the request requires a prediction, personality reading, compatibility claim, medical advice, or hard timing rule"
+  timingSignal:
+    - "magick square; specialized review only"
+  confidenceNotes:
+    - "Runtime import still requires mechanical import review and later direct-use/recommendation review."
+```
+
+#### Source grounding
+
+- source ID: `SRC-ASTROLOGY-DOMINGUEZ-PRACTICAL-ASTROLOGY-WITCHES-PAGANS`
+- citation label: Ivo Dominguez Jr., Practical Astrology for Witches and Pagans: Using the Planets and the Stars for Effective Spellwork, Rituals, and Magick. Weiser Books / Red Wheel/Weiser, 2016.
+- source location: Chapter 15 and Appendix C, PDF pp. 152-170 and appendices
+- source basis: Chapter 15 and Appendix C, PDF pp. 152-170 and appendices; source gives magick-square history, squares, and sigil-construction procedure.
+- source transformation: Converted source timing/glyph mechanics into a small household ritual form without copying long procedures, tables, or pathworking text.
+- excluded source material: no copied pathworkings, no copied tables, no technical magick-square procedure, no deterministic interpretation.
+
+#### Recommendation metadata
+
+```yaml
+recommendationMetadata:
+  purposes:
+    primary: marking
+    secondary: ["remembering"]
+    refinement: "Dominguez practical astrology: Name the Square, Hold the Sigil."
+  carriers:
+    primary: table
+    secondary: ["words"]
+  capacity:
+    supports: ["room_for_something_deeper"]
+    default: room_for_something_deeper
+  audience:
+    supports: ["me"]
+    default: me
+  timing:
+    relationship: none
+    contexts: ["magick square", "specialized review only"]
+  eligibility:
+    recommendable: false
+    missing:
+      - direct_use_review
+      - recommendation_review
+```
+
+#### Availability
+
+```yaml
+availability:
+  findable: false
+  directUseEligible: false
+  recommendationEligible: false
+```
+
+#### Search metadata
+
+```yaml
+searchMetadata:
+  tags:
+    - dominguez
+    - astrology
+    - timing
+    - marking
+    - table
+  keywords:
+    - "astrology"
+    - "timing"
+    - "glyph"
+    - "planetary"
+    - "moon"
+  materials:
+    - "paper"
+    - "pen"
+    - "table"
+  places:
+    - "table"
+    - "altar"
+    - "ritual notebook"
+  sourceLabel: "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans"
+  originLabel: source
+```
+
+#### Review flags
+
+```yaml
+reviewFlags:
+  sourceTextReviewRequired: true
+  materialSafetyReviewRequired: false
+  sourceVerificationRequired: true
+  productBoundaryReviewRequired: true
+  notes:
+    - "Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready."
+    - "Keep timing symbolic and source-backed; do not convert into prediction or hard rule."
+```
+
+#### Adaptation policy notes
+
+- The candidate preserves source timing, glyph, or adaptation mechanics first.
+- Runtime import must mechanically import the candidate wording above or skip the candidate if the packet is judged incomplete.
+- No user-facing ritual words are hidden in metadata.
+
+#### Operative words metadata
+
+```yaml
+ritualWords: []
+operativeWordsNotes:
+  status: functional_instruction_only
+  reason: "This candidate uses functional instructions rather than source-provided spell wording."
+```
+
+
+## Variant and split notes
+
+### Planet family timing
+
+Planet-family logic is best handled primarily in the timing-card artifact. Runtime Ritual candidates should not multiply into one ritual per planet unless the source provides a household-scale practice form. The seven-day planetary cycle and planetary-card attunement candidates are sufficient first Ritual forms.
+
+### Moon sign timing
+
+Moon sign timing is source-backed but should usually shape tone and material style rather than produce twelve separate runtime rituals. The timing-card artifact contains sign-family cards.
+
+### Magick squares
+
+Magick-square and planetary-square material is intentionally held from first mechanical import. It can produce source notes and specialized-review prompts later, but not public runtime tables or technical talisman procedures.
+
+### Aspect weather
+
+Aspects are better modeled as timing cards and selector explanation inputs. The one importable ritual candidate here is a planning/grimoire practice for using an aspect before culmination.
+
+## Held / later / source-note leads
+
+| Lead | Disposition | Reason |
+|---|---|---|
+| Celestial Temple full pathworking | hold | long guided visualization; do not reproduce |
+| Full planetary correspondences | source_note_or_boundary_record | useful for source-backed meaning, not copied tables |
+| Sign-by-sign personality interpretation | source_note_or_boundary_record / hold | horoscope/personality drift risk |
+| House interpretation as life prediction | source_note_or_boundary_record / hold | not product lane |
+| Magick-square sigil procedure | timing_card_extract_now / hold_before_import | technical talismanic method and table copyright/procedure risk |
+| Spirit-work astrology | hold | ceremonial/spirit-work gate needed |
+| Aura/Moon-sign body claims | source_note_or_boundary_record / hold | avoid medical/personality claims |
+| Electional exact chart method | source_note_or_boundary_record | too complex for first import; timing cards can hold soft rules |
+| Retrograde as prohibition | reject conceptually | source supports adaptation, not panic or no-go rules |
+
+## Duplicate / relationship check
+
+| Area | Relationship |
+|---|---|
+| Moon phase timing | Complementary to Moon Book; Dominguez adds timing/use rules, quarter/dark/full distinctions, void Moon, aspect timing. |
+| Planetary timing | Primary source for planetary day/hour and planet-family ritual-shape cards. |
+| Glyphs and symbolic marks | Distinct from Buckland candle work and household table rites; Dominguez supports glyph-as-mark. |
+| Timing adaptation | Strong unique source contribution: adapt to the conditions available rather than waiting for perfect timing. |
+
+## Final checklist
+
+- Source-accounting inventory present: yes.
+- Every inventoried item has a disposition: yes.
+- Accepted candidates use full canonical records: yes.
+- Runtime enum values checked against `src/data/rituals/types.ts`: yes.
+- Operative words are functional-instruction only unless later reviewed: yes.
+- No private-source-excerpt/private-wording/Moon & Table line language: yes.
+- No runtime Ritual records created: yes.
+- No direct-use/recommendation eligibility changed: yes.
+- Timing-card artifact required by #355: see `docs/research/timing-cards/dominguez-astrology-timing-cards.md`.
