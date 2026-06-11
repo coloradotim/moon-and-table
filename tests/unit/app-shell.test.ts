@@ -193,7 +193,7 @@ describe("app shell rendering", () => {
     expect(html).toContain("Go back");
     expect(html).toContain('data-check-in-action="go_back"');
     expect(html).not.toContain("Welcome back");
-    expect(html).toContain("For today");
+    expect(html).not.toContain("For today");
     expect(html).toContain("Barely any");
     expect(html).toContain("A pause, a noticing, or one tiny act.");
     expect(html).toContain("A little");
@@ -216,7 +216,7 @@ describe("app shell rendering", () => {
       displayName: "Morgan Example",
     });
 
-    expect(html).toContain("Looking across the week");
+    expect(html).not.toContain("Looking across the week");
     expect(html).toContain("How much energy or capacity do you have?");
     expect(html).not.toContain("Welcome back");
   });
@@ -293,9 +293,13 @@ describe("app shell rendering", () => {
     expect(purposeHtml).toContain("Remembering");
     expect(carrierHtml).toContain("Go back");
     expect(carrierHtml).toContain("Where should the ritual live?");
-    expect(carrierHtml).toContain("I'm open");
+    const tableIndex = carrierHtml.indexOf("At the table");
+    const openIndex = carrierHtml.indexOf("I&#39;m open");
+
+    expect(carrierHtml).toContain("I&#39;m open");
     expect(carrierHtml).toContain("Let Moon &amp; Table choose the carrier.");
     expect(carrierHtml).toContain("At the table");
+    expect(tableIndex).toBeLessThan(openIndex);
   });
 
   it("renders a purpose step even for barely-any capacity", () => {
