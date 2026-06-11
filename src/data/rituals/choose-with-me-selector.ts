@@ -406,26 +406,37 @@ function getFirstSentence(text: string): string {
   return sentenceMatch?.[0] ?? normalized;
 }
 
-function describeSelectionLane(
-  request: ChooseWithMeRequest,
-  ritual?: Ritual,
+function pluralize(
+  count: number,
+  singular: string,
+  plural = `${singular}s`,
 ): string {
-  const pieces = [
-    capacityLabels[request.energyCapacity],
-    request.audience === "both_of_us" ? "both of you" : "one person",
+  return count === 1 ? singular : plural;
+}
+
+function describeHardGates(request: ChooseWithMeRequest): string {
+  const gates = [
     request.purpose ? purposeLabels[request.purpose] : undefined,
     request.carrier ? carrierLabels[request.carrier] : undefined,
+    request.audience === "both_of_us" ? "both of you" : "one person",
+    capacityLabels[request.energyCapacity],
   ].filter(Boolean) as string[];
-  const base = joinNaturalList(pieces);
 
-  if (request.carrier || !ritual) {
-    return base;
+  return joinNaturalList(gates);
+}
+
+function describeRitualMetadataFit(
+  ritual: Ritual,
+  request: ChooseWithMeRequest,
+): string {
+  const primaryPurpose =
+    purposeLabels[ritual.recommendationMetadata.purposes.primary];
+
+  if (request.carrier) {
+    return `Its record names ${primaryPurpose} as its primary work and ${carrierLabels[ritual.recommendationMetadata.carriers.primary]} as its primary carrier.`;
   }
 
-  const carrierForm =
-    carrierFormLabels[ritual.recommendationMetadata.carriers.primary];
-
-  return `${base}, with the ritual's own ${carrierForm} leading`;
+  return `Its record names ${primaryPurpose} as its primary work, and its own ${carrierFormLabels[ritual.recommendationMetadata.carriers.primary]} could lead because carrier was open.`;
 }
 
 function describePracticeFit(ritual: Ritual): string {
@@ -443,9 +454,7 @@ function buildWhyThisFits(
   request: ChooseWithMeRequest,
 ): string {
   const practiceFit = describePracticeFit(ritual);
-  const purpose = request.purpose
-    ? purposeLabels[request.purpose]
-    : "the work";
+  const purpose = request.purpose ? purposeLabels[request.purpose] : "the work";
   const capacityShape =
     request.energyCapacity === "room_for_something_deeper"
       ? "with room to unfold"
@@ -460,16 +469,19 @@ function buildWhyThisFits(
 
 function buildHowThisWasChosen(
   request: ChooseWithMeRequest,
+  debug: ChooseWithMeDebug,
   ritual?: Ritual,
 ): string {
   const timingPhrase =
     request.timeScope === "today" ? "for today" : "for this week";
-  const selectionLane = describeSelectionLane(request, ritual);
+  const hardGates = describeHardGates(request);
+  const remainingCount = debug.eligibleCount;
+  const remainingPhrase = `${remainingCount} approved ${pluralize(remainingCount, "ritual")} stayed in that lane ${timingPhrase}`;
   const closing = ritual
-    ? "Moon & Table did not widen the audience, raise the capacity, or swap the work to make an easier match."
+    ? describeRitualMetadataFit(ritual, request)
     : "Moon & Table did not choose a ritual outside that request.";
 
-  return `Inputs honored: ${timingPhrase}, ${selectionLane}. ${closing}`;
+  return `Selection gates: ${hardGates}. ${remainingPhrase}. ${closing}`;
 }
 
 function buildDebug(
@@ -540,7 +552,7 @@ export function chooseWithMeRitual(
       status: "no_result",
       whyThisFits:
         "I could not find a recommendation-ready ritual for that exact carrier, purpose, audience, and capacity.",
-      howThisWasChosen: buildHowThisWasChosen(normalizedRequest),
+      howThisWasChosen: buildHowThisWasChosen(normalizedRequest, debug),
       debug,
     };
   }
@@ -549,7 +561,11 @@ export function chooseWithMeRitual(
     status: "selected",
     selectedRitual: selected.ritual,
     whyThisFits: buildWhyThisFits(selected.ritual, normalizedRequest),
-    howThisWasChosen: buildHowThisWasChosen(normalizedRequest, selected.ritual),
+    howThisWasChosen: buildHowThisWasChosen(
+      normalizedRequest,
+      debug,
+      selected.ritual,
+    ),
     debug,
   };
 }

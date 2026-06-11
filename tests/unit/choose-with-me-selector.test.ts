@@ -175,7 +175,7 @@ describe("chooseWithMeRitual", () => {
       "The authored ritual already holds this shape",
     );
     expect(result.whyThisFits).not.toContain("carrier inferred");
-    expect(result.howThisWasChosen).toContain("ritual's own vessel form");
+    expect(result.howThisWasChosen).toContain("its own vessel form");
   });
 
   it("returns a documented no-result instead of drifting to another carrier", () => {
