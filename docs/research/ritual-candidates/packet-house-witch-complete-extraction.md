@@ -75,6 +75,7 @@ Words, blessings, prayers, spoken formulas, charms, prompts, recipes, and ritual
 | Doorstep cleansing | 173-183 | ritual | ritual_candidate | candidate_extract_now | Complete threshold wash. | Candidate below. |
 | House blessing | 173-183 | ritual | ritual_candidate | candidate_extract_now | Complete whole-house circuit. | Candidate below. |
 | Room blessing | 173-183 | ritual | ritual_candidate | candidate_extract_now | Complete single-room candle/water/pouch rite. | Candidate below. |
+| Room blessing bundle component | 173-183 | ritual_component | ritual_candidate | hold | Pouch is source-supported as part of the larger room blessing; standalone split needs Tim approval and exact-word handling. | Hold before import. |
 | Personal purification | 173-183 | ritual | ritual_candidate | candidate_extract_now | Complete candle/salt sequence. | Candidate below. |
 | Create sacred space | 173-183 | ritual | ritual_candidate | candidate_extract_now | Complete element-space sequence. | Candidate below. |
 | Food with awareness | 139-152 | practice_family | ritual_candidate | candidate_extract_now | Complete Moon & Table form from source-supported action. | Candidate below. |
@@ -88,14 +89,14 @@ Words, blessings, prayers, spoken formulas, charms, prompts, recipes, and ritual
 ## Packet metrics
 
 ```text
-source_items_inventoried: 29
+source_items_inventoried: 30
 candidate_extract_now: 15
 candidate_extract_later: 1
 private_excerpt_reference: 0
 items_with_private_excerpt_recommended: 10
 source_note_only: 5
 context_only: 1
-hold_before_import_candidate_records: 8
+hold_before_import_candidate_records: 9
 reject: 0
 runtime_records_created: no
 direct_use_eligibility_changed: no
@@ -130,7 +131,7 @@ Primary coverage only counts candidates marked `approved_for_mechanical_import`.
 | candlelight | steadying | 1 | `ritual-house-witch-bank-the-inner-flame` |
 | table | opening | 1 | `ritual-house-witch-spiritual-hearth-recognition` |
 | vessel | steadying | 1 | `ritual-house-witch-cauldron-harmony` |
-| vessel | blessing | 4 | `ritual-house-witch-cauldron-blessing`; `ritual-house-witch-bless-one-room`; `ritual-house-witch-bless-kitchen-tool`; `ritual-house-witch-room-pouch-blessing` |
+| vessel | blessing | 3 | `ritual-house-witch-cauldron-blessing`; `ritual-house-witch-bless-one-room`; `ritual-house-witch-bless-kitchen-tool` |
 | doorway | releasing | 1 | `ritual-house-witch-doorstep-cleansing` |
 | doorway | blessing | 1 | `ritual-house-witch-house-blessing-circuit` |
 | body | releasing | 2 | `ritual-house-witch-purify-person-at-home`; `ritual-house-witch-purify-one-room` |
@@ -207,7 +208,7 @@ whyThisFitsIngredients:
   checkInHooks: [end of day, scattered, unsettled]
   timingHooks: [before bed]
   lunarPlanetarySeasonalHooks: []
-  capacityHooks: [low, enough_to_participate]
+  capacityHooks: [only_a_little, enough_to_participate]
   audienceHooks: [me]
   materialPlaceCarrierPurposeFit: [kitchen/hearth place, optional candle, light switch or door]
   sourceBackedRationale: [The House Witch gives a bank-your-inner-flame practice with review of the day, three breaths, optional prayer, and a final physical act]
@@ -222,7 +223,7 @@ howThisWasChosenIngredients:
 
 source grounding: `The House Witch`, Ch. 2, PDF pp. 26-38.
 
-recommendation metadata: primaryPurpose steadying; secondaryPurposes [protecting]; primaryCarrier candlelight; secondaryCarriers [words, body]; capacity [low, enough_to_participate]; audience [me]; timing required at night; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+recommendation metadata: primaryPurpose steadying; secondaryPurposes [protecting]; primaryCarrier candlelight; secondaryCarriers [words, body]; capacity [only_a_little, enough_to_participate]; audience [me]; timing required at night; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
 search metadata: tags [house-witch, smooring, bank inner flame, bedtime]; materials [optional candle]; places [kitchen, hearth, threshold]
 
@@ -254,7 +255,7 @@ whyThisFitsIngredients:
   checkInHooks: [needs opening, kitchen work]
   timingHooks: [before kitchen or table work]
   lunarPlanetarySeasonalHooks: []
-  capacityHooks: [low, enough_to_participate]
+  capacityHooks: [only_a_little, enough_to_participate]
   audienceHooks: [me, both_of_us]
   materialPlaceCarrierPurposeFit: [candle or oil lamp, kitchen, flame]
   sourceBackedRationale: [The House Witch treats candle or oil lamp flame as a symbol of sacred presence and gives a lighting prayer]
@@ -269,7 +270,7 @@ howThisWasChosenIngredients:
 
 source grounding: `The House Witch`, Ch. 6 and Ch. 11, PDF pp. 83-98 and 173-183.
 
-recommendation metadata: primaryPurpose opening; secondaryPurposes [blessing, tending]; primaryCarrier candlelight; secondaryCarriers [table, words]; capacity [low, enough_to_participate]; audience [me, both_of_us]; timing required before kitchen work; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+recommendation metadata: primaryPurpose opening; secondaryPurposes [blessing, tending]; primaryCarrier candlelight; secondaryCarriers [table, words]; capacity [only_a_little, enough_to_participate]; audience [me, both_of_us]; timing required before kitchen work; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
 search metadata: tags [house-witch, kitchen flame, candle, oil lamp]; materials [candle or oil lamp, holder]; places [kitchen, table, counter]
 
@@ -301,7 +302,7 @@ whyThisFitsIngredients:
   checkInHooks: [preparing flame material]
   timingHooks: [before lighting]
   lunarPlanetarySeasonalHooks: []
-  capacityHooks: [low, enough_to_participate]
+  capacityHooks: [only_a_little, enough_to_participate]
   audienceHooks: [me]
   materialPlaceCarrierPurposeFit: [candle or oil/fuel, hands, hearth visualization]
   sourceBackedRationale: [The House Witch gives consecration mechanics using hands, visualization, and a short dedication]
@@ -316,7 +317,7 @@ howThisWasChosenIngredients:
 
 source grounding: `The House Witch`, Ch. 11 / PDF pp. 173-183.
 
-recommendation metadata: primaryPurpose blessing; secondaryPurposes [opening]; primaryCarrier candlelight; secondaryCarriers [vessel, words]; capacity [low, enough_to_participate]; audience [me]; timing required before flame rite; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+recommendation metadata: primaryPurpose blessing; secondaryPurposes [opening]; primaryCarrier candlelight; secondaryCarriers [vessel, words]; capacity [only_a_little, enough_to_participate]; audience [me]; timing required before flame rite; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
 search metadata: tags [house-witch, candle consecration, oil lamp, fuel]; materials [candle, oil, fuel]; places [table, kitchen, hearth]
 
@@ -565,50 +566,50 @@ import readiness label: `approved_for_mechanical_import`
 
 ### `ritual-house-witch-room-pouch-blessing` — Set the Room Blessing Bundle
 
-disposition: `candidate_extract_now`
+disposition: `hold`
 
-ritualizationType: `direct_source_ritual`
+ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Set the Room Blessing Bundle
 
-ritual body / practice: Use this only as a small follow-up to a room blessing. Place a square of cloth on the table. Put one small amethyst or clear quartz in the center, add a pinch of salt, and add one penny or other coin. Gather the corners of the cloth and tie them with narrow ribbon. Hold the bundle near the room's doorway and name the room it will bless. Hang the bundle above the door or place it somewhere in the room where it can remain safely and continue to bless the room. Check later that the bundle is secure and out of reach of children or pets.
+ritual body / practice: Hold before import. The source-supported pouch materials are one 4-inch by 4-inch square of cloth, one small amethyst or clear quartz, a pinch of salt, one penny or other coin, and about ten inches of narrow ribbon. The source-supported placement is above the room door or somewhere in the room where it can safely continue to bless the room. This component should stay inside `Bless One Room` unless Tim approves a standalone follow-up form and exact short source lines are handled in that standalone body.
 
-intention: Leave a small, physical blessing marker in a room.
+intention: Preserve the room-blessing pouch component for later review without weakening the source room-blessing architecture.
 
-bestWindow: After the full room blessing or after refreshing a room's purpose.
+bestWindow: Hold before import.
 
-questionToCarry: What does this room need to keep holding?
+questionToCarry: Is this a whole ritual or a component of the room blessing?
 
 whyThisFitsIngredients:
   checkInHooks: [room needs a physical blessing marker]
   timingHooks: [after room blessing]
   lunarPlanetarySeasonalHooks: []
-  capacityHooks: [low, enough_to_participate]
+  capacityHooks: [only_a_little, enough_to_participate]
   audienceHooks: [me]
   materialPlaceCarrierPurposeFit: [cloth bundle, stone, salt, coin, ribbon, room]
   sourceBackedRationale: [The House Witch room blessing creates and places a cloth pouch to continue blessing the room]
-  notForOrHoldNotes: [small object and pet/child safety]
+  notForOrHoldNotes: [component/follow-up pattern held before import]
 
 howThisWasChosenIngredients:
   primarySelectionSignals: [small room marker]
   secondarySelectionSignals: [vessel/pouch]
-  exclusionSignals: [unsafe hanging/placement]
+  exclusionSignals: [not complete standalone source ritual without adaptation]
   timingSignal: after room blessing
-  confidenceNotes: complete source-supported component made into a standalone follow-up form; no unsupported props
+  confidenceNotes: source-supported component, but standalone split would require Tim approval and exact-word handling
 
 source grounding: `The House Witch`, Ch. 11 / PDF pp. 173-183.
 
-recommendation metadata: primaryPurpose blessing; secondaryPurposes [marking]; primaryCarrier vessel; secondaryCarriers [table, words]; capacity [low, enough_to_participate]; audience [me]; timing helpful after room blessing; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+recommendation metadata: primaryPurpose blessing; secondaryPurposes [marking]; primaryCarrier vessel; secondaryCarriers [table, words]; capacity [only_a_little, enough_to_participate]; audience [me]; timing helpful after room blessing; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
 search metadata: tags [house-witch, room bundle, pouch blessing]; materials [cloth, amethyst or clear quartz, salt, coin, ribbon]; places [room, doorway]
 
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [small object, hanging, pet/child safety].
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [held component; standalone adaptation and exact-word handling required before import].
 
-adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
+adaptation policy notes: hold_before_import; no standalone import until Tim approves the split from the larger Room Blessing.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `May this room keep its blessing.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `blessing`, note: `Source provides the pouch placement; this short line is Moon & Table original to make the follow-up form complete without copying longer room-blessing text.` }]
+operative words metadata: []
 
-import readiness label: `approved_for_mechanical_import`
+import readiness label: `hold_before_import`
 
 ### `ritual-house-witch-purify-person-at-home` — Purify the Person at Home
 
@@ -665,7 +666,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Purify One Room
 
-ritual body / practice: Physically clean the room first: return things to their places, then vacuum, sweep, dust, polish, or otherwise remove dirt as needed. Put a teaspoon of purifying incense on a charcoal tablet in a censer or heatproof bowl with sand, or use one stick of purchased purifying incense. Light the incense and use the private source incense line if Tim excerpts it. Place the bowl or censer in the middle of the room. Let the smoke fill the space; if desired, walk counterclockwise around the room to disperse it. Let the incense work for as long as needed, from a few minutes to a few hours, without assuming more smoke is better. When the room feels purified and smoke has cleared enough for safe flame use, light a candle in the middle of the room and use the private source flame line if Tim excerpts it. Allow the candle to burn down only if it can be attended safely; otherwise extinguish it at the end of the ritual and record that direct-use review must decide a safer close.
+ritual body / practice: Physically clean the room first: return things to their places, then vacuum, sweep, dust, polish, or otherwise remove dirt as needed. Put a teaspoon of purifying incense on a charcoal tablet in a censer or heatproof bowl with sand, or use one stick of purchased purifying incense. Light the incense and use the private source incense line if Tim excerpts it. Place the bowl or censer in the middle of the room. Let the smoke fill the space; if desired, walk counterclockwise around the room to disperse it. Let the incense work for as long as needed, from a few minutes to a few hours, without assuming more smoke is better. When the room feels purified and smoke has cleared enough for safe flame use, light a candle in the middle of the room and use the private source flame line if Tim excerpts it. Let the candle burn down while attended. If you cannot remain with the candle, extinguish it at the end of the rite. When the flame is out, leave the room clean and undisturbed for a while.
 
 intention: Purify a room, then bless the cleared space with flame.
 
@@ -688,7 +689,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [cleanse, then bless]
   exclusionSignals: [smoke unsafe, unattended candle]
   timingSignal: after physical cleaning
-  confidenceNotes: title-column correction applied; complete direct source ritual with direct-use safety caveat
+  confidenceNotes: title-column correction applied; complete direct source ritual with burn-down close preserved for draft mechanical import
 
 source grounding: `The House Witch`, Ch. 7 / PDF pp. 99-121.
 
@@ -696,9 +697,9 @@ recommendation metadata: primaryPurpose releasing; secondaryPurposes [protecting
 
 search metadata: tags [house-witch, room purification, incense, candle]; materials [cleaning supplies, incense, censer/heatproof bowl, sand, candle, holder, matches/lighter]; places [single room]
 
-review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [smoke/fire/pet/asthma review before direct use].
+review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [smoke/fire/pet/asthma review before direct use; source burn-down close preserved for draft mechanical import but direct-use presentation still requires material/fire-safety review].
 
-adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
+adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable; direct-use safety review may later author a safer close only if Tim approves.
 
 operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-room-purification-lines-ch7`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 7 / PDF pp. 99-121`, useContext: `spoken`, note: `Source incense and flame lines are operative and should be stored privately.` }]
 
@@ -712,7 +713,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Create the Small Sacred Space
 
-ritual body / practice: Gather a candle in a holder, incense in a censer, matches or a lighter, a small cup of water, and a small dish of salt, sand, or earth. Place them at the edge or center of the space you want to define. Light the candle and incense. Take a minute to arrive fully in the moment. Move around the perimeter of the space with the candle, then the water, then the salt/sand/earth, then the incense, or if moving is difficult, turn in place and raise each element toward the four directions. With each element, visualize its energy moving outward and pushing away what does not belong in the working space. Use the private source element words if Tim excerpts them; otherwise keep the work wordless. Return the elements to the starting place. Close by standing in the space, naming its purpose in one plain sentence, and extinguishing the flame and incense safely when the work is complete.
+ritual body / practice: Gather incense in a censer, a candle in a holder, matches or a lighter, a small cup of water, and a small dish of salt, sand, or earth. Place them at the edge or center of the space you want to define. Take a minute to arrive fully in the moment. Light the incense, move it around the perimeter of the space, and say: "I bless this space with air." Light the candle, move it around the perimeter of the space, and say: "I bless this space with fire." Carry the cup of water around the perimeter and say: "I bless this space with water." Carry the salt, sand, or earth around the perimeter and say: "I bless this space with earth." If moving is difficult, turn in place and raise each element toward the four directions instead. With each element, visualize its energy moving outward and pushing away what does not belong in the working space. Return the elements to the starting place. Stand in the space and say: "I call upon the power of the spiritual hearth to bless this space." Close by naming the space's purpose in one plain sentence, then extinguish the flame and incense safely when the work is complete.
 
 intention: Define a small working space for a specific household ritual.
 
@@ -726,8 +727,8 @@ whyThisFitsIngredients:
   lunarPlanetarySeasonalHooks: []
   capacityHooks: [enough_to_participate]
   audienceHooks: [me]
-  materialPlaceCarrierPurposeFit: [candle, incense, water, salt/sand/earth, perimeter/directions]
-  sourceBackedRationale: [House Witch gives a simple sacred-space method using candle, incense, water, earth/salt, movement or directional turning, and visualization]
+  materialPlaceCarrierPurposeFit: [incense, candle, water, salt/sand/earth, perimeter/directions]
+  sourceBackedRationale: [House Witch gives a simple sacred-space method using incense, candle, water, earth/salt, movement or directional turning, visualization, and short element lines]
   notForOrHoldNotes: [smoke/fire safety, not for ordinary productivity blocks]
 
 howThisWasChosenIngredients:
@@ -735,19 +736,19 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [elemental purification]
   exclusionSignals: [unsafe smoke/flame]
   timingSignal: before ritual work
-  confidenceNotes: source gives complete element structure; final purpose sentence is Moon & Table close
+  confidenceNotes: source gives complete element structure and usable short source lines
 
 source grounding: `The House Witch`, Ch. 11 / PDF pp. 173-183.
 
 recommendation metadata: primaryPurpose opening; secondaryPurposes [blessing]; primaryCarrier body; secondaryCarriers [candlelight, vessel, words]; capacity [enough_to_participate, room_for_something_deeper]; audience [me]; timing required before ritual work; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
-search metadata: tags [house-witch, sacred space, elements]; materials [candle, incense, water, salt/sand/earth]; places [room, altar, table, hearth]
+search metadata: tags [house-witch, sacred space, elements]; materials [incense, candle, water, salt/sand/earth]; places [room, altar, table, hearth]
 
-review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
 
 adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-create-sacred-space-ch11`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `spoken`, note: `Any exact element words or directional language should be checked privately.` }]
+operative words metadata: [{ mode: `source_exact_short`, text: `I bless this space with air.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `blessing`, note: `Short exact element line used inline.` }, { mode: `source_exact_short`, text: `I bless this space with fire.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `blessing`, note: `Short exact element line used inline.` }, { mode: `source_exact_short`, text: `I bless this space with water.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `blessing`, note: `Short exact element line used inline.` }, { mode: `source_exact_short`, text: `I bless this space with earth.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `blessing`, note: `Short exact element line used inline.` }, { mode: `source_exact_short`, text: `I call upon the power of the spiritual hearth to bless this space.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `blessing`, note: `Short exact hearth blessing line used inline.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -786,7 +787,7 @@ howThisWasChosenIngredients:
 
 source grounding: `The House Witch`, Ch. 6 / PDF pp. 83-98.
 
-recommendation metadata: primaryPurpose blessing; secondaryPurposes [tending]; primaryCarrier vessel; secondaryCarriers [table, words]; capacity [low, enough_to_participate]; audience [me, both_of_us]; timing helpful; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+recommendation metadata: primaryPurpose blessing; secondaryPurposes [tending]; primaryCarrier vessel; secondaryCarriers [table, words]; capacity [enough_to_participate]; audience [me, both_of_us]; timing helpful; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
 search metadata: tags [house-witch, kitchen tool, appliance blessing]; materials [tool/appliance, optional water, optional salt]; places [kitchen counter, appliance location]
 
@@ -833,7 +834,7 @@ howThisWasChosenIngredients:
 
 source grounding: `The House Witch`, Ch. 8 / PDF pp. 122-138 and Ch. 9 recipe-memory context.
 
-recommendation metadata: primaryPurpose remembering; secondaryPurposes [marking, tending]; primaryCarrier words; secondaryCarriers [table, vessel]; capacity [low, enough_to_participate]; audience [me, both_of_us]; timing required after ritual; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+recommendation metadata: primaryPurpose remembering; secondaryPurposes [marking, tending]; primaryCarrier words; secondaryCarriers [table, vessel]; capacity [enough_to_participate]; audience [me, both_of_us]; timing required after ritual; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
 search metadata: tags [house-witch, grimoire, record keeping, household memory]; materials [notebook, binder, pen, Moon & Table note]; places [table, kitchen, hearth]
 
@@ -880,7 +881,7 @@ howThisWasChosenIngredients:
 
 source grounding: `The House Witch`, Ch. 1 / PDF pp. 9-25, Ch. 8 / PDF pp. 122-138, and Ch. 9 / PDF pp. 139-152.
 
-recommendation metadata: primaryPurpose tending; secondaryPurposes [connecting, blessing]; primaryCarrier body; secondaryCarriers [table, vessel, words]; capacity [low, enough_to_participate]; audience [me, both_of_us]; timing helpful during cooking; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+recommendation metadata: primaryPurpose tending; secondaryPurposes [connecting, blessing]; primaryCarrier body; secondaryCarriers [table, vessel, words]; capacity [enough_to_participate]; audience [me, both_of_us]; timing helpful during cooking; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
 
 search metadata: tags [house-witch, food, kitchen witchcraft, cooking with awareness]; materials [planned food, normal cooking tools]; places [kitchen, table]
 
@@ -903,6 +904,7 @@ import readiness label: `approved_for_mechanical_import`
 | `ritual-house-witch-spell-bottle-household-vessel` | hold_before_import | Basic spell-bottle mechanics require material-specific safe variants. |
 | `ritual-house-witch-kitchen-shrine-tending` | hold_before_import | Kitchen shrine mechanics need a complete Tim-approved form without restricted cosmology. |
 | `ritual-house-witch-mark-season-hearth` | hold_before_import | Seasonal/craft form needs source-specific material and timing review. |
+| `ritual-house-witch-room-pouch-blessing` | hold_before_import | Source-supported pouch component belongs inside the larger Room Blessing until Tim approves a standalone follow-up adaptation. |
 | Recipe-specific candidates | candidate_extract_later | Valid private lane, but exact recipes and dietary/allergy/food-safety review are required. |
 
 ## Coverage records
@@ -918,7 +920,7 @@ import readiness label: `approved_for_mechanical_import`
 | `ritual-house-witch-doorstep-cleansing` | doorway | releasing | vessel, body, words | protecting | approved_for_mechanical_import |
 | `ritual-house-witch-house-blessing-circuit` | doorway | blessing | candlelight, vessel, words, body | protecting, marking | approved_for_mechanical_import |
 | `ritual-house-witch-bless-one-room` | vessel | blessing | candlelight, doorway, words | marking, protecting | approved_for_mechanical_import |
-| `ritual-house-witch-room-pouch-blessing` | vessel | blessing | table, words | marking | approved_for_mechanical_import |
+| `ritual-house-witch-room-pouch-blessing` | vessel | blessing | table, words | marking | hold_before_import |
 | `ritual-house-witch-purify-person-at-home` | body | releasing | candlelight, vessel | steadying, blessing | approved_for_mechanical_import |
 | `ritual-house-witch-purify-one-room` | body | releasing | candlelight, vessel, words | protecting, blessing | approved_for_mechanical_import |
 | `ritual-house-witch-create-small-sacred-space` | body | opening | candlelight, vessel, words | blessing | approved_for_mechanical_import |
@@ -931,9 +933,10 @@ import readiness label: `approved_for_mechanical_import`
 - `Kitchen Sacred Flame`: split later into candle and oil-lamp variants after direct-use material/fire review.
 - `House Blessing Circuit`: split later into whole-house, apartment, single-room, moving/new-home, and smoke-free variants.
 - `Purify One Room`: current approved draft preserves the source smoke/candle architecture but is not direct-use eligible; later QA may author a smoke-free variant if Tim approves.
-- `Create the Small Sacred Space`: current candidate is approved as a draft source-backed form; exact directional/element words remain private.
+- `Create the Small Sacred Space`: current candidate is approved as a draft direct-source ritual using the source's short element lines inline.
 - `Bless the Hearth Vessel`: direct cauldron version is approved; bowl/jar variants may be separate Moon & Table forms.
 - `Food With Awareness`: no recipe text is imported here. Recipe-specific rituals stay in the later/private lane.
+- `Room Blessing Bundle`: held as a component of `Bless One Room`; do not import as a standalone Ritual unless Tim approves that adaptation.
 
 ## Required self-check results
 
@@ -951,20 +954,26 @@ chosen version
 not needed
 generic
 journal
+low
+record that direct-use review
 ```
 
 Results:
 
 - No approved candidate body uses placeholder mechanics such as source pattern, source period, source close, source layout, source diagram, as the source shows, or as the diagram shows.
-- `journal` appears only in source-accounting/grimoire context, not as an unsupported addition to a direct-source ritual.
-- `not needed` and `generic` are not used to dismiss source wording.
+- No approved candidate uses the invalid runtime capacity value `low`; approved records use `only_a_little`, `enough_to_participate`, or `room_for_something_deeper`.
+- `Purify One Room` contains no internal QA/process language in the ritual body.
+- `Create the Small Sacred Space` includes the short source element lines inline and tracks them as `source_exact_short`.
+- `Room Blessing Bundle` is held before import and does not count toward primary coverage.
 - Long source wording is tracked through `private_source_excerpt`.
 - No runtime records or eligibility flags are changed.
 
 ## Validation checklist
 
-- [x] Every `candidate_extract_now` record has complete operational `ritual body / practice`.
+- [x] Every `approved_for_mechanical_import` record has complete operational `ritual body / practice`.
 - [x] No approved candidate requires source lookup for materials, placement, sequence, timing, repetition, wording handling, close, disposal, or rest.
+- [x] No approved candidate body contains internal QA/process text.
+- [x] No approved candidate uses invalid runtime enum values.
 - [x] Short exact source wording is handled under the 20-word rule.
 - [x] Long/substantial source wording uses `private_source_excerpt`.
 - [x] Mechanics/components are held unless made into complete source-backed forms.
