@@ -42,9 +42,13 @@ describe("Today's shape brief", () => {
     });
 
     expect(brief.title).toBe("Today’s shape");
-    expect(brief.summary).toContain("Today, the moon is in its waning gibbous phase");
+    expect(brief.summary).toContain(
+      "Today, the moon is in its waning gibbous phase",
+    );
     expect(brief.summary).toContain("Next lunar milestone: Last quarter moon");
-    expect(brief.summary).toContain("Today’s timing is more for noticing the pattern than forcing a turn");
+    expect(brief.summary).toContain(
+      "Today’s timing is more for noticing the pattern than forcing a turn",
+    );
     expect(brief.chips).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -66,11 +70,56 @@ describe("Today's shape brief", () => {
     expect(brief.summary).toContain("New moon today");
     expect(brief.chips).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ label: "New moon today", emphasis: "primary" }),
+        expect.objectContaining({
+          label: "New moon today",
+          emphasis: "primary",
+        }),
       ]),
     );
     expect(brief.timingAuthority).toBe("may_lead");
     expect(brief.majorEventPresent).toBe(true);
+  });
+
+  it("lets a nearby new moon color today without making it exact-lunation weather", () => {
+    const brief = createTodaysShapeBrief({
+      currentDate: "2026-06-11T18:00:00.000Z",
+      timezone: "America/Denver",
+    });
+
+    expect(brief.summary).toContain("Next lunar milestone: New moon on Sunday");
+    expect(brief.summary).toContain(
+      "The new moon is close enough to be in the weather",
+    );
+    expect(brief.summary).not.toContain("No large timing marker");
+    expect(brief.timingAuthority).toBe("shape_only");
+    expect(brief.majorEventPresent).toBe(false);
+  });
+
+  it("does not treat four local days before a lunar milestone as nearby", () => {
+    const brief = createTodaysShapeBrief({
+      currentDate: "2026-06-10T18:00:00.000Z",
+      timezone: "America/Denver",
+    });
+
+    expect(brief.summary).toContain("Next lunar milestone: New moon on Sunday");
+    expect(brief.summary).toContain("No large timing marker");
+    expect(brief.summary).not.toContain("The new moon is close enough");
+  });
+
+  it("lets a nearby full moon color today without making it exact-lunation weather", () => {
+    const brief = createTodaysShapeBrief({
+      currentDate: "2026-06-26T18:00:00.000Z",
+      timezone: "America/Denver",
+    });
+
+    expect(brief.summary).toContain(
+      "Next lunar milestone: Full moon on Monday",
+    );
+    expect(brief.summary).toContain(
+      "The full moon is close enough to be in the weather",
+    );
+    expect(brief.timingAuthority).toBe("shape_only");
+    expect(brief.majorEventPresent).toBe(false);
   });
 
   it("finds a full moon inside the best-week window", () => {
@@ -96,7 +145,10 @@ describe("Today's shape brief", () => {
     expect(brief.summary).toContain("threshold weather");
     expect(brief.chips).toEqual(
       expect.arrayContaining([
-        expect.objectContaining({ label: "Last day of July", kind: "calendar" }),
+        expect.objectContaining({
+          label: "Last day of July",
+          kind: "calendar",
+        }),
       ]),
     );
   });
@@ -156,12 +208,16 @@ describe("Today's shape brief", () => {
       currentDate: "2026-08-03T00:00:00.000Z",
       timezone: "UTC",
     });
-    const numerologyChips = brief.chips.filter((chip) => chip.kind === "numerology");
+    const numerologyChips = brief.chips.filter(
+      (chip) => chip.kind === "numerology",
+    );
 
     expect(numerologyChips).toHaveLength(0);
     expect(brief.summary).not.toContain("3 note");
     expect(brief.summary).toContain("Next lunar milestone: Last quarter moon");
-    expect(brief.summary).toContain("Today’s timing is more for noticing what is already changing than forcing a turn");
+    expect(brief.summary).toContain(
+      "Today’s timing is more for noticing what is already changing than forcing a turn",
+    );
   });
 
   it("summarizes private timing contacts without raw chart data", () => {
@@ -171,10 +227,14 @@ describe("Today's shape brief", () => {
       privateNatalProfiles: fakeNatalProfiles,
     });
     const privateTimingText = textFor({
-      details: brief.details?.filter((detail) => detail.title === "Private timing"),
+      details: brief.details?.filter(
+        (detail) => detail.title === "Private timing",
+      ),
     });
 
-    expect(brief.chips.some((chip) => chip.kind === "private_contact")).toBe(false);
+    expect(brief.chips.some((chip) => chip.kind === "private_contact")).toBe(
+      false,
+    );
     expect(privateTimingText).toContain("shared private timing note");
     expect(privateTimingText).not.toContain("person_a");
     expect(privateTimingText).not.toContain("person_b");
@@ -191,7 +251,9 @@ describe("Today's shape brief", () => {
     });
     const briefText = textFor(brief);
 
-    expect(brief.summary).toContain("the day can stay simple and observational");
+    expect(brief.summary).toContain(
+      "the day can stay simple and observational",
+    );
     expect(briefText).not.toContain("you should");
     expect(briefText).not.toContain("timing overrides");
     expect(briefText).not.toContain("score");

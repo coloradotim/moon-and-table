@@ -1,4 +1,7 @@
-import type { AstrologyVisibility, PrivateNatalProfile } from "./private-data-schema";
+import type {
+  AstrologyVisibility,
+  PrivateNatalProfile,
+} from "./private-data-schema";
 import {
   getMoonPhaseGlyphLabelForAngle,
   getNextMoonPhaseMilestoneForAngle,
@@ -74,11 +77,12 @@ const NUMEROLOGY_ACCENT_COPY: Record<number, string> = {
 };
 
 function resolveDate(value: Date | string | undefined): Date {
-  const date = value === undefined
-    ? new Date()
-    : value instanceof Date
-      ? new Date(value)
-      : new Date(value);
+  const date =
+    value === undefined
+      ? new Date()
+      : value instanceof Date
+        ? new Date(value)
+        : new Date(value);
 
   if (Number.isNaN(date.getTime())) {
     throw new Error("A valid date is required for Today’s shape.");
@@ -103,6 +107,23 @@ function localDateKey(date: Date, timezone: string): string {
     valueByType.get("month"),
     valueByType.get("day"),
   ].join("-");
+}
+
+function localCalendarDaysBetween(
+  startDate: Date,
+  endIso: string,
+  timezone: string,
+): number {
+  const [startYear, startMonth, startDay] = localDateKey(startDate, timezone)
+    .split("-")
+    .map(Number);
+  const [endYear, endMonth, endDay] = localDateKey(new Date(endIso), timezone)
+    .split("-")
+    .map(Number);
+  const startUtc = Date.UTC(startYear, startMonth - 1, startDay);
+  const endUtc = Date.UTC(endYear, endMonth - 1, endDay);
+
+  return Math.round((endUtc - startUtc) / 86_400_000);
 }
 
 function weekdayLabel(iso: string, timezone: string): string {
@@ -130,7 +151,10 @@ function factDateMatchesToday(
   return iso ? localDateKey(new Date(iso), timezone) === todayKey : false;
 }
 
-function getLocalDateParts(date: Date, timezone: string): {
+function getLocalDateParts(
+  date: Date,
+  timezone: string,
+): {
   month: number;
   day: number;
 } {
@@ -150,7 +174,9 @@ function getLocalDateParts(date: Date, timezone: string): {
 }
 
 function findMoonPhaseFact(facts: TimingFact[]): MoonPhaseFact {
-  const fact = facts.find((item): item is MoonPhaseFact => item.type === "moon_phase");
+  const fact = facts.find(
+    (item): item is MoonPhaseFact => item.type === "moon_phase",
+  );
 
   if (!fact) {
     throw new Error("Today’s shape needs a moon phase fact.");
@@ -184,7 +210,8 @@ function findTodayLunation(
 ): LunationFact | undefined {
   return facts.find(
     (fact): fact is LunationFact =>
-      fact.type === "lunation" && factDateMatchesToday(fact, todayKey, timezone),
+      fact.type === "lunation" &&
+      factDateMatchesToday(fact, todayKey, timezone),
   );
 }
 
@@ -220,16 +247,43 @@ function findNumerologyAccent(
 function findBestWeekMajorCandidate(
   candidates: TimingWindowCandidate[],
 ): TimingWindowCandidate | undefined {
-  return candidates.find(
-    (candidate) =>
-      candidate.strength === "primary" &&
-      candidate.timingFacts.some((fact) =>
+  return candidates.find(isMajorCandidate);
+}
+
+function isMajorCandidate(candidate: TimingWindowCandidate): boolean {
+  return (
+    candidate.strength === "primary" &&
+    candidate.timingFacts.some(
+      (fact) =>
         fact.type === "lunation" ||
         fact.type === "solar_season" ||
         fact.type === "calendar_threshold" ||
         fact.type === "planetary_aspect",
-      ),
+    )
   );
+}
+
+function findNearbyMajorCandidate(
+  candidates: TimingWindowCandidate[],
+  currentDate: Date,
+  timezone: string,
+): TimingWindowCandidate | undefined {
+  return candidates
+    .filter(isMajorCandidate)
+    .map((candidate) => ({
+      candidate,
+      daysAway: localCalendarDaysBetween(
+        currentDate,
+        candidate.startsAtIso,
+        timezone,
+      ),
+    }))
+    .filter(({ daysAway }) => daysAway > 0 && daysAway <= 3)
+    .sort(
+      (a, b) =>
+        a.daysAway - b.daysAway || b.candidate.score - a.candidate.score,
+    )
+    .map(({ candidate }) => candidate)[0];
 }
 
 function calendarSummary(fact: CalendarThresholdFact): string {
@@ -244,7 +298,10 @@ function calendarSummary(fact: CalendarThresholdFact): string {
   return `${fact.label}. This is threshold weather: last word, return, emptying, or setting one thing down.`;
 }
 
-function yearThresholdSummary(date: Date, timezone: string): string | undefined {
+function yearThresholdSummary(
+  date: Date,
+  timezone: string,
+): string | undefined {
   const { month, day } = getLocalDateParts(date, timezone);
 
   if (month === 1 && day === 1) {
@@ -299,13 +356,20 @@ function zodiacSummary(facts: TimingFact[]): string | undefined {
   const moonSun = [
     moonSign ? `The Moon is in ${sentenceCase(moonSign.sign)}` : undefined,
     sunSign ? `the Sun is in ${sentenceCase(sunSign.sign)}` : undefined,
-  ].filter(Boolean).join(" and ");
-  const personalPlanets = mercurySign && venusSign && mercurySign.sign === venusSign.sign
-    ? `Mercury and Venus are in ${sentenceCase(mercurySign.sign)}`
-    : [
-        mercurySign ? `Mercury is in ${sentenceCase(mercurySign.sign)}` : undefined,
-        venusSign ? `Venus is in ${sentenceCase(venusSign.sign)}` : undefined,
-      ].filter(Boolean).join(" and ");
+  ]
+    .filter(Boolean)
+    .join(" and ");
+  const personalPlanets =
+    mercurySign && venusSign && mercurySign.sign === venusSign.sign
+      ? `Mercury and Venus are in ${sentenceCase(mercurySign.sign)}`
+      : [
+          mercurySign
+            ? `Mercury is in ${sentenceCase(mercurySign.sign)}`
+            : undefined,
+          venusSign ? `Venus is in ${sentenceCase(venusSign.sign)}` : undefined,
+        ]
+          .filter(Boolean)
+          .join(" and ");
 
   if (personalPlanets) {
     return `${moonSun}; ${personalPlanets}.`;
@@ -321,11 +385,17 @@ function timingSynthesis({
   moonLabel,
   nextMilestoneLabel,
   nextMilestoneDay,
+  nextMilestoneDaysAway,
+  nearbyMajorCandidate,
+  timezone,
 }: {
   facts: TimingFact[];
   moonLabel: string;
   nextMilestoneLabel: string;
   nextMilestoneDay: string;
+  nextMilestoneDaysAway: number;
+  nearbyMajorCandidate?: TimingWindowCandidate;
+  timezone: string;
 }): string {
   const moonSign = findMoonSignFact(facts);
   const sunSign = findSunSignFact(facts);
@@ -349,6 +419,21 @@ function timingSynthesis({
     return "Today’s timing is more for noticing what is already changing than forcing a turn. The waning moon is moving toward the last quarter, so the day can stay simple and observational.";
   }
 
+  if (nextMilestoneDaysAway > 0 && nextMilestoneDaysAway <= 3) {
+    const lunarSummary = nearbyLunarMilestoneSummary(
+      nextMilestoneLabel,
+      nextMilestoneDay,
+    );
+
+    if (lunarSummary) {
+      return lunarSummary;
+    }
+  }
+
+  if (nearbyMajorCandidate) {
+    return nearbyMarkerSummary(nearbyMajorCandidate, timezone);
+  }
+
   return "No large timing marker is at the center today; the day can stay simple.";
 }
 
@@ -356,7 +441,12 @@ function joinSummaryParagraphs(paragraphs: Array<string | undefined>): string {
   return paragraphs.filter(Boolean).join("\n\n");
 }
 
-function moonPhaseSummary(moonLabel: string, nextLabel: string, nextIso: string, timezone: string): string {
+function moonPhaseSummary(
+  moonLabel: string,
+  nextLabel: string,
+  nextIso: string,
+  timezone: string,
+): string {
   if (/waning/i.test(moonLabel)) {
     return `${moonLabel}. Next lunar milestone: ${nextLabel} on ${weekdayLabel(nextIso, timezone)}. The moment favors lowering, returning, and letting one thing take up less room.`;
   }
@@ -372,7 +462,10 @@ function moonPhaseSummary(moonLabel: string, nextLabel: string, nextIso: string,
   return `${moonLabel}. Next lunar milestone: ${nextLabel} on ${weekdayLabel(nextIso, timezone)}. The moment favors one small beginning, first light, or a phrase that does not need to become a plan.`;
 }
 
-function lunationSummary(fact: LunationFact, numerology?: NumerologyDateFact): string {
+function lunationSummary(
+  fact: LunationFact,
+  numerology?: NumerologyDateFact,
+): string {
   if (fact.lunation === "new_moon") {
     return `New moon today${numerology ? `, with a ${numerology.number} note in the date` : ""}. Good weather for a small beginning, first light, or one phrase that does not need to become a plan.`;
   }
@@ -388,7 +481,10 @@ function seasonalSummary(fact: SeasonalMarkerFact): string {
   return `${fact.label} is in the weather. Let balance, threshold, and return stay small enough for the check-in to choose the path.`;
 }
 
-function bestWeekSummary(candidate: TimingWindowCandidate, timezone: string): string {
+function bestWeekSummary(
+  candidate: TimingWindowCandidate,
+  timezone: string,
+): string {
   const day = dateLabel(candidate.startsAtIso, timezone);
 
   if (/full moon/i.test(candidate.label)) {
@@ -404,6 +500,51 @@ function bestWeekSummary(candidate: TimingWindowCandidate, timezone: string): st
   }
 
   return `${candidate.label} stands out within the week, around ${day}. It is real threshold weather, but the check-in still chooses the ritual.`;
+}
+
+function nearbyMarkerSummary(
+  candidate: TimingWindowCandidate,
+  timezone: string,
+): string {
+  const day = weekdayLabel(candidate.startsAtIso, timezone);
+  const label = candidate.label;
+
+  if (/new moon/i.test(label)) {
+    return `The new moon is close enough to be in the weather, but not here yet. This is good timing for lowering the lights, clearing one small place, or letting a beginning stay quiet until ${day}.`;
+  }
+
+  if (/full moon/i.test(label)) {
+    return `The full moon is close enough to be in the weather, but not here yet. This is good timing for noticing what is becoming visible without making the day perform like the full moon has already arrived.`;
+  }
+
+  if (/solstice|equinox/i.test(label)) {
+    return `${label} is close enough to be in the weather, but not here yet. Let the threshold gather quietly before it becomes the center.`;
+  }
+
+  return `${label} is close enough to be in the weather, but not here yet. Let it color the day without making the check-in serve only that timing.`;
+}
+
+function nearbyLunarMilestoneSummary(
+  nextMilestoneLabel: string,
+  nextMilestoneDay: string,
+): string | undefined {
+  if (/new moon/i.test(nextMilestoneLabel)) {
+    return `The new moon is close enough to be in the weather, but not here yet. This is good timing for lowering the lights, clearing one small place, or letting a beginning stay quiet until ${nextMilestoneDay}.`;
+  }
+
+  if (/full moon/i.test(nextMilestoneLabel)) {
+    return `The full moon is close enough to be in the weather, but not here yet. This is good timing for noticing what is becoming visible without making the day perform like the full moon has already arrived.`;
+  }
+
+  if (/last quarter/i.test(nextMilestoneLabel)) {
+    return `The last quarter moon is close enough to be in the weather, but not here yet. This is good timing for noticing what is ready to be reduced, returned, or made simpler by ${nextMilestoneDay}.`;
+  }
+
+  if (/first quarter/i.test(nextMilestoneLabel)) {
+    return `The first quarter moon is close enough to be in the weather, but not here yet. This is good timing for giving one small beginning a little structure before ${nextMilestoneDay}.`;
+  }
+
+  return undefined;
 }
 
 function makeChip(
@@ -435,13 +576,18 @@ export function createTodaysShapeBrief(
   const currentDate = resolveDate(input.currentDate);
   const timezone = input.timezone ?? getDefaultTimingTimezone();
   const timeScope = input.timeScope ?? "today";
-  const facts = input.computedTimingFacts ?? getTimingFactsForDate(currentDate, {
-    timezone,
-  });
+  const facts =
+    input.computedTimingFacts ??
+    getTimingFactsForDate(currentDate, {
+      timezone,
+    });
   const todayKey = localDateKey(currentDate, timezone);
   const moon = findMoonPhaseFact(facts);
   const moonLabel = getMoonPhaseGlyphLabelForAngle(moon.phaseAngleDegrees);
-  const moonObservation = moonObservationSummary(moonLabel, moon.phaseAngleDegrees);
+  const moonObservation = moonObservationSummary(
+    moonLabel,
+    moon.phaseAngleDegrees,
+  );
   const zodiac = zodiacSummary(facts);
   const nextMilestone = getNextMoonPhaseMilestoneForAngle(
     moon.phaseAngleDegrees,
@@ -452,8 +598,9 @@ export function createTodaysShapeBrief(
   const numerologyIsMajor = numerology
     ? majorNumerologyNumbers.has(numerology.number)
     : false;
-  const privateCandidates = input.timingWindowCandidates ?? (
-    input.privateNatalProfiles && input.privateNatalProfiles.length > 0
+  const privateCandidates =
+    input.timingWindowCandidates ??
+    (input.privateNatalProfiles && input.privateNatalProfiles.length > 0
       ? getTimingWindowCandidates({
           startDate: currentDate,
           timezone,
@@ -466,18 +613,23 @@ export function createTodaysShapeBrief(
             maxCandidates: 12,
           },
         })
-      : []
-  );
+      : []);
   const privateContact = privateCandidates.find(
     (candidate) => candidate.natalContactKeys.length > 0,
   );
   const chips: TodaysShapeChip[] = [
-    makeChip(`${moonLabel}; next ${nextMilestone.label.toLowerCase()}`, "moon", "supporting"),
+    makeChip(
+      `${moonLabel}; next ${nextMilestone.label.toLowerCase()}`,
+      "moon",
+      "supporting",
+    ),
   ];
-  const details: TodaysShapeDetail[] = [{
-    title: "Moon",
-    body: `${moonLabel}. Next lunar milestone: ${nextMilestone.label} on ${dateLabel(nextMilestone.exactIso, timezone)}.`,
-  }];
+  const details: TodaysShapeDetail[] = [
+    {
+      title: "Moon",
+      body: `${moonLabel}. Next lunar milestone: ${nextMilestone.label} on ${dateLabel(nextMilestone.exactIso, timezone)}.`,
+    },
+  ];
   let summary = moonPhaseSummary(
     moonLabel,
     nextMilestone.label,
@@ -489,29 +641,68 @@ export function createTodaysShapeBrief(
 
   const todayLunation = findTodayLunation(facts, todayKey, timezone);
   const todayCalendarThreshold = findTodayCalendarThreshold(facts);
-  const todaySeasonalMarker = findTodaySeasonalMarker(facts, todayKey, timezone);
+  const todaySeasonalMarker = findTodaySeasonalMarker(
+    facts,
+    todayKey,
+    timezone,
+  );
   const yearThreshold = yearThresholdSummary(currentDate, timezone);
-  const bestWeekMajorCandidate = timeScope === "best_moment_this_week"
-    ? findBestWeekMajorCandidate(
-        input.timingWindowCandidates ??
-          getTimingWindowCandidates({
-            startDate: currentDate,
-            timezone,
-            daysAhead: 7,
-            options: { maxCandidates: 12 },
-          }),
-      )
-    : undefined;
+  const nearbyCandidatePool =
+    input.timingWindowCandidates ??
+    getTimingWindowCandidates({
+      startDate: currentDate,
+      timezone,
+      daysAhead: 4,
+      options: { maxCandidates: 12 },
+    });
+  const nearbyMajorCandidate =
+    timeScope === "today"
+      ? findNearbyMajorCandidate(nearbyCandidatePool, currentDate, timezone)
+      : undefined;
+  const bestWeekMajorCandidate =
+    timeScope === "best_moment_this_week"
+      ? findBestWeekMajorCandidate(
+          input.timingWindowCandidates ??
+            getTimingWindowCandidates({
+              startDate: currentDate,
+              timezone,
+              daysAhead: 7,
+              options: { maxCandidates: 12 },
+            }),
+        )
+      : undefined;
 
   if (todayLunation) {
-    summary = lunationSummary(todayLunation, numerologyIsMajor ? numerology : undefined);
-    chips.push(makeChip(todayLunation.lunation === "new_moon" ? "New moon today" : "Full moon today", "moon", "primary"));
+    summary = lunationSummary(
+      todayLunation,
+      numerologyIsMajor ? numerology : undefined,
+    );
+    chips.push(
+      makeChip(
+        todayLunation.lunation === "new_moon"
+          ? "New moon today"
+          : "Full moon today",
+        "moon",
+        "primary",
+      ),
+    );
     majorEventPresent = true;
     timingAuthority = "may_lead";
   } else if (yearThreshold) {
     summary = yearThreshold;
-    chips.push(makeChip(summary.startsWith("The year has") ? "Year beginning" : "Year ending", "calendar", "primary"));
-    details.push({ title: "Calendar", body: summary.startsWith("The year has") ? "First day of the year." : "Last day of the year." });
+    chips.push(
+      makeChip(
+        summary.startsWith("The year has") ? "Year beginning" : "Year ending",
+        "calendar",
+        "primary",
+      ),
+    );
+    details.push({
+      title: "Calendar",
+      body: summary.startsWith("The year has")
+        ? "First day of the year."
+        : "Last day of the year.",
+    });
     majorEventPresent = true;
     timingAuthority = "may_lead";
   } else if (todayCalendarThreshold) {
@@ -541,12 +732,25 @@ export function createTodaysShapeBrief(
         moonLabel,
         nextMilestoneLabel: nextMilestone.label,
         nextMilestoneDay: weekdayLabel(nextMilestone.exactIso, timezone),
+        nextMilestoneDaysAway: localCalendarDaysBetween(
+          currentDate,
+          nextMilestone.exactIso,
+          timezone,
+        ),
+        nearbyMajorCandidate,
+        timezone,
       }),
     ]);
   }
 
   if (numerologyIsMajor && numerology) {
-    chips.push(makeChip(`${numerology.number} note`, "numerology", numerologyIsMajor ? "supporting" : "accent"));
+    chips.push(
+      makeChip(
+        `${numerology.number} note`,
+        "numerology",
+        numerologyIsMajor ? "supporting" : "accent",
+      ),
+    );
     details.push({
       title: "Numerology",
       body: NUMEROLOGY_ACCENT_COPY[numerology.number],
@@ -562,9 +766,10 @@ export function createTodaysShapeBrief(
   if (privateContact) {
     details.push({
       title: "Private timing",
-      body: privateContact.label === "Shared timing contact"
-        ? "A shared private timing note adds careful words and practical care."
-        : "Private timing adds a quiet note of structure and return.",
+      body:
+        privateContact.label === "Shared timing contact"
+          ? "A shared private timing note adds careful words and practical care."
+          : "Private timing adds a quiet note of structure and return.",
     });
   }
 
