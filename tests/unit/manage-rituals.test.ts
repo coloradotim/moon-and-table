@@ -29,6 +29,13 @@ describe("Manage Rituals view model", () => {
     expect(viewModel.counts.recommendable).toBe(182);
     expect(viewModel.counts.withValidationFindings).toBe(0);
     expect(viewModel.counts.withMissingReadiness).toBe(36);
+    expect(viewModel.sourceOptions).toHaveLength(10);
+    expect(viewModel.sourceOptions.map((option) => option.label)).toEqual(
+      expect.arrayContaining([
+        "Raymond Buckland, Practical Candleburning Rituals",
+        "Laurel Woodward, Kitchen Witchery: Unlocking the Magick in Everyday Ingredients",
+      ]),
+    );
     expect(viewModel.rows.map((row) => row.id)).toEqual(
       expect.arrayContaining([
         "ritual-buckland-candle-prepare-table",
@@ -49,7 +56,7 @@ describe("Manage Rituals view model", () => {
     ).toBe(true);
   });
 
-  it("filters by status, origin, readiness, and validation state", () => {
+  it("filters by status, origin, source, readiness, and validation state", () => {
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { status: "draft" })
         .filteredTotal,
@@ -70,6 +77,11 @@ describe("Manage Rituals view model", () => {
       createManageRitualsViewModel(sourceBackedRituals, { origin: "household" })
         .filteredTotal,
     ).toBe(0);
+    expect(
+      createManageRitualsViewModel(sourceBackedRituals, {
+        source: "raymond_buckland_practical_candleburning_rituals",
+      }).filteredTotal,
+    ).toBe(13);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, {
         readiness: "missing_readiness",
@@ -93,6 +105,24 @@ describe("Manage Rituals view model", () => {
       createManageRitualsViewModel(sourceBackedRituals, { validation: "findings" })
         .filteredTotal,
     ).toBe(0);
+  });
+
+  it("sorts table rows by selected columns and direction", () => {
+    const byStatus = createManageRitualsViewModel(sourceBackedRituals, {
+      sort: "status",
+    });
+    const byRecommendationDesc = createManageRitualsViewModel(sourceBackedRituals, {
+      sort: "recommendation",
+      direction: "desc",
+    });
+
+    expect(byStatus.rows[0].status).toBe("reviewed");
+    expect(byRecommendationDesc.rows[0].recommendable).toBe(true);
+    expect(
+      createManageRitualsViewModel(sourceBackedRituals, {
+        sort: "not_real" as never,
+      }).filters.sort,
+    ).toBe("headline");
   });
 
   it("surfaces validation findings in the table rows", () => {

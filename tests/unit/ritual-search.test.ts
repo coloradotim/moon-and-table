@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { sourceBackedRituals } from "../../src/data/rituals/source-backed-rituals";
 import {
   getRitualSearchChips,
+  getRitualSourceOptions,
   searchRituals,
 } from "../../src/data/rituals/search-rituals";
 import type { Ritual } from "../../src/data/rituals/types";
@@ -133,6 +134,41 @@ describe("Ritual search", () => {
         includeNonDirectUse: true,
       }).map((ritual) => ritual.id),
     ).toEqual([]);
+  });
+
+  it("filters by canonical source labels", () => {
+    const sourceOptions = getRitualSourceOptions(sourceBackedRituals);
+
+    expect(sourceOptions).toHaveLength(10);
+    expect(sourceOptions.map((option) => option.label)).toEqual(
+      expect.arrayContaining([
+        "Raymond Buckland, Practical Candleburning Rituals",
+        "Arin Murphy-Hiscock, The House Witch: Your Complete Guide to Creating a Magical Space with Rituals and Spells for Hearth and Home",
+        "Sophie Saint Thomas, Sex Witch: Magickal Spells for Love, Lust, and Self-Protection",
+      ]),
+    );
+    expect(sourceOptions.map((option) => option.label)).not.toEqual(
+      expect.arrayContaining(["The House Witch", "Whitehurst flower magic"]),
+    );
+    expect(
+      searchRituals(sourceBackedRituals, {
+        source: "raymond_buckland_practical_candleburning_rituals",
+      }),
+    ).toHaveLength(13);
+  });
+
+  it("supports expanded search sort options", () => {
+    expect(
+      searchRituals(sourceBackedRituals, { sort: "source" })[0].searchMetadata
+        .sourceLabel,
+    ).toBe("The Green Witch's Garden");
+    expect(
+      searchRituals(sourceBackedRituals, { sort: "capacity" })[0]
+        .recommendationMetadata.capacity.default,
+    ).toBe("enough_to_participate");
+    expect(
+      searchRituals(sourceBackedRituals, { sort: "recently_added" })[0].id,
+    ).toBe(sourceBackedRituals[sourceBackedRituals.length - 1].id);
   });
 
   it("excludes non-findable rituals from normal search results", () => {

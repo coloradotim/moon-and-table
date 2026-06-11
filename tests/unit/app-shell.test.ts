@@ -694,9 +694,13 @@ describe("app shell rendering", () => {
     expect(html).toContain("Search by material, mood, purpose, place, or phrase.");
     expect(html).toContain('data-ritual-search-form="true"');
     expect(html).toContain('type="search"');
-    expect(html).toContain('data-ritual-search-chip="plant"');
-    expect(html).toContain('data-ritual-search-chip="table"');
+    expect(html).not.toContain('data-ritual-search-chip="plant"');
+    expect(html).not.toContain('data-ritual-search-chip="table"');
+    expect(html).toContain('name="ritualSearchSource"');
+    expect(html).toContain('name="ritualSearchPurpose"');
+    expect(html).toContain('name="ritualSearchCarrier"');
     expect(html).toContain('data-ritual-select=');
+    expect(html).toContain('class="ritual-result-card__expanded"');
     expect(html).not.toContain("Wet the seed and wait.");
     expect(html).not.toContain("Set grain at the table.");
     expect(html).not.toContain("Kindle the first household light.");
@@ -704,11 +708,17 @@ describe("app shell rendering", () => {
     expect(html).toContain("218 rituals available");
     expect(html).toContain('name="ritualSearchSort"');
     expect(html).toContain("Best match");
+    expect(html).toContain("Recently added");
+    expect(html).toContain("Carrier");
+    expect(html).toContain("Capacity");
+    expect(html).toContain('data-ritual-search-clear="true"');
+    expect(html).toContain("Clear filters");
     expect(html).not.toContain("Preview only");
     expect(html).not.toContain("Pilot · Preview only");
     expect(html).not.toContain("Browse the pilot ritual library");
     expect(html).not.toContain("Reach by one word");
     expect(html).toContain("Recommendation eligible");
+    expect(html).not.toContain("Source cluster");
     expect(html).not.toContain("direct_use_review");
     expect(html).toContain("Readiness and source details");
     expect(html).not.toContain("<table");
@@ -724,25 +734,33 @@ describe("app shell rendering", () => {
 
     expect(html).toContain('aria-label="Manage Rituals"');
     expect(html).toContain('aria-pressed="true">Manage rituals</button>');
-    expect(html).toContain("218 imported Rituals. 0 pilot. 218 direct-use eligible.");
+    expect(html).toContain("218 imported Rituals. 36 reviewed. 218 direct-use eligible.");
     expect(html).toContain("Readiness summary");
     expect(html).toContain("recommendation-ready");
     expect(html).toContain("Missing readiness");
-    expect(html).toContain("Issues");
+    expect(html).toContain("Findings");
     expect(html).toContain('data-manage-rituals-filter-form="true"');
     expect(html).toContain('name="manageRitualStatus"');
+    expect(html).toContain("All states");
+    expect(html).not.toContain(">Pilot import<");
+    expect(html).not.toContain(">Draft import<");
     expect(html).toContain('name="manageRitualOrigin"');
+    expect(html).toContain('name="manageRitualSource"');
     expect(html).toContain('name="manageRitualAvailability"');
     expect(html).toContain('name="manageRitualReadiness"');
     expect(html).toContain('name="manageRitualValidation"');
+    expect(html).toContain('data-manage-rituals-clear="true"');
     expect(html).toContain('role="table"');
     expect(html).toContain("Imported Ritual records");
     expect(html).toContain("Ritual");
+    expect(html).toContain('data-manage-ritual-sort="headline"');
+    expect(html).toContain('data-manage-ritual-sort="recommendation"');
     expect(html).toContain('class="manage-rituals__record-summary"');
     expect(html).toContain("Direct use");
     expect(html).toContain("Validation findings");
     expect(html).toContain("Source label / origin label");
     expect(html).toContain("Prepare the Candle Table");
+    expect(html).not.toContain("<dt>Why this fits</dt>");
     expect(html).toContain("ritual-buckland-candle-prepare-table");
     expect(html).not.toContain("direct_use_review");
     expect(html).toContain("timing_engine_wiring");
@@ -799,10 +817,13 @@ describe("app shell rendering", () => {
     expect(renderSearchRitualsSource).not.toContain("activeBrief");
   });
 
-  it("filters the Search rituals view by query and chips", () => {
+  it("filters the Search rituals view by query, source, and chips", () => {
     const seedHtml = renderSearchRitualsSection({ query: "seed" });
     const tableHtml = renderSearchRitualsSection({
       selectedChips: ["table"],
+    });
+    const bucklandHtml = renderSearchRitualsSection({
+      source: "raymond_buckland_practical_candleburning_rituals",
     });
     const emptyHtml = renderSearchRitualsSection({
       query: "no such ritual",
@@ -813,6 +834,8 @@ describe("app shell rendering", () => {
     expect(seedHtml).toContain("Set the Seed on the Dark Table");
     expect(tableHtml).toContain("ritual");
     expect(tableHtml).toContain("Bread on the Table");
+    expect(bucklandHtml).toContain("Raymond Buckland, Practical Candleburning Rituals");
+    expect(bucklandHtml).toContain("13 rituals found");
     expect(emptyHtml).toContain("Nothing matched that exact reach.");
   });
 
