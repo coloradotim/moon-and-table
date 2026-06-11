@@ -182,8 +182,7 @@ Allowed modes:
 
 ```text
 source_exact_short
-private_source_excerpt
-moon_and_table_original
+adapted_source_words
 ```
 
 Definition:
@@ -194,15 +193,15 @@ short source phrase = 20 words or fewer
 
 If the exact operative source phrase is 20 words or fewer, include it inline in the ritual body and add `ritualWords` metadata with `mode: source_exact_short`, source location, use context, and citation label.
 
-If the exact operative source wording is more than 20 words, do not reproduce it in the public packet. Add a `ritualWords` record with `mode: private_source_excerpt`, source location, use context, citation label, and a note explaining why the exact words matter.
+If the exact operative source wording is more than 20 words, do not reproduce the long passage in the public packet. First decide whether a plain functional instruction preserves the rite honestly. Use adapted Moon & Table words only as a candidate-by-candidate exception when the source words are structurally necessary; include those adapted words inline in the ritual body, and add a `ritualWords` record with `mode: adapted_source_words`, source location, use context, citation label, and a note explaining what function was adapted.
 
-Do not create a generic Moon & Table replacement for source-provided operative words unless the source does not provide usable words or Tim explicitly approves adaptation.
+If the source supports a word-shaped action but does not provide operative words, use plain functional instruction rather than invented quoted speech.
 
-Do not create a separate `sourceTextUse` or `privateExcerptSupport` block for normal extraction. `ritualWords` is the operative-word tracking surface.
+Do not create generic filler, process labels, or private-wording placeholders for source-provided operative words.
+
+Do not create a separate source-text mini-schema for normal extraction. `ritualWords` is the operative-word tracking surface.
 
 Do not flatten prayer, blessing, charm, incantation, petition, or spoken formula into "state an intention."
-
-Moon & Table original operative words are allowed only when the source supports a spoken or written action but does not supply short usable words, or when Tim explicitly approves an adaptation. They must still follow the source's magical function.
 
 ## Props, materials, and decorative close rule
 
@@ -578,7 +577,7 @@ source PDF/material
 extraction packet PR diff
 docs/research/voice/moon-and-table-house-voice-guide.md
 docs/research/extraction-depth-policy.md
-docs/research/private-source-text-policy.md
+docs/research/operative-ritual-words-policy.md
 docs/research/runtime-ritual-authoring-policy.md
 src/data/rituals/types.ts
 ```
@@ -594,7 +593,7 @@ QA must verify:
 - `ritual body / practice` contains open, action/sequence, operative words where needed, and close;
 - `ritualWords` is metadata only;
 - exact short source words are inline, 20 words or fewer, and tracked as `source_exact_short`;
-- longer exact wording uses `private_source_excerpt` metadata;
+- longer exact wording is handled by functional instruction or, when justified candidate by candidate, adapted into inline Moon & Table words and tracked as `adapted_source_words`;
 - no generic Moon & Table replacement words are created where usable source words exist;
 - `whyThisFitsIngredients` and `howThisWasChosenIngredients` use the required structure;
 - no runtime eligibility flags are changed.
@@ -629,8 +628,8 @@ Use this checklist before merging any source-specific re-extraction packet.
 - [ ] No source materials or props were omitted without reason.
 - [ ] No props/materials/decorative closing gestures were added unless backed by the source or Tim-approved.
 - [ ] Source-provided short phrases of 20 words or fewer are preserved inline where useful.
-- [ ] Longer source wording uses `private_source_excerpt` ritualWords metadata.
-- [ ] Moon & Table original operative words are used only when the source supports spoken/written action but does not supply usable short words, or when Tim has approved adaptation.
+- [ ] Longer source wording is handled by functional instruction, or adapted into ritual-body words and tracked as `adapted_source_words` only when the candidate audit justifies that exception.
+- [ ] Plain functional naming/writing instructions are used when the source supports word-shaped action but does not provide operative words.
 - [ ] Source magical logic is preserved.
 - [ ] Approved examples in this guide are not being copied as complete candidate records.
 - [ ] Source architecture that is unsafe, coercive, medical/legal/financial, culturally sensitive, or outside product boundaries is held rather than laundered into a softer ritual.
@@ -652,7 +651,7 @@ Use this checklist before merging any source-specific re-extraction packet.
 - [ ] Audience metadata is realistic.
 - [ ] Timing relationship is accurate: required, preferred, helpful, or none.
 - [ ] Search metadata includes real materials, places, tags, and keywords.
-- [ ] Review flags capture private excerpt, source verification, material review, or product-boundary needs.
+- [ ] Review flags capture source verification, material review, or product-boundary needs.
 - [ ] Candidate is explicitly marked `approved_for_mechanical_import`, `needs_packet_correction`, or `hold_before_import`.
 - [ ] `approved_for_mechanical_import` is not treated as direct-use, recommendation, reviewed, recommendable, or runtime-ready approval.
 

@@ -99,7 +99,6 @@ function getReviewFlags(ritual: Ritual): string[] {
   }
 
   return [
-    flags.privateExcerptRequired ? "privateExcerptRequired" : undefined,
     flags.sourceTextReviewRequired ? "sourceTextReviewRequired" : undefined,
     flags.materialSafetyReviewRequired ? "materialSafetyReviewRequired" : undefined,
     flags.sourceVerificationRequired ? "sourceVerificationRequired" : undefined,

@@ -226,7 +226,7 @@ Likely purposes: `opening`, `blessing`, `marking`, `releasing`, `remembering`, `
 
 Why it looks promising: A flower-spell source is more likely to include actual mechanics than a flower dictionary. Flowers are easy to adapt into low-overwhelm private household rituals.
 
-Reasons to be cautious or reject: Need source gate to check whether spells are original modern copyrighted text requiring private-excerpt handling, whether they are too generic, and whether there are unsafe plant/allergy/pet issues.
+Reasons to be cautious or reject: Need source gate to check whether spells are original modern copyrighted text requiring operative-text-review handling, whether they are too generic, and whether there are unsafe plant/allergy/pet issues.
 
 Recommended next action: source_gate_now  
 Priority: medium-high

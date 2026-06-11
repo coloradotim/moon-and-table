@@ -1,6 +1,6 @@
-# Private source text policy
+# Operative ritual words policy
 
-Moon & Table is a private household ritual calendar and grimoire for Tim and Jessica. It is not a public ritual-publishing platform.
+Moon & Table is a private household ritual calendar and grimoire. It is not a public ritual-publishing platform.
 
 This policy exists so research agents stop flattening rituals into generic mechanics and stop treating words, blessings, prayers, invocations, prompts, meditations, spells, charms, and recipes as contamination risks.
 
@@ -23,7 +23,8 @@ Blessings, prayers, invocations, prompts, meditations, spells, charms, spoken fo
 
 Author-provided words that the practitioner is meant to say, write, chant, bless, pray, invoke, petition, name, close, or carry are operative ritual words. Treat them as ritual materials, not decorative prose.
 
-The task is to classify and preserve source text use, not erase it.
+The task is to classify and preserve source text use, not erase it and not hide
+behind process language.
 
 ## Distinction to preserve
 
@@ -32,14 +33,17 @@ There are five different uses of source text:
 1. **Mechanics extraction** — source-backed ritual structure, materials, sequence, timing, carrier, purpose, and boundary context.
 2. **Surrounding runtime instructions** — Moon & Table-authored instructions that may be rewritten into product voice.
 3. **Operative ritual words** — source-provided words used inside the rite. These should be preserved when feasible.
-4. **Private exact-text use** — exact wording stored through approved private excerpt support and cited to the source.
-5. **Operative words metadata** — `ritualWords` records that classify and prove how operative words are handled.
+4. **Adapted long operative words** — a tightly justified Moon & Table
+   exception that replaces source operative wording longer than 20 words while
+   preserving its ritual function.
+5. **Operative words metadata** — `ritualWords` records that prove whether words
+   are exact short source words or adapted long source words.
 
 A modern authored blessing, prompt, invocation, spell, meditation, charm, recipe, or prayer may be valid for private household use even when a generated research packet should not reproduce the whole passage.
 
 ## Simple exact wording rule
 
-Do not create a separate `sourceTextUse` or `privateExcerptSupport` block for normal extraction.
+Do not create a separate source-text mini-schema for normal extraction.
 
 Use the ritual body plus `ritualWords`:
 
@@ -50,12 +54,17 @@ If exact operative source wording is 20 words or fewer:
   - include source location, citation label, use context, and note if needed.
 
 If exact operative source wording is more than 20 words:
-  - do not reproduce it in the public packet;
-  - add ritualWords metadata with mode: private_source_excerpt;
-  - include source location, citation label, use context, and a note explaining why the exact words matter.
+  - do not reproduce the long source passage in the public packet;
+  - first decide whether the ritual can be made honest with a plain functional instruction;
+  - use adapted_source_words only as a candidate-by-candidate exception when the source words are structurally necessary to the rite;
+  - include the adapted phrase inline in the ritual body / practice where it is used;
+  - add ritualWords metadata with mode: adapted_source_words;
+  - include source location, citation label, use context, and a note explaining the exact ritual function preserved.
 
 If the source provides usable operative words:
-  - do not create a generic Moon & Table replacement unless Tim explicitly approves adaptation.
+  - use them exactly when they are 20 words or fewer;
+  - do not invent substitute speech when the words are longer than 20 words;
+  - either use a functional instruction, justify an adapted_source_words exception, or hold the candidate if the unresolved words are required.
 ```
 
 Definition:
@@ -78,11 +87,16 @@ Allowed modes:
 
 ```text
 source_exact_short
-private_source_excerpt
-moon_and_table_original
+adapted_source_words
 ```
 
-Moon & Table original operative words are allowed only when the source supports a spoken or written action but does not supply short usable words, or when Tim explicitly approves an adaptation. They must still follow the source's magical function.
+There is no third mode for operative ritual words. Private/process labels must
+never appear as ritual speech. If a source merely asks the practitioner to name,
+write, thank, ask, or state something without giving operative wording, use
+plain functional instruction such as "Name the purpose aloud" rather than
+invented ceremonial speech. If a candidate truly depends on unresolved source
+words and cannot be made honest with functional instruction, hold the candidate
+until those words are reviewed.
 
 ## Agent extraction posture
 
@@ -97,7 +111,8 @@ Agents may extract:
 - exact material/action labels;
 - short wording anchors that help preserve ritual force;
 - close summaries of the source ritual’s structure, materials, sequence, purpose, and magical function;
-- `ritualWords` metadata that tracks the operative wording mode, source location, context, and review dependency.
+- `ritualWords` metadata that tracks the operative wording mode, source
+  location, context, and adaptation basis.
 
 Agents should not reproduce in generated public repo files:
 
@@ -109,7 +124,12 @@ Agents should not reproduce in generated public repo files:
 - whole distinctive spell texts;
 - long copyrighted passages.
 
-The fallback for longer exact wording is not generic paraphrase. The fallback is `ritualWords.mode = "private_source_excerpt"` with a source location and a clear note about why the exact words matter.
+The fallback for longer exact wording is not a process placeholder, automatic
+adaptation, or generic paraphrase. Use a plain functional instruction when the
+source supports a speech action but no reviewed reusable words are available.
+Use `ritualWords.mode = "adapted_source_words"` only when a candidate-level
+audit explains why adapted words are necessary to preserve the source function.
+Hold the candidate when neither path is honest.
 
 ## Runtime handling
 
@@ -117,9 +137,8 @@ Runtime Ritual records should use the schema fields in `src/data/rituals/types.t
 
 ```ts
 ritualWords?: {
-  mode: "source_exact_short" | "private_source_excerpt" | "moon_and_table_original";
+  mode: "source_exact_short" | "adapted_source_words";
   text?: string;
-  privateExcerptKey?: string;
   citationLabel?: string;
   sourceLocation?: string;
   useContext:
@@ -142,9 +161,11 @@ ritualWords?: {
 
 Use `source_exact_short` when a short operative wording of 20 words or fewer can be preserved directly in the committed record with attribution and without substituting for the source.
 
-Use `private_source_excerpt` when the exact source wording is longer, distinctive, or substantially the source’s authored ritual text.
-
-Use `moon_and_table_original` only when the source supports spoken/written ritual mechanics but does not provide operative words, or when Tim explicitly chooses adaptation over source wording.
+Use `adapted_source_words` only when the exact source wording is longer than 20
+words and a candidate-level audit explains why functional instruction is not
+enough. The `text` must be the actual adapted phrase that appears in the ritual
+body. Do not use this mode for ordinary instructions such as "name the purpose
+aloud."
 
 ## Classification model
 
@@ -152,13 +173,18 @@ Use these classifications in source-gate and extraction records.
 
 ```text
 use_directly_from_source:
-  Tim and Jessica can perform the rite directly from the purchased/provided source. The app may recommend the source rite by title, page, and section without reproducing the full text.
+  The household can perform the rite directly from the purchased/provided source. The app may recommend the source rite by title, page, and section without reproducing the full text.
 
-private_excerpt_allowed:
-  Exact modern source wording may be stored through approved private excerpt support with citation. Research agents identify source locations and importance; longer/substantial passages use private_source_excerpt ritualWords metadata rather than public repo reproduction.
+adapted_source_words_exception:
+  Exact modern operative wording longer than 20 words is not reproduced in the
+  repo. Research agents identify the source location and use adapted Moon &
+  Table wording only when a candidate-level audit shows that functional
+  instruction would not preserve the operative function.
 
-private_recipe_excerpt_allowed:
-  Exact recipes may be stored through approved private excerpt support for private household use. Research agents classify the recipe’s ritual role and boundary context, but should not reproduce full recipes in public repo files.
+recipe_text_review_required:
+  Full recipes are not reproduced in public repo files. Research agents classify
+  the recipe's ritual role and boundary context before any exact recipe wording
+  is considered for runtime use.
 
 brief_quote_allowed:
   Short quotes are allowed for internal review, source commentary, phrase anchoring, or short operative ritual words. Keep them brief, attributed, and non-substitutive for the source.
@@ -194,15 +220,14 @@ For extraction, “close to the source” means close to:
 
 It does not mean a line-by-line rewrite that merely swaps synonyms.
 
-## Private exact-text storage policy
+## Source-gate exact wording review policy
 
 Exact source wording may be stored only under these constraints:
 
-- private app only;
 - cited with source ID;
 - cited with title and author;
 - cited with page or section;
-- marked as source excerpt, not generated Moon & Table text;
+- marked as source wording, not generated Moon & Table text;
 - unavailable by default until reviewed;
 - not used as public repo prose;
 - not recommendation eligible until human review.
@@ -211,18 +236,17 @@ Recommended source-gate policy block:
 
 ```ts
 sourceTextPolicy: {
-  exactTextUse: "private_excerpt_allowed";
+  exactTextUse: "operative_text_review";
   assistantMayReproduce: "brief_quote_or_short_operative_words_only";
-  privateAppStorage: "allowed_with_citation_and_review";
+  storagePosture: "review_before_runtime_use";
   storageLimits: [
-    "private_app_only",
     "cite_source_id",
     "cite_title_author",
     "cite_page_or_section",
     "unavailable_by_default",
     "not_recommendation_eligible_until_human_review"
   ];
-  notes: "Author-provided operative ritual words should be preserved when feasible. Short operative wording of 20 words or fewer may be stored directly in presentation.practice and tracked as ritualWords.source_exact_short when non-substitutive and attributed. Longer or substantial source wording should use ritualWords.private_source_excerpt rather than generic paraphrase."
+  notes: "Author-provided operative ritual words are ritual materials. Operative wording of 20 words or fewer must be stored directly in presentation.practice and tracked as ritualWords.source_exact_short. Longer operative wording may be adapted into a Moon & Table phrase only as a justified candidate-level exception in presentation.practice and tracked as ritualWords.adapted_source_words; otherwise use functional instruction or hold the candidate. Do not use process labels as ritual speech."
 }
 ```
 
@@ -247,7 +271,7 @@ Do not reject recipe material just because it is a recipe.
 Classify recipes as:
 
 - `mechanics_only` when extracting preparation, timing, sequence, serving, offering, blessing, or table structure;
-- `private_recipe_excerpt_allowed` when the exact recipe may be valuable for the private app;
+- `recipe_text_review_required` when exact recipe wording may matter later;
 - `paraphrase_required` when creating non-operative Moon & Table-authored recipe-adjacent ritual copy;
 - `do_not_use` only for unsafe, medicalized, culturally inappropriate, or out-of-scope material.
 
@@ -265,15 +289,17 @@ For modern copyrighted sources, distinguish between:
 1. mechanics extraction;
 2. non-operative surrounding instructions rewritten into Moon & Table voice;
 3. exact short operative ritual words preserved directly in the ritual body where feasible and tracked as ritualWords.source_exact_short;
-4. longer or substantial exact wording handled through ritualWords.private_source_excerpt.
+4. longer exact operative wording handled by functional instruction, or by a
+   justified Moon & Table adaptation in the ritual body tracked as
+   ritualWords.adapted_source_words.
 
-Research agents should not reproduce long copyrighted passages in generated public repo files. However, agents must not erase, downgrade, or generically paraphrase verbal, recipe, prayer, blessing, invocation, incantation, spell, prompt, or meditation material. Instead, classify it and preserve it inline when short enough or through private_source_excerpt metadata when longer/substantial.
+Research agents should not reproduce long copyrighted passages in generated public repo files. However, agents must not erase, downgrade, or generically paraphrase verbal, recipe, prayer, blessing, invocation, incantation, spell, prompt, or meditation material. Instead, classify it, preserve it inline when short enough, use functional instruction when no reusable words are supplied, and justify any adapted long wording candidate by candidate.
 
 Agents may extract exact short phrases, questions, rite titles, spoken cues, blessing names, invocation cues, and wording anchors when they are ritually important and 20 words or fewer.
 
 Agents may closely summarize or rewrite surrounding instructions while preserving the source’s structure, materials, sequence, carrier, purpose, operative words, and magical force.
 
-When exact wording is important but too long or substantial for direct public repo storage, use ritualWords.mode = "private_source_excerpt", give the source page/section, and explain why the exact wording matters.
+When exact wording is important but too long for direct public repo storage, first ask whether the candidate can honestly use functional instruction. Use ritualWords.mode = "adapted_source_words" only when the adapted phrase is necessary to preserve the source ritual function; give the source page/section and explain the function being preserved. If that cannot be justified, hold the candidate.
 ```
 
 ## Coordinator instruction
@@ -288,6 +314,6 @@ The correct handling is:
 - track operative wording with `ritualWords` metadata;
 - closely summarize the ritual structure and magical function;
 - identify exact-wording locations when exact phrasing matters;
-- use `private_source_excerpt` ritualWords metadata for longer/substantial wording;
+- use `adapted_source_words` ritualWords metadata only for justified longer operative wording;
 - avoid agent-generated long reproduction of copyrighted text in public repo files;
-- keep private exact excerpts cited, unavailable by default, and human-reviewed before any recommendation path.
+- keep unresolved exact wording out of runtime until cited and human-reviewed before any recommendation path.

@@ -17,18 +17,18 @@ Legal copy reviewed: user-provided working copy reviewed; legal status not indep
 Review depth: full source-gate review from uploaded PDF. Front matter, TOC, introduction, worldview/core concepts, planets, glyphs for magick, astrology of time, choosing/adapting timing, magick squares, correspondences, and appendices reviewed at gate level.
 Page count and page-numbering notes: uploaded PDF has 194 PDF pages. Cover/title/copyright/TOC are PDF pp. 1-6. Chapter 1 begins PDF p. 7. Source uses PDF pagination; future extraction should cite PDF page and chapter/section.
 TOC reviewed: yes. TOC lists 17 chapters plus appendices A-F.
-Excerpt boundaries reviewed: yes, source-gate level. The source contains pathworking/visualization, glyph exercises, timing techniques, planetary hours/days, adaptation techniques, magick-square methods, correspondences, and appendix tables that require private excerpt and mechanics-only handling.
+Excerpt boundaries reviewed: yes, source-gate level. The source contains pathworking/visualization, glyph exercises, timing techniques, planetary hours/days, adaptation techniques, magick-square methods, correspondences, and appendix tables that require exact-text/adaptation review and mechanics-only handling.
 Approved extraction ranges: approved with limits; see approved ranges below.
 Excluded extraction ranges: generic interpretation-only material, deterministic natal/transit claims, chart reading as personality/horoscope content, non-household ceremonial material, technical talisman/sigil methods that are unsafe or too complex for household use, wholesale correspondence tables, medical/body claims, relationship determinism, and any ritual text not reviewed for source-expression limits.
-Allowed use: mechanics extraction, timing-support extraction, planet-by-planet ritual logic, close paraphrase of ritual timing/adaptation principles, short anchors, source notes, safety constraints, and private excerpt review.
+Allowed use: mechanics extraction, timing-support extraction, planet-by-planet ritual logic, close paraphrase of ritual timing/adaptation principles, short anchors, source notes, safety constraints, and 20-word/adapted-word review.
 Forbidden use: runtime use, direct-use eligibility, recommendation eligibility, copied full pathworkings, copied tables, copied technical procedures, exact ritual scripts, deterministic forecasts, horoscope/personality copy, medical/health claims, relationship compatibility claims, and app-facing timing rules without human review.
 Verbal / expressive / charm / practice handling:
-  direct_use_allowed: no for generated app text. Tim may privately use source practices from his copy after review; Moon & Table candidates remain draft until human review.
+  direct_use_allowed: no for generated app text. Moon & Table candidates remain draft until human review.
   brief_quote_allowed: exact title/chapter/short phrase anchors only.
   paraphrase_required: app-facing timing language, planetary contact language, ritual instructions, glyph use, adaptation logic, and timing explanations.
   mechanics_only: planetary days/hours, aspects, adapting to conditions, magick squares, symbolic marks, aura material, and ceremonial sections unless separately reviewed.
   do_not_use: deterministic transit/natal predictions, relationship-control timing, medical/body claims, copied correspondence tables, copied pathworkings, copied technical procedures, and any content that turns Moon & Table into a horoscope or chart-reading app.
-Citation requirement: future extraction must cite source ID, title/author, edition, PDF page, chapter/section, and private-excerpt status where relevant.
+Citation requirement: future extraction must cite source ID, title/author, edition, PDF page, chapter/section, and operative-text-review status where relevant.
 Reviewer required: yes.
 Required reviewer expertise: Tim; astrology/ritual review; safety review for candles/incense/herbs/oils/plants/talismans; source-boundary review for Qabala, ritual geometry, magick squares, fixed stars, and ceremonial material.
 Specific extraction cautions: see below.
@@ -104,7 +104,7 @@ Chapter 4 covers the planets and provides planet-by-planet symbolic logic, inclu
 
 | Carrier | Support level | Source basis | Gate note |
 | --- | --- | --- | --- |
-| words | strong | glyphs, calls, timing language, journal/learning, pathworking, verbal timing support | Exact wording private excerpt only. |
+| words | strong | glyphs, calls, timing language, journal/learning, pathworking, verbal timing support | Exact wording must follow the 20-word/adapted-word rule. |
 | candlelight | moderate | ritual timing, planetary work, altar/casting implication, physical representations | Verify specific candle practices during extraction. |
 | table | moderate | altar/work surface for glyphs, symbolic marks, squares, timing work | Strong as ritual workspace/altar. |
 | vessel | moderate/thin | symbolic object support; ritual containers | Do not overclaim vessel-first ritual. |
@@ -149,7 +149,7 @@ Approved mechanics:
 Allowed carriers: `words`, `body`.
 Allowed purposes: `opening`, `marking`, `remembering`, `steadying`.
 
-Limits: copied pathworking private-excerpt only; do not reproduce full visualization.
+Limits: copied pathworking operative-text-review only; do not reproduce full visualization.
 
 ### Chapter 3: The Core Concepts of Astrology — PDF pp. 18-28
 
@@ -207,7 +207,7 @@ Approved mechanics:
 Allowed carriers: `words`, `table`, `vessel`, `body`.
 Allowed purposes: `marking`, `voicing`, `opening`, `remembering`.
 
-Limits: copied glyph exercises private-excerpt; future extraction should turn this into simple household symbol work, not technical talisman construction.
+Limits: copied glyph exercises operative-text-review; future extraction should turn this into simple household symbol work, not technical talisman construction.
 
 ### Chapter 9: The Astrology of Time
 
@@ -294,7 +294,7 @@ Approved mechanics with limits:
 Allowed carriers: `table`, `words`, `vessel`, `candlelight`.
 Allowed purposes: `marking`, `voicing`, `protecting`, `blessing`, `opening`.
 
-Limits: do not reproduce full square tables or full technical procedures; talismanic work should remain draft/private-excerpt-heavy until safety/source-boundary review.
+Limits: do not reproduce full square tables or full technical procedures; talismanic work should remain draft/operative-text-review-heavy until safety/source-boundary review.
 
 ### Chapter 16: The Great Year and Chapter 17: Next Steps
 
@@ -313,7 +313,7 @@ Approved with limits:
 - signs and body;
 - Three Gates of the Moon.
 
-Allowed use: source notes, cross-checking, private excerpt references, and mechanics scaffolding.
+Allowed use: source notes, cross-checking, exact-text/adaptation review, and mechanics scaffolding.
 
 Limits: do not copy tables wholesale. Body correspondences require medical/safety caution. Moon gates may be useful but must be reconciled with Moon Book and astronomy/timing sources.
 
@@ -325,9 +325,9 @@ Limits: do not copy tables wholesale. Body correspondences require medical/safet
 | Deterministic transit predictions | do_not_use | Moon & Table should shape rituals, not predict outcomes. |
 | Relationship compatibility or Venus/Mars determinism | hold | Avoid deterministic relationship astrology. |
 | Ceremonial contact work | hold | Requires separate source-boundary decision. |
-| Full pathworkings | private_excerpt_only | Do not copy long guided visualizations. |
-| Full correspondence tables | private_excerpt_only / source_note_only | Do not reproduce tables wholesale. |
-| Magick square tables and technical procedures | private_excerpt_only / mechanics_only | Technical/talismanic; high exact-text and safety burden. |
+| Full pathworkings | operative_text_review | Do not copy long guided visualizations. |
+| Full correspondence tables | operative_text_review / source_note_only | Do not reproduce tables wholesale. |
+| Magick square tables and technical procedures | operative_text_review / mechanics_only | Technical/talismanic; high exact-text and safety burden. |
 | Herbs, oils, incense, plants | safety_review_required | Pet/allergy/pregnancy/ingestion/smoke cautions. |
 | Medical/body correspondences | hold/source_note_only | No diagnosis or medical advice. |
 | Adversarial or coercive Mars/Saturn work | hold/reject by item | Product/source ethics. |
@@ -355,9 +355,9 @@ Limits: do not copy tables wholesale. Body correspondences require medical/safet
 - unsafe incense/oil/herb/talisman practices;
 - medical or body-diagnosis claims.
 
-## Exact-text / private-excerpt handling
+## Exact-text / operative-text-review handling
 
-High private-excerpt need for:
+High operative-text-review need for:
 
 - Celestial Temple pathworking;
 - glyph exercises;
@@ -383,7 +383,7 @@ no full ritual scripts
 
 | Carrier | Support level | Source basis | Notes |
 | --- | --- | --- | --- |
-| `words` | strong | glyphs, timing language, planetary qualities, calls, notes, pathworking | Strongest carrier; private excerpt for long text. |
+| `words` | strong | glyphs, timing language, planetary qualities, calls, notes, pathworking | Strongest carrier; use exact short words or adapted long words. |
 | `table` | strong | chart work, glyph drawing, altars, squares, symbolic marks, timing plans | Good ritual work surface/altar source. |
 | `candlelight` | moderate/strong | planetary hour/timing, physical representations, altar/casting implications | Verify exact candle uses during extraction. |
 | `vessel` | moderate | talisman/symbol/focal object support; ritual containers | Do not overclaim vessel-first ritual. |
@@ -400,7 +400,7 @@ no full ritual scripts
 | `tending` | adequate | adapting to current conditions, learning cycles, repeated timing practice | Useful but less direct. |
 | `blessing` | adequate | benefic planetary work, Sun/Jupiter/Venus/Moon logic | Needs extraction review. |
 | `protecting` | adequate/fragile | Saturn/Mars/protective timing, void Moon cautions, casting support | Must avoid fear/adversarial tone. |
-| `voicing` | adequate | glyphs/calls/timing statements | Exact text private. |
+| `voicing` | adequate | glyphs/calls/timing statements | Exact text requires operative text review. |
 | `remembering` | adequate | journals, cycles, natal/transit patterns, source notes | Avoid personality reading. |
 | `steadying` | adequate | adapting timing, sacred space, grounding body/conditions | Strong for difficult astrology if softened. |
 | `releasing` | possible | Moon phase/void, Saturn/Mars, adaptation methods | Needs extraction review. |
@@ -441,7 +441,7 @@ Preserved planning queue:
 ## Tim decisions needed
 
 1. Are deeper ceremonial contact sections held by default? Recommended: yes.
-2. Are magick squares and symbolic marks eligible for candidate extraction or source-note-only first? Recommended: source-note/private-excerpt first.
+2. Are magick squares and symbolic marks eligible for candidate extraction or source-note-only first? Recommended: source-note/operative-text-review first.
 3. Should planetary days/hours be allowed as recommendation timing hints once authored? Recommended: yes, after review.
 4. Should Venus/Mars relationship timing be allowed? Recommended: only private, non-deterministic, non-manipulative uses.
 5. Should plant/herb/oil correspondences be held until safety matrix exists? Recommended: yes.

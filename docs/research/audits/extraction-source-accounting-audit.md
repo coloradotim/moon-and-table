@@ -47,7 +47,7 @@ The correction from the first pass is not about reopening extraction. It is abou
 
 ### Packets needing no extraction but needing authoring care
 
-All ten packets need authoring/import-prep care before runtime use. The main reviews are source verification, private-excerpt review, material-form safety, product-boundary review, and schema normalization. No packet should be imported wholesale.
+All ten packets need authoring/import-prep care before runtime use. The main reviews are source verification, operative text review, material-form safety, product-boundary review, and schema normalization. No packet should be imported wholesale.
 
 ### Packets needing supplement
 
@@ -101,7 +101,7 @@ Cell labels use `strong`, `adequate`, `thin`, `held`, or `absent`, followed by p
 2. Packet read: yes — `docs/research/ritual-candidates/packet-whitehurst-flower-table-magic.md`.
 3. Gate-approved lanes: cut flower/table/vase/message/memory/blessing, flower proximity, ethical gathering, offerings, purchased bouquet intention, quiet contemplation, flower care, flower charm/token, flower altar/table/vase, flower-as-message/gift/witness, release/return, pressed/dried memory token, and correspondence-assisted selection as source-note support.
 4. Actual packet coverage: complete approved-scope accounting after correction. It now accounts for orientation mechanics, appendices, and every flower entry.
-5. Candidate counts and dispositions: 96 inventoried; 36 candidate records; 31 `candidate_extract_now`; 37 `candidate_extract_later`; 6 `source_note_only`; 1 `context_only`; 18 `hold`; 3 `reject`; 25 items with private-excerpt recommendations.
+5. Candidate counts and dispositions: 96 inventoried; 36 candidate records; 31 `candidate_extract_now`; 37 `candidate_extract_later`; 6 `source_note_only`; 1 `context_only`; 18 `hold`; 3 `reject`; 25 items with operative-text-review recommendations.
 6. 7x10 primary coverage: strong `plant + opening/marking/tending/blessing/remembering/steadying/voicing/connecting`; adequate `plant + protecting/releasing`; strong table/vessel memory/blessing support; words support spoken purpose and journal follow-up.
 7. Secondary coverage not to over-count: body and doorway support are mostly held/thin. Candlelight is atmosphere/altar support, not a Whitehurst primary lane.
 8. Held/rejected/source-note-only boundaries: flower essences, mists, oils, baths, smoke/incense/diffusion, direct-contact practices, food/drink use, unsafe flowers, health-adjacent claims, non-mutual influence framing, and whole correspondence tables.
@@ -114,7 +114,7 @@ Cell labels use `strong`, `adequate`, `thin`, `held`, or `absent`, followed by p
 2. Packet read: yes — `docs/research/ritual-candidates/packet-saint-thomas-sex-witch.md`.
 3. Gate-approved lanes: private consensual connection, candlelight, altar/table, vessel/jar, bath/bedroom, written/spoken intention, body/self-blessing, glamour, invitation, protection, relationship tending, release, closing, and grimoire follow-up.
 4. Actual packet coverage: complete approved-scope accounting. It covers ritual containers, candlelit atmosphere, altar/table setup, shared symbols, shared intention, spoken purpose, heart/partner witnessing, invitation, integration, repeated practice, memory follow-up, glamour/body blessing, desire voicing, bath/bedroom/love table, repair/boundary, vessel/jar, and protection/uncrossing mechanics.
-5. Candidate counts and dispositions: 98 inventoried; 45 `candidate_extract_now`; 26 `candidate_extract_later`; 1 `private_excerpt_reference`; 49 items with private-excerpt recommendations; 3 `source_note_only`; 19 `hold`; 4 `reject`.
+5. Candidate counts and dispositions: 98 inventoried; 45 `candidate_extract_now`; 26 `candidate_extract_later`; 1 `operative_text_review_reference`; 49 items with operative-text-review recommendations; 3 `source_note_only`; 19 `hold`; 4 `reject`.
 6. 7x10 primary coverage: strong `candlelight + connecting/blessing/opening`, `table + connecting/blessing`, `vessel + connecting/releasing/protecting`, `words + voicing/connecting/protecting`, `body + blessing/connecting`, and adequate `remembering/tending/releasing` via grimoire, relationship repair, and boundary work.
 7. Secondary coverage not to over-count: doorway appears only in protection/banishing contexts and should not be inflated. Body mechanics are private and need authoring care but are not inherently off-product.
 8. Held/rejected/source-note-only boundaries: exact incantations/prayers/chants, non-mutual attraction, revenge/hex/enemy work, technique instruction, body-fluid mechanics, drug/smoke material, clinical/legal/advice content.
@@ -127,20 +127,20 @@ Cell labels use `strong`, `adequate`, `thin`, `held`, or `absent`, followed by p
 2. Packet read: yes — `docs/research/ritual-candidates/packet-moon-book-lunar-cycle.md`.
 3. Gate-approved lanes: lunar phase structure, new/waxing/full/waning/dark moon mechanics, journaling/cycle tracking, intention, release, blessing, gratitude, protection, reflection, moon altar, candle, vessel/water, words, and body-based mechanics.
 4. Actual packet coverage: complete extraction accounting after repair. Timing/source-note card work remains separate and should not reopen accounting.
-5. Candidate counts and dispositions: 112 inventoried; 64 `candidate_extract_now`; 10 `candidate_extract_later`; 15 `source_note_only`; 8 `context_only`; 15 `hold`; 61 private-excerpt recommendations.
+5. Candidate counts and dispositions: 112 inventoried; 64 `candidate_extract_now`; 10 `candidate_extract_later`; 15 `source_note_only`; 8 `context_only`; 15 `hold`; 61 operative-text-review recommendations.
 6. 7x10 primary coverage: strong `words + remembering/voicing`, `vessel + marking/blessing/releasing`, `candlelight + opening/blessing/marking`, `table + marking/blessing`, `body + steadying/releasing`, and lunar-cycle `opening/tending/marking/releasing/remembering`.
 7. Secondary coverage not to over-count: timing architecture is not itself runtime ritual coverage unless paired with candidate mechanics. Plant/cultural/moon-name material is not generally available.
 8. Held/rejected/source-note-only boundaries: exact prompts/spells/meditations, cultural/living-practice moon names, deity/spirit/ancestor material, health-adjacent claims, hex/binding/revenge, herb/oil/crystal/smoke/ingestion claims.
 9. Verdict: `no_action`; separate timing-card work remains.
-10. Authoring/import-prep notes: all 64 `candidate_extract_now` records move into authoring/import prep after source verification and private-excerpt handling. #318/#319 timing-card work is separate.
+10. Authoring/import-prep notes: all 64 `candidate_extract_now` records move into authoring/import prep after source verification and operative-text-review handling. #318/#319 timing-card work is separate.
 
 ### #315 — Dominguez practical astrology
 
 1. Source gate read: yes — `docs/research/source-gates/src-astrology-dominguez-practical-astrology-witches-pagans.md`.
 2. Packet read: yes — `docs/research/ritual-candidates/packet-dominguez-practical-astrology.md`.
-3. Gate-approved lanes: planet families, planetary days/hours, Moon phase/sign/VOC/aspect timing, glyph-as-marking, timing adaptation, symbolic marks, household table/altar/words/candle/vessel/body practices shaped by astrology, magick-square source notes/private-excerpts.
+3. Gate-approved lanes: planet families, planetary days/hours, Moon phase/sign/VOC/aspect timing, glyph-as-marking, timing adaptation, symbolic marks, household table/altar/words/candle/vessel/body practices shaped by astrology, magick-square source notes/operative-text-reviews.
 4. Actual packet coverage: complete extraction accounting for approved lanes. It also correctly separates timing/source-note infrastructure from ritual accounting.
-5. Candidate counts and dispositions: 53 inventoried; 22 `candidate_extract_now`; 13 `candidate_extract_later`; 2 `private_excerpt_reference`; 20 private-excerpt recommendations; 10 `source_note_only`; 3 `context_only`; 5 `hold`.
+5. Candidate counts and dispositions: 53 inventoried; 22 `candidate_extract_now`; 13 `candidate_extract_later`; 2 `operative_text_review_reference`; 20 operative-text-review recommendations; 10 `source_note_only`; 3 `context_only`; 5 `hold`.
 6. 7x10 primary coverage: strong `words + marking/voicing`, `table + marking`, `candlelight + blessing/opening`, `vessel + remembering`, `body + steadying`, and adequate `opening/blessing/protecting` by planet family.
 7. Secondary coverage not to over-count: timing explanations, houses/aspects, magick squares, and correspondence tables are source-note support unless turned into reviewed candidates.
 8. Held/rejected/source-note-only boundaries: horoscope/personality/chart-reading, deterministic transits, relationship compatibility, ceremonial contact, full pathworkings/tables/procedures, technical talismans, medical/body diagnosis, plant/herb/oil material.
@@ -153,7 +153,7 @@ Cell labels use `strong`, `adequate`, `thin`, `held`, or `absent`, followed by p
 2. Packet read: yes — `docs/research/ritual-candidates/packet-magical-household-domestic-threshold-altar.md`.
 3. Gate-approved lanes: hearth/flame, thresholds/doors/windows/keys/locks, furnishings, kitchen/stove/spoon/table/food, body tending, indoor plants/garden, animal/pet material with limits, protection, bottles/sachets/amulets, broom/rag, cleansing, purification, moving, magical year, house spells, and household altar.
 4. Actual packet coverage: complete approved-scope accounting. It inventories 187 items across the scan and includes all major household mechanics.
-5. Candidate counts and dispositions: 187 inventoried; 58 `candidate_extract_now`; 54 `candidate_extract_later`; 26 `source_note_only`; 6 `context_only`; 41 `hold`; 2 `reject`; 71 private-excerpt recommendations.
+5. Candidate counts and dispositions: 187 inventoried; 58 `candidate_extract_now`; 54 `candidate_extract_later`; 26 `source_note_only`; 6 `context_only`; 41 `hold`; 2 `reject`; 71 operative-text-review recommendations.
 6. 7x10 primary coverage: strongest broad packet for `doorway + opening/protecting/releasing/marking`, `table + blessing/connecting/marking/tending`, `vessel + protecting/releasing/blessing/opening`, `body + releasing/tending/steadying/opening`, `candlelight + steadying/blessing/protecting/opening`, `words + voicing/protecting/blessing/remembering`, and plant with safety.
 7. Secondary coverage not to over-count: pet/animal, omens/divination, deity/spirit, and some herb/oil/bath/food/smoke/fire materials are held; do not treat their presence as coverage.
 8. Held/rejected/source-note-only boundaries: exact charms/spells/prayers, deity/spirit/omen material, non-mutual love/fertility workings, animal harm/control, health claims, unsafe fire/smoke/herb/oil/bath/food, guaranteed result claims.
@@ -166,7 +166,7 @@ Cell labels use `strong`, `adequate`, `thin`, `held`, or `absent`, followed by p
 2. Packet read: yes — `docs/research/ritual-candidates/packet-anand-connection.md`.
 3. Gate-approved lanes: private opt-in partner connection, Magic Circle/container, altar/candle/table, shared symbol, partner communication, shared vision, body/energy practice, partner feedback, ritual greeting, heart connection, clarified intent, closing/integration, journal follow-up.
 4. Actual packet coverage: sufficient approved-scope accounting for ritual containers and partner connection mechanics. It correctly holds technique-heavy and therapy-adjacent material.
-5. Candidate counts and dispositions: 52 inventoried; 24 `candidate_extract_now`; 12 `candidate_extract_later`; 2 `private_excerpt_reference`; 28 private-excerpt recommendations; 5 `source_note_only`; 2 `context_only`; 6 `hold`; 1 `reject`.
+5. Candidate counts and dispositions: 52 inventoried; 24 `candidate_extract_now`; 12 `candidate_extract_later`; 2 `operative_text_review_reference`; 28 operative-text-review recommendations; 5 `source_note_only`; 2 `context_only`; 6 `hold`; 1 `reject`.
 6. 7x10 primary coverage: strong `body + connecting/opening/steadying`, `words + voicing/connecting/remembering`, `table + connecting/marking`, `candlelight + connecting/opening`; thin `vessel + connecting`.
 7. Secondary coverage not to over-count: vessel support is thin; specialized terminology and practice menus need boundary review before authoring.
 8. Held/rejected/source-note-only boundaries: technique lessons, therapy/wound material, guaranteed manifestation, non-mutual attraction/control, unreviewed terminology, full guided exercises/scripts/diagrams.
@@ -177,9 +177,9 @@ Cell labels use `strong`, `adequate`, `thin`, `held`, or `absent`, followed by p
 
 1. Source gate read: yes — `docs/research/source-gate-house-witch.md`.
 2. Packet read: yes — `docs/research/ritual-candidates/repair-house-witch-source-inventory.md`.
-3. Gate-approved lanes: hearth/home tending, home-as-sacred-space, kitchen/table spirituality, sacred flame/candle/oil lamp, cauldron/vessel, doorway/threshold cleansing/protection, blessing structures, spoken magic, food/recipe-as-ritual, personal purification, sacred-space creation, ancestor/remembrance with caution, private exact-text excerpt support.
-4. Actual packet coverage: repair/backfill accounts for the approved source-gate scope. It reconciles the original 11 candidates and adds inventory, backlog, held/rejected leads, private-excerpt needs, and candidate disposition tracking.
-5. Candidate counts and dispositions: 58 inventoried; 11 existing draft candidates; 17 `candidate_extract_later`; 1 `private_excerpt_reference`; 17 private-excerpt recommendations; 14 `source_note_only`; 7 `context_only`; 8 `hold`; 0 `reject`.
+3. Gate-approved lanes: hearth/home tending, home-as-sacred-space, kitchen/table spirituality, sacred flame/candle/oil lamp, cauldron/vessel, doorway/threshold cleansing/protection, blessing structures, spoken magic, food/recipe-as-ritual, personal purification, sacred-space creation, ancestor/remembrance with caution, operative text review.
+4. Actual packet coverage: repair/backfill accounts for the approved source-gate scope. It reconciles the original 11 candidates and adds inventory, backlog, held/rejected leads, operative-text-review needs, and candidate disposition tracking.
+5. Candidate counts and dispositions: 58 inventoried; 11 existing draft candidates; 17 `candidate_extract_later`; 1 `operative_text_review_reference`; 17 operative-text-review recommendations; 14 `source_note_only`; 7 `context_only`; 8 `hold`; 0 `reject`.
 6. 7x10 primary coverage: strong `hearth/candlelight + opening/blessing/steadying`, `doorway + protecting/releasing`, `vessel + blessing/protecting`, `table + tending/blessing`, `words + voicing/blessing`, plus household grimoire remembering.
 7. Secondary coverage not to over-count: recipe-specific and ancestor/spirit material remain sensitive; oil-lamp/cauldron/fire variants need material-form review.
 8. Held/rejected/source-note-only boundaries: deity/spirit, ancestor material beyond remembrance context, genericized smoke cleansing, unsafe cauldron/fire, direct recipe reproduction, correspondence import, herbs/washes, guaranteed outcomes.
@@ -192,12 +192,12 @@ Cell labels use `strong`, `adequate`, `thin`, `held`, or `absent`, followed by p
 2. Packet read: yes — `docs/research/ritual-candidates/packet-candlelight-buckland-pilot.md`.
 3. Gate-approved lanes: candle-magic mechanics only: room/table/altar preparation, candle roles, dressing/anointing, lighting/extinguishing, symbolic placement, repeated sessions, candle movement, photo/object markers, spoken/prayer/script structure, concentration/meditation, completion/closing.
 4. Actual packet coverage: complete enough for approved candlelight mechanics. It is correctly narrow and should not be penalized for not covering non-candle carriers.
-5. Candidate counts and dispositions: 54 inventoried; 9 `candidate_extract_now`; 8 `candidate_extract_later`; 10 `source_note_only`; 12 `context_only`; 8 `hold`; 7 `reject`; 0 private-excerpt-only items, though private text matters for several candidates.
+5. Candidate counts and dispositions: 54 inventoried; 9 `candidate_extract_now`; 8 `candidate_extract_later`; 10 `source_note_only`; 12 `context_only`; 8 `hold`; 7 `reject`; 0 operative-text-review-only items, though operative wording matters for several candidates.
 6. 7x10 primary coverage: strong `candlelight + opening/steadying/releasing/voicing/marking/blessing/protecting/remembering`; moderate `candlelight + tending`; thin/held `candlelight + connecting`.
 7. Secondary coverage not to over-count: table/altar/object/photo support is secondary to candlelight. Do not count Buckland as solving table, vessel, or connection broadly.
 8. Held/rejected/source-note-only boundaries: exact scripts, prayers, poems, diagrams, paired scripts, non-mutual influence workings, jealousy/enemy/domination, guaranteed health/money/success/protection claims, dark-side appendix material, non-candle appendix material.
 9. Verdict: `no_action`.
-10. Authoring/import-prep notes: all 9 `candidate_extract_now` records move into authoring/import prep. Several need authoring revision, sourceTextUse, and fire-safety review before schema normalization.
+10. Authoring/import-prep notes: all 9 `candidate_extract_now` records move into authoring/import prep. Several need authoring revision, operativeTextReview, and fire-safety review before schema normalization.
 
 ## Content-authoring queue
 
@@ -239,4 +239,4 @@ Every `candidate_extract_now` item in accepted packets moves into authoring/impo
 
 `#335 can close after PM review.`
 
-Reason: all ten packets have now been checked against their gates and the 7x10 matrix as a coverage lens. The audit finds honest weak/thin/held cells and overclaim corrections, but no remaining extraction source-accounting gap that requires a new packet, supplement issue, or full redo. The next step is authoring/import-prep planning for all `candidate_extract_now` items, with packet-specific source verification, private-excerpt review, material-form review, and product-boundary review before any runtime activation.
+Reason: all ten packets have now been checked against their gates and the 7x10 matrix as a coverage lens. The audit finds honest weak/thin/held cells and overclaim corrections, but no remaining extraction source-accounting gap that requires a new packet, supplement issue, or full redo. The next step is authoring/import-prep planning for all `candidate_extract_now` items, with packet-specific source verification, operative text review, material-form review, and product-boundary review before any runtime activation.

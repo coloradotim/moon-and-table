@@ -41,7 +41,7 @@ TOC reviewed: yes.
 Excerpt boundaries reviewed: yes, source-gate level only.
 Approved extraction ranges: see Approved extraction ranges.
 Excluded extraction ranges: see Excluded or limited ranges.
-Allowed use: mechanics extraction, close paraphrase, short anchors, private exact-text review, source notes, safety notes, and future inventory-first extraction.
+Allowed use: mechanics extraction, close paraphrase, short anchors, operative-text review, source notes, safety notes, and future inventory-first extraction.
 Forbidden use: runtime approval, recommendation eligibility, copied full spells/charms/prayers/rituals, copied diagrams/illustrations, medical or guaranteed-effect claims, coercive intimacy/reproductive claims, unsafe fire/smoke/herb/oil/bath/food/animal practice, genericized cultural/deity/spirit material.
 Verbal / expressive / charm / spell handling:
   direct_use_allowed: Tim/Jessica may privately use source rites directly from their copy where safe and within their practice boundaries; app may point to title/page after human review but must not reproduce full text.
@@ -97,20 +97,17 @@ Optional longer alias if needed later:
 
 ```ts
 sourceTextPolicy: {
-  exactTextUse: "private_excerpt_allowed";
-  assistantMayReproduce: "brief_quote_only";
-  timManualEntry: "allowed_for_private_app";
+  exactTextUse: "operative_text_review";
+  assistantMayReproduce: "brief_quote_or_short_operative_words_only";
+  storagePosture: "review_before_runtime_use";
   storageLimits: [
-    "private_app_only",
-    "not_public_repo",
-    "not_public_runtime_content",
     "cite_source_id",
     "cite_title_author",
     "cite_page_or_section",
     "unavailable_by_default",
     "not_recommendation_eligible_until_human_review"
   ];
-  notes: "Tim may manually enter exact source wording from his copy for private household use. Research agents should identify important exact wording and source location but should not reproduce full spells, charms, prayers, invocations, rituals, formulas, prompt sets, recipes, or long distinctive passages. Many charms and spells in this source are best handled as mechanics-only or private-excerpt candidates pending safety and source-boundary review."
+  notes: "Author-provided operative ritual words are ritual materials. Operative wording of 20 words or fewer must be stored directly in presentation.practice and tracked as ritualWords.source_exact_short. Longer operative wording may be adapted into a Moon & Table phrase only as a justified candidate-level exception in presentation.practice and tracked as ritualWords.adapted_source_words; otherwise use functional instruction or hold the candidate."
 }
 ```
 
@@ -127,8 +124,8 @@ Tim is approving:
 - future inventory-first extraction from the approved ranges;
 - use of *The Magical Household* as a broad household magic mechanics source;
 - future draft Ritual candidates around hearth, doorway, kitchen, bath/body, plants, garden, protection, sweeping/cleaning, purification, moving, magical year, house spells, and household altar;
-- classification of charms, spells, spoken formulas, prayers, and exact source wording as valid private ritual material;
-- private manual excerpt review from Tim's copy, with source citation and non-runtime status until reviewed.
+- classification of charms, spells, spoken formulas, prayers, and exact source wording as valid ritual material;
+- operative text review under the 20-word exact / justified adaptation / functional instruction rule, with source citation and non-runtime status until reviewed.
 
 Tim is not approving:
 

@@ -36,14 +36,14 @@ Existing candidates reconciled:
 - `ritual-house-witch-kitchen-purification`
 - `ritual-house-witch-spell-bottle-household-vessel`
 
-The existing packet produced a strong first extraction set, but it did not yet inventory the full usable ritual material in the source. This repair backfills source rite inventory, disposition tracking, backlog, private excerpt references, held/rejected leads, and candidate reconciliation.
+The existing packet produced a strong first extraction set, but it did not yet inventory the full usable ritual material in the source. This repair backfills source rite inventory, disposition tracking, backlog, operative text review references, held/rejected leads, and candidate reconciliation.
 
 ## Source-gate basis
 
 Use:
 
 ```text
-docs/research/private-source-text-policy.md
+docs/research/operative-ritual-words-policy.md
 docs/research/extraction-depth-policy.md
 docs/research/prompts/extraction-packet-prompt-template.md
 docs/research/source-gate-house-witch.md
@@ -68,7 +68,7 @@ Approved with limits for:
 - food preparation and recipe-as-ritual structures;
 - personal purification and sacred-space creation structures;
 - ancestor / remembrance context with caution;
-- private exact-text excerpt support under policy.
+- operative text review under policy.
 
 Not approved for runtime recommendation eligibility, public distribution, source-pool approval, copied app-facing public content, deity/spirit extraction without separate approval, genericizing cultural practices, or guaranteed-effect claims.
 
@@ -107,13 +107,13 @@ Excluded or held by default:
 - recipe text copied wholesale;
 - exact blessing/prayer/invocation/spell text reproduced beyond short anchors.
 
-Allowed under private source text policy:
+Allowed under operative ritual words policy:
 
 - exact phrase anchors;
 - exact rite titles;
 - exact short spoken cues;
 - exact questions when short and ritually important;
-- private excerpt recommendations pointing Tim to source page/section;
+- operative text review recommendations pointing Tim to source page/section;
 - close summaries of ritual structure, materials, sequence, purpose, tone, and magical function.
 
 ## Inventory metrics
@@ -122,8 +122,8 @@ Allowed under private source text policy:
 source_items_inventoried: 58
 candidate_extract_now: 11
 candidate_extract_later: 17
-private_excerpt_reference: 1
-items_with_private_excerpt_recommended: 17
+operative_text_review_reference: 1
+items_with_operative_text_review: 17
 source_note_only: 14
 context_only: 7
 hold: 8
@@ -134,8 +134,8 @@ remaining_extraction_backlog: 17 candidate_extract_later items plus 8 hold items
 
 Notes:
 
-- `private_excerpt_reference: 1` counts only items primarily useful as exact-text reference, such as the traditional smooring prayer.
-- `items_with_private_excerpt_recommended: 17` captures candidate/source items where exact wording, prayers, blessings, prompts, recipes, formulas, or spoken cues may matter for Tim’s private review even when the item also supports candidate extraction.
+- `operative_text_review_reference: 1` counts only items primarily useful as exact-text reference, such as the traditional smooring prayer.
+- `items_with_operative_text_review: 17` captures candidate/source items where exact wording, prayers, blessings, prompts, recipes, formulas, or spoken cues may matter for operative text review even when the item also supports candidate extraction.
 
 ## Source rite inventory summary
 
@@ -233,13 +233,13 @@ Medical/healing/nutrition claims and guaranteed protection/purification/healing 
 
 | Existing candidate ID | Title | Inventory source item(s) | Keep / revise / merge / hold / reject | Reason | Required fixes |
 | --- | --- | --- | --- | --- | --- |
-| `ritual-house-witch-spiritual-hearth-recognition` | Recognize the Hearth | Locating your spiritual hearth; Blessing the Hearth; hearth sanctity ritual | keep / consider root-practice designation | Strongest root household practice; may be more than one candidate. | Decide whether this becomes Moon & Table’s root household practice or remains one candidate. Add private excerpt support for hearth blessing text. |
-| `ritual-house-witch-bank-the-inner-flame` | Bank the Inner Flame | Smooring / Banking Your Fire; Bank Your Inner Flame; traditional smooring prayer | keep | Strong bedtime/close-of-day practice. | Clarify whether default is bedtime-specific or general close-of-day. Keep prayer as private excerpt only. |
-| `ritual-house-witch-kitchen-sacred-flame` | Light the Kitchen Flame | Bringing Spirituality to Your Kitchen; Lamps and Sacred Flames in the Kitchen; Lighting the Oil Lamp or Candle | keep / later split | Strong kitchen candle/oil-lamp opening candidate. | Flag later split into candle variant and oil-lamp variant. Add private excerpt support for lamp/candle prayer. |
-| `ritual-house-witch-threshold-wash` | Wash the Threshold | Set Up Energy Boundaries; threshold protection; Doorstep Cleansing | keep / later split | Strong doorway cleansing/protection candidate. | Identify future indoor/outdoor variants; exact threshold line private excerpt only. |
+| `ritual-house-witch-spiritual-hearth-recognition` | Recognize the Hearth | Locating your spiritual hearth; Blessing the Hearth; hearth sanctity ritual | keep / consider root-practice designation | Strongest root household practice; may be more than one candidate. | Decide whether this becomes Moon & Table’s root household practice or remains one candidate. Add operative text review support for hearth blessing text. |
+| `ritual-house-witch-bank-the-inner-flame` | Bank the Inner Flame | Smooring / Banking Your Fire; Bank Your Inner Flame; traditional smooring prayer | keep | Strong bedtime/close-of-day practice. | Clarify whether default is bedtime-specific or general close-of-day. Keep prayer as operative text review only. |
+| `ritual-house-witch-kitchen-sacred-flame` | Light the Kitchen Flame | Bringing Spirituality to Your Kitchen; Lamps and Sacred Flames in the Kitchen; Lighting the Oil Lamp or Candle | keep / later split | Strong kitchen candle/oil-lamp opening candidate. | Flag later split into candle variant and oil-lamp variant. Add operative text review support for lamp/candle prayer. |
+| `ritual-house-witch-threshold-wash` | Wash the Threshold | Set Up Energy Boundaries; threshold protection; Doorstep Cleansing | keep / later split | Strong doorway cleansing/protection candidate. | Identify future indoor/outdoor variants; exact threshold line operative text review only. |
 | `ritual-house-witch-house-blessing-circuit` | Bless the House by Circuit | House Blessing; door/window frames; elements; movement through rooms | keep / later split | Very strong full-house practice. | Flag splits: full-house blessing, single-room blessing, threshold-only blessing, pre-hosting/post-conflict reset if supported. |
 | `ritual-house-witch-cauldron-blessing` | Bless the Hearth Vessel | Using cauldron in hearthcraft; Blessing Your Cauldron; cauldron-based rites | keep | Strong vessel/blessing candidate. | Decide whether non-cauldron bowls/jars are allowed adaptations or separate variants. |
-| `ritual-house-witch-spoken-hearth-words` | Speak at the Hearth | Spoken Magic; own sayings; prayer/blessing language | keep | Words are primary mechanics, not decoration. | Add explicit “words are the carrier” note. Exact examples private excerpt only. |
+| `ritual-house-witch-spoken-hearth-words` | Speak at the Hearth | Spoken Magic; own sayings; prayer/blessing language | keep | Words are primary mechanics, not decoration. | Add explicit “words are the carrier” note. Exact examples operative text review only. |
 | `ritual-house-witch-food-with-awareness` | Prepare Food with Awareness | Bringing Spirituality to Your Kitchen; Prepare Food with Awareness; Recipes | keep / later expand | Strong food/table candidate. | Add private recipe excerpt support; do not reproduce full recipes. |
 | `ritual-house-witch-household-grimoire-entry` | Enter It in the Household Grimoire | Keep Records | revise classification | It can be both a standalone Ritual candidate and a product follow-up pattern. | Mark as `keep`; add note that it may also become a product follow-up after rituals. |
 | `ritual-house-witch-kitchen-purification` | Purify the Kitchen Hearth | Regular Purification of the Kitchen; Purifying and Cleansing Your Home; Room Purification Ritual | keep | Strong kitchen/releasing/tending practice. | Avoid generic chore framing and genericized smudging. |
@@ -250,12 +250,12 @@ Medical/healing/nutrition claims and guaranteed protection/purification/healing 
 | Backlog item | Source item | Classification | Likely primary cell | Notes |
 | --- | --- | --- | --- | --- |
 | Hearth values / sacred definition prompt | What is spiritual to you? / Define values | `candidate_extract_later` | words + marking | Could support household orientation before hearth blessing. |
-| Household values table rite | Define family values | `candidate_extract_later` | table + connecting | Strong for Tim/Jessica private household. |
+| Household values table rite | Define family values | `candidate_extract_later` | table + connecting | Strong household fit. |
 | Chosen-family care rite | Caring for those outside your home | `candidate_extract_later` | table + connecting | Non-coercive connection lane. |
 | Kitchen shrine tending | Kitchen Shrines and Altars | `candidate_extract_later` | table + tending | Distinct from kitchen flame. |
 | Kitchen mindfulness practice | Acting Mindfully in the Kitchen | `candidate_extract_later` | body + tending | Could be short practice; avoid generic wellness tone. |
-| Table blessing / food gratitude | Consuming food with thanks | `candidate_extract_later` | table + blessing | Exact words private excerpt if present. |
-| Recipe-specific ritual candidates | Recipes | `candidate_extract_later` | table + tending/connecting | Recipes valid; Tim may privately excerpt exact recipes. |
+| Table blessing / food gratitude | Consuming food with thanks | `candidate_extract_later` | table + blessing | Exact words operative text review if present. |
+| Recipe-specific ritual candidates | Recipes | `candidate_extract_later` | table + tending/connecting | Recipes valid; exact recipe text requires recipe/operative text review. |
 | Imagined hearth meditation | Your Imagined Spiritual Hearth | `candidate_extract_later` | body + steadying | Strong inner hearth lane. |
 | Access hearth energy | Accessing the Energy of Your Spiritual Hearth | `candidate_extract_later` | body + steadying | Could pair with Bank Inner Flame. |
 | Room purification | Room Purification Ritual | `candidate_extract_later` | body + releasing/protecting | Distinct from kitchen purification. |
@@ -267,28 +267,28 @@ Medical/healing/nutrition claims and guaranteed protection/purification/healing 
 | Appliance/tool blessing | Modern Appliances and Magic | `candidate_extract_later` | vessel/table + blessing | Strong domestic magic lane. |
 | Seasonal honoring craft | Honoring the Seasons | `candidate_extract_later` | plant/table + marking | Seasonal packet candidate. |
 | Herb waters / washes | Herb waters / washes | `candidate_extract_later` | plant/vessel + releasing | Needs herb/safety review. |
-| Other magical recipes | Oils/incense/sealing oil | `candidate_extract_later` | plant/vessel + blessing/protecting | Exact formulas private excerpt; safety caution. |
+| Other magical recipes | Oils/incense/sealing oil | `candidate_extract_later` | plant/vessel + blessing/protecting | Exact formulas operative text review; safety caution. |
 
-## Private excerpt reference list
+## Operative text review reference list
 
-| Source item | Source pages | Exact text type | Exact text importance | Agent use limit | Private excerpt recommendation |
+| Source item | Source pages | Exact text type | Exact text importance | Agent use limit | Operative text review recommendation |
 | --- | --- | --- | --- | --- | --- |
-| Blessing the Hearth / hearth recognition ritual | Ch. 3, roughly PDF pp. 47–52 | blessing / ritual_sequence | high | `short_phrases_only` | Tim should review exact hearth blessing privately. |
-| Smooring / traditional prayer | Ch. 2, roughly PDF pp. 35–38 | prayer | high | `short_phrases_only` | Private excerpt only; preserve cultural/religious context. |
+| Blessing the Hearth / hearth recognition ritual | Ch. 3, roughly PDF pp. 47–52 | blessing / ritual_sequence | high | `short_phrases_only` | Tim should review exact hearth blessing through operative text review. |
+| Smooring / traditional prayer | Ch. 2, roughly PDF pp. 35–38 | prayer | high | `short_phrases_only` | Operative text review only; preserve cultural/religious context. |
 | Bank Your Inner Flame wording | Ch. 2, roughly PDF pp. 36–38 | meditation / prompt | medium | `close_paraphrase_allowed` | Exact prompt sequence may matter; no full passage in packet. |
-| Kitchen sacred flame / oil lamp prayer | Ch. 6 and Ch. 11, roughly PDF pp. 94–98, 173 | prayer / spoken_formula | high | `short_phrases_only` | Tim may review exact flame prayer privately. |
-| Threshold protection ritual | Ch. 7, roughly PDF pp. 103–107 | spell / charm | high | `short_phrases_only` | Exact symbols/words private excerpt only; do not genericize. |
-| Doorstep cleansing line | Ch. 11, roughly PDF p. 175 | spell / spoken_formula | high | `short_phrases_only` | Tim may review exact line privately. |
+| Kitchen sacred flame / oil lamp prayer | Ch. 6 and Ch. 11, roughly PDF pp. 94–98, 173 | prayer / spoken_formula | high | `short_phrases_only` | Tim may review exact flame prayer through operative text review. |
+| Threshold protection ritual | Ch. 7, roughly PDF pp. 103–107 | spell / charm | high | `short_phrases_only` | Exact symbols/words operative text review only; do not genericize. |
+| Doorstep cleansing line | Ch. 11, roughly PDF p. 175 | spell / spoken_formula | high | `short_phrases_only` | Tim may review exact line through operative text review. |
 | House blessing lines | Ch. 11, roughly PDF pp. 175–177 | blessing | high | `short_phrases_only` | Exact repeated elemental lines are ritually important. |
-| Room blessing lines | Ch. 11, roughly PDF pp. 177–178 | blessing | high | `short_phrases_only` | Private excerpt support for future room candidate. |
+| Room blessing lines | Ch. 11, roughly PDF pp. 177–178 | blessing | high | `short_phrases_only` | Operative text review support for future room candidate. |
 | Personal purification text | Ch. 11, roughly PDF pp. 178–179 | cleansing / spoken_formula | medium | `short_phrases_only` | Review privately for future body/releasing candidate. |
 | Creating sacred space text | Ch. 11, roughly PDF pp. 179–180 | ritual_sequence / spoken_formula | medium | `short_phrases_only` | Useful for future opening candidate. |
-| Cauldron blessing | Ch. 4, roughly PDF pp. 75–78 | blessing | high | `short_phrases_only` | Tim may review exact cauldron blessing privately. |
+| Cauldron blessing | Ch. 4, roughly PDF pp. 75–78 | blessing | high | `short_phrases_only` | Tim may review exact cauldron blessing through operative text review. |
 | Spoken Magic examples | Ch. 10, roughly PDF pp. 167–168 | spoken_formula | high | `short_phrases_only` | Exact examples may be valuable anchors. |
-| Recipes | Ch. 9, PDF pp. 145–152 | recipe | high | `close_paraphrase_allowed` | Tim may privately excerpt exact recipes. Agents should not reproduce full recipes. |
-| Magical recipe formulas | Ch. 11, PDF pp. 181–183 | recipe / spell | high | `short_phrases_only` | Oils/incense/sealing formulas private excerpt only. |
+| Recipes | Ch. 9, PDF pp. 145–152 | recipe | high | `close_paraphrase_allowed` | Exact recipe text requires recipe/operative text review. Agents should not reproduce full recipes. |
+| Magical recipe formulas | Ch. 11, PDF pp. 181–183 | recipe / spell | high | `short_phrases_only` | Oils/incense/sealing formulas operative text review only. |
 | Spell bottle contents/examples | Ch. 10, PDF pp. 164–166 | spell / charm | high | `short_phrases_only` | Exact contents/examples may matter; do not generate full lists wholesale. |
-| Grimoire/record prompts | Ch. 8, PDF pp. 137–138 | prompt | medium | `close_paraphrase_allowed` | Exact list of recordable items may be privately useful. |
+| Grimoire/record prompts | Ch. 8, PDF pp. 137–138 | prompt | medium | `close_paraphrase_allowed` | Exact list of recordable items may be useful for operative text review. |
 | Ancestor/remembrance text | Ch. 3, roughly PDF pp. 57–60 | invocation / remembrance | high | `short_phrases_only` | Hold pending ancestor/spirit decision, but exact text may matter. |
 
 ## Held / rejected list
@@ -302,7 +302,7 @@ Medical/healing/nutrition claims and guaranteed protection/purification/healing 
 | Smudging as named/generic practice | Ch. 7 / Ch. 10 | hold | Cultural/living-practice caution; smoke mechanics only unless reviewed. |
 | Corn husk doll / kitchen witch icon | Ch. 1 / Ch. 10 | hold | Folk/craft/cultural review. |
 | Magical figures and symbols | Ch. 10 | hold | Symbol/craft/cultural review. |
-| Direct recipe reproduction | Ch. 9 / Ch. 11 | hold | Recipes valid, but exact text must be private excerpt only. |
+| Direct recipe reproduction | Ch. 9 / Ch. 11 | hold | Recipes valid, but exact text must be operative text review only. |
 | Generic correspondence import | Appendix | hold | Not a correspondence database. |
 | Medical/healing/nutrition claims | Food/herb sections | reject if encountered | Out of scope; no medical/nutrition claims. |
 | Guaranteed protection/purification/healing outcomes | Ch. 7 / Ch. 11 | reject if encountered | No guaranteed-effect claims. |
@@ -321,7 +321,7 @@ Medical/healing/nutrition claims and guaranteed protection/purification/healing 
 | doorway + opening | strong | Threshold-as-transition mechanics. |
 | vessel + blessing | strong | Cauldron, oil lamp, bowl/bucket, spell bottle, water/salt, recipes. |
 | vessel + protecting | strong | Spell bottles, washes, threshold cleansing, house blessing. |
-| words + voicing | strong | Spoken magic, prayers, blessings, prompts, records, exact private excerpts. |
+| words + voicing | strong | Spoken magic, prayers, blessings, prompts, records, exact operative text reviews. |
 | words + remembering | strong | Grimoire records, ancestors, recipes, house evolution, prayers/poems/offering records. |
 | plant + protecting | moderate | Herbs, incense, spell bottles, washes, plants/stones. Needs safety/cultural caution. |
 | body + releasing | strong | Washing, moving through rooms, cleaning, breath, personal purification. |
@@ -344,12 +344,12 @@ Medical/healing/nutrition claims and guaranteed protection/purification/healing 
 | Grimoire entry as Ritual vs product feature | `household-grimoire-entry` | Treat as both: standalone candidate and likely follow-up feature. |
 | Kitchen purification vs ordinary cleaning | `kitchen-purification` | Keep magical purification framing; avoid chore/productivity framing. |
 | Spell bottle variants | `spell-bottle-household-vessel` | Future split likely: protection bottle, blessing bottle, remembrance bottle, seasonal marker bottle, threshold bottle. |
-| Spoken magic across all candidates | `spoken-hearth-words`, many others | `spoken-hearth-words` is primary words candidate; other candidates still need private excerpt references for exact wording. |
+| Spoken magic across all candidates | `spoken-hearth-words`, many others | `spoken-hearth-words` is primary words candidate; other candidates still need operative text review references for exact wording. |
 
 ## Template / process lessons
 
 1. Inventory must come before confidence. A strong 8–12 candidate first packet is useful, but not complete unless the source rite inventory shows what was extracted, deferred, held, rejected, and left as source-note-only.
-2. Private excerpt metrics need their own count. Use both `private_excerpt_reference` and `items_with_private_excerpt_recommended`.
+2. Operative text review metrics need their own count. Use both `operative_text_review_reference` and `items_with_operative_text_review`.
 3. Candidate vs product feature must be explicit. `Household Grimoire Entry` is a valid Ritual candidate and a likely product follow-up pattern.
 4. Variant splitting should be tracked early: house vs room blessing, threshold vs whole-house, candle vs oil lamp, cauldron vs bowl/jar, spell bottle variants, recipe-specific rituals.
 5. Primary vs secondary coverage matters. `House Blessing Circuit` touches many carriers and purposes, but it should not be used to claim every cell is solved.

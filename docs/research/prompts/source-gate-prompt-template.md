@@ -22,7 +22,7 @@ Use only the provided source file. Do not rely on outside summaries except for b
 Follow:
 
 ```text
-docs/research/private-source-text-policy.md
+docs/research/operative-ritual-words-policy.md
 docs/research/extraction-depth-policy.md
 ```
 
@@ -48,7 +48,11 @@ If exact operative source wording is 20 words or fewer:
 
 If exact operative source wording is more than 20 words:
   - it should not be reproduced in generated public repo prose;
-  - it should be tracked as ritualWords.mode = "private_source_excerpt" with source location and a note explaining why the words matter.
+  - it should not be automatically adapted during extraction;
+  - use functional instruction when the rite remains honest without reusable words;
+  - use adapted_source_words only as a candidate-by-candidate exception when the source words are structurally necessary;
+  - the adapted words should appear inline in the ritual body;
+  - it should be tracked as ritualWords.mode = "adapted_source_words" with source location and a note explaining what ritual function was adapted.
 ```
 
 A source gate may impose stricter limits only for source-specific reasons, such as explicit sexualized commands, coercive wording, revenge/hex language, distinctive author voice, culturally sensitive language, medical/legal/therapy claims, or other product-boundary concerns.
@@ -57,7 +61,7 @@ Do not write a blanket ban on exact short operative phrases unless the source-sp
 
 Research agents should not reproduce long copyrighted passages in generated packets. However, exact short phrase anchors, exact questions, rite titles, spoken cues, blessing names, invocation cues, and wording anchors of 20 words or fewer may be extracted when ritually important and not source-prohibited.
 
-When exact wording is important but longer than 20 words, mark it for Tim private excerpt review with source page/section.
+When exact wording is important but longer than 20 words, preserve its ritual function through adapted Moon & Table wording and cite the source page/section.
 
 ## Required tasks
 
@@ -70,8 +74,8 @@ When exact wording is important but longer than 20 words, mark it for Tim privat
 7. Separate mechanics from authored wording, scripts, prayers, spells, meditations, recipes, prompts, diagrams, and distinctive sequence language.
 8. Classify verbal/expressive/recipe handling:
    - `use_directly_from_source`
-   - `private_excerpt_allowed`
-   - `private_recipe_excerpt_allowed`
+   - `operative_text_review`
+   - `recipe_text_review_required`
    - `brief_quote_allowed`
    - `close_paraphrase_allowed`
    - `paraphrase_required`
@@ -152,11 +156,10 @@ Include the source’s specific exact-text handling using:
 
 ```ts
 sourceTextPolicy: {
-  exactTextUse: "private_excerpt_allowed";
+  exactTextUse: "operative_text_review";
   assistantMayReproduce: "brief_quote_or_short_operative_words_only";
-  timManualEntry: "allowed_for_private_app";
+  runtimeUse: "review_before_runtime_use";
   storageLimits: [
-    "private_app_only",
     "not_public_repo",
     "not_public_runtime_content",
     "cite_source_id",
@@ -165,7 +168,7 @@ sourceTextPolicy: {
     "unavailable_by_default",
     "not_recommendation_eligible_until_human_review"
   ];
-  notes: "Default rule: exact operative source wording of 20 words or fewer may be used inline during extraction when source-attributed, non-substitutive, ritually important, and not source-prohibited. Longer/substantial exact wording uses private_source_excerpt metadata. Add stricter limits only for source-specific product-boundary reasons."
+  notes: "Default rule: exact operative source wording of 20 words or fewer may be used inline during extraction when source-attributed, non-substitutive, ritually important, and not source-prohibited. Longer/substantial exact wording may be adapted into Moon & Table words only as a justified candidate-level exception; otherwise use functional instruction or hold the candidate. Add stricter limits only for source-specific product-boundary reasons."
 }
 ```
 
@@ -185,7 +188,7 @@ Use page/chapter references.
 For each approved range, specify:
 
 - approved mechanics;
-- exact-text/private-excerpt opportunities;
+- exact-text/adaptation opportunities;
 - approved carriers;
 - approved purposes;
 - allowed use;
@@ -198,7 +201,7 @@ Use page/chapter references.
 
 For each excluded/limited range, specify why:
 
-- authored wording requires private excerpt handling;
+- authored wording requires adaptation handling;
 - exact spell/prayer/meditation/prompt/recipe handling;
 - deity/cosmology issue;
 - medical/safety issue;
@@ -223,8 +226,8 @@ List source rituals, blessings, prompts, meditations, recipes, invocations, or s
 Use type:
 
 - `use_directly_from_source`
-- `private_excerpt_allowed`
-- `private_recipe_excerpt_allowed`
+- `operative_text_review`
+- `recipe_text_review_required`
 - `short_excerpt_possible`
 - `paraphrase_for_app`
 - `mechanics_only`

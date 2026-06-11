@@ -32,7 +32,7 @@ Every `approved_for_mechanical_import` record below has a complete `ritual body 
 
 ## Source text posture
 
-The approved source gate for this source is `docs/research/source-gates/src-plant-murphy-hiscock-green-witchs-garden.md`. That gate is stricter than the general short-quote rule: it allows mechanics extraction and private exact-text handling, but says runtime text should not reproduce direct source quotes from exercises, blessings, charms, rituals, recipes, or distinctive prose. Therefore this packet does not use `source_exact_short` for this source. Where exact wording matters, it is tracked as `private_source_excerpt`; where a complete public packet body needs a spoken line, the line is `moon_and_table_original` and the note explains the source-supported action it completes.
+The approved source gate for this source is `docs/research/source-gates/src-plant-murphy-hiscock-green-witchs-garden.md`. That gate is stricter than the general short-quote rule for exercises, blessings, charms, rituals, recipes, and distinctive prose. This packet preserves exact source wording only when a short operative phrase has been exact-text reviewed. Where the source supports a speech act but does not provide reviewed reusable wording, the body uses plain functional instruction instead of invented ceremonial speech. No candidate in this packet currently uses `adapted_source_words`.
 
 ## Source sections used
 
@@ -71,11 +71,11 @@ The approved source gate for this source is `docs/research/source-gates/src-plan
 | Windowsill / window box plant | 187-190, 64-94 | practice_family | ritual_candidate | candidate_extract_now | Household light/threshold placement is explicit. | Candidate below. |
 | Tool dedication | 95-116 | ritual | hold_before_import | hold_before_import | Complete source ritual, but plant is not primary carrier and it uses candle/element mechanics. | Hold for tool packet. |
 | Strewing herbs / smoke or herb-water clearing | 95-116 | ritual | hold_before_import | hold_before_import | Material/smoke/surface/pet safety and recipe-like contents need separate review. | Hold. |
-| Garden blessing | 95-116, 184-209 | ritual | ritual_candidate | candidate_extract_now | Elemental garden blessing architecture can be imported with private exact text. | Candidate below. |
+| Garden blessing | 95-116, 184-209 | ritual | ritual_candidate | candidate_extract_now | Elemental garden blessing architecture can be imported with functional wording until exact short source words are reviewed. | Candidate below. |
 | Garden record / plant page / photos | 95-116, 245-265 | practice_family | ritual_candidate | candidate_extract_now | Recordkeeping is source-backed and mechanically complete. | Candidate below. |
 | Pressed sample / physical harvest record | 253-258 | project | candidate_extract_later | candidate_extract_later | Strong memory mechanic but harvesting and preservation safety need a separate variant. | Later. |
 | Chapter 6 plant categories and correspondences | 117-183 | reference | source_note_only | source_note_only | Safety/context only; no correspondence database. | Use only to support reviewed plant choices. |
-| New plant welcome / purification | 184-190 | ritual_pattern | ritual_candidate | candidate_extract_now | Complete household-scale welcome, with private exact words. | Candidate below. |
+| New plant welcome / purification | 184-190 | ritual_pattern | ritual_candidate | candidate_extract_now | Complete household-scale welcome, using functional wording until exact short source words are reviewed. | Candidate below. |
 | Safe offering of attention | 193-194 | practice_family | ritual_candidate | candidate_extract_now | Source supports attention, song, thanks, and care without obligation. | Candidate below. |
 | Garden charms / decor / spirit houses / genius loci | 190-210 | charm/cosmology | hold_before_import | hold_before_import | Spirit/place obligations, materials, and outdoor structures need separate review. | Hold. |
 | Harvest gratitude | 210-219 | ritual_pattern | ritual_candidate | candidate_extract_now | Harvest gratitude can be complete without recipe/ingestion import. | Candidate below. |
@@ -93,8 +93,8 @@ The approved source gate for this source is `docs/research/source-gates/src-plan
 source_items_inventoried: 30
 candidate_extract_now: 16
 candidate_extract_later: 2
-private_excerpt_reference: 0
-items_with_private_excerpt_recommended: 7
+adapted_or_exact_text_review: 0
+items_with_operative_text_review: 7
 source_note_only: 6
 context_only: 1
 hold_before_import_candidate_records: 8
@@ -146,7 +146,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Welcome the Green Already Here
 
-ritual body / practice: Choose one living plant already in the home. Place it where you can sit or stand near it without crowding it. Look at the whole plant first: pot, soil, stems, leaves, light, and the space around it. Check whether it needs ordinary care right now. If it needs water, water it according to its actual care needs. If it needs no water, do not water it for symbolism. Touch the pot or the table beneath it. Say the Moon & Table line: "You are already part of this house." Stay beside the plant for three slow breaths. Close by returning the plant to its usual place or leaving it where it belongs.
+ritual body / practice: Choose one living plant already in the home. Place it where you can sit or stand near it without crowding it. Look at the whole plant first: pot, soil, stems, leaves, light, and the space around it. Check whether it needs ordinary care right now. If it needs water, water it according to its actual care needs. If it needs no water, do not water it for symbolism. Touch the pot or the table beneath it. Name aloud that the plant is already part of the house. Stay beside the plant for three slow breaths. Close by returning the plant to its usual place or leaving it where it belongs.
 
 intention: Recognize an existing plant as a living household carrier, not a decoration.
 
@@ -169,7 +169,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [household plant relationship]
   exclusionSignals: [unsafe or unidentified plant, care need unclear]
   timingSignal: beginning plant practice
-  confidenceNotes: complete source-backed Moon & Table form; no exact source words used because source gate requires rewritten runtime language
+  confidenceNotes: complete source-backed Moon & Table form; no exact or adapted source words used
 
 source grounding: `The Green Witch's Garden`, Introduction / How to Use This Book, PDF pp. 6-9; Ch. 4, PDF pp. 64-94.
 
@@ -181,7 +181,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no named plant recommendation; no water unless care calls for it.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `You are already part of this house.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `PDF pp. 6-9 and 64-94`, useContext: `spoken`, note: `Source supports recognizing existing plants; source gate requires rewritten runtime wording.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -193,7 +193,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: One Green Check-In
 
-ritual body / practice: Choose one living plant. Before touching it, look at its leaves, soil, pot, and light. Ask what care it actually needs today. If the soil is dry and that plant wants water, water it. If a dead leaf is ready to come away without tearing living tissue, remove it and place it in compost or ordinary plant waste. If the plant only needs to be noticed, simply stand with it. Say the Moon & Table line: "Care first, symbol second." Close by putting away the watering can, cloth, or trimmings so the plant's place is left clean.
+ritual body / practice: Choose one living plant. Before touching it, look at its leaves, soil, pot, and light. Ask what care it actually needs today. If the soil is dry and that plant wants water, water it. If a dead leaf is ready to come away without tearing living tissue, remove it and place it in compost or ordinary plant waste. If the plant only needs to be noticed, simply stand with it. Name the care it actually needs before doing anything symbolic. Close by putting away the watering can, cloth, or trimmings so the plant's place is left clean.
 
 intention: Let ordinary plant care become the ritual, without forcing extra symbolism onto the plant.
 
@@ -216,7 +216,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [brief household practice]
   exclusionSignals: [plant care need unknown, unsafe plant]
   timingSignal: routine care moment
-  confidenceNotes: complete source-backed form; source gate requires rewritten public wording
+  confidenceNotes: complete source-backed form; no exact or adapted source words used
 
 source grounding: `The Green Witch's Garden`, Ch. 1, PDF pp. 10-14 and 18-19.
 
@@ -228,7 +228,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; care action must be real care.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `Care first, symbol second.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 1 / PDF pp. 10-14`, useContext: `spoken`, note: `Moon & Table line summarizing the source's care-before-symbol posture.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -275,7 +275,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: direct_source_ritual paraphrased; exact exercise wording is not reproduced under source gate.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `green-witchs-garden-elements-exercise-pp15-16`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 1 / PDF pp. 15-16`, useContext: `question`, note: `The full exercise questions are source-specific and remain private; public body paraphrases the mechanics.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -287,7 +287,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Greet the Green Witness
 
-ritual body / practice: Choose one plant you want to know more respectfully. Center yourself before approaching it. Look closely at its physical details: leaf shape, stem, soil, pot, new growth, dry edges, lean, and light. Reach your attention toward the plant without taking anything from it. If the plant feels unwelcome to work with, thank it silently and stop. If the moment feels open, say the Moon & Table line: "I am here to meet you, not use you." Sit or stand with the plant for three breaths. Close by thanking the plant and leaving it as you found it.
+ritual body / practice: Choose one plant you want to know more respectfully. Center yourself before approaching it. Look closely at its physical details: leaf shape, stem, soil, pot, new growth, dry edges, lean, and light. Reach your attention toward the plant without taking anything from it. If the plant feels unwelcome to work with, thank it silently and stop. If the moment feels open, name aloud that you are meeting the plant, not using it. Sit or stand with the plant for three breaths. Close by thanking the plant and leaving it as you found it.
 
 intention: Meet a plant as a living presence without turning it into a tool.
 
@@ -322,7 +322,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no plant-familiar commitment, no obligation, no guaranteed messages.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `I am here to meet you, not use you.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 1 / PDF pp. 18-19`, useContext: `spoken`, note: `Source supports respectful greeting; source gate requires rewritten runtime words.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -334,7 +334,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Rededicate the Plant Corner
 
-ritual body / practice: Stand in the plant corner, windowsill, shelf, balcony container, or table space you want to reorient. Look at the plants and objects already there. Name, out loud or silently, what in this space still belongs. Name what no longer belongs. Remove only what can be removed safely: trash, dead plant matter already detached, old labels, empty pots, or objects that no longer serve the plant place. Thank the old use of the space. Say the Moon & Table line: "What served before may leave cleanly; what belongs now may root here." Wipe the table, tray, sill, or shelf if it needs cleaning. Return the plants or objects that remain. Close by naming the new purpose of this plant place in one sentence.
+ritual body / practice: Stand in the plant corner, windowsill, shelf, balcony container, or table space you want to reorient. Look at the plants and objects already there. Name, out loud or silently, what in this space still belongs. Name what no longer belongs. Remove only what can be removed safely: trash, dead plant matter already detached, old labels, empty pots, or objects that no longer serve the plant place. Thank the old use of the space. Name the new purpose of the plant place in one sentence. Wipe the table, tray, sill, or shelf if it needs cleaning. Return the plants or objects that remain. Close by leaving the named purpose with the plants.
 
 intention: Let a plant place release its old use and receive a clearer household role.
 
@@ -369,7 +369,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no added stones, herbs, smoke, or buried charms from the source examples.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `What served before may leave cleanly; what belongs now may root here.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 2 / PDF pp. 31-32`, useContext: `spoken`, note: `Moon & Table wording for the source-supported rededication action.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -381,7 +381,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Root the Kitchen Scrap
 
-ritual body / practice: Choose a safe kitchen scrap that the source identifies as suitable for regrowth, such as the base of celery, bok choy, cabbage, or a bulb onion root end. Use only a clean scrap from food already being prepared. Place it root-end down in a shallow cup, jar, or small bowl with enough water to cover the root end but not drown the whole piece. Set the vessel on a stable windowsill or bright table away from pets and children. Change the water every day or two. Each time you change the water, say the Moon & Table line: "What was almost waste may try again." When roots show clearly, either transfer it to potting soil in a small container or close the experiment by composting it with thanks.
+ritual body / practice: Choose a safe kitchen scrap that the source identifies as suitable for regrowth, such as the base of celery, bok choy, cabbage, or a bulb onion root end. Use only a clean scrap from food already being prepared. Place it root-end down in a shallow cup, jar, or small bowl with enough water to cover the root end but not drown the whole piece. Set the vessel on a stable windowsill or bright table away from pets and children. Change the water every day or two. Each time you change the water, name the regrowth you are waiting for. When roots show clearly, either transfer it to potting soil in a small container or close the experiment by composting it with thanks.
 
 intention: Mark a small opening from discard into new growth.
 
@@ -416,7 +416,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no runtime food recommendation.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `What was almost waste may try again.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 4 / PDF pp. 64-94`, useContext: `spoken`, note: `Moon & Table wording for source-supported kitchen-scrap regrowth.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -428,7 +428,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Keep Green Through Winter
 
-ritual body / practice: Choose one indoor plant, terrarium, windowsill herb, cutting, or plant shelf that remains alive while the outdoor garden rests. Place your hand near the pot or vessel without disturbing it. Notice the light, warmth, soil, and water conditions around it. Do only the ordinary care it actually needs: water, turn, trim already-dead matter, or leave it alone. Say the Moon & Table line: "The outside garden may sleep; this green stays awake with me." Close by recording the plant's condition in one sentence or by taking a dated photo for the household plant record.
+ritual body / practice: Choose one indoor plant, terrarium, windowsill herb, cutting, or plant shelf that remains alive while the outdoor garden rests. Place your hand near the pot or vessel without disturbing it. Notice the light, warmth, soil, and water conditions around it. Do only the ordinary care it actually needs: water, turn, trim already-dead matter, or leave it alone. Name how this green is staying with the household while the outside garden rests. Close by recording the plant's condition in one sentence or by taking a dated photo for the household plant record.
 
 intention: Keep a small living thread of green practice during the resting season.
 
@@ -463,7 +463,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; do not turn this into seasonal therapy or plant shopping advice.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `The outside garden may sleep; this green stays awake with me.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 4 / PDF pp. 64-94 and Ch. 9 / PDF pp. 230-248`, useContext: `spoken`, note: `Moon & Table wording for the source-supported winter indoor plant practice.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -475,7 +475,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Set the Window Green Threshold
 
-ritual body / practice: Choose one small plant that is already safe for the household and suited to the light at the window. Place it in a stable pot or tray with drainage protection. Set it on the windowsill, window table, or window box where it can receive the light and air it needs without falling, leaking, or blocking the window's use. Turn the pot so the plant faces the light. Touch the pot and say the Moon & Table line: "Stand here between house and sky." Close by checking that the pot is stable and that no water can damage the surface below it.
+ritual body / practice: Choose one small plant that is already safe for the household and suited to the light at the window. Place it in a stable pot or tray with drainage protection. Set it on the windowsill, window table, or window box where it can receive the light and air it needs without falling, leaking, or blocking the window's use. Turn the pot so the plant faces the light. Touch the pot and name the window as the place where this plant meets house and sky. Close by checking that the pot is stable and that no water can damage the surface below it.
 
 intention: Mark the window as a living threshold between the home and the weather outside.
 
@@ -510,7 +510,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; avoids warding/protection guarantees.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `Stand here between house and sky.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 4 / PDF pp. 64-94`, useContext: `spoken`, note: `Moon & Table wording for source-supported window/threshold placement.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -522,7 +522,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Bless the Plant Place
 
-ritual body / practice: Use this for a small indoor plant place, container grouping, balcony planter, or garden bed that has already been physically cleaned and made safe. Gather simple representations of air, fire, water, and earth that are safe for the place: moving air from an open window or fan, sunlight or a safe unlit candle as a fire symbol, a small cup of water, and a small dish of soil or the soil already in the pot. Place the four representations around or beside the plant place. Stand or sit before the plant place. Use the private source garden-blessing words from Tim's copy, or keep the blessing wordless until Tim excerpts them. Touch or gesture toward air, fire, water, and earth in that order. As each element is acknowledged, picture it supporting the plants in ordinary, plant-safe ways. Close by naming the plant place's purpose in one sentence and putting away any cup, dish, or candle symbol that should not remain there.
+ritual body / practice: Use this for a small indoor plant place, container grouping, balcony planter, or garden bed that has already been physically cleaned and made safe. Gather simple representations of air, fire, water, and earth that are safe for the place: moving air from an open window or fan, sunlight or a safe unlit candle as a fire symbol, a small cup of water, and a small dish of soil or the soil already in the pot. Place the four representations around or beside the plant place. Stand or sit before the plant place. Touch or gesture toward air, fire, water, and earth in that order. As each element is acknowledged, picture it supporting the plants in ordinary, plant-safe ways. Close by naming the plant place's purpose in one sentence and putting away any cup, dish, or candle symbol that should not remain there.
 
 intention: Bless a plant place with the elements that actually sustain it.
 
@@ -545,7 +545,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [elements, plant support]
   exclusionSignals: [unsafe fire, outdoor/ecological claims not reviewed]
   timingSignal: after plant-space setup
-  confidenceNotes: complete direct source ritual paraphrased; exact blessing private under source gate
+  confidenceNotes: complete direct source ritual paraphrased; no exact or adapted blessing words are used
 
 source grounding: `The Green Witch's Garden`, Ch. 5, PDF pp. 95-116; Ch. 7, PDF pp. 184-209.
 
@@ -553,11 +553,11 @@ recommendation metadata: primaryPurpose blessing; secondaryPurposes [opening, pr
 
 search metadata: tags [green-witchs-garden, garden blessing, plant place, elements]; materials [air representation, fire symbol, water, soil]; places [plant corner, container grouping, balcony planter, garden bed]
 
-review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [fire, water, soil contact, plant identification, pets, children, pregnancy, allergies, invasive plants, outdoor placement, pollinator/wildlife claims, and local ecology review].
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [fire, water, soil contact, plant identification, pets, children, pregnancy, allergies, invasive plants, outdoor placement, pollinator/wildlife claims, and local ecology review].
 
 adaptation policy notes: direct_source_ritual paraphrased; no exact blessing reproduced publicly.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `green-witchs-garden-garden-blessing-pp95-116`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 5 / PDF pp. 95-116`, useContext: `blessing`, note: `The elemental garden blessing is substantial and remains private.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -569,7 +569,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Compost the Old Leaf
 
-ritual body / practice: Choose only plant matter that is already dead, fallen, trimmed for ordinary care, or finished from a household plant or garden. Do not cut living growth for the ritual. Hold the dead leaf, spent bloom, or small trimming over a compost container, yard-waste bowl, or garden soil where it can be safely returned. Name what has finished. Say the Moon & Table line: "What is finished can feed what comes next." Place the plant matter in compost, yard waste, or soil according to the household's normal plant-disposal practice. Wash your hands if soil, sap, compost, or unknown plant residue touched your skin.
+ritual body / practice: Choose only plant matter that is already dead, fallen, trimmed for ordinary care, or finished from a household plant or garden. Do not cut living growth for the ritual. Hold the dead leaf, spent bloom, or small trimming over a compost container, yard-waste bowl, or garden soil where it can be safely returned. Name what has finished and what it can feed next. Place the plant matter in compost, yard waste, or soil according to the household's normal plant-disposal practice. Wash your hands if soil, sap, compost, or unknown plant residue touched your skin.
 
 intention: Return finished plant matter to the cycle without treating death as failure.
 
@@ -604,7 +604,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; do not harvest living material for this rite.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `What is finished can feed what comes next.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 1 / PDF pp. 16-18 and Ch. 7 / PDF pp. 204-205`, useContext: `spoken`, note: `Moon & Table wording for source-supported decomposition/compost logic.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -616,7 +616,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Welcome the New Green One
 
-ritual body / practice: Before bringing a new plant fully into the household plant place, identify it and check whether it is safe for the home, including pets, children, allergies, sap, scent, smoke, and ingestion risk. Set the plant in its pot or nursery container on a tray or table. Look it over for stress, pests, soil condition, and water need. Do not repot immediately unless ordinary plant care calls for it. Touch the pot. Say the Moon & Table line: "Come in clean, come in rooted, come in known." If the plant needs water, water it according to its care needs. If it does not, leave it alone. Put the plant in its chosen place and record its name, care needs, and safety notes.
+ritual body / practice: Before bringing a new plant fully into the household plant place, identify it and check whether it is safe for the home, including pets, children, allergies, sap, scent, smoke, and ingestion risk. Set the plant in its pot or nursery container on a tray or table. Look it over for stress, pests, soil condition, and water need. Do not repot immediately unless ordinary plant care calls for it. Touch the pot. Name the plant as known before it joins the household place. If the plant needs water, water it according to its care needs. If it does not, leave it alone. Put the plant in its chosen place and record its name, care needs, and safety notes.
 
 intention: Welcome a new plant into the home with care, not impulse.
 
@@ -647,11 +647,11 @@ recommendation metadata: primaryPurpose opening; secondaryPurposes [blessing, pr
 
 search metadata: tags [green-witchs-garden, new plant, welcome, plant safety]; materials [new plant, pot/tray, record]; places [plant table, windowsill, shelf]
 
-review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [plant identification, toxicity, pests, pets, children, pregnancy, allergy, skin contact, sap, scent, ingestion, and invasive-plant review].
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [plant identification, toxicity, pests, children, pregnancy, allergy, skin contact, sap, scent, ingestion, and invasive-plant review].
 
 adaptation policy notes: source_backed_moon_and_table_form; no named-plant recommendation.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `Come in clean, come in rooted, come in known.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 7 / PDF pp. 184-190`, useContext: `spoken`, note: `Moon & Table wording for source-supported plant welcome/purification mechanics.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -663,7 +663,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Offer Attention, Not Obligation
 
-ritual body / practice: Choose one plant or small plant place. Do not bring food, stones, crystals, oils, incense, or water unless the plant actually needs water. Stand or sit near the plant. Give it one minute of full attention: look at its color, new growth, soil, pot, and light. If the plant needs water, water it. If it does not, simply stay with it. Hum, sing softly, or speak one sentence of thanks if that feels natural. Say the Moon & Table line: "Attention is the offering today." Close by leaving the plant clean, stable, and undisturbed.
+ritual body / practice: Choose one plant or small plant place. Do not bring food, stones, crystals, oils, incense, or water unless the plant actually needs water. Stand or sit near the plant. Give it one minute of full attention: look at its color, new growth, soil, pot, and light. If the plant needs water, water it. If it does not, simply stay with it. Hum, sing softly, or speak one sentence of thanks if that feels natural. Close by leaving the plant clean, stable, and undisturbed.
 
 intention: Make attention and actual care the offering.
 
@@ -698,7 +698,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; safe no-obligation offering only.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `Attention is the offering today.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 7 / PDF pp. 193-194`, useContext: `spoken`, note: `Moon & Table wording for source-supported safe offering of attention/care.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -710,7 +710,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Thank the Harvest Without Taking More
 
-ritual body / practice: Use this only when there is already a plant harvest, fallen seed, finished bloom, kitchen herb clipping, or produce from a plant you are already tending. Do not take extra material for the ritual. Hold the harvest or place it on the table. Name where it came from: pot, window, balcony, garden bed, farmer, or household plant place. Thank the plant or plant place for what it gave. Say the Moon & Table line: "I take only what is already given." Record the date, plant or produce name, and how the household will use or preserve it. If the material will not be used, return it to compost or plant waste with thanks.
+ritual body / practice: Use this only when there is already a plant harvest, fallen seed, finished bloom, kitchen herb clipping, or produce from a plant you are already tending. Do not take extra material for the ritual. Hold the harvest or place it on the table. Name where it came from: pot, window, balcony, garden bed, farmer, or household plant place. Thank the plant or plant place for what it gave. Record the date, plant or produce name, and how the household will use or preserve it. If the material will not be used, return it to compost or plant waste with thanks.
 
 intention: Mark harvest as relationship and gratitude, not extraction.
 
@@ -745,7 +745,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no added harvest or food use.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `I take only what is already given.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 8 / PDF pp. 210-229`, useContext: `spoken`, note: `Moon & Table wording for source-supported harvest gratitude and restraint.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -788,11 +788,11 @@ recommendation metadata: primaryPurpose remembering; secondaryPurposes [marking,
 
 search metadata: tags [green-witchs-garden, green record, plant page, plant safety]; materials [notebook/binder/Moon & Table note, optional photo]; places [table, plant place]
 
-review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; privacyReviewRequired true; notes [record can include safety warnings but not medical claims; track plant identification, toxicity, pets, children, pregnancy, allergies, ingestion, skin contact/sap, scent, smoke, invasive status, soil, and care risks].
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; privacyReviewRequired true; notes [record can include safety warnings but not medical claims; track plant identification, toxicity, pets, children, pregnancy, allergies, ingestion, skin contact/sap, scent, smoke, invasive status, soil, and care risks].
 
 adaptation policy notes: source_backed_moon_and_table_form; public packet does not reproduce the source's full plant-entry template.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `green-witchs-garden-plant-record-template-pp245-265`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 5 / PDF pp. 245-265`, useContext: `written`, note: `The detailed plant-entry template is private/source-specific; packet uses a compact mechanical summary.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -804,7 +804,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Stand Beside the Living Energy
 
-ritual body / practice: Choose one living plant or small garden place. Do not cut, pluck, or harvest anything. Stand or sit beside it. Center yourself and feel your own energy inside your body. Reach your attention toward the plant place as a neighbor, not as a source to drain. Ask silently whether this is a good moment to stand with its living energy. If the answer feels like no, thank it and stop. If the answer feels open, breathe with the plant for five slow breaths. Imagine standing next to its living vitality rather than pulling it into yourself. Say the Moon & Table line: "I stand beside your life, and I take nothing from it." Close by thanking the plant and leaving it whole.
+ritual body / practice: Choose one living plant or small garden place. Do not cut, pluck, or harvest anything. Stand or sit beside it. Center yourself and feel your own energy inside your body. Reach your attention toward the plant place as a neighbor, not as a source to drain. Ask silently whether this is a good moment to stand with its living energy. If the answer feels like no, thank it and stop. If the answer feels open, breathe with the plant for five slow breaths. Imagine standing next to its living vitality rather than pulling it into yourself. Thank the plant and close by leaving it whole.
 
 intention: Work with living plant energy without taking plant matter or depleting the plant.
 
@@ -839,7 +839,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no harvest, no offering obligation, no guaranteed message.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `I stand beside your life, and I take nothing from it.`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 3 / PDF pp. 40-63 and Ch. 9 / PDF pp. 230-236`, useContext: `spoken`, note: `Moon & Table wording for source-supported non-depleting plant energy work.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -886,7 +886,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: direct_source_ritual paraphrased; exact meditation prose not reproduced.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `green-witchs-garden-garden-meditation-pp244-246`, citationLabel: `Murphy-Hiscock, The Green Witch's Garden`, sourceLocation: `Ch. 9 / PDF pp. 244-246`, useContext: `spoken`, note: `Meditation guidance is source-specific and remains private; packet preserves mechanics.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -942,7 +942,7 @@ Checked the revised packet for blocking placeholder mechanics and invalid runtim
 
 - [x] Every `candidate_extract_now` has a complete operational ritual body / practice.
 - [x] No approved candidate requires source lookup for materials, plant/place, placement, sequence, timing, repetition, wording handling, close, disposal, rest, or recordkeeping.
-- [x] Long/substantial source wording uses `private_source_excerpt`.
+- [x] No approved candidate in this packet uses `adapted_source_words`; source-supported speech actions use plain functional instruction where no reviewed reusable source words are present.
 - [x] Green Witch's Garden source-gate direct-quote restrictions are cited and honored.
 - [x] Plant/garden safety and product-boundary notes are explicit under valid review flags.
 - [x] No invalid `plantSafetyReviewRequired` flag remains.

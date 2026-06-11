@@ -22,14 +22,14 @@ Excluded extraction ranges: see excluded or limited ranges below.
 Allowed use: source-backed mechanics and symbolic logic for household-scale flower ritual, especially cut flower/table/vase/bouquet/message/witness/blessing/memory/opening/release practices, flower contemplation, ethical gathering/offering, flower-as-focus, flower-as-gift, dried or pressed flower tokens, flower altar/table arrangements, and correspondence-assisted selection after review.
 Forbidden use: runtime import; recommendation eligibility; direct-use eligibility; generic flower encyclopedia behavior; medical or treatment claims; unsafe preparations or applications; unsafe household plant handling; crystal elixir claims; manipulative love or attraction work; legal or therapy advice.
 Verbal / expressive / charm / recipe handling:
-  direct_use_allowed: no for generated app text. Tim may privately use source practices from his copy after review.
-  private_excerpt_allowed: yes for short spoken charms, prayers/blessings, exact questions, ritual titles, and distinctive sequence language Tim manually selects for the private app.
-  private_recipe_excerpt_allowed: yes in principle for Tim's private copy, but preparation-based practices require safety review and are not normal Moon & Table extraction.
+  direct_use_allowed: no for generated app text.
+  operative_text_review: yes for short spoken charms, prayers/blessings, exact questions, ritual titles, and distinctive sequence language under the 20-word exact / justified adaptation / functional instruction rule.
+  recipe_text_review_required: yes in principle for Tim's private copy, but preparation-based practices require safety review and are not normal Moon & Table extraction.
   brief_quote_allowed: exact title, section, and short anchor phrases only.
   paraphrase_required: all generated Moon & Table wording, ritual instructions, safety notes, correspondence explanations, spoken copy, and timing language.
   mechanics_only: preferred for flower entries, correspondence lists, charm architecture, table/vase/altar practices, gathering/offering, contemplation, memory/release actions, mists/oils/baths/essences.
   do_not_use: full modern rituals, full charm/prayer text, full recipes, full tables, medicalized claims, unsafe preparations, manipulative attraction work, or distinctive long source prose.
-Citation requirement: future extraction must cite source ID, title/author, edition, PDF page range, flower entry or section title, and private-excerpt status where relevant.
+Citation requirement: future extraction must cite source ID, title/author, edition, PDF page range, flower entry or section title, and operative-text-review status where relevant.
 Reviewer required: yes.
 Required reviewer expertise: Tim; Moon & Table product/content review; household flower safety review before direct-use review.
 Approval authority: Tim
@@ -60,20 +60,17 @@ Reason: this source is a strong fit for Moon & Table's cut-flower/table/vase/mes
 
 ```ts
 sourceTextPolicy: {
-  exactTextUse: "private_excerpt_allowed";
-  assistantMayReproduce: "brief_quote_only";
-  timManualEntry: "allowed_for_private_app";
+  exactTextUse: "operative_text_review";
+  assistantMayReproduce: "brief_quote_or_short_operative_words_only";
+  storagePosture: "review_before_runtime_use";
   storageLimits: [
-    "private_app_only",
-    "not_public_repo",
-    "not_public_runtime_content",
     "cite_source_id",
     "cite_title_author",
     "cite_page_or_section",
     "unavailable_by_default",
     "not_recommendation_eligible_until_human_review"
   ];
-  notes: "Tim may manually enter exact source wording from his copy for private household use. Research agents should identify important exact wording and source location but should not reproduce long copyrighted passages, full charms, full meditations, full recipes, full tables, or distinctive flower-entry prose."
+  notes: "Author-provided operative ritual words are ritual materials. Operative wording of 20 words or fewer must be stored directly in presentation.practice and tracked as ritualWords.source_exact_short. Longer operative wording may be adapted into a Moon & Table phrase only as a justified candidate-level exception in presentation.practice and tracked as ritualWords.adapted_source_words; otherwise use functional instruction or hold the candidate."
 }
 ```
 
@@ -87,7 +84,7 @@ sourceTextPolicy: {
 | 13-19 | An Orientation to Flower Magic | approved_with_limits | Strongest general mechanics section: proximity, gathering, offering, contemplation, care, charms, essences, correspondences, and cautionary note. |
 | 20-21 | Author's Notes | approved_with_limits | Local availability, flower communication, offerings, plant-spirit language. |
 | 24-360 | Flower entries | approved_with_limits | High-yield extraction range. Future packet must separate flower-first mechanics from correspondence-only or unsafe material. |
-| 361-363 | Appendix A: How to Make a Flower Essence | hold / private_recipe_excerpt_allowed | Not normal Moon & Table extraction. Possible private reference only after safety review. |
+| 361-363 | Appendix A: How to Make a Flower Essence | hold / recipe_text_review_required | Not normal Moon & Table extraction. Possible private reference only after safety review. |
 | 364-383 | Appendix B: Magical Uses Overview | source_note_only | Useful selection index. Do not copy wholesale or make app a flower database. |
 | 384-386 | Appendix C: Elemental Correspondences | source_note_only | Useful for selection/timing notes; no wholesale table reproduction. |
 | 387-389 | Appendix D: Planetary Correspondences | source_note_only | Useful for timing/source-note cards after review; no wholesale table reproduction. |
@@ -161,8 +158,8 @@ Use and adaptation: source-note-only and extraction scaffolding. No wholesale ta
 
 | Source material | PDF pages | Decision | Reason / handling |
 | --- | ---: | --- | --- |
-| Full modern ritual/charm/spell/prayer/meditation/potion wording | throughout | private_excerpt_only | Words are valid ritual mechanics, but generated packets must not reproduce full copyrighted charms, prayers, recipes, meditations, or distinctive passages. |
-| Appendix A, flower essence preparation | 361-363 | hold / private_recipe_excerpt_allowed | Not normal Moon & Table extraction without safety review. |
+| Full modern ritual/charm/spell/prayer/meditation/potion wording | throughout | operative_text_review | Words are valid ritual mechanics, but generated packets must not reproduce full copyrighted charms, prayers, recipes, meditations, or distinctive passages. |
+| Appendix A, flower essence preparation | 361-363 | hold / recipe_text_review_required | Not normal Moon & Table extraction without safety review. |
 | Preparation-based practices involving the body, smoke, oils, baths, or food/drink | throughout | hold unless safety-reviewed | Requires separate safety review before any direct-use path. |
 | Adding any flower preparation to another person's food or drink | throughout | reject | Consent and safety boundary. |
 | Medicalized claims | throughout | do_not_use as advice | Moon & Table may support symbolic tending but must not give health, treatment, recovery, fertility, puberty, or diagnostic advice. |
@@ -184,7 +181,7 @@ Use and adaptation: source-note-only and extraction scaffolding. No wholesale ta
 | Flower altar/table/vase | Flower entries, PDF pp. 24-360 | plant, table, candlelight, vessel | blessing, connecting, marking | approved_with_limits | High-yield for private domestic rituals. |
 | Flower as message / gift / witness | Flower entries, PDF pp. 24-360 | plant, words, table | connecting, voicing, blessing | approved_with_limits | Strong source fit for Tim/Jessica if non-manipulative and mutual. |
 | Flower return / release | Flower entries, PDF pp. 24-360 | plant, words, vessel | releasing, marking, remembering | approved_with_limits | Use compost/earth/tree-base when safe. |
-| Mists, oils, baths, flower waters, flower essences | Orientation, Appendix A, flower entries | vessel, body, plant | blessing, steadying, opening | hold/private_recipe_excerpt_allowed | Rich mechanics but safety-heavy. |
+| Mists, oils, baths, flower waters, flower essences | Orientation, Appendix A, flower entries | vessel, body, plant | blessing, steadying, opening | hold/recipe_text_review_required | Rich mechanics but safety-heavy. |
 | Elemental/planetary flower correspondences | Orientation and Appendices C-D, PDF pp. 18-19, 384-389 | plant, words | marking, opening | source_note_only | Useful timing/source-note support, not standalone rituals. |
 | Purpose-to-flower lookup | Appendix B, PDF pp. 364-383 | plant, words | marking, blessing, steadying | source_note_only | Use for extraction navigation and reviewed matching only. |
 
@@ -194,7 +191,7 @@ Use and adaptation: source-note-only and extraction scaffolding. No wholesale ta
 | --- | --- | --- | --- |
 | `plant` | strong | Entire source centers flowers as magical carriers; proximity, gathering, contemplation, care, charms, bouquets, essences, correspondences | Primary carrier. Future extraction should keep flower first. |
 | `table` | strong | Purchased bouquets, altars, bowls, vases, charm preparation, table/stool in essence-making, flower placement in home/workspace | Strong for Moon & Table's table/vase/bowl lane. |
-| `words` | strong | Silent requests to flowers, spoken charms, prayers, intention-setting, gratitude, journal notes, correspondence labels | Exact wording requires private excerpt or rewrite. |
+| `words` | strong | Silent requests to flowers, spoken charms, prayers, intention-setting, gratitude, journal notes, correspondence labels | Exact wording requires 20-word/adapted-word review. |
 | `vessel` | strong | Vase/bouquet, bowl, mister, charm bag, jar/bottle/dropper, bath, cup/wine/tea | Use safe non-ingested vessels first; hold preparation-heavy vessel work by default. |
 | `candlelight` | moderate | Many flower entries pair flowers with candles/altars; some ritual examples include candles | Good secondary support. Fire safety required. |
 | `body` | moderate/fragile | Quiet contemplation, baths, oils, anointing, flower essences, aromatic practices | Body practices are safety-heavy; use with care. |
@@ -208,7 +205,7 @@ Use and adaptation: source-note-only and extraction scaffolding. No wholesale ta
 | `blessing` | strong | Blessing categories, flower altars, gratitude, beauty/love/divine alignment entries | Strong fit if kept non-medical. |
 | `remembering` | strong | Flower-as-memory, pressed/dried tokens, journal notes, ancestry/heritage entries, repeated contemplation | Strong future lane. |
 | `opening` | strong | Beginnings, invitation, divine alignment, romance/beauty/opportunity entries | Strong if non-manipulative. |
-| `voicing` | strong | Silent requests, spoken charms, prayers, affirmations, gratitude, intention-setting | Exact words private; app wording rewritten. |
+| `voicing` | strong | Silent requests, spoken charms, prayers, affirmations, gratitude, intention-setting | Use exact short source words when reviewed; otherwise functional instruction or justified adapted source words. |
 | `steadying` | strong | Comfort, grounding, gentleness, balance, calm, support entries | Avoid treatment claims. |
 | `releasing` | moderate/strong | Clearing, purification, transition, letting-go, return-to-earth mechanics | Strong when adapted symbolically. |
 | `connecting` | moderate/strong | Flower gifts, love/romance/friendship entries, flower-as-message/witness | Must stay mutual and consent-respecting. |
@@ -229,9 +226,9 @@ Use and adaptation: source-note-only and extraction scaffolding. No wholesale ta
 
 - This is a modern copyrighted Llewellyn source.
 - Do not reproduce full flower entries, full rituals, full charms, full prayers/blessings, full meditations, full recipes, or full correspondence tables in generated research packets or runtime copy.
-- Exact short anchors, ritual titles, short spoken cues, and source locations may be recorded for Tim's private review.
+- Exact short anchors, ritual titles, short spoken cues, and source locations may be recorded for operative text review.
 - Moon & Table runtime copy must be newly written and cite the source ID/title/author/page support.
-- Tim may manually excerpt exact wording into the private app only under the private source text policy.
+- Operative wording follows the 20-word exact / justified adaptation / functional instruction rule.
 
 ## Cultural / living-practice cautions
 
@@ -254,7 +251,7 @@ Use and adaptation: source-note-only and extraction scaffolding. No wholesale ta
 | Future extraction lane | Source sections/pages | Likely carriers | Likely purposes | Why high-yield | Cautions |
 | --- | --- | --- | --- | --- | --- |
 | Flower on the table / vase as witness | Orientation pp. 13-15; flower entries pp. 24-360 | plant, table, vessel, words | marking, blessing, voicing | Directly supports Moon & Table's table/vase/cut-flower gap. | Confirm household flower safety. |
-| Flower-as-message / flower-as-gift | Orientation pp. 13-15; love/friendship/comfort entries pp. 24-360 | plant, words | connecting, blessing, voicing | Strong private household use for Tim/Jessica. | Avoid manipulative attraction or target-control framing. |
+| Flower-as-message / flower-as-gift | Orientation pp. 13-15; love/friendship/comfort entries pp. 24-360 | plant, words | connecting, blessing, voicing | Strong household use. | Avoid manipulative attraction or target-control framing. |
 | Quiet contemplation with a living blossom | Orientation pp. 14-15; entries with contemplation suggestions | plant, body, words | steadying, remembering, opening | Low-overwhelm and source-backed. | Avoid diagnosis, therapy, or guaranteed insight claims. |
 | Ethical gathering and offering | Orientation p. 14; Author's Notes pp. 20-21; entries with gathering/offering | plant, words, vessel | blessing, tending, marking | Grimoire-like, concrete, simple. | Land permission, ecology, household safety. |
 | Pressed/dried flower memory token | Flower entries pp. 24-360 | plant, vessel, words | remembering, marking, releasing | Strong memory/follow-up lane. | Avoid unsafe/irritating flowers and fragile exact charm language. |
@@ -269,7 +266,7 @@ Use and adaptation: source-note-only and extraction scaffolding. No wholesale ta
 expected_source_items_to_inventory: 140-220
 likely_candidate_extract_now: 35-60
 likely_candidate_extract_later: 45-80
-likely_private_excerpt_references: 30-60
+likely_adapted_or_exact_text_reviews: 30-60
 likely_context_only_or_source_notes: 30-50
 likely_hold_or_reject: 35-70
 ```
@@ -317,7 +314,7 @@ Recommended Tim decision: approve for extraction with these limits, then create 
 - Words treated as valid mechanics: yes
 - Recipes classified: yes
 - Flower-as-primary-carrier separated from correspondence-only material: yes
-- Private source text policy applied: yes
+- Operative ritual words policy applied: yes
 - Household safety boundaries included: yes
 - Expected future inventory scope estimated: yes
 - Follow-on queue from #295 preserved: yes

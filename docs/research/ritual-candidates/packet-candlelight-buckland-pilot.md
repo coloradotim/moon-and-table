@@ -35,17 +35,17 @@ Real candles/flame are the default ritual carrier for this packet. LED candles m
 
 ## Source policy note
 
-Moon & Table follows `docs/research/private-source-text-policy.md`.
+Moon & Table follows `docs/research/operative-ritual-words-policy.md`.
 
 Words, prayers, spoken formulas, ritual scripts, Psalms, exact phrases, and distinctive ritual wording are valid ritual material. They should not be erased or flattened into generic wellness mechanics.
 
 For this packet:
 
-- exact Buckland wording may matter for Tim’s private review;
+- exact Buckland wording may matter for operative text review;
 - agents may use exact short phrase anchors, rite titles, spoken cues, and source locations;
 - agents must not reproduce long copyrighted passages, full scripts, full Psalms, full poems, full prayers, or whole distinctive rituals;
-- when exact wording matters, candidates include `sourceTextUse`;
-- private excerpt support does not make a candidate reviewed, findable, direct-use eligible, recommendation eligible, or recommendable.
+- when exact wording matters, candidates include `operativeTextReview`;
+- operative text review support does not make a candidate reviewed, findable, direct-use eligible, recommendation eligible, or recommendable.
 
 ## Disallowed / excluded source material
 
@@ -75,7 +75,7 @@ Inventory metrics:
 source_items_inventoried: 54
 candidate_extract_now: 9
 candidate_extract_later: 8
-private_excerpt_reference: 0
+operative_text_review_reference: 0
 source_note_only: 10
 context_only: 12
 hold: 8
@@ -84,7 +84,7 @@ remaining_unreviewed_source_sections: none known within approved candlelight sco
 remaining_extraction_backlog: 8 candidate_extract_later items plus 8 hold items requiring product/source-boundary decisions
 ```
 
-Important interpretation: `private_excerpt_reference: 0` does not mean exact source wording is irrelevant. It means no source item is only a private excerpt. Several candidate/source items still require `sourceTextUse` because exact scripts, Psalms, spoken formulas, prayers, poems, and consecration language may matter for Tim’s private review.
+Important interpretation: `operative_text_review_reference: 0` does not mean exact source wording is irrelevant. It means no source item is only an operative text review reference. Several candidate/source items still require `operativeTextReview` because exact scripts, Psalms, spoken formulas, prayers, poems, and consecration language may matter for operative text review.
 
 ## Source sections used
 
@@ -115,7 +115,7 @@ Important interpretation: `private_excerpt_reference: 0` does not mean exact sou
 source_items_inventoried: 54
 candidate_extract_now: 9
 candidate_extract_later: 8
-private_excerpt_reference: 0
+operative_text_review_reference: 0
 source_note_only: 10
 context_only: 12
 hold: 8
@@ -149,19 +149,19 @@ current_candidates_recommendation_eligible: 0
 
 | Candidate ID | Source inventory item(s) | Keep / revise / merge / hold / reject | Reason | Required fixes |
 | --- | --- | --- | --- | --- |
-| `ritual-candlelight-buckland-opening-altar-first-light` | Room prep; altar/table setup; candle dressing; lighting/extinguishing; timing; Final Word Before Starting | keep | Correctly grounded in preparation mechanics. | Add sourceTextUse for Final Word language; expand source grounding to include timing and final-word guidance. |
-| `ritual-candlelight-buckland-steadying-blue-meditation` | `To Meditate`; candle roles; reverse extinguishing | keep | Strong direct source support. | Add sourceTextUse for title/short cues; note multi-candle source structure has been simplified/adapted. |
+| `ritual-candlelight-buckland-opening-altar-first-light` | Room prep; altar/table setup; candle dressing; lighting/extinguishing; timing; Final Word Before Starting | keep | Correctly grounded in preparation mechanics. | Add operativeTextReview for Final Word language; expand source grounding to include timing and final-word guidance. |
+| `ritual-candlelight-buckland-steadying-blue-meditation` | `To Meditate`; candle roles; reverse extinguishing | keep | Strong direct source support. | Add operativeTextReview for title/short cues; note multi-candle source structure has been simplified/adapted. |
 | `ritual-candlelight-buckland-releasing-habit-surrounded` | `To Overcome a Bad Habit` | keep | Strong non-coercive release candidate. | Explicitly exclude addiction, medical treatment, self-harm, or compulsive-behavior treatment framing. |
 | `ritual-candlelight-buckland-tending-home-settling` | `To Settle a Disturbed Condition in the Home` | revise | Useful household-tending mechanics, but source purpose can overclaim. | Keep multi-candle structure; avoid claiming peace, conflict resolution, or house fixing. |
 | `ritual-candlelight-buckland-voicing-own-words-flame` | Ritual words / own words guidance; Final Word Before Starting | keep | Strong verbal mechanics candidate. | Add anchors: “A Final Word Before Starting,” “words from the heart,” spontaneous/personal wording. |
 | `ritual-candlelight-buckland-marking-seven-night-increase` | `To Increase Your Power`; repeated candle movement/addition patterns | revise | Good marking mechanics, but source purpose requires heavy adaptation. | State no power-over, occult power, healing, ESP, or guaranteed power-increase claims; preserve seven-session/full-moon/candle sequence. |
 | `ritual-candlelight-buckland-protecting-boundary-circle` | `To Protect Against Evil / To Uncross a Person (i)` | revise | Strong spiritual protection mechanics. | Keep protection language; avoid guarantees, anti-evil certainty, Psalm mapping, copied scripts, and uncrossing provenance unless reviewed. |
-| `ritual-candlelight-buckland-remembering-photo-peace-light` | `For the Dead` | keep | Strong direct remembering candidate. | Add sourceTextUse for exact title/private text review; preserve photo/object + peace candle; no afterlife claims. |
-| `ritual-candlelight-buckland-blessing-object-in-light` | `Consecration of an Amulet or Talisman` | revise | Strong object blessing/consecration mechanics. | Clarify safe adaptation: object near flame/between candles, not through flame by default; exact consecration wording private-excerpt only; use one-candle default with two-candle option. |
+| `ritual-candlelight-buckland-remembering-photo-peace-light` | `For the Dead` | keep | Strong direct remembering candidate. | Add operativeTextReview for exact title/operative wording review; preserve photo/object + peace candle; no afterlife claims. |
+| `ritual-candlelight-buckland-blessing-object-in-light` | `Consecration of an Amulet or Talisman` | revise | Strong object blessing/consecration mechanics. | Clarify safe adaptation: object near flame/between candles, not through flame by default; exact consecration wording operative-text-review only; use one-candle default with two-candle option. |
 
-## Existing candidate sourceTextUse updates
+## Existing candidate operativeTextReview updates
 
-Apply these `sourceTextUse` additions to existing candidate records. Do not reproduce full prayers, Psalms, poems, scripts, consecrations, or rituals.
+Apply these `operativeTextReview` additions to existing candidate records. Do not reproduce full prayers, Psalms, poems, scripts, consecrations, or rituals.
 
 ```ts
 const bucklandPrivateExcerptStoragePolicy = [
@@ -176,13 +176,13 @@ const bucklandPrivateExcerptStoragePolicy = [
 ### `ritual-candlelight-buckland-opening-altar-first-light`
 
 ```ts
-sourceTextUse: {
+operativeTextReview: {
   exactPhraseAnchors: ["Preparation", "Lighting and Extinguishing of Candles", "Time of Rituals", "A Final Word Before Starting"],
   exactSpokenCues: ["read it through", "words from the heart"],
-  privateExcerptRecommended: true,
+  operativeTextReviewRecommended: true,
   excerptType: "ritual_sequence",
   sourceLocation: "Preparation / Lighting and Extinguishing / Time of Rituals / A Final Word Before Starting, PDF pp. 12-15",
-  whyExactTextMatters: "The preparation and final-word guidance explain how Buckland expects practitioners to approach ritual words and candle action. Tim may want the exact guidance in the private grimoire.",
+  whyExactTextMatters: "The preparation and final-word guidance explain how Buckland expects practitioners to approach ritual words and candle action. Any exact guidance requires operative text review before runtime use.",
   agentUseLimit: "short_phrases_only",
   storagePolicy: bucklandPrivateExcerptStoragePolicy
 }
@@ -193,10 +193,10 @@ Research status remains: `draft_record_ready`.
 ### `ritual-candlelight-buckland-steadying-blue-meditation`
 
 ```ts
-sourceTextUse: {
+operativeTextReview: {
   exactPhraseAnchors: ["To Meditate"],
   exactSpokenCues: ["meditate", "reverse order extinguishing"],
-  privateExcerptRecommended: false,
+  operativeTextReviewRecommended: false,
   excerptType: "meditation",
   sourceLocation: "To Meditate, PDF pp. 86-87 / printed pp. 153-155",
   whyExactTextMatters: "The title and source structure matter more than exact wording for this candidate. Tim can review exact wording if desired.",
@@ -210,13 +210,13 @@ Research status remains: `draft_record_ready`.
 ### `ritual-candlelight-buckland-releasing-habit-surrounded`
 
 ```ts
-sourceTextUse: {
+operativeTextReview: {
   exactPhraseAnchors: ["To Overcome a Bad Habit"],
   exactSpokenCues: ["bad habit", "weekly repetition", "moving WHITE candles toward BLACK candle"],
-  privateExcerptRecommended: true,
+  operativeTextReviewRecommended: true,
   excerptType: "spell",
   sourceLocation: "To Overcome a Bad Habit, PDF pp. 19-21 / printed pp. 21-24",
-  whyExactTextMatters: "The source’s repeated movement and contrast between problem candle and support candles are structurally important. Exact script/Psalm should only be reviewed privately.",
+  whyExactTextMatters: "The source’s repeated movement and contrast between problem candle and support candles are structurally important. Exact script/Psalm should only be reviewed through operative text review.",
   agentUseLimit: "short_phrases_only",
   storagePolicy: bucklandPrivateExcerptStoragePolicy
 }
@@ -227,13 +227,13 @@ Required candidate note: symbolic pattern-release only; not addiction treatment,
 ### `ritual-candlelight-buckland-tending-home-settling`
 
 ```ts
-sourceTextUse: {
+operativeTextReview: {
   exactPhraseAnchors: ["To Settle a Disturbed Condition in the Home"],
   exactSpokenCues: ["disturbed condition in the home", "three consecutive nights"],
-  privateExcerptRecommended: true,
+  operativeTextReviewRecommended: true,
   excerptType: "spell",
   sourceLocation: "To Settle a Disturbed Condition in the Home, PDF pp. 22-23 / printed pp. 25-28",
-  whyExactTextMatters: "The source’s home-settling language may matter for private review, but generated app text must avoid promising peace or conflict resolution.",
+  whyExactTextMatters: "The source’s home-settling language may matter for operative text review, but generated app text must avoid promising peace or conflict resolution.",
   agentUseLimit: "short_phrases_only",
   storagePolicy: bucklandPrivateExcerptStoragePolicy
 }
@@ -244,13 +244,13 @@ Required revision: keep the multi-candle/source structure where practical. Phras
 ### `ritual-candlelight-buckland-voicing-own-words-flame`
 
 ```ts
-sourceTextUse: {
+operativeTextReview: {
   exactPhraseAnchors: ["A Final Word Before Starting", "words from the heart"],
   exactSpokenCues: ["spontaneous words", "personally fitting ritual words", "read it through"],
-  privateExcerptRecommended: true,
+  operativeTextReviewRecommended: true,
   excerptType: "spoken_formula",
   sourceLocation: "Preparation / Rituals / A Final Word Before Starting, PDF pp. 14-15",
-  whyExactTextMatters: "This candidate depends on Buckland’s explicit teaching that source scripts are provided but meaningful personal words may be ideal. The exact passage is a useful private anchor.",
+  whyExactTextMatters: "This candidate depends on Buckland’s explicit teaching that source scripts are provided but meaningful personal words may be ideal. Any exact passage requires operative text review before runtime use.",
   agentUseLimit: "short_phrases_only",
   storagePolicy: bucklandPrivateExcerptStoragePolicy
 }
@@ -261,10 +261,10 @@ Research status remains: `draft_record_ready`.
 ### `ritual-candlelight-buckland-marking-seven-night-increase`
 
 ```ts
-sourceTextUse: {
+operativeTextReview: {
   exactPhraseAnchors: ["To Increase Your Power", "seven days before the full moon"],
   exactSpokenCues: ["seven-session sequence", "incremental candle sequence"],
-  privateExcerptRecommended: false,
+  operativeTextReviewRecommended: false,
   excerptType: "ritual_sequence",
   sourceLocation: "To Increase Your Power, PDF pp. 90-93 / printed pp. 161-166",
   whyExactTextMatters: "The timing and sequence matter. Exact wording is less suitable because Moon & Table does not import power-over, occult power, healing, ESP, or guaranteed power-increase claims.",
@@ -278,13 +278,13 @@ Required revision: keep `Seven Marks of Readiness` for now; preserve the seven-s
 ### `ritual-candlelight-buckland-protecting-boundary-circle`
 
 ```ts
-sourceTextUse: {
+operativeTextReview: {
   exactPhraseAnchors: ["To Protect Against Evil", "To Uncross a Person (i)"],
   exactSpokenCues: ["protective candle structure", "surrounding candles", "petitioner candle"],
-  privateExcerptRecommended: true,
+  operativeTextReviewRecommended: true,
   excerptType: "spell",
   sourceLocation: "To Protect Against Evil / To Uncross a Person (i), PDF pp. 30-32 / printed pp. 43-47",
-  whyExactTextMatters: "The source’s protection language and candle structure may be useful for private review, but Buckland’s Psalm mapping, scripts, anti-evil certainty, and uncrossing provenance should not be generated into the packet.",
+  whyExactTextMatters: "The source’s protection language and candle structure may be useful for operative text review, but Buckland’s Psalm mapping, scripts, anti-evil certainty, and uncrossing provenance should not be generated into the packet.",
   agentUseLimit: "short_phrases_only",
   storagePolicy: bucklandPrivateExcerptStoragePolicy
 }
@@ -295,13 +295,13 @@ Required revision: keep spiritual protection language; remove guarantee/anti-evi
 ### `ritual-candlelight-buckland-remembering-photo-peace-light`
 
 ```ts
-sourceTextUse: {
+operativeTextReview: {
   exactPhraseAnchors: ["For the Dead", "peace/tranquility candle", "seven nights"],
   exactSpokenCues: ["photo before the candle", "remembrance structure"],
-  privateExcerptRecommended: true,
+  operativeTextReviewRecommended: true,
   excerptType: "spell",
   sourceLocation: "For the Dead, PDF pp. 23-26 / printed pp. 29-34",
-  whyExactTextMatters: "This is one of the most direct and ritually distinctive source items. Tim may want to review exact wording privately, but generated packet text must avoid full scripts, Psalms, poems, or afterlife claims.",
+  whyExactTextMatters: "This is one of the most direct and ritually distinctive source items. Exact wording requires operative text review before runtime use, and generated packet text must avoid full scripts, Psalms, poems, or afterlife claims.",
   agentUseLimit: "short_phrases_only",
   storagePolicy: bucklandPrivateExcerptStoragePolicy
 }
@@ -312,10 +312,10 @@ Required candidate note: preserve photo/object + remembrance candle + peace/tran
 ### `ritual-candlelight-buckland-blessing-object-in-light`
 
 ```ts
-sourceTextUse: {
+operativeTextReview: {
   exactPhraseAnchors: ["Consecration of an Amulet or Talisman"],
   exactSpokenCues: ["consecration wording", "object rested with candles", "carry or return to use"],
-  privateExcerptRecommended: true,
+  operativeTextReviewRecommended: true,
   excerptType: "blessing",
   sourceLocation: "Consecration of an Amulet or Talisman, PDF pp. 93-94 / printed pp. 167-169",
   whyExactTextMatters: "The consecration wording may matter for private grimoire use, but agent output should not reproduce it. The candidate preserves blessing/consecration mechanics while adapting unsafe flame-passing.",
@@ -330,14 +330,14 @@ Required revision: default to one candle if the object can sit safely beside it;
 
 | Candidate | Required authoring/source update | Severity |
 | --- | --- | --- |
-| First Light at the Table | Add Final Word grounding and sourceTextUse. | low |
+| First Light at the Table | Add Final Word grounding and operativeTextReview. | low |
 | Quiet Flame for Steadying | Clarify adaptation from multi-candle source structure. | low |
 | Surround the Pattern | Add explicit medical/addiction/self-harm exclusion. | medium |
 | Settle the House Light | Authoring revision to avoid peace/fix/conflict guarantee. | medium |
-| Words Beside the Flame | Add sourceTextUse anchors. | low |
+| Words Beside the Flame | Add operativeTextReview anchors. | low |
 | Seven Marks of Readiness | Tighten no-power-claim adaptation note; keep title for now. | medium |
 | Boundary Light | Tighten spiritual protection without guarantee/anti-evil certainty. | medium |
-| Remembering Light | Add sourceTextUse and no-afterlife claim note. | low |
+| Remembering Light | Add operativeTextReview and no-afterlife claim note. | low |
 | Object in the Light | Clarify one-candle default / two-candle option and no flame-passing default. | medium |
 
 ## Additional candidate backlog
@@ -409,14 +409,14 @@ Required revision: default to one candle if the object can sit safely beside it;
 | Petitioner / astral candle | Preparation; many rites | Needs later candidate or source note; do not force into every candidate. |
 | Multi-candle surrounding | Bad Habit; Protect Against Evil; Fear; Home; others | Distinct from one-candle focus; candidates should preserve multi-candle mechanics where source-backed. |
 | Repeated session / movement | Bad Habit; Happiness; Luck; Increase Power | General marking mechanic; current packet has `Surround the Pattern` and `Seven Marks`. |
-| Spoken scripts / prayers / Psalms | Most rites | Requires sourceTextUse/private excerpt support. Do not copy full texts. |
+| Spoken scripts / prayers / Psalms | Most rites | Requires operativeTextReview/operative text review support. Do not copy full texts. |
 | Photo/object marker | For the Dead; Amulet/Talisman | Distinct remembrance/blessing mechanics; keep separate. |
 | Protection / uncrossing | Protect Against Evil; Uncrossing | Boundary Light should not absorb all uncrossing material until provenance review. |
 | Divination/vision | Scrying; Dreams; Truth | Backlog/hold pending product decision. |
 
 ## Candidate records revision status
 
-Current candidate records should remain as-is structurally, with the `sourceTextUse` additions above and the required authoring/source-grounding fixes.
+Current candidate records should remain as-is structurally, with the `operativeTextReview` additions above and the required authoring/source-grounding fixes.
 
 All candidates remain:
 
@@ -478,13 +478,13 @@ Do not mark any Buckland candidate reviewed, recommendable, findable, direct-use
 - Integrated source rite inventory summary: yes.
 - Added packet metrics: yes.
 - Added remaining extraction backlog: yes.
-- Added sourceTextUse support plan for all existing candidates where exact wording may matter: yes.
+- Added operativeTextReview support plan for all existing candidates where exact wording may matter: yes.
 - Reconciled existing candidates against inventory: yes.
 - Updated held/rejected/source-note sections: yes.
 - Updated coverage to reflect true source yield: yes.
 - Did not count held/rejected items as available coverage: yes.
 - Did not reproduce full prayers, Psalms, poems, scripts, consecrations, or rituals: yes.
-- Preserved words/spoken formulas/private excerpt handling as valid ritual material: yes.
+- Preserved words/spoken formulas/operative text review handling as valid ritual material: yes.
 
 ## Open questions for Tim
 
@@ -493,7 +493,7 @@ Do not mark any Buckland candidate reviewed, recommendable, findable, direct-use
 3. Should `To Heal an Unhappy Marriage` stay held permanently, or could it become a mutual-consent relationship-tending candle rite?
 4. Should money/prosperity/luck/success workings remain held, or be reframed as non-guaranteed readiness/intention practices?
 5. Should a standalone petitioner/self-marker candle candidate be added in the next batch?
-6. Should every Buckland-derived candidate include `sourceTextUse`, even when exact wording is low importance?
+6. Should every Buckland-derived candidate include `operativeTextReview`, even when exact wording is low importance?
 7. Should `Boundary Light` be sourced only from `To Protect Against Evil`, or also from uncrossing after cultural/source-boundary review?
 8. Should the non-candle appendix remain permanently out of scope, or become a separate words/body source packet later?
 
