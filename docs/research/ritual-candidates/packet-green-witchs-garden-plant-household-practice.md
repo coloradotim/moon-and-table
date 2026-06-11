@@ -91,7 +91,7 @@ The approved source gate for this source is `docs/research/source-gates/src-plan
 
 ```text
 source_items_inventoried: 30
-candidate_extract_now: 15
+candidate_extract_now: 16
 candidate_extract_later: 2
 private_excerpt_reference: 0
 items_with_private_excerpt_recommended: 7
