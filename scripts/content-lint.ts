@@ -1,4 +1,5 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -123,6 +124,25 @@ function getScannedFiles(rootPath: string): string[] {
   });
 }
 
+function getSourceControlledScannedFiles(): string[] {
+  try {
+    return execFileSync("git", ["ls-files", ...SCANNED_ROOTS], {
+      cwd: REPO_ROOT,
+      encoding: "utf8",
+    })
+      .split(/\r?\n/)
+      .filter(Boolean)
+      .filter((relativePath) =>
+        !shouldSkipPath(relativePath) && isScannedFile(relativePath),
+      )
+      .map((relativePath) => join(REPO_ROOT, relativePath));
+  } catch {
+    return SCANNED_ROOTS.flatMap((root) =>
+      getScannedFiles(join(REPO_ROOT, root)),
+    );
+  }
+}
+
 function isEmailAllowed(value: string): boolean {
   return EMAIL_ALLOWLIST_PATTERNS.some((pattern) => pattern.test(value));
 }
@@ -210,9 +230,7 @@ export function lintContentText(
 }
 
 export function runContentLint(): ContentLintResult {
-  const files = SCANNED_ROOTS.flatMap((root) =>
-    getScannedFiles(join(REPO_ROOT, root)),
-  );
+  const files = getSourceControlledScannedFiles();
   const findings = files.flatMap((filePath) => {
     const relativePath = relative(REPO_ROOT, filePath);
     const contents = readFileSync(filePath, "utf8");
