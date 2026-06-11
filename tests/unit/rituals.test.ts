@@ -17,7 +17,7 @@ import {
 } from "../../src/data/rituals/validate-rituals";
 
 describe("source-backed Ritual import data", () => {
-  it("contains source-backed records with direct-use review overlays applied", () => {
+  it("contains source-backed records with direct-use and recommendation review overlays applied", () => {
     expect(sourceBackedRituals).toHaveLength(218);
     expect(sourceBackedRituals.map((ritual) => ritual.id)).toEqual(
       expect.arrayContaining([
@@ -38,7 +38,10 @@ describe("source-backed Ritual import data", () => {
     );
     expect(
       sourceBackedRituals.filter((ritual) => ritual.status === "reviewed"),
-    ).toHaveLength(218);
+    ).toHaveLength(36);
+    expect(
+      sourceBackedRituals.filter((ritual) => ritual.status === "recommendable"),
+    ).toHaveLength(182);
     expect(sourceBackedRituals.every((ritual) => ritual.origin.type === "source")).toBe(
       true,
     );
@@ -49,26 +52,18 @@ describe("source-backed Ritual import data", () => {
       sourceBackedRituals.filter((ritual) => ritual.availability.directUseEligible),
     ).toHaveLength(218);
     expect(
-      sourceBackedRituals.every(
-        (ritual) => ritual.availability.recommendationEligible === false,
-      ),
-    ).toBe(true);
+      sourceBackedRituals.filter((ritual) => ritual.availability.recommendationEligible),
+    ).toHaveLength(182);
     expect(
       sourceBackedRituals.every(
         (ritual) =>
-          ritual.recommendationMetadata.eligibility.recommendable === false &&
-          ritual.recommendationMetadata.eligibility.missing?.includes(
-            "recommendation_review",
-          ) &&
-          (ritual.availability.directUseEligible ||
-            ritual.recommendationMetadata.eligibility.missing?.includes(
-              "direct_use_review",
-            )),
+          ritual.availability.recommendationEligible ===
+          ritual.recommendationMetadata.eligibility.recommendable,
       ),
     ).toBe(true);
   });
 
-  it("promotes the Woodward kitchen/vessel batch for direct use only", () => {
+  it("promotes the Woodward kitchen/vessel batch for recommendation", () => {
     const woodward = sourceBackedRituals.filter(
       (ritual) =>
         ritual.searchMetadata.sourceLabel ===
@@ -76,41 +71,41 @@ describe("source-backed Ritual import data", () => {
     );
 
     expect(woodward).toHaveLength(14);
-    expect(woodward.every((ritual) => ritual.status === "reviewed")).toBe(true);
+    expect(woodward.every((ritual) => ritual.status === "recommendable")).toBe(true);
     expect(woodward.every((ritual) => ritual.availability.directUseEligible)).toBe(
       true,
     );
     expect(
-      woodward.every((ritual) => !ritual.availability.recommendationEligible),
+      woodward.every((ritual) => ritual.availability.recommendationEligible),
     ).toBe(true);
     expect(
       woodward.every(
         (ritual) =>
           ritual.recommendationMetadata.eligibility.missing?.join(",") ===
-          "recommendation_review",
+          "",
       ),
     ).toBe(true);
     expect(woodward.every((ritual) => ritual.reviewFlags === undefined)).toBe(true);
   });
 
-  it("promotes the House Witch hearth and room batch for direct use only", () => {
+  it("promotes the House Witch hearth and room batch for recommendation", () => {
     const houseWitch = sourceBackedRituals.filter(
       (ritual) => ritual.searchMetadata.sourceLabel === "The House Witch",
     );
 
     expect(houseWitch).toHaveLength(15);
-    expect(houseWitch.every((ritual) => ritual.status === "reviewed")).toBe(true);
+    expect(houseWitch.every((ritual) => ritual.status === "recommendable")).toBe(true);
     expect(
       houseWitch.every((ritual) => ritual.availability.directUseEligible),
     ).toBe(true);
     expect(
-      houseWitch.every((ritual) => !ritual.availability.recommendationEligible),
+      houseWitch.every((ritual) => ritual.availability.recommendationEligible),
     ).toBe(true);
     expect(
       houseWitch.every(
         (ritual) =>
           ritual.recommendationMetadata.eligibility.missing?.join(",") ===
-          "recommendation_review",
+          "",
       ),
     ).toBe(true);
     expect(houseWitch.every((ritual) => ritual.reviewFlags === undefined)).toBe(true);
@@ -132,7 +127,7 @@ describe("source-backed Ritual import data", () => {
     ).toBe("Release Through Salt and Flame");
   });
 
-  it("promotes the Buckland candle batch for direct use only", () => {
+  it("promotes deeper-capacity Buckland multi-night records and holds the full-moon lead-time rite", () => {
     const buckland = sourceBackedRituals.filter(
       (ritual) =>
         ritual.searchMetadata.sourceLabel ===
@@ -140,20 +135,29 @@ describe("source-backed Ritual import data", () => {
     );
 
     expect(buckland).toHaveLength(13);
-    expect(buckland.every((ritual) => ritual.status === "reviewed")).toBe(true);
     expect(buckland.every((ritual) => ritual.availability.directUseEligible)).toBe(
       true,
     );
     expect(
-      buckland.every((ritual) => !ritual.availability.recommendationEligible),
-    ).toBe(true);
+      buckland.filter((ritual) => ritual.availability.recommendationEligible),
+    ).toHaveLength(12);
+    expect(buckland.filter((ritual) => ritual.status === "reviewed")).toHaveLength(
+      1,
+    );
     expect(
-      buckland.every(
+      buckland
+        .filter((ritual) => !ritual.availability.recommendationEligible)
+        .map((ritual) => ritual.id),
+    ).toEqual(["ritual-candlelight-buckland-marking-seven-night-increase"]);
+    expect(
+      buckland.find(
         (ritual) =>
-          ritual.recommendationMetadata.eligibility.missing?.join(",") ===
-          "recommendation_review",
-      ),
-    ).toBe(true);
+          ritual.id === "ritual-candlelight-buckland-releasing-habit-surrounded",
+      )?.recommendationMetadata.capacity,
+    ).toEqual({
+      supports: ["room_for_something_deeper"],
+      default: "room_for_something_deeper",
+    });
     expect(buckland.every((ritual) => ritual.reviewFlags === undefined)).toBe(true);
 
     const directUseText = buckland
@@ -184,13 +188,13 @@ describe("source-backed Ritual import data", () => {
     ).toContain("all that it sees");
   });
 
-  it("promotes the Magical Household domestic batch for direct use only", () => {
+  it("promotes the Magical Household domestic batch for recommendation", () => {
     const magicalHousehold = sourceBackedRituals.filter(
       (ritual) => ritual.searchMetadata.sourceLabel === "The Magical Household",
     );
 
     expect(magicalHousehold).toHaveLength(15);
-    expect(magicalHousehold.every((ritual) => ritual.status === "reviewed")).toBe(
+    expect(magicalHousehold.every((ritual) => ritual.status === "recommendable")).toBe(
       true,
     );
     expect(
@@ -198,14 +202,14 @@ describe("source-backed Ritual import data", () => {
     ).toBe(true);
     expect(
       magicalHousehold.every(
-        (ritual) => !ritual.availability.recommendationEligible,
+        (ritual) => ritual.availability.recommendationEligible,
       ),
     ).toBe(true);
     expect(
       magicalHousehold.every(
         (ritual) =>
           ritual.recommendationMetadata.eligibility.missing?.join(",") ===
-          "recommendation_review",
+          "",
       ),
     ).toBe(true);
     expect(
@@ -221,24 +225,24 @@ describe("source-backed Ritual import data", () => {
     ).toBe("Carry the Four Elements Through the House");
   });
 
-  it("promotes the Green Garden plant batch for direct use only", () => {
+  it("promotes the Green Garden plant batch for recommendation", () => {
     const greenGarden = sourceBackedRituals.filter(
       (ritual) => ritual.searchMetadata.sourceLabel === "The Green Witch's Garden",
     );
 
     expect(greenGarden).toHaveLength(16);
-    expect(greenGarden.every((ritual) => ritual.status === "reviewed")).toBe(true);
+    expect(greenGarden.every((ritual) => ritual.status === "recommendable")).toBe(true);
     expect(
       greenGarden.every((ritual) => ritual.availability.directUseEligible),
     ).toBe(true);
     expect(
-      greenGarden.every((ritual) => !ritual.availability.recommendationEligible),
+      greenGarden.every((ritual) => ritual.availability.recommendationEligible),
     ).toBe(true);
     expect(
       greenGarden.every(
         (ritual) =>
           ritual.recommendationMetadata.eligibility.missing?.join(",") ===
-          "recommendation_review",
+          "",
       ),
     ).toBe(true);
     expect(
@@ -253,7 +257,7 @@ describe("source-backed Ritual import data", () => {
     ).not.toMatch(/pets|children|safety warnings/i);
   });
 
-  it("promotes the Whitehurst flower batches for direct use only", () => {
+  it("promotes the Whitehurst flower batches for recommendation", () => {
     const whitehurst = sourceBackedRituals.filter(
       (ritual) => ritual.searchMetadata.sourceLabel === "Whitehurst flower magic",
     );
@@ -263,12 +267,12 @@ describe("source-backed Ritual import data", () => {
 
     expect(whitehurst).toHaveLength(36);
     expect(reviewedWhitehurst).toHaveLength(36);
-    expect(reviewedWhitehurst.every((ritual) => ritual.status === "reviewed")).toBe(
+    expect(reviewedWhitehurst.every((ritual) => ritual.status === "recommendable")).toBe(
       true,
     );
     expect(
       reviewedWhitehurst.every(
-        (ritual) => !ritual.availability.recommendationEligible,
+        (ritual) => ritual.availability.recommendationEligible,
       ),
     ).toBe(true);
     expect(
@@ -286,7 +290,7 @@ describe("source-backed Ritual import data", () => {
     ).not.toMatch(/reviewed flower|reviewed bouquet|reviewed petals/i);
   });
 
-  it("promotes the Moon Book lunar-cycle batch for direct use only", () => {
+  it("promotes timing-flexible Moon Book records and holds phase-required records", () => {
     const moonBook = sourceBackedRituals.filter(
       (ritual) =>
         ritual.searchMetadata.sourceLabel ===
@@ -294,18 +298,80 @@ describe("source-backed Ritual import data", () => {
     );
 
     expect(moonBook).toHaveLength(21);
-    expect(moonBook.every((ritual) => ritual.status === "reviewed")).toBe(true);
     expect(moonBook.every((ritual) => ritual.availability.directUseEligible)).toBe(
       true,
     );
     expect(
-      moonBook.every((ritual) => !ritual.availability.recommendationEligible),
+      moonBook.filter((ritual) => ritual.availability.recommendationEligible),
+    ).toHaveLength(13);
+    expect(
+      moonBook
+        .filter((ritual) => !ritual.availability.recommendationEligible)
+        .every((ritual) =>
+          ritual.recommendationMetadata.eligibility.missing?.includes(
+            "timing_engine_wiring",
+          ),
+        ),
     ).toBe(true);
     expect(
       moonBook.find(
         (ritual) => ritual.id === "candidate.moon_book.imperfect_timing_adaptation",
-      )?.presentation.headline,
-    ).toBe("Use the Phase You Actually Have");
+      ),
+    ).toEqual(
+      expect.objectContaining({
+        status: "recommendable",
+        presentation: expect.objectContaining({
+          headline: "Use the Phase You Actually Have",
+        }),
+      }),
+    );
+  });
+
+  it("holds only the context-dependent Anand records", () => {
+    const anand = sourceBackedRituals.filter(
+      (ritual) =>
+        ritual.searchMetadata.sourceLabel ===
+        "Margot Anand, The Art of Sexual Magic",
+    );
+
+    expect(anand).toHaveLength(28);
+    expect(anand.filter((ritual) => ritual.availability.recommendationEligible)).toHaveLength(
+      24,
+    );
+    expect(
+      anand
+        .filter((ritual) => !ritual.availability.recommendationEligible)
+        .map((ritual) => ritual.id),
+    ).toEqual([
+      "candidate.anand.practice_night_commitment",
+      "candidate.anand.read_the_steps_together",
+      "candidate.anand.afterglow_grimoire",
+      "candidate.anand.keep_symbol_warm",
+    ]);
+  });
+
+  it("keeps Dominguez timing records direct-use only until timing wiring exists", () => {
+    const dominguez = sourceBackedRituals.filter(
+      (ritual) =>
+        ritual.searchMetadata.sourceLabel ===
+        "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans",
+    );
+
+    expect(dominguez).toHaveLength(13);
+    expect(dominguez.every((ritual) => ritual.status === "reviewed")).toBe(true);
+    expect(
+      dominguez.every((ritual) => ritual.availability.directUseEligible),
+    ).toBe(true);
+    expect(
+      dominguez.every((ritual) => !ritual.availability.recommendationEligible),
+    ).toBe(true);
+    expect(
+      dominguez.every((ritual) =>
+        ritual.recommendationMetadata.eligibility.missing?.includes(
+          "timing_engine_wiring",
+        ),
+      ),
+    ).toBe(true);
   });
 
   it("maps packet presentation fields without legacy pilot records", () => {
@@ -522,9 +588,10 @@ describe("source-backed Ritual import data", () => {
     );
   });
 
-  it("prevents source-backed Rituals from self-identifying as recommendation-ready", () => {
+  it("prevents pilot Rituals from self-identifying as recommendation-ready", () => {
     const recommendationEligiblePilot = {
       ...sourceBackedRituals[0],
+      status: "pilot",
       availability: {
         ...sourceBackedRituals[0].availability,
         recommendationEligible: true,
@@ -532,6 +599,7 @@ describe("source-backed Ritual import data", () => {
     } satisfies Ritual;
     const recommendablePilot = {
       ...sourceBackedRituals[0],
+      status: "pilot",
       recommendationMetadata: {
         ...sourceBackedRituals[0].recommendationMetadata,
         eligibility: {

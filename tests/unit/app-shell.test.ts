@@ -746,7 +746,7 @@ describe("app shell rendering", () => {
     expect(html).toContain("Prepare the Candle Table");
     expect(html).toContain("ritual-buckland-candle-prepare-table");
     expect(html).not.toContain("direct_use_review");
-    expect(html).toContain("recommendation_review");
+    expect(html).toContain("timing_engine_wiring");
     expect(html).toContain("Raw full object");
     expect(html).toContain("&quot;id&quot;: &quot;ritual-buckland-candle-prepare-table&quot;");
     expect(html).not.toContain("Search by material, mood, purpose, place, or phrase.");
@@ -770,9 +770,9 @@ describe("app shell rendering", () => {
     expect(sourceHtml).toContain("Prepare the Candle Table");
     expect(householdHtml).toContain("0 Rituals shown");
     expect(householdHtml).not.toContain("Prepare the Candle Table");
-    expect(missingReadinessHtml).toContain("218 Rituals shown");
+    expect(missingReadinessHtml).toContain("36 Rituals shown");
     expect(missingReadinessHtml).not.toContain("direct_use_review");
-    expect(missingReadinessHtml).toContain("recommendation_review");
+    expect(missingReadinessHtml).toContain("timing_engine_wiring");
   });
 
   it("keeps the search ritual path renderable before a brief exists", () => {
@@ -832,7 +832,7 @@ describe("app shell rendering", () => {
     expect(html).toContain("Question to carry");
     expect(html).toContain("What does this table need to be fed?");
     expect(html).toContain("Recommendation eligible");
-    expect(html).toContain("<dd>no</dd>");
+    expect(html).toContain("<dd>yes</dd>");
     expect(html).not.toContain("data-testid=\"recommended-ritual\"");
   });
 

@@ -7,7 +7,7 @@ import {
 import { sourceBackedRituals } from "../../src/data/rituals/source-backed-rituals";
 
 describe("Manage Rituals view model", () => {
-  it("summarizes imported Ritual records with direct-use review overlays", () => {
+  it("summarizes imported Ritual records with recommendation review overlays", () => {
     const viewModel = createManageRitualsViewModel(sourceBackedRituals);
 
     expect(viewModel.total).toBe(218);
@@ -16,8 +16,8 @@ describe("Manage Rituals view model", () => {
     expect(viewModel.counts.byStatus).toEqual({
       pilot: 0,
       draft: 0,
-      reviewed: 218,
-      recommendable: 0,
+      reviewed: 36,
+      recommendable: 182,
     });
     expect(viewModel.counts.byOrigin).toEqual({
       source: 218,
@@ -25,10 +25,10 @@ describe("Manage Rituals view model", () => {
     });
     expect(viewModel.counts.findable).toBe(218);
     expect(viewModel.counts.directUseEligible).toBe(218);
-    expect(viewModel.counts.recommendationEligible).toBe(0);
-    expect(viewModel.counts.recommendable).toBe(0);
+    expect(viewModel.counts.recommendationEligible).toBe(182);
+    expect(viewModel.counts.recommendable).toBe(182);
     expect(viewModel.counts.withValidationFindings).toBe(0);
-    expect(viewModel.counts.withMissingReadiness).toBe(218);
+    expect(viewModel.counts.withMissingReadiness).toBe(36);
     expect(viewModel.rows.map((row) => row.id)).toEqual(
       expect.arrayContaining([
         "ritual-buckland-candle-prepare-table",
@@ -40,7 +40,12 @@ describe("Manage Rituals view model", () => {
       ]),
     );
     expect(
-      viewModel.rows.every((row) => row.missingReadiness.includes("recommendation_review")),
+      viewModel.rows.filter((row) => row.missingReadiness.length > 0),
+    ).toHaveLength(36);
+    expect(
+      viewModel.rows.some((row) =>
+        row.missingReadiness.includes("timing_engine_wiring"),
+      ),
     ).toBe(true);
   });
 
@@ -52,7 +57,11 @@ describe("Manage Rituals view model", () => {
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { status: "reviewed" })
         .filteredTotal,
-    ).toBe(218);
+    ).toBe(36);
+    expect(
+      createManageRitualsViewModel(sourceBackedRituals, { status: "recommendable" })
+        .filteredTotal,
+    ).toBe(182);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { origin: "source" })
         .filteredTotal,
@@ -65,7 +74,12 @@ describe("Manage Rituals view model", () => {
       createManageRitualsViewModel(sourceBackedRituals, {
         readiness: "missing_readiness",
       }).filteredTotal,
-    ).toBe(218);
+    ).toBe(36);
+    expect(
+      createManageRitualsViewModel(sourceBackedRituals, {
+        readiness: "recommendation_ready",
+      }).filteredTotal,
+    ).toBe(182);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, {
         readiness: "validation_findings",
