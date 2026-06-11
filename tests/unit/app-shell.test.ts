@@ -202,8 +202,8 @@ describe("app shell rendering", () => {
     expect(html).toContain("Room for something deeper");
     expect(html).toContain("More time, reflection, conversation, or ritual shape.");
     expect(html).not.toContain("Who is this for?");
-    expect(html).not.toContain("What feels welcome?");
-    expect(html).not.toContain("What intention should this hold?");
+    expect(html).not.toContain("Where should the ritual live?");
+    expect(html).not.toContain("What work should the ritual hold?");
   });
 
   it("acknowledges the selected week scope before the next question", () => {
@@ -220,32 +220,31 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("Welcome back");
   });
 
-  it("renders adaptive A little practice options only", () => {
+  it("renders carrier options for A little capacity", () => {
     const html = renderRitualCheckInShell({
       draft: {
-        step: "practice_type",
+        step: "carrier",
         timeScope: "today",
         energyCapacity: "a_little",
         capacityMode: "low",
       },
     });
 
-    expect(html).toContain("What feels welcome?");
-    expect(html).toContain("Home");
-    expect(html).toContain("Plant");
-    expect(html).toContain("Kitchen");
-    expect(html).toContain("Candle or light");
-    expect(html).toContain("Surprise me");
+    expect(html).toContain("Where should the ritual live?");
+    expect(html).toContain("In candlelight");
+    expect(html).toContain("At the table");
+    expect(html).toContain("At the doorway");
+    expect(html).toContain("With a plant");
+    expect(html).toContain("In words");
+    expect(html).toContain("In a vessel");
+    expect(html).toContain("In the body");
     expect(html).not.toContain("Today’s shape");
     expect(html).not.toContain("Conversation");
     expect(html).not.toContain("Who is this for?");
-    expect(html).not.toContain("Home tending");
-    expect(html).not.toContain("Reflection");
-    expect(html).not.toContain("Seasonal");
-    expect(html).not.toContain("What intention should this hold?");
+    expect(html).not.toContain("What work should the ritual hold?");
   });
 
-  it("renders audience and deeper ritual-focus steps", () => {
+  it("renders audience, carrier, purpose, and deeper refinement steps", () => {
     const audienceHtml = renderRitualCheckInShell({
       draft: {
         step: "audience",
@@ -254,23 +253,37 @@ describe("app shell rendering", () => {
         capacityMode: "high",
       },
     });
-    const practiceHtml = renderRitualCheckInShell({
+    const carrierHtml = renderRitualCheckInShell({
       draft: {
-        step: "practice_type",
+        step: "carrier",
         timeScope: "best_moment_this_week",
         energyCapacity: "room_for_something_deeper",
         capacityMode: "high",
         audience: "both_of_us",
       },
     });
-    const focusHtml = renderRitualCheckInShell({
+    const purposeHtml = renderRitualCheckInShell({
       draft: {
-        step: "ritual_focus",
+        step: "purpose",
         timeScope: "best_moment_this_week",
         energyCapacity: "room_for_something_deeper",
         capacityMode: "high",
         audience: "both_of_us",
-        practiceTypeHints: ["seasonal"],
+        carrier: "table",
+        carrierLabel: "At the table",
+      },
+    });
+    const refinementHtml = renderRitualCheckInShell({
+      draft: {
+        step: "refinement",
+        timeScope: "best_moment_this_week",
+        energyCapacity: "room_for_something_deeper",
+        capacityMode: "high",
+        audience: "both_of_us",
+        carrier: "table",
+        carrierLabel: "At the table",
+        purpose: "connecting",
+        purposeLabel: "Connecting",
       },
     });
 
@@ -278,25 +291,32 @@ describe("app shell rendering", () => {
     expect(audienceHtml).toContain("Go back");
     expect(audienceHtml).toContain("Me");
     expect(audienceHtml).toContain("Both of us");
-    expect(practiceHtml).toContain("Go back");
-    expect(practiceHtml).toContain("Seasonal");
-    expect(focusHtml).toContain("Go back");
-    expect(focusHtml).toContain("What intention should this hold?");
-    expect(focusHtml).toContain("Getting grounded");
-    expect(focusHtml).toContain("Making a beginning");
-    expect(focusHtml).toContain("Clearing something out");
-    expect(focusHtml).toContain("Resting");
-    expect(focusHtml).toContain("Saying something clearly");
-    expect(focusHtml).toContain("Tending us");
-    expect(focusHtml).toContain("Tending the home");
-    expect(focusHtml).toContain("Marking a threshold");
-    expect(focusHtml).toContain("Something else");
+    expect(carrierHtml).toContain("Go back");
+    expect(carrierHtml).toContain("Where should the ritual live?");
+    expect(carrierHtml).toContain("At the table");
+    expect(purposeHtml).toContain("Go back");
+    expect(purposeHtml).toContain("What work should the ritual hold?");
+    expect(purposeHtml).toContain("Steadying");
+    expect(purposeHtml).toContain("Opening");
+    expect(purposeHtml).toContain("Releasing");
+    expect(purposeHtml).toContain("Tending");
+    expect(purposeHtml).toContain("Connecting");
+    expect(purposeHtml).toContain("Voicing");
+    expect(purposeHtml).toContain("Marking");
+    expect(purposeHtml).toContain("Blessing");
+    expect(purposeHtml).toContain("Protecting");
+    expect(purposeHtml).toContain("Remembering");
+    expect(refinementHtml).toContain("What kind of connection?");
+    expect(refinementHtml).toContain("Touch");
+    expect(refinementHtml).toContain("Sensuality");
+    expect(refinementHtml).toContain("Tenderness");
+    expect(refinementHtml).toContain("Desire");
   });
 
-  it("renders an intention step even for barely-any capacity", () => {
+  it("renders a purpose step even for barely-any capacity", () => {
     const html = renderRitualCheckInShell({
       draft: {
-        step: "ritual_focus",
+        step: "purpose",
         timeScope: "today",
         energyCapacity: "barely_any",
         capacityMode: "pause",
@@ -306,9 +326,9 @@ describe("app shell rendering", () => {
 
     expect(html).toContain("Me");
     expect(html).not.toContain("Barely any capacity.");
-    expect(html).toContain("What intention should this hold?");
-    expect(html).toContain("Resting");
-    expect(html).toContain("Getting grounded");
+    expect(html).toContain("What work should the ritual hold?");
+    expect(html).toContain("Steadying");
+    expect(html).toContain("Remembering");
   });
 
   it("renders a review screen before generating the brief", () => {
@@ -319,8 +339,10 @@ describe("app shell rendering", () => {
         energyCapacity: "a_little",
         capacityMode: "low",
         audience: "both_of_us",
-        practiceTypeLabel: "Plant",
-        ritualFocusLabel: "Tending the home",
+        carrier: "plant",
+        carrierLabel: "With a plant",
+        purpose: "tending",
+        purposeLabel: "Tending",
       },
     });
 
@@ -329,8 +351,8 @@ describe("app shell rendering", () => {
     expect(html).toContain("<li>across the week</li>");
     expect(html).toContain("<li>for both of you</li>");
     expect(html).toContain("<li>with a little capacity</li>");
-    expect(html).toContain("<li>with plant</li>");
-    expect(html).toContain("<li>holding tending the home</li>");
+    expect(html).toContain("<li>living with a plant</li>");
+    expect(html).toContain("<li>holding tending</li>");
     expect(html).not.toContain("for both of us");
     expect(html).toContain(
       "I’ll use this with your saved profile to recommend one ritual.",
@@ -349,7 +371,8 @@ describe("app shell rendering", () => {
         energyCapacity: "barely_any",
         capacityMode: "pause",
         audience: "me",
-        ritualFocusLabel: "Getting grounded",
+        purpose: "steadying",
+        purposeLabel: "Steadying",
       },
     });
 
@@ -365,25 +388,6 @@ describe("app shell rendering", () => {
     expect(html).toContain("Reading the moon.");
     expect(html).toContain("Choosing one ritual.");
     expect(html).not.toContain("data-testid=\"recommended-ritual\"");
-  });
-
-  it("renders Something else as short text without interpretation copy", () => {
-    const html = renderRitualCheckInShell({
-      draft: {
-        step: "ritual_focus_text",
-        timeScope: "best_moment_this_week",
-        energyCapacity: "room_for_something_deeper",
-        capacityMode: "high",
-        ritualFocusKey: "something_else",
-      },
-    });
-
-    expect(html).toContain("Something else");
-    expect(html).toContain('maxlength="120"');
-    expect(html).toContain("Choose ritual");
-    expect(html).not.toContain("AI");
-    expect(html).not.toContain("free-associate");
-    expect(html).not.toContain("interpret");
   });
 
   it("renders a loading state", () => {

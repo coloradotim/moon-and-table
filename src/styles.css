@@ -1714,6 +1714,83 @@ h2 {
   line-height: 1.64;
 }
 
+.choose-result {
+  display: grid;
+  gap: 24px;
+}
+
+.choose-result__intro {
+  padding-bottom: 6px;
+}
+
+.choose-result__body {
+  max-width: 760px;
+  padding: 24px 0;
+  border-top: 1px solid rgba(217, 208, 193, 0.72);
+}
+
+.choose-result__body .ritual-preview__header {
+  display: none;
+}
+
+.choose-result__body .ritual-readiness-details {
+  display: none;
+}
+
+.choose-result__reasoning {
+  padding-top: 0;
+}
+
+.choose-result__debug {
+  max-width: 760px;
+  padding: 14px 16px;
+  border-left: 4px solid #667b5c;
+  background: #eef3f1;
+}
+
+.choose-result__debug summary {
+  width: fit-content;
+  color: #3f5348;
+  cursor: pointer;
+  font-size: var(--text-label);
+  font-weight: 700;
+}
+
+.choose-result__debug dl {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.choose-result__debug dl > div {
+  display: grid;
+  gap: 2px;
+}
+
+.choose-result__debug dt {
+  color: #66736a;
+  font-size: var(--text-label);
+  font-weight: 700;
+}
+
+.choose-result__debug dd {
+  margin: 0;
+  color: #26312c;
+  font-size: var(--text-small);
+}
+
+.choose-result__debug pre {
+  max-height: 360px;
+  overflow: auto;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid rgba(102, 123, 92, 0.22);
+  background: rgba(255, 255, 255, 0.56);
+  color: #26312c;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
 .ritual-readiness-details {
   max-width: 720px;
   padding-top: 4px;

@@ -8,8 +8,11 @@ import {
 import { MoonPhase } from "astronomy-engine";
 import {
   audienceOptions,
+  carrierOptions,
   energyCapacityOptions,
   getPracticeOptionsForEnergy,
+  getRefinementGroupForPurpose,
+  purposeOptions,
   timeScopeOptions,
   type RitualCheckInDraft,
   type RitualCheckInEnergyCapacity,
@@ -55,6 +58,7 @@ import {
   getRitualSearchChips,
   searchRituals,
 } from "../data/rituals/search-rituals";
+import type { ChooseWithMeResult } from "../data/rituals/choose-with-me-selector";
 import { RITUAL_STATUSES, type Ritual } from "../data/rituals/types";
 
 const feedbackLabels: Record<BriefFeedbackType, string> = {
@@ -107,6 +111,7 @@ export type RitualSearchSort = "match" | "title" | "purpose" | "material";
 export type SignedInShellOptions = {
   activeView?: SignedInView;
   brief?: WeeklyBrief;
+  chooseWithMeResult?: ChooseWithMeResult;
   feedbackStatus?: string;
   tryAgainStatus?: string;
   selectedFeedbackType?: BriefFeedbackType;
@@ -917,6 +922,92 @@ export function renderRitualPreview(ritual: Ritual): string {
   `;
 }
 
+function renderChooseWithMeDebug(result: ChooseWithMeResult): string {
+  return `
+    <details class="choose-result__debug" aria-label="Recommendation debug">
+      <summary>Recommendation debug</summary>
+      <dl>
+        <div>
+          <dt>Status</dt>
+          <dd>${escapeHtml(result.status)}</dd>
+        </div>
+        <div>
+          <dt>Eligible</dt>
+          <dd>${result.debug.eligibleCount}</dd>
+        </div>
+        <div>
+          <dt>Excluded</dt>
+          <dd>${result.debug.excludedCount}</dd>
+        </div>
+        <div>
+          <dt>Selected</dt>
+          <dd>${escapeHtml(result.debug.selectedRitualId ?? "none")}</dd>
+        </div>
+      </dl>
+      <pre>${escapeHtml(JSON.stringify(result.debug, null, 2))}</pre>
+    </details>
+  `;
+}
+
+function renderChooseWithMeResult(result: ChooseWithMeResult): string {
+  if (result.status === "no_result") {
+    return `
+      <article class="choose-result choose-result--empty" aria-label="Chosen ritual">
+        <section class="brief__core" aria-label="No recommendation">
+          <h2 class="brief__theme">Nothing fit that exact reach.</h2>
+          <p>${escapeHtml(result.whyThisFits)}</p>
+          <p>${escapeHtml(result.howThisWasChosen)}</p>
+          <button
+            class="quiet-action"
+            type="button"
+            data-check-in-start-over="true"
+          >Check in again</button>
+        </section>
+        ${renderChooseWithMeDebug(result)}
+      </article>
+    `;
+  }
+
+  const ritual = result.selectedRitual;
+
+  return `
+    <article class="choose-result" aria-label="Chosen ritual">
+      <section class="brief__core choose-result__intro" aria-label="Ritual summary">
+        <p class="brief__section-label">Chosen ritual</p>
+        <h2 class="brief__theme">${escapeHtml(ritual.presentation.headline)}</h2>
+        <p class="brief__practice" data-testid="recommended-ritual">${escapeHtml(ritual.presentation.intention)}</p>
+      </section>
+
+      <section class="choose-result__body" aria-label="Ritual">
+        ${renderRitualPreview(ritual)}
+      </section>
+
+      <section class="brief__depth choose-result__reasoning" aria-label="Why this ritual">
+        <section class="ritual-preview__section" aria-label="Why this fits now">
+          <p class="brief__section-label">Why this fits</p>
+          <p>${escapeHtml(result.whyThisFits)}</p>
+        </section>
+        <section class="ritual-preview__section" aria-label="How this was chosen">
+          <p class="brief__section-label">How this was chosen</p>
+          <p>${escapeHtml(result.howThisWasChosen)}</p>
+        </section>
+      </section>
+
+      <section class="brief__actions" aria-label="Ritual actions">
+        <div class="brief__closing-actions">
+          <button
+            class="quiet-action"
+            type="button"
+            data-check-in-start-over="true"
+          >I want to check in again</button>
+        </div>
+      </section>
+
+      ${renderChooseWithMeDebug(result)}
+    </article>
+  `;
+}
+
 function renderRitualResultCard(ritual: Ritual, selectedRitualId: string): string {
   const isSelected = ritual.id === selectedRitualId;
   const materialsAndTags = [
@@ -1610,22 +1701,37 @@ const energyReviewLabels: Record<RitualCheckInEnergyCapacity, string> = {
 };
 
 function renderCheckInAcknowledgement(draft: RitualCheckInDraft): string {
-  const acknowledgement =
-    draft.step === "review"
-      ? undefined
-      : draft.ritualFocusText
-        ? draft.ritualFocusText
-        : draft.ritualFocusLabel
-          ? draft.ritualFocusLabel
-          : draft.practiceTypeLabel
-            ? draft.practiceTypeLabel
-            : draft.audience
-              ? audienceOptions.find((option) => option.key === draft.audience)?.label
-              : draft.energyCapacity
-      ? energyAcknowledgements[draft.energyCapacity]
-      : draft.timeScope
-        ? timeScopeAcknowledgements[draft.timeScope]
-        : undefined;
+  const acknowledgement = (() => {
+    if (draft.step === "review") {
+      return undefined;
+    }
+
+    if (draft.refinementLabel) {
+      return draft.refinementLabel;
+    }
+
+    if (draft.purposeLabel) {
+      return draft.purposeLabel;
+    }
+
+    if (draft.carrierLabel) {
+      return draft.carrierLabel;
+    }
+
+    if (draft.audience) {
+      return audienceOptions.find((option) => option.key === draft.audience)?.label;
+    }
+
+    if (draft.energyCapacity) {
+      return energyAcknowledgements[draft.energyCapacity];
+    }
+
+    if (draft.timeScope) {
+      return timeScopeAcknowledgements[draft.timeScope];
+    }
+
+    return undefined;
+  })();
 
   return acknowledgement
     ? `<p class="check-in__acknowledgement">${escapeHtml(acknowledgement)}</p>`
@@ -1679,52 +1785,51 @@ function renderCheckInQuestion(draft: RitualCheckInDraft): string {
     `;
   }
 
-  if (draft.step === "practice_type" && draft.energyCapacity) {
+  if (draft.step === "carrier") {
     return `
-      <section class="check-in-step" aria-label="Practice type">
-        <h3>What feels welcome?</h3>
+      <section class="check-in-step" aria-label="Carrier">
+        <h3>Where should the ritual live?</h3>
         <div class="check-in-options">
-          ${getPracticeOptionsForEnergy(draft.energyCapacity).map((option) => renderCheckInOptionButton({
-            action: "practice_type",
+          ${carrierOptions.map((option) => renderCheckInOptionButton({
+            action: "carrier",
             value: option.key,
             label: option.label,
+            description: option.description,
           })).join("")}
         </div>
       </section>
     `;
   }
 
-  if (draft.step === "ritual_focus") {
+  if (draft.step === "purpose") {
     return `
-      <section class="check-in-step" aria-label="Ritual focus">
-        <h3>What intention should this hold?</h3>
+      <section class="check-in-step" aria-label="Purpose">
+        <h3>What work should the ritual hold?</h3>
         <div class="check-in-options">
-          ${ritualFocusOptions.map((option) => renderCheckInOptionButton({
-            action: "ritual_focus",
+          ${purposeOptions.map((option) => renderCheckInOptionButton({
+            action: "purpose",
             value: option.key,
             label: option.label,
+            description: option.description,
           })).join("")}
         </div>
       </section>
     `;
   }
 
-  if (draft.step === "ritual_focus_text") {
+  if (draft.step === "refinement" && draft.purpose) {
+    const group = getRefinementGroupForPurpose(draft.purpose);
+
     return `
-      <section class="check-in-step" aria-label="Something else">
-        <h3>What intention should this hold?</h3>
-        <form class="check-in-text-form" data-check-in-text-form="true">
-          <label>
-            <span>Something else</span>
-            <input
-              name="ritualFocusText"
-              type="text"
-              maxlength="120"
-              autocomplete="off"
-            />
-          </label>
-          <button class="primary-action" type="submit">Choose ritual</button>
-        </form>
+      <section class="check-in-step" aria-label="Refinement">
+        <h3>${escapeHtml(group.question)}</h3>
+        <div class="check-in-options">
+          ${group.options.map((option) => renderCheckInOptionButton({
+            action: "refinement",
+            value: option.key,
+            label: option.label,
+          })).join("")}
+        </div>
       </section>
     `;
   }
@@ -1824,32 +1929,49 @@ function renderReviewBullet(value: string | undefined): string {
   return value ? `<li>${escapeHtml(value)}</li>` : "";
 }
 
+function getCapacityReviewPhrase(
+  energyCapacity: RitualCheckInEnergyCapacity,
+): string {
+  if (energyCapacity === "room_for_something_deeper") {
+    return "with room for something deeper";
+  }
+
+  if (energyCapacity === "enough_to_engage") {
+    return "with enough to engage";
+  }
+
+  return `with ${lowercaseFirst(energyReviewLabels[energyCapacity])} capacity`;
+}
+
 function renderReviewBullets(draft: RitualCheckInDraft): string {
   const timing = draft.timeScope
     ? lowercaseFirst(timeScopeReviewLabels[draft.timeScope])
     : undefined;
   const capacity = draft.energyCapacity
-    ? `with ${lowercaseFirst(energyReviewLabels[draft.energyCapacity])} capacity`
+    ? getCapacityReviewPhrase(draft.energyCapacity)
     : undefined;
   const audience = draft.audience
     ? draft.audience === "both_of_us"
       ? "for both of you"
       : "for you"
     : undefined;
-  const practice = draft.practiceTypeLabel
-    ? `with ${lowercaseFirst(draft.practiceTypeLabel)}`
+  const carrier = draft.carrierLabel
+    ? `living ${lowercaseFirst(draft.carrierLabel)}`
     : undefined;
-  const intention = draft.ritualFocusText ?? draft.ritualFocusLabel;
-  const intentionPhrase = intention
-    ? `holding ${lowercaseFirst(intention)}`
+  const purpose = draft.purposeLabel
+    ? `holding ${lowercaseFirst(draft.purposeLabel)}`
+    : undefined;
+  const refinement = draft.refinementLabel
+    ? `around ${lowercaseFirst(draft.refinementLabel)}`
     : undefined;
 
   return [
     renderReviewBullet(timing),
     renderReviewBullet(audience),
     renderReviewBullet(capacity),
-    renderReviewBullet(practice),
-    renderReviewBullet(intentionPhrase),
+    renderReviewBullet(carrier),
+    renderReviewBullet(purpose),
+    renderReviewBullet(refinement),
   ].join("");
 }
 
@@ -2023,6 +2145,9 @@ export function renderSignedInShell(
     </article>
   `;
   });
+  const thisWeekContent = options.chooseWithMeResult
+    ? renderChooseWithMeResult(options.chooseWithMeResult)
+    : weeklyBrief();
   const profileSettings = renderProfileTuningSection(
     privateBriefData,
     options.activeProfileSettingsTabId,
@@ -2046,7 +2171,7 @@ export function renderSignedInShell(
         ? manageRituals
       : activeView === "how_it_works"
         ? howItWorks
-      : weeklyBrief();
+      : thisWeekContent;
 
   return `
     <section class="shell" aria-labelledby="app-title">

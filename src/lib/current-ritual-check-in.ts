@@ -1,4 +1,10 @@
-import { ritualFocusOptions, type RitualFocusOptionKey } from "../data/ritual-focus-options";
+import {
+  RITUAL_CARRIERS,
+  RITUAL_PURPOSES,
+  type RitualCarrier,
+  type RitualPurpose,
+} from "../data/rituals/types";
+import type { RitualFocusOptionKey } from "../data/ritual-focus-options";
 import type { CapacityMode } from "./generate-weekly-brief";
 
 export const RITUAL_CHECK_IN_TIME_SCOPES = [
@@ -27,9 +33,9 @@ export type RitualCheckInStep =
   | "time_scope"
   | "energy_capacity"
   | "audience"
-  | "practice_type"
-  | "ritual_focus"
-  | "ritual_focus_text"
+  | "carrier"
+  | "purpose"
+  | "refinement"
   | "review";
 
 export type CurrentRitualCheckIn = {
@@ -39,6 +45,12 @@ export type CurrentRitualCheckIn = {
   audience?: RitualCheckInAudience;
   practiceTypeHints?: string[];
   practiceTypeLabel?: string;
+  carrier?: RitualCarrier;
+  carrierLabel?: string;
+  purpose?: RitualPurpose;
+  purposeLabel?: string;
+  refinement?: string;
+  refinementLabel?: string;
   ritualFocusKey?: RitualFocusOptionKey;
   ritualFocusLabel?: string;
   ritualFocusText?: string;
@@ -54,6 +66,17 @@ export type RitualCheckInOption = {
   label: string;
   description?: string;
   practiceTypeHints?: string[];
+};
+
+export type RitualCheckInRefinementOption = {
+  key: string;
+  label: string;
+};
+
+export type RitualCheckInRefinementGroup = {
+  purpose: RitualPurpose;
+  question: string;
+  options: RitualCheckInRefinementOption[];
 };
 
 export const timeScopeOptions: RitualCheckInOption[] = [
@@ -118,8 +141,159 @@ const deeperPracticeOptions: RitualCheckInOption[] = [
   steadyPracticeOptions[steadyPracticeOptions.length - 1],
 ];
 
+export const carrierOptions: RitualCheckInOption[] = [
+  {
+    key: "candlelight",
+    label: "In candlelight",
+    description: "Flame, lamp, glow, witness.",
+  },
+  {
+    key: "table",
+    label: "At the table",
+    description: "Bread, cup, shared surface, enough.",
+  },
+  {
+    key: "doorway",
+    label: "At the doorway",
+    description: "Threshold, entry, crossing, month-turn.",
+  },
+  {
+    key: "plant",
+    label: "With a plant",
+    description: "Growth, witness, rest, living thing.",
+  },
+  {
+    key: "words",
+    label: "In words",
+    description: "Spoken, written, folded, carried.",
+  },
+  {
+    key: "vessel",
+    label: "In a vessel",
+    description: "Bowl, cup, plate, holding, emptying.",
+  },
+  {
+    key: "body",
+    label: "In the body",
+    description: "Touch, breath, sensuality, movement.",
+  },
+];
+
+export const purposeOptions: RitualCheckInOption[] = [
+  { key: "steadying", label: "Steadying", description: "Ground, rest, settle." },
+  { key: "opening", label: "Opening", description: "Begin, invite, receive." },
+  { key: "releasing", label: "Releasing", description: "Let go, clear, finish." },
+  { key: "tending", label: "Tending", description: "Home, us, body, what's here." },
+  { key: "connecting", label: "Connecting", description: "Touch, intimacy, closeness." },
+  { key: "voicing", label: "Voicing", description: "Speak, write, name." },
+  { key: "marking", label: "Marking", description: "Threshold, season, change." },
+  { key: "blessing", label: "Blessing", description: "Honor, welcome, make sacred." },
+  {
+    key: "protecting",
+    label: "Protecting",
+    description: "Boundary, belonging, what stays held.",
+  },
+  {
+    key: "remembering",
+    label: "Remembering",
+    description: "Memory, gratitude, meaning.",
+  },
+];
+
+export const refinementGroups: RitualCheckInRefinementGroup[] = [
+  {
+    purpose: "steadying",
+    question: "What needs steadying?",
+    options: ["My body", "The room", "Us", "The moment"].map((label) => ({
+      key: slugifyRefinement(label),
+      label,
+    })),
+  },
+  {
+    purpose: "opening",
+    question: "What is opening?",
+    options: ["A beginning", "A welcome", "A threshold", "The month"].map((label) => ({
+      key: slugifyRefinement(label),
+      label,
+    })),
+  },
+  {
+    purpose: "releasing",
+    question: "What is being released?",
+    options: ["A hold", "A finished thing", "A small space", "A burden"].map((label) => ({
+      key: slugifyRefinement(label),
+      label,
+    })),
+  },
+  {
+    purpose: "tending",
+    question: "What needs tending?",
+    options: [
+      "Me",
+      "Us",
+      "The home",
+      "A living thing",
+      "What is already here",
+    ].map((label) => ({ key: slugifyRefinement(label), label })),
+  },
+  {
+    purpose: "connecting",
+    question: "What kind of connection?",
+    options: ["Touch", "Sensuality", "Tenderness", "Play", "Desire", "Closeness"].map((label) => ({
+      key: slugifyRefinement(label),
+      label,
+    })),
+  },
+  {
+    purpose: "voicing",
+    question: "What needs voice?",
+    options: [
+      "A clear sentence",
+      "A truth",
+      "A written phrase",
+      "Something between us",
+    ].map((label) => ({ key: slugifyRefinement(label), label })),
+  },
+  {
+    purpose: "marking",
+    question: "What are you marking?",
+    options: ["A threshold", "A season", "A change", "The month turning"].map((label) => ({
+      key: slugifyRefinement(label),
+      label,
+    })),
+  },
+  {
+    purpose: "blessing",
+    question: "What are you blessing?",
+    options: ["The room", "The table", "Us", "A beginning", "What is already here"].map((label) => ({
+      key: slugifyRefinement(label),
+      label,
+    })),
+  },
+  {
+    purpose: "protecting",
+    question: "What are you protecting?",
+    options: ["Rest", "A boundary", "The threshold", "What belongs here", "Us"].map((label) => ({
+      key: slugifyRefinement(label),
+      label,
+    })),
+  },
+  {
+    purpose: "remembering",
+    question: "What are you remembering?",
+    options: ["Someone", "What changed", "What mattered", "What is still here", "Gratitude"].map((label) => ({
+      key: slugifyRefinement(label),
+      label,
+    })),
+  },
+];
+
 export function createInitialRitualCheckInDraft(): RitualCheckInDraft {
   return { step: "entry_path" };
+}
+
+function slugifyRefinement(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "");
 }
 
 export function getCapacityModeForEnergy(
@@ -146,7 +320,7 @@ export function getNextStepAfterEnergy(
 export function getNextStepAfterAudience(
   energyCapacity: RitualCheckInEnergyCapacity,
 ): RitualCheckInStep {
-  return energyCapacity === "barely_any" ? "ritual_focus" : "practice_type";
+  return energyCapacity === "barely_any" ? "purpose" : "carrier";
 }
 
 export function getPracticeOptionsForEnergy(
@@ -165,13 +339,32 @@ export function getPracticeOptionsForEnergy(
 }
 
 export function getNextStepAfterPractice(
-  _energyCapacity: RitualCheckInEnergyCapacity,
+  energyCapacity: RitualCheckInEnergyCapacity,
 ): RitualCheckInStep {
-  return "ritual_focus";
+  return energyCapacity === "a_little" ? "review" : "refinement";
 }
 
-export function isRitualFocusOptionKey(value: string): value is RitualFocusOptionKey {
-  return ritualFocusOptions.some((option) => option.key === value);
+export function getRefinementGroupForPurpose(
+  purpose: RitualPurpose,
+): RitualCheckInRefinementGroup {
+  return refinementGroups.find((group) => group.purpose === purpose)!;
+}
+
+export function isRitualCarrier(value: string): value is RitualCarrier {
+  return RITUAL_CARRIERS.includes(value as RitualCarrier);
+}
+
+export function isRitualPurpose(value: string): value is RitualPurpose {
+  return RITUAL_PURPOSES.includes(value as RitualPurpose);
+}
+
+export function isRitualRefinementOption(
+  purpose: RitualPurpose,
+  value: string,
+): boolean {
+  return getRefinementGroupForPurpose(purpose).options.some(
+    (option) => option.key === value,
+  );
 }
 
 export function isTimeScope(value: string): value is RitualCheckInTimeScope {

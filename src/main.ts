@@ -22,16 +22,18 @@ import {
 } from "./lib/generate-weekly-brief";
 import {
   createInitialRitualCheckInDraft,
+  carrierOptions,
   getCapacityModeForEnergy,
   getNextStepAfterAudience,
   getNextStepAfterEnergy,
-  getNextStepAfterPractice,
-  getPracticeOptionsForEnergy,
+  getRefinementGroupForPurpose,
   isCheckInAudience,
   isEnergyCapacity,
-  isRitualFocusOptionKey,
+  isRitualCarrier,
+  isRitualPurpose,
+  isRitualRefinementOption,
   isTimeScope,
-  sanitizeRitualFocusText,
+  purposeOptions,
   type CurrentRitualCheckIn,
   type RitualCheckInDraft,
   type RitualCheckInStep,
@@ -68,7 +70,11 @@ import {
   type ManageRitualStatusFilter,
   type ManageRitualValidationFilter,
 } from "./data/rituals/manage-rituals";
-import { ritualFocusOptions } from "./data/ritual-focus-options";
+import { sourceBackedRituals } from "./data/rituals/source-backed-rituals";
+import {
+  chooseWithMeRitual,
+  type ChooseWithMeResult,
+} from "./data/rituals/choose-with-me-selector";
 import "./styles.css";
 
 const app = document.querySelector<HTMLElement>("#app");
@@ -87,6 +93,7 @@ let privateDataRequestId = 0;
 let activeSignedInState: Extract<AppAuthState, { status: "signed_in" }> | null = null;
 let activePrivateBriefData: PrivateBriefData | null = null;
 let activeBrief: WeeklyBrief | null = null;
+let activeChooseWithMeResult: ChooseWithMeResult | null = null;
 let activeSignedInView: SignedInView = "this_week";
 let activeProfileSettingsTabId: string | null = null;
 let activeCheckInDraft: RitualCheckInDraft = createInitialRitualCheckInDraft();
@@ -193,6 +200,7 @@ function renderPrivateWelcomeOrCheckIn(): void {
   if (requestedView && requestedView !== "this_week") {
     activeSignedInView = requestedView;
     activeBrief = generateWeeklyBrief(getActiveBriefInput());
+    activeChooseWithMeResult = null;
     renderActiveSignedInShell();
     return;
   }
@@ -218,6 +226,7 @@ function renderActiveSignedInShell(options: {
   appRoot.innerHTML = renderSignedInShell(activePrivateBriefData, {
     activeView: activeSignedInView,
     brief: activeBrief ?? undefined,
+    chooseWithMeResult: activeChooseWithMeResult ?? undefined,
     feedbackStatus: options.feedbackStatus,
     tryAgainStatus: options.tryAgainStatus,
     selectedFeedbackType: options.selectedFeedbackType,
@@ -256,6 +265,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
           activeSignedInState = null;
           activePrivateBriefData = null;
           activeBrief = null;
+          activeChooseWithMeResult = null;
           activeSignedInView = "this_week";
           activeProfileSettingsTabId = null;
           activeRitualSearchQuery = "";
@@ -277,6 +287,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activeSelectedRitualId = null;
         activeManageRitualFilters = { ...defaultManageRitualFilters };
         activeBrief = null;
+        activeChooseWithMeResult = null;
         activeCurrentRitualCheckIn = null;
         activeFirstLoginCheckIn = false;
         activeCheckInDraft = createInitialRitualCheckInDraft();
@@ -288,6 +299,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activeSignedInState = null;
         activePrivateBriefData = null;
         activeBrief = null;
+        activeChooseWithMeResult = null;
         activeSignedInView = "this_week";
         activeProfileSettingsTabId = null;
         activeRitualSearchQuery = "";
@@ -323,16 +335,19 @@ function renderDevVisualQaState(): void {
   activeSelectedRitualId = null;
   activeManageRitualFilters = { ...defaultManageRitualFilters };
   activeCurrentRitualCheckIn = null;
+  activeChooseWithMeResult = null;
   activeFirstLoginCheckIn = false;
   activeCheckInDraft = createInitialRitualCheckInDraft();
 
   if (activeSignedInView !== "this_week") {
     activeBrief = generateWeeklyBrief(getActiveBriefInput());
+    activeChooseWithMeResult = null;
     renderActiveSignedInShell();
     return;
   }
 
   activeBrief = null;
+  activeChooseWithMeResult = null;
   renderPrivateWelcomeOrCheckIn();
 }
 
@@ -377,7 +392,20 @@ function completeCheckIn(checkIn: CurrentRitualCheckIn): void {
   activeSignedInView = "this_week";
   activeProfileSettingsTabId = null;
   activeFirstLoginCheckIn = false;
-  activeBrief = generateWeeklyBrief(getActiveBriefInput());
+  activeBrief = null;
+  activeChooseWithMeResult = chooseWithMeRitual(sourceBackedRituals, {
+    timeScope: checkIn.timeScope,
+    energyCapacity: checkIn.energyCapacity,
+    capacityMode: checkIn.capacityMode,
+    audience: checkIn.audience,
+    carrier: checkIn.carrier ?? null,
+    purpose: checkIn.purpose ?? null,
+    refinement: checkIn.refinement ?? null,
+    freeTextIntent: checkIn.ritualFocusText ?? null,
+    timingContext: {
+      timingWindowCandidateIds: checkIn.timingWindowCandidateIds,
+    },
+  });
   renderActiveSignedInShell();
 }
 
@@ -430,6 +458,12 @@ function maybeCompleteCheckIn(
     ...(draft.audience ? { audience: draft.audience } : {}),
     ...(draft.practiceTypeHints ? { practiceTypeHints: draft.practiceTypeHints } : {}),
     ...(draft.practiceTypeLabel ? { practiceTypeLabel: draft.practiceTypeLabel } : {}),
+    ...(draft.carrier ? { carrier: draft.carrier } : {}),
+    ...(draft.carrierLabel ? { carrierLabel: draft.carrierLabel } : {}),
+    ...(draft.purpose ? { purpose: draft.purpose } : {}),
+    ...(draft.purposeLabel ? { purposeLabel: draft.purposeLabel } : {}),
+    ...(draft.refinement ? { refinement: draft.refinement } : {}),
+    ...(draft.refinementLabel ? { refinementLabel: draft.refinementLabel } : {}),
     ...(draft.ritualFocusKey ? { ritualFocusKey: draft.ritualFocusKey } : {}),
     ...(draft.ritualFocusLabel ? { ritualFocusLabel: draft.ritualFocusLabel } : {}),
     ...(draft.ritualFocusText ? { ritualFocusText: draft.ritualFocusText } : {}),
@@ -490,10 +524,8 @@ function handleCheckInAction(action: string, value: string): void {
     return;
   }
 
-  if (action === "practice_type" && activeCheckInDraft.energyCapacity) {
-    const option = getPracticeOptionsForEnergy(
-      activeCheckInDraft.energyCapacity,
-    ).find((candidate) => candidate.key === value);
+  if (action === "carrier" && activeCheckInDraft.energyCapacity && isRitualCarrier(value)) {
+    const option = carrierOptions.find((candidate) => candidate.key === value);
 
     if (!option) {
       return;
@@ -501,9 +533,11 @@ function handleCheckInAction(action: string, value: string): void {
 
     const nextDraft: RitualCheckInDraft = {
       ...activeCheckInDraft,
-      practiceTypeHints: option.practiceTypeHints,
+      carrier: value,
+      carrierLabel: option.label,
+      practiceTypeHints: [value],
       practiceTypeLabel: option.label,
-      step: getNextStepAfterPractice(activeCheckInDraft.energyCapacity),
+      step: "purpose",
     };
 
     activeCheckInDraft = nextDraft;
@@ -511,22 +545,40 @@ function handleCheckInAction(action: string, value: string): void {
     return;
   }
 
-  if (action === "ritual_focus" && isRitualFocusOptionKey(value)) {
-    if (value === "something_else") {
-      activeCheckInDraft = {
-        ...activeCheckInDraft,
-        ritualFocusKey: value,
-        step: "ritual_focus_text",
-      };
-      renderActiveCheckInShell();
+  if (action === "purpose" && isRitualPurpose(value)) {
+    if (!activeCheckInDraft.energyCapacity) {
       return;
     }
 
-    const option = ritualFocusOptions.find((candidate) => candidate.key === value);
+    const option = purposeOptions.find((candidate) => candidate.key === value);
+    const nextStep = activeCheckInDraft.energyCapacity === "enough_to_engage" ||
+      activeCheckInDraft.energyCapacity === "room_for_something_deeper"
+      ? "refinement"
+      : "review";
+
     activeCheckInDraft = {
       ...activeCheckInDraft,
-      ritualFocusKey: value,
+      purpose: value,
+      purposeLabel: option?.label,
       ...(option ? { ritualFocusLabel: option.label } : {}),
+      step: nextStep,
+    };
+    renderActiveCheckInShell();
+    return;
+  }
+
+  if (
+    action === "refinement" &&
+    activeCheckInDraft.purpose &&
+    isRitualRefinementOption(activeCheckInDraft.purpose, value)
+  ) {
+    const option = getRefinementGroupForPurpose(activeCheckInDraft.purpose)
+      .options.find((candidate) => candidate.key === value);
+
+    activeCheckInDraft = {
+      ...activeCheckInDraft,
+      refinement: option?.label ?? value,
+      refinementLabel: option?.label ?? value,
       step: "review",
     };
     renderActiveCheckInShell();
@@ -550,16 +602,20 @@ function getPreviousCheckInStep(draft: RitualCheckInDraft): RitualCheckInStep {
       return "time_scope";
     case "audience":
       return "energy_capacity";
-    case "practice_type":
+    case "carrier":
       return "audience";
-    case "ritual_focus":
-      return draft.energyCapacity === "barely_any" ? "audience" : "practice_type";
-    case "ritual_focus_text":
-      return "ritual_focus";
+    case "purpose":
+      return draft.energyCapacity === "barely_any" ? "audience" : "carrier";
+    case "refinement":
+      return "purpose";
     case "review":
-      return draft.ritualFocusKey === "something_else"
-        ? "ritual_focus_text"
-        : "ritual_focus";
+      if (
+        draft.energyCapacity === "enough_to_engage" ||
+        draft.energyCapacity === "room_for_something_deeper"
+      ) {
+        return "refinement";
+      }
+      return "purpose";
     case "entry_path":
     default:
       return "entry_path";
@@ -571,24 +627,6 @@ function getPreviousCheckInDraft(draft: RitualCheckInDraft): RitualCheckInDraft 
     ...draft,
     step: getPreviousCheckInStep(draft),
   };
-}
-
-function handleCheckInTextSubmit(form: HTMLFormElement): void {
-  const formData = new FormData(form);
-  const ritualFocusText = sanitizeRitualFocusText(
-    String(formData.get("ritualFocusText") ?? ""),
-  );
-  activeCheckInDraft = {
-    ...activeCheckInDraft,
-    ritualFocusText,
-    step: "ritual_focus_text",
-  };
-
-  activeCheckInDraft = {
-    ...activeCheckInDraft,
-    step: "review",
-  };
-  renderActiveCheckInShell();
 }
 
 function isCapacityMode(value: FormDataEntryValue | null): value is CapacityMode {
@@ -778,6 +816,7 @@ async function handleTryAgainClick(): Promise<void> {
     }
 
     activeBrief = alternateBrief;
+    activeChooseWithMeResult = null;
     renderActiveSignedInShell({
       tryAgainStatus: "Here is another approved option.",
       selectedFeedbackType: "try_again",
@@ -798,6 +837,7 @@ function closeOpenOverlays(): void {
 function startCheckInOver(): void {
   clearCheckInLoadingTimeout();
   activeBrief = null;
+  activeChooseWithMeResult = null;
   activeCurrentRitualCheckIn = null;
   activeCheckInDraft = createInitialRitualCheckInDraft();
   activeSignedInView = "this_week";
@@ -890,7 +930,7 @@ appRoot.addEventListener("click", (event) => {
     event.preventDefault();
     activeSignedInView = "this_week";
 
-    if (activePrivateBriefData && activeBrief) {
+    if (activePrivateBriefData && (activeBrief || activeChooseWithMeResult)) {
       renderActiveSignedInShell();
     } else if (activePrivateBriefData) {
       renderActiveCheckInShell();
@@ -912,7 +952,12 @@ appRoot.addEventListener("click", (event) => {
       ?.closest("details[data-app-menu='true']")
       ?.removeAttribute("open");
 
-    if (activePrivateBriefData && menuAction === "this_week" && !activeBrief) {
+    if (
+      activePrivateBriefData &&
+      menuAction === "this_week" &&
+      !activeBrief &&
+      !activeChooseWithMeResult
+    ) {
       renderActiveCheckInShell();
     } else if (activePrivateBriefData) {
       renderActiveSignedInShell();
@@ -961,6 +1006,7 @@ appRoot.addEventListener("click", (event) => {
     clearCheckInLoadingTimeout();
     target.closest("details[data-app-menu='true']")?.removeAttribute("open");
     activeCurrentRitualCheckIn = null;
+    activeChooseWithMeResult = null;
     activeCheckInDraft = createInitialRitualCheckInDraft();
     void signOutOfFirebase(firebaseServices);
   }
@@ -1061,6 +1107,7 @@ if (devVisualQaMode) {
     activeSignedInState = null;
     activePrivateBriefData = null;
     activeBrief = null;
+    activeChooseWithMeResult = null;
     activeSignedInView = "this_week";
     activeProfileSettingsTabId = null;
     activeRitualSearchQuery = "";
@@ -1086,11 +1133,6 @@ appRoot.addEventListener("submit", (event) => {
   if (target.matches("[data-profile-tuning-form='true']")) {
     event.preventDefault();
     void handleProfileTuningSubmit(target);
-  }
-
-  if (target.matches("[data-check-in-text-form='true']")) {
-    event.preventDefault();
-    handleCheckInTextSubmit(target);
   }
 
   if (target.matches("[data-ritual-search-form='true']")) {
