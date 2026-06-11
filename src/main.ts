@@ -22,16 +22,18 @@ import {
 } from "./lib/generate-weekly-brief";
 import {
   createInitialRitualCheckInDraft,
+  carrierOptions,
   getCapacityModeForEnergy,
   getNextStepAfterAudience,
   getNextStepAfterEnergy,
-  getNextStepAfterPractice,
-  getPracticeOptionsForEnergy,
+  getRefinementGroupForPurpose,
   isCheckInAudience,
   isEnergyCapacity,
-  isRitualFocusOptionKey,
+  isRitualCarrier,
+  isRitualPurpose,
+  isRitualRefinementOption,
   isTimeScope,
-  sanitizeRitualFocusText,
+  purposeOptions,
   type CurrentRitualCheckIn,
   type RitualCheckInDraft,
   type RitualCheckInStep,
@@ -68,7 +70,11 @@ import {
   type ManageRitualStatusFilter,
   type ManageRitualValidationFilter,
 } from "./data/rituals/manage-rituals";
-import { ritualFocusOptions } from "./data/ritual-focus-options";
+import { sourceBackedRituals } from "./data/rituals/source-backed-rituals";
+import {
+  chooseWithMeRitual,
+  type ChooseWithMeResult,
+} from "./data/rituals/choose-with-me-selector";
 import "./styles.css";
 
 const app = document.querySelector<HTMLElement>("#app");
@@ -87,6 +93,7 @@ let privateDataRequestId = 0;
 let activeSignedInState: Extract<AppAuthState, { status: "signed_in" }> | null = null;
 let activePrivateBriefData: PrivateBriefData | null = null;
 let activeBrief: WeeklyBrief | null = null;
+let activeChooseWithMeResult: ChooseWithMeResult | null = null;
 let activeSignedInView: SignedInView = "this_week";
 let activeProfileSettingsTabId: string | null = null;
 let activeCheckInDraft: RitualCheckInDraft = createInitialRitualCheckInDraft();
@@ -193,6 +200,7 @@ function renderPrivateWelcomeOrCheckIn(): void {
   if (requestedView && requestedView !== "this_week") {
     activeSignedInView = requestedView;
     activeBrief = generateWeeklyBrief(getActiveBriefInput());
+    activeChooseWithMeResult = null;
     renderActiveSignedInShell();
     return;
   }
@@ -218,6 +226,7 @@ function renderActiveSignedInShell(options: {
   appRoot.innerHTML = renderSignedInShell(activePrivateBriefData, {
     activeView: activeSignedInView,
     brief: activeBrief ?? undefined,
+    chooseWithMeResult: activeChooseWithMeResult ?? undefined,
     feedbackStatus: options.feedbackStatus,
     tryAgainStatus: options.tryAgainStatus,
     selectedFeedbackType: options.selectedFeedbackType,
@@ -256,6 +265,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
           activeSignedInState = null;
           activePrivateBriefData = null;
           activeBrief = null;
+          activeChooseWithMeResult = null;
           activeSignedInView = "this_week";
           activeProfileSettingsTabId = null;
           activeRitualSearchQuery = "";
@@ -277,6 +287,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activeSelectedRitualId = null;
         activeManageRitualFilters = { ...defaultManageRitualFilters };
         activeBrief = null;
+        activeChooseWithMeResult = null;
         activeCurrentRitualCheckIn = null;
         activeFirstLoginCheckIn = false;
         activeCheckInDraft = createInitialRitualCheckInDraft();
@@ -288,6 +299,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activeSignedInState = null;
         activePrivateBriefData = null;
         activeBrief = null;
+        activeChooseWithMeResult = null;
         activeSignedInView = "this_week";
         activeProfileSettingsTabId = null;
         activeRitualSearchQuery = "";
@@ -323,16 +335,19 @@ function renderDevVisualQaState(): void {
   activeSelectedRitualId = null;
   activeManageRitualFilters = { ...defaultManageRitualFilters };
   activeCurrentRitualCheckIn = null;
+  activeChooseWithMeResult = null;
   activeFirstLoginCheckIn = false;
   activeCheckInDraft = createInitialRitualCheckInDraft();
 
   if (activeSignedInView !== "this_week") {
     activeBrief = generateWeeklyBrief(getActiveBriefInput());
+    activeChooseWithMeResult = null;
     renderActiveSignedInShell();
     return;
   }
 
   activeBrief = null;
+  activeChooseWithMeResult = null;
   renderPrivateWelcomeOrCheckIn();
 }
 
@@ -377,7 +392,20 @@ function completeCheckIn(checkIn: CurrentRitualCheckIn): void {
   activeSignedInView = "this_week";
   activeProfileSettingsTabId = null;
   activeFirstLoginCheckIn = false;
-  activeBrief = generateWeeklyBrief(getActiveBriefInput());
+  activeBrief = null;
+  activeChooseWithMeResult = chooseWithMeRitual(sourceBackedRituals, {
+    timeScope: checkIn.timeScope,
+    energyCapacity: checkIn.energyCapacity,
+    capacityMode: checkIn.capacityMode,
+    audience: checkIn.audience,
+    carrier: checkIn.carrier ?? null,
+    purpose: checkIn.purpose ?? null,
+    refinement: checkIn.refinement ?? null,
+    freeTextIntent: checkIn.ritualFocusText ?? null,
+    timingContext: {
+      timingWindowCandidateIds: checkIn.timingWindowCandidateIds,
+    },
+  });
   renderActiveSignedInShell();
 }
 
@@ -424,12 +452,19 @@ function maybeCompleteCheckIn(
   }
 
   return addTimingWindowCandidateIds({
-    timeScope: draft.timeScope,
+    timeScope: draft.timeScope ?? "today",
     energyCapacity: draft.energyCapacity,
     capacityMode: draft.capacityMode,
-    ...(draft.audience ? { audience: draft.audience } : {}),
+    audience: draft.audience ?? "me",
     ...(draft.practiceTypeHints ? { practiceTypeHints: draft.practiceTypeHints } : {}),
     ...(draft.practiceTypeLabel ? { practiceTypeLabel: draft.practiceTypeLabel } : {}),
+    ...(draft.carrier ? { carrier: draft.carrier } : {}),
+    ...(draft.carrierLabel ? { carrierLabel: draft.carrierLabel } : {}),
+    ...(draft.carrierOpen ? { carrierOpen: draft.carrierOpen } : {}),
+    ...(draft.purpose ? { purpose: draft.purpose } : {}),
+    ...(draft.purposeLabel ? { purposeLabel: draft.purposeLabel } : {}),
+    ...(draft.refinement ? { refinement: draft.refinement } : {}),
+    ...(draft.refinementLabel ? { refinementLabel: draft.refinementLabel } : {}),
     ...(draft.ritualFocusKey ? { ritualFocusKey: draft.ritualFocusKey } : {}),
     ...(draft.ritualFocusLabel ? { ritualFocusLabel: draft.ritualFocusLabel } : {}),
     ...(draft.ritualFocusText ? { ritualFocusText: draft.ritualFocusText } : {}),
@@ -446,7 +481,7 @@ function handleCheckInAction(action: string, value: string): void {
   if (action === "start_guided" && value === "choose_with_me") {
     activeCheckInDraft = {
       ...activeCheckInDraft,
-      step: "time_scope",
+      step: "energy_capacity",
     };
     renderActiveCheckInShell();
     return;
@@ -456,7 +491,15 @@ function handleCheckInAction(action: string, value: string): void {
     activeCheckInDraft = {
       ...activeCheckInDraft,
       timeScope: value,
-      step: "energy_capacity",
+      audience: undefined,
+      purpose: undefined,
+      purposeLabel: undefined,
+      carrier: undefined,
+      carrierLabel: undefined,
+      carrierOpen: undefined,
+      refinement: undefined,
+      refinementLabel: undefined,
+      step: "audience",
     };
     renderActiveCheckInShell();
     return;
@@ -468,6 +511,16 @@ function handleCheckInAction(action: string, value: string): void {
       ...activeCheckInDraft,
       energyCapacity: value,
       capacityMode,
+      ...(value === "barely_any"
+        ? { timeScope: "today" as const, audience: "me" as const }
+        : { timeScope: undefined, audience: undefined }),
+      purpose: undefined,
+      purposeLabel: undefined,
+      carrier: undefined,
+      carrierLabel: undefined,
+      carrierOpen: undefined,
+      refinement: undefined,
+      refinementLabel: undefined,
       step: getNextStepAfterEnergy(value),
     };
 
@@ -484,16 +537,45 @@ function handleCheckInAction(action: string, value: string): void {
     activeCheckInDraft = {
       ...activeCheckInDraft,
       audience: value,
+      purpose: undefined,
+      purposeLabel: undefined,
+      carrier: undefined,
+      carrierLabel: undefined,
+      carrierOpen: undefined,
+      refinement: undefined,
+      refinementLabel: undefined,
       step: getNextStepAfterAudience(activeCheckInDraft.energyCapacity),
     };
     renderActiveCheckInShell();
     return;
   }
 
-  if (action === "practice_type" && activeCheckInDraft.energyCapacity) {
-    const option = getPracticeOptionsForEnergy(
-      activeCheckInDraft.energyCapacity,
-    ).find((candidate) => candidate.key === value);
+  if (
+    action === "carrier" &&
+    activeCheckInDraft.energyCapacity &&
+    value === "open"
+  ) {
+    const nextDraft: RitualCheckInDraft = {
+      ...activeCheckInDraft,
+      carrier: undefined,
+      carrierLabel: "I'm open",
+      carrierOpen: true,
+      practiceTypeHints: [],
+      practiceTypeLabel: "I'm open",
+      refinement: undefined,
+      refinementLabel: undefined,
+      step: "carrier",
+    };
+    activeCheckInDraft = nextDraft;
+    const completed = maybeCompleteCheckIn(nextDraft);
+    if (completed) {
+      showCheckInLoadingThenComplete(completed);
+    }
+    return;
+  }
+
+  if (action === "carrier" && activeCheckInDraft.energyCapacity && isRitualCarrier(value)) {
+    const option = carrierOptions.find((candidate) => candidate.key === value);
 
     if (!option) {
       return;
@@ -501,32 +583,73 @@ function handleCheckInAction(action: string, value: string): void {
 
     const nextDraft: RitualCheckInDraft = {
       ...activeCheckInDraft,
-      practiceTypeHints: option.practiceTypeHints,
+      carrier: value,
+      carrierLabel: option.label,
+      carrierOpen: false,
+      practiceTypeHints: [value],
       practiceTypeLabel: option.label,
-      step: getNextStepAfterPractice(activeCheckInDraft.energyCapacity),
+      refinement: undefined,
+      refinementLabel: undefined,
+      step: "carrier",
     };
 
     activeCheckInDraft = nextDraft;
+    const completed = maybeCompleteCheckIn(nextDraft);
+    if (completed) {
+      showCheckInLoadingThenComplete(completed);
+    }
+    return;
+  }
+
+  if (action === "purpose" && isRitualPurpose(value)) {
+    if (!activeCheckInDraft.energyCapacity) {
+      return;
+    }
+
+    const option = purposeOptions.find((candidate) => candidate.key === value);
+    const nextStep = activeCheckInDraft.energyCapacity === "barely_any"
+      ? "purpose"
+      : "carrier";
+
+    const nextDraft: RitualCheckInDraft = {
+      ...activeCheckInDraft,
+      purpose: value,
+      purposeLabel: option?.label,
+      ...(option ? { ritualFocusLabel: option.label } : {}),
+      carrier: undefined,
+      carrierLabel: undefined,
+      carrierOpen: undefined,
+      refinement: undefined,
+      refinementLabel: undefined,
+      step: nextStep,
+    };
+
+    activeCheckInDraft = nextDraft;
+
+    if (activeCheckInDraft.energyCapacity === "barely_any") {
+      const completed = maybeCompleteCheckIn(nextDraft);
+      if (completed) {
+        showCheckInLoadingThenComplete(completed);
+      }
+      return;
+    }
+
     renderActiveCheckInShell();
     return;
   }
 
-  if (action === "ritual_focus" && isRitualFocusOptionKey(value)) {
-    if (value === "something_else") {
-      activeCheckInDraft = {
-        ...activeCheckInDraft,
-        ritualFocusKey: value,
-        step: "ritual_focus_text",
-      };
-      renderActiveCheckInShell();
-      return;
-    }
+  if (
+    action === "refinement" &&
+    activeCheckInDraft.purpose &&
+    isRitualRefinementOption(activeCheckInDraft.purpose, value)
+  ) {
+    const option = getRefinementGroupForPurpose(activeCheckInDraft.purpose)
+      .options.find((candidate) => candidate.key === value);
 
-    const option = ritualFocusOptions.find((candidate) => candidate.key === value);
     activeCheckInDraft = {
       ...activeCheckInDraft,
-      ritualFocusKey: value,
-      ...(option ? { ritualFocusLabel: option.label } : {}),
+      refinement: option?.label ?? value,
+      refinementLabel: option?.label ?? value,
       step: "review",
     };
     renderActiveCheckInShell();
@@ -545,21 +668,19 @@ function handleCheckInAction(action: string, value: string): void {
 function getPreviousCheckInStep(draft: RitualCheckInDraft): RitualCheckInStep {
   switch (draft.step) {
     case "time_scope":
-      return "entry_path";
-    case "energy_capacity":
-      return "time_scope";
-    case "audience":
       return "energy_capacity";
-    case "practice_type":
-      return "audience";
-    case "ritual_focus":
-      return draft.energyCapacity === "barely_any" ? "audience" : "practice_type";
-    case "ritual_focus_text":
-      return "ritual_focus";
+    case "energy_capacity":
+      return "entry_path";
+    case "audience":
+      return "time_scope";
+    case "carrier":
+      return "purpose";
+    case "purpose":
+      return draft.energyCapacity === "barely_any" ? "energy_capacity" : "audience";
+    case "refinement":
+      return "purpose";
     case "review":
-      return draft.ritualFocusKey === "something_else"
-        ? "ritual_focus_text"
-        : "ritual_focus";
+      return draft.energyCapacity === "barely_any" ? "purpose" : "carrier";
     case "entry_path":
     default:
       return "entry_path";
@@ -571,24 +692,6 @@ function getPreviousCheckInDraft(draft: RitualCheckInDraft): RitualCheckInDraft 
     ...draft,
     step: getPreviousCheckInStep(draft),
   };
-}
-
-function handleCheckInTextSubmit(form: HTMLFormElement): void {
-  const formData = new FormData(form);
-  const ritualFocusText = sanitizeRitualFocusText(
-    String(formData.get("ritualFocusText") ?? ""),
-  );
-  activeCheckInDraft = {
-    ...activeCheckInDraft,
-    ritualFocusText,
-    step: "ritual_focus_text",
-  };
-
-  activeCheckInDraft = {
-    ...activeCheckInDraft,
-    step: "review",
-  };
-  renderActiveCheckInShell();
 }
 
 function isCapacityMode(value: FormDataEntryValue | null): value is CapacityMode {
@@ -778,6 +881,7 @@ async function handleTryAgainClick(): Promise<void> {
     }
 
     activeBrief = alternateBrief;
+    activeChooseWithMeResult = null;
     renderActiveSignedInShell({
       tryAgainStatus: "Here is another approved option.",
       selectedFeedbackType: "try_again",
@@ -798,6 +902,7 @@ function closeOpenOverlays(): void {
 function startCheckInOver(): void {
   clearCheckInLoadingTimeout();
   activeBrief = null;
+  activeChooseWithMeResult = null;
   activeCurrentRitualCheckIn = null;
   activeCheckInDraft = createInitialRitualCheckInDraft();
   activeSignedInView = "this_week";
@@ -888,14 +993,20 @@ appRoot.addEventListener("click", (event) => {
 
   if (homeAction === "this_week") {
     event.preventDefault();
-    activeSignedInView = "this_week";
 
-    if (activePrivateBriefData && activeBrief) {
-      renderActiveSignedInShell();
-    } else if (activePrivateBriefData) {
-      renderActiveCheckInShell();
+    if (activePrivateBriefData) {
+      startCheckInOver();
     }
 
+    return;
+  }
+
+  if (menuAction === "choose_ritual") {
+    event.preventDefault();
+    menuActionTarget
+      ?.closest("details[data-app-menu='true']")
+      ?.removeAttribute("open");
+    startCheckInOver();
     return;
   }
 
@@ -912,7 +1023,12 @@ appRoot.addEventListener("click", (event) => {
       ?.closest("details[data-app-menu='true']")
       ?.removeAttribute("open");
 
-    if (activePrivateBriefData && menuAction === "this_week" && !activeBrief) {
+    if (
+      activePrivateBriefData &&
+      menuAction === "this_week" &&
+      !activeBrief &&
+      !activeChooseWithMeResult
+    ) {
       renderActiveCheckInShell();
     } else if (activePrivateBriefData) {
       renderActiveSignedInShell();
@@ -961,6 +1077,7 @@ appRoot.addEventListener("click", (event) => {
     clearCheckInLoadingTimeout();
     target.closest("details[data-app-menu='true']")?.removeAttribute("open");
     activeCurrentRitualCheckIn = null;
+    activeChooseWithMeResult = null;
     activeCheckInDraft = createInitialRitualCheckInDraft();
     void signOutOfFirebase(firebaseServices);
   }
@@ -1061,6 +1178,7 @@ if (devVisualQaMode) {
     activeSignedInState = null;
     activePrivateBriefData = null;
     activeBrief = null;
+    activeChooseWithMeResult = null;
     activeSignedInView = "this_week";
     activeProfileSettingsTabId = null;
     activeRitualSearchQuery = "";
@@ -1086,11 +1204,6 @@ appRoot.addEventListener("submit", (event) => {
   if (target.matches("[data-profile-tuning-form='true']")) {
     event.preventDefault();
     void handleProfileTuningSubmit(target);
-  }
-
-  if (target.matches("[data-check-in-text-form='true']")) {
-    event.preventDefault();
-    handleCheckInTextSubmit(target);
   }
 
   if (target.matches("[data-ritual-search-form='true']")) {

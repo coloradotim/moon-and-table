@@ -459,6 +459,10 @@ h2 {
   justify-content: space-between;
 }
 
+.check-in__header + .todays-shape {
+  margin-top: -10px;
+}
+
 .check-in__header .app-menu {
   margin-left: auto;
 }
@@ -485,7 +489,7 @@ h2 {
 
 .todays-shape__body {
   display: grid;
-  gap: 6px;
+  gap: 10px;
 }
 
 .todays-shape p {
@@ -501,7 +505,7 @@ h2 {
 
 .todays-shape__synthesis {
   max-width: 430px;
-  margin-top: 6px;
+  margin-top: 12px;
   padding-left: 12px;
   border-left: 2px solid rgba(102, 123, 92, 0.3);
   color: #3f5048;
@@ -613,36 +617,6 @@ h2 {
   max-width: 320px;
 }
 
-.check-in-options--choice-pair {
-  display: inline-grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  width: min(100%, 380px);
-  max-width: none;
-  justify-self: center;
-  gap: 0;
-  overflow: hidden;
-  border: 1px solid rgba(159, 174, 166, 0.78);
-  border-radius: 8px;
-  background: rgba(255, 253, 247, 0.72);
-}
-
-.check-in-options--choice-pair .check-in-option {
-  min-height: 42px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  text-align: center;
-}
-
-.check-in-options--choice-pair .check-in-option + .check-in-option {
-  border-left: 1px solid rgba(159, 174, 166, 0.78);
-}
-
-.check-in-options--choice-pair .check-in-option:hover {
-  background: rgba(244, 247, 242, 0.95);
-  box-shadow: none;
-}
-
 .check-in-option {
   display: grid;
   min-height: 40px;
@@ -671,6 +645,10 @@ h2 {
   color: #52635a;
   font-size: 0.96rem;
   line-height: 1.35;
+}
+
+.check-in-option--open {
+  margin-top: 10px;
 }
 
 .check-in-option:hover {
@@ -1400,8 +1378,8 @@ h2 {
   display: grid;
   max-width: 455px;
   gap: 10px;
-  padding: 14px 0;
-  border-block: 1px solid rgba(217, 208, 193, 0.72);
+  padding: 20px 0 0;
+  border-top: 1px solid rgba(217, 208, 193, 0.72);
 }
 
 .ritual-entry-action {
@@ -1712,6 +1690,115 @@ h2 {
   color: #435349;
   font-size: var(--text-body);
   line-height: 1.64;
+}
+
+.choose-result {
+  display: grid;
+  gap: 24px;
+}
+
+.choose-result__intro {
+  padding-bottom: 6px;
+}
+
+.choose-result__body {
+  max-width: 760px;
+  padding: 24px 0 14px;
+  border-top: 1px solid rgba(217, 208, 193, 0.72);
+}
+
+.choose-result__body .ritual-preview__header {
+  display: none;
+}
+
+.choose-result__body .ritual-preview__section[aria-label="Why this fits"] {
+  display: none;
+}
+
+.choose-result__body .ritual-readiness-details {
+  display: none;
+}
+
+.choose-result__reasoning {
+  gap: 10px;
+  padding: 12px 0 18px;
+}
+
+.choose-result__reason {
+  display: grid;
+  max-width: 720px;
+  gap: 8px;
+}
+
+.choose-result__reason summary {
+  width: fit-content;
+  color: #5f6f65;
+  cursor: pointer;
+  font-size: var(--text-label);
+  font-weight: 700;
+}
+
+.choose-result__reason summary:focus-visible {
+  outline: 2px solid #667b5c;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.choose-result__reason p {
+  margin: 0;
+  color: #435349;
+  font-size: var(--text-body);
+  line-height: 1.64;
+}
+
+.choose-result__debug {
+  max-width: 760px;
+  padding: 14px 16px;
+  border-left: 4px solid #667b5c;
+  background: #eef3f1;
+}
+
+.choose-result__debug summary {
+  width: fit-content;
+  color: #3f5348;
+  cursor: pointer;
+  font-size: var(--text-label);
+  font-weight: 700;
+}
+
+.choose-result__debug dl {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.choose-result__debug dl > div {
+  display: grid;
+  gap: 2px;
+}
+
+.choose-result__debug dt {
+  color: #66736a;
+  font-size: var(--text-label);
+  font-weight: 700;
+}
+
+.choose-result__debug dd {
+  margin: 0;
+  color: #26312c;
+  font-size: var(--text-small);
+}
+
+.choose-result__debug pre {
+  max-height: 360px;
+  overflow: auto;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid rgba(102, 123, 92, 0.22);
+  background: rgba(255, 255, 255, 0.56);
+  color: #26312c;
+  font-size: 0.78rem;
+  line-height: 1.45;
 }
 
 .ritual-readiness-details {
@@ -2515,11 +2602,6 @@ fieldset {
 
   .check-in-options {
     grid-template-columns: 1fr;
-  }
-
-  .check-in-options--choice-pair .check-in-option + .check-in-option {
-    border-top: 1px solid rgba(159, 174, 166, 0.78);
-    border-left: 0;
   }
 
   .brief__topline {

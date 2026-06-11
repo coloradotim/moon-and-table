@@ -68,6 +68,7 @@ describe("app shell rendering", () => {
     expect(html).toContain('aria-label="Open menu"');
     expect(html).toContain('class="app-menu__icon"');
     expect(html).toContain('data-menu-action="this_week"');
+    expect(html).toContain('data-menu-action="choose_ritual"');
     expect(html).toContain('data-menu-action="search_rituals"');
     expect(html).toContain('data-menu-action="manage_rituals"');
     expect(html).toContain("Manage rituals");
@@ -192,7 +193,7 @@ describe("app shell rendering", () => {
     expect(html).toContain("Go back");
     expect(html).toContain('data-check-in-action="go_back"');
     expect(html).not.toContain("Welcome back");
-    expect(html).toContain("For today.");
+    expect(html).not.toContain("For today");
     expect(html).toContain("Barely any");
     expect(html).toContain("A pause, a noticing, or one tiny act.");
     expect(html).toContain("A little");
@@ -202,8 +203,8 @@ describe("app shell rendering", () => {
     expect(html).toContain("Room for something deeper");
     expect(html).toContain("More time, reflection, conversation, or ritual shape.");
     expect(html).not.toContain("Who is this for?");
-    expect(html).not.toContain("What feels welcome?");
-    expect(html).not.toContain("What intention should this hold?");
+    expect(html).not.toContain("Where should the ritual live?");
+    expect(html).not.toContain("What work should the ritual hold?");
   });
 
   it("acknowledges the selected week scope before the next question", () => {
@@ -215,37 +216,36 @@ describe("app shell rendering", () => {
       displayName: "Morgan Example",
     });
 
-    expect(html).toContain("Looking across the week.");
+    expect(html).not.toContain("Looking across the week");
     expect(html).toContain("How much energy or capacity do you have?");
     expect(html).not.toContain("Welcome back");
   });
 
-  it("renders adaptive A little practice options only", () => {
+  it("renders carrier options for A little capacity", () => {
     const html = renderRitualCheckInShell({
       draft: {
-        step: "practice_type",
+        step: "carrier",
         timeScope: "today",
         energyCapacity: "a_little",
         capacityMode: "low",
       },
     });
 
-    expect(html).toContain("What feels welcome?");
-    expect(html).toContain("Home");
-    expect(html).toContain("Plant");
-    expect(html).toContain("Kitchen");
-    expect(html).toContain("Candle or light");
-    expect(html).toContain("Surprise me");
+    expect(html).toContain("Where should the ritual live?");
+    expect(html).toContain("In candlelight");
+    expect(html).toContain("At the table");
+    expect(html).toContain("At the doorway");
+    expect(html).toContain("With a plant");
+    expect(html).toContain("In words");
+    expect(html).toContain("In a vessel");
+    expect(html).toContain("In the body");
     expect(html).not.toContain("Today’s shape");
     expect(html).not.toContain("Conversation");
     expect(html).not.toContain("Who is this for?");
-    expect(html).not.toContain("Home tending");
-    expect(html).not.toContain("Reflection");
-    expect(html).not.toContain("Seasonal");
-    expect(html).not.toContain("What intention should this hold?");
+    expect(html).not.toContain("What work should the ritual hold?");
   });
 
-  it("renders audience and deeper ritual-focus steps", () => {
+  it("renders audience, purpose, and carrier steps", () => {
     const audienceHtml = renderRitualCheckInShell({
       draft: {
         step: "audience",
@@ -254,23 +254,24 @@ describe("app shell rendering", () => {
         capacityMode: "high",
       },
     });
-    const practiceHtml = renderRitualCheckInShell({
+    const purposeHtml = renderRitualCheckInShell({
       draft: {
-        step: "practice_type",
+        step: "purpose",
         timeScope: "best_moment_this_week",
         energyCapacity: "room_for_something_deeper",
         capacityMode: "high",
         audience: "both_of_us",
       },
     });
-    const focusHtml = renderRitualCheckInShell({
+    const carrierHtml = renderRitualCheckInShell({
       draft: {
-        step: "ritual_focus",
+        step: "carrier",
         timeScope: "best_moment_this_week",
         energyCapacity: "room_for_something_deeper",
         capacityMode: "high",
         audience: "both_of_us",
-        practiceTypeHints: ["seasonal"],
+        purpose: "connecting",
+        purposeLabel: "Connecting",
       },
     });
 
@@ -278,25 +279,33 @@ describe("app shell rendering", () => {
     expect(audienceHtml).toContain("Go back");
     expect(audienceHtml).toContain("Me");
     expect(audienceHtml).toContain("Both of us");
-    expect(practiceHtml).toContain("Go back");
-    expect(practiceHtml).toContain("Seasonal");
-    expect(focusHtml).toContain("Go back");
-    expect(focusHtml).toContain("What intention should this hold?");
-    expect(focusHtml).toContain("Getting grounded");
-    expect(focusHtml).toContain("Making a beginning");
-    expect(focusHtml).toContain("Clearing something out");
-    expect(focusHtml).toContain("Resting");
-    expect(focusHtml).toContain("Saying something clearly");
-    expect(focusHtml).toContain("Tending us");
-    expect(focusHtml).toContain("Tending the home");
-    expect(focusHtml).toContain("Marking a threshold");
-    expect(focusHtml).toContain("Something else");
+    expect(purposeHtml).toContain("Go back");
+    expect(purposeHtml).toContain("What work should the ritual hold?");
+    expect(purposeHtml).toContain("Steadying");
+    expect(purposeHtml).toContain("Opening");
+    expect(purposeHtml).toContain("Releasing");
+    expect(purposeHtml).toContain("Tending");
+    expect(purposeHtml).toContain("Connecting");
+    expect(purposeHtml).toContain("Voicing");
+    expect(purposeHtml).toContain("Marking");
+    expect(purposeHtml).toContain("Blessing");
+    expect(purposeHtml).toContain("Protecting");
+    expect(purposeHtml).toContain("Remembering");
+    expect(carrierHtml).toContain("Go back");
+    expect(carrierHtml).toContain("Where should the ritual live?");
+    const tableIndex = carrierHtml.indexOf("At the table");
+    const openIndex = carrierHtml.indexOf("I&#39;m open");
+
+    expect(carrierHtml).toContain("I&#39;m open");
+    expect(carrierHtml).toContain("Let Moon &amp; Table choose the carrier.");
+    expect(carrierHtml).toContain("At the table");
+    expect(tableIndex).toBeLessThan(openIndex);
   });
 
-  it("renders an intention step even for barely-any capacity", () => {
+  it("renders a purpose step even for barely-any capacity", () => {
     const html = renderRitualCheckInShell({
       draft: {
-        step: "ritual_focus",
+        step: "purpose",
         timeScope: "today",
         energyCapacity: "barely_any",
         capacityMode: "pause",
@@ -305,10 +314,10 @@ describe("app shell rendering", () => {
     });
 
     expect(html).toContain("Me");
-    expect(html).not.toContain("Barely any capacity.");
-    expect(html).toContain("What intention should this hold?");
-    expect(html).toContain("Resting");
-    expect(html).toContain("Getting grounded");
+    expect(html).not.toContain("Barely any capacity");
+    expect(html).toContain("What work should the ritual hold?");
+    expect(html).toContain("Steadying");
+    expect(html).toContain("Remembering");
   });
 
   it("renders a review screen before generating the brief", () => {
@@ -319,8 +328,10 @@ describe("app shell rendering", () => {
         energyCapacity: "a_little",
         capacityMode: "low",
         audience: "both_of_us",
-        practiceTypeLabel: "Plant",
-        ritualFocusLabel: "Tending the home",
+        carrier: "plant",
+        carrierLabel: "With a plant",
+        purpose: "tending",
+        purposeLabel: "Tending",
       },
     });
 
@@ -329,8 +340,8 @@ describe("app shell rendering", () => {
     expect(html).toContain("<li>across the week</li>");
     expect(html).toContain("<li>for both of you</li>");
     expect(html).toContain("<li>with a little capacity</li>");
-    expect(html).toContain("<li>with plant</li>");
-    expect(html).toContain("<li>holding tending the home</li>");
+    expect(html).toContain("<li>living with a plant</li>");
+    expect(html).toContain("<li>tending</li>");
     expect(html).not.toContain("for both of us");
     expect(html).toContain(
       "I’ll use this with your saved profile to recommend one ritual.",
@@ -349,7 +360,8 @@ describe("app shell rendering", () => {
         energyCapacity: "barely_any",
         capacityMode: "pause",
         audience: "me",
-        ritualFocusLabel: "Getting grounded",
+        purpose: "steadying",
+        purposeLabel: "Steadying",
       },
     });
 
@@ -365,25 +377,6 @@ describe("app shell rendering", () => {
     expect(html).toContain("Reading the moon.");
     expect(html).toContain("Choosing one ritual.");
     expect(html).not.toContain("data-testid=\"recommended-ritual\"");
-  });
-
-  it("renders Something else as short text without interpretation copy", () => {
-    const html = renderRitualCheckInShell({
-      draft: {
-        step: "ritual_focus_text",
-        timeScope: "best_moment_this_week",
-        energyCapacity: "room_for_something_deeper",
-        capacityMode: "high",
-        ritualFocusKey: "something_else",
-      },
-    });
-
-    expect(html).toContain("Something else");
-    expect(html).toContain('maxlength="120"');
-    expect(html).toContain("Choose ritual");
-    expect(html).not.toContain("AI");
-    expect(html).not.toContain("free-associate");
-    expect(html).not.toContain("interpret");
   });
 
   it("renders a loading state", () => {
@@ -438,6 +431,9 @@ describe("app shell rendering", () => {
     const feedbackIndex = html.indexOf("Give feedback");
     const actionsIndex = html.indexOf('class="brief__actions"');
     const menuThisWeekIndex = html.indexOf('data-menu-action="this_week"');
+    const menuChooseRitualIndex = html.indexOf(
+      'data-menu-action="choose_ritual"',
+    );
     const menuSearchRitualsIndex = html.indexOf(
       'data-menu-action="search_rituals"',
     );
@@ -472,6 +468,7 @@ describe("app shell rendering", () => {
     expect(checkInAgainIndex).toBeGreaterThan(tryAgainIndex);
     expect(feedbackIndex).toBeGreaterThan(checkInAgainIndex);
     expect(html).toContain("Current ritual");
+    expect(html).toContain("Choose a ritual");
     expect(html).toContain("Search rituals");
     expect(html).toContain("Manage rituals");
     expect(html).toContain("Profile settings");
@@ -496,11 +493,13 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("ellipsis");
     expect(html).not.toContain("•••");
     expect(html).toContain('data-menu-action="this_week"');
+    expect(html).toContain('data-menu-action="choose_ritual"');
     expect(html).toContain('data-menu-action="search_rituals"');
     expect(html).toContain('data-menu-action="manage_rituals"');
     expect(html).toContain('data-menu-action="profile_settings"');
     expect(html).toContain('data-menu-action="how_it_works"');
-    expect(menuThisWeekIndex).toBeLessThan(menuSearchRitualsIndex);
+    expect(menuThisWeekIndex).toBeLessThan(menuChooseRitualIndex);
+    expect(menuChooseRitualIndex).toBeLessThan(menuSearchRitualsIndex);
     expect(menuSearchRitualsIndex).toBeLessThan(menuManageRitualsIndex);
     expect(menuManageRitualsIndex).toBeLessThan(menuProfileIndex);
     expect(menuProfileIndex).toBeLessThan(menuHowItWorksIndex);
