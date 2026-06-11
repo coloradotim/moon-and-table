@@ -1,234 +1,108 @@
-# Ritual candidate packet: House Witch complete extraction
+# Ritual candidate packet: House Witch canonical re-extraction
 
 ## Packet metadata
 
 Packet ID: `packet-house-witch-complete-extraction`
 
-Packet status: `complete_extraction_ready_for_tim_review`
+Packet status: `canonical_reextraction_pr_for_qa`
 
-Researcher: ChatGPT
+Parent issue: #347
 
-Date created: 2026-06-10
-
-Date patched: 2026-06-10
-
-Parent issue: #337
-
-Related issues: #278, #335, #268
+Related issues: #344, #345, #287, #335, #336, #337
 
 Output path: `docs/research/ritual-candidates/packet-house-witch-complete-extraction.md`
 
 Source ID: `SRC-MOD-HOUSE-MURPHYHISCOCK-2018`
 
-This packet is Markdown research content only. It does not approve runtime use. It does not create runtime Ritual records. It does not mark any Ritual or candidate reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.
+Source used: Arin Murphy-Hiscock, *The House Witch: Your Complete Guide to Creating a Magical Space with Rituals and Spells for Hearth and Home*. Adams Media, 2018. First Adams Media hardcover edition, November 2018.
 
-## Assignment
+This packet is Markdown research content only. It does not create runtime Ritual records. It does not mark any Ritual or candidate reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.
 
-Assigned source mode: single approved source only.
+## Controlling model
 
-Assigned source: Arin Murphy-Hiscock, *The House Witch: Your Complete Guide to Creating a Magical Space with Rituals and Spells for Hearth and Home*. Adams Media, 2018.
+This packet has been re-run under #345 and the #344 house voice guide. The packet, not Codex, is the future mechanical-import authoring artifact.
 
-Assigned lane: complete House Witch extraction expansion beyond the pilot-era split.
-
-Controlling source gate:
+Core rule:
 
 ```text
-docs/research/source-gate-house-witch.md
+If Codex must invent user-facing Ritual prose during #287, the extraction packet is not complete enough for import.
 ```
 
-Baseline repair artifact preserved unchanged:
+Every `approved_for_mechanical_import` record below has a complete `ritual body / practice` that can be mechanically imported as draft/unavailable Ritual copy after PR-gated QA. `approved_for_mechanical_import` does not mean reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.
 
-```text
-docs/research/ritual-candidates/repair-house-witch-source-inventory.md
-```
+## Source text posture
 
-Parent audit:
-
-```text
-docs/research/audits/extraction-source-accounting-audit.md
-```
-
-This packet expands from the repaired inventory. It does not overwrite the repair artifact.
-
-## Approved source lanes
-
-The source gate and repair artifact support these lanes with limits:
-
-```text
-hearth and home tending mechanics
-home-as-sacred-space framing
-kitchen/table spirituality
-sacred flame / candle / oil lamp mechanics
-cauldron and vessel mechanics
-doorway and threshold cleansing/protection mechanics
-home, room, hearth, cauldron, candle, fuel, and object blessing structures
-spoken magic and personally authored words
-food preparation and recipe-as-ritual structures
-personal purification and sacred-space creation structures
-remembrance context with caution
-private exact-text excerpt support under policy
-```
-
-This packet preserves magical household language: hearth, home, sacred space, kitchen, flame, cauldron, vessel, threshold, blessing, protection, purification, spell, consecration, spoken magic, recipe-as-ritual, grimoire, and remembrance.
-
-It does not flatten sweeping, washing, cooking, lighting a flame, blessing a room, tending a kitchen shrine, or writing in a grimoire into chores, wellness, mindfulness, or productivity.
-
-## Source policy note
-
-Moon & Table follows:
-
-```text
-docs/research/private-source-text-policy.md
-docs/research/extraction-depth-policy.md
-docs/research/prompts/extraction-packet-prompt-template.md
-```
-
-Words, blessings, prayers, prompts, meditations, recipes, charms, spoken formulas, and spells are valid ritual mechanics. Exact source wording may be permitted for Tim's private household use when manually selected from his copy, cited, and kept private. This packet identifies where exact wording matters but does not reproduce full authored rituals, prayers, spells, recipes, prompts, meditations, invocations, or distinctive long source passages.
-
-## Boundary summary
-
-This packet does not promote restricted cosmology, restricted remembrance beyond cautious memory, culturally specific smoke practice, guaranteed-effect claims, clinical/nutrition claims, unsafe herb/smoke/oil/flame/cauldron/food practices, direct recipe reproduction, generic correspondence import, or unsafe fire forms.
-
-Promotion to `candidate_extract_now` is allowed where the source item can be authored as a safe, magical, household-scale ritual without unsafe material requirements, clinical claims, guaranteed outcomes, genericized cultural practice, or restricted source lanes beyond the gate.
+Words, blessings, prayers, spoken formulas, charms, prompts, recipes, and ritual language are valid ritual mechanics. Exact operative source wording of 20 words or fewer may appear inline when it is ritually useful and non-substitutive. Longer prayers, blessings, scripts, recipes, meditations, prompts, formulas, and distinctive passages are not reproduced in this public packet. They are tracked through `ritualWords.mode = "private_source_excerpt"` with source location and use context.
 
 ## Source sections used
 
 | PDF pages | Source section | Extraction decision | Notes |
 | ---: | --- | --- | --- |
-| 1-6 | Front matter / TOC | context_only | Source identity and navigation. |
-| 7-8 | Introduction | source_note_only | Home/refuge/hearthcraft frame. |
-| 9-25 | Ch. 1, A Place to Call Home | approved_with_limits | Home values, sacred household, belonging, household care. |
-| 26-38 | Ch. 2, Your Home As a Sacred Space | approved_with_limits | Sacred space, boundaries, inner flame, closing. High-risk fire held. |
-| 39-60 | Ch. 3, Your Spiritual Hearth | approved_with_limits | Spiritual hearth, hearth blessing, imagined hearth, remembrance held with caution. |
-| 61-82 | Ch. 4, The Magic of the Cauldron | approved_with_limits | Cauldron/vessel blessing, care, use, symbolic hearth vessel. Unsafe fire held. |
-| 83-98 | Ch. 6, The Kitchen As a Sacred Space | approved_with_limits | Kitchen sacred flame, shrine/altar, table, kitchen attention, appliances/tools. |
-| 99-121 | Ch. 7, Using Hearthcraft to Protect Your Home | approved_with_limits | Thresholds, boundaries, doorway cleansing/protection, plant/stones source notes. |
-| 122-138 | Ch. 8, Magic at the Hearth | approved_with_limits | Records/grimoire, hearth practice, seasonal hearth memory. |
-| 139-152 | Ch. 9, The Spirituality of Food | approved_with_limits | Food awareness, table blessing, recipes-as-ritual with exact recipe text private only. |
-| 153-172 | Ch. 10, Herbs, Crafts, and Other Hearth-Related Magic Work | limited | Spell bottles, spoken magic, crafts; material-specific practices held. |
-| 173-183 | Ch. 11, Spells and Rituals | approved_with_limits | Doorstep cleansing, house/room/personal purification, sacred space, recipes/formulas with limits. |
+| 1-8 | Front matter / Introduction | context_only / source_note_only | Source identity, house-witch frame, home-as-refuge language. |
+| 9-25 | Ch. 1, A Place to Call Home | source_note_only / hold | Hearthcraft frame, values, food and everyday action. Values/table adaptations held. |
+| 26-38 | Ch. 2, Your Home As a Sacred Space | candidate_extract_now / hold | Bank inner flame approved; needfire/high-risk fire held. |
+| 39-60 | Ch. 3, Your Spiritual Hearth | candidate_extract_now / hold | Spiritual hearth recognition approved; imagined hearth and ancestor/spirit material held. |
+| 61-82 | Ch. 4, The Magic of the Cauldron | candidate_extract_now / hold | Cauldron blessing and harmony candle approved; high-risk cauldron fire held. |
+| 83-98 | Ch. 6, The Kitchen As a Sacred Space | candidate_extract_now / hold | Kitchen flame and appliance/tool blessing approved; shrine variant held. |
+| 99-121 | Ch. 7, Protect Your Home | candidate_extract_now / hold | Room purification approved; wards/threshold boundary held. |
+| 122-138 | Ch. 8, Magic at the Hearth | candidate_extract_now | Grimoire / record keeping approved as source-backed Moon & Table form. |
+| 139-152 | Ch. 9, Spirituality of Food | candidate_extract_now / later | Food awareness approved; recipe-specific candidates later/private. |
+| 153-172 | Ch. 10, Herbs, Crafts, and Other Hearth Work | hold / later | Spell bottles, spoken-magic examples, and crafts require material/private-text review. |
+| 173-183 | Ch. 11, Spells and Rituals | candidate_extract_now | Candle/oil flame, candle/fuel consecration, doorstep, house blessing, room blessing, personal purification, sacred space. |
 | 184-200 | Appendix / bibliography / index | context_only | Navigation/provenance only. |
 
-## Source rite inventory
+## Source rite inventory and disposition
 
-Every inventoried source item has a disposition. This inventory re-evaluates the repaired baseline under the mature extraction-depth policy.
-
-| Source item | Source pages | Source location precision | Type | Research use | Brief source description | Likely carriers | Likely purposes | Exact text importance | Disposition | Reason | Future action |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Front matter / TOC | 1-6 | page_range | context_only | context_only | Metadata and source navigation. | words | remembering | low | context_only | Metadata only. | Preserve citation. |
-| Introduction / home as refuge | 7-8 | page_range | context_only | source_note_only | Home/refuge/hearthcraft frame. | words | marking | medium | source_note_only | Voice/context, not standalone ritual. | Use as source note. |
-| Hearthcraft definition | 7-25 | chapter_range | context_only | source_note_only | Hearthcraft as household magic. | words | marking | medium | source_note_only | Product language support. | Use sparingly in authoring. |
-| Ritual simplicity / intuitive ceremony | 7-25 | chapter_range | context_only | source_note_only | Everyday acts can be ritual. | words, body | tending | medium | source_note_only | Context only. | Do not flatten. |
-| Hearth values / sacred definition prompt | PDF pp. 9-25 / Ch. 1 | page_range | prompt | ritual_candidate | Define what is sacred in the home. | words, table | marking, opening | medium | candidate_extract_now | Promoted; strong household orientation. | Candidate: Name What Is Sacred Here. Source verification required before import. |
-| Household values table rite | PDF pp. 9-25 / Ch. 1 | page_range | prompt | ritual_candidate | Define shared household values at a table. | table, words | connecting, marking | medium | candidate_extract_now | Promoted; highly Moon & Table-shaped. | Candidate: Set the Household Values Table. Source verification required before import. |
-| Chosen-family care rite | PDF pp. 9-25 / Ch. 1 | page_range | ritual | ritual_candidate | Extend household care to beloved circle. | table, words | connecting, blessing | medium | candidate_extract_now | Promoted; non-coercive connection lane. | Candidate: Set a Place for Chosen Care. Source verification required before import. |
-| Sacred home / threshold customs | PDF pp. 26-38 / Ch. 2 | page_range | context_only | source_note_only | Thresholds and sacred household context. | doorway, words | protecting, remembering | medium | source_note_only | Context only. | Avoid genericizing. |
-| Spiritual hearth recognition | PDF pp. 39-60 / Ch. 3 | page_range | ritual | ritual_candidate | Locate and recognize the spiritual hearth. | table, candlelight, words | opening, blessing | high | candidate_extract_now | Existing candidate. | Candidate: Recognize the Hearth. Source verification required before import. |
-| Blessing the hearth | PDF pp. 39-60 / Ch. 3 | page_range | blessing | source_note_only | Hearth blessing sequence and words supporting hearth recognition. | candlelight, words, table | blessing, marking | high | source_note_only | Exact blessing supports a candidate but is not counted as a separate now-candidate. | Private excerpt support for Recognize the Hearth. |
-| Bank inner flame / closing prayer | PDF pp. 26-38 and 39-60 / Ch. 2-3 | page_range | prayer | ritual_candidate | Closing/banking the inner or household flame. | candlelight, words, body | steadying, protecting | high | candidate_extract_now | Existing candidate; prayer private. | Candidate: Bank the Inner Flame. |
-| Imagined spiritual hearth meditation | PDF pp. 39-60 / Ch. 3 | page_range | meditation | ritual_candidate | Visualize / enter the inner spiritual hearth. | body, words, candlelight | steadying, opening | high | candidate_extract_now | Promoted; strong inner-hearth lane. | Candidate: Visit the Imagined Hearth. Source verification required before import. |
-| Access hearth energy | PDF pp. 39-60 / Ch. 3 | page_range | meditation | ritual_candidate | Draw on spiritual hearth energy in daily life. | body, words | steadying, blessing | medium | candidate_extract_now | Promoted; pair with hearth recognition. | Candidate: Return to Hearth Energy. Source verification required before import. |
-| Restricted remembrance / lineage material | PDF pp. 39-60 / Ch. 3 | page_range | invocation | hold | Remembrance material that may imply ancestor/spirit work. | words, table | remembering, blessing | high | hold | Source-boundary decision needed. | Hold pending policy. |
-| Restricted cosmology material | Ch. 5 | chapter_range | invocation | hold | Deity/household spirit/cosmology lane. | words, table | blessing, protecting | high | hold | Not approved by default. | Hold. |
-| High-risk fire material | PDF pp. 26-38 and 61-82 / Ch. 2 and Ch. 4 | page_range | ritual | hold | Needfire/alcohol-fire or unsafe fire/cauldron practices. | candlelight, vessel, body | opening, protecting | high | hold | High fire risk. | Separate safety review only. |
-| What is a cauldron? | PDF pp. 61-82 / Ch. 4 | page_range | context_only | source_note_only | Cauldron lore and role. | vessel, words | remembering | medium | source_note_only | Context only. | Support vessel authoring. |
-| Cauldron types/care | PDF pp. 61-82 / Ch. 4 | page_range | context_only | source_note_only | Cauldron materials and care. | vessel | tending | medium | source_note_only | Care context, not standalone ritual. | Source note. |
-| Using cauldron in hearthcraft | PDF pp. 61-82 / Ch. 4 | page_range | ritual | ritual_candidate | Cauldron as hearth vessel. | vessel, table, candlelight | blessing, steadying | medium | candidate_extract_now | Existing candidate support. | Candidate: Bless the Hearth Vessel. |
-| Blessing your cauldron | PDF pp. 61-82 / Ch. 4 | page_range | blessing | ritual_candidate | Cauldron blessing. | vessel, words, table | blessing, marking | high | candidate_extract_now | Existing candidate; exact words private. | Candidate: Cauldron Blessing. Source verification required before import. |
-| Cauldron-based rite | PDF pp. 61-82 / Ch. 4 | page_range | ritual | ritual_candidate | Cauldron as focus for household spell/rite. | vessel, candlelight, words | blessing, steadying | high | candidate_extract_now | Promoted; safe no-fire vessel variant. | Candidate: Set the Cauldron at the Hearth. Source verification required before import. |
-| Kitchen as sacred space | PDF pp. 83-98 / Ch. 6 | page_range | context_only | source_note_only | Kitchen as magical household center. | table, words | blessing | medium | source_note_only | Context only; candidates below carry mechanics. | Source note. |
-| Bringing spirituality to kitchen | PDF pp. 83-98 / Ch. 6 | page_range | ritual | ritual_candidate | Kitchen work as spiritual practice. | table, body, words | tending, blessing | medium | candidate_extract_now | Existing candidate support. | Candidate: Prepare Food with Awareness. |
-| Kitchen sacred flame / oil lamp | PDF pp. 83-98 and 173-183 / Ch. 6 and Ch. 11 | page_range | prayer | ritual_candidate | Lamp/candle before kitchen work. | candlelight, table, words | opening, blessing | high | candidate_extract_now | Existing candidate; later split candle/oil lamp. | Candidate: Light the Kitchen Flame. Source verification required before import. |
-| Kitchen shrine / altar tending | PDF pp. 83-98 / Ch. 6 | page_range | ritual | ritual_candidate | Tending a small kitchen shrine/altar. | table, vessel, candlelight | tending, blessing | medium | candidate_extract_now | Promoted; very source/product fit. | Candidate: Tend the Kitchen Shrine. Source verification required before import. |
-| Kitchen attention / sacred kitchen action | PDF pp. 83-98 / Ch. 6 | page_range | ritual | ritual_candidate | Kitchen action as attention and magic. | body, table, words | tending, steadying | medium | candidate_extract_now | Promoted; keep magical not wellness. | Candidate: Move Like the Kitchen Is Sacred. Source verification required before import. |
-| Appliance/tool blessing | PDF pp. 83-98 and 153-172 / Ch. 6 and Ch. 10 | page_range | blessing | ritual_candidate | Blessing modern kitchen tools/appliances. | vessel, table, words | blessing, tending | medium | candidate_extract_now | Promoted; strong domestic magic lane. | Candidate: Bless the Kitchen Tool. Source verification required before import. |
-| Table blessing / food gratitude | PDF pp. 139-152 / Ch. 9 | page_range | blessing | ritual_candidate | Gratitude and blessing around food/table. | table, words, vessel | blessing, connecting | high | candidate_extract_now | Promoted; exact words private. | Candidate: Bless the Table Before Eating. Source verification required before import. |
-| Food with awareness | PDF pp. 139-152 / Ch. 9 | page_range | ritual | ritual_candidate | Food preparation as ritual. | body, table, vessel | tending, connecting | medium | candidate_extract_now | Existing candidate. | Candidate: Prepare Food With Awareness. Primary body because the source action is embodied preparing/serving food. |
-| Recipe-specific ritual candidates | PDF pp. 139-152 and 173-183 / Ch. 9 and Ch. 11 | page_range | recipe | ritual_candidate | Recipes as private ritual structures. | table, vessel, words | tending, connecting | high | candidate_extract_later | Valid but recipe-specific authoring/safety needed. | Stage as later private-recipe lane. |
-| Direct recipe reproduction | PDF pp. 139-152 and 173-183 / Ch. 9 and Ch. 11 | page_range | recipe | hold | Exact recipe text. | words, table | tending | high | hold | Private excerpt only; do not reproduce. | Hold exact text. |
-| Clinical/nutrition claims | Food/herb sections | chapter_range | context_only | reject | Claims outside ritual scope. | body, plant | steadying | medium | reject | Out of product scope. | Do not use. |
-| Keep records / household grimoire | PDF pp. 122-138 / Ch. 8 | page_range | prompt | both | Record household rituals, changes, recipes, impressions. | words, table | remembering, marking | medium | candidate_extract_now | Existing candidate; also product follow-up. | Candidate: Enter It in the Household Grimoire. |
-| Spoken magic | PDF pp. 153-172 / Ch. 10 | page_range | spoken_formula | ritual_candidate | Personally authored words/spoken formulas. | words | voicing, blessing | high | candidate_extract_now | Existing words carrier; exact examples private. | Candidate: Speak Hearth Words. |
-| Spell bottles | PDF pp. 153-172 / Ch. 10 | page_range | charm | ritual_candidate | Bottles as protective/blessing vessels. | vessel, words, doorway | protecting, blessing | high | candidate_extract_now | Existing candidate; split later. | Candidate: Make a Household Spell Bottle. |
-| Spell bottle variants | PDF pp. 153-172 / Ch. 10 | page_range | charm | ritual_candidate | Protection, blessing, remembrance, seasonal, threshold bottle variants. | vessel, doorway, table | protecting, blessing, remembering | high | candidate_extract_later | Variants need material/safety review and later splitting. | Keep in split ledger; no now-candidate record. |
-| Restricted smoke practice | PDF pp. 99-121 and 153-172 / Ch. 7 and Ch. 10 | page_range | cleansing | hold | Smoke-based cleansing language/material. | body, plant, candlelight | releasing, protecting | high | hold | Cultural/source and smoke-safety review needed. | Hold; possible smoke mechanics later. |
-| Folk/craft icon material | PDF pp. 9-25 and 153-172 / Ch. 1 and Ch. 10 | page_range | craft | hold | Kitchen witch icon / folk craft material. | table, vessel | blessing, protecting | high | hold | Folk/cultural/craft review. | Hold. |
-| Magical figures and symbols | PDF pp. 153-172 / Ch. 10 | page_range | craft | hold | Symbol/figure material. | table, words, vessel | marking, protecting | high | hold | Symbol/cultural review needed. | Hold. |
-| Generic correspondence import | Appendix | chapter_range | correspondence_with_action | hold | Correspondence lists. | words | marking | medium | hold | Not a correspondence database. | Hold/source-note only after gating. |
-| Set up energy boundaries | PDF pp. 99-121 / Ch. 7 | page_range | ritual | ritual_candidate | Establish household boundaries. | doorway, words, vessel | protecting, marking | high | candidate_extract_now | Existing threshold/boundary support. | Candidate: Set the Household Boundary. Source verification required before import. |
-| Threshold protection | PDF pp. 99-121 / Ch. 7 | page_range | ritual | ritual_candidate | Door/threshold protection mechanics. | doorway, vessel, words | protecting, opening | high | candidate_extract_now | Existing threshold lane. | Candidate: Wash the Threshold. Source verification required before import. |
-| Doorstep cleansing | roughly PDF p. 175 / Ch. 11 | needs_tightening | cleansing | ritual_candidate | Doorstep cleansing line/action. | doorway, body, words | releasing, protecting | high | candidate_extract_now | Existing candidate; exact line private. | Candidate: Doorstep Cleansing. Source verification required before import. |
-| House blessing | roughly PDF pp. 175-177 / Ch. 11 | needs_tightening | blessing | ritual_candidate | Full-house blessing circuit. | doorway, body, vessel, words | blessing, protecting | high | candidate_extract_now | Existing candidate. | Candidate: Bless the House by Circuit. Primary doorway because the circuit centers door/window/threshold movement. |
-| Room purification | roughly PDF pp. 177-178 / Ch. 11 | needs_tightening | cleansing | ritual_candidate | Single-room purification. | body, vessel, words | releasing, protecting | high | candidate_extract_now | Promoted; distinct from kitchen purification. | Candidate: Purify One Room. Source verification required before import. |
-| Room blessing | roughly PDF pp. 177-178 / Ch. 11 | needs_tightening | blessing | ritual_candidate | Bless a single room. | vessel, words, table | blessing, marking | high | candidate_extract_now | Promoted; single-room variant. | Candidate: Bless One Room. Source verification required before import. |
-| Kitchen purification | PDF pp. 99-121 and 173-183 / Ch. 7 and Ch. 11 | page_range | cleansing | ritual_candidate | Regular kitchen purification. | table, vessel, body | releasing, tending | high | candidate_extract_now | Existing candidate. | Candidate: Purify the Kitchen Hearth. Primary table because the runtime action centers the kitchen surface/counter as hearth. |
-| Personal purification | roughly PDF pp. 178-179 / Ch. 11 | needs_tightening | cleansing | ritual_candidate | Personal symbolic purification. | body, words, vessel | releasing, blessing | high | candidate_extract_now | Promoted; avoid clinical framing. | Candidate: Purify the Person at Home. Source verification required before import. |
-| Creating sacred space | roughly PDF pp. 179-180 / Ch. 11 | needs_tightening | ritual | ritual_candidate | Create a sacred working space. | body, words, table | opening, blessing | high | candidate_extract_now | Promoted; strong general opener. | Candidate: Create the Small Sacred Space. Source verification required before import. |
-| Consecrating candles/fuel | PDF pp. 173-183 / Ch. 11 | page_range | consecration | ritual_candidate | Bless/consecrate candles or fuel. | candlelight, words, vessel | blessing, opening | high | candidate_extract_now | Promoted; supports candle stack. | Candidate: Consecrate the Candle or Fuel. Source verification required before import. |
-| Herb waters / washes | PDF pp. 173-183 / Ch. 11 | page_range | cleansing | hold | Herbal waters/washes. | plant, vessel, body | releasing, blessing | high | hold | Herb/safety review needed. | Hold. |
-| Oils/incense/sealing formulas | PDF pp. 173-183 / Ch. 11 | page_range | recipe | hold | Formula-based rites. | plant, vessel, candlelight | blessing, protecting | high | hold | Formula/smoke/oil safety; exact formulas private-only. | Hold. |
-| Seasonal honoring craft | PDF pp. 122-138 and 153-172 / Ch. 8 and Ch. 10 | page_range | craft | ritual_candidate | Seasonal honoring through craft/object/table. | table, plant, vessel | marking, remembering | medium | candidate_extract_now | Promoted; safe craft/table marker. | Candidate: Mark the Season at the Hearth. Source verification required before import. |
-| Protective plants/stones | PDF pp. 99-121 and 153-172 / Ch. 7 and Ch. 10 | page_range | correspondence_with_action | source_note_only | Plant/stone household protection context. | plant, vessel | protecting | medium | source_note_only | Named-material safety required. | Support only. |
-| Purification technique categories | PDF pp. 99-121 and 173-183 / Ch. 7 and Ch. 11 | page_range | context_only | source_note_only | Categories of cleansing/purification. | body, vessel, words | releasing | medium | source_note_only | Source-note support. | Use in authoring. |
-| Everyday objects/tools | PDF pp. 153-172 / Ch. 10 | page_range | context_only | source_note_only | Household objects/tools can be magical. | vessel, table | blessing, tending | medium | source_note_only | Context. | Supports appliance/tool blessing. |
-| Appendix ingredients/supplies | 184-200 | page_range | context_only | source_note_only | Supply/index context. | words | remembering | low | source_note_only | Navigation only. | No runtime list. |
-| Bibliography/index | 184-200 | page_range | context_only | context_only | Source/provenance. | words | remembering | low | context_only | Metadata only. | No action. |
+| Source item | Source pages | Type | Research use | Disposition | Reason | Future action |
+| --- | --- | --- | --- | --- | --- | --- |
+| Source identity / copyright | 1-6, 184-200 | context_only | context_only | context_only | Metadata only. | Preserve citation. |
+| Home as refuge / hearthcraft frame | 7-25 | context_only | source_note_only | source_note_only | Voice and product frame. | Use as rationale, not standalone ritual. |
+| Household values / sacred-home prompts | 9-25 | prompt | ritual_candidate | hold | Needs Tim-approved table form to avoid worksheet flattening. | Hold. |
+| Chosen-family care practice | 9-25 | practice_family | ritual_candidate | hold | Strong Moon & Table fit but needs adaptation approval. | Hold. |
+| Bank inner flame | 26-38 | ritual/prayer | ritual_candidate | candidate_extract_now | Complete closing practice; long prayer private. | Candidate below. |
+| Needfire / alcohol fire | 26-38 and 61-82 | fire_ritual | hold | hold | High fire risk. | Separate safety review only. |
+| Spiritual hearth recognition | 39-60 | ritual | ritual_candidate | candidate_extract_now | Complete hearth recognition structure. | Candidate below. |
+| Imagined spiritual hearth | 39-60 | meditation | ritual_candidate | hold | Guided structure needs private review before mechanical import. | Hold. |
+| Ancestor / household spirit material | 39-60 and Ch. 5 | invocation/context | hold | hold | Restricted remembrance/cosmology. | Separate product decision. |
+| Cauldron blessing | 61-82 | blessing | ritual_candidate | candidate_extract_now | Complete vessel blessing; long blessing private. | Candidate below. |
+| Cauldron harmony candle | 173-183 | spell/rite | ritual_candidate | candidate_extract_now | Complete cauldron + candle rite. | Candidate below. |
+| Kitchen sacred flame | 83-98 and 173-183 | candle/prayer | ritual_candidate | candidate_extract_now | Complete flame opening; long prayer private. | Candidate below. |
+| Consecrating candle/fuel | 173-183 | consecration | ritual_candidate | candidate_extract_now | Complete visualization + short source line. | Candidate below. |
+| Appliance/tool blessing | 83-98 | blessing | ritual_candidate | candidate_extract_now | Source gives repeatable blessing structure. | Candidate below. |
+| Kitchen shrine/altar tending | 83-98 | practice_family | ritual_candidate | hold | Needs complete non-cosmology form. | Hold. |
+| Room purification | 99-121 | ritual | ritual_candidate | candidate_extract_now | Complete cleaning/incense/candle sequence. | Candidate below. |
+| Threshold wards / boundary circuit | 99-121 | ritual | ritual_candidate | hold | Outdoor/property/warding language and safety need QA. | Hold. |
+| Doorstep cleansing | 173-183 | ritual | ritual_candidate | candidate_extract_now | Complete threshold wash. | Candidate below. |
+| House blessing | 173-183 | ritual | ritual_candidate | candidate_extract_now | Complete whole-house circuit. | Candidate below. |
+| Room blessing | 173-183 | ritual | ritual_candidate | candidate_extract_now | Complete single-room candle/water/pouch rite. | Candidate below. |
+| Personal purification | 173-183 | ritual | ritual_candidate | candidate_extract_now | Complete candle/salt sequence. | Candidate below. |
+| Create sacred space | 173-183 | ritual | ritual_candidate | candidate_extract_now | Complete element-space sequence. | Candidate below. |
+| Food with awareness | 139-152 | practice_family | ritual_candidate | candidate_extract_now | Complete Moon & Table form from source-supported action. | Candidate below. |
+| Recipe-specific rituals | 139-152 and 173-183 | recipe | ritual_candidate | candidate_extract_later | Exact recipes and dietary/safety review required. | Later private-recipe lane. |
+| Keep records / grimoire | 122-138 | prompt/practice | ritual_candidate | candidate_extract_now | Complete post-ritual record form. | Candidate below. |
+| Spell bottle mechanics | 153-172 | charm/craft | ritual_candidate | hold | Materials and variants need safe splits. | Hold. |
+| Corn husk / seasonal crafts | 153-172 | craft | ritual_candidate | hold | Material/time/placement variants need separate review. | Hold. |
+| Spoken magic examples | 153-172 | spoken_formula | source_note_only | source_note_only | Supports words-as-mechanics and Moon & Table original lines. | Keep as source note. |
+| Oils/incense/potpourri recipes | Ch. 7, Ch. 10, Ch. 11 | recipe/formula | hold | hold | Essential oil/smoke/pet/pregnancy/asthma safety. | Separate safety review. |
 
 ## Packet metrics
 
 ```text
-source_items_inventoried: 58
-candidate_records: 31
-candidate_extract_now: 31
-candidate_extract_later: 2
+source_items_inventoried: 29
+candidate_extract_now: 15
+candidate_extract_later: 1
 private_excerpt_reference: 0
-items_with_private_excerpt_recommended: 28
-source_note_only: 11
-context_only: 2
-hold: 10
-reject: 1
-remaining_unreviewed_source_sections: none known within approved House Witch extraction scope; exact prayers/blessings/recipes/prompts/formulas still require Tim private review from source copy
-remaining_extraction_backlog: 2 candidate_extract_later rows plus held rows requiring product/source-boundary/safety decisions
+items_with_private_excerpt_recommended: 10
+source_note_only: 5
+context_only: 1
+hold_before_import_candidate_records: 8
+reject: 0
+runtime_records_created: no
+direct_use_eligibility_changed: no
+recommendation_eligibility_changed: no
 ```
 
-`private_excerpt_reference` is `0` because the packet has no standalone source-inventory row whose main disposition is `private_excerpt_reference`. Exact wording still matters for many rows; those are counted under `items_with_private_excerpt_recommended`.
-
-`Spell Bottle Variant Note` was removed from candidate research records and coverage records. It remains represented by the `Spell bottle variants` inventory row, the `candidate_extract_later` section, and the variant/split ledger.
-
-## Coverage summary
-
-Primary coverage only counts toward coverage satisfaction. Secondary carriers and secondary purposes are not counted here.
-
-`Candidate count` means primary carrier + primary purpose count using the coverage records table as source of truth.
-
-| Primary carrier | Primary purpose | Support | Candidate count | Primary candidates | Notes |
-| --- | --- | --- | ---: | --- | --- |
-| candlelight | opening | strong | 1 | `ritual-house-witch-kitchen-sacred-flame` | Kitchen flame is the primary candlelight opener. |
-| candlelight | blessing | strong | 1 | `ritual-house-witch-consecrate-candle-fuel` | Material consecration supports later candle stack. |
-| candlelight | steadying | strong | 1 | `ritual-house-witch-bank-the-inner-flame` | Close-of-day / banked-flame practice. |
-| table | opening | strong | 1 | `ritual-house-witch-spiritual-hearth-recognition` | Primary carrier is table/hearth-place because the action locates and marks the hearth. |
-| table | connecting | strong | 2 | `ritual-house-witch-household-values-table`; `ritual-house-witch-place-for-chosen-care` | Shared household table practices. |
-| table | tending | strong | 1 | `ritual-house-witch-kitchen-shrine-tending` | Shrine/altar tending. |
-| table | blessing | strong | 1 | `ritual-house-witch-table-gratitude` | Table blessing before eating. |
-| table | releasing | adequate | 1 | `ritual-house-witch-kitchen-purification` | Counter/table as kitchen hearth surface. |
-| table | marking | adequate | 1 | `ritual-house-witch-mark-season-hearth` | Seasonal hearth/table marker. |
-| vessel | blessing | strong | 4 | `ritual-house-witch-cauldron-blessing`; `ritual-house-witch-bless-one-room`; `ritual-house-witch-bless-kitchen-tool`; `ritual-house-witch-bless-room-vessel` | Cauldron/object/room-vessel blessing family. |
-| vessel | protecting | strong | 1 | `ritual-house-witch-spell-bottle-household-vessel` | Root spell-bottle vessel only; variants later. |
-| vessel | steadying | adequate | 1 | `ritual-house-witch-set-cauldron-at-hearth` | Hearth vessel as steadying focus. |
-| doorway | blessing | strong | 1 | `ritual-house-witch-house-blessing-circuit` | Primary doorway because the circuit centers door/window/threshold movement. |
-| doorway | protecting | strong | 1 | `ritual-house-witch-set-household-boundary` | Boundary practice. |
-| doorway | releasing | strong | 2 | `ritual-house-witch-threshold-wash`; `ritual-house-witch-doorstep-cleansing` | Threshold cleansing / release. |
-| body | opening | adequate | 1 | `ritual-house-witch-create-small-sacred-space` | Embodied creation of a working space. |
-| body | tending | strong | 2 | `ritual-house-witch-food-with-awareness`; `ritual-house-witch-sacred-kitchen-movement` | Main action is embodied kitchen work. |
-| body | releasing | strong | 2 | `ritual-house-witch-purify-one-room`; `ritual-house-witch-purify-person-at-home` | Movement/washing/gesture as release. |
-| body | steadying | strong | 2 | `ritual-house-witch-imagined-hearth`; `ritual-house-witch-return-hearth-energy` | Inner hearth and return-to-hearth practices. |
-| words | marking | adequate | 1 | `ritual-house-witch-name-sacred-here` | Naming sacred household values. |
-| words | voicing | strong | 1 | `ritual-house-witch-spoken-hearth-words` | Words as primary carrier. |
-| words | remembering | strong | 2 | `ritual-house-witch-household-grimoire-entry`; `ritual-house-witch-hearth-recipe-memory` | Grimoire and recipe-memory records. |
-
-## Candidate research records
-
-Common status for every candidate:
+## Common runtime posture for every candidate
 
 ```ts
 status: "draft"
@@ -240,272 +114,860 @@ availability: {
 recommendationMetadata: {
   eligibility: {
     recommendable: false,
-    missing: ["human_review", "source_verification"],
+    missing: ["human_review", "source_verification", "direct_use_review"],
   },
 }
 ```
 
-| Candidate ID | Title | Source location | Primary carrier | Primary purpose | Draft practice shape | Required review before authoring/import |
-| --- | --- | --- | --- | --- | --- | --- |
-| `ritual-house-witch-spiritual-hearth-recognition` | Recognize the Hearth | PDF pp. 39-60 / Ch. 3; source verification required before import | table | opening | Name the household hearth, light or touch the hearth marker, and close by acknowledging the home. | Primary table because the rite locates/marks the hearth-place. Decide root-practice status; exact hearth blessing private. |
-| `ritual-house-witch-bank-the-inner-flame` | Bank the Inner Flame | PDF pp. 26-38 and 39-60 / Ch. 2-3 | candlelight | steadying | Close the day by banking the household flame in words or candlelight. | Prayer private; decide bedtime vs general close. |
-| `ritual-house-witch-kitchen-sacred-flame` | Light the Kitchen Flame | PDF pp. 83-98 and 173-183 / Ch. 6 and Ch. 11; source verification required before import | candlelight | opening | Light a safe kitchen candle/lamp before cooking or table work and name the kitchen sacred. | Split candle/oil-lamp later; flame safety. |
-| `ritual-house-witch-threshold-wash` | Wash the Threshold | PDF pp. 99-121 / Ch. 7; source verification required before import | doorway | releasing | Wash or symbolically wipe the threshold and speak a boundary line. | Exact threshold line private; surface/safety review. |
-| `ritual-house-witch-house-blessing-circuit` | Bless the House by Circuit | rough PDF pp. 175-177 / Ch. 11; source verification required before import | doorway | blessing | Move through the home with safe objects/words and close at the hearth/table. | Primary doorway because the circuit centers door/window/threshold movement. Split room/house variants later; exact lines private. |
-| `ritual-house-witch-cauldron-blessing` | Bless the Hearth Vessel | PDF pp. 61-82 / Ch. 4; source verification required before import | vessel | blessing | Place the cauldron/bowl, name it as a hearth vessel, and bless its use. | Exact cauldron blessing private; decide bowl adaptation. |
-| `ritual-house-witch-spoken-hearth-words` | Speak at the Hearth | PDF pp. 153-172 / Ch. 10; source verification required before import | words | voicing | Speak one personally authored line at the hearth/table before another rite. | Exact examples private; reusable verbal layer. |
-| `ritual-house-witch-food-with-awareness` | Prepare Food with Awareness | PDF pp. 139-152 / Ch. 9; source verification required before import | body | tending | Prepare already-planned food while naming the hearth purpose and table memory. | Primary body because the main ritual action is embodied preparing/serving food. No recipes; food/allergy safety. |
-| `ritual-house-witch-household-grimoire-entry` | Enter It in the Household Grimoire | PDF pp. 122-138 / Ch. 8 | words | remembering | Record the rite, date, place, words, and what changed in the household. | Can be Ritual and product follow-up. |
-| `ritual-house-witch-kitchen-purification` | Purify the Kitchen Hearth | PDF pp. 99-121 and 173-183 / Ch. 7 and Ch. 11; source verification required before import | table | releasing | Clear one kitchen surface, speak what leaves, and close by restoring the table/counter. | Primary table because the runtime action centers the kitchen surface/counter as hearth. Avoid chore flattening. |
-| `ritual-house-witch-spell-bottle-household-vessel` | Make a Household Spell Bottle | PDF pp. 153-172 / Ch. 10; source verification required before import | vessel | protecting | Fill a small safe bottle with reviewed symbolic items and place it for household boundary/blessing. | Material safety; exact contents private. Variants later. |
-| `ritual-house-witch-name-sacred-here` | Name What Is Sacred Here | PDF pp. 9-25 / Ch. 1; source verification required before import | words | marking | Sit at the table and name what the home protects, feeds, and refuses to forget. | Keep magical, not values-work worksheet. |
-| `ritual-house-witch-household-values-table` | Set the Household Values Table | PDF pp. 9-25 / Ch. 1; source verification required before import | table | connecting | Place three objects or words on the table to mark what the household is becoming. | Keep intimate/domestic, not corporate exercise. |
-| `ritual-house-witch-place-for-chosen-care` | Set a Place for Chosen Care | PDF pp. 9-25 / Ch. 1; source verification required before import | table | connecting | Set an empty place, cup, or candle for someone held in care and speak a blessing. | No obligation/guilt; no restricted invocation. |
-| `ritual-house-witch-kitchen-shrine-tending` | Tend the Kitchen Shrine | PDF pp. 83-98 / Ch. 6; source verification required before import | table | tending | Refresh one small kitchen shrine or altar, remove stale objects, and name the work it holds. | Avoid restricted cosmology unless approved. |
-| `ritual-house-witch-sacred-kitchen-movement` | Move Like the Kitchen Is Sacred | PDF pp. 83-98 / Ch. 6; source verification required before import | body | tending | Before kitchen work, pause, touch the counter, and move through one action as hearthcraft. | Avoid generic mindfulness; keep kitchen witch language. |
-| `ritual-house-witch-table-gratitude` | Bless the Table Before Eating | PDF pp. 139-152 / Ch. 9; source verification required before import | table | blessing | Before eating, place hands near the plate/table and speak one original gratitude. | Exact words private; food safety. |
-| `ritual-house-witch-imagined-hearth` | Visit the Imagined Hearth | PDF pp. 39-60 / Ch. 3; source verification required before import | body | steadying | Sit, imagine the inner hearth, and return with one word of warmth for the home. | Guided sequence private; no clinical claims. |
-| `ritual-house-witch-return-hearth-energy` | Return to Hearth Energy | PDF pp. 39-60 / Ch. 3; source verification required before import | body | steadying | In a stressful moment, touch the hearth/table and recall the household flame. | Avoid guaranteed calm. |
-| `ritual-house-witch-purify-one-room` | rough PDF pp. 177-178 / Ch. 11; source verification required before import | body | releasing | Move through one room with safe words/gestures and name what leaves. | Exact text private; no smoke default. |
-| `ritual-house-witch-bless-one-room` | Bless One Room | rough PDF pp. 177-178 / Ch. 11; source verification required before import | vessel | blessing | Place a small vessel/object in one room and speak an original blessing for its use. | Primary vessel because this variant anchors room blessing through a placed object/vessel. Exact lines private. |
-| `ritual-house-witch-purify-person-at-home` | Purify the Person at Home | rough PDF pp. 178-179 / Ch. 11; source verification required before import | body | releasing | Wash hands/face or stand before the hearth and name what is being released. | No clinical or purity-moralism framing. |
-| `ritual-house-witch-create-small-sacred-space` | Create the Small Sacred Space | rough PDF pp. 179-180 / Ch. 11; source verification required before import | body | opening | Clear a small place, mark its edge, speak its purpose, and close when finished. | Exact sequence private. |
-| `ritual-house-witch-consecrate-candle-fuel` | Consecrate the Candle or Fuel | PDF pp. 173-183 / Ch. 11; source verification required before import | candlelight | blessing | Hold a candle/fuel safely, name its purpose, and set it aside for ritual use. | Fire/material safety; no oil assumptions. |
-| `ritual-house-witch-set-cauldron-at-hearth` | Set the Cauldron at the Hearth | PDF pp. 61-82 / Ch. 4; source verification required before import | vessel | steadying | Place the cauldron/bowl at the hearth/table and let it hold what the home is steadying. | No unsafe fire form; object safety. |
-| `ritual-house-witch-bless-kitchen-tool` | Bless the Kitchen Tool | PDF pp. 83-98 and 153-172 / Ch. 6 and Ch. 10; source verification required before import | vessel | blessing | Hold or touch one kitchen tool and bless it for the work it helps the home do. | Primary vessel/object because the blessed carrier is the tool. Electrical/heat/knife safety. |
-| `ritual-house-witch-mark-season-hearth` | Mark the Season at the Hearth | PDF pp. 122-138 and 153-172 / Ch. 8 and Ch. 10; source verification required before import | table | marking | Place one seasonal object on the hearth/table and record the turn of the season. | Avoid cultural/ritual obligations. |
-| `ritual-house-witch-set-household-boundary` | Set the Household Boundary | PDF pp. 99-121 / Ch. 7; source verification required before import | doorway | protecting | Stand near door/window and speak what may enter and what stays out. | No fear-based copy; exact line private. |
-| `ritual-house-witch-doorstep-cleansing` | Doorstep Cleansing | rough PDF p. 175 / Ch. 11; source verification required before import | doorway | releasing | Clean or symbolically wipe the doorstep and close with original words. | Surface/weather/safety; exact line private. |
-| `ritual-house-witch-bless-room-vessel` | Bless the Room Vessel | rough PDF pp. 177-178 / Ch. 11 plus Ch. 4 vessel mechanics; source verification required before import | vessel | blessing | Set a bowl/cauldron/object in the room and bless it for the room's purpose. | Keep as vessel-anchored variant; may merge with Bless One Room during authoring if too duplicative. |
-| `ritual-house-witch-hearth-recipe-memory` | Keep the Recipe Memory | PDF pp. 139-152 / Ch. 9; source verification required before import | words | remembering | Record the food, season, people, and hearth feeling without writing the full recipe. | Private recipe text only; food provenance. |
+## Coverage summary
 
-## Candidate extract later
+Primary coverage only counts candidates marked `approved_for_mechanical_import`.
 
-| Item | Source | Reason |
+| Primary carrier | Primary purpose | Candidate count | Primary candidates |
+| --- | --- | ---: | --- |
+| candlelight | opening | 1 | `ritual-house-witch-kitchen-sacred-flame` |
+| candlelight | blessing | 1 | `ritual-house-witch-consecrate-candle-fuel` |
+| candlelight | steadying | 1 | `ritual-house-witch-bank-the-inner-flame` |
+| table | opening | 1 | `ritual-house-witch-spiritual-hearth-recognition` |
+| vessel | steadying | 1 | `ritual-house-witch-cauldron-harmony` |
+| vessel | blessing | 4 | `ritual-house-witch-cauldron-blessing`; `ritual-house-witch-bless-one-room`; `ritual-house-witch-bless-kitchen-tool`; `ritual-house-witch-room-pouch-blessing` |
+| doorway | releasing | 1 | `ritual-house-witch-doorstep-cleansing` |
+| doorway | blessing | 1 | `ritual-house-witch-house-blessing-circuit` |
+| body | releasing | 2 | `ritual-house-witch-purify-person-at-home`; `ritual-house-witch-purify-one-room` |
+| body | opening | 1 | `ritual-house-witch-create-small-sacred-space` |
+| body | tending | 1 | `ritual-house-witch-food-with-awareness` |
+| words | remembering | 1 | `ritual-house-witch-household-grimoire-entry` |
+
+## Candidate records
+
+### `ritual-house-witch-spiritual-hearth-recognition` — Recognize the Hearth
+
+disposition: `candidate_extract_now`
+
+ritualizationType: `direct_source_ritual`
+
+headline: Recognize the Hearth
+
+ritual body / practice: Stand or kneel before the physical place you have chosen as the spiritual hearth. Place a small bowl of salt, a small bowl of water, a small bowl of mixed kitchen herbs or spices, a candle in a holder, matches, a heatproof dish, and a small bowl of olive or vegetable oil within reach. Take three slow breaths. Hold your hands toward the hearth and use the private source hearth-recognition words from Tim's copy. Bow to the hearth. Touch the salt and scatter a few grains toward the hearth. Touch the water and flick a few drops toward the hearth. Stir the herbs or spices and waft their scent toward the hearth. Light the candle, hold it toward the hearth, and use the private source fire-recognition words. Place the candle safely on or near the hearth. Touch one fingertip to the oil and lightly mark the hearth or its safe symbolic marker. Bow once more. If you will remain in the room, let the candle burn while attended; otherwise, snuff it out.
+
+intention: Formally recognize the place that holds the home's spiritual center.
+
+bestWindow: When establishing a hearth place, after a household reset, or before beginning a series of home rituals.
+
+questionToCarry: Where does this home gather its warmth?
+
+whyThisFitsIngredients:
+  checkInHooks: [needs home center, needs beginning]
+  timingHooks: [new home, reset, before household ritual sequence]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [enough_to_participate, room_for_something_deeper]
+  audienceHooks: [me, both_of_us]
+  materialPlaceCarrierPurposeFit: [hearth place, salt, water, kitchen herbs/spices, candle, oil]
+  sourceBackedRationale: [The House Witch gives a complete hearth-recognition ritual using salt, water, herbs/spices, flame, oil, bowing, and hearth-recognition words]
+  notForOrHoldNotes: [not deity/spirit invocation; direct-use fire/material review still required]
+
+howThisWasChosenIngredients:
+  primarySelectionSignals: [establish hearth, open household practice]
+  secondarySelectionSignals: [elemental recognition, private source words]
+  exclusionSignals: [no safe candle/oil surface]
+  timingSignal: before other House Witch rituals
+  confidenceNotes: complete direct source architecture; long exact wording private
+
+source grounding: `The House Witch`, Ch. 3, PDF pp. 39-60.
+
+recommendation metadata: primaryPurpose opening; secondaryPurposes [blessing, marking]; primaryCarrier table; secondaryCarriers [candlelight, words, body]; capacity [enough_to_participate, room_for_something_deeper]; audience [me, both_of_us]; timing preferred; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+
+search metadata: tags [house-witch, spiritual hearth, hearth recognition]; keywords [hearth, home center, salt, water, herbs, candle, oil]; materials [salt, water, mixed kitchen herbs/spices, candle, oil]; places [hearth, kitchen, table]
+
+review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
+
+adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
+
+operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-hearth-recognition-ch3`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 3 / PDF pp. 39-60`, useContext: `blessing`, note: `The hearth recognition and elemental acknowledgement words are operative and remain private.` }]
+
+import readiness label: `approved_for_mechanical_import`
+
+### `ritual-house-witch-bank-the-inner-flame` — Bank the Inner Flame
+
+disposition: `candidate_extract_now`
+
+ritualizationType: `source_backed_moon_and_table_form`
+
+headline: Bank the Inner Flame
+
+ritual body / practice: Do this after the day's kitchen or household work is finished and before bed. Sit or stand in the kitchen, at the hearth place, or by a candle if one is already safely lit. Relax your body. Look back over the day from waking to this moment without judging it. Notice the feelings that remain. Close your eyes and take three slow breaths; with each exhale, let worry or irritation move out of you. Feel yourself here, now, in the home. If using a candle, snuff or blow it out. If not using a candle, turn off the kitchen or hearth light, or close the door if you are at a threshold. Use the private source smooring prayer if Tim excerpts it; otherwise close silently.
+
+intention: Gather the day's scattered energy back into the hearth before sleep.
+
+bestWindow: At night, after cleaning up and before bed.
+
+questionToCarry: What can be banked safely until morning?
+
+whyThisFitsIngredients:
+  checkInHooks: [end of day, scattered, unsettled]
+  timingHooks: [before bed]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [low, enough_to_participate]
+  audienceHooks: [me]
+  materialPlaceCarrierPurposeFit: [kitchen/hearth place, optional candle, light switch or door]
+  sourceBackedRationale: [The House Witch gives a bank-your-inner-flame practice with review of the day, three breaths, optional prayer, and a final physical act]
+  notForOrHoldNotes: [no sleep/mental-health claim]
+
+howThisWasChosenIngredients:
+  primarySelectionSignals: [night close, steadying]
+  secondarySelectionSignals: [smooring, hearth-fire symbolism]
+  exclusionSignals: [needs active task instead of closing]
+  timingSignal: before bed
+  confidenceNotes: complete source-backed form; traditional prayer private
+
+source grounding: `The House Witch`, Ch. 2, PDF pp. 26-38.
+
+recommendation metadata: primaryPurpose steadying; secondaryPurposes [protecting]; primaryCarrier candlelight; secondaryCarriers [words, body]; capacity [low, enough_to_participate]; audience [me]; timing required at night; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+
+search metadata: tags [house-witch, smooring, bank inner flame, bedtime]; materials [optional candle]; places [kitchen, hearth, threshold]
+
+review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
+
+adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
+
+operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-smooring-prayer-ch2`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 2 / PDF pp. 26-38`, useContext: `prayer`, note: `Traditional smooring prayer is long and remains private.` }]
+
+import readiness label: `approved_for_mechanical_import`
+
+### `ritual-house-witch-kitchen-sacred-flame` — Light the Kitchen Flame
+
+disposition: `candidate_extract_now`
+
+ritualizationType: `direct_source_ritual`
+
+headline: Light the Kitchen Flame
+
+ritual body / practice: Place a candle in a holder or an oil lamp in a safe kitchen location where it will not be near drafts, towels, paper, hair, sleeves, children, pets, or food prep clutter. Before beginning kitchen or table work, stand before the flame. Light it. Use the private source flame prayer if Tim excerpts it. Let the flame mark the kitchen as sacred while you work nearby and attend it. When the kitchen work is finished or you leave the room, extinguish the flame safely.
+
+intention: Open kitchen work by recognizing the sacred flame at the hearth.
+
+bestWindow: Before cooking, table-setting, kitchen cleaning, or a household ritual centered in the kitchen.
+
+questionToCarry: What does this flame make visible about the kitchen?
+
+whyThisFitsIngredients:
+  checkInHooks: [needs opening, kitchen work]
+  timingHooks: [before kitchen or table work]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [low, enough_to_participate]
+  audienceHooks: [me, both_of_us]
+  materialPlaceCarrierPurposeFit: [candle or oil lamp, kitchen, flame]
+  sourceBackedRationale: [The House Witch treats candle or oil lamp flame as a symbol of sacred presence and gives a lighting prayer]
+  notForOrHoldNotes: [flame safety; oil-lamp variant needs material review]
+
+howThisWasChosenIngredients:
+  primarySelectionSignals: [kitchen opening, flame]
+  secondarySelectionSignals: [hearthcraft, sacred kitchen]
+  exclusionSignals: [unsafe flame context]
+  timingSignal: before kitchen work
+  confidenceNotes: complete direct source architecture; exact prayer private
+
+source grounding: `The House Witch`, Ch. 6 and Ch. 11, PDF pp. 83-98 and 173-183.
+
+recommendation metadata: primaryPurpose opening; secondaryPurposes [blessing, tending]; primaryCarrier candlelight; secondaryCarriers [table, words]; capacity [low, enough_to_participate]; audience [me, both_of_us]; timing required before kitchen work; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+
+search metadata: tags [house-witch, kitchen flame, candle, oil lamp]; materials [candle or oil lamp, holder]; places [kitchen, table, counter]
+
+review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
+
+adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
+
+operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-kitchen-flame-prayer-ch11`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `prayer`, note: `The flame prayer is operative and remains private.` }]
+
+import readiness label: `approved_for_mechanical_import`
+
+### `ritual-house-witch-consecrate-candle-fuel` — Consecrate the Candle or Fuel
+
+disposition: `candidate_extract_now`
+
+ritualizationType: `direct_source_ritual`
+
+headline: Consecrate the Candle or Fuel
+
+ritual body / practice: Place the candle, candles, or oil/fuel on the table before use. Hold both hands over them. Visualize the sacred flame of the hearth burning in your heart. Imagine that fire moving from your heart through your arms and into your hands. Let the light flow from your hands into the candle or fuel, bathing it in the energy of the spiritual hearth. Say the source line: "I dedicate these candles/this oil to the service of my spiritual hearth." Set the candle or fuel aside for later ritual use.
+
+intention: Mark the candle or fuel as hearth material before it is lit.
+
+bestWindow: Before a House Witch candle, oil-lamp, or flame rite.
+
+questionToCarry: What service is this flame being prepared for?
+
+whyThisFitsIngredients:
+  checkInHooks: [preparing flame material]
+  timingHooks: [before lighting]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [low, enough_to_participate]
+  audienceHooks: [me]
+  materialPlaceCarrierPurposeFit: [candle or oil/fuel, hands, hearth visualization]
+  sourceBackedRationale: [The House Witch gives consecration mechanics using hands, visualization, and a short dedication]
+  notForOrHoldNotes: [no essential-oil assumption; material/fire review remains]
+
+howThisWasChosenIngredients:
+  primarySelectionSignals: [candle/fuel blessing]
+  secondarySelectionSignals: [preparation for later flame rites]
+  exclusionSignals: [unsafe fuel handling]
+  timingSignal: before flame rite
+  confidenceNotes: complete direct source architecture; short exact source line used inline and tracked
+
+source grounding: `The House Witch`, Ch. 11 / PDF pp. 173-183.
+
+recommendation metadata: primaryPurpose blessing; secondaryPurposes [opening]; primaryCarrier candlelight; secondaryCarriers [vessel, words]; capacity [low, enough_to_participate]; audience [me]; timing required before flame rite; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+
+search metadata: tags [house-witch, candle consecration, oil lamp, fuel]; materials [candle, oil, fuel]; places [table, kitchen, hearth]
+
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
+
+adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
+
+operative words metadata: [{ mode: `source_exact_short`, text: `I dedicate these candles/this oil to the service of my spiritual hearth.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `spoken`, note: `Short exact dedication line from source.` }]
+
+import readiness label: `approved_for_mechanical_import`
+
+### `ritual-house-witch-cauldron-harmony` — Cauldron Harmony Candle
+
+disposition: `candidate_extract_now`
+
+ritualizationType: `direct_source_ritual`
+
+headline: Cauldron Harmony Candle
+
+ritual body / practice: Place a small cauldron or heat-safe bowl on the physical analogue of the spiritual hearth or on the kitchen shrine. Pour enough salt or sand into the bottom to hold a candle securely, about an inch and a half if the candle is tall. Set a pale blue candle upright in the salt or sand. Light the candle. Use the private source harmony words from Tim's copy. Leave the cauldron and candle on the hearth place or shrine while attended. Extinguish the candle when the rite is complete or when you leave the room.
+
+intention: Let the hearth vessel and blue candle hold rest, renewal, peace, and harmony for the home.
+
+bestWindow: When the house has been rough, overfull, or in need of a calmer center.
+
+questionToCarry: What would harmony feel like if the hearth could hold it?
+
+whyThisFitsIngredients:
+  checkInHooks: [home needs calm, family rough time]
+  timingHooks: [as needed]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [enough_to_participate]
+  audienceHooks: [me, both_of_us]
+  materialPlaceCarrierPurposeFit: [cauldron or heat-safe bowl, salt/sand, pale blue candle, hearth place]
+  sourceBackedRationale: [The House Witch gives a cauldron harmony spell using salt or sand, a cauldron, a pale blue candle, source words, and placement at the spiritual hearth or kitchen shrine]
+  notForOrHoldNotes: [no guaranteed peace; flame safety]
+
+howThisWasChosenIngredients:
+  primarySelectionSignals: [home harmony]
+  secondarySelectionSignals: [cauldron and flame]
+  exclusionSignals: [unsafe candle/vessel]
+  timingSignal: as needed
+  confidenceNotes: complete direct source ritual; exact spoken text private
+
+source grounding: `The House Witch`, Ch. 11 / PDF pp. 173-183.
+
+recommendation metadata: primaryPurpose steadying; secondaryPurposes [blessing, tending]; primaryCarrier vessel; secondaryCarriers [candlelight, table, words]; capacity [enough_to_participate]; audience [me, both_of_us]; timing helpful; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+
+search metadata: tags [house-witch, cauldron, harmony, blue candle]; materials [cauldron or heat-safe bowl, salt or sand, pale blue candle]; places [spiritual hearth, kitchen shrine]
+
+review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
+
+adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
+
+operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-cauldron-harmony-spell-ch11`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `spoken`, note: `The cauldron harmony spoken formula is operative and remains private.` }]
+
+import readiness label: `approved_for_mechanical_import`
+
+### `ritual-house-witch-cauldron-blessing` — Bless the Hearth Vessel
+
+disposition: `candidate_extract_now`
+
+ritualizationType: `direct_source_ritual`
+
+headline: Bless the Hearth Vessel
+
+ritual body / practice: Clean and purify the cauldron or hearth vessel before use. Place it at the hearth place, kitchen shrine, or table. Stand or sit before it. Put both hands near it or on it if it is safe to touch. Use the private source cauldron blessing from Tim's copy, or a separately approved personal blessing. If using herbs is approved, sprinkle a few fresh or dried herbs inside that represent blessing or welcome to you. Leave the vessel in its hearth place when finished.
+
+intention: Welcome the cauldron or vessel as a symbol of transformation, wisdom, and household work.
+
+bestWindow: When a new cauldron, bowl, or hearth vessel is brought into household practice.
+
+questionToCarry: What will this vessel hold for the home?
+
+whyThisFitsIngredients:
+  checkInHooks: [new vessel, hearth tool needs blessing]
+  timingHooks: [before first use]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [enough_to_participate]
+  audienceHooks: [me]
+  materialPlaceCarrierPurposeFit: [cauldron/vessel, optional herbs, hearth place]
+  sourceBackedRationale: [The House Witch instructs cleansing/purifying a cauldron before spiritual use, then saying a blessing and optionally adding herbs of welcome/blessing]
+  notForOrHoldNotes: [herb/pet/child/allergy review before direct use]
+
+howThisWasChosenIngredients:
+  primarySelectionSignals: [vessel blessing]
+  secondarySelectionSignals: [cauldron hearthcraft]
+  exclusionSignals: [unsafe or unclean vessel]
+  timingSignal: before first use
+  confidenceNotes: complete direct source ritual; long blessing private
+
+source grounding: `The House Witch`, Ch. 4 / PDF pp. 61-82.
+
+recommendation metadata: primaryPurpose blessing; secondaryPurposes [marking, tending]; primaryCarrier vessel; secondaryCarriers [table, words]; capacity [enough_to_participate]; audience [me]; timing required before use; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+
+search metadata: tags [house-witch, cauldron blessing, hearth vessel]; materials [cauldron or bowl, optional herbs]; places [hearth, kitchen shrine, table]
+
+review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
+
+adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
+
+operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-cauldron-blessing-ch4`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 4 / PDF pp. 61-82`, useContext: `blessing`, note: `The cauldron blessing is substantial source wording and remains private.` }]
+
+import readiness label: `approved_for_mechanical_import`
+
+### `ritual-house-witch-doorstep-cleansing` — Doorstep Cleansing
+
+disposition: `candidate_extract_now`
+
+ritualizationType: `direct_source_ritual`
+
+headline: Doorstep Cleansing
+
+ritual body / practice: Combine one cup water, one tablespoon vinegar, one tablespoon salt, and three whole cloves in a bowl or bucket. Leave the mixture to steep in a sunny place for at least one hour. Bring the bowl or bucket and a washing cloth to the threshold or doorstep. Dip the cloth in the liquid and wash the threshold or doorstep. As you wash, visualize unwanted energy dissipating from the surface. Say the source line: "I hereby cleanse this threshold of negative energy." Repeat regularly or as needed. Dispose of the wash water safely for the surface and household.
+
+intention: Cleanse the threshold so the home has a clearer boundary.
+
+bestWindow: Before guests, after heavy traffic, after conflict, or during regular household cleansing.
+
+questionToCarry: What should not cling to this threshold anymore?
+
+whyThisFitsIngredients:
+  checkInHooks: [threshold needs clearing, guests, after conflict]
+  timingHooks: [regular or as needed]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [enough_to_participate]
+  audienceHooks: [me, both_of_us]
+  materialPlaceCarrierPurposeFit: [threshold/doorstep, water, vinegar, salt, cloves, washing cloth]
+  sourceBackedRationale: [The House Witch gives a simple doorstep cleansing with exact materials, sunny steeping period, washing action, visualization, and spoken line]
+  notForOrHoldNotes: [surface/weather/pet safety]
+
+howThisWasChosenIngredients:
+  primarySelectionSignals: [doorway release]
+  secondarySelectionSignals: [pre-hosting, threshold care]
+  exclusionSignals: [surface damaged by vinegar/salt]
+  timingSignal: regular or as needed
+  confidenceNotes: complete direct source ritual; short exact source line used inline and tracked
+
+source grounding: `The House Witch`, Ch. 11 / PDF pp. 173-183.
+
+recommendation metadata: primaryPurpose releasing; secondaryPurposes [protecting]; primaryCarrier doorway; secondaryCarriers [vessel, body, words]; capacity [enough_to_participate]; audience [me, both_of_us]; timing helpful; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+
+search metadata: tags [house-witch, doorstep cleansing, threshold, vinegar, salt, cloves]; materials [water, vinegar, salt, three cloves, bowl/bucket, cloth]; places [threshold, doorstep]
+
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [surface, pets, outdoor runoff, and weather review].
+
+adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
+
+operative words metadata: [{ mode: `source_exact_short`, text: `I hereby cleanse this threshold of negative energy.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `spoken`, note: `Short exact source line used inline.` }]
+
+import readiness label: `approved_for_mechanical_import`
+
+### `ritual-house-witch-house-blessing-circuit` — Bless the House by Circuit
+
+disposition: `candidate_extract_now`
+
+ritualizationType: `direct_source_ritual`
+
+headline: Bless the House by Circuit
+
+ritual body / practice: Repair what needs repair, then thoroughly clean walls, floors, windows, cupboards, stairs, and other neglected places. Move counterclockwise through the house while cleaning, finishing by sweeping dirt out the back door and shaking dust rags or emptying wash water out the back door as appropriate. Begin the blessing at the physical analogue of the spiritual hearth. Light purification incense safely in a censer or heatproof bowl with sand. Carry the incense clockwise through each room, wafting smoke into cupboards and behind doors, and use the private source fire-and-air blessing line. Return the incense to the hearth. Light a candle in a holder and carry it clockwise through each room, using the private source light-and-flame blessing line. Return the candle to the hearth. Add a pinch of salt to a small cup of water. Carry it clockwise through each room. Touch the outside and inside of each doorframe, and the frame of each window and cupboard, with salt water; if approved, draw a simple blessing symbol. Use the private source water-and-salt line. Return the water to the hearth. Stand at the hearth and use the private source closing blessing.
+
+intention: Bless the whole home by moving earth, water, air, and fire through its rooms and thresholds.
+
+bestWindow: After cleaning, before moving in, after a heavy season, or when resetting the home.
+
+questionToCarry: What does this house need to receive as blessing?
+
+whyThisFitsIngredients:
+  checkInHooks: [whole home reset, moving, blessing]
+  timingHooks: [after cleaning]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [room_for_something_deeper]
+  audienceHooks: [me, both_of_us]
+  materialPlaceCarrierPurposeFit: [hearth, incense, candle, water, salt, rooms, doors, windows, cupboards]
+  sourceBackedRationale: [The House Witch gives a full house blessing with cleaning, counterclockwise removal, clockwise incense, candle, salt-water circuits, frame touching, and final hearth blessing]
+  notForOrHoldNotes: [smoke/fire/surface/pet/asthma review before direct use]
+
+howThisWasChosenIngredients:
+  primarySelectionSignals: [whole-home blessing]
+  secondarySelectionSignals: [thresholds, elements, circuit movement]
+  exclusionSignals: [too low capacity, unsafe smoke/flame]
+  timingSignal: after physical cleaning
+  confidenceNotes: complete direct source ritual; exact repeated lines private
+
+source grounding: `The House Witch`, Ch. 11 / PDF pp. 173-183.
+
+recommendation metadata: primaryPurpose blessing; secondaryPurposes [protecting, marking]; primaryCarrier doorway; secondaryCarriers [candlelight, vessel, words, body]; capacity [room_for_something_deeper]; audience [me, both_of_us]; timing preferred after cleaning; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+
+search metadata: tags [house-witch, house blessing, whole-home blessing]; materials [cleaning supplies, incense, censer/bowl, sand, candle, water, salt]; places [hearth, rooms, doors, windows, cupboards]
+
+review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [smoke/fire/surface/pet/asthma review].
+
+adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
+
+operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-house-blessing-lines-ch11`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `blessing`, note: `The house-blessing element lines and closing are operative and remain private.` }]
+
+import readiness label: `approved_for_mechanical_import`
+
+### `ritual-house-witch-bless-one-room` — Bless One Room
+
+disposition: `candidate_extract_now`
+
+ritualizationType: `direct_source_ritual`
+
+headline: Bless One Room
+
+ritual body / practice: Sit in the room and think about its identity. Choose either a white candle or a candle in the color that fits the room's energy. Gather a candle in a holder, matches or lighter, a small cup of water, a pinch of salt for the water, a 4-inch by 4-inch square of cloth, one small amethyst or clear quartz, a pinch of salt for the pouch, one penny or other coin, and about ten inches of narrow ribbon. Light the candle and place it in the center of the room. Use the private source flame blessing. Add a pinch of salt to the water. Dip your finger in it and draw a line along the room threshold, using the private source threshold blessing. Place the stone, pouch salt, and coin on the cloth, using the private source lines for each item. Gather the corners of the cloth and tie it closed with the ribbon. Carefully pass the bundle above, not through, the candle flame and use the private source fire-sealing line. Hang the bundle above the door or place it somewhere in the room where it can continue to bless the room. Use the private source closing line. Extinguish the candle safely.
+
+intention: Bless a single room by giving it flame, threshold, harmony, protection, abundance, and a placed bundle.
+
+bestWindow: When a room has been changed, cleaned, rearranged, or needs renewed identity.
+
+questionToCarry: What does this room need to become again?
+
+whyThisFitsIngredients:
+  checkInHooks: [room needs blessing]
+  timingHooks: [after cleaning/rearranging]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [room_for_something_deeper]
+  audienceHooks: [me, both_of_us]
+  materialPlaceCarrierPurposeFit: [room, candle, salt water, cloth, stone, coin, ribbon, threshold]
+  sourceBackedRationale: [The House Witch gives a complete room blessing with candle, threshold line, pouch contents, flame sealing, placement, and closing]
+  notForOrHoldNotes: [fire, surface, child/pet, and object-safety review]
+
+howThisWasChosenIngredients:
+  primarySelectionSignals: [room blessing]
+  secondarySelectionSignals: [vessel/pouch, threshold]
+  exclusionSignals: [unsafe flame/object placement]
+  timingSignal: after room reset
+  confidenceNotes: complete direct source ritual; exact lines private
+
+source grounding: `The House Witch`, Ch. 11 / PDF pp. 173-183.
+
+recommendation metadata: primaryPurpose blessing; secondaryPurposes [marking, protecting]; primaryCarrier vessel; secondaryCarriers [candlelight, doorway, words]; capacity [room_for_something_deeper]; audience [me, both_of_us]; timing helpful after room reset; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+
+search metadata: tags [house-witch, room blessing, pouch, threshold]; materials [candle, water, salt, cloth, amethyst or clear quartz, coin, ribbon]; places [single room, threshold, doorway]
+
+review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [small object, flame, hanging/placement safety].
+
+adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
+
+operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-room-blessing-lines-ch11`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `blessing`, note: `The room blessing lines are operative and remain private.` }]
+
+import readiness label: `approved_for_mechanical_import`
+
+### `ritual-house-witch-room-pouch-blessing` — Set the Room Blessing Bundle
+
+disposition: `candidate_extract_now`
+
+ritualizationType: `direct_source_ritual`
+
+headline: Set the Room Blessing Bundle
+
+ritual body / practice: Use this only as a small follow-up to a room blessing. Place a square of cloth on the table. Put one small amethyst or clear quartz in the center, add a pinch of salt, and add one penny or other coin. Gather the corners of the cloth and tie them with narrow ribbon. Hold the bundle near the room's doorway and name the room it will bless. Hang the bundle above the door or place it somewhere in the room where it can remain safely and continue to bless the room. Check later that the bundle is secure and out of reach of children or pets.
+
+intention: Leave a small, physical blessing marker in a room.
+
+bestWindow: After the full room blessing or after refreshing a room's purpose.
+
+questionToCarry: What does this room need to keep holding?
+
+whyThisFitsIngredients:
+  checkInHooks: [room needs a physical blessing marker]
+  timingHooks: [after room blessing]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [low, enough_to_participate]
+  audienceHooks: [me]
+  materialPlaceCarrierPurposeFit: [cloth bundle, stone, salt, coin, ribbon, room]
+  sourceBackedRationale: [The House Witch room blessing creates and places a cloth pouch to continue blessing the room]
+  notForOrHoldNotes: [small object and pet/child safety]
+
+howThisWasChosenIngredients:
+  primarySelectionSignals: [small room marker]
+  secondarySelectionSignals: [vessel/pouch]
+  exclusionSignals: [unsafe hanging/placement]
+  timingSignal: after room blessing
+  confidenceNotes: complete source-supported component made into a standalone follow-up form; no unsupported props
+
+source grounding: `The House Witch`, Ch. 11 / PDF pp. 173-183.
+
+recommendation metadata: primaryPurpose blessing; secondaryPurposes [marking]; primaryCarrier vessel; secondaryCarriers [table, words]; capacity [low, enough_to_participate]; audience [me]; timing helpful after room blessing; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+
+search metadata: tags [house-witch, room bundle, pouch blessing]; materials [cloth, amethyst or clear quartz, salt, coin, ribbon]; places [room, doorway]
+
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [small object, hanging, pet/child safety].
+
+adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
+
+operative words metadata: [{ mode: `moon_and_table_original`, text: `May this room keep its blessing.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `blessing`, note: `Source provides the pouch placement; this short line is Moon & Table original to make the follow-up form complete without copying longer room-blessing text.` }]
+
+import readiness label: `approved_for_mechanical_import`
+
+### `ritual-house-witch-purify-person-at-home` — Purify the Person at Home
+
+disposition: `candidate_extract_now`
+
+ritualizationType: `direct_source_ritual`
+
+headline: Purify the Person at Home
+
+ritual body / practice: Set a small candle in a holder on the table and place a small bowl or dish of salt beside it. Light the candle. Sit down and take time to settle fully into the moment. Take a few cleansing breaths. Lift your hands and place your fingers in the bowl of salt. Close your eyes and breathe deeply. As you exhale, visualize unwanted energy or the undesired emotion flowing down your arms, out through your fingers, and into the salt. Continue until the release feels complete enough for this sitting. Remove your fingers from the salt and open your eyes. Focus on the candle. Breathe in and visualize the warmth and brightness of the flame entering your body and filling it with light and beauty. Continue until refreshed enough to close. Extinguish the candle. Dissolve the salt in water and pour it down the sink.
+
+intention: Release unwanted energy into salt and take in the warmth of the hearth flame.
+
+bestWindow: Before an important act, in the middle of a difficult day, or at the beginning or end of the day.
+
+questionToCarry: What can leave through my hands now?
+
+whyThisFitsIngredients:
+  checkInHooks: [wound up, afraid, anxious, unfocused, before important act]
+  timingHooks: [before/after day, before important act]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [enough_to_participate]
+  audienceHooks: [me]
+  materialPlaceCarrierPurposeFit: [small candle, bowl of salt, hands, breath, sink disposal]
+  sourceBackedRationale: [The House Witch gives a complete personal purification using candle, salt, breath, visualization, extinguishing, and salt disposal]
+  notForOrHoldNotes: [no medical or therapy claim]
+
+howThisWasChosenIngredients:
+  primarySelectionSignals: [personal release]
+  secondarySelectionSignals: [flame warmth, salt absorption]
+  exclusionSignals: [distress needing human support]
+  timingSignal: before/after important act or day
+  confidenceNotes: complete direct source ritual; no exact words required
+
+source grounding: `The House Witch`, Ch. 11 / PDF pp. 173-183.
+
+recommendation metadata: primaryPurpose releasing; secondaryPurposes [steadying, blessing]; primaryCarrier body; secondaryCarriers [candlelight, vessel]; capacity [enough_to_participate]; audience [me]; timing helpful; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+
+search metadata: tags [house-witch, personal purification, salt, candle]; materials [small candle, candleholder, salt, bowl/dish]; places [table, kitchen, sink]
+
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [no clinical claims].
+
+adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
+
+operative words metadata: []
+
+import readiness label: `approved_for_mechanical_import`
+
+### `ritual-house-witch-purify-one-room` — Purify One Room
+
+disposition: `candidate_extract_now`
+
+ritualizationType: `direct_source_ritual`
+
+headline: Purify One Room
+
+ritual body / practice: Physically clean the room first: return things to their places, then vacuum, sweep, dust, polish, or otherwise remove dirt as needed. Put a teaspoon of purifying incense on a charcoal tablet in a censer or heatproof bowl with sand, or use one stick of purchased purifying incense. Light the incense and use the private source incense line if Tim excerpts it. Place the bowl or censer in the middle of the room. Let the smoke fill the space; if desired, walk counterclockwise around the room to disperse it. Let the incense work for as long as needed, from a few minutes to a few hours, without assuming more smoke is better. When the room feels purified and smoke has cleared enough for safe flame use, light a candle in the middle of the room and use the private source flame line if Tim excerpts it. Allow the candle to burn down only if it can be attended safely; otherwise extinguish it at the end of the ritual and record that direct-use review must decide a safer close.
+
+intention: Purify a room, then bless the cleared space with flame.
+
+bestWindow: After physical cleaning, before guests, after heavy emotional traffic, or when a room feels energetically ragged.
+
+questionToCarry: What is leaving this room, and what is invited to remain?
+
+whyThisFitsIngredients:
+  checkInHooks: [room feels heavy, cluttered, ragged, or after conflict]
+  timingHooks: [after physical cleaning]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [room_for_something_deeper]
+  audienceHooks: [me]
+  materialPlaceCarrierPurposeFit: [room, cleaning, incense/smoke, candle/flame]
+  sourceBackedRationale: [The House Witch gives an all-purpose room purification with physical cleaning, incense purification, optional counterclockwise movement, candle blessing, and burn-down close]
+  notForOrHoldNotes: [smoke/fire/pet/asthma review; no smoke-free direct-use variant yet]
+
+howThisWasChosenIngredients:
+  primarySelectionSignals: [room purification]
+  secondarySelectionSignals: [cleanse, then bless]
+  exclusionSignals: [smoke unsafe, unattended candle]
+  timingSignal: after physical cleaning
+  confidenceNotes: title-column correction applied; complete direct source ritual with direct-use safety caveat
+
+source grounding: `The House Witch`, Ch. 7 / PDF pp. 99-121.
+
+recommendation metadata: primaryPurpose releasing; secondaryPurposes [protecting, blessing]; primaryCarrier body; secondaryCarriers [candlelight, vessel, words]; capacity [room_for_something_deeper]; audience [me]; timing helpful after cleaning; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+
+search metadata: tags [house-witch, room purification, incense, candle]; materials [cleaning supplies, incense, censer/heatproof bowl, sand, candle, holder, matches/lighter]; places [single room]
+
+review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [smoke/fire/pet/asthma review before direct use].
+
+adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
+
+operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-room-purification-lines-ch7`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 7 / PDF pp. 99-121`, useContext: `spoken`, note: `Source incense and flame lines are operative and should be stored privately.` }]
+
+import readiness label: `approved_for_mechanical_import`
+
+### `ritual-house-witch-create-small-sacred-space` — Create the Small Sacred Space
+
+disposition: `candidate_extract_now`
+
+ritualizationType: `direct_source_ritual`
+
+headline: Create the Small Sacred Space
+
+ritual body / practice: Gather a candle in a holder, incense in a censer, matches or a lighter, a small cup of water, and a small dish of salt, sand, or earth. Place them at the edge or center of the space you want to define. Light the candle and incense. Take a minute to arrive fully in the moment. Move around the perimeter of the space with the candle, then the water, then the salt/sand/earth, then the incense, or if moving is difficult, turn in place and raise each element toward the four directions. With each element, visualize its energy moving outward and pushing away what does not belong in the working space. Use the private source element words if Tim excerpts them; otherwise keep the work wordless. Return the elements to the starting place. Close by standing in the space, naming its purpose in one plain sentence, and extinguishing the flame and incense safely when the work is complete.
+
+intention: Define a small working space for a specific household ritual.
+
+bestWindow: Before a focused spiritual or household ritual.
+
+questionToCarry: What is this space being set apart to hold?
+
+whyThisFitsIngredients:
+  checkInHooks: [needs defined ritual container]
+  timingHooks: [before ritual work]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [enough_to_participate]
+  audienceHooks: [me]
+  materialPlaceCarrierPurposeFit: [candle, incense, water, salt/sand/earth, perimeter/directions]
+  sourceBackedRationale: [House Witch gives a simple sacred-space method using candle, incense, water, earth/salt, movement or directional turning, and visualization]
+  notForOrHoldNotes: [smoke/fire safety, not for ordinary productivity blocks]
+
+howThisWasChosenIngredients:
+  primarySelectionSignals: [create ritual container]
+  secondarySelectionSignals: [elemental purification]
+  exclusionSignals: [unsafe smoke/flame]
+  timingSignal: before ritual work
+  confidenceNotes: source gives complete element structure; final purpose sentence is Moon & Table close
+
+source grounding: `The House Witch`, Ch. 11 / PDF pp. 173-183.
+
+recommendation metadata: primaryPurpose opening; secondaryPurposes [blessing]; primaryCarrier body; secondaryCarriers [candlelight, vessel, words]; capacity [enough_to_participate, room_for_something_deeper]; audience [me]; timing required before ritual work; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+
+search metadata: tags [house-witch, sacred space, elements]; materials [candle, incense, water, salt/sand/earth]; places [room, altar, table, hearth]
+
+review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
+
+adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
+
+operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-create-sacred-space-ch11`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `spoken`, note: `Any exact element words or directional language should be checked privately.` }]
+
+import readiness label: `approved_for_mechanical_import`
+
+### `ritual-house-witch-bless-kitchen-tool` — Bless the Kitchen Tool
+
+disposition: `candidate_extract_now`
+
+ritualizationType: `source_backed_moon_and_table_form`
+
+headline: Bless the Kitchen Tool
+
+ritual body / practice: Choose one appliance or kitchen tool that is used often. If it needs physical cleaning or purification, do that first. Stand before it and touch it with both hands, or touch a safe part of it if it is sharp, hot, electrical, or breakable. Open yourself to its energy: what it does, how often it serves the kitchen, and what kind of work it helps the household do. Say a simple blessing in the source pattern: name the tool, thank it for the work it does, thank it for being part of the household, and bless it. If desired, draw a small circle or hearth-flame symbol on it with plain water, water with a pinch of salt, or a dry finger. Let the mark dry or fade on its own.
+
+intention: Recognize a kitchen tool as a participant in the hearth's work.
+
+bestWindow: When a tool is new, repaired, heavily used, or ready to be welcomed back into kitchen work.
+
+questionToCarry: What work does this tool help the home do?
+
+whyThisFitsIngredients:
+  checkInHooks: [tool/appliance needs recognition]
+  timingHooks: [new, repaired, or regular maintenance]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [enough_to_participate]
+  audienceHooks: [me]
+  materialPlaceCarrierPurposeFit: [appliance/tool, hand touch, optional water/salt symbol]
+  sourceBackedRationale: [House Witch gives appliance blessing structure: touch, sense energy, thank/bless, optional water/salt/dry symbol]
+  notForOrHoldNotes: [electrical/heat/knife safety]
+
+howThisWasChosenIngredients:
+  primarySelectionSignals: [kitchen tool blessing]
+  secondarySelectionSignals: [modern hearthcraft]
+  exclusionSignals: [unsafe touch, plugged/hot/sharp tool]
+  timingSignal: as needed
+  confidenceNotes: complete source-backed form based on source refrigerator example
+
+source grounding: `The House Witch`, Ch. 6 / PDF pp. 83-98.
+
+recommendation metadata: primaryPurpose blessing; secondaryPurposes [tending]; primaryCarrier vessel; secondaryCarriers [table, words]; capacity [low, enough_to_participate]; audience [me, both_of_us]; timing helpful; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+
+search metadata: tags [house-witch, kitchen tool, appliance blessing]; materials [tool/appliance, optional water, optional salt]; places [kitchen counter, appliance location]
+
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [electrical, heat, blade, and appliance safety].
+
+adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
+
+operative words metadata: [{ mode: `moon_and_table_original`, text: `Thank you for the work you do here. I bless you.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 6 / PDF pp. 83-98`, useContext: `blessing`, note: `Source gives appliance-specific sample wording; Moon & Table line generalizes the source-backed structure without copying the full sample.` }]
+
+import readiness label: `approved_for_mechanical_import`
+
+### `ritual-house-witch-household-grimoire-entry` — Enter It in the Household Grimoire
+
+disposition: `candidate_extract_now`
+
+ritualizationType: `source_backed_moon_and_table_form`
+
+headline: Enter It in the Household Grimoire
+
+ritual body / practice: Open the household grimoire, notebook, binder, or Moon & Table note. Record the date, the place in the home, the ritual or household action just performed, the materials used, any words spoken, who was present, and the weather or household mood if it mattered. Add one sentence about what felt different afterward. If the action involved food, record the dish or recipe name without copying a full copyrighted recipe into the public packet. Close the book or note and put it back in its household place.
+
+intention: Keep the home's magical memory in a form that can be returned to later.
+
+bestWindow: Immediately after a ritual, recipe, dinner, seasonal change, or household blessing.
+
+questionToCarry: What should the house remember about this?
+
+whyThisFitsIngredients:
+  checkInHooks: [needs memory or record]
+  timingHooks: [after ritual or household event]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [enough_to_participate]
+  audienceHooks: [me]
+  materialPlaceCarrierPurposeFit: [grimoire/notebook/binder, words, table]
+  sourceBackedRationale: [House Witch gives record-keeping guidance for rituals, purifications, recipes, dates, weather, people present, impressions, and household evolution]
+  notForOrHoldNotes: [do not copy full recipes or restricted exact source text into public records]
+
+howThisWasChosenIngredients:
+  primarySelectionSignals: [record keeping]
+  secondarySelectionSignals: [grimoire and household memory]
+  exclusionSignals: [privacy concern, no meaningful event]
+  timingSignal: after ritual/event
+  confidenceNotes: complete source-backed Moon & Table form
+
+source grounding: `The House Witch`, Ch. 8 / PDF pp. 122-138 and Ch. 9 recipe-memory context.
+
+recommendation metadata: primaryPurpose remembering; secondaryPurposes [marking, tending]; primaryCarrier words; secondaryCarriers [table, vessel]; capacity [low, enough_to_participate]; audience [me, both_of_us]; timing required after ritual; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+
+search metadata: tags [house-witch, grimoire, record keeping, household memory]; materials [notebook, binder, pen, Moon & Table note]; places [table, kitchen, hearth]
+
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; notes [privacy and recipe copyright review].
+
+adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
+
+operative words metadata: []
+
+import readiness label: `approved_for_mechanical_import`
+
+### `ritual-house-witch-food-with-awareness` — Prepare Food With Awareness
+
+disposition: `candidate_extract_now`
+
+ritualizationType: `source_backed_moon_and_table_form`
+
+headline: Prepare Food With Awareness
+
+ritual body / practice: Choose food you were already going to prepare. Before beginning, pause at the kitchen counter or stove and name who the food is for. Choose one main action to carry the magic: washing vegetables, adding salt, stirring, kneading, pouring, or serving. Keep attention on that action. If stirring, move clockwise when inviting warmth, harmony, or support; move counterclockwise only when the household intention is release or clearing. Speak one short line from the heart or keep the work wordless. Finish by serving or setting the food down with attention to the care it carries. Do not add ingredients or substitutions for magical reasons unless the recipe and dietary needs already allow them.
+
+intention: Prepare food as hearthcraft without turning the recipe into performance.
+
+bestWindow: During normal cooking, especially when food is being made for oneself, Jessica, or chosen family.
+
+questionToCarry: What care am I putting into this food?
+
+whyThisFitsIngredients:
+  checkInHooks: [cooking, feeding, care, connection]
+  timingHooks: [during planned meal preparation]
+  lunarPlanetarySeasonalHooks: []
+  capacityHooks: [enough_to_participate]
+  audienceHooks: [me]
+  materialPlaceCarrierPurposeFit: [kitchen action, food already planned, stirring/salt/serving]
+  sourceBackedRationale: [House Witch supports food preparation with awareness, focusing intent through ordinary kitchen actions and caring for those who will eat]
+  notForOrHoldNotes: [no coercive food magic, no allergy/medical/nutrition claim]
+
+howThisWasChosenIngredients:
+  primarySelectionSignals: [food preparation as tending]
+  secondarySelectionSignals: [connection through care]
+  exclusionSignals: [dietary safety unclear, manipulative intent]
+  timingSignal: during cooking
+  confidenceNotes: complete source-backed form from food/hearthcraft chapters
+
+source grounding: `The House Witch`, Ch. 1 / PDF pp. 9-25, Ch. 8 / PDF pp. 122-138, and Ch. 9 / PDF pp. 139-152.
+
+recommendation metadata: primaryPurpose tending; secondaryPurposes [connecting, blessing]; primaryCarrier body; secondaryCarriers [table, vessel, words]; capacity [low, enough_to_participate]; audience [me, both_of_us]; timing helpful during cooking; recommendable false; missing [human_review, source_verification, direct_use_review]; availability findable false/directUseEligible false/recommendationEligible false
+
+search metadata: tags [house-witch, food, kitchen witchcraft, cooking with awareness]; materials [planned food, normal cooking tools]; places [kitchen, table]
+
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [food allergy, dietary, and coercive-intent review].
+
+adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
+
+operative words metadata: [{ mode: `moon_and_table_original`, text: `May this food carry care.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 9 / PDF pp. 139-152`, useContext: `blessing`, note: `Source supports short spoken kitchen words and food awareness; this is Moon & Table original rather than copied sample wording.` }]
+
+import readiness label: `approved_for_mechanical_import`
+
+## Held / later records
+
+| Candidate or source item | Import readiness | Reason |
 | --- | --- | --- |
-| Recipe-specific ritual candidates | PDF pp. 139-152 and 173-183 / Ch. 9 and Ch. 11 | Valid but requires recipe-specific safety and private excerpt handling. |
-| Spell bottle variants | PDF pp. 153-172 / Ch. 10 | Valid but should split into separate material-safe variants later. |
-
-## Private excerpt requirements
-
-| Source item | Source pages | Exact text type | Exact text importance | Private review note |
-| --- | --- | --- | --- | --- |
-| Blessing the Hearth / hearth recognition | Ch. 3 | blessing / ritual_sequence | high | Tim should review exact hearth blessing privately. |
-| Traditional closing prayer | Ch. 2-3 | prayer | high | Private excerpt only; preserve context. |
-| Bank Your Inner Flame wording | Ch. 2-3 | meditation / prompt | medium | Exact prompt sequence may matter. |
-| Kitchen sacred flame / oil lamp prayer | Ch. 6 / Ch. 11 | prayer / spoken_formula | high | Review exact flame prayer privately. |
-| Threshold protection ritual | Ch. 7 | spell / charm | high | Exact symbols/words private only. |
-| Doorstep cleansing line | Ch. 11 | spell / spoken_formula | high | Review exact line privately. |
-| House blessing lines | Ch. 11 | blessing | high | Repeated lines are ritually important. |
-| Room blessing lines | Ch. 11 | blessing | high | Private excerpt support for room candidate. |
-| Personal purification text | Ch. 11 | cleansing / spoken_formula | medium | Review privately before authoring. |
-| Creating sacred space text | Ch. 11 | ritual_sequence / spoken_formula | medium | Useful opening candidate support. |
-| Cauldron blessing | Ch. 4 | blessing | high | Review exact cauldron blessing privately. |
-| Spoken Magic examples | Ch. 10 | spoken_formula | high | Exact examples may be anchors. |
-| Recipes | Ch. 9 | recipe | high | Tim may privately excerpt exact recipes; packet must not reproduce them. |
-| Magical recipe formulas | Ch. 11 | recipe / spell | high | Formulas private only and held for safety. |
-| Spell bottle contents/examples | Ch. 10 | spell / charm | high | Exact contents/examples need safety/private review. |
-| Grimoire/record prompts | Ch. 8 | prompt | medium | Exact list may be privately useful. |
-| Restricted remembrance text | Ch. 3 | invocation / remembrance | high | Hold pending remembrance policy decision. |
+| `ritual-house-witch-household-values-table` | hold_before_import | Source supports household values work, but the runtime form risks becoming a worksheet unless Tim approves a specific ritualized table form. |
+| `ritual-house-witch-place-for-chosen-care` | hold_before_import | Strong Moon & Table fit, but requires Tim approval for an empty-place/cup/candle adaptation. |
+| `ritual-house-witch-imagined-hearth` | hold_before_import | Source meditation is promising but exact guided structure requires private review before mechanical import. |
+| `ritual-house-witch-set-household-boundary` | hold_before_import | Threshold/warding sequence is strong but property, outdoor movement, protection language, and material safety need separate QA. |
+| `ritual-house-witch-spell-bottle-household-vessel` | hold_before_import | Basic spell-bottle mechanics require material-specific safe variants. |
+| `ritual-house-witch-kitchen-shrine-tending` | hold_before_import | Kitchen shrine mechanics need a complete Tim-approved form without restricted cosmology. |
+| `ritual-house-witch-mark-season-hearth` | hold_before_import | Seasonal/craft form needs source-specific material and timing review. |
+| Recipe-specific candidates | candidate_extract_later | Valid private lane, but exact recipes and dietary/allergy/food-safety review are required. |
 
 ## Coverage records
 
-| Candidate ID | Primary carrier | Primary purpose | Secondary carriers | Secondary purposes |
-| --- | --- | --- | --- | --- |
-| `ritual-house-witch-spiritual-hearth-recognition` | table | opening | candlelight, words | blessing, marking |
-| `ritual-house-witch-bank-the-inner-flame` | candlelight | steadying | words, body | protecting, closing |
-| `ritual-house-witch-kitchen-sacred-flame` | candlelight | opening | table, words | blessing |
-| `ritual-house-witch-threshold-wash` | doorway | releasing | body, vessel, words | protecting |
-| `ritual-house-witch-house-blessing-circuit` | doorway | blessing | body, vessel, words | protecting, marking |
-| `ritual-house-witch-cauldron-blessing` | vessel | blessing | table, words | marking |
-| `ritual-house-witch-spoken-hearth-words` | words | voicing | table, candlelight | blessing |
-| `ritual-house-witch-food-with-awareness` | body | tending | table, vessel, words | connecting, blessing |
-| `ritual-house-witch-household-grimoire-entry` | words | remembering | table | marking |
-| `ritual-house-witch-kitchen-purification` | table | releasing | body, vessel, words | tending |
-| `ritual-house-witch-spell-bottle-household-vessel` | vessel | protecting | doorway, words | blessing |
-| `ritual-house-witch-name-sacred-here` | words | marking | table | opening |
-| `ritual-house-witch-household-values-table` | table | connecting | words, vessel | marking |
-| `ritual-house-witch-place-for-chosen-care` | table | connecting | words, vessel | blessing |
-| `ritual-house-witch-kitchen-shrine-tending` | table | tending | vessel, candlelight | blessing |
-| `ritual-house-witch-sacred-kitchen-movement` | body | tending | table, words | steadying |
-| `ritual-house-witch-table-gratitude` | table | blessing | words, vessel | connecting |
-| `ritual-house-witch-imagined-hearth` | body | steadying | words, candlelight | opening |
-| `ritual-house-witch-return-hearth-energy` | body | steadying | words, table | blessing |
-| `ritual-house-witch-purify-one-room` | body | releasing | vessel, words | protecting |
-| `ritual-house-witch-bless-one-room` | vessel | blessing | words, table | marking |
-| `ritual-house-witch-purify-person-at-home` | body | releasing | words, vessel | blessing |
-| `ritual-house-witch-create-small-sacred-space` | body | opening | words, table | blessing |
-| `ritual-house-witch-consecrate-candle-fuel` | candlelight | blessing | words, vessel | opening |
-| `ritual-house-witch-set-cauldron-at-hearth` | vessel | steadying | table, candlelight | blessing |
-| `ritual-house-witch-bless-kitchen-tool` | vessel | blessing | table, words | tending |
-| `ritual-house-witch-mark-season-hearth` | table | marking | plant, vessel, words | remembering |
-| `ritual-house-witch-set-household-boundary` | doorway | protecting | words | marking |
-| `ritual-house-witch-doorstep-cleansing` | doorway | releasing | body, words | protecting |
-| `ritual-house-witch-bless-room-vessel` | vessel | blessing | table, words | marking |
-| `ritual-house-witch-hearth-recipe-memory` | words | remembering | table, vessel | connecting |
+| Candidate ID | Primary carrier | Primary purpose | Secondary carriers | Secondary purposes | Import readiness |
+| --- | --- | --- | --- | --- | --- |
+| `ritual-house-witch-spiritual-hearth-recognition` | table | opening | candlelight, words, body | blessing, marking | approved_for_mechanical_import |
+| `ritual-house-witch-bank-the-inner-flame` | candlelight | steadying | words, body | protecting | approved_for_mechanical_import |
+| `ritual-house-witch-kitchen-sacred-flame` | candlelight | opening | table, words | blessing, tending | approved_for_mechanical_import |
+| `ritual-house-witch-consecrate-candle-fuel` | candlelight | blessing | vessel, words | opening | approved_for_mechanical_import |
+| `ritual-house-witch-cauldron-harmony` | vessel | steadying | candlelight, table, words | blessing, tending | approved_for_mechanical_import |
+| `ritual-house-witch-cauldron-blessing` | vessel | blessing | table, words | marking, tending | approved_for_mechanical_import |
+| `ritual-house-witch-doorstep-cleansing` | doorway | releasing | vessel, body, words | protecting | approved_for_mechanical_import |
+| `ritual-house-witch-house-blessing-circuit` | doorway | blessing | candlelight, vessel, words, body | protecting, marking | approved_for_mechanical_import |
+| `ritual-house-witch-bless-one-room` | vessel | blessing | candlelight, doorway, words | marking, protecting | approved_for_mechanical_import |
+| `ritual-house-witch-room-pouch-blessing` | vessel | blessing | table, words | marking | approved_for_mechanical_import |
+| `ritual-house-witch-purify-person-at-home` | body | releasing | candlelight, vessel | steadying, blessing | approved_for_mechanical_import |
+| `ritual-house-witch-purify-one-room` | body | releasing | candlelight, vessel, words | protecting, blessing | approved_for_mechanical_import |
+| `ritual-house-witch-create-small-sacred-space` | body | opening | candlelight, vessel, words | blessing | approved_for_mechanical_import |
+| `ritual-house-witch-bless-kitchen-tool` | vessel | blessing | table, words | tending | approved_for_mechanical_import |
+| `ritual-house-witch-household-grimoire-entry` | words | remembering | table | marking, tending | approved_for_mechanical_import |
+| `ritual-house-witch-food-with-awareness` | body | tending | table, vessel, words | connecting, blessing | approved_for_mechanical_import |
 
 ## Variant / split ledger
 
-```text
-Variant / split candidates:
-- keep together now: Spiritual Hearth Recognition.
-- split later: root household practice; hearth blessing; hearth values table; imagined hearth meditation.
-- reason: source clusters place, values, blessing, and inner hearth.
-- trigger for split: direct-use review decides root ritual vs multiple runtime rituals.
-```
+- `Kitchen Sacred Flame`: split later into candle and oil-lamp variants after direct-use material/fire review.
+- `House Blessing Circuit`: split later into whole-house, apartment, single-room, moving/new-home, and smoke-free variants.
+- `Purify One Room`: current approved draft preserves the source smoke/candle architecture but is not direct-use eligible; later QA may author a smoke-free variant if Tim approves.
+- `Create the Small Sacred Space`: current candidate is approved as a draft source-backed form; exact directional/element words remain private.
+- `Bless the Hearth Vessel`: direct cauldron version is approved; bowl/jar variants may be separate Moon & Table forms.
+- `Food With Awareness`: no recipe text is imported here. Recipe-specific rituals stay in the later/private lane.
+
+## Required self-check results
+
+Searched/checked the revised packet for these QA-blocking terms:
 
 ```text
-Variant / split candidates:
-- keep together now: Kitchen Sacred Flame.
-- split later: candle variant; oil-lamp variant; before-cooking flame; before-table flame.
-- reason: material carrier affects safety and tone.
-- trigger for split: candle/oil-lamp material review.
+source pattern
+source period
+source close
+source layout
+source diagram
+as the source shows
+as the diagram shows
+chosen version
+not needed
+generic
+journal
 ```
 
-```text
-Variant / split candidates:
-- keep together now: Threshold Wash.
-- split later: indoor threshold; outdoor doorstep; window/door-frame; pre-hosting; post-conflict reset.
-- reason: same threshold mechanics, different household contexts and materials.
-- trigger for split: surface/material/weather safety review.
-```
+Results:
 
-```text
-Variant / split candidates:
-- keep together now: House Blessing Circuit.
-- split later: full-house blessing; single-room blessing; threshold-only blessing; moving/new-home version.
-- reason: source supports both whole-home and room-scale blessings.
-- trigger for split: authoring/import-prep decides runtime length and capacity variants.
-```
-
-```text
-Variant / split candidates:
-- keep together now: Cauldron Blessing / Set the Cauldron at the Hearth.
-- split later: cauldron; bowl; jar; heat-safe hearth vessel; no-fire vessel.
-- reason: cauldron is source-specific but Moon & Table may need safe household vessels.
-- trigger for split: material-form review.
-```
-
-```text
-Variant / split candidates:
-- keep together now: Spell Bottle Household Vessel.
-- split later: protection bottle; blessing bottle; remembrance bottle; seasonal marker bottle; threshold bottle.
-- reason: source-backed bottle mechanics are broad but material lists must be reviewed.
-- trigger for split: material safety and sourceTextUse review.
-```
-
-```text
-Variant / split candidates:
-- keep together now: Household Grimoire Entry.
-- split later: standalone Ritual; post-ritual follow-up; recipe memory; house history record; seasonal hearth record.
-- reason: grimoire is both ritual and product pattern.
-- trigger for split: product model for follow-up/memory records.
-```
-
-## Held / rejected leads
-
-| Source item | Disposition | Reason |
-| --- | --- | --- |
-| Restricted cosmology material | hold | Not approved by default. |
-| Restricted remembrance beyond cautious memory | hold | Separate decision needed. |
-| High-risk fire material | hold | Separate safety review. |
-| Restricted smoke practice | hold | Source-boundary and smoke-safety review. |
-| Folk/craft icon material | hold | Folk/craft/cultural review. |
-| Magical figures and symbols | hold | Symbol/craft/cultural review. |
-| Direct recipe reproduction | hold | Recipes are valid but exact text private-only. |
-| Generic correspondence import | hold | Not a correspondence database. |
-| Herb waters / washes | hold | Herb/material safety review. |
-| Oils/incense/sealing formulas | hold | Formula/smoke/oil safety; exact formulas private-only. |
-| Clinical/nutrition claims | reject | Out of product scope. |
-| Guaranteed-effect claims | reject_if_encountered | No guaranteed-effect claims. |
-
-## Duplicate check
-
-| Mechanic cluster | Candidates affected | Handling |
-| --- | --- | --- |
-| Hearth recognition vs imagined hearth | `spiritual-hearth-recognition`, `imagined-hearth`, `return-hearth-energy` | Keep distinct: place/root practice vs inner visualization vs quick return. |
-| Kitchen flame vs candle/fuel consecration | `kitchen-sacred-flame`, `consecrate-candle-fuel` | Keep distinct: one opens kitchen work; one prepares ritual materials. |
-| Threshold wash vs house blessing | `threshold-wash`, `doorstep-cleansing`, `house-blessing-circuit` | Keep distinct: focused doorway cleanse vs full-house circuit. |
-| House blessing vs room blessing | `house-blessing-circuit`, `bless-one-room`, `bless-room-vessel` | Split now as distinct capacity/scale candidates, but authoring may merge if too duplicative. |
-| Kitchen shrine vs kitchen purification | `kitchen-shrine-tending`, `kitchen-purification` | Keep distinct: altar tending vs cleansing/releasing. |
-| Cauldron blessing vs cauldron rite | `cauldron-blessing`, `set-cauldron-at-hearth` | Keep distinct: blessing object vs using vessel in ritual. |
-| Food awareness vs table gratitude vs recipe memory | `food-with-awareness`, `table-gratitude`, `hearth-recipe-memory` | Keep distinct: preparation, table blessing, and memory record. |
-| Spell bottle root vs variants | `spell-bottle-household-vessel`; variants in later backlog | Root candidate now; variants staged. |
-| Spoken magic across all candidates | `spoken-hearth-words`, many others | Words candidate is primary; other candidates still need private excerpt review. |
-
-## Gap notes
-
-- `candidate_extract_now` is no longer constrained by the original 11 pilot candidates.
-- `Spell Bottle Variant Note` is no longer counted as a now-candidate Ritual; the concept remains later-staged.
-- The most important promotions are household values table, chosen care, kitchen shrine tending, table blessing, imagined hearth, room purification, room blessing, personal purification, creating sacred space, consecrating candles/fuel, appliance/tool blessing, and seasonal honoring craft.
-- Recipe-specific rituals remain later-staged rather than promoted wholesale because exact recipes and food safety require separate review.
-- Herb waters, washes, oils, incense, and sealing formulas remain held; this is not under-extraction.
-- Restricted remembrance/cosmology material remains held despite source richness. That is a source-boundary decision.
-- The packet strengthens table + connecting, table + blessing, body + steadying, body + releasing, vessel + blessing, doorway + releasing/protecting, candlelight + blessing/opening, and words + voicing/remembering.
-
-## Remaining extraction backlog
-
-Extraction accounting is complete enough for Tim review. Remaining backlog is not a hidden inventory gap; it is review-gated work:
-
-1. Recipe-specific ritual candidates.
-2. Spell bottle variants.
-3. Remembrance lane decision.
-4. Restricted cosmology policy decision.
-5. Herb water/wash safety review.
-6. Formula safety and source-text review.
-7. Smoke-language and cultural practice decision.
-8. Cauldron/fire material-form safety review.
+- No approved candidate body uses placeholder mechanics such as source pattern, source period, source close, source layout, source diagram, as the source shows, or as the diagram shows.
+- `journal` appears only in source-accounting/grimoire context, not as an unsupported addition to a direct-source ritual.
+- `not needed` and `generic` are not used to dismiss source wording.
+- Long source wording is tracked through `private_source_excerpt`.
+- No runtime records or eligibility flags are changed.
 
 ## Validation checklist
 
-- Existing repair artifact preserved: yes.
-- Used approved source gate and repaired source-inventory artifact: yes.
-- Re-evaluated previously inventoried House Witch source items under mature extraction-depth standard: yes.
-- Coverage summary corrected to primary-only counts: yes.
-- `Spell Bottle Variant Note` removed from now-candidate records and coverage records: yes.
-- `private_excerpt_reference` metric corrected to `0`: yes.
-- Newly promoted candidate locations tightened or marked source verification required: yes.
-- Primary carrier assignments reviewed for coverage-padding risk: yes.
-- Candidate count not constrained by original pilot count: yes.
-- All candidates remain research-only/draft: yes.
-- No runtime Ritual records created: yes.
-- No recommendation logic added: yes.
-- No UI changes: yes.
-- No candidate marked reviewed: yes.
-- No candidate marked findable: yes.
-- No candidate marked direct-use eligible: yes.
-- No candidate marked recommendation eligible: yes.
-- No candidate marked recommendable: yes.
-- No candidate marked runtime-ready: yes.
-- Exact source language handled by private-source-text policy only: yes.
-- Magical household language preserved: yes.
-- Domestic magic not flattened into chores/wellness/productivity: yes.
-- Human review required: yes.
-
-## Open questions for Tim
-
-1. Should `Spiritual Hearth Recognition` become Moon & Table's root household practice?
-2. Should `Kitchen Sacred Flame` split into candle and oil-lamp variants before runtime authoring?
-3. Should `Threshold Wash` split into indoor threshold, outdoor doorstep, and window/door-frame variants?
-4. Should `House Blessing Circuit` split into full-house, room, threshold-only, pre-hosting, and post-conflict variants?
-5. Are non-cauldron bowls/jars acceptable adaptations for cauldron mechanics?
-6. Should exact recipe storage become its own private Moon & Table content type?
-7. Should `Household Grimoire Entry` become both a Ritual candidate and a standard post-ritual follow-up pattern?
-8. Should restricted remembrance material move forward in a separate packet, or remain held until a policy exists?
-9. Should restricted cosmology material remain permanently context-only?
-10. Should named smoke-cleansing language be avoided while preserving reviewed smoke mechanics under different wording?
-
-## Final packet status
-
-```text
-packet_status: complete_extraction_ready_for_tim_review
-runtime_records_created: no
-recommendation_logic_updated: no
-ui_updated: no
-candidates_reviewed: no
-candidates_findable: no
-candidates_direct_use_eligible: no
-candidates_recommendation_eligible: no
-candidates_recommendable: no
-human_review_required: yes
-```
+- [x] Every `candidate_extract_now` record has complete operational `ritual body / practice`.
+- [x] No approved candidate requires source lookup for materials, placement, sequence, timing, repetition, wording handling, close, disposal, or rest.
+- [x] Short exact source wording is handled under the 20-word rule.
+- [x] Long/substantial source wording uses `private_source_excerpt`.
+- [x] Mechanics/components are held unless made into complete source-backed forms.
+- [x] `ritual-house-witch-purify-one-room` title correction is applied.
+- [x] Packet metrics and coverage are internally consistent.
+- [x] Common runtime posture remains draft/unavailable/not recommendable.
