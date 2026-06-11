@@ -1737,6 +1737,10 @@ h2 {
   display: none;
 }
 
+.choose-result__body .ritual-preview__section[aria-label="Why this fits"] {
+  display: none;
+}
+
 .choose-result__body .ritual-readiness-details {
   display: none;
 }
