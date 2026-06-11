@@ -217,7 +217,7 @@ remaining_extraction_backlog: 39 source items require later extraction, exact-wo
 
 - candidate ID: `candidate.saint_thomas.grimoire_record_after_rite`
 - disposition: `candidate_extract_now`
-- ritualizationType: `record_and_return`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -262,7 +262,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:remembering"
     - "carrier:words"
-    - "ritualizationType:record_and_return"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:notebook, pen"
     - "place:table or bedside"
@@ -286,17 +286,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: remembering
-  secondaryPurposes: []
-  primaryCarrier: words
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: helpful
+  purposes:
+    primary: remembering
+    secondary: []
+    refinement: "source-backed remembering form: Record the spell before it scatters"
+  carriers:
+    primary: words
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: helpful
+    contexts:
+      - "After a rite, before ordinary conversation takes over."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -329,7 +352,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -344,7 +367,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.intimate_altar_table`
 - disposition: `candidate_extract_now`
-- ritualizationType: `table_or_altar_setup`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -389,7 +412,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:marking"
     - "carrier:table"
-    - "ritualizationType:table_or_altar_setup"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:small table or tray, candle or lamp, cloth, personal object"
     - "place:bedroom, table, or private shelf"
@@ -413,17 +436,41 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: marking
-  secondaryPurposes: []
-  primaryCarrier: table
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: both_of_us
-  timingRelationship: none
+  purposes:
+    primary: marking
+    secondary: []
+    refinement: "source-backed marking form: Set the private altar before the rite"
+  carriers:
+    primary: table
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - both_of_us
+    default: both_of_us
+    bothOfUsStructure: "candidate body must give both people a role or place one shared object/light between them"
+  timing:
+    relationship: none
+    contexts:
+      - "Before an intimate or connecting rite."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -456,7 +503,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -471,7 +518,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.confidence_sigil_candle`
 - disposition: `candidate_extract_now`
-- ritualizationType: `sigil_candle`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -516,7 +563,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:blessing"
     - "carrier:candlelight"
-    - "ritualizationType:sigil_candle"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:paper, pen, candle or lamp"
     - "place:mirror, table, or bedside"
@@ -540,17 +587,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: blessing
-  secondaryPurposes: []
-  primaryCarrier: candlelight
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: me
-  timingRelationship: helpful
+  purposes:
+    primary: blessing
+    secondary: []
+    refinement: "source-backed blessing form: Mark confidence into one small light"
+  carriers:
+    primary: candlelight
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: helpful
+    contexts:
+      - "Before asking to be seen, touched, or heard."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -583,7 +653,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -598,7 +668,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.figure_candle_body_kindness`
 - disposition: `candidate_extract_now`
-- ritualizationType: `body_release_bath`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -643,7 +713,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:releasing"
     - "carrier:body"
-    - "ritualizationType:body_release_bath"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:paper, pen, candle or bowl, water"
     - "place:bathroom or bedroom"
@@ -667,17 +737,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: releasing
-  secondaryPurposes: []
-  primaryCarrier: body
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: helpful
+  purposes:
+    primary: releasing
+    secondary: []
+    refinement: "source-backed releasing form: Let one harsh body thought loosen"
+  carriers:
+    primary: body
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: helpful
+    contexts:
+      - "When body judgment is loud and capacity is low."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -710,7 +803,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -725,7 +818,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.digital_boundary_container`
 - disposition: `candidate_extract_now`
-- ritualizationType: `digital_boundary_vessel`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -770,7 +863,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:releasing"
     - "carrier:vessel"
-    - "ritualizationType:digital_boundary_vessel"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:device, paper, pen, small bowl, salt"
     - "place:table or bedside"
@@ -794,17 +887,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: releasing
-  secondaryPurposes: []
-  primaryCarrier: vessel
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: preferred
+  purposes:
+    primary: releasing
+    secondary: []
+    refinement: "source-backed releasing form: Put the screen outside the circle for one night"
+  carriers:
+    primary: vessel
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: preferred
+    contexts:
+      - "Waning moon or any evening when digital attention is sticky."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -837,7 +953,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -852,7 +968,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.desire_question_journal`
 - disposition: `candidate_extract_now`
-- ritualizationType: `desire_question`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -897,7 +1013,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:voicing"
     - "carrier:words"
-    - "ritualizationType:desire_question"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:notebook, pen, one card or object"
     - "place:table, bed, or floor"
@@ -921,17 +1037,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: voicing
-  secondaryPurposes: []
-  primaryCarrier: words
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: me
-  timingRelationship: none
+  purposes:
+    primary: voicing
+    secondary: []
+    refinement: "source-backed voicing form: Ask desire what it actually wants"
+  carriers:
+    primary: words
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: none
+    contexts:
+      - "When wanting feels tangled or borrowed."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -964,7 +1103,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -979,7 +1118,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.flame_courage_invitation`
 - disposition: `candidate_extract_now`
-- ritualizationType: `fire_safe_courage`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -1024,7 +1163,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:opening"
     - "carrier:candlelight"
-    - "ritualizationType:fire_safe_courage"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:paper, pen, candle or lamp, fire-safe dish"
     - "place:table or hearth surface"
@@ -1048,17 +1187,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: opening
-  secondaryPurposes: []
-  primaryCarrier: candlelight
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: me
-  timingRelationship: preferred
+  purposes:
+    primary: opening
+    secondary: []
+    refinement: "source-backed opening form: Burn the fear before the invitation"
+  carriers:
+    primary: candlelight
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: preferred
+    contexts:
+      - "Before inviting closeness, conversation, or shared attention."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -1091,7 +1253,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -1106,7 +1268,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.bedroom_leaf_blessing`
 - disposition: `candidate_extract_now`
-- ritualizationType: `bedroom_blessing`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -1151,7 +1313,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:blessing"
     - "carrier:vessel"
-    - "ritualizationType:bedroom_blessing"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:bowl of water, leaf or flower, candle or lamp"
     - "place:bedroom"
@@ -1175,17 +1337,41 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: blessing
-  secondaryPurposes: []
-  primaryCarrier: vessel
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: both_of_us
-  timingRelationship: helpful
+  purposes:
+    primary: blessing
+    secondary: []
+    refinement: "source-backed blessing form: Give the bedroom one clear blessing"
+  carriers:
+    primary: vessel
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - both_of_us
+    default: both_of_us
+    bothOfUsStructure: "candidate body must give both people a role or place one shared object/light between them"
+  timing:
+    relationship: helpful
+    contexts:
+      - "New moon, before sleep, or before shared privacy."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -1218,7 +1404,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -1233,7 +1419,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.self_acceptance_ribbon`
 - disposition: `candidate_extract_now`
-- ritualizationType: `body_object_blessing`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -1278,7 +1464,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:blessing"
     - "carrier:body"
-    - "ritualizationType:body_object_blessing"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:ribbon and clean garment or private object"
     - "place:bedroom or closet"
@@ -1302,17 +1488,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: blessing
-  secondaryPurposes: []
-  primaryCarrier: body
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: none
+  purposes:
+    primary: blessing
+    secondary: []
+    refinement: "source-backed blessing form: Tie acceptance to one private object"
+  carriers:
+    primary: body
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: none
+    contexts:
+      - "Before dressing, undressing, or re-entering the room as yourself."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -1345,7 +1554,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -1360,7 +1569,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.cut_toxic_cycle_string`
 - disposition: `candidate_extract_now`
-- ritualizationType: `cord_release`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -1405,7 +1614,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:releasing"
     - "carrier:words"
-    - "ritualizationType:cord_release"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:paper, pen, string, scissors"
     - "place:table or floor"
@@ -1429,17 +1638,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: releasing
-  secondaryPurposes: []
-  primaryCarrier: words
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: preferred
+  purposes:
+    primary: releasing
+    secondary: []
+    refinement: "source-backed releasing form: Cut one cycle down to one line"
+  carriers:
+    primary: words
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: preferred
+    contexts:
+      - "Waning moon or after the same pattern repeats again."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -1472,7 +1704,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -1487,7 +1719,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.mirror_glamour_self_gaze`
 - disposition: `candidate_extract_now`
-- ritualizationType: `mirror_glamour`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -1532,7 +1764,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:blessing"
     - "carrier:body"
-    - "ritualizationType:mirror_glamour"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:mirror, one adornment/color/scent already owned"
     - "place:mirror or dressing space"
@@ -1556,17 +1788,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: blessing
-  secondaryPurposes: []
-  primaryCarrier: body
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: helpful
+  purposes:
+    primary: blessing
+    secondary: []
+    refinement: "source-backed blessing form: Let the mirror receive the bold face"
+  carriers:
+    primary: body
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: helpful
+    contexts:
+      - "Before going out, being seen, or returning to the body after shame."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -1599,7 +1854,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -1614,7 +1869,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.scarlet_bath_candle`
 - disposition: `candidate_extract_now`
-- ritualizationType: `bath_glamour`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -1659,7 +1914,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:opening"
     - "carrier:body"
-    - "ritualizationType:bath_glamour"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:bath or foot bath, warm-colored object, candle or lamp"
     - "place:bathroom"
@@ -1683,17 +1938,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: opening
-  secondaryPurposes: []
-  primaryCarrier: body
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: me
-  timingRelationship: helpful
+  purposes:
+    primary: opening
+    secondary: []
+    refinement: "source-backed opening form: Let the bath carry one red thread of wanting"
+  carriers:
+    primary: body
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: helpful
+    contexts:
+      - "Before private time or when desire needs a softer door."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -1726,7 +2004,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -1741,7 +2019,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.first_date_threshold_blessing`
 - disposition: `candidate_extract_now`
-- ritualizationType: `threshold_blessing`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -1786,7 +2064,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:opening"
     - "carrier:doorway"
-    - "ritualizationType:threshold_blessing"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:one carried object"
     - "place:doorway"
@@ -1810,17 +2088,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: opening
-  secondaryPurposes: []
-  primaryCarrier: doorway
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: helpful
+  purposes:
+    primary: opening
+    secondary: []
+    refinement: "source-backed opening form: Bless the leaving before the date"
+  carriers:
+    primary: doorway
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: helpful
+    contexts:
+      - "Before leaving for a date or chosen meeting."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -1853,7 +2154,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -1868,7 +2169,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.devil_death_table_naming`
 - disposition: `candidate_extract_now`
-- ritualizationType: `tarot_shadow_table`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -1913,7 +2214,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:marking"
     - "carrier:table"
-    - "ritualizationType:tarot_shadow_table"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:two cards/images/objects"
     - "place:table"
@@ -1937,17 +2238,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: marking
-  secondaryPurposes: []
-  primaryCarrier: table
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: me
-  timingRelationship: none
+  purposes:
+    primary: marking
+    secondary: []
+    refinement: "source-backed marking form: Place the hard thing where it can be seen"
+  carriers:
+    primary: table
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: none
+    contexts:
+      - "When a repeated fear or old story needs a table, not a throne."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -1980,7 +2304,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -1995,7 +2319,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.just_sex_boundary_string`
 - disposition: `candidate_extract_now`
-- ritualizationType: `adult_intention_boundary`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -2040,7 +2364,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:connecting"
     - "carrier:words"
-    - "ritualizationType:adult_intention_boundary"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:paper, pen, string"
     - "place:bedroom or private table"
@@ -2064,17 +2388,41 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: connecting
-  secondaryPurposes: []
-  primaryCarrier: words
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: both_of_us
-  timingRelationship: none
+  purposes:
+    primary: connecting
+    secondary: []
+    refinement: "source-backed connecting form: Tie the private intention before it becomes mixed"
+  carriers:
+    primary: words
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - both_of_us
+    default: both_of_us
+    bothOfUsStructure: "candidate body must give both people a role or place one shared object/light between them"
+  timing:
+    relationship: none
+    contexts:
+      - "Before adult private time when the purpose needs to stay simple."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -2107,7 +2455,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -2122,7 +2470,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.sex_positive_candle_prayer`
 - disposition: `candidate_extract_now`
-- ritualizationType: `candle_prayer_functional`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -2167,7 +2515,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:blessing"
     - "carrier:candlelight"
-    - "ritualizationType:candle_prayer_functional"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:candle or lamp, table"
     - "place:private table or bedside"
@@ -2191,17 +2539,41 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: blessing
-  secondaryPurposes: []
-  primaryCarrier: candlelight
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: both_of_us
-  timingRelationship: none
+  purposes:
+    primary: blessing
+    secondary: []
+    refinement: "source-backed blessing form: Let one candle witness sex-positive speech"
+  carriers:
+    primary: candlelight
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - both_of_us
+    default: both_of_us
+    bothOfUsStructure: "candidate body must give both people a role or place one shared object/light between them"
+  timing:
+    relationship: none
+    contexts:
+      - "Before adult private time or after shame has entered the room."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -2234,7 +2606,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -2249,7 +2621,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.erotic_sigil_light`
 - disposition: `candidate_extract_now`
-- ritualizationType: `erotic_sigil`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -2294,7 +2666,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:connecting"
     - "carrier:candlelight"
-    - "ritualizationType:erotic_sigil"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:paper, pen, candle or lamp, optional household sweetness"
     - "place:private table"
@@ -2318,17 +2690,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: connecting
-  secondaryPurposes: []
-  primaryCarrier: candlelight
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: me
-  timingRelationship: helpful
+  purposes:
+    primary: connecting
+    secondary: []
+    refinement: "source-backed connecting form: Give private desire one sigil and one light"
+  carriers:
+    primary: candlelight
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: helpful
+    contexts:
+      - "Before private adult connection or during a Venus-touched evening."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -2361,7 +2756,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -2376,7 +2771,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.two_candles_desire_clarity`
 - disposition: `candidate_extract_now`
-- ritualizationType: `two_light_desire_clarity`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -2421,7 +2816,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:voicing"
     - "carrier:candlelight"
-    - "ritualizationType:two_light_desire_clarity"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:two candles or lamps, paper, pen"
     - "place:private table or floor"
@@ -2445,17 +2840,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: voicing
-  secondaryPurposes: []
-  primaryCarrier: candlelight
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: me
-  timingRelationship: none
+  purposes:
+    primary: voicing
+    secondary: []
+    refinement: "source-backed voicing form: Let two lights hold the edge of desire"
+  carriers:
+    primary: candlelight
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: none
+    contexts:
+      - "When curiosity, kink, or longing needs language before action."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -2488,7 +2906,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -2503,7 +2921,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.apple_fantasy_container`
 - disposition: `candidate_extract_now`
-- ritualizationType: `fantasy_container`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -2548,7 +2966,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:marking"
     - "carrier:table"
-    - "ritualizationType:fantasy_container"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:apple, candle or lamp"
     - "place:table"
@@ -2572,17 +2990,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: marking
-  secondaryPurposes: []
-  primaryCarrier: table
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: none
+  purposes:
+    primary: marking
+    secondary: []
+    refinement: "source-backed marking form: Give the fantasy one apple and no instructions"
+  carriers:
+    primary: table
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: none
+    contexts:
+      - "When attraction or curiosity needs containment rather than action."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -2615,7 +3056,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -2630,7 +3071,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.private_object_consecration`
 - disposition: `candidate_extract_now`
-- ritualizationType: `private_object_consecration`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -2675,7 +3116,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:blessing"
     - "carrier:body"
-    - "ritualizationType:private_object_consecration"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:private object, clean cloth, candle or lamp"
     - "place:private table or drawer"
@@ -2699,17 +3140,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: blessing
-  secondaryPurposes: []
-  primaryCarrier: body
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: helpful
+  purposes:
+    primary: blessing
+    secondary: []
+    refinement: "source-backed blessing form: Consecrate the private object before use"
+  carriers:
+    primary: body
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: helpful
+    contexts:
+      - "Before using or storing an adult private object."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -2742,7 +3206,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -2757,7 +3221,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.rose_fantasy_witness`
 - disposition: `candidate_extract_now`
-- ritualizationType: `rose_fantasy_witness`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -2802,7 +3266,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:marking"
     - "carrier:table"
-    - "ritualizationType:rose_fantasy_witness"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:rose, petal, or drawn flower; paper and pen"
     - "place:table"
@@ -2826,17 +3290,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: marking
-  secondaryPurposes: []
-  primaryCarrier: table
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: none
+  purposes:
+    primary: marking
+    secondary: []
+    refinement: "source-backed marking form: Let the rose witness the fantasy once"
+  carriers:
+    primary: table
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: none
+    contexts:
+      - "When longing needs beauty and a boundary at the same time."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -2869,7 +3356,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -2884,7 +3371,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.partner_shared_intention_light`
 - disposition: `candidate_extract_now`
-- ritualizationType: `partner_shared_intention`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -2929,7 +3416,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:connecting"
     - "carrier:candlelight"
-    - "ritualizationType:partner_shared_intention"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:candle or lamp, paper, pen"
     - "place:private table or bedside"
@@ -2953,17 +3440,41 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: connecting
-  secondaryPurposes: []
-  primaryCarrier: candlelight
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: both_of_us
-  timingRelationship: helpful
+  purposes:
+    primary: connecting
+    secondary: []
+    refinement: "source-backed connecting form: Place one shared intention between both bodies"
+  carriers:
+    primary: candlelight
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - both_of_us
+    default: both_of_us
+    bothOfUsStructure: "candidate body must give both people a role or place one shared object/light between them"
+  timing:
+    relationship: helpful
+    contexts:
+      - "Before consensual private time or a shared connecting rite."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -2996,7 +3507,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -3011,7 +3522,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.dry_spell_water_release`
 - disposition: `candidate_extract_now`
-- ritualizationType: `fear_water_release`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -3056,7 +3567,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:releasing"
     - "carrier:vessel"
-    - "ritualizationType:fear_water_release"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:paper, pen, bowl of water"
     - "place:bathroom or table"
@@ -3080,17 +3591,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: releasing
-  secondaryPurposes: []
-  primaryCarrier: vessel
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: helpful
+  purposes:
+    primary: releasing
+    secondary: []
+    refinement: "source-backed releasing form: Let dry-spell fear leave through water"
+  carriers:
+    primary: vessel
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: helpful
+    contexts:
+      - "When scarcity, comparison, or old pressure gets loud."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -3123,7 +3657,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -3138,7 +3672,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.paired_candle_repair`
 - disposition: `candidate_extract_now`
-- ritualizationType: `paired_candle_repair`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -3183,7 +3717,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:connecting"
     - "carrier:candlelight"
-    - "ritualizationType:paired_candle_repair"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:two candles or lamps, paper, pen"
     - "place:table or bedroom"
@@ -3207,17 +3741,41 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: connecting
-  secondaryPurposes: []
-  primaryCarrier: candlelight
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: both_of_us
-  timingRelationship: none
+  purposes:
+    primary: connecting
+    secondary: []
+    refinement: "source-backed connecting form: Give repair two lights and one clean sentence"
+  carriers:
+    primary: candlelight
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - both_of_us
+    default: both_of_us
+    bothOfUsStructure: "candidate body must give both people a role or place one shared object/light between them"
+  timing:
+    relationship: none
+    contexts:
+      - "After a rupture when both people want a small rite, not a debate."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -3250,7 +3808,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -3265,7 +3823,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.jealousy_blue_candle_page`
 - disposition: `candidate_extract_now`
-- ritualizationType: `jealousy_containment`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -3310,7 +3868,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:tending"
     - "carrier:words"
-    - "ritualizationType:jealousy_containment"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:blue object/candle/lamp, notebook, pen"
     - "place:table or bedside"
@@ -3334,17 +3892,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: tending
-  secondaryPurposes: []
-  primaryCarrier: words
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: none
+  purposes:
+    primary: tending
+    secondary: []
+    refinement: "source-backed tending form: Give jealousy one blue page"
+  carriers:
+    primary: words
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: none
+    contexts:
+      - "When jealousy is present but no decision is needed tonight."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -3377,7 +3958,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -3392,7 +3973,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.forgiveness_flower_bath`
 - disposition: `candidate_extract_now`
-- ritualizationType: `flower_forgiveness_bath`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -3437,7 +4018,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:tending"
     - "carrier:body"
-    - "ritualizationType:flower_forgiveness_bath"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:flower, petal, or cloth; water"
     - "place:bathroom"
@@ -3461,17 +4042,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: tending
-  secondaryPurposes: []
-  primaryCarrier: body
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: helpful
+  purposes:
+    primary: tending
+    secondary: []
+    refinement: "source-backed tending form: Let forgiveness touch water before speech"
+  carriers:
+    primary: body
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: helpful
+    contexts:
+      - "When tenderness is possible but a long conversation would be too much."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -3504,7 +4108,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -3519,7 +4123,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.clear_communication_goblet`
 - disposition: `candidate_extract_now`
-- ritualizationType: `water_speech_clarity`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -3564,7 +4168,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:voicing"
     - "carrier:vessel"
-    - "ritualizationType:water_speech_clarity"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:glass or bowl of water, paper, pen"
     - "place:table"
@@ -3588,17 +4192,41 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: voicing
-  secondaryPurposes: []
-  primaryCarrier: vessel
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: both_of_us
-  timingRelationship: helpful
+  purposes:
+    primary: voicing
+    secondary: []
+    refinement: "source-backed voicing form: Let the water hold the sentence before it is spoken"
+  carriers:
+    primary: vessel
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - both_of_us
+    default: both_of_us
+    bothOfUsStructure: "candidate body must give both people a role or place one shared object/light between them"
+  timing:
+    relationship: helpful
+    contexts:
+      - "Before a needed conversation or message."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -3631,7 +4259,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -3646,7 +4274,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.long_distance_calendar_light`
 - disposition: `candidate_extract_now`
-- ritualizationType: `distance_tending_light`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -3691,7 +4319,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:connecting"
     - "carrier:candlelight"
-    - "ritualizationType:distance_tending_light"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:calendar or note, candle or lamp"
     - "place:table or bedside"
@@ -3715,17 +4343,41 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: connecting
-  secondaryPurposes: []
-  primaryCarrier: candlelight
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: both_of_us
-  timingRelationship: helpful
+  purposes:
+    primary: connecting
+    secondary: []
+    refinement: "source-backed connecting form: Mark distance with one calendar light"
+  carriers:
+    primary: candlelight
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - both_of_us
+    default: both_of_us
+    bothOfUsStructure: "candidate body must give both people a role or place one shared object/light between them"
+  timing:
+    relationship: helpful
+    contexts:
+      - "During separation, before a planned call, or under moon/timing that emphasizes distance."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -3758,7 +4410,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -3773,7 +4425,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.level_up_three_lights`
 - disposition: `candidate_extract_now`
-- ritualizationType: `relationship_next_step_lights`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -3818,7 +4470,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:marking"
     - "carrier:candlelight"
-    - "ritualizationType:relationship_next_step_lights"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:three candles, lamps, or small objects"
     - "place:table or floor"
@@ -3842,17 +4494,41 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: marking
-  secondaryPurposes: []
-  primaryCarrier: candlelight
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: both_of_us
-  timingRelationship: none
+  purposes:
+    primary: marking
+    secondary: []
+    refinement: "source-backed marking form: Set three lights for the next step"
+  carriers:
+    primary: candlelight
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - both_of_us
+    default: both_of_us
+    bothOfUsStructure: "candidate body must give both people a role or place one shared object/light between them"
+  timing:
+    relationship: none
+    contexts:
+      - "When the relationship is changing shape and both people can participate."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -3885,7 +4561,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -3900,7 +4576,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.honey_jar_relationship_tending`
 - disposition: `candidate_extract_now`
-- ritualizationType: `sweet_vessel_tending`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -3945,7 +4621,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:tending"
     - "carrier:vessel"
-    - "ritualizationType:sweet_vessel_tending"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:small jar, paper, pen, household sweetness cue"
     - "place:table or shelf"
@@ -3969,17 +4645,41 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: tending
-  secondaryPurposes: []
-  primaryCarrier: vessel
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: both_of_us
-  timingRelationship: helpful
+  purposes:
+    primary: tending
+    secondary: []
+    refinement: "source-backed tending form: Let sweetness hold one name gently"
+  carriers:
+    primary: vessel
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - both_of_us
+    default: both_of_us
+    bothOfUsStructure: "candidate body must give both people a role or place one shared object/light between them"
+  timing:
+    relationship: helpful
+    contexts:
+      - "Friday, Venus-touched timing, or any quiet tending moment."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -4012,7 +4712,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -4027,7 +4727,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.compassion_candle_sigil`
 - disposition: `candidate_extract_now`
-- ritualizationType: `compassion_sigil_candle`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -4072,7 +4772,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:tending"
     - "carrier:candlelight"
-    - "ritualizationType:compassion_sigil_candle"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:paper, pen, candle or lamp"
     - "place:table"
@@ -4096,17 +4796,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: tending
-  secondaryPurposes: []
-  primaryCarrier: candlelight
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: me
-  timingRelationship: none
+  purposes:
+    primary: tending
+    secondary: []
+    refinement: "source-backed tending form: Let compassion stand under one light"
+  carriers:
+    primary: candlelight
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: none
+    contexts:
+      - "When compassion is wanted but capacity is finite."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -4139,7 +4862,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -4154,7 +4877,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.three_month_marker`
 - disposition: `candidate_extract_now`
-- ritualizationType: `relationship_milestone_marker`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -4199,7 +4922,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:marking"
     - "carrier:table"
-    - "ritualizationType:relationship_milestone_marker"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:one small object"
     - "place:table or bed edge"
@@ -4223,17 +4946,41 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: marking
-  secondaryPurposes: []
-  primaryCarrier: table
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: both_of_us
-  timingRelationship: helpful
+  purposes:
+    primary: marking
+    secondary: []
+    refinement: "source-backed marking form: Mark the relationship without pushing it forward"
+  carriers:
+    primary: table
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - both_of_us
+    default: both_of_us
+    bothOfUsStructure: "candidate body must give both people a role or place one shared object/light between them"
+  timing:
+    relationship: helpful
+    contexts:
+      - "At a relationship milestone or when a pattern wants acknowledgment."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -4266,7 +5013,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -4281,7 +5028,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.moving_in_room_blessing`
 - disposition: `candidate_extract_now`
-- ritualizationType: `home_room_blessing`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -4326,7 +5073,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:blessing"
     - "carrier:table"
-    - "ritualizationType:home_room_blessing"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:broom or cleared area, white flower/cloth/blue light"
     - "place:shared room"
@@ -4350,17 +5097,41 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: blessing
-  secondaryPurposes: []
-  primaryCarrier: table
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: both_of_us
-  timingRelationship: helpful
+  purposes:
+    primary: blessing
+    secondary: []
+    refinement: "source-backed blessing form: Bless the room as shared home"
+  carriers:
+    primary: table
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - both_of_us
+    default: both_of_us
+    bothOfUsStructure: "candidate body must give both people a role or place one shared object/light between them"
+  timing:
+    relationship: helpful
+    contexts:
+      - "Before or after moving in, rearranging, or making a shared room."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -4393,7 +5164,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -4408,7 +5179,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.ambition_love_table_balance`
 - disposition: `candidate_extract_now`
-- ritualizationType: `two_life_table_balance`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -4453,7 +5224,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:tending"
     - "carrier:table"
-    - "ritualizationType:two_life_table_balance"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:work object, relationship object, candle or lamp"
     - "place:table or desk"
@@ -4477,17 +5248,41 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: tending
-  secondaryPurposes: []
-  primaryCarrier: table
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: both_of_us
-  timingRelationship: none
+  purposes:
+    primary: tending
+    secondary: []
+    refinement: "source-backed tending form: Let love and ambition share the table"
+  carriers:
+    primary: table
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - both_of_us
+    default: both_of_us
+    bothOfUsStructure: "candidate body must give both people a role or place one shared object/light between them"
+  timing:
+    relationship: none
+    contexts:
+      - "When work and love are both present and neither should be erased."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -4520,7 +5315,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -4535,7 +5330,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.basic_uncrossing_candle`
 - disposition: `candidate_extract_now`
-- ritualizationType: `uncrossing_candle`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -4580,7 +5375,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:releasing"
     - "carrier:candlelight"
-    - "ritualizationType:uncrossing_candle"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:paper, pen, candle or lamp"
     - "place:table"
@@ -4604,17 +5399,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: releasing
-  secondaryPurposes: []
-  primaryCarrier: candlelight
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: helpful
+  purposes:
+    primary: releasing
+    secondary: []
+    refinement: "source-backed releasing form: Let one crossed thread loosen under light"
+  carriers:
+    primary: candlelight
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: helpful
+    contexts:
+      - "When something feels tangled, crossed, or difficult to move through."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -4647,7 +5465,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -4662,7 +5480,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.former_lover_release`
 - disposition: `candidate_extract_now`
-- ritualizationType: `former_lover_release`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -4707,7 +5525,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:releasing"
     - "carrier:words"
-    - "ritualizationType:former_lover_release"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:paper, pen, candle or bowl"
     - "place:table or doorway"
@@ -4731,17 +5549,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: releasing
-  secondaryPurposes: []
-  primaryCarrier: words
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: preferred
+  purposes:
+    primary: releasing
+    secondary: []
+    refinement: "source-backed releasing form: Return the old lover to the old road"
+  carriers:
+    primary: words
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: preferred
+    contexts:
+      - "Waning moon or after unwanted memory returns."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -4774,7 +5615,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -4789,7 +5630,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.friendship_benefits_vessel`
 - disposition: `candidate_extract_now`
-- ritualizationType: `adult_friendship_vessel`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -4834,7 +5675,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:connecting"
     - "carrier:vessel"
-    - "ritualizationType:adult_friendship_vessel"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:small bowl, petal/bead/token"
     - "place:private table"
@@ -4858,17 +5699,41 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: connecting
-  secondaryPurposes: []
-  primaryCarrier: vessel
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: both_of_us
-  timingRelationship: none
+  purposes:
+    primary: connecting
+    secondary: []
+    refinement: "source-backed connecting form: Give the arrangement one honest vessel"
+  carriers:
+    primary: vessel
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - both_of_us
+    default: both_of_us
+    bothOfUsStructure: "candidate body must give both people a role or place one shared object/light between them"
+  timing:
+    relationship: none
+    contexts:
+      - "Before a casual adult connection needs kindness and clarity."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -4901,7 +5766,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -4916,7 +5781,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.boundary_salt_line_page`
 - disposition: `candidate_extract_now`
-- ritualizationType: `salt_boundary_page`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -4961,7 +5826,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:protecting"
     - "carrier:words"
-    - "ritualizationType:salt_boundary_page"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:paper or plate, pen, salt"
     - "place:table or counter"
@@ -4985,17 +5850,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: protecting
-  secondaryPurposes: []
-  primaryCarrier: words
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: none
+  purposes:
+    primary: protecting
+    secondary: []
+    refinement: "source-backed protecting form: Draw the boundary as one line"
+  carriers:
+    primary: words
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: none
+    contexts:
+      - "Before answering a message, entering a date, or naming a limit."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -5028,7 +5916,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -5043,7 +5931,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.light_shield_body_boundary`
 - disposition: `candidate_extract_now`
-- ritualizationType: `body_light_boundary`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -5088,7 +5976,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:protecting"
     - "carrier:body"
-    - "ritualizationType:body_light_boundary"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:lamp, candle, or window light"
     - "place:doorway, mirror, or lit room edge"
@@ -5112,17 +6000,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: protecting
-  secondaryPurposes: []
-  primaryCarrier: body
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: helpful
+  purposes:
+    primary: protecting
+    secondary: []
+    refinement: "source-backed protecting form: Let light make the body’s edge visible"
+  carriers:
+    primary: body
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: helpful
+    contexts:
+      - "Before leaving, answering, or returning to a charged room."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -5155,7 +6066,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -5170,7 +6081,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.breakup_boldness_mirror`
 - disposition: `candidate_extract_now`
-- ritualizationType: `breakup_boldness_glamour`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -5215,7 +6126,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:blessing"
     - "carrier:body"
-    - "ritualizationType:breakup_boldness_glamour"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:mirror, one adornment, screen/device"
     - "place:mirror and desk/table"
@@ -5239,17 +6150,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: blessing
-  secondaryPurposes: []
-  primaryCarrier: body
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: none
+  purposes:
+    primary: blessing
+    secondary: []
+    refinement: "source-backed blessing form: Put boldness on before opening the screen"
+  carriers:
+    primary: body
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: none
+    contexts:
+      - "Before breakup-related digital contact or public visibility."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -5282,7 +6216,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -5297,7 +6231,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.stitched_heart_mending`
 - disposition: `candidate_extract_now`
-- ritualizationType: `stitched_object_mending`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -5342,7 +6276,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:tending"
     - "carrier:words"
-    - "ritualizationType:stitched_object_mending"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:paper or cloth heart, pen, thread/tape/fold, candle or lamp"
     - "place:table"
@@ -5366,17 +6300,41 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: tending
-  secondaryPurposes: []
-  primaryCarrier: words
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: both_of_us
-  timingRelationship: helpful
+  purposes:
+    primary: tending
+    secondary: []
+    refinement: "source-backed tending form: Stitch one mending into a small heart"
+  carriers:
+    primary: words
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - both_of_us
+    default: both_of_us
+    bothOfUsStructure: "candidate body must give both people a role or place one shared object/light between them"
+  timing:
+    relationship: helpful
+    contexts:
+      - "When repair is wanted but cannot be forced tonight."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -5409,7 +6367,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -5424,7 +6382,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.trust_object_journal`
 - disposition: `candidate_extract_now`
-- ritualizationType: `trust_object_page`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -5469,7 +6427,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:tending"
     - "carrier:words"
-    - "ritualizationType:trust_object_page"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:notebook, pen, trust object"
     - "place:table or bedside"
@@ -5493,17 +6451,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: tending
-  secondaryPurposes: []
-  primaryCarrier: words
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: none
+  purposes:
+    primary: tending
+    secondary: []
+    refinement: "source-backed tending form: Let trust sit beside one object"
+  carriers:
+    primary: words
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: none
+    contexts:
+      - "When trust needs tending and no trial is required."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -5536,7 +6517,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -5551,7 +6532,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.unsent_contact_boundary`
 - disposition: `candidate_extract_now`
-- ritualizationType: `unsent_contact_release`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -5596,7 +6577,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:releasing"
     - "carrier:words"
-    - "ritualizationType:unsent_contact_release"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:paper, pen, bowl/book/stone, phone"
     - "place:table or bedside"
@@ -5620,17 +6601,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: releasing
-  secondaryPurposes: []
-  primaryCarrier: words
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: helpful
+  purposes:
+    primary: releasing
+    secondary: []
+    refinement: "source-backed releasing form: Let the message stay unsent and contained"
+  carriers:
+    primary: words
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: helpful
+    contexts:
+      - "When the urge to contact an ex or old attachment rises."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -5663,7 +6667,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -5678,7 +6682,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.bed_linen_reset`
 - disposition: `candidate_extract_now`
-- ritualizationType: `bed_reset`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -5723,7 +6727,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:releasing"
     - "carrier:body"
-    - "ritualizationType:bed_reset"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:sheets, flower/cloth/cup of water"
     - "place:bedroom"
@@ -5747,17 +6751,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: releasing
-  secondaryPurposes: []
-  primaryCarrier: body
-  secondaryCarriers: []
-  capacity: enough_to_participate
-  audience: me
-  timingRelationship: helpful
+  purposes:
+    primary: releasing
+    secondary: []
+    refinement: "source-backed releasing form: Reset the bed as a place that belongs to now"
+  carriers:
+    primary: body
+    secondary: []
+  capacity:
+    supports:
+      - enough_to_participate
+    default: enough_to_participate
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: helpful
+    contexts:
+      - "After a breakup, rupture, guest, or intimate ending."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -5790,7 +6817,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -5805,7 +6832,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.home_after_intimacy_reset`
 - disposition: `candidate_extract_now`
-- ritualizationType: `home_body_afterward_reset`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -5850,7 +6877,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:releasing"
     - "carrier:body"
-    - "ritualizationType:home_body_afterward_reset"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:water, one household object"
     - "place:bedroom, bathroom, or private room"
@@ -5874,17 +6901,41 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: releasing
-  secondaryPurposes: []
-  primaryCarrier: body
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: both_of_us
-  timingRelationship: helpful
+  purposes:
+    primary: releasing
+    secondary: []
+    refinement: "source-backed releasing form: Return the room and body after intensity"
+  carriers:
+    primary: body
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - both_of_us
+    default: both_of_us
+    bothOfUsStructure: "candidate body must give both people a role or place one shared object/light between them"
+  timing:
+    relationship: helpful
+    contexts:
+      - "After private intensity, release, or emotional heat."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -5917,7 +6968,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -5932,7 +6983,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.cynicism_candle_softening`
 - disposition: `candidate_extract_now`
-- ritualizationType: `cynicism_softening_light`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -5977,7 +7028,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:opening"
     - "carrier:candlelight"
-    - "ritualizationType:cynicism_softening_light"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:two cards/objects, candle or lamp"
     - "place:table"
@@ -6001,17 +7052,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: opening
-  secondaryPurposes: []
-  primaryCarrier: candlelight
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: none
+  purposes:
+    primary: opening
+    secondary: []
+    refinement: "source-backed opening form: Let cynicism sit where light can reach it"
+  carriers:
+    primary: candlelight
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: none
+    contexts:
+      - "When disappointment has become the default voice."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -6044,7 +7118,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
@@ -6059,7 +7133,7 @@ operativeWordsNotes:
 
 - candidate ID: `candidate.saint_thomas.self_forgiveness_water_light`
 - disposition: `candidate_extract_now`
-- ritualizationType: `self_forgiveness_water_light`
+- ritualizationType: `source_backed_moon_and_table_form`
 - import readiness label: `approved_for_mechanical_import`
 
 #### Headline
@@ -6104,7 +7178,7 @@ howThisWasChosenIngredients:
   primarySelectionSignals:
     - "purpose:tending"
     - "carrier:vessel"
-    - "ritualizationType:self_forgiveness_water_light"
+    - "ritualizationType:source_backed_moon_and_table_form"
   secondarySelectionSignals:
     - "materials:bowl or bath water, candle or lamp"
     - "place:bathroom or table"
@@ -6128,17 +7202,40 @@ howThisWasChosenIngredients:
 #### Recommendation metadata
 ```yaml
 recommendationMetadata:
-  primaryPurpose: tending
-  secondaryPurposes: []
-  primaryCarrier: vessel
-  secondaryCarriers: []
-  capacity: only_a_little
-  audience: me
-  timingRelationship: helpful
+  purposes:
+    primary: tending
+    secondary: []
+    refinement: "source-backed tending form: Let self-forgiveness have water and one light"
+  carriers:
+    primary: vessel
+    secondary: []
+  capacity:
+    supports:
+      - only_a_little
+    default: only_a_little
+  audience:
+    supports:
+      - me
+    default: me
+  timing:
+    relationship: helpful
+    contexts:
+      - "When shame is present and the body needs a smaller rite."
+  eligibility:
+    recommendable: false
+    missing:
+      - human_review
+      - source_verification
+      - material_safety_review
+      - product_boundary_review
+```
+
+#### Availability metadata
+```yaml
+availability:
+  findable: false
   directUseEligible: false
   recommendationEligible: false
-  recommendable: false
-  reviewed: false
 ```
 
 #### Search metadata
@@ -6171,7 +7268,7 @@ reviewFlags:
 #### Adaptation policy notes
 - The candidate preserves source ritual architecture first: material, action, place, and closure remain traceable to the cited section.
 - Any explicit, long, or source-distinctive prayer/chant/spell wording was not imported.
-- User-facing wording should be authored in Moon & Table house voice at runtime import, without changing the ritual's source-backed mechanics.
+- The candidate wording above is the draft user-facing ritual text for later mechanical import. Runtime import must not invent new operative speech or rewrite the ritual body except through a reviewed packet correction.
 
 #### Operative words metadata
 ```yaml
