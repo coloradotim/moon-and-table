@@ -14,17 +14,15 @@ function resultIds(query: string, selectedChips: string[] = []): string[] {
 }
 
 describe("Ritual search", () => {
-  it("does not return draft source-backed rituals in the direct-use search flow", () => {
-    expect(resultIds("")).toEqual([]);
+  it("returns reviewed direct-use records in the direct-selection search flow", () => {
+    expect(resultIds("")).toHaveLength(218);
     expect(sourceBackedRituals).toHaveLength(218);
     expect(sourceBackedRituals.every((ritual) => ritual.availability.findable)).toBe(
       true,
     );
     expect(
-      sourceBackedRituals.every(
-        (ritual) => ritual.availability.directUseEligible === false,
-      ),
-    ).toBe(true);
+      sourceBackedRituals.filter((ritual) => ritual.availability.directUseEligible),
+    ).toHaveLength(218);
   });
 
   it("can include draft records only for inspection/debug search", () => {
@@ -34,7 +32,7 @@ describe("Ritual search", () => {
     }).map((ritual) => ritual.id);
 
     expect(ids).toEqual(
-      expect.arrayContaining(["ritual-green-garden-welcome-existing-plant"]),
+      expect.arrayContaining(["candidate.moon_book.seed_pot_intention"]),
     );
   });
 
@@ -76,7 +74,7 @@ describe("Ritual search", () => {
     );
   });
 
-  it("can inspect the remaining imported packet families only in inspection/debug search", () => {
+  it("can find the imported packet families in inspection/debug search", () => {
     expect(
       searchRituals(sourceBackedRituals, {
         query: "new moon",
@@ -100,12 +98,22 @@ describe("Ritual search", () => {
   });
 
   it("filters by carrier chips only for direct-use eligible rituals", () => {
-    expect(resultIds("", ["plant"])).toEqual([]);
-    expect(resultIds("", ["table"])).toEqual([]);
+    expect(resultIds("", ["plant"])).toEqual(
+      expect.arrayContaining([
+        "ritual-green-garden-welcome-existing-plant",
+        "ritual-woodward-enoughness-bowl",
+        "ritual-woodward-seasonal-food-marker",
+      ]),
+    );
+    expect(resultIds("", ["table"])).toEqual(
+      expect.arrayContaining(["ritual-woodward-bread-table-offering"]),
+    );
   });
 
   it("filters by purpose chips only for direct-use eligible rituals", () => {
-    expect(resultIds("", ["opening"])).toEqual([]);
+    expect(resultIds("", ["opening"])).toEqual(
+      expect.arrayContaining(["ritual-woodward-center-at-counter"]),
+    );
   });
 
   it("narrows when selected chips and text search are combined", () => {
@@ -116,7 +124,7 @@ describe("Ritual search", () => {
         includeNonDirectUse: true,
       }).map((ritual) => ritual.id),
     ).toEqual(
-      expect.arrayContaining(["ritual-green-garden-welcome-existing-plant"]),
+      expect.arrayContaining(["candidate.moon_book.seed_pot_intention"]),
     );
     expect(
       searchRituals(sourceBackedRituals, {
@@ -144,9 +152,27 @@ describe("Ritual search", () => {
     ).toEqual([]);
   });
 
-  it("does not derive direct-use chips from draft source-backed metadata", () => {
-    const chips = getRitualSearchChips(sourceBackedRituals).map((chip) => chip.value);
+  it("derives direct-use chips only from reviewed direct-use metadata", () => {
+    const draftOnlyRitual = {
+      ...sourceBackedRituals[0],
+      id: "ritual.draft_only_chip",
+      status: "draft",
+      availability: {
+        ...sourceBackedRituals[0].availability,
+        directUseEligible: false,
+      },
+      searchMetadata: {
+        ...sourceBackedRituals[0].searchMetadata,
+        tags: ["draft-only-chip"],
+      },
+    } satisfies Ritual;
 
-    expect(chips).toEqual([]);
+    const chips = getRitualSearchChips([
+      ...sourceBackedRituals,
+      draftOnlyRitual,
+    ]).map((chip) => chip.value);
+
+    expect(chips).toEqual(expect.arrayContaining(["table", "vessel", "bread"]));
+    expect(chips).not.toEqual(expect.arrayContaining(["draft-only-chip"]));
   });
 });

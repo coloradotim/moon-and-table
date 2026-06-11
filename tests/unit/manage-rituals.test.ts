@@ -7,7 +7,7 @@ import {
 import { sourceBackedRituals } from "../../src/data/rituals/source-backed-rituals";
 
 describe("Manage Rituals view model", () => {
-  it("summarizes imported Ritual records without changing eligibility", () => {
+  it("summarizes imported Ritual records with direct-use review overlays", () => {
     const viewModel = createManageRitualsViewModel(sourceBackedRituals);
 
     expect(viewModel.total).toBe(218);
@@ -15,8 +15,8 @@ describe("Manage Rituals view model", () => {
     expect(viewModel.filters).toEqual(defaultManageRitualFilters);
     expect(viewModel.counts.byStatus).toEqual({
       pilot: 0,
-      draft: 218,
-      reviewed: 0,
+      draft: 0,
+      reviewed: 218,
       recommendable: 0,
     });
     expect(viewModel.counts.byOrigin).toEqual({
@@ -24,7 +24,7 @@ describe("Manage Rituals view model", () => {
       household: 0,
     });
     expect(viewModel.counts.findable).toBe(218);
-    expect(viewModel.counts.directUseEligible).toBe(0);
+    expect(viewModel.counts.directUseEligible).toBe(218);
     expect(viewModel.counts.recommendationEligible).toBe(0);
     expect(viewModel.counts.recommendable).toBe(0);
     expect(viewModel.counts.withValidationFindings).toBe(0);
@@ -40,10 +40,7 @@ describe("Manage Rituals view model", () => {
       ]),
     );
     expect(
-      viewModel.rows.every((row) =>
-        row.missingReadiness.includes("direct_use_review") &&
-        row.missingReadiness.includes("recommendation_review"),
-      ),
+      viewModel.rows.every((row) => row.missingReadiness.includes("recommendation_review")),
     ).toBe(true);
   });
 
@@ -51,11 +48,11 @@ describe("Manage Rituals view model", () => {
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { status: "draft" })
         .filteredTotal,
-    ).toBe(218);
+    ).toBe(0);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { status: "reviewed" })
         .filteredTotal,
-    ).toBe(0);
+    ).toBe(218);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { origin: "source" })
         .filteredTotal,

@@ -17,7 +17,7 @@ import {
 } from "../../src/data/rituals/validate-rituals";
 
 describe("source-backed Ritual import data", () => {
-  it("contains the source-backed mechanical import batch as draft records", () => {
+  it("contains source-backed records with direct-use review overlays applied", () => {
     expect(sourceBackedRituals).toHaveLength(218);
     expect(sourceBackedRituals.map((ritual) => ritual.id)).toEqual(
       expect.arrayContaining([
@@ -33,7 +33,12 @@ describe("source-backed Ritual import data", () => {
         "candidate.dominguez.glyph-as-mark",
       ]),
     );
-    expect(sourceBackedRituals.every((ritual) => ritual.status === "draft")).toBe(true);
+    expect(sourceBackedRituals.filter((ritual) => ritual.status === "draft")).toHaveLength(
+      0,
+    );
+    expect(
+      sourceBackedRituals.filter((ritual) => ritual.status === "reviewed"),
+    ).toHaveLength(218);
     expect(sourceBackedRituals.every((ritual) => ritual.origin.type === "source")).toBe(
       true,
     );
@@ -41,8 +46,8 @@ describe("source-backed Ritual import data", () => {
       sourceBackedRituals.every((ritual) => ritual.availability.findable === true),
     ).toBe(true);
     expect(
-      sourceBackedRituals.every((ritual) => ritual.availability.directUseEligible === false),
-    ).toBe(true);
+      sourceBackedRituals.filter((ritual) => ritual.availability.directUseEligible),
+    ).toHaveLength(218);
     expect(
       sourceBackedRituals.every(
         (ritual) => ritual.availability.recommendationEligible === false,
@@ -53,13 +58,254 @@ describe("source-backed Ritual import data", () => {
         (ritual) =>
           ritual.recommendationMetadata.eligibility.recommendable === false &&
           ritual.recommendationMetadata.eligibility.missing?.includes(
-            "direct_use_review",
-          ) &&
-          ritual.recommendationMetadata.eligibility.missing?.includes(
             "recommendation_review",
-          ),
+          ) &&
+          (ritual.availability.directUseEligible ||
+            ritual.recommendationMetadata.eligibility.missing?.includes(
+              "direct_use_review",
+            )),
       ),
     ).toBe(true);
+  });
+
+  it("promotes the Woodward kitchen/vessel batch for direct use only", () => {
+    const woodward = sourceBackedRituals.filter(
+      (ritual) =>
+        ritual.searchMetadata.sourceLabel ===
+        "Woodward, The Magical Household Cookbook",
+    );
+
+    expect(woodward).toHaveLength(14);
+    expect(woodward.every((ritual) => ritual.status === "reviewed")).toBe(true);
+    expect(woodward.every((ritual) => ritual.availability.directUseEligible)).toBe(
+      true,
+    );
+    expect(
+      woodward.every((ritual) => !ritual.availability.recommendationEligible),
+    ).toBe(true);
+    expect(
+      woodward.every(
+        (ritual) =>
+          ritual.recommendationMetadata.eligibility.missing?.join(",") ===
+          "recommendation_review",
+      ),
+    ).toBe(true);
+    expect(woodward.every((ritual) => ritual.reviewFlags === undefined)).toBe(true);
+  });
+
+  it("promotes the House Witch hearth and room batch for direct use only", () => {
+    const houseWitch = sourceBackedRituals.filter(
+      (ritual) => ritual.searchMetadata.sourceLabel === "The House Witch",
+    );
+
+    expect(houseWitch).toHaveLength(15);
+    expect(houseWitch.every((ritual) => ritual.status === "reviewed")).toBe(true);
+    expect(
+      houseWitch.every((ritual) => ritual.availability.directUseEligible),
+    ).toBe(true);
+    expect(
+      houseWitch.every((ritual) => !ritual.availability.recommendationEligible),
+    ).toBe(true);
+    expect(
+      houseWitch.every(
+        (ritual) =>
+          ritual.recommendationMetadata.eligibility.missing?.join(",") ===
+          "recommendation_review",
+      ),
+    ).toBe(true);
+    expect(houseWitch.every((ritual) => ritual.reviewFlags === undefined)).toBe(true);
+
+    expect(
+      houseWitch.find(
+        (ritual) => ritual.id === "ritual-house-witch-food-with-awareness",
+      )?.presentation.bestWindow,
+    ).toContain("both of you");
+    expect(
+      houseWitch.find(
+        (ritual) => ritual.id === "ritual-house-witch-cauldron-harmony",
+      )?.presentation.headline,
+    ).toBe("Hold Harmony in the Cauldron");
+    expect(
+      houseWitch.find(
+        (ritual) => ritual.id === "ritual-house-witch-purify-person-at-home",
+      )?.presentation.headline,
+    ).toBe("Release Through Salt and Flame");
+  });
+
+  it("promotes the Buckland candle batch for direct use only", () => {
+    const buckland = sourceBackedRituals.filter(
+      (ritual) =>
+        ritual.searchMetadata.sourceLabel ===
+        "Buckland, Practical Candleburning Rituals",
+    );
+
+    expect(buckland).toHaveLength(13);
+    expect(buckland.every((ritual) => ritual.status === "reviewed")).toBe(true);
+    expect(buckland.every((ritual) => ritual.availability.directUseEligible)).toBe(
+      true,
+    );
+    expect(
+      buckland.every((ritual) => !ritual.availability.recommendationEligible),
+    ).toBe(true);
+    expect(
+      buckland.every(
+        (ritual) =>
+          ritual.recommendationMetadata.eligibility.missing?.join(",") ===
+          "recommendation_review",
+      ),
+    ).toBe(true);
+    expect(buckland.every((ritual) => ritual.reviewFlags === undefined)).toBe(true);
+
+    const directUseText = buckland
+      .map((ritual) => Object.values(ritual.presentation).join(" "))
+      .join(" ");
+
+    expect(directUseText).not.toMatch(
+      /Tim approves|material review|direct-use|for this candidate|Use the first version|Use the second version/i,
+    );
+    expect(
+      buckland.find((ritual) => ritual.id === "ritual-buckland-candle-dream-door")
+        ?.presentation.headline,
+    ).toBe("Open the Dream Door");
+    expect(
+      buckland.find(
+        (ritual) =>
+          ritual.id === "ritual-candlelight-buckland-protecting-boundary-circle",
+      )?.presentation.practice,
+    ).not.toContain("first protection version");
+    expect(
+      buckland.find(
+        (ritual) => ritual.id === "ritual-candlelight-buckland-tending-home-settling",
+      )?.presentation.practice,
+    ).toContain("so burns its spirit");
+    expect(
+      buckland.find((ritual) => ritual.id === "ritual-buckland-candle-dream-door")
+        ?.presentation.practice,
+    ).toContain("all that it sees");
+  });
+
+  it("promotes the Magical Household domestic batch for direct use only", () => {
+    const magicalHousehold = sourceBackedRituals.filter(
+      (ritual) => ritual.searchMetadata.sourceLabel === "The Magical Household",
+    );
+
+    expect(magicalHousehold).toHaveLength(15);
+    expect(magicalHousehold.every((ritual) => ritual.status === "reviewed")).toBe(
+      true,
+    );
+    expect(
+      magicalHousehold.every((ritual) => ritual.availability.directUseEligible),
+    ).toBe(true);
+    expect(
+      magicalHousehold.every(
+        (ritual) => !ritual.availability.recommendationEligible,
+      ),
+    ).toBe(true);
+    expect(
+      magicalHousehold.every(
+        (ritual) =>
+          ritual.recommendationMetadata.eligibility.missing?.join(",") ===
+          "recommendation_review",
+      ),
+    ).toBe(true);
+    expect(
+      magicalHousehold.find(
+        (ritual) => ritual.id === "ritual-magical-household-center-house-mind",
+      )?.presentation.headline,
+    ).toBe("Center the House");
+    expect(
+      magicalHousehold.find(
+        (ritual) =>
+          ritual.id === "ritual-magical-household-four-elements-purification",
+      )?.presentation.headline,
+    ).toBe("Carry the Four Elements Through the House");
+  });
+
+  it("promotes the Green Garden plant batch for direct use only", () => {
+    const greenGarden = sourceBackedRituals.filter(
+      (ritual) => ritual.searchMetadata.sourceLabel === "The Green Witch's Garden",
+    );
+
+    expect(greenGarden).toHaveLength(16);
+    expect(greenGarden.every((ritual) => ritual.status === "reviewed")).toBe(true);
+    expect(
+      greenGarden.every((ritual) => ritual.availability.directUseEligible),
+    ).toBe(true);
+    expect(
+      greenGarden.every((ritual) => !ritual.availability.recommendationEligible),
+    ).toBe(true);
+    expect(
+      greenGarden.every(
+        (ritual) =>
+          ritual.recommendationMetadata.eligibility.missing?.join(",") ===
+          "recommendation_review",
+      ),
+    ).toBe(true);
+    expect(
+      greenGarden.find(
+        (ritual) => ritual.id === "ritual-green-garden-record-page",
+      )?.presentation.headline,
+    ).toBe("Make the Green Record");
+    expect(
+      greenGarden.find(
+        (ritual) => ritual.id === "ritual-green-garden-welcome-new-plant",
+      )?.presentation.practice,
+    ).not.toMatch(/pets|children|safety warnings/i);
+  });
+
+  it("promotes the Whitehurst flower batches for direct use only", () => {
+    const whitehurst = sourceBackedRituals.filter(
+      (ritual) => ritual.searchMetadata.sourceLabel === "Whitehurst flower magic",
+    );
+    const reviewedWhitehurst = whitehurst.filter(
+      (ritual) => ritual.availability.directUseEligible,
+    );
+
+    expect(whitehurst).toHaveLength(36);
+    expect(reviewedWhitehurst).toHaveLength(36);
+    expect(reviewedWhitehurst.every((ritual) => ritual.status === "reviewed")).toBe(
+      true,
+    );
+    expect(
+      reviewedWhitehurst.every(
+        (ritual) => !ritual.availability.recommendationEligible,
+      ),
+    ).toBe(true);
+    expect(
+      reviewedWhitehurst.find((ritual) => ritual.id === "whitehurst-flower-on-the-table")
+        ?.presentation.headline,
+    ).toBe("Set One Flower on the Table");
+    expect(
+      reviewedWhitehurst.find((ritual) => ritual.id === "whitehurst-rose-as-witness")
+        ?.presentation.headline,
+    ).toBe("Let One Rose Witness the Words");
+    expect(
+      reviewedWhitehurst
+        .map((ritual) => ritual.presentation.practice)
+        .join(" "),
+    ).not.toMatch(/reviewed flower|reviewed bouquet|reviewed petals/i);
+  });
+
+  it("promotes the Moon Book lunar-cycle batch for direct use only", () => {
+    const moonBook = sourceBackedRituals.filter(
+      (ritual) =>
+        ritual.searchMetadata.sourceLabel ===
+        "Sarah Faith Gottesdiener, The Moon Book",
+    );
+
+    expect(moonBook).toHaveLength(21);
+    expect(moonBook.every((ritual) => ritual.status === "reviewed")).toBe(true);
+    expect(moonBook.every((ritual) => ritual.availability.directUseEligible)).toBe(
+      true,
+    );
+    expect(
+      moonBook.every((ritual) => !ritual.availability.recommendationEligible),
+    ).toBe(true);
+    expect(
+      moonBook.find(
+        (ritual) => ritual.id === "candidate.moon_book.imperfect_timing_adaptation",
+      )?.presentation.headline,
+    ).toBe("Use the Phase You Actually Have");
   });
 
   it("maps packet presentation fields without legacy pilot records", () => {
@@ -79,7 +325,7 @@ describe("source-backed Ritual import data", () => {
         expect.objectContaining({
           id: "whitehurst-flower-on-the-table",
           presentation: expect.objectContaining({
-            headline: "Set one flower on the table.",
+            headline: "Set One Flower on the Table",
             practice: expect.stringContaining("Put it in a small vase or bowl and set it at the table."),
           }),
         }),
