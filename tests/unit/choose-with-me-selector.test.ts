@@ -176,6 +176,7 @@ describe("chooseWithMeRitual", () => {
     );
     expect(result.whyThisFits).not.toContain("carrier inferred");
     expect(result.howThisWasChosen).toContain("its own vessel form");
+    expect(result.howThisWasChosen).toContain("ranked the remaining rituals");
   });
 
   it("returns a documented no-result instead of drifting to another carrier", () => {

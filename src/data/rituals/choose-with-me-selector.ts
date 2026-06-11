@@ -439,6 +439,34 @@ function describeRitualMetadataFit(
   return `Its record names ${primaryPurpose} as its primary work, and its own ${carrierFormLabels[ritual.recommendationMetadata.carriers.primary]} could lead because carrier was open.`;
 }
 
+function describeRankingSignals(debug: ChooseWithMeDebug): string {
+  const breakdown = debug.selectedBreakdown;
+
+  if (!breakdown) {
+    return "Moon & Table did not choose randomly from that lane.";
+  }
+
+  const signals = [
+    { label: "capacity fit", value: breakdown.capacity },
+    { label: "audience fit", value: breakdown.audience },
+    { label: "timing fit", value: breakdown.timing },
+    { label: "review status", value: breakdown.sourceConfidence },
+    { label: "refinement match", value: breakdown.refinement },
+    { label: "material/place fit", value: breakdown.materialPlaceFit },
+    { label: "free-text match", value: breakdown.freeText },
+  ]
+    .filter((signal) => signal.value > 0)
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 3)
+    .map((signal) => signal.label);
+
+  if (signals.length === 0) {
+    return "Moon & Table did not choose randomly from that lane.";
+  }
+
+  return `From there, Moon & Table ranked the remaining rituals; this one scored highest with ${joinNaturalList(signals)}.`;
+}
+
 function describePracticeFit(ritual: Ritual): string {
   const practiceOpening = getFirstSentence(ritual.presentation.practice);
 
@@ -477,11 +505,12 @@ function buildHowThisWasChosen(
   const hardGates = describeHardGates(request);
   const remainingCount = debug.eligibleCount;
   const remainingPhrase = `${remainingCount} approved ${pluralize(remainingCount, "ritual")} stayed in that lane ${timingPhrase}`;
-  const closing = ritual
+  const metadataFit = ritual
     ? describeRitualMetadataFit(ritual, request)
     : "Moon & Table did not choose a ritual outside that request.";
+  const ranking = describeRankingSignals(debug);
 
-  return `Selection gates: ${hardGates}. ${remainingPhrase}. ${closing}`;
+  return `Selection gates: ${hardGates}. ${remainingPhrase}. ${metadataFit} ${ranking}`;
 }
 
 function buildDebug(
