@@ -38,10 +38,24 @@ import {
 } from "../lib/profile-tuning";
 import { pilotRituals } from "../data/rituals/pilot-rituals";
 import {
+  createManageRitualsViewModel,
+  defaultManageRitualFilters,
+  MANAGE_RITUAL_AVAILABILITY_FILTERS,
+  MANAGE_RITUAL_ORIGIN_FILTERS,
+  MANAGE_RITUAL_READINESS_FILTERS,
+  MANAGE_RITUAL_VALIDATION_FILTERS,
+  type ManageRitualAvailabilityFilter,
+  type ManageRitualFilters,
+  type ManageRitualOriginFilter,
+  type ManageRitualReadinessFilter,
+  type ManageRitualStatusFilter,
+  type ManageRitualValidationFilter,
+} from "../data/rituals/manage-rituals";
+import {
   getRitualSearchChips,
   searchRituals,
 } from "../data/rituals/search-rituals";
-import type { Ritual } from "../data/rituals/types";
+import { RITUAL_STATUSES, type Ritual } from "../data/rituals/types";
 
 const feedbackLabels: Record<BriefFeedbackType, string> = {
   good: "This feels right.",
@@ -84,6 +98,7 @@ const profileWorksOptions = [
 export type SignedInView =
   | "this_week"
   | "search_rituals"
+  | "manage_rituals"
   | "profile_settings"
   | "how_it_works";
 
@@ -102,6 +117,7 @@ export type SignedInShellOptions = {
   selectedRitualSearchChips?: string[];
   selectedRitualId?: string | null;
   ritualSearchSort?: RitualSearchSort;
+  manageRitualFilters?: Partial<ManageRitualFilters>;
 };
 
 function escapeHtml(value: string): string {
@@ -1110,6 +1126,191 @@ export function renderSearchRitualsSection(options: {
   `;
 }
 
+function renderManageRitualFilterOption(
+  value: string,
+  label: string,
+  selectedValue: string,
+): string {
+  return `<option value="${escapeHtml(value)}"${selectedValue === value ? " selected" : ""}>${escapeHtml(label)}</option>`;
+}
+
+function formatManageList(values: string[]): string {
+  return values.length > 0 ? values.join(", ") : "none";
+}
+
+function renderYesNo(value: boolean): string {
+  return value ? "yes" : "no";
+}
+
+function renderManageRitualsFilters(filters: ManageRitualFilters): string {
+  return `
+    <form class="manage-rituals__filters" data-manage-rituals-filter-form="true" aria-label="Manage Rituals filters">
+      <label>
+        <span>Status</span>
+        <select name="manageRitualStatus" data-manage-rituals-filter="true">
+          ${renderManageRitualFilterOption("all", "All statuses", filters.status)}
+          ${RITUAL_STATUSES.map((status) =>
+            renderManageRitualFilterOption(status, formatRitualLabel(status), filters.status),
+          ).join("")}
+        </select>
+      </label>
+      <label>
+        <span>Origin</span>
+        <select name="manageRitualOrigin" data-manage-rituals-filter="true">
+          ${MANAGE_RITUAL_ORIGIN_FILTERS.map((origin) =>
+            renderManageRitualFilterOption(
+              origin,
+              origin === "all" ? "All origins" : formatRitualLabel(origin),
+              filters.origin,
+            ),
+          ).join("")}
+        </select>
+      </label>
+      <label>
+        <span>Availability</span>
+        <select name="manageRitualAvailability" data-manage-rituals-filter="true">
+          ${MANAGE_RITUAL_AVAILABILITY_FILTERS.map((availability) =>
+            renderManageRitualFilterOption(
+              availability,
+              availability === "all" ? "All availability" : formatRitualLabel(availability),
+              filters.availability,
+            ),
+          ).join("")}
+        </select>
+      </label>
+      <label>
+        <span>Readiness</span>
+        <select name="manageRitualReadiness" data-manage-rituals-filter="true">
+          ${MANAGE_RITUAL_READINESS_FILTERS.map((readiness) =>
+            renderManageRitualFilterOption(
+              readiness,
+              readiness === "all" ? "All readiness" : formatRitualLabel(readiness),
+              filters.readiness,
+            ),
+          ).join("")}
+        </select>
+      </label>
+      <label>
+        <span>Issues</span>
+        <select name="manageRitualValidation" data-manage-rituals-filter="true">
+          ${MANAGE_RITUAL_VALIDATION_FILTERS.map((validation) =>
+            renderManageRitualFilterOption(
+              validation,
+              validation === "all" ? "All issues" : formatRitualLabel(validation),
+              filters.validation,
+            ),
+          ).join("")}
+        </select>
+      </label>
+    </form>
+  `;
+}
+
+export function renderManageRitualsSection(options: {
+  filters?: Partial<ManageRitualFilters>;
+} = {}): string {
+  const viewModel = createManageRitualsViewModel(pilotRituals, options.filters);
+  const counts = viewModel.counts;
+  const statusSummary = [
+    `${viewModel.total} imported Ritual${viewModel.total === 1 ? "" : "s"}`,
+    `${counts.byStatus.pilot} pilot`,
+    `${counts.directUseEligible} direct-use eligible`,
+    `${counts.recommendable} recommendation-ready`,
+    `${counts.withMissingReadiness} missing readiness`,
+  ].join(". ");
+
+  return `
+    <article class="manage-rituals" aria-label="Manage Rituals">
+      <header class="manage-rituals__header">
+        <h2>Manage rituals</h2>
+        <p>${escapeHtml(statusSummary)}.</p>
+      </header>
+
+      <details class="manage-rituals__summary">
+        <summary>Readiness summary</summary>
+        <dl>
+          <div><dt>Statuses</dt><dd>${escapeHtml(`pilot ${counts.byStatus.pilot}, draft ${counts.byStatus.draft}, reviewed ${counts.byStatus.reviewed}, recommendable ${counts.byStatus.recommendable}`)}</dd></div>
+          <div><dt>Origins</dt><dd>${escapeHtml(`source ${counts.byOrigin.source}, household ${counts.byOrigin.household}`)}</dd></div>
+          <div><dt>Availability</dt><dd>${escapeHtml(`findable ${counts.findable}, direct-use eligible ${counts.directUseEligible}, recommendation eligible ${counts.recommendationEligible}`)}</dd></div>
+          <div><dt>Issues</dt><dd>${escapeHtml(`validation findings ${counts.withValidationFindings}, missing readiness ${counts.withMissingReadiness}`)}</dd></div>
+        </dl>
+      </details>
+
+      ${renderManageRitualsFilters(viewModel.filters)}
+
+      <section class="manage-rituals__table-section" aria-label="Imported Ritual records">
+        <div class="manage-rituals__table-heading">
+          <h3>Imported Ritual records</h3>
+          <p>${viewModel.filteredTotal === 1 ? "1 Ritual shown" : `${viewModel.filteredTotal} Rituals shown`}</p>
+        </div>
+        <div class="manage-rituals__records" role="table" aria-label="Imported Ritual records table">
+          <div class="manage-rituals__record-head" role="row">
+            <span role="columnheader">Ritual</span>
+            <span role="columnheader">Status</span>
+            <span role="columnheader">Origin</span>
+            <span role="columnheader">Direct use</span>
+            <span role="columnheader">Recommendation</span>
+            <span role="columnheader">Issues</span>
+          </div>
+          ${viewModel.rows.map((row) => `
+            <details class="manage-rituals__record">
+              <summary class="manage-rituals__record-summary">
+                <span class="manage-rituals__ritual-cell">
+                  <span class="manage-rituals__ritual-title">${escapeHtml(row.headline)}</span>
+                </span>
+                <span>${escapeHtml(row.status)}</span>
+                <span>${escapeHtml(row.origin)}</span>
+                <span>${renderYesNo(row.directUseEligible)}</span>
+                <span>${row.recommendable ? "ready" : row.recommendationEligible ? "eligible" : "no"}</span>
+                <span>${escapeHtml(formatManageList(row.issues))}</span>
+              </summary>
+              <div class="manage-rituals__record-detail">
+                      <div class="manage-rituals__detail-grid">
+                        <section>
+                          <h4>Presentation</h4>
+                          <dl>
+                            <div><dt>Headline</dt><dd>${escapeHtml(row.ritual.presentation.headline)}</dd></div>
+                            <div><dt>Practice</dt><dd>${escapeHtml(row.ritual.presentation.practice)}</dd></div>
+                            <div><dt>Intention</dt><dd>${escapeHtml(row.ritual.presentation.intention)}</dd></div>
+                            <div><dt>Best window</dt><dd>${escapeHtml(row.ritual.presentation.bestWindow)}</dd></div>
+                            <div><dt>Why this fits</dt><dd>${escapeHtml(row.ritual.presentation.whyThisFits)}</dd></div>
+                            <div><dt>Question to carry</dt><dd>${escapeHtml(row.ritual.presentation.questionToCarry)}</dd></div>
+                          </dl>
+                        </section>
+                        <section>
+                          <h4>Metadata</h4>
+                          <dl>
+                            <div><dt>Findable</dt><dd>${renderYesNo(row.findable)}</dd></div>
+                            <div><dt>Primary purpose</dt><dd>${escapeHtml(row.primaryPurpose)}</dd></div>
+                            <div><dt>Primary carrier</dt><dd>${escapeHtml(row.primaryCarrier)}</dd></div>
+                            <div><dt>Audience</dt><dd>${escapeHtml(formatManageList(row.audience))}</dd></div>
+                            <div><dt>Capacity</dt><dd>${escapeHtml(formatManageList(row.capacity))}</dd></div>
+                            <div><dt>Review flags</dt><dd>${escapeHtml(formatManageList(row.reviewFlags))}</dd></div>
+                            <div><dt>Source label / origin label</dt><dd>${escapeHtml([row.sourceLabel, row.originLabel].filter(Boolean).join(" / ") || "none")}</dd></div>
+                            <div><dt>Recommendation metadata</dt><dd><pre>${escapeHtml(JSON.stringify(row.ritual.recommendationMetadata, null, 2))}</pre></dd></div>
+                            <div><dt>Search metadata</dt><dd><pre>${escapeHtml(JSON.stringify(row.ritual.searchMetadata, null, 2))}</pre></dd></div>
+                            <div><dt>Origin / source grounding</dt><dd><pre>${escapeHtml(JSON.stringify(row.ritual.origin, null, 2))}</pre></dd></div>
+                            <div><dt>Ritual words</dt><dd><pre>${escapeHtml(JSON.stringify(row.ritual.ritualWords ?? null, null, 2))}</pre></dd></div>
+                            <div><dt>Review flags</dt><dd><pre>${escapeHtml(JSON.stringify(row.ritual.reviewFlags ?? null, null, 2))}</pre></dd></div>
+                            <div><dt>Adaptation policy</dt><dd><pre>${escapeHtml(JSON.stringify(row.ritual.adaptationPolicy ?? null, null, 2))}</pre></dd></div>
+                            <div><dt>Validation findings</dt><dd><pre>${escapeHtml(JSON.stringify(row.validationFindings, null, 2))}</pre></dd></div>
+                            <div><dt>Missing readiness</dt><dd>${escapeHtml(formatManageList(row.missingReadiness))}</dd></div>
+                          </dl>
+                        </section>
+                      </div>
+                      <section class="manage-rituals__raw-object">
+                        <h4>Raw full object</h4>
+                        <pre>${escapeHtml(JSON.stringify(row.ritual, null, 2))}</pre>
+                      </section>
+              </div>
+            </details>
+          `).join("")}
+        </div>
+      </section>
+    </article>
+  `;
+}
+
 export function renderProfileTuningSection(
   privateBriefData: PrivateBriefData,
   activeTabId?: string | null,
@@ -1231,6 +1432,8 @@ function renderAppMenu(activeView: SignedInView): string {
   const thisWeekPressed = activeView === "this_week" ? "true" : "false";
   const searchRitualsPressed =
     activeView === "search_rituals" ? "true" : "false";
+  const manageRitualsPressed =
+    activeView === "manage_rituals" ? "true" : "false";
   const profilePressed = activeView === "profile_settings" ? "true" : "false";
   const howItWorksPressed = activeView === "how_it_works" ? "true" : "false";
 
@@ -1253,8 +1456,9 @@ function renderAppMenu(activeView: SignedInView): string {
       <div class="app-menu__panel" role="menu" aria-label="App menu">
         <button type="button" role="menuitem" data-menu-action="this_week" aria-pressed="${thisWeekPressed}">Current ritual</button>
         <button type="button" role="menuitem" data-menu-action="search_rituals" aria-pressed="${searchRitualsPressed}">Search rituals</button>
-        <button type="button" role="menuitem" data-menu-action="how_it_works" aria-pressed="${howItWorksPressed}">How it works</button>
+        <button type="button" role="menuitem" data-menu-action="manage_rituals" aria-pressed="${manageRitualsPressed}">Manage rituals</button>
         <button type="button" role="menuitem" data-menu-action="profile_settings" aria-pressed="${profilePressed}">Profile settings</button>
+        <button type="button" role="menuitem" data-menu-action="how_it_works" aria-pressed="${howItWorksPressed}">How it works</button>
         <button type="button" role="menuitem" data-auth-action="sign-out">Sign out</button>
       </div>
     </details>
@@ -1688,6 +1892,7 @@ export function renderRitualCheckInShell({
             ? "Let&rsquo;s choose your first ritual."
             : `Welcome back, ${escapeHtml(getFirstName(displayName))}.`
           }</p>
+          ${renderAppMenu("this_week")}
         </header>
       `
     : "";
@@ -1710,10 +1915,15 @@ export function renderRitualCheckInShell({
       </header>
 
       <article class="check-in" aria-label="Ritual check-in">
+        ${draft.step !== "entry_path"
+          ? `<div class="check-in__topline">
+              ${renderCheckInBackControl(draft)}
+              ${renderAppMenu("this_week")}
+            </div>`
+          : ""}
         ${intro}
         ${todaysShape}
         ${entryPaths}
-        ${renderCheckInBackControl(draft)}
         ${renderCheckInAcknowledgement(draft)}
 
         ${checkInContent}
@@ -1823,12 +2033,17 @@ export function renderSignedInShell(
     selectedRitualId: options.selectedRitualId,
     sort: options.ritualSearchSort,
   });
+  const manageRituals = renderManageRitualsSection({
+    filters: options.manageRitualFilters,
+  });
   const howItWorks = renderHowItWorksSection();
   const activeContent =
     activeView === "profile_settings"
       ? profileSettings
       : activeView === "search_rituals"
         ? searchRituals
+      : activeView === "manage_rituals"
+        ? manageRituals
       : activeView === "how_it_works"
         ? howItWorks
       : weeklyBrief();

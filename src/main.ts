@@ -57,6 +57,15 @@ import {
   type RitualSearchSort,
   type SignedInView,
 } from "./ui/app-shell";
+import {
+  defaultManageRitualFilters,
+  type ManageRitualAvailabilityFilter,
+  type ManageRitualFilters,
+  type ManageRitualOriginFilter,
+  type ManageRitualReadinessFilter,
+  type ManageRitualStatusFilter,
+  type ManageRitualValidationFilter,
+} from "./data/rituals/manage-rituals";
 import { ritualFocusOptions } from "./data/ritual-focus-options";
 import "./styles.css";
 
@@ -82,6 +91,9 @@ let activeRitualSearchQuery = "";
 let activeRitualSearchChips: string[] = [];
 let activeRitualSearchSort: RitualSearchSort = "match";
 let activeSelectedRitualId: string | null = null;
+let activeManageRitualFilters: ManageRitualFilters = {
+  ...defaultManageRitualFilters,
+};
 const showDebugTrace = new URLSearchParams(window.location.search).get("debug") === "true";
 
 function getRequestedSignedInView(): SignedInView | null {
@@ -99,6 +111,10 @@ function getRequestedSignedInView(): SignedInView | null {
 
   if (requested === "search" || requested === "search_rituals") {
     return "search_rituals";
+  }
+
+  if (requested === "manage" || requested === "manage_rituals") {
+    return "manage_rituals";
   }
 
   if (requested === "this_week") {
@@ -206,6 +222,7 @@ function renderActiveSignedInShell(options: {
     selectedRitualSearchChips: activeRitualSearchChips,
     ritualSearchSort: activeRitualSearchSort,
     selectedRitualId: activeSelectedRitualId,
+    manageRitualFilters: activeManageRitualFilters,
   });
 }
 
@@ -238,6 +255,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
           activeRitualSearchQuery = "";
           activeRitualSearchChips = [];
           activeSelectedRitualId = null;
+          activeManageRitualFilters = { ...defaultManageRitualFilters };
           activeFirstLoginCheckIn = false;
           appRoot.innerHTML = renderAppShell({
             status: "unauthorized",
@@ -251,6 +269,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activeRitualSearchQuery = "";
         activeRitualSearchChips = [];
         activeSelectedRitualId = null;
+        activeManageRitualFilters = { ...defaultManageRitualFilters };
         activeBrief = null;
         activeCurrentRitualCheckIn = null;
         activeFirstLoginCheckIn = false;
@@ -268,6 +287,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activeRitualSearchQuery = "";
         activeRitualSearchChips = [];
         activeSelectedRitualId = null;
+        activeManageRitualFilters = { ...defaultManageRitualFilters };
         activeCurrentRitualCheckIn = null;
         activeFirstLoginCheckIn = false;
         activeCheckInDraft = createInitialRitualCheckInDraft();
@@ -835,6 +855,8 @@ appRoot.addEventListener("click", (event) => {
 
     if (activePrivateBriefData && activeBrief) {
       renderActiveSignedInShell();
+    } else if (activePrivateBriefData) {
+      renderActiveCheckInShell();
     }
 
     return;
@@ -843,6 +865,7 @@ appRoot.addEventListener("click", (event) => {
   if (
     menuAction === "this_week" ||
     menuAction === "search_rituals" ||
+    menuAction === "manage_rituals" ||
     menuAction === "profile_settings" ||
     menuAction === "how_it_works"
   ) {
@@ -852,7 +875,9 @@ appRoot.addEventListener("click", (event) => {
       ?.closest("details[data-app-menu='true']")
       ?.removeAttribute("open");
 
-    if (activePrivateBriefData) {
+    if (activePrivateBriefData && menuAction === "this_week" && !activeBrief) {
+      renderActiveCheckInShell();
+    } else if (activePrivateBriefData) {
       renderActiveSignedInShell();
     }
 
@@ -947,6 +972,40 @@ appRoot.addEventListener("change", (event) => {
     activeSelectedRitualId = null;
     renderSearchRituals();
   }
+
+  if (
+    target instanceof HTMLSelectElement &&
+    target.matches("[data-manage-rituals-filter='true']")
+  ) {
+    activeManageRitualFilters = {
+      status:
+        (document.querySelector<HTMLSelectElement>(
+          "[name='manageRitualStatus']",
+        )?.value as ManageRitualStatusFilter | undefined) ??
+        activeManageRitualFilters.status,
+      origin:
+        (document.querySelector<HTMLSelectElement>(
+          "[name='manageRitualOrigin']",
+        )?.value as ManageRitualOriginFilter | undefined) ??
+        activeManageRitualFilters.origin,
+      availability:
+        (document.querySelector<HTMLSelectElement>(
+          "[name='manageRitualAvailability']",
+        )?.value as ManageRitualAvailabilityFilter | undefined) ??
+        activeManageRitualFilters.availability,
+      readiness:
+        (document.querySelector<HTMLSelectElement>(
+          "[name='manageRitualReadiness']",
+        )?.value as ManageRitualReadinessFilter | undefined) ??
+        activeManageRitualFilters.readiness,
+      validation:
+        (document.querySelector<HTMLSelectElement>(
+          "[name='manageRitualValidation']",
+        )?.value as ManageRitualValidationFilter | undefined) ??
+        activeManageRitualFilters.validation,
+    };
+    renderActiveSignedInShell();
+  }
 });
 
 subscribeToAuthState(firebaseServices, (state) => {
@@ -964,6 +1023,7 @@ subscribeToAuthState(firebaseServices, (state) => {
   activeRitualSearchChips = [];
   activeRitualSearchSort = "match";
   activeSelectedRitualId = null;
+  activeManageRitualFilters = { ...defaultManageRitualFilters };
   activeCurrentRitualCheckIn = null;
   activeCheckInDraft = createInitialRitualCheckInDraft();
   clearCheckInLoadingTimeout();
@@ -997,5 +1057,9 @@ appRoot.addEventListener("submit", (event) => {
     ) as RitualSearchSort;
     activeSelectedRitualId = null;
     renderSearchRituals();
+  }
+
+  if (target.matches("[data-manage-rituals-filter-form='true']")) {
+    event.preventDefault();
   }
 });
