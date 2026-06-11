@@ -121,9 +121,9 @@ notes:
 Allowed:
 
 * Tim may use exact words from his own copy in his private app.
-* Tim may manually enter exact wording into Moon & Table as a private source excerpt.
-* Moon & Table may preserve exact wording as private grimoire text if cited and unavailable by default.
-* Future extraction may flag exact wording as “worth manual excerpt.”
+* Short operative source wording of 20 words or fewer may be used verbatim when reviewed, product-safe, cited, and non-substitutive.
+* Longer operative source wording must be adapted into Moon & Table words in the ritual body and tracked as adapted source wording.
+* Future extraction may flag exact wording as requiring 20-word/adapted-word review.
 
 Not allowed by default:
 
@@ -143,14 +143,14 @@ See issue #277 and follow-up extraction packet for detailed range review. This s
 | --- | --- | --- | --- | --- | --- |
 | Spiritual hearth recognition and blessing | Ch. 3, PDF roughly 39–57 | candlelight, table, vessel, words, body | blessing, tending, opening, steadying | Strong whole-practice mechanics and exact words matter. | Tim may manually excerpt wording; agents should not reproduce long text. |
 | Kitchen candle / sacred flame before work | Ch. 6, PDF 89–98 | candlelight, table, vessel, words | opening, blessing, tending, steadying | Strong domestic flame lane. | Oil-lamp safety; no long generated source text. |
-| Threshold cleansing and protection | Ch. 7, PDF 103–107; Ch. 11, PDF 175 | doorway, vessel, plant, words, body | protecting, releasing, opening, blessing | Excellent doorway lane. | Exact ritual text private excerpt only. |
+| Threshold cleansing and protection | Ch. 7, PDF 103–107; Ch. 11, PDF 175 | doorway, vessel, plant, words, body | protecting, releasing, opening, blessing | Excellent doorway lane. | Exact ritual text must follow the 20-word/adapted-word rule. |
 | House blessing / room blessing | Ch. 11, PDF 175–178 | candlelight, doorway, vessel, plant, words, body | blessing, protecting, releasing, tending | Strong multi-step domestic ritual mechanics. | Exact wording matters; Tim may excerpt privately. |
 | Cauldron / vessel hearth practice | Ch. 4, PDF 70–75; Ch. 11, PDF 173–175 | vessel, candlelight, table, words | blessing, steadying, marking, tending | Strong vessel carrier support. | Avoid unsafe heat; mythology context-only. |
 | Kitchen tending and purification | Ch. 6, PDF 89–94; Ch. 8, PDF 137 | table, plant, vessel, body, words | tending, releasing, blessing, steadying | Useful regular household lane. | Do not turn into chore/productivity feature. |
-| Spoken magic / own words | Ch. 10, PDF 167–168; Ch. 1, PDF 13–14 | words, body, candlelight/table optional | voicing, blessing, marking, tending | Directly supports words as ritual mechanics. | Exact examples private excerpt only. |
+| Spoken magic / own words | Ch. 10, PDF 167–168; Ch. 1, PDF 13–14 | words, body, candlelight/table optional | voicing, blessing, marking, tending | Directly supports words as ritual mechanics. | Exact examples must follow the 20-word/adapted-word rule. |
 | Food and recipe-as-ritual practice | Ch. 9, PDF 139–152 | table, plant, body, words | tending, connecting, blessing, remembering | Recipes are ritually important and fit Moon & Table. | Tim may privately store recipes; agents classify but do not reproduce full recipes. |
 | Household grimoire / record keeping | Ch. 8, PDF 137–138 | words, table | marking, remembering, tending | Directly supports Moon & Table’s grimoire model. | Avoid copying prompts verbatim in generated packets. |
-| Spell bottles and household vessels | Ch. 10, PDF 164–166 | vessel, plant, words | protecting, blessing, marking | Strong vessel/protection lane. | Ingredient sets private excerpt only; liquid/safety caution. |
+| Spell bottles and household vessels | Ch. 10, PDF 164–166 | vessel, plant, words | protecting, blessing, marking | Strong vessel/protection lane. | Ingredient sets and words require exact-text/adaptation review; liquid/safety caution. |
 
 ## Tim approval decision
 
@@ -161,7 +161,7 @@ Specifically, Tim would be approving:
 * mechanics extraction from the approved sections;
 * future Ritual candidates based on hearth, home, kitchen, candle/flame, cauldron/vessel, doorway, food, spoken magic, blessing, purification, protection, tending, remembering, and sacred-space structures;
 * classification of exact words, blessings, prayers, invocations, prompts, spells, meditations, charms, and recipes as valid Ritual components;
-* private manual excerpting of exact source wording into Moon & Table, with source citation and private-use restrictions.
+* short exact source wording or longer adapted source wording as valid Ritual components when cited and reviewed.
 
 Tim would not be approving:
 
@@ -175,4 +175,4 @@ Tim would not be approving:
 
 ## Required update to future research prompts
 
-Use `docs/research/private-source-text-policy.md` as the canonical policy for exact phrase anchors, private excerpts, recipes, prompts, invocations, blessings, prayers, and closely source-faithful summaries.
+Use `docs/research/private-source-text-policy.md` as the canonical policy for exact phrase anchors, longer operative-word adaptation, recipes, prompts, invocations, blessings, prayers, and closely source-faithful summaries.

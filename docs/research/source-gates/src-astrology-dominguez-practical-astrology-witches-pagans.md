@@ -17,10 +17,10 @@ Legal copy reviewed: user-provided working copy reviewed; legal status not indep
 Review depth: full source-gate review from uploaded PDF. Front matter, TOC, introduction, worldview/core concepts, planets, glyphs for magick, astrology of time, choosing/adapting timing, magick squares, correspondences, and appendices reviewed at gate level.
 Page count and page-numbering notes: uploaded PDF has 194 PDF pages. Cover/title/copyright/TOC are PDF pp. 1-6. Chapter 1 begins PDF p. 7. Source uses PDF pagination; future extraction should cite PDF page and chapter/section.
 TOC reviewed: yes. TOC lists 17 chapters plus appendices A-F.
-Excerpt boundaries reviewed: yes, source-gate level. The source contains pathworking/visualization, glyph exercises, timing techniques, planetary hours/days, adaptation techniques, magick-square methods, correspondences, and appendix tables that require private excerpt and mechanics-only handling.
+Excerpt boundaries reviewed: yes, source-gate level. The source contains pathworking/visualization, glyph exercises, timing techniques, planetary hours/days, adaptation techniques, magick-square methods, correspondences, and appendix tables that require exact-text/adaptation review and mechanics-only handling.
 Approved extraction ranges: approved with limits; see approved ranges below.
 Excluded extraction ranges: generic interpretation-only material, deterministic natal/transit claims, chart reading as personality/horoscope content, non-household ceremonial material, technical talisman/sigil methods that are unsafe or too complex for household use, wholesale correspondence tables, medical/body claims, relationship determinism, and any ritual text not reviewed for source-expression limits.
-Allowed use: mechanics extraction, timing-support extraction, planet-by-planet ritual logic, close paraphrase of ritual timing/adaptation principles, short anchors, source notes, safety constraints, and private excerpt review.
+Allowed use: mechanics extraction, timing-support extraction, planet-by-planet ritual logic, close paraphrase of ritual timing/adaptation principles, short anchors, source notes, safety constraints, and 20-word/adapted-word review.
 Forbidden use: runtime use, direct-use eligibility, recommendation eligibility, copied full pathworkings, copied tables, copied technical procedures, exact ritual scripts, deterministic forecasts, horoscope/personality copy, medical/health claims, relationship compatibility claims, and app-facing timing rules without human review.
 Verbal / expressive / charm / practice handling:
   direct_use_allowed: no for generated app text. Tim may privately use source practices from his copy after review; Moon & Table candidates remain draft until human review.
@@ -104,7 +104,7 @@ Chapter 4 covers the planets and provides planet-by-planet symbolic logic, inclu
 
 | Carrier | Support level | Source basis | Gate note |
 | --- | --- | --- | --- |
-| words | strong | glyphs, calls, timing language, journal/learning, pathworking, verbal timing support | Exact wording private excerpt only. |
+| words | strong | glyphs, calls, timing language, journal/learning, pathworking, verbal timing support | Exact wording must follow the 20-word/adapted-word rule. |
 | candlelight | moderate | ritual timing, planetary work, altar/casting implication, physical representations | Verify specific candle practices during extraction. |
 | table | moderate | altar/work surface for glyphs, symbolic marks, squares, timing work | Strong as ritual workspace/altar. |
 | vessel | moderate/thin | symbolic object support; ritual containers | Do not overclaim vessel-first ritual. |
@@ -313,7 +313,7 @@ Approved with limits:
 - signs and body;
 - Three Gates of the Moon.
 
-Allowed use: source notes, cross-checking, private excerpt references, and mechanics scaffolding.
+Allowed use: source notes, cross-checking, exact-text/adaptation review, and mechanics scaffolding.
 
 Limits: do not copy tables wholesale. Body correspondences require medical/safety caution. Moon gates may be useful but must be reconciled with Moon Book and astronomy/timing sources.
 
@@ -383,7 +383,7 @@ no full ritual scripts
 
 | Carrier | Support level | Source basis | Notes |
 | --- | --- | --- | --- |
-| `words` | strong | glyphs, timing language, planetary qualities, calls, notes, pathworking | Strongest carrier; private excerpt for long text. |
+| `words` | strong | glyphs, timing language, planetary qualities, calls, notes, pathworking | Strongest carrier; use exact short words or adapted long words. |
 | `table` | strong | chart work, glyph drawing, altars, squares, symbolic marks, timing plans | Good ritual work surface/altar source. |
 | `candlelight` | moderate/strong | planetary hour/timing, physical representations, altar/casting implications | Verify exact candle uses during extraction. |
 | `vessel` | moderate | talisman/symbol/focal object support; ritual containers | Do not overclaim vessel-first ritual. |

@@ -308,7 +308,7 @@ Cautions: case studies are personal narrative and not ritual mechanics by themse
 | 10–22, moon science/lore | limited | Some astronomy/lunar influence material should be verified elsewhere; symbolic use only. |
 | 23–37, spell work guarantees | limited | Spell efficacy, subconscious reprogramming, result language should not become product claims. |
 | 28–29, correspondences | limited | Plants/crystals/water/oils/correspondences need safety and provenance review. |
-| 30–35, exact spell structure language | private excerpt only | Valid mechanics, but authored expression and exact ritual process should not be copied. |
+| 30–35, exact spell structure language | exact-text/adaptation review | Valid mechanics, but authored expression and exact ritual process should not be copied; use exact short words or adapted long words only. |
 | 57–81, journaling/altar/moon-water instructions | approved with limits | Exact instructions protected; water and outdoor practices need safety notes. |
 | New Moon Magic | approved with limits | Exact spells/prompts/tarot/correspondences protected. |
 | Waxing Moon Magic | approved with limits | Abundance/health/fertility/success spell framing must be adapted heavily. |
@@ -462,7 +462,7 @@ Do not start extraction yet. These are future lanes only.
 expected_source_items_to_inventory: 65-90
 likely_candidate_extract_now: 30-45
 likely_candidate_extract_later: 20-30
-likely_private_excerpt_references: 30-45
+likely_adapted_or_exact_text_reviews: 30-45
 likely_context_only_or_source_notes: 20-30
 likely_hold_or_reject: 15-25
 ```

@@ -32,7 +32,7 @@ Every `approved_for_mechanical_import` record below has a complete `ritual body 
 
 ## Source text posture
 
-The approved source gate for this source is `docs/research/source-gates/src-mod-house-cunningham-harrington-magical-household.md`. It permits brief exact anchors, but many short lines in this source are embedded inside charms, spells, predictive practices, deity/spirit material, or guaranteed-protection formulae. This packet uses Moon & Table original words when a public draft body needs a spoken line and the source action supports speech but the exact line is either substantial, culturally/source-sensitive, or bound to a held formula. Longer exact charms, blessings, spells, and ritual directions are tracked as `private_source_excerpt` rather than reproduced.
+The approved source gate for this source is `docs/research/source-gates/src-mod-house-cunningham-harrington-magical-household.md`. It permits brief exact anchors after review, but many short lines in this source are embedded inside charms, spells, predictive practices, deity/spirit material, or guaranteed-protection formulae. This packet preserves exact operative source words only when they are 20 words or fewer and product-safe after review. Longer operative wording is adapted into Moon & Table words in the ritual body and tracked as `adapted_source_words`. Where the source supports a speech act but not reusable wording, the packet uses plain functional instruction instead of invented ceremonial speech.
 
 ## Source sections used
 
@@ -87,7 +87,7 @@ The approved source gate for this source is `docs/research/source-gates/src-mod-
 | Moving first things into new home | 2, 75-76 | page_range | moving_rite | ritual_candidate | Salt/bread/cheese, fire/heat, seating, first entrance. | doorway, table, candlelight | opening, blessing | brief | candidate_extract_later | Good later moving variant; food/fire review. | Later. |
 | Old-home clearing after moving | 76-77 | page_range | moving_close | ritual_candidate | Sweep/clear old rooms and leave. | body, doorway | releasing, marking | brief | candidate_extract_now | Complete transition close. | Candidate below. |
 | New-year and seasonal sweeping | 78-84 | chapter_range | seasonal | ritual_candidate | Year/seasonal household sweeping and marking. | doorway, body, table | releasing, opening, marking | brief | candidate_extract_later | Seasonal variants later. | Later. |
-| House protection / peace spells | 84-86 | page_range | spell | private_excerpt_reference | Protection and peace/harmony house spells. | words, vessel, table | protecting, steadying | substantial | candidate_extract_later | Exact spells private and formulaic. | Later private review. |
+| House protection / peace spells | 84-86 | page_range | spell | adapted_or_exact_text_review | Protection and peace/harmony house spells. | words, vessel, table | protecting, steadying | substantial | candidate_extract_later | Exact spells require 20-word/adapted-word review and product-boundary filtering. | Later text review. |
 | Prosperity/luck, theft, adversarial, and target-control spells | 86-89 | page_range | spell | source_note_only | Luck/prosperity/theft/visitor/social spells. | words, vessel | blessing, protecting | substantial | hold_before_import | Guaranteed/adversarial/coercive boundaries. | Hold. |
 | Household altar location and privacy | 91-93 | page_range | altar | ritual_candidate | Choose a household altar place and protect privacy. | table, words | opening, protecting | brief | candidate_extract_now | Strong table/altar candidate. | Candidate below. |
 | Household altar objects and tending | 93-95 | page_range | altar_tending | ritual_candidate | Place, tend, clean, refresh altar objects. | table, vessel, plant | tending, remembering | brief | candidate_extract_now | Complete ongoing practice. | Candidate below. |
@@ -103,8 +103,8 @@ The approved source gate for this source is `docs/research/source-gates/src-mod-
 source_items_inventoried: 31
 candidate_extract_now: 15
 candidate_extract_later: 8
-private_excerpt_reference: 1
-items_with_private_excerpt_recommended: 4
+adapted_or_exact_text_review: 1
+items_with_operative_text_review: 4
 source_note_only: 4
 context_only: 1
 hold_before_import_candidate_records: 6
@@ -159,7 +159,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Center the House Mind
 
-ritual body / practice: Stand or sit in one room of the home. Rub your palms together briskly, then hold them apart. Let your attention gather in your hands and then widen to the room around you. Picture the room becoming quiet enough to hold one simple household intention. Say the Moon & Table line: "Let the house gather around one clear thing." Touch the table, wall, doorframe, or floor to close, then begin the household action that follows.
+ritual body / practice: Stand or sit in one room of the home. Rub your palms together briskly, then hold them apart. Let your attention gather in your hands and then widen to the room around you. Picture the room becoming quiet enough to hold one simple household intention. Name that intention in one sentence. Touch the table, wall, doorframe, or floor to close, then begin the household action that follows.
 
 intention: Gather scattered attention before beginning household magic.
 
@@ -194,7 +194,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; no
 
 adaptation policy notes: direct_source_ritual paraphrased; no copied instruction sequence beyond mechanics.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `magical-household-note-on-magic-pp10-11`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF pp. 10-11`, useContext: `spoken`, note: `General visualization/concentration language remains private; public body preserves the mechanics.` }, { mode: `moon_and_table_original`, text: `Let the house gather around one clear thing.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF pp. 10-11`, useContext: `spoken`, note: `Moon & Table line for the source-supported focusing action.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -206,7 +206,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Return to the Hearth
 
-ritual body / practice: Choose the safest household stand-in for the hearth: a candle on the table, a small lamp, or the place where household warmth gathers. Set it in its usual safe place. Sit or stand nearby. Light the candle or turn on the lamp. Name one thing the home is holding tonight. Say the Moon & Table line: "Warmth returns to the center." Stay for three breaths. Close by extinguishing the candle or turning off the lamp when the moment is complete.
+ritual body / practice: Choose the safest household stand-in for the hearth: a candle on the table, a small lamp, or the place where household warmth gathers. Set it in its usual safe place. Sit or stand nearby. Light the candle or turn on the lamp. Name one thing the home is holding tonight. Stay for three breaths. Close by extinguishing the candle or turning off the lamp when the moment is complete.
 
 intention: Reconnect the home with its center of warmth and attention.
 
@@ -241,7 +241,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; candle/lamp adaptation preserves hearth logic without fireplace hazards.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `Warmth returns to the center.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF pp. 15-18`, useContext: `spoken`, note: `Moon & Table line for source-supported hearth-centering mechanics.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -253,7 +253,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Sit Beside the Flame
 
-ritual body / practice: Set one candle on a stable table, or sit beside a safe hearth flame if one is already present. Light the candle if using one. Sit where you can see the flame without leaning toward it. Name one fear, worry, or restless thought that belongs to this moment. Look at the flame for nine slow breaths. Let the flame be present without asking it to predict anything. Say the Moon & Table line: "The flame is here; I do not have to chase the future." Look away, feel your feet or hands, and extinguish the candle to close.
+ritual body / practice: Set one candle on a stable table, or sit beside a safe hearth flame if one is already present. Light the candle if using one. Sit where you can see the flame without leaning toward it. Name one fear, worry, or restless thought that belongs to this moment. Look at the flame for nine slow breaths. Let the flame be present without asking it to predict anything. Look away, feel your feet or hands, and extinguish the candle to close.
 
 intention: Let a small flame steady the body without turning it into fortune-telling.
 
@@ -288,7 +288,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; predictive use removed for product boundary.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `The flame is here; I do not have to chase the future.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF p. 17`, useContext: `spoken`, note: `Moon & Table line for source-supported fire-gazing mechanics without prediction.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -300,7 +300,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Stand at the Threshold
 
-ritual body / practice: Stand just inside the main door or another household threshold. Face inward first. Touch the inside of the doorframe and name what belongs inside tonight: rest, warmth, truth, welcome, patience, or quiet. Turn toward the outside. Touch the frame again and name what does not get to cross this threshold tonight. Say the Moon & Table line: "This doorway knows the difference." Close the door gently, then step back into the room.
+ritual body / practice: Stand just inside the main door or another household threshold. Face inward first. Touch the inside of the doorframe and name what belongs inside tonight: rest, warmth, truth, welcome, patience, or quiet. Turn toward the outside. Touch the frame again and name what does not get to cross this threshold tonight. Close the door gently, then step back into the room.
 
 intention: Renew the threshold as a boundary between the house and the outside world.
 
@@ -335,7 +335,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; pr
 
 adaptation policy notes: source_backed_moon_and_table_form; authoring uses source-supported doorway mechanics without copying charms.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `This doorway knows the difference.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF pp. 18-21`, useContext: `spoken`, note: `Moon & Table line for source-supported threshold boundary action.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -347,7 +347,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Doorway Guardian Object
 
-ritual body / practice: Choose one safe object already acceptable near the door: a bell, ribbon, small wreath, clean stone, key, or other household marker. Hold it at the threshold. Name the kind of guarding it will do: quiet, welcome, boundary, or reminder. Say the Moon & Table line: "Guard gently; keep the doorway clear." Place the object near the door where it will not trip, scratch, poison, tempt a pet, or interfere with opening and closing. Close by touching the doorframe once.
+ritual body / practice: Choose one safe object already acceptable near the door: a bell, ribbon, small wreath, clean stone, key, or other household marker. Hold it at the threshold. Name the kind of guarding it will do: quiet, welcome, boundary, or reminder. Place the object near the door where it will not trip, scratch, poison, tempt a pet, or interfere with opening and closing. Close by touching the doorframe once.
 
 intention: Give the doorway a visible household boundary marker.
 
@@ -382,7 +382,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; excludes unsafe folk-object variants.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `Guard gently; keep the doorway clear.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF p. 19`, useContext: `spoken`, note: `Moon & Table line for source-supported doorway object placement.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -394,7 +394,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Key at the Door
 
-ritual body / practice: Choose an old key, spare key, or symbolic key that will not compromise actual security. Stand at the doorway. Hold the key in both hands and name what it guards: the privacy of the home, the quiet of the room, or the welcome of the threshold. Say the Moon & Table line: "This key remembers what opens and what stays closed." Hang or place the key near the entrance where it is secure and not mistaken for an active house key. Touch the door once to close.
+ritual body / practice: Choose an old key, spare key, or symbolic key that will not compromise actual security. Stand at the doorway. Hold the key in both hands and name what it guards: the privacy of the home, the quiet of the room, or the welcome of the threshold. Say: "This key remembers what opens and what stays closed." Hang or place the key near the entrance where it is secure and not mistaken for an active house key. Touch the door once to close.
 
 intention: Use a key as a boundary symbol for the household entrance.
 
@@ -417,7 +417,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [vessel/object, marking]
   exclusionSignals: [active key security risk, desire for guarantee]
   timingSignal: threshold privacy moment
-  confidenceNotes: source-backed Moon & Table form; source charm text private
+  confidenceNotes: source-backed Moon & Table form; charm wording adapted under the operative-words rule
 
 source grounding: `The Magical Household`, Thresholds of Power, PDF p. 20.
 
@@ -425,11 +425,11 @@ recommendation metadata: primaryPurpose protecting; secondaryPurposes [marking, 
 
 search metadata: tags [magical-household, key, door, threshold]; keywords [key, lock, door, privacy, entrance]; materials [old key or symbolic key]; places [main door, entryway]
 
-review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [No actual security guarantee; active-key storage and child/pet/placement review.]
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [No actual security guarantee; active-key storage and child/pet/placement review.]
 
-adaptation policy notes: source_backed_moon_and_table_form; exact key charm remains private.
+adaptation policy notes: source_backed_moon_and_table_form; key charm wording adapted because the source formula requires product-boundary review.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `magical-household-key-door-pp20`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF p. 20`, useContext: `chanted`, note: `The source key wording is a short repeated charm within a larger formula and should be reviewed privately before any exact use.` }, { mode: `moon_and_table_original`, text: `This key remembers what opens and what stays closed.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF p. 20`, useContext: `spoken`, note: `Moon & Table line for source-supported key/door mechanics.` }]
+operative words metadata: [{ mode: `adapted_source_words`, text: `This key remembers what opens and what stays closed.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF p. 20`, useContext: `spoken`, note: `Adapted line for source-supported key/door mechanics from a charm formula requiring boundary review.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -441,7 +441,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Wash the Windows Clear
 
-ritual body / practice: Choose one window, mirror, or glass door pane. Wash it with the ordinary cleaner already safe for that surface. Move from the center outward, or from top to bottom if that is how the glass cleans best. As the glass clears, name what can leave the house with the streaks: stale feeling, old argument, worry, or dullness. Say the Moon & Table line: "Clear glass, clear seeing." Dry the glass and put the cloth away to close.
+ritual body / practice: Choose one window, mirror, or glass door pane. Wash it with the ordinary cleaner already safe for that surface. Move from the center outward, or from top to bottom if that is how the glass cleans best. As the glass clears, name what can leave the house with the streaks: stale feeling, old argument, worry, or dullness. Dry the glass and put the cloth away to close.
 
 intention: Clear one household opening so the room can see and be seen more cleanly.
 
@@ -476,7 +476,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no required chemical formula imported.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `Clear glass, clear seeing.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF p. 20`, useContext: `spoken`, note: `Moon & Table line for source-supported window-clearing action.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -488,7 +488,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Lay the Working Rug
 
-ritual body / practice: Choose a small rug, cloth, mat, or table textile used only when the household wants a defined working place. Lay it flat on the floor or table. Smooth it once from the center outward. Name what this space is being set apart to hold: blessing, release, quiet, welcome, or remembering. Say the Moon & Table line: "This is the place for the work." Put the bowl, candle, card, key, or other already-supported ritual object on it if the paired ritual uses one. Close by removing the object and folding or rolling the rug or cloth away.
+ritual body / practice: Choose a small rug, cloth, mat, or table textile used only when the household wants a defined working place. Lay it flat on the floor or table. Smooth it once from the center outward. Name what this space is being set apart to hold: blessing, release, quiet, welcome, or remembering. Put the bowl, candle, card, key, or other already-supported ritual object on it if the paired ritual uses one. Close by removing the object and folding or rolling the rug or cloth away.
 
 intention: Define a small household working place that opens and closes visibly.
 
@@ -523,7 +523,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; uses textile-space mechanics without copying circle language.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `This is the place for the work.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF p. 23`, useContext: `spoken`, note: `Moon & Table line for source-supported rug/textile space marking.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -535,7 +535,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Bless the Table Legs
 
-ritual body / practice: Stand beside the table where meals, talk, planning, or ritual usually happens. Touch the first table corner or leg and name stability. Touch the second and name food. Touch the third and name conversation. Touch the fourth and name rest. Place both hands on the tabletop. Say the Moon & Table line: "This table stands for the life we set upon it." Close by clearing one small thing from the table or setting one vessel at its center.
+ritual body / practice: Stand beside the table where meals, talk, planning, or ritual usually happens. Touch the first table corner or leg and name stability. Touch the second and name food. Touch the third and name conversation. Touch the fourth and name rest. Place both hands on the tabletop. Close by clearing one small thing from the table or setting one vessel at its center.
 
 intention: Bless the table as a steady household surface.
 
@@ -570,7 +570,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; avoids unsafe table-climbing method.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `This table stands for the life we set upon it.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF pp. 24-25`, useContext: `spoken`, note: `Moon & Table line for source-supported table-as-household-surface mechanics.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -582,7 +582,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Living Room Green Tending
 
-ritual body / practice: Choose one identified, household-safe plant already living in the room. Look at its leaves, soil, pot, and light. Do only the care it actually needs: water, turn, trim dead matter, wipe dust from leaves, or leave it alone. Place one hand near the pot and name the atmosphere you are tending: calm, welcome, clarity, or rest. Say the Moon & Table line: "Green life, help this room breathe." Close by returning the watering can, cloth, or trimmings to their place.
+ritual body / practice: Choose one identified, household-safe plant already living in the room. Look at its leaves, soil, pot, and light. Do only the care it actually needs: water, turn, trim dead matter, wipe dust from leaves, or leave it alone. Place one hand near the pot and name the atmosphere you are tending: calm, welcome, clarity, or rest. Close by returning the watering can, cloth, or trimmings to their place.
 
 intention: Tend the living presence of the room through one safe plant.
 
@@ -617,7 +617,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no plant correspondence table imported.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `Green life, help this room breathe.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF pp. 42-45`, useContext: `spoken`, note: `Moon & Table line for source-supported indoor plant tending.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -629,7 +629,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Sweep the House Clean
 
-ritual body / practice: Choose one room, hallway, or entry area. Open the door or window if that is already normal for the room. Sweep, dust, or wipe from the far side of the space toward the exit. Name what is being moved out: stale feeling, old dust, last night's argument, or the heaviness of the week. Say the Moon & Table line: "Out with what has settled too long." Gather the dust or cloth. Dispose of it through the ordinary trash, wash, or cleaning routine, then close the door or window.
+ritual body / practice: Choose one room, hallway, or entry area. Open the door or window if that is already normal for the room. Sweep, dust, or wipe from the far side of the space toward the exit. Name what is being moved out: stale feeling, old dust, last night's argument, or the heaviness of the week. Gather the dust or cloth. Dispose of it through the ordinary trash, wash, or cleaning routine, then close the door or window.
 
 intention: Make cleaning into a visible act of release without turning it into a chore list.
 
@@ -664,7 +664,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; preserves cleaning-as-magic without adding unsafe powders or herbs.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `Out with what has settled too long.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF pp. 67-70`, useContext: `spoken`, note: `Moon & Table line for source-supported sweeping/cleaning release.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -676,7 +676,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Four Elements House Purification
 
-ritual body / practice: Physically clean the rooms first. Open the inside doors and windows that can be opened for the rite. Gather a small bowl of salt, a safe incense or smoke substitute if smoke is not allowed, one candle in a holder, and a small bowl of clean water. Begin near the main room or table. Carry the salt through the rooms and lightly gesture with it as the earth part of the working. Carry the incense or smoke substitute as the air part. Carry the lit candle as the fire part, or carry an unlit candle if flame is not safe. Carry the water as the water part and flick only a few drops where the surface allows it. Use the private source purification words from Tim's copy or keep the circuit wordless. Return to the starting place. Close the open windows and doors when the house has aired and settled.
+ritual body / practice: Physically clean the rooms first. Open the inside doors and windows that can be opened for the rite. Gather a small bowl of salt, a safe incense or smoke substitute if smoke is not allowed, one candle in a holder, and a small bowl of clean water. Begin near the main room or table. Carry the salt through the rooms and lightly gesture with it as the earth part of the working. Carry the incense or smoke substitute as the air part. Carry the lit candle as the fire part, or carry an unlit candle if flame is not safe. Carry the water as the water part and flick only a few drops where the surface allows it. Say: "Earth, air, fire, and water return the house to itself." Return to the starting place. Close the open windows and doors when the house has aired and settled.
 
 intention: Purify the house by moving earth, air, fire, and water through it in order.
 
@@ -707,11 +707,11 @@ recommendation metadata: primaryPurpose releasing; secondaryPurposes [protecting
 
 search metadata: tags [magical-household, house purification, elements, salt water candle]; keywords [salt, incense, candle, water, house circuit]; materials [salt, incense or smoke substitute, candle, water, bowls]; places [whole house, rooms, doors, windows]
 
-review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Smoke, flame, salt, water, surface, pets, children, asthma/allergy, open windows, spill, and no medical/healing claim review.]
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Smoke, flame, salt, water, surface, pets, children, asthma/allergy, open windows, spill, and no medical/healing claim review.]
 
 adaptation policy notes: direct_source_ritual; smoke/flame substitutions are draft safety adaptations and must be reviewed before direct use.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `magical-household-elemental-purification-pp72-73`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF pp. 72-73`, useContext: `spoken`, note: `Elemental purification words and sequence require private source review; packet preserves mechanics.` }]
+operative words metadata: [{ mode: `adapted_source_words`, text: `Earth, air, fire, and water return the house to itself.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF pp. 72-73`, useContext: `spoken`, note: `Adapted line for the source-supported elemental house circuit from longer purification wording.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -723,7 +723,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Leave the Old Rooms Clear
 
-ritual body / practice: After the last belongings are removed from an old room or home, stand inside the doorway and look back once. Sweep or wipe from the far side of the room toward the door, gathering dust, scraps, or leftover bits. Name what is finished there. Say the Moon & Table line: "This room is no longer mine to carry." Take the dust or cloth out with you. Close the door or step over the threshold without turning the room into a burden.
+ritual body / practice: After the last belongings are removed from an old room or home, stand inside the doorway and look back once. Sweep or wipe from the far side of the room toward the door, gathering dust, scraps, or leftover bits. Name what is finished there. Take the dust or cloth out with you. Close the door or step over the threshold without turning the room into a burden.
 
 intention: Release an old home or room cleanly after moving out.
 
@@ -758,7 +758,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no charm disposal or animal luck material imported.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `This room is no longer mine to carry.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF pp. 76-77`, useContext: `spoken`, note: `Moon & Table line for source-supported moving-out sweep and threshold close.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -770,7 +770,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Choose the Household Altar Place
 
-ritual body / practice: Walk through the home and choose one small surface that can hold household magic without being in the way: a shelf, table corner, windowsill, cabinet top, or tray. Clear it completely. Touch the surface and name the work it will hold: blessing, remembering, protection, seasonal turning, or quiet. Say the Moon & Table line: "This place is set apart for the house." Put one simple object there to mark the place. Step back, look once, and leave it undisturbed until it is time to tend it.
+ritual body / practice: Walk through the home and choose one small surface that can hold household magic without being in the way: a shelf, table corner, windowsill, cabinet top, or tray. Clear it completely. Touch the surface and name the work it will hold: blessing, remembering, protection, seasonal turning, or quiet. Put one simple object there to mark the place. Step back, look once, and leave it undisturbed until it is time to tend it.
 
 intention: Set apart one household surface as the center for small private workings.
 
@@ -805,7 +805,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no prayer or deity/spirit obligation imported.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `This place is set apart for the house.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF pp. 91-93`, useContext: `spoken`, note: `Moon & Table line for source-supported altar-place selection.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -817,7 +817,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Tend the Household Altar
 
-ritual body / practice: Go to the household altar, shelf, table, or small surface set aside for household magic. Remove anything that no longer belongs there. Dust or wipe the surface. Return the objects that still serve the home: a candle, bowl, stone, key, plant, cloth, photo, seasonal object, or written line, but only if they already belong to this household altar. Place one object at the center and name what it is holding for the home. Say the Moon & Table line: "This table remembers the house." Close by stepping back and leaving the altar in order.
+ritual body / practice: Go to the household altar, shelf, table, or small surface set aside for household magic. Remove anything that no longer belongs there. Dust or wipe the surface. Return the objects that still serve the home: a candle, bowl, stone, key, plant, cloth, photo, seasonal object, or written line, but only if they already belong to this household altar. Place one object at the center and name what it is holding for the home. Say: "This table remembers the house." Close by stepping back and leaving the altar in order.
 
 intention: Keep the household altar alive through ordinary tending and clear purpose.
 
@@ -848,11 +848,11 @@ recommendation metadata: primaryPurpose tending; secondaryPurposes [remembering,
 
 search metadata: tags [magical-household, household altar, altar tending]; keywords [altar, shelf, table, objects, household memory]; materials [altar surface, household altar objects]; places [household altar, shelf, table]
 
-review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Candle, plant toxicity, small objects, photos/privacy, deity/spirit/ancestor boundary, pet/child, and cultural/provenance review.]
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Candle, plant toxicity, small objects, photos/privacy, deity/spirit/ancestor boundary, pet/child, and cultural/provenance review.]
 
-adaptation policy notes: source_backed_moon_and_table_form; altar prayer/spell text remains private or held.
+adaptation policy notes: source_backed_moon_and_table_form; altar prayer/spell text is held unless reviewed under the 20-word/adapted-word rule.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `magical-household-household-altar-pp91-96`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF pp. 91-96`, useContext: `blessing`, note: `Altar prayers/spells and exact source wording remain private; public body preserves altar placement/tending mechanics.` }, { mode: `moon_and_table_original`, text: `This table remembers the house.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF pp. 91-96`, useContext: `spoken`, note: `Moon & Table line for source-supported household altar tending.` }]
+operative words metadata: [{ mode: `adapted_source_words`, text: `This table remembers the house.`, citationLabel: `Cunningham and Harrington, The Magical Household`, sourceLocation: `PDF pp. 91-96`, useContext: `spoken`, note: `Adapted line for source-supported household altar tending from longer altar-practice wording.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -905,13 +905,13 @@ import readiness label: `approved_for_mechanical_import`
 
 ## Required self-check results
 
-Checked the revised packet for blocking placeholder mechanics and invalid runtime posture. No approved candidate body uses placeholder source-reference language, internal review-process language, informal capacity values, or invalid review flag names. Approved candidates use only runtime-valid carriers and capacity values. Specific safety concerns are preserved under valid review flags and notes. The source-exact wording posture cites the approved source gate path and explains why exact source formulae are generally private/held. No runtime records or eligibility flags are changed.
+Checked the revised packet for blocking placeholder mechanics and invalid runtime posture. No approved candidate body uses placeholder source-reference language, internal review-process language, informal capacity values, or invalid review flag names. Approved candidates use only runtime-valid carriers and capacity values. Specific safety concerns are preserved under valid review flags and notes. The source-exact wording posture cites the approved source gate path and applies the 20-word/adapted-word rule. No runtime records or eligibility flags are changed.
 
 ## Validation checklist
 
 - [x] Every `candidate_extract_now` has a complete operational ritual body / practice.
 - [x] No approved candidate requires source lookup for materials, place, placement, sequence, timing, repetition, wording handling, close, disposal, storing, burying, washing, leaving-to-work, or recordkeeping.
-- [x] Long/substantial source wording uses `private_source_excerpt`.
+- [x] Long/substantial source wording is adapted into ritual-body words and tracked as `adapted_source_words`, or the candidate uses plain functional instruction where no reusable source words are present.
 - [x] Magical Household source-gate exact-text restrictions are cited and honored.
 - [x] Domestic, threshold, altar, table, plant, vessel, candle, charm, cleaning, moving, and purification safety/product-boundary notes are explicit under valid review flags.
 - [x] Components/mechanics are held unless made into complete source-backed forms.

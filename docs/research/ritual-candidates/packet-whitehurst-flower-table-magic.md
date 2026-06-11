@@ -204,7 +204,7 @@ source_items_inventoried: 96
 candidate_records: 36
 candidate_extract_now: 31
 candidate_extract_later: 37
-private_excerpt_reference: 0
+adapted_or_exact_text_review: 0
 items_with_private_excerpt_recommended: 25
 source_note_only: 6
 context_only: 1

@@ -46,7 +46,7 @@ Every approved extraction source requires three layers:
    - Every inventoried source item must receive a disposition:
      - `candidate_extract_now`
      - `candidate_extract_later`
-     - `private_excerpt_reference`
+     - `adapted_or_exact_text_review`
      - `source_note_only`
      - `context_only`
      - `hold`
@@ -170,7 +170,7 @@ howThisWasChosenIngredients -> packet/recommendation inputs only unless a later 
 source grounding -> origin.sourceGrounding[]
 purpose/carrier/capacity/audience/timing/eligibility -> recommendationMetadata
 materials/places/tags/keywords/source labels -> searchMetadata
-private excerpt/material/source/product-boundary dependencies -> reviewFlags
+material/source/product-boundary dependencies -> reviewFlags
 operative words metadata -> ritualWords[]
 ```
 
@@ -211,8 +211,7 @@ Allowed modes:
 
 ```text
 source_exact_short
-private_source_excerpt
-moon_and_table_original
+adapted_source_words
 ```
 
 Definition:
@@ -223,9 +222,11 @@ short source phrase = 20 words or fewer
 
 If the exact operative source phrase is 20 words or fewer, include it inline in the ritual body and add `ritualWords` metadata with `mode: source_exact_short`, source location, use context, and citation label.
 
-If the exact operative source wording is more than 20 words, do not reproduce it in the public packet. Add a `ritualWords` record with `mode: private_source_excerpt`, source location, use context, citation label, and a note explaining why the exact words matter.
+If the exact operative source wording is more than 20 words, do not reproduce the long passage in the public packet. Write adapted Moon & Table words that preserve the source words' ritual function, include those adapted words inline in the ritual body, and add a `ritualWords` record with `mode: adapted_source_words`, source location, use context, citation label, and a note explaining what function was adapted.
 
-Do not create a generic Moon & Table replacement for source-provided operative words unless the source does not provide usable words or Tim explicitly approves adaptation.
+If the source supports a word-shaped action but does not provide operative words, use plain functional instruction in the ritual body, such as "Name the purpose aloud" or "Write the date and one sentence." Do not invent quoted ceremonial speech for that case.
+
+Do not create generic filler, process labels, or private-wording placeholders for source-provided operative words.
 
 No separate `sourceTextUse` or `privateExcerptSupport` block is required for normal extraction. `ritualWords` is the operative-word tracking surface.
 
@@ -278,8 +279,8 @@ Every extraction packet must report:
 source_items_inventoried:
 candidate_extract_now:
 candidate_extract_later:
-private_excerpt_reference:
-items_with_private_excerpt_recommended:
+adapted_or_exact_text_review:
+items_with_operative_text_review:
 source_note_only:
 context_only:
 hold:
@@ -288,9 +289,9 @@ remaining_unreviewed_source_sections:
 remaining_extraction_backlog:
 ```
 
-`private_excerpt_reference` counts source items whose main disposition is private excerpt reference.
+`adapted_or_exact_text_review` counts source items whose main disposition is exact short-wording review or longer operative-word adaptation.
 
-`items_with_private_excerpt_recommended` counts any inventoried source item or candidate where exact prayers, blessings, spoken cues, prompts, recipes, meditations, charms, spells, or distinctive wording should be reviewed privately by Tim, even if the item’s disposition is also `candidate_extract_now` or `candidate_extract_later`.
+`items_with_operative_text_review` counts any inventoried source item or candidate where exact prayers, blessings, spoken cues, prompts, recipes, meditations, charms, spells, or distinctive wording must be reviewed under the 20-word/adapted-words rule, even if the item's disposition is also `candidate_extract_now` or `candidate_extract_later`.
 
 ## Coverage accounting rule
 
@@ -372,7 +373,7 @@ If a source contains many rituals but the packet only extracts a small sample wi
 Reviewers must also check:
 
 - whether primary coverage claims are inflated by secondary support;
-- whether private excerpt recommendations are counted even when the item is also a candidate;
+- whether operative text review needs are counted even when the item is also a candidate;
 - whether broad candidates need variant/split tracking;
 - whether rough source locations are marked `needs_tightening` or `chapter_range` rather than treated as exact page support;
 - whether product follow-up patterns have been wrongly forced into Ritual candidate status;
@@ -405,7 +406,7 @@ QA must verify:
 - `ritual body / practice` contains open, action/sequence, operative words where needed, and close;
 - `ritualWords` is metadata only;
 - exact short source words are inline, 20 words or fewer, and tracked as `source_exact_short`;
-- longer exact wording uses `private_source_excerpt` metadata;
+- longer exact wording is adapted into inline Moon & Table words and tracked as `adapted_source_words`;
 - no generic Moon & Table replacement words are created where usable source words exist;
 - `whyThisFitsIngredients` and `howThisWasChosenIngredients` use the required structure;
 - no runtime eligibility flags are changed.

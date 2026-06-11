@@ -194,7 +194,7 @@ Use and adaptation: source-note-only and extraction scaffolding. No wholesale ta
 | --- | --- | --- | --- |
 | `plant` | strong | Entire source centers flowers as magical carriers; proximity, gathering, contemplation, care, charms, bouquets, essences, correspondences | Primary carrier. Future extraction should keep flower first. |
 | `table` | strong | Purchased bouquets, altars, bowls, vases, charm preparation, table/stool in essence-making, flower placement in home/workspace | Strong for Moon & Table's table/vase/bowl lane. |
-| `words` | strong | Silent requests to flowers, spoken charms, prayers, intention-setting, gratitude, journal notes, correspondence labels | Exact wording requires private excerpt or rewrite. |
+| `words` | strong | Silent requests to flowers, spoken charms, prayers, intention-setting, gratitude, journal notes, correspondence labels | Exact wording requires 20-word/adapted-word review. |
 | `vessel` | strong | Vase/bouquet, bowl, mister, charm bag, jar/bottle/dropper, bath, cup/wine/tea | Use safe non-ingested vessels first; hold preparation-heavy vessel work by default. |
 | `candlelight` | moderate | Many flower entries pair flowers with candles/altars; some ritual examples include candles | Good secondary support. Fire safety required. |
 | `body` | moderate/fragile | Quiet contemplation, baths, oils, anointing, flower essences, aromatic practices | Body practices are safety-heavy; use with care. |
@@ -269,7 +269,7 @@ Use and adaptation: source-note-only and extraction scaffolding. No wholesale ta
 expected_source_items_to_inventory: 140-220
 likely_candidate_extract_now: 35-60
 likely_candidate_extract_later: 45-80
-likely_private_excerpt_references: 30-60
+likely_adapted_or_exact_text_reviews: 30-60
 likely_context_only_or_source_notes: 30-50
 likely_hold_or_reject: 35-70
 ```

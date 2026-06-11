@@ -179,7 +179,7 @@ howThisWasChosenIngredients -> packet/recommendation inputs only unless a later 
 source grounding -> origin.sourceGrounding[]
 purpose/carrier/capacity/audience/timing/eligibility -> recommendationMetadata
 materials/places/tags/keywords/source labels -> searchMetadata
-private excerpt/material/source/product-boundary dependencies -> reviewFlags
+material/source/product-boundary dependencies -> reviewFlags
 operative words metadata -> ritualWords[]
 ```
 
@@ -211,9 +211,9 @@ Default runtime authoring posture:
 1. Preserve source architecture and operative ritual words when feasible.
 2. Rewrite only the surrounding instructions into Moon & Table voice.
 3. If exact operative source words are 20 words or fewer, include them inline in `presentation.practice` and track them with `ritualWords.mode = "source_exact_short"`.
-4. If exact operative source wording is more than 20 words, do not reproduce it in public repo prose; track it with `ritualWords.mode = "private_source_excerpt"`, source location, use context, and a note explaining why it matters.
-5. Do not create a generic Moon & Table replacement for source-provided operative words unless the source does not provide usable words or Tim explicitly approves adaptation.
-6. Do not block draft mechanical import merely because exact ritual words exist.
+4. If exact operative source wording is more than 20 words, do not reproduce the long passage in public repo prose; write adapted Moon & Table words that preserve the source words' ritual function, include those words inline in `presentation.practice`, and track them with `ritualWords.mode = "adapted_source_words"`.
+5. Do not create generic filler, process labels, or placeholder speech for source-provided operative words.
+6. Do not block draft mechanical import merely because exact ritual words are longer than 20 words; adapt them.
 7. Do not flatten prayer, blessing, charm, incantation, spell, petition, or spoken formula into “state an intention.”
 
 ## Source text handling
@@ -223,18 +223,18 @@ Moon & Table distinguishes between:
 1. ritual mechanics and sequence;
 2. surrounding runtime instructions;
 3. operative words used inside the Ritual body;
-4. exact modern source text that needs private excerpt storage;
+4. long operative source text that needs Moon & Table adaptation;
 5. `ritualWords` metadata that tracks/proves operative word handling.
 
 For modern copyrighted sources:
 
 - do not reproduce full copyrighted rituals, full chapters, full scripts, full prompt sets, full meditations, full recipes, full poems, full prayers, full invocations, or long distinctive passages in public committed repo files;
 - do preserve exact short operative words of 20 words or fewer when they are necessary, attributed, and not a substitute for the source;
-- do use `ritualWords.mode = "private_source_excerpt"` for longer or substantial operative wording;
-- do record source location and why the exact words matter;
-- do not convert exact ritual words into bland Moon & Table original text just because they are exact words.
+- do use `ritualWords.mode = "adapted_source_words"` for operative wording longer than 20 words;
+- do record source location and the ritual function being adapted;
+- do not convert exact ritual words into bland copy, process labels, or placeholders.
 
-The correct fallback for long source wording is private excerpt tracking in `ritualWords`, not generic paraphrase and not a separate source-text mini-schema.
+The correct fallback for long source wording is adapted words in the ritual body, tracked in `ritualWords`, not generic paraphrase, not private-wording process labels, and not a separate source-text mini-schema.
 
 ## Runtime schema expectations
 
@@ -250,8 +250,7 @@ Allowed `ritualWords.mode` values:
 
 ```text
 source_exact_short
-private_source_excerpt
-moon_and_table_original
+adapted_source_words
 ```
 
 Definition:
@@ -265,19 +264,18 @@ Example:
 ```ts
 ritualWords: [
   {
-    mode: "private_source_excerpt",
-    privateExcerptKey: "buckland-final-word-pp15",
+    mode: "adapted_source_words",
+    text: "Let the final word close the flame.",
     citationLabel: "Buckland, Practical Candleburning Rituals",
     sourceLocation: "PDF p. 15",
     useContext: "closing",
-    note: "Use the author-provided final words from Tim's private source copy.",
+    note: "Adapted from source closing wording longer than 20 words.",
   },
 ]
 ```
 
 ```ts
 reviewFlags: {
-  privateExcerptRequired: true,
   sourceTextReviewRequired: true,
 }
 ```
@@ -320,9 +318,8 @@ Direct-use review should also remove unnecessary safety boilerplate, preserve ma
 
 ```text
 preserved as exact short words inline and tracked as source_exact_short
-tracked as private_source_excerpt metadata
-kept as source-attributed wording anchor
-authored as Moon & Table original only when the source did not provide operative words or Tim explicitly chose adaptation
+adapted as Moon & Table words inline and tracked as adapted_source_words when the source wording is longer than 20 words
+omitted as quoted speech when the source merely asks the practitioner to name, write, thank, ask, or state something without providing words
 ```
 
 Do not make recommendation eligibility part of direct-use review unless a separate issue explicitly says so.
@@ -347,6 +344,6 @@ Do not flatten magic.
 Do not replace operative ritual words by default.
 Do not add props/materials/decorative closing gestures unless source-backed or Tim-approved.
 Do not narrow accepted packets editorially.
-Use ritualWords.private_source_excerpt for longer exact source wording instead of generic paraphrase.
+Use ritualWords.adapted_source_words for longer exact source wording instead of generic paraphrase or private-wording placeholders.
 Ritual words belong inline in presentation.practice; ritualWords is provenance/review metadata only.
 ```

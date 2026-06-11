@@ -32,7 +32,7 @@ Every `approved_for_mechanical_import` record below has a complete `ritual body 
 
 ## Source text posture
 
-The approved source gate for this source is `docs/research/source-gates/src-vessel-woodward-kitchen-witchery.md`. That gate is stricter than the general 20-word rule: it allows mechanics extraction and private exact-text handling, but says runtime text should not reproduce direct source quotes from recipes, recipe headnotes, exercises, blessings, charms, meditations, petitions, or distinctive prose. Therefore this packet does not use `source_exact_short` for this source. Where exact wording matters, it is tracked as `private_source_excerpt`; where a complete public packet body needs spoken or written words, the line is `moon_and_table_original` and the note explains the source-supported action it completes.
+The approved source gate for this source is `docs/research/source-gates/src-vessel-woodward-kitchen-witchery.md`. That gate is stricter than the general 20-word rule for recipes, recipe headnotes, exercises, blessings, charms, meditations, petitions, and distinctive prose. This packet does not preserve source wording unless a short operative phrase has been exact-text reviewed. Where longer source wording shapes the practice, the packet includes adapted Moon & Table words in the ritual body and tracks them as `adapted_source_words`. Where the source supports a speech act but does not give reusable operative words, the body uses plain functional instruction instead of invented ceremonial speech.
 
 ## Source sections used
 
@@ -64,11 +64,11 @@ The approved source gate for this source is `docs/research/source-gates/src-vess
 | Coming to center | 27-30 | page_range | meditation | ritual_candidate | Pause, breathe, gather attention before acting. | body, words, table | steadying, opening | high | candidate_extract_now | Complete kitchen opening if kept simple. | Candidate below. |
 | Bowl as focus while mixing/stirring | 21-28 | page_range | ritual_mechanic | ritual_candidate | Vessel receives attention, intention, and action. | vessel, body, words | tending, connecting | medium | candidate_extract_now | Strong vessel mechanic, not recipe. | Candidate below. |
 | Candle at the table while cooking | 23-25 | page_range | ritual_mechanic | ritual_candidate | Candle and prepared food share table/working space. | candlelight, table, vessel | opening, blessing, marking | medium | candidate_extract_now | Fire-safe table variant can stand alone. | Candidate below. |
-| Spoken petitions over food | 21-28 | page_range | words | private_excerpt_reference | Source examples use voiced petitions while preparing food. | words, vessel | voicing, blessing | high | hold_before_import | Exact text excluded; coercive examples rejected. | Use only private/source-reviewed text later. |
+| Spoken petitions over food | 21-28 | page_range | words | adapted_or_exact_text_review | Source examples use voiced petitions while preparing food. | words, vessel | voicing, blessing | high | hold_before_import | Exact text requires 20-word/adapted-word review; coercive examples rejected. | Use only exact reviewed short words or adapted words. |
 | Moon phase kitchen wording | 30-36 | page_range | timing_context | product_followup_pattern | Waxing/full/waning timing shapes the verb of a kitchen/table act. | words, table | opening, marking, releasing | medium | candidate_extract_later | Useful timing layer, not enough by itself. | Later timing variant. |
 | Dark moon water bowl reflection | 33-34 | exact_page | ritual_mechanic | ritual_candidate | Water bowl/window reflection and written noticing. | vessel, words, body | remembering, releasing, voicing | medium | candidate_extract_now | Strong vessel + remembering; underworld/mediumship softened. | Candidate below. |
 | Tool/object cleansing and consecration | 38-41 | page_range | object_ritual | ritual_candidate | Cleanse/bless/charge a kitchen or ritual object. | vessel, table, words, body | blessing, marking, protecting | high | candidate_extract_now | Use food-safe cleaning; smoke/oil/deity material held. | Candidate below. |
-| Elemental object blessing | 39-40 | page_range | invocation | private_excerpt_reference | Elemental blessing over an object. | table, vessel, words | blessing, marking | high | hold_before_import | Exact invocation, smoke/oil/deity options, and ritual complexity require review. | Hold. |
+| Elemental object blessing | 39-40 | page_range | invocation | adapted_or_exact_text_review | Elemental blessing over an object. | table, vessel, words | blessing, marking | high | hold_before_import | Exact invocation, smoke/oil/deity options, and ritual complexity require review. | Hold. |
 | Bread/dough/kneading as intention work | 42-71 | chapter_range | ritual_mechanic | ritual_candidate | Bread/dough/kneading/bowl/table as embodied intention and offering. | vessel, body, table | tending, blessing, remembering | medium | candidate_extract_now | No recipe; raw flour/gluten boundary. | Candidate below. |
 | Bread as household offering | 42-71, 344-381 | chapter_range | food_symbol | ritual_candidate | Bread/loaf as household offering or table sign. | table, vessel, body | blessing, remembering | medium | candidate_extract_now | Can use already-planned bread without recipe. | Candidate below. |
 | Beans/lentils/vegetable soup or stew bowl | 92-107, 165-221 | chapter_range | meal_vessel | ritual_candidate | Hearty bowl/pot/serving vessel as tending and steadiness. | vessel, table, body | tending, steadying | medium | candidate_extract_now | No recipe or nutrition claim. | Candidate below. |
@@ -93,8 +93,8 @@ The approved source gate for this source is `docs/research/source-gates/src-vess
 source_items_inventoried: 26
 candidate_extract_now: 14
 candidate_extract_later: 3
-private_excerpt_reference: 3
-items_with_private_excerpt_recommended: 4
+adapted_or_exact_text_review: 3
+items_with_operative_text_review: 4
 source_note_only: 5
 context_only: 1
 hold_before_import_candidate_records: 7
@@ -146,7 +146,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Come to Center at the Counter
 
-ritual body / practice: Stand or sit at the kitchen counter, table, or sink before beginning the kitchen act. Put both feet on the floor. Let your hands rest on the counter edge, the table, or your own body. Take three slow breaths. On each breath, draw your attention away from the rest of the day and into the kitchen. Notice your body, your hands, and the object or vessel you are about to touch. Say the Moon & Table line: "I am here, and the work begins here." Begin the next kitchen action only after that pause.
+ritual body / practice: Stand or sit at the kitchen counter, table, or sink before beginning the kitchen act. Put both feet on the floor. Let your hands rest on the counter edge, the table, or your own body. Take three slow breaths. On each breath, draw your attention away from the rest of the day and into the kitchen. Notice your body, your hands, and the object or vessel you are about to touch. Say: "I am here, and the work begins here." Begin the next kitchen action only after that pause.
 
 intention: Arrive fully before asking the kitchen action to carry meaning.
 
@@ -179,9 +179,9 @@ search metadata: tags [woodward, kitchen, counter, centering]; keywords [center,
 
 review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired false; notes [No medical, therapy, or nervous-system claim.]
 
-adaptation policy notes: direct_source_ritual paraphrased; source gate requires rewritten runtime wording.
+adaptation policy notes: direct_source_ritual paraphrased; source wording is longer than 20 words or source-shaped action requires adapted app wording.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `woodward-centering-meditation-pp27-30`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 27-30`, useContext: `spoken`, note: `The source centering meditation is substantial and remains private; public body preserves the mechanics.` }, { mode: `moon_and_table_original`, text: `I am here, and the work begins here.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 27-30`, useContext: `spoken`, note: `Moon & Table line completing the source-supported centering action.` }]
+operative words metadata: [{ mode: `adapted_source_words`, text: `I am here, and the work begins here.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 27-30`, useContext: `spoken`, note: `Adapted line completing the source-supported centering action from a longer meditation.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -193,7 +193,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Set the Kitchen-Table Intention
 
-ritual body / practice: Clear a small space on the kitchen table or counter. Set down the empty bowl, cup, pot, plate, or serving dish that will hold the work. Place one small paper beside it. Write one plain, non-coercive sentence naming what this kitchen act is for: welcome, steadiness, repair, warmth, courage, patience, release, or blessing. Read the sentence once. Say the Moon & Table line: "This is what the work is for." Put the paper under or beside the vessel while the kitchen action begins. Close by folding the paper and putting it in the household record, recycling it, or placing it under the vessel until the table is cleared.
+ritual body / practice: Clear a small space on the kitchen table or counter. Set down the empty bowl, cup, pot, plate, or serving dish that will hold the work. Place one small paper beside it. Write one plain, non-coercive sentence naming what this kitchen act is for: welcome, steadiness, repair, warmth, courage, patience, release, or blessing. Read the sentence once. Put the paper under or beside the vessel while the kitchen action begins. Close by folding the paper and putting it in the household record, recycling it, or placing it under the vessel until the table is cleared.
 
 intention: Give the vessel a clear household purpose before the kitchen action begins.
 
@@ -228,7 +228,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; pr
 
 adaptation policy notes: source_backed_moon_and_table_form; no exact source petition copied.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `This is what the work is for.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 20-28`, useContext: `spoken`, note: `Moon & Table line for the source-supported intention-setting action.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -240,7 +240,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Stir the Bowl With Purpose
 
-ritual body / practice: Set one bowl on the counter or table. Put into it only food or ingredients that are already part of the planned kitchen work. Come to center. Hold the bowl steady. Name the household quality the bowl is meant to carry: warmth, welcome, patience, courage, sweetness, repair, steadiness, or enoughness. Stir, mash, fold, or mix slowly for nine turns. Keep your attention on the bowl and the action rather than on a promised result. Say the Moon & Table line: "Let this bowl hold the work cleanly." Continue the ordinary kitchen preparation or close by washing the bowl if the food will not be used.
+ritual body / practice: Set one bowl on the counter or table. Put into it only food or ingredients that are already part of the planned kitchen work. Come to center. Hold the bowl steady. Name the household quality the bowl is meant to carry: warmth, welcome, patience, courage, sweetness, repair, steadiness, or enoughness. Stir, mash, fold, or mix slowly for nine turns. Keep your attention on the bowl and the action rather than on a promised result. Continue the ordinary kitchen preparation or close by washing the bowl if the food will not be used.
 
 intention: Let a real bowl action carry the purpose without turning the meal into a spell database.
 
@@ -275,7 +275,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no recipe or exact petition reproduced.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `Let this bowl hold the work cleanly.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 20-28`, useContext: `spoken`, note: `Moon & Table line for source-supported bowl-as-focus action.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -287,7 +287,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Bread on the Table
 
-ritual body / practice: Use bread that is already safe for the household: a slice, roll, small loaf, toast, or bread already being prepared. Do not add baking instructions to this ritual. Place the bread on a plate at the center of the table. Touch the plate and name what the household is being fed tonight: steadiness, welcome, repair, patience, warmth, or memory. Say the Moon & Table line: "Let this be enough for the table." Share the bread only with people who know what is being offered and can safely eat it. If it is not eaten, wrap it for later or compost/discard it according to household practice.
+ritual body / practice: Use bread that is already safe for the household: a slice, roll, small loaf, toast, or bread already being prepared. Do not add baking instructions to this ritual. Place the bread on a plate at the center of the table. Touch the plate and name what the household is being fed tonight: steadiness, welcome, repair, patience, warmth, or memory. Share the bread only with people who know what is being offered and can safely eat it. If it is not eaten, wrap it for later or compost/discard it according to household practice.
 
 intention: Make bread a visible household offering without turning Moon & Table into a recipe source.
 
@@ -322,7 +322,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no measurements, temperature, recipe steps, or exact blessing copied.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `Let this be enough for the table.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 3 / PDF pp. 42-71 and Ch. 15 / PDF pp. 344-381`, useContext: `spoken`, note: `Moon & Table line for source-supported bread/table offering mechanics.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -334,7 +334,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Water Bowl at the Window
 
-ritual body / practice: Fill a clean bowl with tap water. Place it on a stable table, counter, or windowsill where it can reflect the room, sky, or dark glass without spilling. Sit beside the bowl. Come to center. Look into the water without trying to force a message. Let one word, image, or feeling rise. Write that one thing on a small paper. Say the Moon & Table line: "The bowl has shown enough." Pour the water down the sink. Dry the bowl and put it away.
+ritual body / practice: Fill a clean bowl with tap water. Place it on a stable table, counter, or windowsill where it can reflect the room, sky, or dark glass without spilling. Sit beside the bowl. Come to center. Look into the water without trying to force a message. Let one word, image, or feeling rise. Write that one thing on a small paper. Say: "The bowl has shown enough." Pour the water down the sink. Dry the bowl and put it away.
 
 intention: Let a simple water vessel hold what is ready to be noticed and released.
 
@@ -357,7 +357,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [release, written word]
   exclusionSignals: [spill risk, unsafe location, desire for mediumship]
   timingSignal: quiet reflective window period
-  confidenceNotes: complete source-backed form; source text and meditation details remain private
+  confidenceNotes: complete source-backed form; source text and meditation details are adapted rather than copied
 
 source grounding: `Kitchen Witchery`, Ch. 2, PDF pp. 33-34; Ch. 12, PDF pp. 254-268.
 
@@ -365,11 +365,11 @@ recommendation metadata: primaryPurpose remembering; secondaryPurposes [releasin
 
 search metadata: tags [woodward, water bowl, window, dark moon]; keywords [bowl, water, window, reflection, written word]; materials [bowl, tap water, paper, pen]; places [window, table, counter]
 
-review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Use potable tap water only; do not drink ritual water; manage spill, pet, child, electronics, and mediumship/deity framing boundaries.]
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [Use potable tap water only; do not drink ritual water; manage spill, pet, child, electronics, and mediumship/deity framing boundaries.]
 
 adaptation policy notes: source_backed_moon_and_table_form; mediumship/underworld details softened under source gate.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `woodward-dark-moon-water-bowl-pp33-34`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 33-34`, useContext: `spoken`, note: `The source meditation and exact wording are private; packet preserves the water-bowl reflection mechanics.` }, { mode: `moon_and_table_original`, text: `The bowl has shown enough.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 33-34`, useContext: `closing`, note: `Moon & Table close for the source-supported water-bowl reflection.` }]
+operative words metadata: [{ mode: `adapted_source_words`, text: `The bowl has shown enough.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 33-34`, useContext: `closing`, note: `Adapted close for the source-supported water-bowl reflection from longer meditation wording.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -381,7 +381,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Share the Cup Pause
 
-ritual body / practice: Choose a safe ordinary drink already suitable for everyone present: water, herbal-free warm water, juice, milk, or tea only if already known to be safe. Pour it into one shared pitcher or two separate cups. Set the cup or cups on the table. Come to center. Name the purpose of the pause: welcome, patience, repair, listening, or simple company. Say the Moon & Table line: "Let the cup slow us down." Drink only if everyone knows what is being served and wants to participate. Close by washing the cup or cups and returning them to their place.
+ritual body / practice: Choose a safe ordinary drink already suitable for everyone present: water, herbal-free warm water, juice, milk, or tea only if already known to be safe. Pour it into one shared pitcher or two separate cups. Set the cup or cups on the table. Come to center. Name the purpose of the pause: welcome, patience, repair, listening, or simple company. Drink only if everyone knows what is being served and wants to participate. Close by washing the cup or cups and returning them to their place.
 
 intention: Let a safe shared drink become a small vessel for connection.
 
@@ -416,7 +416,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; shared participation must be explicit.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `Let the cup slow us down.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 12 / PDF pp. 254-268`, useContext: `spoken`, note: `Moon & Table line for source-supported cup/drink carrier mechanics.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -428,7 +428,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Enoughness Bowl
 
-ritual body / practice: Set an empty bowl at the center of the table. Choose one safe, ordinary object already in the kitchen: a piece of fruit, wrapped sweet, clean spoon, folded note, bread end, or pantry object. Place it in the bowl. Name one way the household has enough for this hour. Say the Moon & Table line: "Enough is allowed to be small." Leave the bowl on the table through the meal, conversation, or quiet hour. Close by eating, saving, washing, composting, or returning the object according to what it is.
+ritual body / practice: Set an empty bowl at the center of the table. Choose one safe, ordinary object already in the kitchen: a piece of fruit, wrapped sweet, clean spoon, folded note, bread end, or pantry object. Place it in the bowl. Name one way the household has enough for this hour. Leave the bowl on the table through the meal, conversation, or quiet hour. Close by eating, saving, washing, composting, or returning the object according to what it is.
 
 intention: Give enoughness a visible vessel without promising wealth, luck, or more.
 
@@ -463,7 +463,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; abundance is narrowed to sufficiency and warmth.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `Enough is allowed to be small.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 8 / PDF pp. 137-164 and Ch. 11 / PDF pp. 225-253`, useContext: `spoken`, note: `Moon & Table line for source-supported sweetness/fruit/bowl blessing mechanics.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -475,7 +475,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Mark the Season at the Table
 
-ritual body / practice: Choose one safe seasonal food already in the kitchen or already planned for the table. Place it on a plate or in a bowl. Name what the season is doing: arriving, ripening, resting, darkening, brightening, returning, or letting go. Say the Moon & Table line: "This is what the season has brought to the table." Let the food or object remain through the meal or quiet moment. If it is eaten, share it only with consent and safety. If it is not eaten, save, compost, or discard it according to what it is.
+ritual body / practice: Choose one safe seasonal food already in the kitchen or already planned for the table. Place it on a plate or in a bowl. Name what the season is doing: arriving, ripening, resting, darkening, brightening, returning, or letting go. Let the food or object remain through the meal or quiet moment. If it is eaten, share it only with consent and safety. If it is not eaten, save, compost, or discard it according to what it is.
 
 intention: Let one safe seasonal thing mark the moment without importing a recipe or holiday obligation.
 
@@ -510,7 +510,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no culturally specific ritual claim is imported.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `This is what the season has brought to the table.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 15 / PDF pp. 344-381`, useContext: `spoken`, note: `Moon & Table line for source-supported seasonal food marking.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -522,7 +522,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Clear the Table as Closing
 
-ritual body / practice: After a meal, table blessing, shared cup, or bowl ritual, pause before clearing. Name what the table held: welcome, release, repair, enoughness, steadiness, or memory. Remove the vessels first. Remove plates, cups, utensils, food, paper, or candle holders next. Wipe the table once from far edge to near edge. Say the Moon & Table line: "What leaves the table is finished; what remains is memory." Wash, store, compost, or discard the materials according to ordinary household practice.
+ritual body / practice: After a meal, table blessing, shared cup, or bowl ritual, pause before clearing. Name what the table held: welcome, release, repair, enoughness, steadiness, or memory. Remove the vessels first. Remove plates, cups, utensils, food, paper, or candle holders next. Wipe the table once from far edge to near edge. Wash, store, compost, or discard the materials according to ordinary household practice.
 
 intention: Let clearing the table close the work instead of letting it trail off.
 
@@ -557,7 +557,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; close completes source-supported kitchen action.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `What leaves the table is finished; what remains is memory.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Introduction / PDF pp. 9-10 and Ch. 2 / PDF pp. 20-28`, useContext: `closing`, note: `Moon & Table close for source-supported kitchen action as ritual.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -569,7 +569,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Bless the Kept Kitchen Object
 
-ritual body / practice: Choose one ordinary kitchen object that will keep being used: a cup, bowl, spoon, jar, cloth, serving dish, pot, or pan. Clean it with the ordinary method that is safe for the object. Set it on the table. Come to center. Put one hand near or on the object. Name the household job it is being given: hold welcome, remember this season, steady the table, bless a shared drink, or serve the next meal cleanly. Say the Moon & Table line: "You are kept for this work." Breathe once over or near the object without touching your mouth to it. Return it to use or storage.
+ritual body / practice: Choose one ordinary kitchen object that will keep being used: a cup, bowl, spoon, jar, cloth, serving dish, pot, or pan. Clean it with the ordinary method that is safe for the object. Set it on the table. Come to center. Put one hand near or on the object. Name the household job it is being given: hold welcome, remember this season, steady the table, bless a shared drink, or serve the next meal cleanly. Say: "You are kept for this work." Breathe once over or near the object without touching your mouth to it. Return it to use or storage.
 
 intention: Give one kitchen object a clear household role.
 
@@ -604,7 +604,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; source's smoke/oil/elemental options are held.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `woodward-object-consecration-pp38-41`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 38-41`, useContext: `blessing`, note: `Source object-consecration language and elemental material remain private/held; packet preserves object-role mechanics.` }, { mode: `moon_and_table_original`, text: `You are kept for this work.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 38-41`, useContext: `spoken`, note: `Moon & Table line for source-supported object purpose-giving.` }]
+operative words metadata: [{ mode: `adapted_source_words`, text: `You are kept for this work.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 38-41`, useContext: `spoken`, note: `Adapted line for source-supported object purpose-giving from longer consecration wording.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -616,7 +616,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Tend the Pot
 
-ritual body / practice: Use a pot, pan, or serving bowl already involved in a planned soup, stew, grain, beans, lentils, vegetables, or warm dish. Do not add a recipe to the ritual. Stand at the stove, counter, or table. Come to center. Place one hand near the pot or bowl where it is safe. Name the kind of tending being asked of the meal: steadiness, warmth, patience, repair, or nourishment. Stir or fold three slow times if stirring is part of the actual preparation. Say the Moon & Table line: "This pot tends what it holds." Continue cooking or serving according to the recipe you already know. Close by covering the pot, serving the food, or washing the vessel when the meal is done.
+ritual body / practice: Use a pot, pan, or serving bowl already involved in a planned soup, stew, grain, beans, lentils, vegetables, or warm dish. Do not add a recipe to the ritual. Stand at the stove, counter, or table. Come to center. Place one hand near the pot or bowl where it is safe. Name the kind of tending being asked of the meal: steadiness, warmth, patience, repair, or nourishment. Stir or fold three slow times if stirring is part of the actual preparation. Continue cooking or serving according to the recipe you already know. Close by covering the pot, serving the food, or washing the vessel when the meal is done.
 
 intention: Let an ordinary pot or bowl hold steady household tending.
 
@@ -651,7 +651,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; no cooking instructions, measurements, or health claims imported.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `This pot tends what it holds.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Chs. 3-6 / PDF pp. 42-120 and Ch. 9 / PDF pp. 165-221`, useContext: `spoken`, note: `Moon & Table line for source-supported pot/bowl tending mechanics.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -663,7 +663,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Welcome Served Simply
 
-ritual body / practice: Choose one safe, simple thing already appropriate to offer: water, a piece of fruit, bread, a small sweet, or a non-edible token on a plate. Set it on the table between you and the person being welcomed, or in the place where welcome is being made. Say the Moon & Table line: "This is an invitation, not a claim." Offer it openly. The other person may eat, drink, touch, decline, or leave it alone. Close by clearing the plate or cup and putting the table back in order.
+ritual body / practice: Choose one safe, simple thing already appropriate to offer: water, a piece of fruit, bread, a small sweet, or a non-edible token on a plate. Set it on the table between you and the person being welcomed, or in the place where welcome is being made. Name the offering as an invitation, not a claim. Offer it openly. The other person may eat, drink, touch, decline, or leave it alone. Close by clearing the plate or cup and putting the table back in order.
 
 intention: Make welcome visible without asking food to control anyone.
 
@@ -698,7 +698,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; hospitality mechanics are retained, target-control is rejected.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `This is an invitation, not a claim.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 21-27`, useContext: `spoken`, note: `Moon & Table line for non-coercive source-supported hospitality mechanics.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -710,7 +710,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Remember the Repeated Dish
 
-ritual body / practice: Choose one food, drink, or table object already meaningful to the household. Do not copy the recipe into this packet or into the public ritual record. Open the household grimoire, notebook, or Moon & Table note. Record the name of the dish or object, the date, who was present, where it was served, what season or moon moment surrounded it, and one sentence about what the table held. Say the Moon & Table line: "The recipe stays private; the spell is what we remember." Close the record and return it to its place.
+ritual body / practice: Choose one food, drink, or table object already meaningful to the household. Do not copy the recipe into this packet or into the public ritual record. Open the household grimoire, notebook, or Moon & Table note. Record the name of the dish or object, the date, who was present, where it was served, what season or moon moment surrounded it, and one sentence about what the table held. Read the sentence aloud once if that helps mark the memory. Close the record and return it to its place.
 
 intention: Preserve the household memory around food without turning the app into a recipe book.
 
@@ -745,7 +745,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; pr
 
 adaptation policy notes: source_backed_moon_and_table_form; record memory, not recipe instructions.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `The recipe stays private; the spell is what we remember.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 15 / PDF pp. 344-381`, useContext: `spoken`, note: `Moon & Table line for source-supported seasonal/repeated-food memory.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -757,7 +757,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Candle Beside the Bowl
 
-ritual body / practice: Set a bowl, cup, plate, or serving dish on the table. Place a small candle beside it, not inside it, or use an unlit candle as the fire symbol if flame is not appropriate. Name what the vessel is here to hold: welcome, enoughness, courage, blessing, memory, or release. Say the Moon & Table line: "The light shows what the vessel holds." If a flame is lit, keep it attended and extinguish it when the vessel is cleared. If the candle remains unlit, put it away when the table is cleared.
+ritual body / practice: Set a bowl, cup, plate, or serving dish on the table. Place a small candle beside it, not inside it, or use an unlit candle as the fire symbol if flame is not appropriate. Name what the vessel is here to hold: welcome, enoughness, courage, blessing, memory, or release. If a flame is lit, keep it attended and extinguish it when the vessel is cleared. If the candle remains unlit, put it away when the table is cleared.
 
 intention: Let candlelight show the vessel's job without making the candle the whole ritual.
 
@@ -792,7 +792,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: source_backed_moon_and_table_form; ordinary candle table support only.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `The light shows what the vessel holds.`, citationLabel: `Woodward, Kitchen Witchery`, sourceLocation: `Ch. 2 / PDF pp. 23-41`, useContext: `spoken`, note: `Moon & Table line for source-supported candle/table/vessel atmosphere.` }]
+operative words metadata: []
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -848,7 +848,7 @@ Checked the revised packet for blocking placeholder mechanics and invalid runtim
 
 - [x] Every `candidate_extract_now` has a complete operational ritual body / practice.
 - [x] No approved candidate requires source lookup for materials, food/vessel/place, placement, sequence, timing, repetition, wording handling, close, disposal, washing, serving, rest, or recordkeeping.
-- [x] Long/substantial source wording uses `private_source_excerpt`.
+- [x] Long/substantial source wording is either adapted into ritual-body words and tracked as `adapted_source_words`, or converted to plain functional instruction when the source supports speech without reusable wording.
 - [x] Woodward source-gate direct-quote restrictions are cited and honored.
 - [x] Kitchen/food/vessel safety and product-boundary notes are explicit under valid review flags.
 - [x] Components/mechanics are held unless made into complete source-backed forms.

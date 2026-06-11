@@ -51,11 +51,15 @@ If exact operative source wording is 20 words or fewer:
 
 If exact operative source wording is more than 20 words:
 
-- do not reproduce it in the public packet;
-- add `ritualWords` metadata with `mode: "private_source_excerpt"`;
-- include source location, citation label, use context, and a note explaining why the exact words matter.
+- do not reproduce the long source passage in the public packet;
+- write adapted Moon & Table words that preserve the source words' ritual function;
+- include those adapted words inline in the ritual body / practice where they are used;
+- add `ritualWords` metadata with `mode: "adapted_source_words"`;
+- include source location, citation label, use context, and a note explaining what function was adapted.
 
-If the source provides usable operative words, do not create a generic Moon & Table replacement unless Tim explicitly approves adaptation.
+If the source supports a word-shaped action but does not provide operative words, use plain functional instruction, not quoted ceremonial filler.
+
+If the source provides usable operative words, never create private/process placeholder speech.
 
 Do not create separate `sourceTextUse` or `privateExcerptSupport` objects. `ritualWords` is the operative-word tracking surface.
 
@@ -94,19 +98,19 @@ The source rite inventory must list every ritual-like item you find in the appro
 - cleansing practices;
 - consecrations;
 - correspondence material that includes action;
-- source material whose longer exact wording should be tracked through `ritualWords.mode = "private_source_excerpt"`.
+- source material whose longer exact wording should be adapted through `ritualWords.mode = "adapted_source_words"`.
 
 For every source item, assign a disposition:
 
 - `candidate_extract_now`
 - `candidate_extract_later`
-- `private_excerpt_reference`
+- `adapted_or_exact_text_review`
 - `source_note_only`
 - `context_only`
 - `hold`
 - `reject`
 
-`private_excerpt_reference` is an inventory disposition. It is not a candidate-level object and does not replace `ritualWords`.
+`adapted_or_exact_text_review` is an inventory disposition for source items whose main value is exact short-wording review or longer operative-word adaptation. It is not a candidate-level object and does not replace `ritualWords`.
 
 If the packet becomes too large, split the candidate records into batches, but still provide the source rite inventory and remaining extraction backlog.
 
@@ -160,8 +164,8 @@ Include:
 source_items_inventoried:
 candidate_extract_now:
 candidate_extract_later:
-private_excerpt_reference:
-items_with_private_excerpt_recommended:
+adapted_or_exact_text_review:
+items_with_operative_text_review:
 source_note_only:
 context_only:
 hold:
@@ -170,9 +174,9 @@ remaining_unreviewed_source_sections:
 remaining_extraction_backlog:
 ```
 
-`private_excerpt_reference` counts source items whose main disposition is private excerpt reference.
+`adapted_or_exact_text_review` counts source items whose main disposition is exact short-wording review or longer operative-word adaptation.
 
-`items_with_private_excerpt_recommended` counts any inventoried source item or candidate where exact prayers, blessings, spoken cues, prompts, recipes, meditations, charms, spells, or distinctive wording should be reviewed privately by Tim, even when that item is also a candidate.
+`items_with_operative_text_review` counts any inventoried source item or candidate where exact prayers, blessings, spoken cues, prompts, recipes, meditations, charms, spells, or distinctive wording must be reviewed under the 20-word/adapted-words rule, even when that item is also a candidate.
 
 ## Coverage accounting
 
@@ -258,7 +262,7 @@ howThisWasChosenIngredients -> packet/recommendation inputs only unless a later 
 source grounding -> origin.sourceGrounding[]
 purpose/carrier/capacity/audience/timing/eligibility -> recommendationMetadata
 materials/places/tags/keywords/source labels -> searchMetadata
-private excerpt/material/source/product-boundary dependencies -> reviewFlags
+material/source/product-boundary dependencies -> reviewFlags
 operative words metadata -> ritualWords[]
 ```
 
@@ -350,9 +354,8 @@ Where relevant, include:
 ```ts
 ritualWords?: [
   {
-    mode: "source_exact_short" | "private_source_excerpt" | "moon_and_table_original";
+    mode: "source_exact_short" | "adapted_source_words";
     text?: string;
-    privateExcerptKey?: string;
     citationLabel?: string;
     sourceLocation?: string;
     useContext: "spoken" | "written" | "chanted" | "prayer" | "blessing" | "incantation" | "invocation" | "petition" | "closing" | "question" | "vow" | "song" | "other";
@@ -365,7 +368,7 @@ Spoken or written words that the user should say or write belong inline in `ritu
 
 `ritualWords` is not the authoring surface for Ritual copy. It is provenance/review metadata.
 
-Use `moon_and_table_original` only when the source supports spoken/written ritual mechanics but does not provide operative words, or when Tim explicitly chooses adaptation over source wording.
+Use `adapted_source_words` only when the source provides operative words longer than 20 words. The `text` must be the actual adapted phrase that appears in the ritual body.
 
 ## Variant / split ledger
 
@@ -451,7 +454,7 @@ QA must verify:
 - `ritual body / practice` contains open, action/sequence, operative words where needed, and close;
 - `ritualWords` is metadata only;
 - exact short source words are inline, 20 words or fewer, and tracked as `source_exact_short`;
-- longer exact wording uses `private_source_excerpt` metadata;
+- longer exact wording is adapted into inline Moon & Table words and tracked as `adapted_source_words`;
 - no generic Moon & Table replacement words are created where usable source words exist;
 - `whyThisFitsIngredients` and `howThisWasChosenIngredients` use the required structure;
 - no runtime eligibility flags are changed.
@@ -470,7 +473,7 @@ Every packet must validate:
 - [ ] No props/materials/decorative closing gestures are added unless source-supported or Tim-approved.
 - [ ] `ritualWords` is metadata only and does not replace the ritual body.
 - [ ] Short source phrases are 20 words or fewer, inline in the ritual body, and tracked as `source_exact_short`.
-- [ ] Longer/substantial exact text is handled through `private_source_excerpt` ritualWords metadata.
+- [ ] Longer/substantial exact operative text is adapted into ritual-body words and tracked as `adapted_source_words`.
 - [ ] No generic Moon & Table replacement words are created where usable source words exist.
 - [ ] Why-this-fits / how-this-was-chosen ingredients use the required structure.
 - [ ] Candidate import readiness label is present.

@@ -32,7 +32,7 @@ Every `approved_for_mechanical_import` record below has a complete `ritual body 
 
 ## Source text posture
 
-Words, blessings, prayers, spoken formulas, charms, prompts, recipes, and ritual language are valid ritual mechanics. Exact operative source wording of 20 words or fewer may appear inline when it is ritually useful and non-substitutive. Longer prayers, blessings, scripts, recipes, meditations, prompts, formulas, and distinctive passages are not reproduced in this public packet. They are tracked through `ritualWords.mode = "private_source_excerpt"` with source location and use context.
+Words, blessings, prayers, spoken formulas, charms, prompts, recipes, and ritual language are valid ritual mechanics. Exact operative source wording of 20 words or fewer may appear inline when it is ritually useful and non-substitutive. Longer prayers, blessings, scripts, recipes, meditations, prompts, formulas, and distinctive passages are not reproduced in this public packet; they are adapted into Moon & Table words in the ritual body and tracked through `ritualWords.mode = "adapted_source_words"` with source location and use context.
 
 ## Source sections used
 
@@ -92,7 +92,7 @@ Words, blessings, prayers, spoken formulas, charms, prompts, recipes, and ritual
 source_items_inventoried: 30
 candidate_extract_now: 15
 candidate_extract_later: 1
-private_excerpt_reference: 0
+adapted_or_exact_text_review: 0
 items_with_private_excerpt_recommended: 10
 source_note_only: 5
 context_only: 1
@@ -149,7 +149,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Recognize the Hearth
 
-ritual body / practice: Stand or kneel before the physical place you have chosen as the spiritual hearth. Place a small bowl of salt, a small bowl of water, a small bowl of mixed kitchen herbs or spices, a candle in a holder, matches, a heatproof dish, and a small bowl of olive or vegetable oil within reach. Take three slow breaths. Hold your hands toward the hearth and use the private source hearth-recognition words from Tim's copy. Bow to the hearth. Touch the salt and scatter a few grains toward the hearth. Touch the water and flick a few drops toward the hearth. Stir the herbs or spices and waft their scent toward the hearth. Light the candle, hold it toward the hearth, and use the private source fire-recognition words. Place the candle safely on or near the hearth. Touch one fingertip to the oil and lightly mark the hearth or its safe symbolic marker. Bow once more. If you will remain in the room, let the candle burn while attended; otherwise, snuff it out.
+ritual body / practice: Stand or kneel before the physical place you have chosen as the spiritual hearth. Place a small bowl of salt, a small bowl of water, a small bowl of mixed kitchen herbs or spices, a candle in a holder, matches, a heatproof dish, and a small bowl of olive or vegetable oil within reach. Take three slow breaths. Hold your hands toward the hearth and say: "This hearth is known; this home has a center." Bow to the hearth. Touch the salt and scatter a few grains toward the hearth. Touch the water and flick a few drops toward the hearth. Stir the herbs or spices and waft their scent toward the hearth. Light the candle, hold it toward the hearth, and say: "This flame keeps the center visible." Place the candle safely on or near the hearth. Touch one fingertip to the oil and lightly mark the hearth or its safe symbolic marker. Bow once more. If you will remain in the room, let the candle burn while attended; otherwise, snuff it out.
 
 intention: Formally recognize the place that holds the home's spiritual center.
 
@@ -169,7 +169,7 @@ whyThisFitsIngredients:
 
 howThisWasChosenIngredients:
   primarySelectionSignals: [establish hearth, open household practice]
-  secondarySelectionSignals: [elemental recognition, private source words]
+  secondarySelectionSignals: [elemental recognition, adapted source words]
   exclusionSignals: [no safe candle/oil surface]
   timingSignal: before other House Witch rituals
   confidenceNotes: complete direct source architecture; long exact wording private
@@ -180,11 +180,11 @@ recommendation metadata: primaryPurpose opening; secondaryPurposes [blessing, ma
 
 search metadata: tags [house-witch, spiritual hearth, hearth recognition]; keywords [hearth, home center, salt, water, herbs, candle, oil]; materials [salt, water, mixed kitchen herbs/spices, candle, oil]; places [hearth, kitchen, table]
 
-review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
 
 adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-hearth-recognition-ch3`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 3 / PDF pp. 39-60`, useContext: `blessing`, note: `The hearth recognition and elemental acknowledgement words are operative and remain private.` }]
+operative words metadata: [{ mode: `adapted_source_words`, text: `This hearth is known; this home has a center.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 3 / PDF pp. 39-60`, useContext: `blessing`, note: `Adapted from the source hearth-recognition words.` }, { mode: `adapted_source_words`, text: `This flame keeps the center visible.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 3 / PDF pp. 39-60`, useContext: `blessing`, note: `Adapted from the source fire-recognition words.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -196,7 +196,7 @@ ritualizationType: `source_backed_moon_and_table_form`
 
 headline: Bank the Inner Flame
 
-ritual body / practice: Do this after the day's kitchen or household work is finished and before bed. Sit or stand in the kitchen, at the hearth place, or by a candle if one is already safely lit. Relax your body. Look back over the day from waking to this moment without judging it. Notice the feelings that remain. Close your eyes and take three slow breaths; with each exhale, let worry or irritation move out of you. Feel yourself here, now, in the home. If using a candle, snuff or blow it out. If not using a candle, turn off the kitchen or hearth light, or close the door if you are at a threshold. Use the private source smooring prayer if Tim excerpts it; otherwise close silently.
+ritual body / practice: Do this after the day's kitchen or household work is finished and before bed. Sit or stand in the kitchen, at the hearth place, or by a candle if one is already safely lit. Relax your body. Look back over the day from waking to this moment without judging it. Notice the feelings that remain. Close your eyes and take three slow breaths; with each exhale, let worry or irritation move out of you. Feel yourself here, now, in the home. If using a candle, snuff or blow it out. If not using a candle, turn off the kitchen or hearth light, or close the door if you are at a threshold. Say: "The day is banked; the hearth keeps its ember."
 
 intention: Gather the day's scattered energy back into the hearth before sleep.
 
@@ -227,11 +227,11 @@ recommendation metadata: primaryPurpose steadying; secondaryPurposes [protecting
 
 search metadata: tags [house-witch, smooring, bank inner flame, bedtime]; materials [optional candle]; places [kitchen, hearth, threshold]
 
-review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
 
 adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-smooring-prayer-ch2`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 2 / PDF pp. 26-38`, useContext: `prayer`, note: `Traditional smooring prayer is long and remains private.` }]
+operative words metadata: [{ mode: `adapted_source_words`, text: `The day is banked; the hearth keeps its ember.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 2 / PDF pp. 26-38`, useContext: `prayer`, note: `Adapted from the longer traditional smooring prayer.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -243,7 +243,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Light the Kitchen Flame
 
-ritual body / practice: Place a candle in a holder or an oil lamp in a safe kitchen location where it will not be near drafts, towels, paper, hair, sleeves, children, pets, or food prep clutter. Before beginning kitchen or table work, stand before the flame. Light it. Use the private source flame prayer if Tim excerpts it. Let the flame mark the kitchen as sacred while you work nearby and attend it. When the kitchen work is finished or you leave the room, extinguish the flame safely.
+ritual body / practice: Place a candle in a holder or an oil lamp in a safe kitchen location where it will not be near drafts, towels, paper, hair, sleeves, children, pets, or food prep clutter. Before beginning kitchen or table work, stand before the flame. Light it. Say: "This flame opens the kitchen work." Let the flame mark the kitchen as sacred while you work nearby and attend it. When the kitchen work is finished or you leave the room, extinguish the flame safely.
 
 intention: Open kitchen work by recognizing the sacred flame at the hearth.
 
@@ -274,11 +274,11 @@ recommendation metadata: primaryPurpose opening; secondaryPurposes [blessing, te
 
 search metadata: tags [house-witch, kitchen flame, candle, oil lamp]; materials [candle or oil lamp, holder]; places [kitchen, table, counter]
 
-review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
 
 adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-kitchen-flame-prayer-ch11`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `prayer`, note: `The flame prayer is operative and remains private.` }]
+operative words metadata: [{ mode: `adapted_source_words`, text: `This flame opens the kitchen work.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `prayer`, note: `Adapted from the source kitchen flame prayer.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -337,7 +337,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Cauldron Harmony Candle
 
-ritual body / practice: Place a small cauldron or heat-safe bowl on the physical analogue of the spiritual hearth or on the kitchen shrine. Pour enough salt or sand into the bottom to hold a candle securely, about an inch and a half if the candle is tall. Set a pale blue candle upright in the salt or sand. Light the candle. Use the private source harmony words from Tim's copy. Leave the cauldron and candle on the hearth place or shrine while attended. Extinguish the candle when the rite is complete or when you leave the room.
+ritual body / practice: Place a small cauldron or heat-safe bowl on the physical analogue of the spiritual hearth or on the kitchen shrine. Pour enough salt or sand into the bottom to hold a candle securely, about an inch and a half if the candle is tall. Set a pale blue candle upright in the salt or sand. Light the candle. Say: "Let this blue flame hold peace at the hearth." Leave the cauldron and candle on the hearth place or shrine while attended. Extinguish the candle when the rite is complete or when you leave the room.
 
 intention: Let the hearth vessel and blue candle hold rest, renewal, peace, and harmony for the home.
 
@@ -368,11 +368,11 @@ recommendation metadata: primaryPurpose steadying; secondaryPurposes [blessing, 
 
 search metadata: tags [house-witch, cauldron, harmony, blue candle]; materials [cauldron or heat-safe bowl, salt or sand, pale blue candle]; places [spiritual hearth, kitchen shrine]
 
-review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
 
 adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-cauldron-harmony-spell-ch11`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `spoken`, note: `The cauldron harmony spoken formula is operative and remains private.` }]
+operative words metadata: [{ mode: `adapted_source_words`, text: `Let this blue flame hold peace at the hearth.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `spoken`, note: `Adapted from the source cauldron harmony formula.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -384,7 +384,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Bless the Hearth Vessel
 
-ritual body / practice: Clean and purify the cauldron or hearth vessel before use. Place it at the hearth place, kitchen shrine, or table. Stand or sit before it. Put both hands near it or on it if it is safe to touch. Use the private source cauldron blessing from Tim's copy, or a separately approved personal blessing. If using herbs is approved, sprinkle a few fresh or dried herbs inside that represent blessing or welcome to you. Leave the vessel in its hearth place when finished.
+ritual body / practice: Clean and purify the cauldron or hearth vessel before use. Place it at the hearth place, kitchen shrine, or table. Stand or sit before it. Put both hands near it or on it if it is safe to touch. Say: "Vessel of the hearth, hold the work of change." If using herbs is approved, sprinkle a few fresh or dried herbs inside that represent blessing or welcome to you. Leave the vessel in its hearth place when finished.
 
 intention: Welcome the cauldron or vessel as a symbol of transformation, wisdom, and household work.
 
@@ -415,11 +415,11 @@ recommendation metadata: primaryPurpose blessing; secondaryPurposes [marking, te
 
 search metadata: tags [house-witch, cauldron blessing, hearth vessel]; materials [cauldron or bowl, optional herbs]; places [hearth, kitchen shrine, table]
 
-review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true.
 
 adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-cauldron-blessing-ch4`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 4 / PDF pp. 61-82`, useContext: `blessing`, note: `The cauldron blessing is substantial source wording and remains private.` }]
+operative words metadata: [{ mode: `adapted_source_words`, text: `Vessel of the hearth, hold the work of change.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 4 / PDF pp. 61-82`, useContext: `blessing`, note: `Adapted from the longer source cauldron blessing.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -478,7 +478,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Bless the House by Circuit
 
-ritual body / practice: Repair what needs repair, then thoroughly clean walls, floors, windows, cupboards, stairs, and other neglected places. Move counterclockwise through the house while cleaning, finishing by sweeping dirt out the back door and shaking dust rags or emptying wash water out the back door as appropriate. Begin the blessing at the physical analogue of the spiritual hearth. Light purification incense safely in a censer or heatproof bowl with sand. Carry the incense clockwise through each room, wafting smoke into cupboards and behind doors, and use the private source fire-and-air blessing line. Return the incense to the hearth. Light a candle in a holder and carry it clockwise through each room, using the private source light-and-flame blessing line. Return the candle to the hearth. Add a pinch of salt to a small cup of water. Carry it clockwise through each room. Touch the outside and inside of each doorframe, and the frame of each window and cupboard, with salt water; if approved, draw a simple blessing symbol. Use the private source water-and-salt line. Return the water to the hearth. Stand at the hearth and use the private source closing blessing.
+ritual body / practice: Repair what needs repair, then thoroughly clean walls, floors, windows, cupboards, stairs, and other neglected places. Move counterclockwise through the house while cleaning, finishing by sweeping dirt out the back door and shaking dust rags or emptying wash water out the back door as appropriate. Begin the blessing at the physical analogue of the spiritual hearth. Light purification incense safely in a censer or heatproof bowl with sand. Carry the incense clockwise through each room, wafting smoke into cupboards and behind doors, and say: "Let air and fire bless this room." Return the incense to the hearth. Light a candle in a holder and carry it clockwise through each room, saying: "Let light carry blessing through the house." Return the candle to the hearth. Add a pinch of salt to a small cup of water. Carry it clockwise through each room. Touch the outside and inside of each doorframe, and the frame of each window and cupboard, with salt water; if approved, draw a simple blessing symbol. Say: "Let water and salt mark this place clean." Return the water to the hearth. Stand at the hearth and say: "The house is blessed and returned to itself."
 
 intention: Bless the whole home by moving earth, water, air, and fire through its rooms and thresholds.
 
@@ -501,7 +501,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [thresholds, elements, circuit movement]
   exclusionSignals: [too low capacity, unsafe smoke/flame]
   timingSignal: after physical cleaning
-  confidenceNotes: complete direct source ritual; exact repeated lines private
+  confidenceNotes: complete direct source ritual; repeated source lines adapted
 
 source grounding: `The House Witch`, Ch. 11 / PDF pp. 173-183.
 
@@ -509,11 +509,11 @@ recommendation metadata: primaryPurpose blessing; secondaryPurposes [protecting,
 
 search metadata: tags [house-witch, house blessing, whole-home blessing]; materials [cleaning supplies, incense, censer/bowl, sand, candle, water, salt]; places [hearth, rooms, doors, windows, cupboards]
 
-review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [smoke/fire/surface/pet/asthma review].
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [smoke/fire/surface/pet/asthma review].
 
 adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-house-blessing-lines-ch11`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `blessing`, note: `The house-blessing element lines and closing are operative and remain private.` }]
+operative words metadata: [{ mode: `adapted_source_words`, text: `Let air and fire bless this room.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `blessing`, note: `Adapted from the source fire-and-air blessing line.` }, { mode: `adapted_source_words`, text: `Let light carry blessing through the house.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `blessing`, note: `Adapted from the source light-and-flame blessing line.` }, { mode: `adapted_source_words`, text: `Let water and salt mark this place clean.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `blessing`, note: `Adapted from the source water-and-salt line.` }, { mode: `adapted_source_words`, text: `The house is blessed and returned to itself.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `closing`, note: `Adapted from the source closing blessing.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -525,7 +525,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Bless One Room
 
-ritual body / practice: Sit in the room and think about its identity. Choose either a white candle or a candle in the color that fits the room's energy. Gather a candle in a holder, matches or lighter, a small cup of water, a pinch of salt for the water, a 4-inch by 4-inch square of cloth, one small amethyst or clear quartz, a pinch of salt for the pouch, one penny or other coin, and about ten inches of narrow ribbon. Light the candle and place it in the center of the room. Use the private source flame blessing. Add a pinch of salt to the water. Dip your finger in it and draw a line along the room threshold, using the private source threshold blessing. Place the stone, pouch salt, and coin on the cloth, using the private source lines for each item. Gather the corners of the cloth and tie it closed with the ribbon. Carefully pass the bundle above, not through, the candle flame and use the private source fire-sealing line. Hang the bundle above the door or place it somewhere in the room where it can continue to bless the room. Use the private source closing line. Extinguish the candle safely.
+ritual body / practice: Sit in the room and think about its identity. Choose either a white candle or a candle in the color that fits the room's energy. Gather a candle in a holder, matches or lighter, a small cup of water, a pinch of salt for the water, a 4-inch by 4-inch square of cloth, one small amethyst or clear quartz, a pinch of salt for the pouch, one penny or other coin, and about ten inches of narrow ribbon. Light the candle and place it in the center of the room. Say: "This flame names the room as blessed." Add a pinch of salt to the water. Dip your finger in it and draw a line along the room threshold, saying: "This threshold receives the room's blessing." Place the stone, pouch salt, and coin on the cloth, naming each one for harmony, steadiness, and enough. Gather the corners of the cloth and tie it closed with the ribbon. Carefully pass the bundle above, not through, the candle flame and say: "The bundle is sealed in the room's light." Hang the bundle above the door or place it somewhere in the room where it can continue to bless the room. Say: "The room is held and the work is closed." Extinguish the candle safely.
 
 intention: Bless a single room by giving it flame, threshold, harmony, protection, abundance, and a placed bundle.
 
@@ -548,7 +548,7 @@ howThisWasChosenIngredients:
   secondarySelectionSignals: [vessel/pouch, threshold]
   exclusionSignals: [unsafe flame/object placement]
   timingSignal: after room reset
-  confidenceNotes: complete direct source ritual; exact lines private
+  confidenceNotes: complete direct source ritual; longer blessing lines adapted
 
 source grounding: `The House Witch`, Ch. 11 / PDF pp. 173-183.
 
@@ -556,11 +556,11 @@ recommendation metadata: primaryPurpose blessing; secondaryPurposes [marking, pr
 
 search metadata: tags [house-witch, room blessing, pouch, threshold]; materials [candle, water, salt, cloth, amethyst or clear quartz, coin, ribbon]; places [single room, threshold, doorway]
 
-review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [small object, flame, hanging/placement safety].
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [small object, flame, hanging/placement safety].
 
 adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-room-blessing-lines-ch11`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `blessing`, note: `The room blessing lines are operative and remain private.` }]
+operative words metadata: [{ mode: `adapted_source_words`, text: `This flame names the room as blessed.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `blessing`, note: `Adapted from the source room flame blessing.` }, { mode: `adapted_source_words`, text: `This threshold receives the room's blessing.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `blessing`, note: `Adapted from the source threshold blessing.` }, { mode: `adapted_source_words`, text: `The bundle is sealed in the room's light.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `blessing`, note: `Adapted from the source fire-sealing line.` }, { mode: `adapted_source_words`, text: `The room is held and the work is closed.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 11 / PDF pp. 173-183`, useContext: `closing`, note: `Adapted from the source closing line.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -666,7 +666,7 @@ ritualizationType: `direct_source_ritual`
 
 headline: Purify One Room
 
-ritual body / practice: Physically clean the room first: return things to their places, then vacuum, sweep, dust, polish, or otherwise remove dirt as needed. Put a teaspoon of purifying incense on a charcoal tablet in a censer or heatproof bowl with sand, or use one stick of purchased purifying incense. Light the incense and use the private source incense line if Tim excerpts it. Place the bowl or censer in the middle of the room. Let the smoke fill the space; if desired, walk counterclockwise around the room to disperse it. Let the incense work for as long as needed, from a few minutes to a few hours, without assuming more smoke is better. When the room feels purified and smoke has cleared enough for safe flame use, light a candle in the middle of the room and use the private source flame line if Tim excerpts it. Let the candle burn down while attended. If you cannot remain with the candle, extinguish it at the end of the rite. When the flame is out, leave the room clean and undisturbed for a while.
+ritual body / practice: Physically clean the room first: return things to their places, then vacuum, sweep, dust, polish, or otherwise remove dirt as needed. Put a teaspoon of purifying incense on a charcoal tablet in a censer or heatproof bowl with sand, or use one stick of purchased purifying incense. Light the incense and say: "Let smoke carry out what the room has released." Place the bowl or censer in the middle of the room. Let the smoke fill the space; if desired, walk counterclockwise around the room to disperse it. Let the incense work for as long as needed, from a few minutes to a few hours, without assuming more smoke is better. When the room feels purified and smoke has cleared enough for safe flame use, light a candle in the middle of the room and say: "Let flame bless the room that remains." Let the candle burn down while attended. If you cannot remain with the candle, extinguish it at the end of the rite. When the flame is out, leave the room clean and undisturbed for a while.
 
 intention: Purify a room, then bless the cleared space with flame.
 
@@ -697,11 +697,11 @@ recommendation metadata: primaryPurpose releasing; secondaryPurposes [protecting
 
 search metadata: tags [house-witch, room purification, incense, candle]; materials [cleaning supplies, incense, censer/heatproof bowl, sand, candle, holder, matches/lighter]; places [single room]
 
-review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [smoke/fire/pet/asthma review before direct use; source burn-down close preserved for draft mechanical import but direct-use presentation still requires material/fire-safety review].
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [smoke/fire/pet/asthma review before direct use; source burn-down close preserved for draft mechanical import but direct-use presentation still requires material/fire-safety review].
 
 adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable; direct-use safety review may later author a safer close only if Tim approves.
 
-operative words metadata: [{ mode: `private_source_excerpt`, privateExcerptKey: `house-witch-room-purification-lines-ch7`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 7 / PDF pp. 99-121`, useContext: `spoken`, note: `Source incense and flame lines are operative and should be stored privately.` }]
+operative words metadata: [{ mode: `adapted_source_words`, text: `Let smoke carry out what the room has released.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 7 / PDF pp. 99-121`, useContext: `spoken`, note: `Adapted from the source incense purification line.` }, { mode: `adapted_source_words`, text: `Let flame bless the room that remains.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 7 / PDF pp. 99-121`, useContext: `spoken`, note: `Adapted from the source flame blessing line.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -795,7 +795,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `Thank you for the work you do here. I bless you.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 6 / PDF pp. 83-98`, useContext: `blessing`, note: `Source gives appliance-specific sample wording; Moon & Table line generalizes the source-backed structure without copying the full sample.` }]
+operative words metadata: [{ mode: `adapted_source_words`, text: `Thank you for the work you do here. I bless you.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 6 / PDF pp. 83-98`, useContext: `blessing`, note: `Source gives appliance-specific sample wording; adapted line generalizes the source-backed structure without copying the full sample.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -889,7 +889,7 @@ review flags: sourceTextReviewRequired true; sourceVerificationRequired true; ma
 
 adaptation policy notes: purposeChange: not_allowed; materialSubstitution: defined_only; status draft/unavailable/not recommendable.
 
-operative words metadata: [{ mode: `moon_and_table_original`, text: `May this food carry care.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 9 / PDF pp. 139-152`, useContext: `blessing`, note: `Source supports short spoken kitchen words and food awareness; this is Moon & Table original rather than copied sample wording.` }]
+operative words metadata: [{ mode: `adapted_source_words`, text: `May this food carry care.`, citationLabel: `Murphy-Hiscock, The House Witch`, sourceLocation: `Ch. 9 / PDF pp. 139-152`, useContext: `blessing`, note: `Source supports short spoken kitchen words and food awareness; this is Moon & Table original rather than copied sample wording.` }]
 
 import readiness label: `approved_for_mechanical_import`
 
@@ -965,7 +965,7 @@ Results:
 - `Purify One Room` contains no internal QA/process language in the ritual body.
 - `Create the Small Sacred Space` includes the short source element lines inline and tracks them as `source_exact_short`.
 - `Room Blessing Bundle` is held before import and does not count toward primary coverage.
-- Long source wording is tracked through `private_source_excerpt`.
+- Long source wording is adapted into ritual-body words and tracked through `adapted_source_words`.
 - No runtime records or eligibility flags are changed.
 
 ## Validation checklist
@@ -975,7 +975,7 @@ Results:
 - [x] No approved candidate body contains internal QA/process text.
 - [x] No approved candidate uses invalid runtime enum values.
 - [x] Short exact source wording is handled under the 20-word rule.
-- [x] Long/substantial source wording uses `private_source_excerpt`.
+- [x] Long/substantial source wording is adapted into ritual-body words and tracked as `adapted_source_words`.
 - [x] Mechanics/components are held unless made into complete source-backed forms.
 - [x] `ritual-house-witch-purify-one-room` title correction is applied.
 - [x] Packet metrics and coverage are internally consistent.

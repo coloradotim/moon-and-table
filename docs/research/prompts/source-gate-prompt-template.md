@@ -48,7 +48,9 @@ If exact operative source wording is 20 words or fewer:
 
 If exact operative source wording is more than 20 words:
   - it should not be reproduced in generated public repo prose;
-  - it should be tracked as ritualWords.mode = "private_source_excerpt" with source location and a note explaining why the words matter.
+  - it should be adapted into Moon & Table words during extraction;
+  - the adapted words should appear inline in the ritual body;
+  - it should be tracked as ritualWords.mode = "adapted_source_words" with source location and a note explaining what ritual function was adapted.
 ```
 
 A source gate may impose stricter limits only for source-specific reasons, such as explicit sexualized commands, coercive wording, revenge/hex language, distinctive author voice, culturally sensitive language, medical/legal/therapy claims, or other product-boundary concerns.
@@ -57,7 +59,7 @@ Do not write a blanket ban on exact short operative phrases unless the source-sp
 
 Research agents should not reproduce long copyrighted passages in generated packets. However, exact short phrase anchors, exact questions, rite titles, spoken cues, blessing names, invocation cues, and wording anchors of 20 words or fewer may be extracted when ritually important and not source-prohibited.
 
-When exact wording is important but longer than 20 words, mark it for Tim private excerpt review with source page/section.
+When exact wording is important but longer than 20 words, preserve its ritual function through adapted Moon & Table wording and cite the source page/section.
 
 ## Required tasks
 
@@ -165,7 +167,7 @@ sourceTextPolicy: {
     "unavailable_by_default",
     "not_recommendation_eligible_until_human_review"
   ];
-  notes: "Default rule: exact operative source wording of 20 words or fewer may be used inline during extraction when source-attributed, non-substitutive, ritually important, and not source-prohibited. Longer/substantial exact wording uses private_source_excerpt metadata. Add stricter limits only for source-specific product-boundary reasons."
+  notes: "Default rule: exact operative source wording of 20 words or fewer may be used inline during extraction when source-attributed, non-substitutive, ritually important, and not source-prohibited. Longer/substantial exact wording is adapted into Moon & Table words in the ritual body and tracked with adapted_source_words metadata. Add stricter limits only for source-specific product-boundary reasons."
 }
 ```
 
@@ -185,7 +187,7 @@ Use page/chapter references.
 For each approved range, specify:
 
 - approved mechanics;
-- exact-text/private-excerpt opportunities;
+- exact-text/adaptation opportunities;
 - approved carriers;
 - approved purposes;
 - allowed use;
@@ -198,7 +200,7 @@ Use page/chapter references.
 
 For each excluded/limited range, specify why:
 
-- authored wording requires private excerpt handling;
+- authored wording requires adaptation handling;
 - exact spell/prayer/meditation/prompt/recipe handling;
 - deity/cosmology issue;
 - medical/safety issue;

@@ -89,8 +89,7 @@ export type RitualPresentation = {
 
 export const RITUAL_WORD_MODES = [
   "source_exact_short",
-  "private_source_excerpt",
-  "moon_and_table_original",
+  "adapted_source_words",
 ] as const;
 
 export type RitualWordMode = (typeof RITUAL_WORD_MODES)[number];
@@ -117,7 +116,6 @@ export type RitualWordUseContext =
 export type RitualWords = {
   mode: RitualWordMode;
   text?: string;
-  privateExcerptKey?: string;
   citationLabel?: string;
   sourceLocation?: string;
   useContext: RitualWordUseContext;
@@ -125,7 +123,6 @@ export type RitualWords = {
 };
 
 export type RitualReviewFlags = {
-  privateExcerptRequired?: boolean;
   sourceTextReviewRequired?: boolean;
   materialSafetyReviewRequired?: boolean;
   sourceVerificationRequired?: boolean;
