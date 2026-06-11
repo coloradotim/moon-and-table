@@ -14,6 +14,7 @@ These docs control the Ritual-first reset. If an older doc conflicts with them, 
 
 ## Current Supporting Artifacts
 
+- `docs/product/manage-rituals-workflow.md`
 - `docs/product/ritual-model-pilot-extraction-review.md`
 - `docs/product/ritual-pattern-purpose-migration-audit.md`
 - `docs/product/ritual-content-architecture-audit.md`
