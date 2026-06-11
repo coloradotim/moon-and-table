@@ -51,12 +51,17 @@ import {
   type ManageRitualFilters,
   type ManageRitualOriginFilter,
   type ManageRitualReadinessFilter,
+  type ManageRitualSortKey,
   type ManageRitualStatusFilter,
   type ManageRitualValidationFilter,
 } from "../data/rituals/manage-rituals";
 import {
-  getRitualSearchChips,
+  getRitualCarrierOptions,
+  getRitualPurposeOptions,
+  getRitualSourceLabels,
+  getRitualSourceOptions,
   searchRituals,
+  type RitualSortKey,
 } from "../data/rituals/search-rituals";
 import type { ChooseWithMeResult } from "../data/rituals/choose-with-me-selector";
 import { RITUAL_STATUSES, type Ritual } from "../data/rituals/types";
@@ -106,7 +111,7 @@ export type SignedInView =
   | "profile_settings"
   | "how_it_works";
 
-export type RitualSearchSort = "match" | "title" | "purpose" | "material";
+export type RitualSearchSort = RitualSortKey;
 
 export type SignedInShellOptions = {
   activeView?: SignedInView;
@@ -122,6 +127,9 @@ export type SignedInShellOptions = {
   selectedRitualSearchChips?: string[];
   selectedRitualId?: string | null;
   ritualSearchSort?: RitualSearchSort;
+  ritualSearchSource?: string;
+  ritualSearchPurpose?: string;
+  ritualSearchCarrier?: string;
   manageRitualFilters?: Partial<ManageRitualFilters>;
 };
 
@@ -853,7 +861,13 @@ function getRitualSearchSummary(ritual: Ritual): string {
   return ritual.presentation.intention || ritual.presentation.questionToCarry;
 }
 
-export function renderRitualPreview(ritual: Ritual): string {
+export function renderRitualPreview(
+  ritual: Ritual,
+  options: { showWhyThisFits?: boolean } = {},
+): string {
+  const showWhyThisFits = options.showWhyThisFits ?? true;
+  const sourceLabel = getRitualSourceLabels(ritual)[0] ?? "none";
+
   return `
     <article class="ritual-preview" aria-label="${escapeHtml(ritual.presentation.headline)}">
       <div class="ritual-preview__header">
@@ -871,10 +885,14 @@ export function renderRitualPreview(ritual: Ritual): string {
         <p>${escapeHtml(ritual.presentation.bestWindow)}</p>
       </section>
 
-      <section class="ritual-preview__section" aria-label="Why this fits">
-        <p class="brief__section-label">Why this fits</p>
-        <p>${escapeHtml(ritual.presentation.whyThisFits)}</p>
-      </section>
+      ${showWhyThisFits
+        ? `
+          <section class="ritual-preview__section" aria-label="Why this fits">
+            <p class="brief__section-label">Why this fits</p>
+            <p>${escapeHtml(ritual.presentation.whyThisFits)}</p>
+          </section>
+        `
+        : ""}
 
       <section class="ritual-preview__section" aria-label="Question to carry">
         <p class="brief__section-label">Question to carry</p>
@@ -910,11 +928,7 @@ export function renderRitualPreview(ritual: Ritual): string {
           </div>
           <div>
             <dt>Source</dt>
-            <dd>${escapeHtml(ritual.searchMetadata.sourceLabel ?? "none")}</dd>
-          </div>
-          <div>
-            <dt>Source cluster</dt>
-            <dd>${escapeHtml(ritual.searchMetadata.originLabel ?? "none")}</dd>
+            <dd>${escapeHtml(sourceLabel)}</dd>
           </div>
         </dl>
       </details>
@@ -1013,60 +1027,49 @@ function renderRitualResultCard(ritual: Ritual, selectedRitualId: string): strin
     ...(ritual.searchMetadata.materials ?? []),
     ...ritual.searchMetadata.tags.slice(0, 3),
   ].slice(0, 5);
+  const sourceLabel = getRitualSourceLabels(ritual)[0];
+  const capacity = ritual.recommendationMetadata.capacity.default ??
+    ritual.recommendationMetadata.capacity.supports[0];
+  const metadata = [
+    sourceLabel ? `Source: ${sourceLabel}` : undefined,
+    `Work: ${formatRitualLabel(ritual.recommendationMetadata.purposes.primary)}`,
+    `Carrier: ${formatRitualLabel(ritual.recommendationMetadata.carriers.primary)}`,
+    capacity ? `Energy: ${formatRitualLabel(capacity)}` : undefined,
+    ritual.recommendationMetadata.audience.supports.length > 0
+      ? `For: ${ritual.recommendationMetadata.audience.supports.map(formatRitualLabel).join(", ")}`
+      : undefined,
+  ].filter((item): item is string => Boolean(item));
 
   return `
-    <button
-      class="ritual-result-card${isSelected ? " ritual-result-card--selected" : ""}"
-      type="button"
-      data-ritual-select="${escapeHtml(ritual.id)}"
-      aria-pressed="${isSelected ? "true" : "false"}"
-    >
-      <strong>${escapeHtml(ritual.presentation.headline)}</strong>
-      <span>${escapeHtml(getRitualSearchSummary(ritual))}</span>
-      <small>${escapeHtml([
-        formatRitualLabel(ritual.recommendationMetadata.purposes.primary),
-        formatRitualLabel(ritual.recommendationMetadata.carriers.primary),
-      ].join(" · "))}</small>
-      <small>${escapeHtml(materialsAndTags.join(" · ") || "No materials listed")}</small>
-    </button>
+    <details class="ritual-result-card-shell" ${isSelected ? "open" : ""}>
+      <summary
+        class="ritual-result-card${isSelected ? " ritual-result-card--selected" : ""}"
+        data-ritual-select="${escapeHtml(ritual.id)}"
+        aria-current="${isSelected ? "true" : "false"}"
+      >
+        <strong>${escapeHtml(ritual.presentation.headline)}</strong>
+        <span>${escapeHtml(getRitualSearchSummary(ritual))}</span>
+        <span class="ritual-result-card__metadata">${escapeHtml(metadata.join(" · "))}</span>
+        <span class="ritual-result-card__tags">${escapeHtml(materialsAndTags.join(" · ") || "No materials listed")}</span>
+      </summary>
+      ${isSelected
+        ? `<div class="ritual-result-card__expanded">${renderRitualPreview(ritual, { showWhyThisFits: false })}</div>`
+        : ""}
+    </details>
   `;
 }
 
-function getPrimaryRitualMaterial(ritual: Ritual): string {
-  return ritual.searchMetadata.materials?.[0] ??
-    ritual.searchMetadata.tags[0] ??
-    ritual.recommendationMetadata.carriers.primary;
-}
-
-function sortRitualSearchResults(
-  results: Ritual[],
-  sort: RitualSearchSort,
-): Ritual[] {
-  const sorted = [...results];
-
-  if (sort === "title") {
-    return sorted.sort((a, b) =>
-      a.presentation.headline.localeCompare(b.presentation.headline),
-    );
-  }
-
-  if (sort === "purpose") {
-    return sorted.sort((a, b) =>
-      a.recommendationMetadata.purposes.primary.localeCompare(
-        b.recommendationMetadata.purposes.primary,
-      ) || a.presentation.headline.localeCompare(b.presentation.headline),
-    );
-  }
-
-  if (sort === "material") {
-    return sorted.sort((a, b) =>
-      getPrimaryRitualMaterial(a).localeCompare(getPrimaryRitualMaterial(b)) ||
-      a.presentation.headline.localeCompare(b.presentation.headline),
-    );
-  }
-
-  return sorted;
-}
+const ritualSearchSortOptions: Array<{ value: RitualSearchSort; label: string }> = [
+  { value: "match", label: "Best match" },
+  { value: "title", label: "Title" },
+  { value: "recently_added", label: "Recently added" },
+  { value: "oldest_added", label: "Oldest added" },
+  { value: "source", label: "Source" },
+  { value: "purpose", label: "Purpose" },
+  { value: "carrier", label: "Carrier" },
+  { value: "material", label: "Material" },
+  { value: "capacity", label: "Capacity" },
+];
 
 function renderRitualSearchSortOption(
   value: RitualSearchSort,
@@ -1076,35 +1079,12 @@ function renderRitualSearchSortOption(
   return `<option value="${value}"${selectedSort === value ? " selected" : ""}>${label}</option>`;
 }
 
-const ritualSearchStarterChipValues = [
-  "candlelight",
-  "plant",
-  "table",
-  "vessel",
-  "beginning",
-  "bread",
-  "grain",
-  "household light",
-  "first light",
-  "water",
-  "opening",
-  "tending",
-] as const;
-
-function getVisibleRitualSearchChips(
-  chips: ReturnType<typeof getRitualSearchChips>,
-  selectedChips: string[],
-): ReturnType<typeof getRitualSearchChips> {
-  const chipByValue = new Map(chips.map((chip) => [chip.value, chip]));
-  const visibleValues = [
-    ...ritualSearchStarterChipValues,
-    ...selectedChips,
-  ];
-  const visibleChips = visibleValues
-    .map((value) => chipByValue.get(value))
-    .filter((chip): chip is NonNullable<typeof chip> => Boolean(chip));
-
-  return [...new Map(visibleChips.map((chip) => [chip.value, chip])).values()];
+function renderSelectOption(
+  value: string,
+  label: string,
+  selectedValue: string,
+): string {
+  return `<option value="${escapeHtml(value)}"${selectedValue === value ? " selected" : ""}>${escapeHtml(label)}</option>`;
 }
 
 export function renderSearchRitualsSection(options: {
@@ -1112,18 +1092,33 @@ export function renderSearchRitualsSection(options: {
   selectedChips?: string[];
   selectedRitualId?: string | null;
   sort?: RitualSearchSort;
+  source?: string;
+  purpose?: string;
+  carrier?: string;
 } = {}): string {
   const query = options.query ?? "";
   const selectedChips = options.selectedChips ?? [];
   const selectedSort = options.sort ?? "match";
-  const selectedChipSet = new Set(selectedChips);
-  const chips = getRitualSearchChips(sourceBackedRituals);
-  const visibleChips = getVisibleRitualSearchChips(chips, selectedChips);
-  const results = sortRitualSearchResults(searchRituals(sourceBackedRituals, {
+  const selectedSource = options.source ?? "all";
+  const selectedPurpose = options.purpose ?? "all";
+  const selectedCarrier = options.carrier ?? "all";
+  const sourceOptions = getRitualSourceOptions(sourceBackedRituals);
+  const purposeOptions = getRitualPurposeOptions(sourceBackedRituals);
+  const carrierOptions = getRitualCarrierOptions(sourceBackedRituals);
+  const results = searchRituals(sourceBackedRituals, {
     query,
     selectedChips,
-  }), selectedSort);
-  const hasSearchCriteria = query.trim().length > 0 || selectedChips.length > 0;
+    source: selectedSource,
+    purpose: selectedPurpose,
+    carrier: selectedCarrier,
+    sort: selectedSort,
+  });
+  const hasSearchCriteria =
+    query.trim().length > 0 ||
+    selectedChips.length > 0 ||
+    selectedSource !== "all" ||
+    selectedPurpose !== "all" ||
+    selectedCarrier !== "all";
   const selectedRitual =
     results.find((ritual) => ritual.id === options.selectedRitualId) ??
     results[0];
@@ -1154,19 +1149,63 @@ export function renderSearchRitualsSection(options: {
           </label>
           <button class="ritual-search__submit" type="submit">Search</button>
         </div>
-        <div class="ritual-search__chips" aria-label="Search filters">
-          ${visibleChips.map((chip) => {
-            const selected = selectedChipSet.has(chip.value);
-
-            return `
-              <button
-                class="ritual-search-chip${selected ? " ritual-search-chip--selected" : ""}"
-                type="button"
-                data-ritual-search-chip="${escapeHtml(chip.value)}"
-                aria-pressed="${selected ? "true" : "false"}"
-              >${escapeHtml(chip.label)}</button>
-            `;
-          }).join("")}
+        <div class="ritual-search__filters-row" aria-label="Search filters">
+          <label class="ritual-search__select">
+            <span>Source</span>
+            <select
+              name="ritualSearchSource"
+              form="ritual-search-form"
+              data-ritual-search-source="true"
+            >
+              ${renderSelectOption("all", "All sources", selectedSource)}
+              ${sourceOptions.map((option) =>
+                renderSelectOption(option.value, option.label, selectedSource),
+              ).join("")}
+            </select>
+          </label>
+          <label class="ritual-search__select">
+            <span>Purpose</span>
+            <select
+              name="ritualSearchPurpose"
+              form="ritual-search-form"
+              data-ritual-search-purpose="true"
+            >
+              ${renderSelectOption("all", "All purposes", selectedPurpose)}
+              ${purposeOptions.map((option) =>
+                renderSelectOption(option.value, formatRitualLabel(option.label), selectedPurpose),
+              ).join("")}
+            </select>
+          </label>
+          <label class="ritual-search__select">
+            <span>Carrier</span>
+            <select
+              name="ritualSearchCarrier"
+              form="ritual-search-form"
+              data-ritual-search-carrier="true"
+            >
+              ${renderSelectOption("all", "All carriers", selectedCarrier)}
+              ${carrierOptions.map((option) =>
+                renderSelectOption(option.value, formatRitualLabel(option.label), selectedCarrier),
+              ).join("")}
+            </select>
+          </label>
+          <label class="ritual-search__select">
+            <span>Sort</span>
+            <select
+              name="ritualSearchSort"
+              form="ritual-search-form"
+              data-ritual-search-sort="true"
+            >
+              ${ritualSearchSortOptions.map((option) =>
+                renderRitualSearchSortOption(option.value, option.label, selectedSort),
+              ).join("")}
+            </select>
+          </label>
+          <button
+            class="ritual-search__clear"
+            type="button"
+            data-ritual-search-clear="true"
+          >Clear filters</button>
         </div>
       </form>
 
@@ -1177,19 +1216,6 @@ export function renderSearchRitualsSection(options: {
               <h3>Select a ritual</h3>
               <p>${results.length === 1 ? "1 ritual" : `${results.length} rituals`}${hasSearchCriteria ? " found" : " available"}</p>
             </div>
-            <label class="ritual-search__sort">
-              <span>Sort</span>
-              <select
-                name="ritualSearchSort"
-                form="ritual-search-form"
-                data-ritual-search-sort="true"
-              >
-                ${renderRitualSearchSortOption("match", "Best match", selectedSort)}
-                ${renderRitualSearchSortOption("title", "Title", selectedSort)}
-                ${renderRitualSearchSortOption("purpose", "Purpose", selectedSort)}
-                ${renderRitualSearchSortOption("material", "Material", selectedSort)}
-              </select>
-            </label>
           </div>
           ${results.length > 0
             ? results.map((ritual) => renderRitualResultCard(ritual, selectedRitual?.id ?? "")).join("")
@@ -1203,7 +1229,7 @@ export function renderSearchRitualsSection(options: {
 
         <section class="ritual-search__preview" aria-label="Selected ritual">
           ${selectedRitual
-            ? renderRitualPreview(selectedRitual)
+            ? renderRitualPreview(selectedRitual, { showWhyThisFits: false })
             : `
               <div class="ritual-search__preview-empty">
                 <p>Selected ritual</p>
@@ -1224,6 +1250,62 @@ function renderManageRitualFilterOption(
   return `<option value="${escapeHtml(value)}"${selectedValue === value ? " selected" : ""}>${escapeHtml(label)}</option>`;
 }
 
+function getManageStatusFilterLabel(status: ManageRitualStatusFilter): string {
+  if (status === "all") {
+    return "All states";
+  }
+
+  if (status === "reviewed") {
+    return "Reviewed for direct use";
+  }
+
+  if (status === "recommendable") {
+    return "Recommendation-ready";
+  }
+
+  return `${formatRitualLabel(status)} import`;
+}
+
+function getManageAvailabilityFilterLabel(
+  availability: ManageRitualAvailabilityFilter,
+): string {
+  const labels: Record<ManageRitualAvailabilityFilter, string> = {
+    all: "All use paths",
+    findable: "Findable in search",
+    direct_use: "Usable directly",
+    recommendation_eligible: "Can be recommended",
+    recommendable: "Recommendation-ready",
+  };
+
+  return labels[availability];
+}
+
+function getManageReadinessFilterLabel(
+  readiness: ManageRitualReadinessFilter,
+): string {
+  const labels: Record<ManageRitualReadinessFilter, string> = {
+    all: "All work states",
+    missing_readiness: "Missing recommendation work",
+    review_flags: "Has review flags",
+    validation_findings: "Has validation findings",
+    recommendation_ready: "No recommendation work missing",
+  };
+
+  return labels[readiness];
+}
+
+function getManageValidationFilterLabel(
+  validation: ManageRitualValidationFilter,
+): string {
+  const labels: Record<ManageRitualValidationFilter, string> = {
+    all: "All validation",
+    valid: "No findings",
+    findings: "Has findings",
+  };
+
+  return labels[validation];
+}
+
 function formatManageList(values: string[]): string {
   return values.length > 0 ? values.join(", ") : "none";
 }
@@ -1232,15 +1314,28 @@ function renderYesNo(value: boolean): string {
   return value ? "yes" : "no";
 }
 
-function renderManageRitualsFilters(filters: ManageRitualFilters): string {
+function renderManageRitualsFilters(
+  filters: ManageRitualFilters,
+  sourceOptions: Array<{ value: string; label: string }>,
+  statusCounts: Record<string, number>,
+): string {
+  const visibleStatuses = RITUAL_STATUSES.filter(
+    (status) => statusCounts[status] > 0 || filters.status === status,
+  );
+  const visibleReadinessFilters = MANAGE_RITUAL_READINESS_FILTERS.filter(
+    (readiness) =>
+      readiness !== "recommendation_ready" ||
+      filters.readiness === "recommendation_ready",
+  );
+
   return `
     <form class="manage-rituals__filters" data-manage-rituals-filter-form="true" aria-label="Manage Rituals filters">
       <label>
-        <span>Status</span>
+        <span>State</span>
         <select name="manageRitualStatus" data-manage-rituals-filter="true">
-          ${renderManageRitualFilterOption("all", "All statuses", filters.status)}
-          ${RITUAL_STATUSES.map((status) =>
-            renderManageRitualFilterOption(status, formatRitualLabel(status), filters.status),
+          ${renderManageRitualFilterOption("all", getManageStatusFilterLabel("all"), filters.status)}
+          ${visibleStatuses.map((status) =>
+            renderManageRitualFilterOption(status, getManageStatusFilterLabel(status), filters.status),
           ).join("")}
         </select>
       </label>
@@ -1257,12 +1352,21 @@ function renderManageRitualsFilters(filters: ManageRitualFilters): string {
         </select>
       </label>
       <label>
+        <span>Source</span>
+        <select name="manageRitualSource" data-manage-rituals-filter="true" ${filters.origin === "household" ? "disabled" : ""}>
+          ${renderManageRitualFilterOption("all", "All sources", filters.source)}
+          ${sourceOptions.map((option) =>
+            renderManageRitualFilterOption(option.value, option.label, filters.source),
+          ).join("")}
+        </select>
+      </label>
+      <label>
         <span>Availability</span>
         <select name="manageRitualAvailability" data-manage-rituals-filter="true">
           ${MANAGE_RITUAL_AVAILABILITY_FILTERS.map((availability) =>
             renderManageRitualFilterOption(
               availability,
-              availability === "all" ? "All availability" : formatRitualLabel(availability),
+              getManageAvailabilityFilterLabel(availability),
               filters.availability,
             ),
           ).join("")}
@@ -1271,28 +1375,66 @@ function renderManageRitualsFilters(filters: ManageRitualFilters): string {
       <label>
         <span>Readiness</span>
         <select name="manageRitualReadiness" data-manage-rituals-filter="true">
-          ${MANAGE_RITUAL_READINESS_FILTERS.map((readiness) =>
+          ${visibleReadinessFilters.map((readiness) =>
             renderManageRitualFilterOption(
               readiness,
-              readiness === "all" ? "All readiness" : formatRitualLabel(readiness),
+              getManageReadinessFilterLabel(readiness),
               filters.readiness,
             ),
           ).join("")}
         </select>
       </label>
       <label>
-        <span>Issues</span>
+        <span>Findings</span>
         <select name="manageRitualValidation" data-manage-rituals-filter="true">
           ${MANAGE_RITUAL_VALIDATION_FILTERS.map((validation) =>
             renderManageRitualFilterOption(
               validation,
-              validation === "all" ? "All issues" : formatRitualLabel(validation),
+              getManageValidationFilterLabel(validation),
               filters.validation,
             ),
           ).join("")}
         </select>
       </label>
+      <button
+        class="manage-rituals__clear"
+        type="button"
+        data-manage-rituals-clear="true"
+      >Clear filters</button>
     </form>
+  `;
+}
+
+function getManageAriaSort(
+  key: ManageRitualSortKey,
+  filters: ManageRitualFilters,
+): "none" | "ascending" | "descending" {
+  if (filters.sort !== key) {
+    return "none";
+  }
+
+  return filters.direction === "asc" ? "ascending" : "descending";
+}
+
+function renderManageSortHeader(
+  key: ManageRitualSortKey,
+  label: string,
+  filters: ManageRitualFilters,
+): string {
+  const directionLabel = filters.sort !== key
+    ? ""
+    : filters.direction === "asc"
+      ? " ↑"
+      : " ↓";
+
+  return `
+    <span role="columnheader" aria-sort="${getManageAriaSort(key, filters)}">
+      <button
+        class="manage-rituals__sort-button${filters.sort === key ? " manage-rituals__sort-button--active" : ""}"
+        type="button"
+        data-manage-ritual-sort="${key}"
+      >${escapeHtml(label)}<span aria-hidden="true">${directionLabel}</span></button>
+    </span>
   `;
 }
 
@@ -1303,7 +1445,7 @@ export function renderManageRitualsSection(options: {
   const counts = viewModel.counts;
   const statusSummary = [
     `${viewModel.total} imported Ritual${viewModel.total === 1 ? "" : "s"}`,
-    `${counts.byStatus.pilot} pilot`,
+    `${counts.byStatus.reviewed} reviewed`,
     `${counts.directUseEligible} direct-use eligible`,
     `${counts.recommendable} recommendation-ready`,
     `${counts.withMissingReadiness} missing readiness`,
@@ -1322,11 +1464,11 @@ export function renderManageRitualsSection(options: {
           <div><dt>Statuses</dt><dd>${escapeHtml(`pilot ${counts.byStatus.pilot}, draft ${counts.byStatus.draft}, reviewed ${counts.byStatus.reviewed}, recommendable ${counts.byStatus.recommendable}`)}</dd></div>
           <div><dt>Origins</dt><dd>${escapeHtml(`source ${counts.byOrigin.source}, household ${counts.byOrigin.household}`)}</dd></div>
           <div><dt>Availability</dt><dd>${escapeHtml(`findable ${counts.findable}, direct-use eligible ${counts.directUseEligible}, recommendation eligible ${counts.recommendationEligible}`)}</dd></div>
-          <div><dt>Issues</dt><dd>${escapeHtml(`validation findings ${counts.withValidationFindings}, missing readiness ${counts.withMissingReadiness}`)}</dd></div>
+          <div><dt>Findings</dt><dd>${escapeHtml(`validation findings ${counts.withValidationFindings}, missing readiness ${counts.withMissingReadiness}`)}</dd></div>
         </dl>
       </details>
 
-      ${renderManageRitualsFilters(viewModel.filters)}
+      ${renderManageRitualsFilters(viewModel.filters, viewModel.sourceOptions, viewModel.counts.byStatus)}
 
       <section class="manage-rituals__table-section" aria-label="Imported Ritual records">
         <div class="manage-rituals__table-heading">
@@ -1335,12 +1477,12 @@ export function renderManageRitualsSection(options: {
         </div>
         <div class="manage-rituals__records" role="table" aria-label="Imported Ritual records table">
           <div class="manage-rituals__record-head" role="row">
-            <span role="columnheader">Ritual</span>
-            <span role="columnheader">Status</span>
-            <span role="columnheader">Origin</span>
-            <span role="columnheader">Direct use</span>
-            <span role="columnheader">Recommendation</span>
-            <span role="columnheader">Issues</span>
+            ${renderManageSortHeader("headline", "Ritual", viewModel.filters)}
+            ${renderManageSortHeader("status", "Status", viewModel.filters)}
+            ${renderManageSortHeader("origin", "Origin", viewModel.filters)}
+            ${renderManageSortHeader("direct_use", "Direct use", viewModel.filters)}
+            ${renderManageSortHeader("recommendation", "Recommendation", viewModel.filters)}
+            ${renderManageSortHeader("issues", "Findings", viewModel.filters)}
           </div>
           ${viewModel.rows.map((row) => `
             <details class="manage-rituals__record">
@@ -1363,7 +1505,6 @@ export function renderManageRitualsSection(options: {
                             <div><dt>Practice</dt><dd>${escapeHtml(row.ritual.presentation.practice)}</dd></div>
                             <div><dt>Intention</dt><dd>${escapeHtml(row.ritual.presentation.intention)}</dd></div>
                             <div><dt>Best window</dt><dd>${escapeHtml(row.ritual.presentation.bestWindow)}</dd></div>
-                            <div><dt>Why this fits</dt><dd>${escapeHtml(row.ritual.presentation.whyThisFits)}</dd></div>
                             <div><dt>Question to carry</dt><dd>${escapeHtml(row.ritual.presentation.questionToCarry)}</dd></div>
                           </dl>
                         </section>
@@ -2170,6 +2311,9 @@ export function renderSignedInShell(
     selectedChips: options.selectedRitualSearchChips,
     selectedRitualId: options.selectedRitualId,
     sort: options.ritualSearchSort,
+    source: options.ritualSearchSource,
+    purpose: options.ritualSearchPurpose,
+    carrier: options.ritualSearchCarrier,
   });
   const manageRituals = renderManageRitualsSection({
     filters: options.manageRitualFilters,

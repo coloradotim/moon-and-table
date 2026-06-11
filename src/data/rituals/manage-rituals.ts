@@ -1,5 +1,11 @@
 import { RITUAL_STATUSES, type Ritual, type RitualStatus } from "./types";
 import {
+  getRitualSourceFilterValue,
+  getRitualSourceLabels,
+  getRitualSourceOptions,
+  type RitualSourceOption,
+} from "./search-rituals";
+import {
   validateRituals,
   type RitualValidationFinding,
 } from "./validate-rituals";
@@ -29,6 +35,27 @@ export type ManageRitualReadinessFilter =
   (typeof MANAGE_RITUAL_READINESS_FILTERS)[number];
 export type ManageRitualValidationFilter =
   (typeof MANAGE_RITUAL_VALIDATION_FILTERS)[number];
+export type ManageRitualSortKey =
+  | "headline"
+  | "status"
+  | "origin"
+  | "direct_use"
+  | "recommendation"
+  | "issues";
+export type ManageRitualSortDirection = "asc" | "desc";
+
+const MANAGE_RITUAL_SORT_KEYS: ManageRitualSortKey[] = [
+  "headline",
+  "status",
+  "origin",
+  "direct_use",
+  "recommendation",
+  "issues",
+];
+
+const ritualStatusSortOrder = new Map<RitualStatus, number>(
+  RITUAL_STATUSES.map((status, index) => [status, index]),
+);
 
 export type ManageRitualFilters = {
   status: ManageRitualStatusFilter;
@@ -36,6 +63,9 @@ export type ManageRitualFilters = {
   availability: ManageRitualAvailabilityFilter;
   readiness: ManageRitualReadinessFilter;
   validation: ManageRitualValidationFilter;
+  source: string;
+  sort: ManageRitualSortKey;
+  direction: ManageRitualSortDirection;
 };
 
 export type ManageRitualRow = {
@@ -58,6 +88,7 @@ export type ManageRitualRow = {
   issues: string[];
   sourceLabel?: string;
   originLabel?: string;
+  sourceValues: string[];
 };
 
 export type ManageRitualsViewModel = {
@@ -74,6 +105,7 @@ export type ManageRitualsViewModel = {
     withMissingReadiness: number;
   };
   filters: ManageRitualFilters;
+  sourceOptions: RitualSourceOption[];
   rows: ManageRitualRow[];
 };
 
@@ -83,6 +115,9 @@ export const defaultManageRitualFilters: ManageRitualFilters = {
   availability: "all",
   readiness: "all",
   validation: "all",
+  source: "all",
+  sort: "headline",
+  direction: "asc",
 };
 
 function emptyStatusCounts(): Record<RitualStatus, number> {
@@ -114,6 +149,9 @@ function normalizeFilters(filters?: Partial<ManageRitualFilters>): ManageRitualF
   const readiness = filters?.readiness ?? defaultManageRitualFilters.readiness;
   const validation =
     filters?.validation ?? defaultManageRitualFilters.validation;
+  const source = filters?.source ?? defaultManageRitualFilters.source;
+  const sort = filters?.sort ?? defaultManageRitualFilters.sort;
+  const direction = filters?.direction ?? defaultManageRitualFilters.direction;
 
   return {
     status: status === "all" || RITUAL_STATUSES.includes(status) ? status : "all",
@@ -127,6 +165,9 @@ function normalizeFilters(filters?: Partial<ManageRitualFilters>): ManageRitualF
     validation: MANAGE_RITUAL_VALIDATION_FILTERS.includes(validation)
       ? validation
       : "all",
+    source,
+    sort: MANAGE_RITUAL_SORT_KEYS.includes(sort) ? sort : "headline",
+    direction: direction === "desc" ? "desc" : "asc",
   };
 }
 
@@ -136,6 +177,13 @@ function rowMatchesFilters(row: ManageRitualRow, filters: ManageRitualFilters): 
   }
 
   if (filters.origin !== "all" && row.origin !== filters.origin) {
+    return false;
+  }
+
+  if (
+    filters.source !== "all" &&
+    !row.sourceValues.includes(filters.source)
+  ) {
     return false;
   }
 
@@ -191,11 +239,83 @@ function rowMatchesFilters(row: ManageRitualRow, filters: ManageRitualFilters): 
   return true;
 }
 
+function compareText(a: string, b: string): number {
+  const normalizedA = a.trim().toLowerCase();
+  const normalizedB = b.trim().toLowerCase();
+
+  if (!normalizedA && normalizedB) {
+    return 1;
+  }
+
+  if (normalizedA && !normalizedB) {
+    return -1;
+  }
+
+  return normalizedA.localeCompare(normalizedB);
+}
+
+function compareBoolean(a: boolean, b: boolean): number {
+  if (a === b) {
+    return 0;
+  }
+
+  return a ? 1 : -1;
+}
+
+function recommendationSortValue(row: ManageRitualRow): number {
+  if (row.recommendable) {
+    return 2;
+  }
+
+  if (row.recommendationEligible) {
+    return 1;
+  }
+
+  return 0;
+}
+
+function statusSortValue(status: RitualStatus): number {
+  return ritualStatusSortOrder.get(status) ?? RITUAL_STATUSES.length;
+}
+
+function sortManageRows(
+  rows: ManageRitualRow[],
+  filters: ManageRitualFilters,
+): ManageRitualRow[] {
+  const sorted = [...rows].sort((a, b) => {
+    switch (filters.sort) {
+      case "status":
+        return statusSortValue(a.status) - statusSortValue(b.status) ||
+          compareText(a.headline, b.headline);
+      case "origin":
+        return compareText(a.origin, b.origin) ||
+          compareText(a.sourceLabel ?? "", b.sourceLabel ?? "") ||
+          compareText(a.headline, b.headline);
+      case "direct_use":
+        return compareBoolean(a.directUseEligible, b.directUseEligible) ||
+          compareText(a.headline, b.headline);
+      case "recommendation":
+        return recommendationSortValue(a) - recommendationSortValue(b) ||
+          compareText(a.headline, b.headline);
+      case "issues":
+        return compareText(a.issues[0] ?? "", b.issues[0] ?? "") ||
+          a.issues.length - b.issues.length ||
+          compareText(a.headline, b.headline);
+      case "headline":
+      default:
+        return compareText(a.headline, b.headline);
+    }
+  });
+
+  return filters.direction === "desc" ? sorted.reverse() : sorted;
+}
+
 export function createManageRitualsViewModel(
   rituals: Ritual[],
   filterOverrides?: Partial<ManageRitualFilters>,
 ): ManageRitualsViewModel {
   const filters = normalizeFilters(filterOverrides);
+  const sourceOptions = getRitualSourceOptions(rituals);
   const validation = validateRituals(rituals);
   const findingsByRitualId = new Map<string, RitualValidationFinding[]>();
 
@@ -210,6 +330,8 @@ export function createManageRitualsViewModel(
     const validationFindings = findingsByRitualId.get(ritual.id) ?? [];
     const missingReadiness =
       ritual.recommendationMetadata.eligibility.missing ?? [];
+
+    const sourceLabels = getRitualSourceLabels(ritual);
 
     return {
       ritual,
@@ -232,8 +354,9 @@ export function createManageRitualsViewModel(
         ...missingReadiness,
         ...validationFindings.map((finding) => finding.path),
       ])],
-      sourceLabel: ritual.searchMetadata.sourceLabel,
+      sourceLabel: sourceLabels[0],
       originLabel: ritual.searchMetadata.originLabel,
+      sourceValues: sourceLabels.map(getRitualSourceFilterValue),
     };
   });
 
@@ -245,7 +368,10 @@ export function createManageRitualsViewModel(
     byOrigin[row.origin] += 1;
   }
 
-  const filteredRows = rows.filter((row) => rowMatchesFilters(row, filters));
+  const filteredRows = sortManageRows(
+    rows.filter((row) => rowMatchesFilters(row, filters)),
+    filters,
+  );
 
   return {
     total: rows.length,
@@ -266,6 +392,7 @@ export function createManageRitualsViewModel(
       ).length,
     },
     filters,
+    sourceOptions,
     rows: filteredRows,
   };
 }

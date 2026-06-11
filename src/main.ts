@@ -67,6 +67,8 @@ import {
   type ManageRitualFilters,
   type ManageRitualOriginFilter,
   type ManageRitualReadinessFilter,
+  type ManageRitualSortDirection,
+  type ManageRitualSortKey,
   type ManageRitualStatusFilter,
   type ManageRitualValidationFilter,
 } from "./data/rituals/manage-rituals";
@@ -103,11 +105,24 @@ let checkInLoadingTimeout: number | null = null;
 let activeRitualSearchQuery = "";
 let activeRitualSearchChips: string[] = [];
 let activeRitualSearchSort: RitualSearchSort = "match";
+let activeRitualSearchSource = "all";
+let activeRitualSearchPurpose = "all";
+let activeRitualSearchCarrier = "all";
 let activeSelectedRitualId: string | null = null;
 let activeManageRitualFilters: ManageRitualFilters = {
   ...defaultManageRitualFilters,
 };
 const showDebugTrace = new URLSearchParams(window.location.search).get("debug") === "true";
+
+function resetRitualSearchState(): void {
+  activeRitualSearchQuery = "";
+  activeRitualSearchChips = [];
+  activeRitualSearchSort = "match";
+  activeRitualSearchSource = "all";
+  activeRitualSearchPurpose = "all";
+  activeRitualSearchCarrier = "all";
+  activeSelectedRitualId = null;
+}
 
 function getRequestedSignedInView(): SignedInView | null {
   const requestedView = new URLSearchParams(window.location.search).get("view");
@@ -236,6 +251,9 @@ function renderActiveSignedInShell(options: {
     ritualSearchQuery: activeRitualSearchQuery,
     selectedRitualSearchChips: activeRitualSearchChips,
     ritualSearchSort: activeRitualSearchSort,
+    ritualSearchSource: activeRitualSearchSource,
+    ritualSearchPurpose: activeRitualSearchPurpose,
+    ritualSearchCarrier: activeRitualSearchCarrier,
     selectedRitualId: activeSelectedRitualId,
     manageRitualFilters: activeManageRitualFilters,
   });
@@ -268,9 +286,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
           activeChooseWithMeResult = null;
           activeSignedInView = "this_week";
           activeProfileSettingsTabId = null;
-          activeRitualSearchQuery = "";
-          activeRitualSearchChips = [];
-          activeSelectedRitualId = null;
+          resetRitualSearchState();
           activeManageRitualFilters = { ...defaultManageRitualFilters };
           activeFirstLoginCheckIn = false;
           appRoot.innerHTML = renderAppShell({
@@ -282,9 +298,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
 
         activePrivateBriefData = privateBriefData;
         activeProfileSettingsTabId = null;
-        activeRitualSearchQuery = "";
-        activeRitualSearchChips = [];
-        activeSelectedRitualId = null;
+        resetRitualSearchState();
         activeManageRitualFilters = { ...defaultManageRitualFilters };
         activeBrief = null;
         activeChooseWithMeResult = null;
@@ -302,9 +316,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activeChooseWithMeResult = null;
         activeSignedInView = "this_week";
         activeProfileSettingsTabId = null;
-        activeRitualSearchQuery = "";
-        activeRitualSearchChips = [];
-        activeSelectedRitualId = null;
+        resetRitualSearchState();
         activeManageRitualFilters = { ...defaultManageRitualFilters };
         activeCurrentRitualCheckIn = null;
         activeFirstLoginCheckIn = false;
@@ -329,10 +341,7 @@ function renderDevVisualQaState(): void {
   activePrivateBriefData = resolvePrivateBriefData({});
   activeSignedInView = getRequestedSignedInView() ?? "this_week";
   activeProfileSettingsTabId = null;
-  activeRitualSearchQuery = "";
-  activeRitualSearchChips = [];
-  activeRitualSearchSort = "match";
-  activeSelectedRitualId = null;
+  resetRitualSearchState();
   activeManageRitualFilters = { ...defaultManageRitualFilters };
   activeCurrentRitualCheckIn = null;
   activeChooseWithMeResult = null;
@@ -965,6 +974,10 @@ appRoot.addEventListener("click", (event) => {
   const ritualSearchChip = ritualSearchChipTarget?.dataset.ritualSearchChip;
   const ritualSelectTarget = target.closest<HTMLElement>("[data-ritual-select]");
   const ritualSelect = ritualSelectTarget?.dataset.ritualSelect;
+  const manageRitualSortTarget = target.closest<HTMLElement>(
+    "[data-manage-ritual-sort]",
+  );
+  const manageRitualSort = manageRitualSortTarget?.dataset.manageRitualSort;
 
   if (target.closest("[data-private-welcome-action='dismiss']")) {
     void handlePrivateWelcomeDismiss();
@@ -978,6 +991,20 @@ appRoot.addEventListener("click", (event) => {
 
   if (target.closest("[data-ritual-search-back='true']")) {
     startCheckInOver();
+    return;
+  }
+
+  if (target.closest("[data-ritual-search-clear='true']")) {
+    event.preventDefault();
+    resetRitualSearchState();
+    renderSearchRituals();
+    return;
+  }
+
+  if (target.closest("[data-manage-rituals-clear='true']")) {
+    event.preventDefault();
+    activeManageRitualFilters = { ...defaultManageRitualFilters };
+    renderActiveSignedInShell();
     return;
   }
 
@@ -1047,6 +1074,24 @@ appRoot.addEventListener("click", (event) => {
     event.preventDefault();
     activeSelectedRitualId = ritualSelect;
     renderSearchRituals();
+    return;
+  }
+
+  if (manageRitualSort) {
+    event.preventDefault();
+    const sort = manageRitualSort as ManageRitualSortKey;
+    const direction: ManageRitualSortDirection =
+      activeManageRitualFilters.sort === sort &&
+      activeManageRitualFilters.direction === "asc"
+        ? "desc"
+        : "asc";
+
+    activeManageRitualFilters = {
+      ...activeManageRitualFilters,
+      sort,
+      direction,
+    };
+    renderActiveSignedInShell();
     return;
   }
 
@@ -1120,9 +1165,26 @@ appRoot.addEventListener("change", (event) => {
 
   if (
     target instanceof HTMLSelectElement &&
-    target.matches("[data-ritual-search-sort='true']")
+    (
+      target.matches("[data-ritual-search-sort='true']") ||
+      target.matches("[data-ritual-search-source='true']") ||
+      target.matches("[data-ritual-search-purpose='true']") ||
+      target.matches("[data-ritual-search-carrier='true']")
+    )
   ) {
-    activeRitualSearchSort = target.value as RitualSearchSort;
+    activeRitualSearchSort = (
+      document.querySelector<HTMLSelectElement>("[name='ritualSearchSort']")
+        ?.value ?? activeRitualSearchSort
+    ) as RitualSearchSort;
+    activeRitualSearchSource =
+      document.querySelector<HTMLSelectElement>("[name='ritualSearchSource']")
+        ?.value ?? activeRitualSearchSource;
+    activeRitualSearchPurpose =
+      document.querySelector<HTMLSelectElement>("[name='ritualSearchPurpose']")
+        ?.value ?? activeRitualSearchPurpose;
+    activeRitualSearchCarrier =
+      document.querySelector<HTMLSelectElement>("[name='ritualSearchCarrier']")
+        ?.value ?? activeRitualSearchCarrier;
     activeSelectedRitualId = null;
     renderSearchRituals();
   }
@@ -1131,17 +1193,24 @@ appRoot.addEventListener("change", (event) => {
     target instanceof HTMLSelectElement &&
     target.matches("[data-manage-rituals-filter='true']")
   ) {
+    const origin =
+      (document.querySelector<HTMLSelectElement>(
+        "[name='manageRitualOrigin']",
+      )?.value as ManageRitualOriginFilter | undefined) ??
+      activeManageRitualFilters.origin;
+
     activeManageRitualFilters = {
+      ...activeManageRitualFilters,
       status:
         (document.querySelector<HTMLSelectElement>(
           "[name='manageRitualStatus']",
         )?.value as ManageRitualStatusFilter | undefined) ??
         activeManageRitualFilters.status,
-      origin:
-        (document.querySelector<HTMLSelectElement>(
-          "[name='manageRitualOrigin']",
-        )?.value as ManageRitualOriginFilter | undefined) ??
-        activeManageRitualFilters.origin,
+      origin,
+      source: origin === "household"
+        ? "all"
+        : document.querySelector<HTMLSelectElement>("[name='manageRitualSource']")
+          ?.value ?? activeManageRitualFilters.source,
       availability:
         (document.querySelector<HTMLSelectElement>(
           "[name='manageRitualAvailability']",
@@ -1159,6 +1228,29 @@ appRoot.addEventListener("change", (event) => {
         activeManageRitualFilters.validation,
     };
     renderActiveSignedInShell();
+  }
+});
+
+appRoot.addEventListener("input", (event) => {
+  const target = event.target;
+
+  if (
+    target instanceof HTMLInputElement &&
+    target.matches("[name='ritualSearchQuery']")
+  ) {
+    const cursorStart = target.selectionStart ?? target.value.length;
+    const cursorEnd = target.selectionEnd ?? cursorStart;
+
+    activeRitualSearchQuery = target.value;
+    activeSelectedRitualId = null;
+    renderSearchRituals();
+
+    const searchInput = document.querySelector<HTMLInputElement>(
+      "[name='ritualSearchQuery']",
+    );
+
+    searchInput?.focus();
+    searchInput?.setSelectionRange(cursorStart, cursorEnd);
   }
 });
 
@@ -1181,10 +1273,7 @@ if (devVisualQaMode) {
     activeChooseWithMeResult = null;
     activeSignedInView = "this_week";
     activeProfileSettingsTabId = null;
-    activeRitualSearchQuery = "";
-    activeRitualSearchChips = [];
-    activeRitualSearchSort = "match";
-    activeSelectedRitualId = null;
+    resetRitualSearchState();
     activeManageRitualFilters = { ...defaultManageRitualFilters };
     activeCurrentRitualCheckIn = null;
     activeCheckInDraft = createInitialRitualCheckInDraft();
@@ -1213,6 +1302,15 @@ appRoot.addEventListener("submit", (event) => {
     activeRitualSearchSort = String(
       formData.get("ritualSearchSort") ?? activeRitualSearchSort,
     ) as RitualSearchSort;
+    activeRitualSearchSource = String(
+      formData.get("ritualSearchSource") ?? activeRitualSearchSource,
+    );
+    activeRitualSearchPurpose = String(
+      formData.get("ritualSearchPurpose") ?? activeRitualSearchPurpose,
+    );
+    activeRitualSearchCarrier = String(
+      formData.get("ritualSearchCarrier") ?? activeRitualSearchCarrier,
+    );
     activeSelectedRitualId = null;
     renderSearchRituals();
   }
