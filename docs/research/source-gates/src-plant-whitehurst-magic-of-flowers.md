@@ -5,14 +5,14 @@
 ```text
 Source ID: SRC-PLANT-WHITEHURST-MAGIC-OF-FLOWERS
 Gate outcome: approved_for_extraction_with_limits
-Registry status: pending_tim_approval
-Extraction status: blocked_pending_tim_approval
-May appear in candidate sourceIds: after Tim approval only
+Registry status: approved
+Extraction status: approved_for_extraction_with_limits
+May appear in candidate sourceIds: yes
 Mechanics source: yes
 Canonical citation: Whitehurst, Tess. The Magic of Flowers: A Guide to Their Metaphysical Uses & Properties. Llewellyn Publications, 2013. E-book ISBN 9780738732336.
 Edition / translation: English; first e-book edition, 2013.
 Access location: User-provided working PDF, The_Magic_of_Flowers_-_Tess_Whitehurst.pdf.
-Legal copy reviewed: user-provided working PDF reviewed; legal ownership not independently verified. Treat as review copy until Tim confirms lawful source access.
+Legal copy reviewed: Tim confirmed use of the user-provided working PDF for private Moon & Table source-gate and extraction work.
 Review depth: source-gate review from the 394-page uploaded PDF. Front matter, TOC, introduction, orientation, author notes, representative flower entries across the full A-Z flower section, Appendix A-D, acknowledgments, bibliography, and targeted boundary checks were reviewed at gate depth. This is source-gate work only, not extraction.
 Page count and page-numbering notes: uploaded PDF has 394 pages. PDF page references in this gate use PDF page numbers. Front matter and TOC occupy pp. 1-10; Introduction pp. 11-12; Orientation pp. 13-19; Author's Notes pp. 20-21; flower entries pp. 24-360; Appendix A pp. 361-363; Appendix B pp. 364-383; Appendix C pp. 384-386; Appendix D pp. 387-389; Acknowledgments p. 390; Bibliography pp. 391-394.
 TOC reviewed: yes.
@@ -33,13 +33,13 @@ Citation requirement: future extraction must cite source ID, title/author, editi
 Reviewer required: yes.
 Required reviewer expertise: Tim; Moon & Table product/content review; household flower safety review before direct-use review.
 Approval authority: Tim
-Approved date: pending Tim approval
-Required changes before approval: Tim should confirm lawful source access and decide whether flower essences, mists, essential oils, baths, and tea/wine/food recipes remain held by default or may enter a separate safety-reviewed extraction lane.
+Approved date: 2026-06-10
+Required changes before approval: none; extraction remains limited by this gate. Preparation-heavy methods, flower essences, mists, essential oils, baths, smoke/incense, topical use, ingestion, unsafe flowers, medicalized claims, manipulative attraction, and target-control work remain held or rejected unless a later safety-reviewed lane explicitly opens.
 ```
 
 Final recommendation: `approved_for_extraction_with_limits`
 
-Reason: this source is a strong fit for Moon & Table's cut-flower/table/vase/message/memory/blessing lane. It provides actual flower ritual mechanics, not just metaphysical properties: proximity, ethical gathering, offerings, quiet contemplation, flower care, flower gifting, altars, charms, mists, baths, flower essences, spoken charms, correspondences, and repeated entry-level ritual structures. Approval must be limited because many entries mix useful household flower mechanics with preparation-based practices, body-contact practices, health-adjacent claims, unsafe plants, and target-specific attraction.
+Reason: this source is a strong fit for Moon & Table's cut-flower/table/vase/message/memory/blessing lane. It provides actual flower ritual mechanics, not just metaphysical properties: proximity, ethical gathering, offerings, quiet contemplation, flower care, flower gifting, altars, charms, mists, baths, flower essences, spoken charms, correspondences, and repeated entry-level ritual structures. Approval remains limited because many entries mix useful household flower mechanics with preparation-based practices, body-contact practices, health-adjacent claims, unsafe plants, and target-specific attraction.
 
 ## Source ID recommendation
 
@@ -73,7 +73,7 @@ sourceTextPolicy: {
     "unavailable_by_default",
     "not_recommendation_eligible_until_human_review"
   ];
-  notes: "Tim may manually enter exact source wording from his copy for private household use. Research agents should identify important exact wording and source location but should not reproduce long copyrighted passages, full charms, full meditations, full recipes, full tables, or distinctive flower-entry prose."
+  notes: "Tim may manually enter exact source wording from his copy for private household use. Research agents should identify important exact wording and source location but should not reproduce long copyrighted passages, full charms, full meditations, full recipes, full tables, or distinctive flower-entry prose. Generated Moon & Table spoken copy remains paraphrased/original unless Tim later adds a private excerpt."
 }
 ```
 
@@ -97,13 +97,13 @@ sourceTextPolicy: {
 
 ### PDF pp. 13-15 — Flower proximity, gathering, offering, purchased flowers, and quiet contemplation
 
-Approved mechanics: flower or bouquet as intentional home presence; flower as focal point for a household intention; ethical gathering with attention and thanks; small offering after gathering; purchased flowers as table/vase/altar objects; quiet contemplation with a living blossom; silently presenting a question, concern, intention, or gratitude to the flower; notebook/journal follow-up.
+Approved mechanics: flower or bouquet as intentional home presence; flower as focal point for a household intention; ethical gathering with attention and thanks; small offering after gathering; purchased flowers as table/vase/altar objects; quiet contemplation with a living blossom; silently presenting a question, concern, intention, or gratitude to the flower; notebook/grimoire follow-up when the ritual itself uses remembered insight.
 
 Approved carriers: `plant`, `table`, `words`, `vessel`, `body`
 
 Approved purposes: `opening`, `voicing`, `marking`, `blessing`, `steadying`, `remembering`
 
-Use and adaptation: strong future extraction lane for flower-as-witness, flower-as-message, flower-on-table, flower-in-vase, flower-offering, and flower-contemplation rituals. Use Moon & Table-authored wording. Confirm household flower safety before direct-use review.
+Use and adaptation: strong extraction lane for flower-as-witness, flower-as-message, flower-on-table, flower-in-vase, flower-offering, and flower-contemplation rituals. Use Moon & Table-authored wording. Confirm household flower safety before direct-use review.
 
 ### PDF pp. 15-16 — Flower care, rituals, charms, and basic intention work
 
@@ -113,7 +113,7 @@ Approved carriers: `plant`, `table`, `words`, `body`
 
 Approved purposes: `tending`, `opening`, `blessing`, `marking`, `remembering`
 
-Use and adaptation: good support for repeated-practice and journal/follow-up mechanics. Paraphrase required; mechanics-only preferred for charms until item-level review.
+Use and adaptation: good support for repeated-practice and grimoire/follow-up mechanics. Paraphrase required; mechanics-only preferred for charms until item-level review.
 
 ### PDF pp. 16-19 — Aromatherapy, flower essences, affinity, correspondences, and cautionary note
 
@@ -145,7 +145,7 @@ Approved carriers: `plant`, `table`, `words`, `vessel`, `candlelight`, `body`, l
 
 Approved purposes: `marking`, `blessing`, `remembering`, `opening`, `releasing`, `steadying`, `voicing`, `connecting`, `tending`, `protecting`
 
-Use and adaptation: high-yield extraction only when the flower remains the primary ritual carrier. Future packets should favor low-overwhelm domestic forms: a flower on the table, a vase, a bowl of petals, a pressed/dried flower, a bedside flower, a flower as witness, an offering, a return-to-earth close, a short spoken purpose, and a journal/memory follow-up.
+Use and adaptation: high-yield extraction only when the flower remains the primary ritual carrier. Future packets should favor low-overwhelm domestic forms: a flower on the table, a vase, a bowl of petals, a pressed/dried flower, a bedside flower, a flower as witness, an offering, a return-to-earth close, a short spoken purpose, and a grimoire/memory follow-up where source-supported.
 
 ### PDF pp. 364-389 — Appendices B-D
 
@@ -194,7 +194,7 @@ Use and adaptation: source-note-only and extraction scaffolding. No wholesale ta
 | --- | --- | --- | --- |
 | `plant` | strong | Entire source centers flowers as magical carriers; proximity, gathering, contemplation, care, charms, bouquets, essences, correspondences | Primary carrier. Future extraction should keep flower first. |
 | `table` | strong | Purchased bouquets, altars, bowls, vases, charm preparation, table/stool in essence-making, flower placement in home/workspace | Strong for Moon & Table's table/vase/bowl lane. |
-| `words` | strong | Silent requests to flowers, spoken charms, prayers, intention-setting, gratitude, journal notes, correspondence labels | Exact wording requires private excerpt or rewrite. |
+| `words` | strong | Silent requests to flowers, spoken charms, prayers, intention-setting, gratitude, grimoire notes, correspondence labels | Exact wording requires private excerpt or rewrite under this gate. |
 | `vessel` | strong | Vase/bouquet, bowl, mister, charm bag, jar/bottle/dropper, bath, cup/wine/tea | Use safe non-ingested vessels first; hold preparation-heavy vessel work by default. |
 | `candlelight` | moderate | Many flower entries pair flowers with candles/altars; some ritual examples include candles | Good secondary support. Fire safety required. |
 | `body` | moderate/fragile | Quiet contemplation, baths, oils, anointing, flower essences, aromatic practices | Body practices are safety-heavy; use with care. |
@@ -206,9 +206,9 @@ Use and adaptation: source-note-only and extraction scaffolding. No wholesale ta
 | --- | --- | --- | --- |
 | `marking` | strong | Flower selection, offerings, correspondences, charms, altars, beginnings/transitions entries | Strong fit. |
 | `blessing` | strong | Blessing categories, flower altars, gratitude, beauty/love/divine alignment entries | Strong fit if kept non-medical. |
-| `remembering` | strong | Flower-as-memory, pressed/dried tokens, journal notes, ancestry/heritage entries, repeated contemplation | Strong future lane. |
+| `remembering` | strong | Flower-as-memory, pressed/dried tokens, grimoire notes, ancestry/heritage entries, repeated contemplation | Strong future lane. |
 | `opening` | strong | Beginnings, invitation, divine alignment, romance/beauty/opportunity entries | Strong if non-manipulative. |
-| `voicing` | strong | Silent requests, spoken charms, prayers, affirmations, gratitude, intention-setting | Exact words private; app wording rewritten. |
+| `voicing` | strong | Silent requests, spoken charms, prayers, gratitude, intention-setting | Exact words private; app wording rewritten. |
 | `steadying` | strong | Comfort, grounding, gentleness, balance, calm, support entries | Avoid treatment claims. |
 | `releasing` | moderate/strong | Clearing, purification, transition, letting-go, return-to-earth mechanics | Strong when adapted symbolically. |
 | `connecting` | moderate/strong | Flower gifts, love/romance/friendship entries, flower-as-message/witness | Must stay mutual and consent-respecting. |
@@ -277,7 +277,7 @@ likely_hold_or_reject: 35-70
 ## Follow-on source queue preserved from #295
 
 ```text
-1. Arin Murphy-Hiscock — The Green Witch’s Garden
+1. Arin Murphy-Hiscock — The Green Witch's Garden
 2. Ellen Dugan — Garden Witchery
 3. Juliet Diaz — Plant Witchery
 4. Cheralyn Darcey — The Book of Flower Spells
@@ -285,23 +285,9 @@ likely_hold_or_reject: 35-70
 6. Christopher Penczak — The Plant Spirit Familiar
 7. Sandra Kynes — Tree Magic
 8. Arin Murphy-Hiscock — The Green Witch
-9. Scott Cunningham — Cunningham’s Encyclopedia of Magical Herbs
+9. Scott Cunningham — Cunningham's Encyclopedia of Magical Herbs
 10. Robin Wall Kimmerer — Braiding Sweetgrass — hold/source-note only, not extraction
 ```
-
-## Tim approval decision
-
-Tim would be approving:
-
-```text
-Source: Tess Whitehurst, The Magic of Flowers: A Guide to Their Metaphysical Uses & Properties
-Gate outcome: approved_for_extraction_with_limits
-Scope: cut flower / table / vase / message / memory / blessing lane, plus selected flower-first household mechanics
-Blocked until approval: extraction packet creation, runtime Ritual records, direct-use review, recommendation eligibility
-Held by default: preparation-heavy practices, flower essences, essential oils, mists, smoke/incense, baths, topical use, unsafe flowers, medicalized claims, manipulative attraction
-```
-
-Recommended Tim decision: approve for extraction with these limits, then create a separate extraction issue focused on safe, flower-first, table/vase/message/memory/blessing mechanics. Do not open the oil/essence/bath/mist lane until a safety policy exists.
 
 ## Final checklist
 
@@ -311,8 +297,8 @@ Recommended Tim decision: approve for extraction with these limits, then create 
 - TOC reviewed: yes
 - Approved ranges page-referenced: yes
 - Excluded/limited ranges page-referenced: yes
-- No Ritual candidates extracted: yes
-- No matrix filled: yes
+- No Ritual candidates extracted in the gate: yes
+- No matrix filled in the gate: yes
 - No runtime approval: yes
 - Words treated as valid mechanics: yes
 - Recipes classified: yes
@@ -321,5 +307,4 @@ Recommended Tim decision: approve for extraction with these limits, then create 
 - Household safety boundaries included: yes
 - Expected future inventory scope estimated: yes
 - Follow-on queue from #295 preserved: yes
-- Human review required: yes
-- Tim approval decision clear: yes
+- Human review required before runtime/direct-use/recommendation: yes
