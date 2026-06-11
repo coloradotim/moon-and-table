@@ -12,6 +12,7 @@ export type RitualSearchCriteria = {
   query?: string;
   selectedChips?: string[];
   includeNonFindable?: boolean;
+  includeNonDirectUse?: boolean;
 };
 
 function normalize(value: string): string {
@@ -54,10 +55,14 @@ export function getRitualChipValues(ritual: Ritual): string[] {
   ]);
 }
 
+function isSearchEligible(ritual: Ritual): boolean {
+  return ritual.availability.findable && ritual.availability.directUseEligible;
+}
+
 export function getRitualSearchChips(rituals: Ritual[]): RitualSearchChip[] {
   const chips = new Map<string, RitualSearchChip>();
 
-  for (const ritual of rituals.filter((candidate) => candidate.availability.findable)) {
+  for (const ritual of rituals.filter(isSearchEligible)) {
     for (const carrier of uniqueValues([
       ritual.recommendationMetadata.carriers.primary,
       ...ritual.recommendationMetadata.carriers.secondary,
@@ -115,6 +120,10 @@ export function searchRituals(
 
   return rituals.filter((ritual) => {
     if (!criteria.includeNonFindable && !ritual.availability.findable) {
+      return false;
+    }
+
+    if (!criteria.includeNonDirectUse && !ritual.availability.directUseEligible) {
       return false;
     }
 

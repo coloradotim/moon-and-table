@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { pilotRituals } from "../../src/data/rituals/pilot-rituals";
+import { sourceBackedRituals } from "../../src/data/rituals/source-backed-rituals";
 import {
   createRitualReadinessReport,
   formatRitualReadinessReport,
@@ -8,19 +8,19 @@ import {
 import type { Ritual } from "../../src/data/rituals/types";
 
 describe("Ritual readiness report", () => {
-  it("summarizes the current three pilot records", () => {
-    const report = createRitualReadinessReport(pilotRituals);
+  it("summarizes the current source-backed import records", () => {
+    const report = createRitualReadinessReport(sourceBackedRituals);
 
-    expect(report.total).toBe(3);
+    expect(report.total).toBe(156);
     expect(report.byStatus).toEqual({
-      pilot: 3,
-      draft: 0,
+      pilot: 0,
+      draft: 156,
       reviewed: 0,
       recommendable: 0,
     });
     expect(report.availability).toEqual({
-      findable: 3,
-      directUseEligible: 3,
+      findable: 156,
+      directUseEligible: 0,
       recommendationEligible: 0,
     });
     expect(report.validation).toEqual({
@@ -31,7 +31,7 @@ describe("Ritual readiness report", () => {
 
   it("reports zero recommendation-eligible records in formatted output", () => {
     const formatted = formatRitualReadinessReport(
-      createRitualReadinessReport(pilotRituals),
+      createRitualReadinessReport(sourceBackedRituals),
     );
 
     expect(formatted).toContain("Ritual readiness report");
@@ -41,29 +41,34 @@ describe("Ritual readiness report", () => {
     expect(formatted).not.toContain("undefined");
   });
 
-  it("includes pilot_review as the missing readiness item for all pilot records", () => {
-    const report = createRitualReadinessReport(pilotRituals);
+  it("includes direct-use and recommendation review as missing readiness for all source-backed records", () => {
+    const report = createRitualReadinessReport(sourceBackedRituals);
     const formatted = formatRitualReadinessReport(report);
 
-    expect(report.records).toHaveLength(3);
+    expect(report.records).toHaveLength(156);
 
     for (const record of report.records) {
-      expect(record.missing).toEqual(["pilot_review"]);
+      expect(record.missing).toEqual([
+        "direct_use_review",
+        "recommendation_review",
+      ]);
       expect(record.recommendationEligible).toBe(false);
       expect(record.recommendable).toBe(false);
-      expect(formatted).toContain(`${record.id} | pilot`);
+      expect(formatted).toContain(`${record.id} | draft`);
       expect(formatted).toContain(`${record.id}`);
-      expect(formatted).toContain("missing: pilot_review");
+      expect(formatted).toContain(
+        "missing: direct_use_review, recommendation_review",
+      );
     }
   });
 
   it("surfaces validation findings when invalid data is passed", () => {
     const invalid = {
-      ...pilotRituals[0],
+      ...sourceBackedRituals[0],
       recommendationMetadata: {
-        ...pilotRituals[0].recommendationMetadata,
+        ...sourceBackedRituals[0].recommendationMetadata,
         purposes: {
-          ...pilotRituals[0].recommendationMetadata.purposes,
+          ...sourceBackedRituals[0].recommendationMetadata.purposes,
           primary: "generic" as Ritual["recommendationMetadata"]["purposes"]["primary"],
         },
       },
@@ -75,7 +80,7 @@ describe("Ritual readiness report", () => {
     expect(report.validation.findings).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          ritualId: "ritual.wet_the_seed_and_wait",
+          ritualId: sourceBackedRituals[0].id,
           path: "recommendationMetadata.purposes.primary",
         }),
       ]),

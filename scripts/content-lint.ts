@@ -42,7 +42,7 @@ const SKIPPED_PATH_PARTS = new Set([
 ]);
 
 const GUARDRAIL_CONTEXT_PATTERN =
-  /\b(do not|don't|must not|not contain|not include|not\.tocontain|not allowed|not:|never|avoid|avoids|blocked|blocks|blocking|forbidden|forbidden_private_terms|guardrail|privacy|private boundary|safe(?:ty)?|unsafe|risk|risky|riskiest|hard no|no |no real|no copied|no source prose|not copied|non-verbatim|out of scope|deferred|later|not as|not a|not to|is not|does not|should not|should avoid|without committing|may include|must stay out|must stay local|gitignored|source-controlled examples|private storage|acceptance criteria|impossible)\b/i;
+  /\b(do not|don't|must not|not contain|not include|not\.tocontain|not allowed|not:|never|avoid|avoids|blocked|blocks|blocking|forbidden|forbidden_private_terms|guardrail|privacy|private boundary|safe(?:ty)?|unsafe|risk|risky|riskiest|hard no|no |no real|no copied|no source prose|not copied|non-verbatim|out of scope|deferred|later|not as|not a|not to|is not|does not|should not|should avoid|without committing|may include|must stay out|must stay local|gitignored|source-controlled examples|private storage|acceptance criteria|impossible|remove|removes|removed|exclude|excludes|excluded|reject|rejects|rejected)\b/i;
 
 const EMAIL_ALLOWLIST_PATTERNS = [
   /person_[ab]@example\.com/i,

@@ -103,7 +103,6 @@ function getReviewFlags(ritual: Ritual): string[] {
     flags.materialSafetyReviewRequired ? "materialSafetyReviewRequired" : undefined,
     flags.sourceVerificationRequired ? "sourceVerificationRequired" : undefined,
     flags.productBoundaryReviewRequired ? "productBoundaryReviewRequired" : undefined,
-    ...(flags.notes ?? []).map((note) => `note: ${note}`),
   ].filter((flag): flag is string => Boolean(flag));
 }
 
@@ -229,11 +228,10 @@ export function createManageRitualsViewModel(
       reviewFlags,
       validationFindings,
       missingReadiness,
-      issues: [
+      issues: [...new Set([
         ...missingReadiness,
-        ...reviewFlags,
         ...validationFindings.map((finding) => finding.path),
-      ],
+      ])],
       sourceLabel: ritual.searchMetadata.sourceLabel,
       originLabel: ritual.searchMetadata.originLabel,
     };
