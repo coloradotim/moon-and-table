@@ -435,9 +435,37 @@ h2 {
   box-shadow: 0 22px 58px rgba(79, 64, 42, 0.1);
 }
 
+.check-in__topline {
+  display: flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: -8px;
+}
+
+.check-in__topline .app-menu {
+  margin-left: auto;
+}
+
+.check-in__topline .app-menu__button {
+  width: 38px;
+  min-height: 38px;
+}
+
 .check-in__header {
-  display: grid;
-  gap: 8px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.check-in__header .app-menu {
+  margin-left: auto;
+}
+
+.check-in__header .app-menu__button {
+  width: 38px;
+  min-height: 38px;
 }
 
 .check-in__acknowledgement {
@@ -1739,6 +1767,272 @@ h2 {
   margin-top: 10px;
 }
 
+.manage-rituals {
+  display: grid;
+  gap: 18px;
+  padding: clamp(24px, 4.5vw, 42px);
+  border: 1px solid rgba(200, 190, 173, 0.58);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.93);
+  box-shadow: 0 22px 58px rgba(79, 64, 42, 0.1);
+}
+
+.manage-rituals__header {
+  display: grid;
+  max-width: 860px;
+  gap: 6px;
+}
+
+.manage-rituals__header h2 {
+  font-size: clamp(1.8rem, 3.2vw, 2.45rem);
+}
+
+.manage-rituals__header p {
+  margin: 0;
+  color: #435349;
+  font-size: var(--text-body);
+}
+
+.manage-rituals__summary {
+  max-width: 860px;
+}
+
+.manage-rituals__summary summary {
+  width: fit-content;
+  cursor: pointer;
+  color: #53645a;
+  font-size: var(--text-label);
+  font-weight: 700;
+}
+
+.manage-rituals__summary dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px 16px;
+  margin: 10px 0 0;
+}
+
+.manage-rituals__summary div {
+  display: grid;
+  gap: 2px;
+}
+
+.manage-rituals__summary dt,
+.manage-rituals__summary dd {
+  margin: 0;
+  color: #58675f;
+  font-size: var(--text-small);
+  line-height: 1.42;
+}
+
+.manage-rituals__summary dt {
+  color: #26312c;
+  font-weight: 700;
+}
+
+.manage-rituals__filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  max-width: 860px;
+  gap: 8px;
+}
+
+.manage-rituals__filters label {
+  display: grid;
+  gap: 5px;
+  color: #52635a;
+  font-size: var(--text-label);
+  font-weight: 700;
+}
+
+.manage-rituals__filters select {
+  min-height: 34px;
+  padding: 5px 28px 5px 9px;
+  border: 1px solid rgba(159, 174, 166, 0.72);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.82);
+  color: #26312c;
+  font: inherit;
+}
+
+.manage-rituals__table-section {
+  display: grid;
+  min-width: 0;
+  gap: 10px;
+}
+
+.manage-rituals__table-heading {
+  display: flex;
+  gap: 12px;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.manage-rituals__table-heading h3,
+.manage-rituals__table-heading p {
+  margin: 0;
+}
+
+.manage-rituals__table-heading h3 {
+  color: #52635a;
+  font-size: var(--text-label);
+}
+
+.manage-rituals__table-heading p {
+  color: #66736a;
+  font-size: var(--text-small);
+  font-weight: 700;
+}
+
+.manage-rituals__records {
+  overflow-x: auto;
+  border: 1px solid rgba(200, 190, 173, 0.72);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.66);
+}
+
+.manage-rituals__record-head,
+.manage-rituals__record-summary {
+  display: grid;
+  min-width: 780px;
+  grid-template-columns: minmax(240px, 1.8fr) 0.7fr 0.7fr 0.8fr 1fr minmax(160px, 1.2fr);
+  gap: 14px;
+  align-items: start;
+}
+
+.manage-rituals__record-head {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(200, 190, 173, 0.6);
+  background: #f5f3ec;
+  color: #26312c;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.manage-rituals__record {
+  border-bottom: 1px solid rgba(200, 190, 173, 0.52);
+}
+
+.manage-rituals__record:last-child {
+  border-bottom: 0;
+}
+
+.manage-rituals__record-summary {
+  padding: 12px;
+  color: #435349;
+  cursor: pointer;
+  font-size: 0.88rem;
+  line-height: 1.35;
+  list-style: none;
+}
+
+.manage-rituals__record-summary::-webkit-details-marker {
+  display: none;
+}
+
+.manage-rituals__record-summary::marker {
+  content: "";
+}
+
+.manage-rituals__record-summary:hover {
+  background: rgba(244, 247, 242, 0.7);
+}
+
+.manage-rituals__ritual-cell {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  padding-left: 20px;
+  color: #26312c;
+  font-weight: 700;
+}
+
+.manage-rituals__ritual-cell::before {
+  position: absolute;
+  top: 0.1em;
+  left: 0;
+  content: "▸";
+  color: #53645a;
+  font-size: 0.85rem;
+  transform-origin: 50% 50%;
+}
+
+.manage-rituals__record[open] .manage-rituals__ritual-cell::before {
+  transform: rotate(90deg);
+}
+
+.manage-rituals__ritual-title {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.manage-rituals__record code {
+  color: #52635a;
+  font-size: 0.78rem;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.manage-rituals__record-detail {
+  min-width: 780px;
+  padding: 0 12px 14px 32px;
+  background: rgba(248, 246, 239, 0.6);
+}
+
+.manage-rituals__detail-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(320px, 1.1fr);
+  gap: 18px;
+  margin-top: 12px;
+}
+
+.manage-rituals__record-detail h4 {
+  margin: 0 0 8px;
+  color: #26312c;
+  font-size: 0.92rem;
+}
+
+.manage-rituals__record-detail dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.manage-rituals__record-detail dl div {
+  display: grid;
+  gap: 3px;
+}
+
+.manage-rituals__record-detail dt,
+.manage-rituals__record-detail dd {
+  margin: 0;
+  color: #52635a;
+  font-size: var(--text-small);
+  line-height: 1.45;
+}
+
+.manage-rituals__record-detail dt {
+  color: #26312c;
+  font-weight: 700;
+}
+
+.manage-rituals__record-detail pre {
+  overflow-x: auto;
+  max-width: 100%;
+  margin: 0;
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(233, 231, 222, 0.62);
+  color: #26312c;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.manage-rituals__raw-object {
+  margin-top: 16px;
+}
+
 .how-it-works {
   display: grid;
   gap: 28px;
@@ -2268,6 +2562,18 @@ fieldset {
   }
 
   .ritual-search__body {
+    grid-template-columns: 1fr;
+  }
+
+  .manage-rituals {
+    padding: 24px;
+  }
+
+  .manage-rituals__table-heading {
+    display: grid;
+  }
+
+  .manage-rituals__detail-grid {
     grid-template-columns: 1fr;
   }
 

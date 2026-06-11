@@ -8,6 +8,7 @@ import {
   renderPrivateFirstLoginWelcomeShell,
   renderRitualPreview,
   renderRitualCheckInLoadingShell,
+  renderManageRitualsSection,
   renderProfileTuningSection,
   renderRitualCheckInShell,
   renderSearchRitualsSection,
@@ -64,8 +65,12 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("Use this moment and keep the ritual close at hand.");
     expect(html).not.toContain("Let the timing layer look for a stronger fit.");
     expect(html).not.toContain("data-testid=\"recommended-ritual\"");
-    expect(html).not.toContain('aria-label="Open menu"');
-    expect(html).not.toContain('class="app-menu__icon"');
+    expect(html).toContain('aria-label="Open menu"');
+    expect(html).toContain('class="app-menu__icon"');
+    expect(html).toContain('data-menu-action="this_week"');
+    expect(html).toContain('data-menu-action="search_rituals"');
+    expect(html).toContain('data-menu-action="manage_rituals"');
+    expect(html).toContain("Manage rituals");
     expect(html).not.toContain("before it chooses");
     expect(html).not.toContain("what are we making space for");
     expect(html).not.toContain("tune this week");
@@ -436,6 +441,9 @@ describe("app shell rendering", () => {
     const menuSearchRitualsIndex = html.indexOf(
       'data-menu-action="search_rituals"',
     );
+    const menuManageRitualsIndex = html.indexOf(
+      'data-menu-action="manage_rituals"',
+    );
     const menuHowItWorksIndex = html.indexOf('data-menu-action="how_it_works"');
     const menuProfileIndex = html.indexOf('data-menu-action="profile_settings"');
     const menuSignOutIndex = html.indexOf('data-auth-action="sign-out"');
@@ -465,6 +473,7 @@ describe("app shell rendering", () => {
     expect(feedbackIndex).toBeGreaterThan(checkInAgainIndex);
     expect(html).toContain("Current ritual");
     expect(html).toContain("Search rituals");
+    expect(html).toContain("Manage rituals");
     expect(html).toContain("Profile settings");
     expect(html).toContain("How it works");
     expect(html).toContain("Sign out");
@@ -488,12 +497,14 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("•••");
     expect(html).toContain('data-menu-action="this_week"');
     expect(html).toContain('data-menu-action="search_rituals"');
+    expect(html).toContain('data-menu-action="manage_rituals"');
     expect(html).toContain('data-menu-action="profile_settings"');
     expect(html).toContain('data-menu-action="how_it_works"');
     expect(menuThisWeekIndex).toBeLessThan(menuSearchRitualsIndex);
-    expect(menuSearchRitualsIndex).toBeLessThan(menuHowItWorksIndex);
-    expect(menuHowItWorksIndex).toBeLessThan(menuProfileIndex);
-    expect(menuProfileIndex).toBeLessThan(menuSignOutIndex);
+    expect(menuSearchRitualsIndex).toBeLessThan(menuManageRitualsIndex);
+    expect(menuManageRitualsIndex).toBeLessThan(menuProfileIndex);
+    expect(menuProfileIndex).toBeLessThan(menuHowItWorksIndex);
+    expect(menuHowItWorksIndex).toBeLessThan(menuSignOutIndex);
     expect(html).toContain("data-testid=\"recommended-ritual\"");
     expect(html).not.toContain("This week's signals");
     expect(html).not.toContain('class="brief__signal-list"');
@@ -709,8 +720,63 @@ describe("app shell rendering", () => {
     expect(html).toContain("Readiness and source details");
     expect(html).not.toContain("<table");
     expect(html).not.toContain("Ritual library");
-    expect(html).not.toContain("Manage rituals");
+    expect(html).toContain("Manage rituals");
     expect(html).not.toContain('data-testid="recommended-ritual"');
+  });
+
+  it("renders the Manage rituals view as a read-only inspection table", () => {
+    const html = renderSignedInShell(resolvePrivateBriefData({}), {
+      activeView: "manage_rituals",
+    });
+
+    expect(html).toContain('aria-label="Manage Rituals"');
+    expect(html).toContain('aria-pressed="true">Manage rituals</button>');
+    expect(html).toContain("3 imported Rituals. 3 pilot. 3 direct-use eligible.");
+    expect(html).toContain("Readiness summary");
+    expect(html).toContain("recommendation-ready");
+    expect(html).toContain("Missing readiness");
+    expect(html).toContain("Issues");
+    expect(html).toContain('data-manage-rituals-filter-form="true"');
+    expect(html).toContain('name="manageRitualStatus"');
+    expect(html).toContain('name="manageRitualOrigin"');
+    expect(html).toContain('name="manageRitualAvailability"');
+    expect(html).toContain('name="manageRitualReadiness"');
+    expect(html).toContain('name="manageRitualValidation"');
+    expect(html).toContain('role="table"');
+    expect(html).toContain("Imported Ritual records");
+    expect(html).toContain("Ritual");
+    expect(html).toContain('class="manage-rituals__record-summary"');
+    expect(html).toContain("Direct use");
+    expect(html).toContain("Validation findings");
+    expect(html).toContain("Source label / origin label");
+    expect(html).toContain("Wet the seed and wait.");
+    expect(html).toContain("ritual.wet_the_seed_and_wait");
+    expect(html).toContain("pilot_review");
+    expect(html).toContain("Raw full object");
+    expect(html).toContain("&quot;id&quot;: &quot;ritual.wet_the_seed_and_wait&quot;");
+    expect(html).not.toContain("Search by material, mood, purpose, place, or phrase.");
+    expect(html).not.toContain("Choose with me");
+    expect(html).not.toContain("I have something in mind");
+    expect(html).not.toContain("data-ritual-select");
+  });
+
+  it("filters the Manage rituals view without changing Ritual records", () => {
+    const sourceHtml = renderManageRitualsSection({
+      filters: { origin: "source" },
+    });
+    const householdHtml = renderManageRitualsSection({
+      filters: { origin: "household" },
+    });
+    const missingReadinessHtml = renderManageRitualsSection({
+      filters: { readiness: "missing_readiness" },
+    });
+
+    expect(sourceHtml).toContain("3 Rituals shown");
+    expect(sourceHtml).toContain("Wet the seed and wait.");
+    expect(householdHtml).toContain("0 Rituals shown");
+    expect(householdHtml).not.toContain("Wet the seed and wait.");
+    expect(missingReadinessHtml).toContain("3 Rituals shown");
+    expect(missingReadinessHtml).toContain("pilot_review");
   });
 
   it("keeps the search ritual path renderable before a brief exists", () => {
