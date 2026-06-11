@@ -973,7 +973,7 @@ Later issues should proceed in separate slices:
 
 Do not combine schema approval, source extraction, runtime hinting, and recommendation copy in one implementation issue.
 
-## Open questions for #319 and #320
+## Open questions for Moon Book and Dominguez follow-up extraction issues (#349 and #355)
 
 - Should timing cards live in `src/data` eventually, or remain generated from reviewed research packets?
 - Should Moon phase cards and planetary family cards share one runtime table or separate tables?
