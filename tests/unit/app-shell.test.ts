@@ -725,7 +725,7 @@ describe("app shell rendering", () => {
 
     expect(html).toContain('aria-label="Manage Rituals"');
     expect(html).toContain('aria-pressed="true">Manage rituals</button>');
-    expect(html).toContain("156 imported Rituals. 0 pilot. 0 direct-use eligible.");
+    expect(html).toContain("218 imported Rituals. 0 pilot. 0 direct-use eligible.");
     expect(html).toContain("Readiness summary");
     expect(html).toContain("recommendation-ready");
     expect(html).toContain("Missing readiness");
@@ -766,11 +766,11 @@ describe("app shell rendering", () => {
       filters: { readiness: "missing_readiness" },
     });
 
-    expect(sourceHtml).toContain("156 Rituals shown");
+    expect(sourceHtml).toContain("218 Rituals shown");
     expect(sourceHtml).toContain("Prepare the Candle Table");
     expect(householdHtml).toContain("0 Rituals shown");
     expect(householdHtml).not.toContain("Prepare the Candle Table");
-    expect(missingReadinessHtml).toContain("156 Rituals shown");
+    expect(missingReadinessHtml).toContain("218 Rituals shown");
     expect(missingReadinessHtml).toContain("direct_use_review");
   });
 

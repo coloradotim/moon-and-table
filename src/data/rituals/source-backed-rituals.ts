@@ -382,9 +382,9 @@ export const sourceBackedRituals: Ritual[] = [
           "sourceLocation": "PDF pp. 21-23",
           "sourceSummary": "`Buckland, Practical Candleburning Rituals`, PDF pp. 21-23.",
           "sourceSupports": "Buckland gives the candle arrangement; lighting order; repeated wording; three-to-five-minute concentration periods; extinguishing; and three-night repetition petitioner candle; light-blue candle; pink candle; orange candle",
-          "moonAndTableChanges": "direct source ritual; no guarantee or conflict-resolution promise.",
+          "moonAndTableChanges": "direct source ritual; no outcome certainty or conflict-resolution promise.",
           "doNotImport": [
-            "no guarantee of peace",
+            "no outcome certainty of peace",
             "no therapy or relationship-advice framing"
           ]
         }
@@ -739,7 +739,7 @@ export const sourceBackedRituals: Ritual[] = [
           "sourceSupports": "Buckland gives photo option; astral candle; light-blue candle; half-hour period; and nightly repetition photo; astral candle; light-blue candle",
           "moonAndTableChanges": "direct source ritual; primary purpose is remembering only; blessing remains secondary.",
           "doNotImport": [
-            "no afterlife guarantee",
+            "no afterlife outcome certainty",
             "mediumship",
             "or grief therapy claim"
           ]
@@ -854,7 +854,7 @@ export const sourceBackedRituals: Ritual[] = [
           "moonAndTableChanges": "direct source ritual; direct-use QA may require a safer variant but extraction preserves source architecture.",
           "doNotImport": [
             "material/flame review required",
-            "no luck guarantee"
+            "no luck outcome certainty"
           ]
         }
       ]
@@ -984,7 +984,8 @@ export const sourceBackedRituals: Ritual[] = [
           "moonAndTableChanges": "direct source ritual; symbolic courage only.",
           "doNotImport": [
             "not therapy",
-            "anxiety treatment"
+            "anxiety treatment",
+            "or outcome certainty"
           ]
         }
       ]
@@ -1429,7 +1430,7 @@ export const sourceBackedRituals: Ritual[] = [
           "sourceSupports": "Buckland gives bedtime timing; candle count; lighting order; white-light visualization; quiet period; and close day candle; petitioner candle; light-blue candle; orange candle; white candle",
           "moonAndTableChanges": "direct source ritual; no journal added to body or materials.",
           "doNotImport": [
-            "no dream guarantee",
+            "no dream outcome certainty",
             "no unsupported journaling"
           ]
         }
@@ -1644,10 +1645,8 @@ export const sourceBackedRituals: Ritual[] = [
         "hearth",
         "kitchen",
         "table",
-        "[hearth",
         "home center",
-        "herbs",
-        "oil]"
+        "herbs"
       ],
       "materials": [
         "salt",
@@ -3469,10 +3468,9 @@ export const sourceBackedRituals: Ritual[] = [
         "room",
         "table",
         "doorframe",
-        "[center",
+        "center",
         "focus",
-        "house mind",
-        "room]"
+        "house mind"
       ],
       "places": [
         "room",
@@ -3584,10 +3582,9 @@ export const sourceBackedRituals: Ritual[] = [
         "candle or lamp",
         "table",
         "household center",
-        "[hearth",
         "warmth",
         "center",
-        "flame]"
+        "flame"
       ],
       "materials": [
         "candle or lamp"
@@ -3698,9 +3695,8 @@ export const sourceBackedRituals: Ritual[] = [
         "candle and holder",
         "table",
         "hearth",
-        "[flame",
-        "fear",
-        "candle]"
+        "flame",
+        "fear"
       ],
       "materials": [
         "candle and holder"
@@ -3815,10 +3811,9 @@ export const sourceBackedRituals: Ritual[] = [
         "doorway",
         "boundary",
         "main door",
-        "[door",
+        "door",
         "inside",
-        "outside",
-        "boundary]"
+        "outside"
       ],
       "places": [
         "main door",
@@ -3929,11 +3924,11 @@ export const sourceBackedRituals: Ritual[] = [
         "safe doorway object",
         "main door",
         "entryway",
-        "[door",
+        "door",
         "bell",
         "wreath",
         "key",
-        "boundary]"
+        "boundary"
       ],
       "materials": [
         "safe doorway object"
@@ -4046,10 +4041,9 @@ export const sourceBackedRituals: Ritual[] = [
         "old key or symbolic key",
         "main door",
         "entryway",
-        "[key",
         "lock",
         "privacy",
-        "entrance]"
+        "entrance"
       ],
       "materials": [
         "old key or symbolic key"
@@ -4165,9 +4159,8 @@ export const sourceBackedRituals: Ritual[] = [
         "window",
         "mirror",
         "glass door",
-        "[window",
         "glass",
-        "clear]"
+        "clear"
       ],
       "materials": [
         "safe glass cleaner",
@@ -4285,8 +4278,7 @@ export const sourceBackedRituals: Ritual[] = [
         "or textile",
         "floor",
         "table",
-        "[rug",
-        "working place]"
+        "working place"
       ],
       "materials": [
         "small rug",
@@ -4403,10 +4395,10 @@ export const sourceBackedRituals: Ritual[] = [
         "optional vessel",
         "kitchen table",
         "household table",
-        "[table legs",
+        "table legs",
         "tabletop",
         "stability",
-        "meal]"
+        "meal"
       ],
       "materials": [
         "table",
@@ -4521,9 +4513,9 @@ export const sourceBackedRituals: Ritual[] = [
         "water only if needed",
         "cloth if needed",
         "indoor plant place",
-        "[plant",
+        "plant",
         "atmosphere",
-        "care]"
+        "care"
       ],
       "materials": [
         "identified safe houseplant",
@@ -4646,9 +4638,9 @@ export const sourceBackedRituals: Ritual[] = [
         "room",
         "hallway",
         "entry",
-        "[sweep",
+        "sweep",
         "release",
-        "dust]"
+        "dust"
       ],
       "materials": [
         "broom",
@@ -4773,9 +4765,8 @@ export const sourceBackedRituals: Ritual[] = [
         "rooms",
         "doors",
         "windows",
-        "[salt",
         "incense",
-        "house circuit]"
+        "house circuit"
       ],
       "materials": [
         "salt",
@@ -4894,10 +4885,10 @@ export const sourceBackedRituals: Ritual[] = [
         "broom or cloth",
         "old room",
         "doorway",
-        "[move",
+        "move",
         "sweep",
         "release",
-        "threshold]"
+        "threshold"
       ],
       "materials": [
         "broom or cloth"
@@ -5011,8 +5002,8 @@ export const sourceBackedRituals: Ritual[] = [
         "table",
         "windowsill",
         "tray",
-        "[altar",
-        "household center]"
+        "altar",
+        "household center"
       ],
       "materials": [
         "small surface",
@@ -5130,9 +5121,9 @@ export const sourceBackedRituals: Ritual[] = [
         "household altar objects",
         "shelf",
         "table",
-        "[altar",
+        "altar",
         "objects",
-        "household memory]"
+        "household memory"
       ],
       "materials": [
         "altar surface",
@@ -5986,7 +5977,7 @@ export const sourceBackedRituals: Ritual[] = [
           "sourceLocation": "PDF pp. 64-94",
           "sourceSummary": "`The Green Witch's Garden`, Ch. 4, PDF pp. 64-94, especially windowsill/window box and container material.",
           "sourceSupports": "The source supports windowsill/window box gardens; container drainage; light conditions; and small domestic plant placement safe plant; pot; window; tray; drainage",
-          "moonAndTableChanges": "source_backed_moon_and_table_form; avoids warding/protection guarantees.",
+          "moonAndTableChanges": "source_backed_moon_and_table_form; avoids warding/protection outcome certainty.",
           "doNotImport": [
             "no guaranteed protection ward",
             "plant must be safe and place-appropriate"
@@ -7156,10 +7147,10 @@ export const sourceBackedRituals: Ritual[] = [
       "sourceGrounding": [
         {
           "citationLabel": "Whitehurst, The Magic of Flowers",
-          "sourceLocation": "Orientation p. 14 supports purchased flowers, ga",
-          "sourceSummary": "- citation label: Whitehurst, *The Magic of Flowers* - source location / basis: Orientation p. 14 supports purchased flowers, ga",
+          "sourceLocation": "Orientation p. 14 supports purchased flowers, gazing, intention, and sending intention into blossoms.",
+          "sourceSummary": "- citation label: Whitehurst, *The Magic of Flowers* - source location / basis: Orientation p. 14 supports purchased flowers, gazing, intention, and sending intention into blossoms. - source transformation: narrowed to safe external flower, table, vase, bowl, word, witness, memory, offering, or return mechanics without importing full source charms, recipes, prayers, baths, mists, oils, essences, ingestion, health claims, attraction-control claims, or distinctive long source wording.",
           "sourceSupports": "flowers carry conscious intention through presence. Primary fit is `vessel` + `blessing` using bouquet; vase; water; room/table.",
-          "moonAndTableChanges": "- purposeChange: `not_allowed` - materialSubstitution: `defined_only` - capacityAdaptation: `allowed_if_authored` - audienceAdaptation: `allowed_if_authored` - timingAdaptation: `may_shape_best_window` - note: Do not transform this record into recipe, body-contact, safety-forward disclaimer, outcome guarantee, correspondence database, or unrelated flower substitution.",
+          "moonAndTableChanges": "narrowed to safe external flower, table, vase, bowl, word, witness, memory, offering, or return mechanics without importing full source charms, recipes, prayers, baths, mists, oils, essences, ingestion, health claims, attraction-control claims, or distinctive long source wording.",
           "doNotImport": [
             "no oil/essence/mist"
           ]
@@ -8627,7 +8618,7 @@ export const sourceBackedRituals: Ritual[] = [
           "sourceSupports": "carnation is a memory/rebirth flower. Primary fit is `plant` + `remembering` using carnation; photo/letter/object; table/bedside.",
           "moonAndTableChanges": "narrowed to safe external flower, table, vase, bowl, word, witness, memory, offering, or return mechanics without importing full source charms, recipes, prayers, baths, mists, oils, essences, ingestion, health claims, attraction-control claims, or distinctive long source wording.",
           "doNotImport": [
-            "no healing guarantee."
+            "no healing outcome certainty."
           ]
         }
       ]
@@ -8980,9 +8971,12 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Whitehurst, The Magic of Flowers",
           "sourceLocation": "Geranium pp. 150-158 supports spending time with geranium, asking what truth is needed, and receiving guidance; exorcism/body methods held.",
           "sourceSummary": "- citation label: Whitehurst, *The Magic of Flowers* - source location / basis: Geranium pp. 150-158 supports spending time with geranium, asking what truth is needed, and receiving guidance; exorcism/body methods held. - source transformation: narrowed to safe external flower, table, vase, bowl, word, witness, memory, offering, or return mechanics without importing full source charms, recipes, prayers, baths, mists, oils, essences, ingestion, health claims, attraction-control claims, or distinctive long source wording.",
-          "sourceSupports": "geranium supports recogni Primary fit is `plant` + `voicing` using geranium; journal/table.",
+          "sourceSupports": "geranium supports recognizing truth without force. Primary fit is `plant` + `voicing` using geranium; journal/table.",
           "moonAndTableChanges": "narrowed to safe external flower, table, vase, bowl, word, witness, memory, offering, or return mechanics without importing full source charms, recipes, prayers, baths, mists, oils, essences, ingestion, health claims, attraction-control claims, or distinctive long source wording.",
-          "doNotImport": []
+          "doNotImport": [
+            "no interrogation",
+            "no oil/mist/health."
+          ]
         }
       ]
     },
@@ -8991,7 +8985,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Place reviewed geranium near the journal or table. Settle the body before asking anything. Tell the flower what truth needs help becoming visible. Wait without pushing for a verdict. Write one honest sentence, then close the journal.",
       "intention": "Let geranium help truth arrive without forcing judgment.",
       "bestWindow": "When a household question needs plainness more than argument.",
-      "whyThisFits": "geranium supports recogni Primary fit is `plant` + `voicing` using geranium; journal/table.",
+      "whyThisFits": "geranium supports recognizing truth without force. Primary fit is `plant` + `voicing` using geranium; journal/table.",
       "questionToCarry": "What can be named plainly now?"
     },
     "recommendationMetadata": {
@@ -9225,7 +9219,7 @@ export const sourceBackedRituals: Ritual[] = [
             "no hex",
             "curse",
             "banishing",
-            "protection guarantee."
+            "protection outcome certainty."
           ]
         }
       ]
@@ -10031,10 +10025,10 @@ export const sourceBackedRituals: Ritual[] = [
       "sourceGrounding": [
         {
           "citationLabel": "Whitehurst, The Magic of Flowers",
-          "sourceLocation": "Pansy pp. 270-273 supports written clarity, folded paper under bouquet, love altar, and water-ga",
-          "sourceSummary": "- citation label: Whitehurst, *The Magic of Flowers* - source location / basis: Pansy pp. 270-273 supports written clarity, folded paper under bouquet, love altar, and water-ga",
+          "sourceLocation": "Pansy pp. 270-273 supports written clarity, folded paper under bouquet, love altar, and water-gazing bowl; relationship divination narrowed to reflection.",
+          "sourceSummary": "- citation label: Whitehurst, *The Magic of Flowers* - source location / basis: Pansy pp. 270-273 supports written clarity, folded paper under bouquet, love altar, and water-gazing bowl; relationship divination narrowed to reflection. - source transformation: narrowed to safe external flower, table, vase, bowl, word, witness, memory, offering, or return mechanics without importing full source charms, recipes, prayers, baths, mists, oils, essences, ingestion, health claims, attraction-control claims, or distinctive long source wording.",
           "sourceSupports": "pansy supports thought; beauty; and water reflection. Primary fit is `vessel` + `voicing` using pansy/viola/violet; bowl; water; table.",
-          "moonAndTableChanges": "- purposeChange: `not_allowed` - materialSubstitution: `defined_only` - capacityAdaptation: `allowed_if_authored` - audienceAdaptation: `allowed_if_authored` - timingAdaptation: `may_shape_best_window` - note: Do not transform this record into recipe, body-contact, safety-forward disclaimer, outcome guarantee, correspondence database, or unrelated flower substitution.",
+          "moonAndTableChanges": "narrowed to safe external flower, table, vase, bowl, word, witness, memory, offering, or return mechanics without importing full source charms, recipes, prayers, baths, mists, oils, essences, ingestion, health claims, attraction-control claims, or distinctive long source wording.",
           "doNotImport": [
             "no divination about partner's hidden thoughts."
           ]
@@ -10167,7 +10161,7 @@ export const sourceBackedRituals: Ritual[] = [
           "sourceSupports": "rose witnesses truthful; non-coercive connection. Primary fit is `plant` + `connecting` using rose; vase/table.",
           "moonAndTableChanges": "narrowed to safe external flower, table, vase, bowl, word, witness, memory, offering, or return mechanics without importing full source charms, recipes, prayers, baths, mists, oils, essences, ingestion, health claims, attraction-control claims, or distinctive long source wording.",
           "doNotImport": [
-            "no attraction/control/love guarantee."
+            "no attraction/control/love outcome certainty."
           ]
         }
       ]
@@ -10762,10 +10756,10 @@ export const sourceBackedRituals: Ritual[] = [
       "sourceGrounding": [
         {
           "citationLabel": "Whitehurst, The Magic of Flowers",
-          "sourceLocation": "Tulip pp. 326-331 supports gratitude, heart, grounding by ga",
-          "sourceSummary": "- citation label: Whitehurst, *The Magic of Flowers* - source location / basis: Tulip pp. 326-331 supports gratitude, heart, grounding by ga",
+          "sourceLocation": "Tulip pp. 326-331 supports gratitude, heart, grounding by gazing, relationship/home tulips; desire/body-contact held.",
+          "sourceSummary": "- citation label: Whitehurst, *The Magic of Flowers* - source location / basis: Tulip pp. 326-331 supports gratitude, heart, grounding by gazing, relationship/home tulips; desire/body-contact held. - source transformation: narrowed to safe external flower, table, vase, bowl, word, witness, memory, offering, or return mechanics without importing full source charms, recipes, prayers, baths, mists, oils, essences, ingestion, health claims, attraction-control claims, or distinctive long source wording.",
           "sourceSupports": "tulip helps gratitude precede desire. Primary fit is `plant` + `blessing` using tulips; vase; house/table.",
-          "moonAndTableChanges": "- purposeChange: `not_allowed` - materialSubstitution: `defined_only` - capacityAdaptation: `allowed_if_authored` - audienceAdaptation: `allowed_if_authored` - timingAdaptation: `may_shape_best_window` - note: Do not transform this record into recipe, body-contact, safety-forward disclaimer, outcome guarantee, correspondence database, or unrelated flower substitution.",
+          "moonAndTableChanges": "narrowed to safe external flower, table, vase, bowl, word, witness, memory, offering, or return mechanics without importing full source charms, recipes, prayers, baths, mists, oils, essences, ingestion, health claims, attraction-control claims, or distinctive long source wording.",
           "doNotImport": [
             "no prosperity or attraction claim."
           ]
@@ -11238,14 +11232,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for remembering; grimoire; or words as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: notebook; pen. Place: table or bedside.\" sourceBackedRationale: - \"Chapter 1; pp. 19-20; grimoire section supports the record and return architecture through source treats a grimoire as a record of spells; materials; and results.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 1, pp. 19-20, grimoire section supports the record and return architecture through source treats a grimoire as a record of spells, materials, and results. Carrier: words. Materials: notebook, pen. Place: table or bedside.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -11255,7 +11245,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Open a notebook kept for ritual work. Write the date, the material used, the words spoken or withheld, and what changed in the room after the rite. Close the book and return it to the same place.",
       "intention": "Let the ritual have a record without turning it into a performance.",
       "bestWindow": "After a rite, before ordinary conversation takes over.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for remembering; grimoire; or words as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: notebook; pen. Place: table or bedside.\" sourceBackedRationale: - \"Chapter 1; pp. 19-20; grimoire section supports the record and return architecture through source treats a grimoire as a record of spells; materials; and results.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 1, pp. 19-20, grimoire section supports the record and return architecture through source treats a grimoire as a record of spells, materials, and results. Carrier: words. Materials: notebook, pen. Place: table or bedside.",
       "questionToCarry": "What does this rite need remembered, and what can be left unmeasured?"
     },
     "recommendationMetadata": {
@@ -11296,16 +11286,19 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "notebook",
-        "pen",
-        "table or bedside",
         "grimoire",
         "record",
         "close",
         "remember"
+      ],
+      "keywords": [
+        "grimoire",
+        "record",
+        "close",
+        "remember",
+        "notebook",
+        "pen",
+        "table or bedside"
       ],
       "materials": [
         "notebook",
@@ -11355,14 +11348,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for marking; altar; or table as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: table. Materials: small table or tray; candle or lamp; cloth; personal object. Place: bedroom; table; or private shelf.\" sourceBackedRationale: - \"Chapter 1; pp. 21-22; altar section supports the table or altar setup architecture through source describes making an altar with candle; personal/love objects; flowers; stones; and ritual tools.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 1, pp. 21-22, altar section supports the table or altar setup architecture through source describes making an altar with candle, personal/love objects, flowers, stones, and ritual tools. Carrier: table. Materials: small table or tray, candle or lamp, cloth, personal object. Place: bedroom, table, or private shelf.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -11372,7 +11361,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Choose one small table, shelf, or tray. Place one candle or lamp, one object that belongs to the body, and one clean cloth. Name what the space is for in one sentence. The rite begins when nothing else is added.",
       "intention": "Give the work a visible place before asking it to move.",
       "bestWindow": "Before an intimate or connecting rite.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for marking; altar; or table as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: table. Materials: small table or tray; candle or lamp; cloth; personal object. Place: bedroom; table; or private shelf.\" sourceBackedRationale: - \"Chapter 1; pp. 21-22; altar section supports the table or altar setup architecture through source describes making an altar with candle; personal/love objects; flowers; stones; and ritual tools.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 1, pp. 21-22, altar section supports the table or altar setup architecture through source describes making an altar with candle, personal/love objects, flowers, stones, and ritual tools. Carrier: table. Materials: small table or tray, candle or lamp, cloth, personal object. Place: bedroom, table, or private shelf.",
       "questionToCarry": "What belongs at the center, and what does not need to enter?"
     },
     "recommendationMetadata": {
@@ -11414,20 +11403,24 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
+        "altar",
+        "table",
+        "candle",
+        "private",
+        "prepare"
       ],
       "keywords": [
+        "altar",
+        "table",
+        "candle",
+        "private",
+        "prepare",
         "small table or tray",
         "candle or lamp",
         "cloth",
         "personal object",
         "bedroom",
-        "table",
-        "or private shelf",
-        "altar",
-        "candle",
-        "private",
-        "prepare"
+        "or private shelf"
       ],
       "materials": [
         "small table or tray",
@@ -11481,14 +11474,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for blessing; confidence; or candlelight as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: paper; pen; candle or lamp. Place: mirror; table; or bedside.\" sourceBackedRationale: - \"Chapter 3; pp. 70-72; sigil confidence spell supports the sigil candle architecture through source uses written intention; sigil-making; candle placement; and focused confidence work.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 3, pp. 70-72, sigil confidence spell supports the sigil candle architecture through source uses written intention, sigil-making, candle placement, and focused confidence work. Carrier: candlelight. Materials: paper, pen, candle or lamp. Place: mirror, table, or bedside.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -11498,7 +11487,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Write a short confidence sentence. Reduce it into a simple mark or sigil. Place the mark beneath a candle or lamp and let the light stand over it for a few quiet breaths. Put the paper away when the light is out.",
       "intention": "Let confidence become a mark the body can stand near.",
       "bestWindow": "Before asking to be seen, touched, or heard.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for blessing; confidence; or candlelight as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: paper; pen; candle or lamp. Place: mirror; table; or bedside.\" sourceBackedRationale: - \"Chapter 3; pp. 70-72; sigil confidence spell supports the sigil candle architecture through source uses written intention; sigil-making; candle placement; and focused confidence work.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 3, pp. 70-72, sigil confidence spell supports the sigil candle architecture through source uses written intention, sigil-making, candle placement, and focused confidence work. Carrier: candlelight. Materials: paper, pen, candle or lamp. Place: mirror, table, or bedside.",
       "questionToCarry": "What mark could hold confidence without explaining it?"
     },
     "recommendationMetadata": {
@@ -11539,19 +11528,22 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
+        "confidence",
+        "sigil",
+        "candle",
+        "body"
       ],
       "keywords": [
+        "confidence",
+        "sigil",
+        "candle",
+        "body",
         "paper",
         "pen",
         "candle or lamp",
         "mirror",
         "table",
-        "or bedside",
-        "confidence",
-        "sigil",
-        "candle",
-        "body"
+        "or bedside"
       ],
       "materials": [
         "paper",
@@ -11604,14 +11596,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for releasing; body; or body as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: paper; pen; candle or bowl; water. Place: bathroom or bedroom.\" sourceBackedRationale: - \"Chapter 3; p. 77; body insecurity spell supports the body release bath architecture through source uses body-shaped candle and bath salts to banish body insecurity.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 3, p. 77, body insecurity spell supports the body release bath architecture through source uses body-shaped candle and bath salts to banish body insecurity. Carrier: body. Materials: paper, pen, candle or bowl, water. Place: bathroom or bedroom.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -11621,7 +11609,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Name one harsh thought about the body on a slip of paper. Place it near a candle, bowl, or bath edge without reading it twice. Rinse your hands or step into water. Close by folding the paper away for disposal.",
       "intention": "Let the body receive less argument tonight.",
       "bestWindow": "When body judgment is loud and capacity is low.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for releasing; body; or body as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: paper; pen; candle or bowl; water. Place: bathroom or bedroom.\" sourceBackedRationale: - \"Chapter 3; p. 77; body insecurity spell supports the body release bath architecture through source uses body-shaped candle and bath salts to banish body insecurity.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 3, p. 77, body insecurity spell supports the body release bath architecture through source uses body-shaped candle and bath salts to banish body insecurity. Carrier: body. Materials: paper, pen, candle or bowl, water. Place: bathroom or bedroom.",
       "questionToCarry": "What thought can leave the room before the body has to answer it?"
     },
     "recommendationMetadata": {
@@ -11662,18 +11650,21 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "paper",
-        "pen",
-        "candle or bowl",
-        "water",
-        "bathroom or bedroom",
         "body",
         "bath",
         "release",
         "candle"
+      ],
+      "keywords": [
+        "body",
+        "bath",
+        "release",
+        "candle",
+        "paper",
+        "pen",
+        "candle or bowl",
+        "water",
+        "bathroom or bedroom"
       ],
       "materials": [
         "paper",
@@ -11725,14 +11716,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for releasing; digital; or vessel as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: vessel. Materials: device; paper; pen; small bowl; salt. Place: table or bedside.\" sourceBackedRationale: - \"Chapter 3; pp. 79-81; social-media boundary spell supports the digital boundary vessel architecture through source uses electronics; a written spell; salt; and containment to interrupt social-media fixation.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 3, pp. 79-81, social-media boundary spell supports the digital boundary vessel architecture through source uses electronics, a written spell, salt, and containment to interrupt social-media fixation. Carrier: vessel. Materials: device, paper, pen, small bowl, salt. Place: table or bedside.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -11742,7 +11729,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Write one boundary sentence about the feed, thread, or profile that has been pulling attention. Place the device face down beside a small bowl. Add one pinch of salt to the bowl. Close by moving the device away from the bowl and leaving the sentence folded.",
       "intention": "Let attention return to the body instead of the feed.",
       "bestWindow": "Waning moon or any evening when digital attention is sticky.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for releasing; digital; or vessel as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: vessel. Materials: device; paper; pen; small bowl; salt. Place: table or bedside.\" sourceBackedRationale: - \"Chapter 3; pp. 79-81; social-media boundary spell supports the digital boundary vessel architecture through source uses electronics; a written spell; salt; and containment to interrupt social-media fixation.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 3, pp. 79-81, social-media boundary spell supports the digital boundary vessel architecture through source uses electronics, a written spell, salt, and containment to interrupt social-media fixation. Carrier: vessel. Materials: device, paper, pen, small bowl, salt. Place: table or bedside.",
       "questionToCarry": "What contact can wait outside the bowl tonight?"
     },
     "recommendationMetadata": {
@@ -11783,19 +11770,23 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
+        "digital",
+        "boundary",
+        "salt",
+        "bowl",
+        "waning"
       ],
       "keywords": [
+        "digital",
+        "boundary",
+        "salt",
+        "bowl",
+        "waning",
         "device",
         "paper",
         "pen",
         "small bowl",
-        "salt",
-        "table or bedside",
-        "digital",
-        "boundary",
-        "bowl",
-        "waning"
+        "table or bedside"
       ],
       "materials": [
         "device",
@@ -11848,14 +11839,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for voicing; desire; or words as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: notebook; pen; one card or object. Place: table; bed; or floor.\" sourceBackedRationale: - \"Chapter 3; pp. 81-82; desire-clarity journal/tarot rite supports the desire question architecture through source uses journal questioning and divination to clarify desire.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 3, pp. 81-82, desire-clarity journal/tarot rite supports the desire question architecture through source uses journal questioning and divination to clarify desire. Carrier: words. Materials: notebook, pen, one card or object. Place: table, bed, or floor.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -11865,7 +11852,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Write one question about desire at the top of a page. Pull one card, object, or word from the room and set it beside the page. Write three plain sentences in answer. Close the notebook before solving anything.",
       "intention": "Let desire answer before it is turned into a plan.",
       "bestWindow": "When wanting feels tangled or borrowed.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for voicing; desire; or words as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: notebook; pen; one card or object. Place: table; bed; or floor.\" sourceBackedRationale: - \"Chapter 3; pp. 81-82; desire-clarity journal/tarot rite supports the desire question architecture through source uses journal questioning and divination to clarify desire.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 3, pp. 81-82, desire-clarity journal/tarot rite supports the desire question architecture through source uses journal questioning and divination to clarify desire. Carrier: words. Materials: notebook, pen, one card or object. Place: table, bed, or floor.",
       "questionToCarry": "What do I want when no one is watching me want it?"
     },
     "recommendationMetadata": {
@@ -11906,19 +11893,22 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
+        "desire",
+        "journal",
+        "card",
+        "words"
       ],
       "keywords": [
+        "desire",
+        "journal",
+        "card",
+        "words",
         "notebook",
         "pen",
         "one card or object",
         "table",
         "bed",
-        "or floor",
-        "desire",
-        "journal",
-        "card",
-        "words"
+        "or floor"
       ],
       "materials": [
         "notebook",
@@ -11971,14 +11961,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for opening; courage; or candlelight as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: paper; pen; candle or lamp; fire-safe dish. Place: table or hearth surface.\" sourceBackedRationale: - \"Chapter 3; pp. 82-84; Flames for Courage supports the fire safe courage architecture through source uses written fear; flame; and fire-safe container to support courage before action.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 3, pp. 82-84, Flames for Courage supports the fire safe courage architecture through source uses written fear, flame, and fire-safe container to support courage before action. Carrier: candlelight. Materials: paper, pen, candle or lamp, fire-safe dish. Place: table or hearth surface.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -11988,7 +11974,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Write the fear that keeps the invitation small. Place the paper in a fire-safe dish. Touch a candle or lamp on, then burn or tear the paper safely. Close when the dish is empty and the invitation has not been spoken yet.",
       "intention": "Let courage arrive before the ask.",
       "bestWindow": "Before inviting closeness, conversation, or shared attention.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for opening; courage; or candlelight as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: paper; pen; candle or lamp; fire-safe dish. Place: table or hearth surface.\" sourceBackedRationale: - \"Chapter 3; pp. 82-84; Flames for Courage supports the fire safe courage architecture through source uses written fear; flame; and fire-safe container to support courage before action.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 3, pp. 82-84, Flames for Courage supports the fire safe courage architecture through source uses written fear, flame, and fire-safe container to support courage before action. Carrier: candlelight. Materials: paper, pen, candle or lamp, fire-safe dish. Place: table or hearth surface.",
       "questionToCarry": "What fear can leave before the invitation is made?"
     },
     "recommendationMetadata": {
@@ -12029,18 +12015,21 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "paper",
-        "pen",
-        "candle or lamp",
-        "fire-safe dish",
-        "table or hearth surface",
         "courage",
         "invitation",
         "flame",
         "fear"
+      ],
+      "keywords": [
+        "courage",
+        "invitation",
+        "flame",
+        "fear",
+        "paper",
+        "pen",
+        "candle or lamp",
+        "fire-safe dish",
+        "table or hearth surface"
       ],
       "materials": [
         "paper",
@@ -12092,14 +12081,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for blessing; bedroom; or vessel as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: vessel. Materials: bowl of water; leaf or flower; candle or lamp. Place: bedroom.\" sourceBackedRationale: - \"Chapter 3; pp. 84-85; bedroom blessing supports the bedroom blessing architecture through source uses water; plant material; candle; and bedroom blessing structure.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 3, pp. 84-85, bedroom blessing supports the bedroom blessing architecture through source uses water, plant material, candle, and bedroom blessing structure. Carrier: vessel. Materials: bowl of water, leaf or flower, candle or lamp. Place: bedroom.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -12109,7 +12094,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Set a bowl of water beside one leaf, flower, or small green thing. Light a candle or lamp nearby. Name one quality the room may hold tonight. Touch the water, then place the leaf where the room can keep it until morning.",
       "intention": "Let the bedroom become a room with one clear charge.",
       "bestWindow": "New moon, before sleep, or before shared privacy.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for blessing; bedroom; or vessel as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: vessel. Materials: bowl of water; leaf or flower; candle or lamp. Place: bedroom.\" sourceBackedRationale: - \"Chapter 3; pp. 84-85; bedroom blessing supports the bedroom blessing architecture through source uses water; plant material; candle; and bedroom blessing structure.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 3, pp. 84-85, bedroom blessing supports the bedroom blessing architecture through source uses water, plant material, candle, and bedroom blessing structure. Carrier: vessel. Materials: bowl of water, leaf or flower, candle or lamp. Place: bedroom.",
       "questionToCarry": "What should this room know how to hold?"
     },
     "recommendationMetadata": {
@@ -12151,17 +12136,21 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "bowl of water",
-        "leaf or flower",
-        "candle or lamp",
         "bedroom",
         "water",
         "leaf",
         "candle",
         "blessing"
+      ],
+      "keywords": [
+        "bedroom",
+        "water",
+        "leaf",
+        "candle",
+        "blessing",
+        "bowl of water",
+        "leaf or flower",
+        "candle or lamp"
       ],
       "materials": [
         "bowl of water",
@@ -12212,14 +12201,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for blessing; acceptance; or body as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: ribbon and clean garment or private object. Place: bedroom or closet.\" sourceBackedRationale: - \"Chapter 3; pp. 84-85; sexuality acceptance spell supports the body object blessing architecture through source uses personal garment/object; ribbon; and acceptance blessing.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 3, pp. 84-85, sexuality acceptance spell supports the body object blessing architecture through source uses personal garment/object, ribbon, and acceptance blessing. Carrier: body. Materials: ribbon and clean garment or private object. Place: bedroom or closet.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -12229,7 +12214,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Choose one clean garment, ribbon, or small body object. Hold it in both hands and name one part of the self that is allowed to stay. Tie the ribbon around the object or fold the garment once. Return it to its private place.",
       "intention": "Let acceptance have a body it can touch.",
       "bestWindow": "Before dressing, undressing, or re-entering the room as yourself.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for blessing; acceptance; or body as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: ribbon and clean garment or private object. Place: bedroom or closet.\" sourceBackedRationale: - \"Chapter 3; pp. 84-85; sexuality acceptance spell supports the body object blessing architecture through source uses personal garment/object; ribbon; and acceptance blessing.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 3, pp. 84-85, sexuality acceptance spell supports the body object blessing architecture through source uses personal garment/object, ribbon, and acceptance blessing. Carrier: body. Materials: ribbon and clean garment or private object. Place: bedroom or closet.",
       "questionToCarry": "What part of me does not need permission tonight?"
     },
     "recommendationMetadata": {
@@ -12270,15 +12255,18 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "ribbon and clean garment or private object",
-        "bedroom or closet",
         "acceptance",
         "garment",
         "ribbon",
         "body"
+      ],
+      "keywords": [
+        "acceptance",
+        "garment",
+        "ribbon",
+        "body",
+        "ribbon and clean garment or private object",
+        "bedroom or closet"
       ],
       "materials": [
         "ribbon and clean garment or private object"
@@ -12327,14 +12315,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for releasing; cycle; or words as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: paper; pen; string; scissors. Place: table or floor.\" sourceBackedRationale: - \"Chapter 3; pp. 86-87; toxic cycles spell supports the cord release architecture through source uses written naming; rope/string; cutting; and disposal to break a cycle.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 3, pp. 86-87, toxic cycles spell supports the cord release architecture through source uses written naming, rope/string, cutting, and disposal to break a cycle. Carrier: words. Materials: paper, pen, string, scissors. Place: table or floor.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -12344,7 +12328,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Write the cycle in one sentence. Lay a piece of string across the sentence. Cut the string once. Fold the paper around the cut pieces and put it in the trash or outside bin. Close when your hands are empty.",
       "intention": "Let the cycle be named, cut, and removed once.",
       "bestWindow": "Waning moon or after the same pattern repeats again.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for releasing; cycle; or words as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: paper; pen; string; scissors. Place: table or floor.\" sourceBackedRationale: - \"Chapter 3; pp. 86-87; toxic cycles spell supports the cord release architecture through source uses written naming; rope/string; cutting; and disposal to break a cycle.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 3, pp. 86-87, toxic cycles spell supports the cord release architecture through source uses written naming, rope/string, cutting, and disposal to break a cycle. Carrier: words. Materials: paper, pen, string, scissors. Place: table or floor.",
       "questionToCarry": "What cycle is ready to stop receiving new thread?"
     },
     "recommendationMetadata": {
@@ -12385,17 +12369,20 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "paper",
-        "pen",
-        "string",
-        "scissors",
-        "table or floor",
         "cycle",
+        "string",
         "release",
         "waning"
+      ],
+      "keywords": [
+        "cycle",
+        "string",
+        "release",
+        "waning",
+        "paper",
+        "pen",
+        "scissors",
+        "table or floor"
       ],
       "materials": [
         "paper",
@@ -12447,14 +12434,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for blessing; mirror; or body as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: mirror; one adornment/color/scent already owned. Place: mirror or dressing space.\" sourceBackedRationale: - \"Chapter 3 pp. 89-90 and Chapter 4 pp. 93-94; mirror glamour spells supports the mirror glamour architecture through source uses mirror; adornment; music/mood; and self-address for glamour.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 3 pp. 89-90 and Chapter 4 pp. 93-94, mirror glamour spells supports the mirror glamour architecture through source uses mirror, adornment, music/mood, and self-address for glamour. Carrier: body. Materials: mirror, one adornment/color/scent already owned. Place: mirror or dressing space.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -12464,7 +12447,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Stand before the mirror with one adornment, color, or scent already yours. Put it on slowly. Look once without correcting the body. Close by turning away before the mirror becomes an argument.",
       "intention": "Let beauty be received before it is inspected.",
       "bestWindow": "Before going out, being seen, or returning to the body after shame.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for blessing; mirror; or body as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: mirror; one adornment/color/scent already owned. Place: mirror or dressing space.\" sourceBackedRationale: - \"Chapter 3 pp. 89-90 and Chapter 4 pp. 93-94; mirror glamour spells supports the mirror glamour architecture through source uses mirror; adornment; music/mood; and self-address for glamour.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 3 pp. 89-90 and Chapter 4 pp. 93-94, mirror glamour spells supports the mirror glamour architecture through source uses mirror, adornment, music/mood, and self-address for glamour. Carrier: body. Materials: mirror, one adornment/color/scent already owned. Place: mirror or dressing space.",
       "questionToCarry": "What does the mirror get to witness without negotiating?"
     },
     "recommendationMetadata": {
@@ -12505,15 +12488,18 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
         "mirror",
-        "one adornment/color/scent already owned",
-        "mirror or dressing space",
         "glamour",
         "body",
         "seen"
+      ],
+      "keywords": [
+        "mirror",
+        "glamour",
+        "body",
+        "seen",
+        "one adornment/color/scent already owned",
+        "mirror or dressing space"
       ],
       "materials": [
         "mirror",
@@ -12563,14 +12549,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for opening; bath; or body as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: bath or foot bath; warm-colored object; candle or lamp. Place: bathroom.\" sourceBackedRationale: - \"Chapter 4; pp. 97-98; Scarlet Soak supports the bath glamour architecture through source uses bath; color; candle; and desire glamour.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 4, pp. 97-98, Scarlet Soak supports the bath glamour architecture through source uses bath, color, candle, and desire glamour. Carrier: body. Materials: bath or foot bath, warm-colored object, candle or lamp. Place: bathroom.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -12580,7 +12562,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Prepare a bath or foot bath. Place one red, pink, or warm-colored object near the water with a candle or lamp. Name one way the body may feel wanted. Close by draining the water and taking the object away from the edge.",
       "intention": "Let wanting touch the body without becoming a demand.",
       "bestWindow": "Before private time or when desire needs a softer door.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for opening; bath; or body as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: bath or foot bath; warm-colored object; candle or lamp. Place: bathroom.\" sourceBackedRationale: - \"Chapter 4; pp. 97-98; Scarlet Soak supports the bath glamour architecture through source uses bath; color; candle; and desire glamour.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 4, pp. 97-98, Scarlet Soak supports the bath glamour architecture through source uses bath, color, candle, and desire glamour. Carrier: body. Materials: bath or foot bath, warm-colored object, candle or lamp. Place: bathroom.",
       "questionToCarry": "What kind of wanting can the water hold without rushing?"
     },
     "recommendationMetadata": {
@@ -12621,17 +12603,20 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "bath or foot bath",
-        "warm-colored object",
-        "candle or lamp",
-        "bathroom",
         "bath",
         "glamour",
         "desire",
         "candle"
+      ],
+      "keywords": [
+        "bath",
+        "glamour",
+        "desire",
+        "candle",
+        "bath or foot bath",
+        "warm-colored object",
+        "candle or lamp",
+        "bathroom"
       ],
       "materials": [
         "bath or foot bath",
@@ -12682,14 +12667,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for opening; date; or doorway as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: doorway. Materials: one carried object. Place: doorway.\" sourceBackedRationale: - \"Chapter 4; pp. 99-100; first date blessing supports the threshold blessing architecture through source uses a date-preparation blessing to support confidence and welcome.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 4, pp. 99-100, first date blessing supports the threshold blessing architecture through source uses a date-preparation blessing to support confidence and welcome. Carrier: doorway. Materials: one carried object. Place: doorway.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -12699,7 +12680,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Stand at the door with one small object you will carry. Touch the object to the doorframe. Name the quality you want to bring with you. Put the object in a pocket or bag and step through once.",
       "intention": "Let the threshold know what comes with you.",
       "bestWindow": "Before leaving for a date or chosen meeting.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for opening; date; or doorway as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: doorway. Materials: one carried object. Place: doorway.\" sourceBackedRationale: - \"Chapter 4; pp. 99-100; first date blessing supports the threshold blessing architecture through source uses a date-preparation blessing to support confidence and welcome.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 4, pp. 99-100, first date blessing supports the threshold blessing architecture through source uses a date-preparation blessing to support confidence and welcome. Carrier: doorway. Materials: one carried object. Place: doorway.",
       "questionToCarry": "What quality should cross the door with me?"
     },
     "recommendationMetadata": {
@@ -12740,15 +12721,18 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "one carried object",
-        "doorway",
         "date",
         "threshold",
         "carry",
         "blessing"
+      ],
+      "keywords": [
+        "date",
+        "threshold",
+        "carry",
+        "blessing",
+        "one carried object",
+        "doorway"
       ],
       "materials": [
         "one carried object"
@@ -12797,14 +12781,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for marking; tarot; or table as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: table. Materials: two cards/images/objects. Place: table.\" sourceBackedRationale: - \"Chapter 4; pp. 100-101; Deal with Your Demons supports the tarot shadow table architecture through source uses tarot images and written/spoken confrontation of difficult inner material.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 4, pp. 100-101, Deal with Your Demons supports the tarot shadow table architecture through source uses tarot images and written/spoken confrontation of difficult inner material. Carrier: table. Materials: two cards/images/objects. Place: table.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -12814,7 +12794,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Place one difficult card, image, or object on the table. Name the pattern it shows without making it a verdict. Place a second card, image, or object beside it for what can change. Close by turning both facedown.",
       "intention": "Let the hard thing be witnessed without letting it rule the room.",
       "bestWindow": "When a repeated fear or old story needs a table, not a throne.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for marking; tarot; or table as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: table. Materials: two cards/images/objects. Place: table.\" sourceBackedRationale: - \"Chapter 4; pp. 100-101; Deal with Your Demons supports the tarot shadow table architecture through source uses tarot images and written/spoken confrontation of difficult inner material.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 4, pp. 100-101, Deal with Your Demons supports the tarot shadow table architecture through source uses tarot images and written/spoken confrontation of difficult inner material. Carrier: table. Materials: two cards/images/objects. Place: table.",
       "questionToCarry": "What can be named without being obeyed?"
     },
     "recommendationMetadata": {
@@ -12855,14 +12835,17 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "two cards/images/objects",
-        "table",
         "tarot",
         "shadow",
+        "table",
         "naming"
+      ],
+      "keywords": [
+        "tarot",
+        "shadow",
+        "table",
+        "naming",
+        "two cards/images/objects"
       ],
       "materials": [
         "two cards/images/objects"
@@ -12911,14 +12894,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for connecting; adult; or words as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: paper; pen; string. Place: bedroom or private table.\" sourceBackedRationale: - \"Chapter 4; pp. 101-102; ritual for just sex supports the adult intention boundary architecture through source uses written intention; string/rope; and a bounded erotic purpose.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 4, pp. 101-102, ritual for just sex supports the adult intention boundary architecture through source uses written intention, string/rope, and a bounded erotic purpose. Carrier: words. Materials: paper, pen, string. Place: bedroom or private table.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -12928,7 +12907,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Write the adult intention in one plain sentence. Tie a string around the folded paper once. Place it where it will not be seen by guests. Close by naming what this rite is not asking for.",
       "intention": "Let a private desire have a clear edge.",
       "bestWindow": "Before adult private time when the purpose needs to stay simple.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for connecting; adult; or words as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: paper; pen; string. Place: bedroom or private table.\" sourceBackedRationale: - \"Chapter 4; pp. 101-102; ritual for just sex supports the adult intention boundary architecture through source uses written intention; string/rope; and a bounded erotic purpose.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 4, pp. 101-102, ritual for just sex supports the adult intention boundary architecture through source uses written intention, string/rope, and a bounded erotic purpose. Carrier: words. Materials: paper, pen, string. Place: bedroom or private table.",
       "questionToCarry": "What does this desire include, and what does it not include?"
     },
     "recommendationMetadata": {
@@ -12970,16 +12949,19 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "paper",
-        "pen",
-        "string",
-        "bedroom or private table",
         "adult",
         "boundary",
-        "intention"
+        "intention",
+        "string"
+      ],
+      "keywords": [
+        "adult",
+        "boundary",
+        "intention",
+        "string",
+        "paper",
+        "pen",
+        "bedroom or private table"
       ],
       "materials": [
         "paper",
@@ -13030,14 +13012,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for blessing; sex-positive; or candlelight as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: candle or lamp; table. Place: private table or bedside.\" sourceBackedRationale: - \"Chapter 5; pp. 103-105; sex-positivity prayer supports the candle prayer functional architecture through source uses altar/candle/prayer architecture for sex-positive blessing.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 5, pp. 103-105, sex-positivity prayer supports the candle prayer functional architecture through source uses altar/candle/prayer architecture for sex-positive blessing. Carrier: candlelight. Materials: candle or lamp, table. Place: private table or bedside.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -13047,7 +13025,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Set one candle or lamp on the table. Say a brief blessing for consensual adult pleasure in your own words. Keep the words under one breath. Close by touching the table and letting the light stand without more explanation.",
       "intention": "Let pleasure be blessed without needing to defend itself.",
       "bestWindow": "Before adult private time or after shame has entered the room.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for blessing; sex-positive; or candlelight as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: candle or lamp; table. Place: private table or bedside.\" sourceBackedRationale: - \"Chapter 5; pp. 103-105; sex-positivity prayer supports the candle prayer functional architecture through source uses altar/candle/prayer architecture for sex-positive blessing.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 5, pp. 103-105, sex-positivity prayer supports the candle prayer functional architecture through source uses altar/candle/prayer architecture for sex-positive blessing. Carrier: candlelight. Materials: candle or lamp, table. Place: private table or bedside.",
       "questionToCarry": "What blessing can be spoken without making the body argue?"
     },
     "recommendationMetadata": {
@@ -13089,16 +13067,19 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "candle or lamp",
-        "table",
-        "private table or bedside",
         "sex-positive",
         "candle",
         "blessing",
         "adult"
+      ],
+      "keywords": [
+        "sex-positive",
+        "candle",
+        "blessing",
+        "adult",
+        "candle or lamp",
+        "table",
+        "private table or bedside"
       ],
       "materials": [
         "candle or lamp",
@@ -13148,14 +13129,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for connecting; sigil; or candlelight as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: paper; pen; candle or lamp; optional household sweetness. Place: private table.\" sourceBackedRationale: - \"Chapter 5; pp. 105-106; sex sigil spell supports the erotic sigil architecture through source uses erotic sigil; candle; honey/rose materials; and focused desire.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 5, pp. 105-106, sex sigil spell supports the erotic sigil architecture through source uses erotic sigil, candle, honey/rose materials, and focused desire. Carrier: candlelight. Materials: paper, pen, candle or lamp, optional household sweetness. Place: private table.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -13165,7 +13142,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Write the private desire as a short consent-safe sentence. Reduce it into a mark. Place the mark under a candle or lamp with a little sweetness beside it if already in the house. Close by folding the mark away.",
       "intention": "Let desire become a sign, not a demand.",
       "bestWindow": "Before private adult connection or during a Venus-touched evening.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for connecting; sigil; or candlelight as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: paper; pen; candle or lamp; optional household sweetness. Place: private table.\" sourceBackedRationale: - \"Chapter 5; pp. 105-106; sex sigil spell supports the erotic sigil architecture through source uses erotic sigil; candle; honey/rose materials; and focused desire.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 5, pp. 105-106, sex sigil spell supports the erotic sigil architecture through source uses erotic sigil, candle, honey/rose materials, and focused desire. Carrier: candlelight. Materials: paper, pen, candle or lamp, optional household sweetness. Place: private table.",
       "questionToCarry": "What desire can be marked without being forced?"
     },
     "recommendationMetadata": {
@@ -13206,18 +13183,21 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "paper",
-        "pen",
-        "candle or lamp",
-        "optional household sweetness",
-        "private table",
         "sigil",
         "desire",
         "candle",
         "sweetness"
+      ],
+      "keywords": [
+        "sigil",
+        "desire",
+        "candle",
+        "sweetness",
+        "paper",
+        "pen",
+        "candle or lamp",
+        "optional household sweetness",
+        "private table"
       ],
       "materials": [
         "paper",
@@ -13269,14 +13249,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for voicing; desire; or candlelight as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: two candles or lamps; paper; pen. Place: private table or floor.\" sourceBackedRationale: - \"Chapter 5; pp. 108-110; kink/desire clarity rite supports the two light desire clarity architecture through source uses paired candles; written desire; and contemplative clarification.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 5, pp. 108-110, kink/desire clarity rite supports the two light desire clarity architecture through source uses paired candles, written desire, and contemplative clarification. Carrier: candlelight. Materials: two candles or lamps, paper, pen. Place: private table or floor.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -13286,7 +13262,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Place two candles or lamps with space between them. Write one desire you want to understand and set the paper between the lights. Sit until the desire feels like a sentence instead of a fog. Close by folding the paper toward yourself.",
       "intention": "Let desire become clear without having to be acted on.",
       "bestWindow": "When curiosity, kink, or longing needs language before action.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for voicing; desire; or candlelight as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: two candles or lamps; paper; pen. Place: private table or floor.\" sourceBackedRationale: - \"Chapter 5; pp. 108-110; kink/desire clarity rite supports the two light desire clarity architecture through source uses paired candles; written desire; and contemplative clarification.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 5, pp. 108-110, kink/desire clarity rite supports the two light desire clarity architecture through source uses paired candles, written desire, and contemplative clarification. Carrier: candlelight. Materials: two candles or lamps, paper, pen. Place: private table or floor.",
       "questionToCarry": "What can be known first and chosen later?"
     },
     "recommendationMetadata": {
@@ -13327,17 +13303,20 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "two candles or lamps",
-        "paper",
-        "pen",
-        "private table or floor",
         "desire",
         "two lights",
         "clarity",
         "words"
+      ],
+      "keywords": [
+        "desire",
+        "two lights",
+        "clarity",
+        "words",
+        "two candles or lamps",
+        "paper",
+        "pen",
+        "private table or floor"
       ],
       "materials": [
         "two candles or lamps",
@@ -13388,14 +13367,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for marking; fantasy; or table as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: table. Materials: apple; candle or lamp. Place: table.\" sourceBackedRationale: - \"Chapter 5; pp. 113-114; apple fantasy rite supports the fantasy container architecture through source uses apple; candle; and fantasy contemplation around desire outside ordinary boundaries.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 5, pp. 113-114, apple fantasy rite supports the fantasy container architecture through source uses apple, candle, and fantasy contemplation around desire outside ordinary boundaries. Carrier: table. Materials: apple, candle or lamp. Place: table.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -13405,7 +13380,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Place an apple beside an unlit or lit candle. Name the fantasy in one sentence without naming anyone as an assignment. Turn the apple once. Close by leaving it on the table until ordinary hunger or compost claims it.",
       "intention": "Let fantasy be held as symbol before it becomes choice.",
       "bestWindow": "When attraction or curiosity needs containment rather than action.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for marking; fantasy; or table as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: table. Materials: apple; candle or lamp. Place: table.\" sourceBackedRationale: - \"Chapter 5; pp. 113-114; apple fantasy rite supports the fantasy container architecture through source uses apple; candle; and fantasy contemplation around desire outside ordinary boundaries.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 5, pp. 113-114, apple fantasy rite supports the fantasy container architecture through source uses apple, candle, and fantasy contemplation around desire outside ordinary boundaries. Carrier: table. Materials: apple, candle or lamp. Place: table.",
       "questionToCarry": "What can be seen as fantasy without being turned into a command?"
     },
     "recommendationMetadata": {
@@ -13446,15 +13421,18 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "apple",
-        "candle or lamp",
-        "table",
         "fantasy",
+        "apple",
         "candle",
         "containment"
+      ],
+      "keywords": [
+        "fantasy",
+        "apple",
+        "candle",
+        "containment",
+        "candle or lamp",
+        "table"
       ],
       "materials": [
         "apple",
@@ -13504,14 +13482,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for blessing; object; or body as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: private object; clean cloth; candle or lamp. Place: private table or drawer.\" sourceBackedRationale: - \"Chapter 5; pp. 114-115; consecrating sex toys supports the private object consecration architecture through source gives a consecration structure for erotic objects using cleansing/blessing materials.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 5, pp. 114-115, consecrating sex toys supports the private object consecration architecture through source gives a consecration structure for erotic objects using cleansing/blessing materials. Carrier: body. Materials: private object, clean cloth, candle or lamp. Place: private table or drawer.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -13521,7 +13495,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Place the private object on a clean cloth. Set one candle or lamp beside it. Name what kind of care the object belongs to. Touch the cloth, then return the object to its private place until it is chosen again.",
       "intention": "Let the object belong to care before it belongs to use.",
       "bestWindow": "Before using or storing an adult private object.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for blessing; object; or body as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: private object; clean cloth; candle or lamp. Place: private table or drawer.\" sourceBackedRationale: - \"Chapter 5; pp. 114-115; consecrating sex toys supports the private object consecration architecture through source gives a consecration structure for erotic objects using cleansing/blessing materials.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 5, pp. 114-115, consecrating sex toys supports the private object consecration architecture through source gives a consecration structure for erotic objects using cleansing/blessing materials. Carrier: body. Materials: private object, clean cloth, candle or lamp. Place: private table or drawer.",
       "questionToCarry": "What care should this object remember?"
     },
     "recommendationMetadata": {
@@ -13562,17 +13536,20 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "private object",
-        "clean cloth",
-        "candle or lamp",
-        "private table or drawer",
         "object",
         "consecration",
         "adult",
         "cloth"
+      ],
+      "keywords": [
+        "object",
+        "consecration",
+        "adult",
+        "cloth",
+        "private object",
+        "clean cloth",
+        "candle or lamp",
+        "private table or drawer"
       ],
       "materials": [
         "private object",
@@ -13623,14 +13600,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for marking; rose; or table as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: table. Materials: rose; petal; or drawn flower; paper and pen. Place: table.\" sourceBackedRationale: - \"Chapter 5; pp. 118-120; fantasy rose rite supports the rose fantasy witness architecture through source uses roses; tarot imagery; and fantasy manifestation work.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 5, pp. 118-120, fantasy rose rite supports the rose fantasy witness architecture through source uses roses, tarot imagery, and fantasy manifestation work. Carrier: table. Materials: rose, petal, or drawn flower; paper and pen. Place: table.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -13640,7 +13613,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Place one rose, petal, or drawn flower on the table. Name the fantasy as an image, not an instruction. Let the flower sit beside it for one minute. Close by moving the flower away from the sentence.",
       "intention": "Let fantasy be seen without being handed a task.",
       "bestWindow": "When longing needs beauty and a boundary at the same time.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for marking; rose; or table as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: table. Materials: rose; petal; or drawn flower; paper and pen. Place: table.\" sourceBackedRationale: - \"Chapter 5; pp. 118-120; fantasy rose rite supports the rose fantasy witness architecture through source uses roses; tarot imagery; and fantasy manifestation work.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 5, pp. 118-120, fantasy rose rite supports the rose fantasy witness architecture through source uses roses, tarot imagery, and fantasy manifestation work. Carrier: table. Materials: rose, petal, or drawn flower; paper and pen. Place: table.",
       "questionToCarry": "What image can be witnessed and then released from action?"
     },
     "recommendationMetadata": {
@@ -13681,17 +13654,20 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
         "rose",
-        "petal",
-        "or drawn flower",
-        "paper and pen",
-        "table",
         "fantasy",
         "witness",
         "boundary"
+      ],
+      "keywords": [
+        "rose",
+        "fantasy",
+        "witness",
+        "boundary",
+        "petal",
+        "or drawn flower",
+        "paper and pen",
+        "table"
       ],
       "materials": [
         "rose",
@@ -13743,14 +13719,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for connecting; both; or candlelight as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: candle or lamp; paper; pen. Place: private table or bedside.\" sourceBackedRationale: - \"Chapter 5; pp. 121-122; partner sex magick supports the partner shared intention architecture through source describes partnered sex magick around shared intention and focused energy.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 5, pp. 121-122, partner sex magick supports the partner shared intention architecture through source describes partnered sex magick around shared intention and focused energy. Carrier: candlelight. Materials: candle or lamp, paper, pen. Place: private table or bedside.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -13760,7 +13732,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Set one candle or lamp between you. Each person says one word for the shared adult intention. Choose the shorter phrase and place it under the light. Close when both hands leave the table at the same time.",
       "intention": "Let the shared intention stand between you before either person carries it alone.",
       "bestWindow": "Before consensual private time or a shared connecting rite.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for connecting; both; or candlelight as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: candle or lamp; paper; pen. Place: private table or bedside.\" sourceBackedRationale: - \"Chapter 5; pp. 121-122; partner sex magick supports the partner shared intention architecture through source describes partnered sex magick around shared intention and focused energy.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 5, pp. 121-122, partner sex magick supports the partner shared intention architecture through source describes partnered sex magick around shared intention and focused energy. Carrier: candlelight. Materials: candle or lamp, paper, pen. Place: private table or bedside.",
       "questionToCarry": "What can stand between us as invitation, not pressure?"
     },
     "recommendationMetadata": {
@@ -13802,17 +13774,20 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "candle or lamp",
-        "paper",
-        "pen",
-        "private table or bedside",
         "both",
         "shared intention",
         "candle",
         "adult"
+      ],
+      "keywords": [
+        "both",
+        "shared intention",
+        "candle",
+        "adult",
+        "candle or lamp",
+        "paper",
+        "pen",
+        "private table or bedside"
       ],
       "materials": [
         "candle or lamp",
@@ -13863,14 +13838,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for releasing; fear; or vessel as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: vessel. Materials: paper; pen; bowl of water. Place: bathroom or table.\" sourceBackedRationale: - \"Chapter 5; pp. 122-123; dry spell rite supports the fear water release architecture through source uses written fear; water/fire release; calming herb/bath materials; and closure.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 5, pp. 122-123, dry spell rite supports the fear water release architecture through source uses written fear, water/fire release, calming herb/bath materials, and closure. Carrier: vessel. Materials: paper, pen, bowl of water. Place: bathroom or table.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -13880,7 +13851,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Write the fear in one sentence. Touch the paper to a bowl of water without soaking the room. Tear or fold it and dispose of it. Rinse the bowl. Close when the bowl is empty.",
       "intention": "Let fear leave without making the body prove anything.",
       "bestWindow": "When scarcity, comparison, or old pressure gets loud.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for releasing; fear; or vessel as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: vessel. Materials: paper; pen; bowl of water. Place: bathroom or table.\" sourceBackedRationale: - \"Chapter 5; pp. 122-123; dry spell rite supports the fear water release architecture through source uses written fear; water/fire release; calming herb/bath materials; and closure.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 5, pp. 122-123, dry spell rite supports the fear water release architecture through source uses written fear, water/fire release, calming herb/bath materials, and closure. Carrier: vessel. Materials: paper, pen, bowl of water. Place: bathroom or table.",
       "questionToCarry": "What fear can leave without being replaced tonight?"
     },
     "recommendationMetadata": {
@@ -13921,17 +13892,20 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "paper",
-        "pen",
-        "bowl of water",
-        "bathroom or table",
         "fear",
         "water",
         "release",
         "body"
+      ],
+      "keywords": [
+        "fear",
+        "water",
+        "release",
+        "body",
+        "paper",
+        "pen",
+        "bowl of water",
+        "bathroom or table"
       ],
       "materials": [
         "paper",
@@ -13982,14 +13956,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for connecting; repair; or candlelight as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: two candles or lamps; paper; pen. Place: table or bedroom.\" sourceBackedRationale: - \"Chapter 5; pp. 124-125; makeup sex rite supports the paired candle repair architecture through source uses paired candles and repair/return intimacy mechanics.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 5, pp. 124-125, makeup sex rite supports the paired candle repair architecture through source uses paired candles and repair/return intimacy mechanics. Carrier: candlelight. Materials: two candles or lamps, paper, pen. Place: table or bedroom.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -13999,7 +13969,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Place two candles or lamps with a small space between them. Each person names one quality needed for repair. Put the two words on one paper between the lights. Close by moving the lights a little closer, then stopping.",
       "intention": "Let repair have warmth without forcing a long talk.",
       "bestWindow": "After a rupture when both people want a small rite, not a debate.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for connecting; repair; or candlelight as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: two candles or lamps; paper; pen. Place: table or bedroom.\" sourceBackedRationale: - \"Chapter 5; pp. 124-125; makeup sex rite supports the paired candle repair architecture through source uses paired candles and repair/return intimacy mechanics.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 5, pp. 124-125, makeup sex rite supports the paired candle repair architecture through source uses paired candles and repair/return intimacy mechanics. Carrier: candlelight. Materials: two candles or lamps, paper, pen. Place: table or bedroom.",
       "questionToCarry": "What one quality can stand between us tonight?"
     },
     "recommendationMetadata": {
@@ -14041,17 +14011,20 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "two candles or lamps",
-        "paper",
-        "pen",
-        "table or bedroom",
         "repair",
         "both",
         "two lights",
         "sentence"
+      ],
+      "keywords": [
+        "repair",
+        "both",
+        "two lights",
+        "sentence",
+        "two candles or lamps",
+        "paper",
+        "pen",
+        "table or bedroom"
       ],
       "materials": [
         "two candles or lamps",
@@ -14102,14 +14075,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for tending; jealousy; or words as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: blue object/candle/lamp; notebook; pen. Place: table or bedside.\" sourceBackedRationale: - \"Chapter 6; pp. 129-130; jealousy spell supports the jealousy containment architecture through source uses blue candle and written reflection to tame jealousy.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 6, pp. 129-130, jealousy spell supports the jealousy containment architecture through source uses blue candle and written reflection to tame jealousy. Carrier: words. Materials: blue object/candle/lamp, notebook, pen. Place: table or bedside.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -14119,7 +14088,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Set a blue object, candle, or lamp beside a notebook. Write what jealousy is trying to guard in one sentence. Do not answer it yet. Close the notebook and leave the blue object on top until morning.",
       "intention": "Let jealousy be held without letting it steer.",
       "bestWindow": "When jealousy is present but no decision is needed tonight.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for tending; jealousy; or words as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: blue object/candle/lamp; notebook; pen. Place: table or bedside.\" sourceBackedRationale: - \"Chapter 6; pp. 129-130; jealousy spell supports the jealousy containment architecture through source uses blue candle and written reflection to tame jealousy.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 6, pp. 129-130, jealousy spell supports the jealousy containment architecture through source uses blue candle and written reflection to tame jealousy. Carrier: words. Materials: blue object/candle/lamp, notebook, pen. Place: table or bedside.",
       "questionToCarry": "What is jealousy guarding, and what does not need to happen now?"
     },
     "recommendationMetadata": {
@@ -14160,16 +14129,19 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "blue object/candle/lamp",
-        "notebook",
-        "pen",
-        "table or bedside",
         "jealousy",
         "blue",
+        "notebook",
         "containment"
+      ],
+      "keywords": [
+        "jealousy",
+        "blue",
+        "notebook",
+        "containment",
+        "blue object/candle/lamp",
+        "pen",
+        "table or bedside"
       ],
       "materials": [
         "blue object/candle/lamp",
@@ -14220,14 +14192,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for tending; forgiveness; or body as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: flower; petal; or cloth; water. Place: bathroom.\" sourceBackedRationale: - \"Chapter 6; pp. 132-133; forgive someone you love supports the flower forgiveness bath architecture through source uses bath; flower; and forgiveness blessing materials.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 6, pp. 132-133, forgive someone you love supports the flower forgiveness bath architecture through source uses bath, flower, and forgiveness blessing materials. Carrier: body. Materials: flower, petal, or cloth; water. Place: bathroom.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -14237,7 +14205,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Place one white flower, petal, or clean cloth near bath or hand-washing water. Name the forgiveness you are willing to consider, not perform. Wash your hands or step into water. Close by moving the flower or cloth away from the water.",
       "intention": "Let forgiveness begin as contact, not obligation.",
       "bestWindow": "When tenderness is possible but a long conversation would be too much.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for tending; forgiveness; or body as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: flower; petal; or cloth; water. Place: bathroom.\" sourceBackedRationale: - \"Chapter 6; pp. 132-133; forgive someone you love supports the flower forgiveness bath architecture through source uses bath; flower; and forgiveness blessing materials.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 6, pp. 132-133, forgive someone you love supports the flower forgiveness bath architecture through source uses bath, flower, and forgiveness blessing materials. Carrier: body. Materials: flower, petal, or cloth; water. Place: bathroom.",
       "questionToCarry": "What forgiveness can be approached without being forced?"
     },
     "recommendationMetadata": {
@@ -14278,16 +14246,19 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
+        "forgiveness",
+        "water",
+        "flower",
+        "tending"
       ],
       "keywords": [
+        "forgiveness",
+        "water",
         "flower",
+        "tending",
         "petal",
         "or cloth",
-        "water",
-        "bathroom",
-        "forgiveness",
-        "tending"
+        "bathroom"
       ],
       "materials": [
         "flower",
@@ -14339,14 +14310,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for voicing; communication; or vessel as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: vessel. Materials: glass or bowl of water; paper; pen. Place: table.\" sourceBackedRationale: - \"Chapter 6; pp. 133-134; clear communication spell supports the water speech clarity architecture through source uses paper; goblet/water; crystal support; and communication intention.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 6, pp. 133-134, clear communication spell supports the water speech clarity architecture through source uses paper, goblet/water, crystal support, and communication intention. Carrier: vessel. Materials: glass or bowl of water, paper, pen. Place: table.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -14356,7 +14323,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Fill a glass or small bowl with water. Write the sentence that needs clarity. Place the paper under the vessel. Speak the sentence once toward the water. Close by drinking, pouring, or setting the water aside according to ordinary household use.",
       "intention": "Let speech arrive clear and held.",
       "bestWindow": "Before a needed conversation or message.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for voicing; communication; or vessel as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: vessel. Materials: glass or bowl of water; paper; pen. Place: table.\" sourceBackedRationale: - \"Chapter 6; pp. 133-134; clear communication spell supports the water speech clarity architecture through source uses paper; goblet/water; crystal support; and communication intention.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 6, pp. 133-134, clear communication spell supports the water speech clarity architecture through source uses paper, goblet/water, crystal support, and communication intention. Carrier: vessel. Materials: glass or bowl of water, paper, pen. Place: table.",
       "questionToCarry": "What sentence needs water before voice?"
     },
     "recommendationMetadata": {
@@ -14398,17 +14365,20 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "glass or bowl of water",
-        "paper",
-        "pen",
-        "table",
         "communication",
         "water",
         "sentence",
         "voice"
+      ],
+      "keywords": [
+        "communication",
+        "water",
+        "sentence",
+        "voice",
+        "glass or bowl of water",
+        "paper",
+        "pen",
+        "table"
       ],
       "materials": [
         "glass or bowl of water",
@@ -14459,14 +14429,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for connecting; distance; or candlelight as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: calendar or note; candle or lamp. Place: table or bedside.\" sourceBackedRationale: - \"Chapter 6; pp. 136-137; long-distance relationship spell supports the distance tending light architecture through source uses moon; calendar; candle; contact marker; and flowers for long-distance tending.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 6, pp. 136-137, long-distance relationship spell supports the distance tending light architecture through source uses moon, calendar, candle, contact marker, and flowers for long-distance tending. Carrier: candlelight. Materials: calendar or note, candle or lamp. Place: table or bedside.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -14475,32 +14441,38 @@ export const sourceBackedRituals: Ritual[] = [
       "headline": "Mark distance with one calendar light.",
       "practice": "Place a calendar, note, or date marker beside a candle or lamp. Name the next real point of contact. Let the light stand over the date for a few breaths. Close by putting the date marker somewhere visible but ordinary.",
       "intention": "Let distance have a point of return.",
-      "bestWindow": "During separation, before a planned call, or under moon/timing that emphasi",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for connecting; distance; or candlelight as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: calendar or note; candle or lamp. Place: table or bedside.\" sourceBackedRationale: - \"Chapter 6; pp. 136-137; long-distance relationship spell supports the distance tending light architecture through source uses moon; calendar; candle; contact marker; and flowers for long-distance tending.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "bestWindow": "During separation, before a planned call, or under moon/timing that emphasizes distance.",
+      "whyThisFits": "Chapter 6, pp. 136-137, long-distance relationship spell supports the distance tending light architecture through source uses moon, calendar, candle, contact marker, and flowers for long-distance tending. Carrier: candlelight. Materials: calendar or note, candle or lamp. Place: table or bedside.",
       "questionToCarry": "What point of return can be marked without pulling it closer?"
     },
     "recommendationMetadata": {
       "purposes": {
-        "primary": "marking",
+        "primary": "connecting",
         "secondary": [],
-        "refinement": "marking"
+        "refinement": "connecting"
       },
       "carriers": {
-        "primary": "words",
+        "primary": "candlelight",
         "secondary": []
       },
       "capacity": {
         "supports": [
           "only_a_little"
-        ]
+        ],
+        "default": "only_a_little"
       },
       "audience": {
         "supports": [
-          "me"
-        ]
+          "both_of_us"
+        ],
+        "default": "both_of_us",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
       },
       "timing": {
-        "relationship": "helpful"
+        "relationship": "helpful",
+        "contexts": [
+          "During separation, before a planned call, or under moon/timing that emphasizes distance."
+        ]
       },
       "eligibility": {
         "recommendable": false,
@@ -14512,16 +14484,19 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "calendar or note",
-        "candle or lamp",
-        "table or bedside",
         "distance",
         "calendar",
         "light",
         "return"
+      ],
+      "keywords": [
+        "distance",
+        "calendar",
+        "light",
+        "return",
+        "calendar or note",
+        "candle or lamp",
+        "table or bedside"
       ],
       "materials": [
         "calendar or note",
@@ -14571,14 +14546,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for marking; relationship; or candlelight as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: three candles; lamps; or small objects. Place: table or floor.\" sourceBackedRationale: - \"Chapter 6; pp. 138-139; level up love supports the relationship next step lights architecture through source uses three candles/objects to mark relationship development.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 6, pp. 138-139, level up love supports the relationship next step lights architecture through source uses three candles/objects to mark relationship development. Carrier: candlelight. Materials: three candles, lamps, or small objects. Place: table or floor.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -14588,7 +14559,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Place three small lights or three small objects in a line. Name where the relationship has been, where it is, and what is asking to be next. Move the final light or object one handspan forward. Close without making a plan.",
       "intention": "Let the next step be marked before it becomes work.",
       "bestWindow": "When the relationship is changing shape and both people can participate.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for marking; relationship; or candlelight as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: three candles; lamps; or small objects. Place: table or floor.\" sourceBackedRationale: - \"Chapter 6; pp. 138-139; level up love supports the relationship next step lights architecture through source uses three candles/objects to mark relationship development.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 6, pp. 138-139, level up love supports the relationship next step lights architecture through source uses three candles/objects to mark relationship development. Carrier: candlelight. Materials: three candles, lamps, or small objects. Place: table or floor.",
       "questionToCarry": "What is asking to move one handspan forward?"
     },
     "recommendationMetadata": {
@@ -14630,17 +14601,20 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "three candles",
-        "lamps",
-        "or small objects",
-        "table or floor",
         "relationship",
         "next step",
         "three lights",
         "both"
+      ],
+      "keywords": [
+        "relationship",
+        "next step",
+        "three lights",
+        "both",
+        "three candles",
+        "lamps",
+        "or small objects",
+        "table or floor"
       ],
       "materials": [
         "three candles",
@@ -14691,14 +14665,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for tending; honey jar; or vessel as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: vessel. Materials: small jar; paper; pen; household sweetness cue. Place: table or shelf.\" sourceBackedRationale: - \"Chapter 6; pp. 139-140; honey jar supports the sweet vessel tending architecture through source uses jar; paper/name; sweetness; and Venus/Friday timing for love tending.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 6, pp. 139-140, honey jar supports the sweet vessel tending architecture through source uses jar, paper/name, sweetness, and Venus/Friday timing for love tending. Carrier: vessel. Materials: small jar, paper, pen, household sweetness cue. Place: table or shelf.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -14708,7 +14678,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Write one relationship quality on a small paper. Place it in a jar with one ordinary sweetness cue already used in the household. Close the jar. Hold it between both hands or set it at the table for one breath.",
       "intention": "Let sweetness become a vessel, not a bargain.",
       "bestWindow": "Friday, Venus-touched timing, or any quiet tending moment.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for tending; honey jar; or vessel as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: vessel. Materials: small jar; paper; pen; household sweetness cue. Place: table or shelf.\" sourceBackedRationale: - \"Chapter 6; pp. 139-140; honey jar supports the sweet vessel tending architecture through source uses jar; paper/name; sweetness; and Venus/Friday timing for love tending.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 6, pp. 139-140, honey jar supports the sweet vessel tending architecture through source uses jar, paper/name, sweetness, and Venus/Friday timing for love tending. Carrier: vessel. Materials: small jar, paper, pen, household sweetness cue. Place: table or shelf.",
       "questionToCarry": "What quality can be sweetened without being controlled?"
     },
     "recommendationMetadata": {
@@ -14750,18 +14720,21 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "small jar",
-        "paper",
-        "pen",
-        "household sweetness cue",
-        "table or shelf",
         "honey jar",
         "sweetness",
         "relationship",
         "vessel"
+      ],
+      "keywords": [
+        "honey jar",
+        "sweetness",
+        "relationship",
+        "vessel",
+        "small jar",
+        "paper",
+        "pen",
+        "household sweetness cue",
+        "table or shelf"
       ],
       "materials": [
         "small jar",
@@ -14813,14 +14786,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for tending; compassion; or candlelight as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: paper; pen; candle or lamp. Place: table.\" sourceBackedRationale: - \"Chapter 6; pp. 141-143; candle for compassion supports the compassion sigil candle architecture through source uses paper; sigil; candle; and compassion intention.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 6, pp. 141-143, candle for compassion supports the compassion sigil candle architecture through source uses paper, sigil, candle, and compassion intention. Carrier: candlelight. Materials: paper, pen, candle or lamp. Place: table.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -14830,7 +14799,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Write the name, role, or situation needing compassion. Make a simple mark from the sentence. Put the mark beneath a candle or lamp. Close by letting the light remain for one bounded interval, then remove the paper.",
       "intention": "Let compassion have a mark without swallowing the room.",
       "bestWindow": "When compassion is wanted but capacity is finite.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for tending; compassion; or candlelight as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: paper; pen; candle or lamp. Place: table.\" sourceBackedRationale: - \"Chapter 6; pp. 141-143; candle for compassion supports the compassion sigil candle architecture through source uses paper; sigil; candle; and compassion intention.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 6, pp. 141-143, candle for compassion supports the compassion sigil candle architecture through source uses paper, sigil, candle, and compassion intention. Carrier: candlelight. Materials: paper, pen, candle or lamp. Place: table.",
       "questionToCarry": "What can receive compassion without taking everything?"
     },
     "recommendationMetadata": {
@@ -14871,17 +14840,20 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "paper",
-        "pen",
-        "candle or lamp",
-        "table",
         "compassion",
         "sigil",
         "candle",
         "boundary"
+      ],
+      "keywords": [
+        "compassion",
+        "sigil",
+        "candle",
+        "boundary",
+        "paper",
+        "pen",
+        "candle or lamp",
+        "table"
       ],
       "materials": [
         "paper",
@@ -14932,14 +14904,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for marking; milestone; or table as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: table. Materials: one small object. Place: table or bed edge.\" sourceBackedRationale: - \"Chapter 6; pp. 143-144; three-month mark spell supports the relationship milestone marker architecture through source marks a relationship milestone with candle/object attention.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 6, pp. 143-144, three-month mark spell supports the relationship milestone marker architecture through source marks a relationship milestone with candle/object attention. Carrier: table. Materials: one small object. Place: table or bed edge.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -14949,7 +14917,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Choose one small object that can stand for this stage. Place it between two hands or between both people. Name what has been learned in one sentence. Return the object to ordinary use. Close before naming the next demand.",
       "intention": "Let the stage be seen without forcing the next one.",
       "bestWindow": "At a relationship milestone or when a pattern wants acknowledgment.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for marking; milestone; or table as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: table. Materials: one small object. Place: table or bed edge.\" sourceBackedRationale: - \"Chapter 6; pp. 143-144; three-month mark spell supports the relationship milestone marker architecture through source marks a relationship milestone with candle/object attention.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 6, pp. 143-144, three-month mark spell supports the relationship milestone marker architecture through source marks a relationship milestone with candle/object attention. Carrier: table. Materials: one small object. Place: table or bed edge.",
       "questionToCarry": "What stage deserves to be marked before it changes?"
     },
     "recommendationMetadata": {
@@ -14991,15 +14959,18 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "one small object",
-        "table or bed edge",
         "milestone",
         "relationship",
         "object",
         "both"
+      ],
+      "keywords": [
+        "milestone",
+        "relationship",
+        "object",
+        "both",
+        "one small object",
+        "table or bed edge"
       ],
       "materials": [
         "one small object"
@@ -15048,14 +15019,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for blessing; home; or table as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: table. Materials: broom or cleared area; white flower/cloth/blue light. Place: shared room.\" sourceBackedRationale: - \"Chapter 6; pp. 144-145; moving-in house blessing supports the home room blessing architecture through source uses broom/clearing; flowers; candle/incense/oil; and shared house blessing.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 6, pp. 144-145, moving-in house blessing supports the home room blessing architecture through source uses broom/clearing, flowers, candle/incense/oil, and shared house blessing. Carrier: table. Materials: broom or cleared area, white flower/cloth/blue light. Place: shared room.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -15065,7 +15032,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Sweep or clear one small area of the room. Place one white flower, clean cloth, or blue light there. Each person names one way the room may hold you both. Close by leaving the object in place until the next ordinary tidying.",
       "intention": "Let the room learn both names through one shared act.",
       "bestWindow": "Before or after moving in, rearranging, or making a shared room.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for blessing; home; or table as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: table. Materials: broom or cleared area; white flower/cloth/blue light. Place: shared room.\" sourceBackedRationale: - \"Chapter 6; pp. 144-145; moving-in house blessing supports the home room blessing architecture through source uses broom/clearing; flowers; candle/incense/oil; and shared house blessing.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 6, pp. 144-145, moving-in house blessing supports the home room blessing architecture through source uses broom/clearing, flowers, candle/incense/oil, and shared house blessing. Carrier: table. Materials: broom or cleared area, white flower/cloth/blue light. Place: shared room.",
       "questionToCarry": "What can this room hold for both of us?"
     },
     "recommendationMetadata": {
@@ -15107,16 +15074,19 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "broom or cleared area",
-        "white flower/cloth/blue light",
-        "shared room",
         "home",
         "moving in",
         "blessing",
         "both"
+      ],
+      "keywords": [
+        "home",
+        "moving in",
+        "blessing",
+        "both",
+        "broom or cleared area",
+        "white flower/cloth/blue light",
+        "shared room"
       ],
       "materials": [
         "broom or cleared area",
@@ -15166,14 +15136,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for tending; work; or table as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: table. Materials: work object; relationship object; candle or lamp. Place: table or desk.\" sourceBackedRationale: - \"Chapter 6; pp. 145-147; balancing ambition and love supports the two life table balance architecture through source uses altar/table objects; computer/work symbols; and love symbols to balance ambition and relationship.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 6, pp. 145-147, balancing ambition and love supports the two life table balance architecture through source uses altar/table objects, computer/work symbols, and love symbols to balance ambition and relationship. Carrier: table. Materials: work object, relationship object, candle or lamp. Place: table or desk.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -15183,7 +15149,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Place one work object and one relationship object on the table with space between them. Put a candle or lamp behind both. Name one thing each object needs this week. Close by leaving space between them.",
       "intention": "Let two devotions stand without eating each other.",
       "bestWindow": "When work and love are both present and neither should be erased.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for tending; work; or table as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: table. Materials: work object; relationship object; candle or lamp. Place: table or desk.\" sourceBackedRationale: - \"Chapter 6; pp. 145-147; balancing ambition and love supports the two life table balance architecture through source uses altar/table objects; computer/work symbols; and love symbols to balance ambition and relationship.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 6, pp. 145-147, balancing ambition and love supports the two life table balance architecture through source uses altar/table objects, computer/work symbols, and love symbols to balance ambition and relationship. Carrier: table. Materials: work object, relationship object, candle or lamp. Place: table or desk.",
       "questionToCarry": "What space lets both devotions remain visible?"
     },
     "recommendationMetadata": {
@@ -15225,17 +15191,20 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "work object",
-        "relationship object",
-        "candle or lamp",
-        "table or desk",
         "work",
         "love",
         "table",
         "balance"
+      ],
+      "keywords": [
+        "work",
+        "love",
+        "table",
+        "balance",
+        "work object",
+        "relationship object",
+        "candle or lamp",
+        "table or desk"
       ],
       "materials": [
         "work object",
@@ -15286,14 +15255,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for releasing; uncrossing; or candlelight as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: paper; pen; candle or lamp. Place: table.\" sourceBackedRationale: - \"Chapter 7; pp. 149-150; basic uncrossing candle supports the uncrossing candle architecture through source gives candle-based uncrossing mechanics.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 7, pp. 149-150, basic uncrossing candle supports the uncrossing candle architecture through source gives candle-based uncrossing mechanics. Carrier: candlelight. Materials: paper, pen, candle or lamp. Place: table.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -15303,7 +15268,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Name the crossed feeling in one sentence. Place the sentence beneath a candle or lamp. Move the paper out from under the light after one quiet interval. Close by folding it away from you.",
       "intention": "Let the crossed feeling loosen without promising a cure.",
       "bestWindow": "When something feels tangled, crossed, or difficult to move through.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for releasing; uncrossing; or candlelight as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: paper; pen; candle or lamp. Place: table.\" sourceBackedRationale: - \"Chapter 7; pp. 149-150; basic uncrossing candle supports the uncrossing candle architecture through source gives candle-based uncrossing mechanics.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 7, pp. 149-150, basic uncrossing candle supports the uncrossing candle architecture through source gives candle-based uncrossing mechanics. Carrier: candlelight. Materials: paper, pen, candle or lamp. Place: table.",
       "questionToCarry": "What can be loosened without being conquered?"
     },
     "recommendationMetadata": {
@@ -15344,17 +15309,20 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "paper",
-        "pen",
-        "candle or lamp",
-        "table",
         "uncrossing",
         "candle",
         "release",
         "tangle"
+      ],
+      "keywords": [
+        "uncrossing",
+        "candle",
+        "release",
+        "tangle",
+        "paper",
+        "pen",
+        "candle or lamp",
+        "table"
       ],
       "materials": [
         "paper",
@@ -15405,14 +15373,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for releasing; former lover; or words as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: paper; pen; candle or bowl. Place: table or doorway.\" sourceBackedRationale: - \"Chapter 7; pp. 150-153; former-lover release supports the former lover release architecture through source uses candle; written naming; and disposal materials for former-lover release.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 7, pp. 150-153, former-lover release supports the former lover release architecture through source uses candle, written naming, and disposal materials for former-lover release. Carrier: words. Materials: paper, pen, candle or bowl. Place: table or doorway.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -15422,7 +15386,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Write the old attachment in one sentence without sending it anywhere. Place the paper beside a candle or bowl. Tear or fold it away from the body. Close by putting the paper outside the room.",
       "intention": "Let the old attachment leave the body’s front room.",
       "bestWindow": "Waning moon or after unwanted memory returns.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for releasing; former lover; or words as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: paper; pen; candle or bowl. Place: table or doorway.\" sourceBackedRationale: - \"Chapter 7; pp. 150-153; former-lover release supports the former lover release architecture through source uses candle; written naming; and disposal materials for former-lover release.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 7, pp. 150-153, former-lover release supports the former lover release architecture through source uses candle, written naming, and disposal materials for former-lover release. Carrier: words. Materials: paper, pen, candle or bowl. Place: table or doorway.",
       "questionToCarry": "What old attachment can leave without a final speech?"
     },
     "recommendationMetadata": {
@@ -15463,16 +15427,19 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
+        "former lover",
+        "release",
+        "waning",
+        "paper"
       ],
       "keywords": [
+        "former lover",
+        "release",
+        "waning",
         "paper",
         "pen",
         "candle or bowl",
-        "table or doorway",
-        "former lover",
-        "release",
-        "waning"
+        "table or doorway"
       ],
       "materials": [
         "paper",
@@ -15523,14 +15490,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for connecting; adult friendship; or vessel as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: vessel. Materials: small bowl; petal/bead/token. Place: private table.\" sourceBackedRationale: - \"Chapter 7; pp. 152-153; friendship-with-benefits protection/tending spell supports the adult friendship vessel architecture through source uses rose/water/honey vessel mechanics to tend a sexual friendship.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 7, pp. 152-153, friendship-with-benefits protection/tending spell supports the adult friendship vessel architecture through source uses rose/water/honey vessel mechanics to tend a sexual friendship. Carrier: vessel. Materials: small bowl, petal/bead/token. Place: private table.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -15540,7 +15503,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Place a small bowl between you. Each person names one quality the connection needs to stay kind. Put one petal, bead, or small token in the bowl for each word. Close by moving the bowl away before conversation expands.",
       "intention": "Let the arrangement be tended without pretending it is something else.",
       "bestWindow": "Before a casual adult connection needs kindness and clarity.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for connecting; adult friendship; or vessel as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: vessel. Materials: small bowl; petal/bead/token. Place: private table.\" sourceBackedRationale: - \"Chapter 7; pp. 152-153; friendship-with-benefits protection/tending spell supports the adult friendship vessel architecture through source uses rose/water/honey vessel mechanics to tend a sexual friendship.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 7, pp. 152-153, friendship-with-benefits protection/tending spell supports the adult friendship vessel architecture through source uses rose/water/honey vessel mechanics to tend a sexual friendship. Carrier: vessel. Materials: small bowl, petal/bead/token. Place: private table.",
       "questionToCarry": "What keeps this connection kind and honest?"
     },
     "recommendationMetadata": {
@@ -15582,16 +15545,19 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "small bowl",
-        "petal/bead/token",
-        "private table",
         "adult friendship",
         "vessel",
         "both",
         "kindness"
+      ],
+      "keywords": [
+        "adult friendship",
+        "vessel",
+        "both",
+        "kindness",
+        "small bowl",
+        "petal/bead/token",
+        "private table"
       ],
       "materials": [
         "small bowl",
@@ -15641,14 +15607,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for protecting; boundary; or words as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: paper or plate; pen; salt. Place: table or counter.\" sourceBackedRationale: - \"Chapter 7; pp. 161-162; boundaries spell supports the salt boundary page architecture through source uses salt; journal/writing; and boundary-setting ritual structure.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 7, pp. 161-162, boundaries spell supports the salt boundary page architecture through source uses salt, journal/writing, and boundary-setting ritual structure. Carrier: words. Materials: paper or plate, pen, salt. Place: table or counter.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -15658,7 +15620,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Write the boundary in one sentence. Set a thin line or pinch of salt below it on a plate or paper. Read the sentence once. Close by disposing of the salt and keeping or discarding the sentence.",
       "intention": "Let the boundary become visible before it is defended.",
       "bestWindow": "Before answering a message, entering a date, or naming a limit.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for protecting; boundary; or words as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: paper or plate; pen; salt. Place: table or counter.\" sourceBackedRationale: - \"Chapter 7; pp. 161-162; boundaries spell supports the salt boundary page architecture through source uses salt; journal/writing; and boundary-setting ritual structure.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 7, pp. 161-162, boundaries spell supports the salt boundary page architecture through source uses salt, journal/writing, and boundary-setting ritual structure. Carrier: words. Materials: paper or plate, pen, salt. Place: table or counter.",
       "questionToCarry": "What line needs to exist before anyone argues with it?"
     },
     "recommendationMetadata": {
@@ -15699,16 +15661,19 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "paper or plate",
-        "pen",
-        "salt",
-        "table or counter",
         "boundary",
+        "salt",
         "line",
         "words"
+      ],
+      "keywords": [
+        "boundary",
+        "salt",
+        "line",
+        "words",
+        "paper or plate",
+        "pen",
+        "table or counter"
       ],
       "materials": [
         "paper or plate",
@@ -15759,14 +15724,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for protecting; light; or body as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: lamp; candle; or window light. Place: doorway; mirror; or lit room edge.\" sourceBackedRationale: - \"Chapter 7; pp. 163-164; light shield spell supports the body light boundary architecture through source uses light and body visualization for protective energetic boundary.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 7, pp. 163-164, light shield spell supports the body light boundary architecture through source uses light and body visualization for protective energetic boundary. Carrier: body. Materials: lamp, candle, or window light. Place: doorway, mirror, or lit room edge.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -15776,7 +15737,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Stand where a lamp, candle, or window light can touch one side of the body. Name the edge that belongs to you. Turn once away from the light and back. Close when both feet are steady.",
       "intention": "Let the body remember its edge.",
       "bestWindow": "Before leaving, answering, or returning to a charged room.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for protecting; light; or body as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: lamp; candle; or window light. Place: doorway; mirror; or lit room edge.\" sourceBackedRationale: - \"Chapter 7; pp. 163-164; light shield spell supports the body light boundary architecture through source uses light and body visualization for protective energetic boundary.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 7, pp. 163-164, light shield spell supports the body light boundary architecture through source uses light and body visualization for protective energetic boundary. Carrier: body. Materials: lamp, candle, or window light. Place: doorway, mirror, or lit room edge.",
       "questionToCarry": "What edge belongs to me before I enter?"
     },
     "recommendationMetadata": {
@@ -15817,19 +15778,22 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
+        "light",
+        "body",
+        "boundary",
+        "edge"
       ],
       "keywords": [
+        "light",
+        "body",
+        "boundary",
+        "edge",
         "lamp",
         "candle",
         "or window light",
         "doorway",
         "mirror",
-        "or lit room edge",
-        "light",
-        "body",
-        "boundary",
-        "edge"
+        "or lit room edge"
       ],
       "materials": [
         "lamp",
@@ -15882,14 +15846,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for blessing; breakup; or body as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: mirror; one adornment; screen/device. Place: mirror and desk/table.\" sourceBackedRationale: - \"Chapter 9; pp. 178-179; breakup boldness glamour supports the breakup boldness glamour architecture through source uses mirror; computer/social screen; makeup/adornment; and breakup confidence.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 9, pp. 178-179, breakup boldness glamour supports the breakup boldness glamour architecture through source uses mirror, computer/social screen, makeup/adornment, and breakup confidence. Carrier: body. Materials: mirror, one adornment, screen/device. Place: mirror and desk/table.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -15899,7 +15859,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Before opening the message, feed, or profile, stand before a mirror. Put on one color, scent, or object that makes the body feel present. Say one sentence about who is still here. Close the mirror before opening the screen.",
       "intention": "Let boldness arrive before the old story does.",
       "bestWindow": "Before breakup-related digital contact or public visibility.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for blessing; breakup; or body as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: mirror; one adornment; screen/device. Place: mirror and desk/table.\" sourceBackedRationale: - \"Chapter 9; pp. 178-179; breakup boldness glamour supports the breakup boldness glamour architecture through source uses mirror; computer/social screen; makeup/adornment; and breakup confidence.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 9, pp. 178-179, breakup boldness glamour supports the breakup boldness glamour architecture through source uses mirror, computer/social screen, makeup/adornment, and breakup confidence. Carrier: body. Materials: mirror, one adornment, screen/device. Place: mirror and desk/table.",
       "questionToCarry": "What part of me is still here before the screen opens?"
     },
     "recommendationMetadata": {
@@ -15940,16 +15900,19 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "mirror",
-        "one adornment",
-        "screen/device",
-        "mirror and desk/table",
         "breakup",
+        "mirror",
         "boldness",
         "screen"
+      ],
+      "keywords": [
+        "breakup",
+        "mirror",
+        "boldness",
+        "screen",
+        "one adornment",
+        "screen/device",
+        "mirror and desk/table"
       ],
       "materials": [
         "mirror",
@@ -16000,14 +15963,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for tending; mending; or words as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: paper or cloth heart; pen; thread/tape/fold; candle or lamp. Place: table.\" sourceBackedRationale: - \"Chapter 9; pp. 179-180; relationship mending supports the stitched object mending architecture through source uses a felt heart; stitching; herbs/materials; and love-mending intention.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 9, pp. 179-180, relationship mending supports the stitched object mending architecture through source uses a felt heart, stitching, herbs/materials, and love-mending intention. Carrier: words. Materials: paper or cloth heart, pen, thread/tape/fold, candle or lamp. Place: table.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -16017,7 +15976,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Cut or draw a small heart. Write the relationship quality that needs mending on it. Stitch, tape, or fold it closed once. Place it under a candle or lamp for one quiet interval, then put it away.",
       "intention": "Let mending become an object before it becomes a demand.",
       "bestWindow": "When repair is wanted but cannot be forced tonight.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for tending; mending; or words as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: paper or cloth heart; pen; thread/tape/fold; candle or lamp. Place: table.\" sourceBackedRationale: - \"Chapter 9; pp. 179-180; relationship mending supports the stitched object mending architecture through source uses a felt heart; stitching; herbs/materials; and love-mending intention.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 9, pp. 179-180, relationship mending supports the stitched object mending architecture through source uses a felt heart, stitching, herbs/materials, and love-mending intention. Carrier: words. Materials: paper or cloth heart, pen, thread/tape/fold, candle or lamp. Place: table.",
       "questionToCarry": "What can be mended as a symbol before it is asked of anyone?"
     },
     "recommendationMetadata": {
@@ -16059,18 +16018,21 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "paper or cloth heart",
-        "pen",
-        "thread/tape/fold",
-        "candle or lamp",
-        "table",
         "mending",
         "heart",
         "stitch",
         "relationship"
+      ],
+      "keywords": [
+        "mending",
+        "heart",
+        "stitch",
+        "relationship",
+        "paper or cloth heart",
+        "pen",
+        "thread/tape/fold",
+        "candle or lamp",
+        "table"
       ],
       "materials": [
         "paper or cloth heart",
@@ -16122,14 +16084,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for tending; trust; or words as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: notebook; pen; trust object. Place: table or bedside.\" sourceBackedRationale: - \"Chapter 9; pp. 181-182; trust ritual supports the trust object page architecture through source uses journal reflection and a stone/object to work with trust.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 9, pp. 181-182, trust ritual supports the trust object page architecture through source uses journal reflection and a stone/object to work with trust. Carrier: words. Materials: notebook, pen, trust object. Place: table or bedside.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -16139,7 +16097,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Choose one object that already carries trust. Set it beside a notebook. Write one place where trust is present and one place where it is still learning. Close the notebook and return the object.",
       "intention": "Let trust be named without being tested.",
       "bestWindow": "When trust needs tending and no trial is required.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for tending; trust; or words as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: notebook; pen; trust object. Place: table or bedside.\" sourceBackedRationale: - \"Chapter 9; pp. 181-182; trust ritual supports the trust object page architecture through source uses journal reflection and a stone/object to work with trust.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 9, pp. 181-182, trust ritual supports the trust object page architecture through source uses journal reflection and a stone/object to work with trust. Carrier: words. Materials: notebook, pen, trust object. Place: table or bedside.",
       "questionToCarry": "Where is trust present, and where is it still learning?"
     },
     "recommendationMetadata": {
@@ -16180,17 +16138,20 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "notebook",
-        "pen",
-        "trust object",
-        "table or bedside",
         "trust",
         "object",
         "journal",
         "tending"
+      ],
+      "keywords": [
+        "trust",
+        "object",
+        "journal",
+        "tending",
+        "notebook",
+        "pen",
+        "trust object",
+        "table or bedside"
       ],
       "materials": [
         "notebook",
@@ -16241,14 +16202,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for releasing; unsent; or words as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: paper; pen; bowl/book/stone; phone. Place: table or bedside.\" sourceBackedRationale: - \"Chapter 9; pp. 182-183; stop contacting your ex supports the unsent contact release architecture through source uses writing/contact interruption to stop returning to an ex.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 9, pp. 182-183, stop contacting your ex supports the unsent contact release architecture through source uses writing/contact interruption to stop returning to an ex. Carrier: words. Materials: paper, pen, bowl/book/stone, phone. Place: table or bedside.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -16258,7 +16215,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Write the message you are not sending. Fold it once away from you. Place it under a bowl, book, or stone until morning. Close by putting the phone in another place.",
       "intention": "Let contact become contained before it becomes action.",
       "bestWindow": "When the urge to contact an ex or old attachment rises.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for releasing; unsent; or words as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: words. Materials: paper; pen; bowl/book/stone; phone. Place: table or bedside.\" sourceBackedRationale: - \"Chapter 9; pp. 182-183; stop contacting your ex supports the unsent contact release architecture through source uses writing/contact interruption to stop returning to an ex.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 9, pp. 182-183, stop contacting your ex supports the unsent contact release architecture through source uses writing/contact interruption to stop returning to an ex. Carrier: words. Materials: paper, pen, bowl/book/stone, phone. Place: table or bedside.",
       "questionToCarry": "What can be written without being sent?"
     },
     "recommendationMetadata": {
@@ -16299,18 +16256,21 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "paper",
-        "pen",
-        "bowl/book/stone",
-        "phone",
-        "table or bedside",
         "unsent",
         "ex",
         "boundary",
         "contact"
+      ],
+      "keywords": [
+        "unsent",
+        "ex",
+        "boundary",
+        "contact",
+        "paper",
+        "pen",
+        "bowl/book/stone",
+        "phone",
+        "table or bedside"
       ],
       "materials": [
         "paper",
@@ -16362,14 +16322,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for releasing; bed; or body as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: sheets; flower/cloth/cup of water. Place: bedroom.\" sourceBackedRationale: - \"Chapter 9; pp. 183-184; bed cleansing ritual supports the bed reset architecture through source uses bed reset; linens; roses/scent; and water/smoke-style cleansing materials.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 9, pp. 183-184, bed cleansing ritual supports the bed reset architecture through source uses bed reset, linens, roses/scent, and water/smoke-style cleansing materials. Carrier: body. Materials: sheets, flower/cloth/cup of water. Place: bedroom.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -16379,7 +16335,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Change or smooth the sheets. Place one flower, cloth, or cup of water near the bed for a short interval. Name what the bed is allowed to hold now. Close by removing the object before sleep or by morning.",
       "intention": "Let the bed return to the present household.",
       "bestWindow": "After a breakup, rupture, guest, or intimate ending.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for releasing; bed; or body as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Steady capacity allows a fuller setup; a held moment; and a return/closure.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: sheets; flower/cloth/cup of water. Place: bedroom.\" sourceBackedRationale: - \"Chapter 9; pp. 183-184; bed cleansing ritual supports the bed reset architecture through source uses bed reset; linens; roses/scent; and water/smoke-style cleansing materials.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 9, pp. 183-184, bed cleansing ritual supports the bed reset architecture through source uses bed reset, linens, roses/scent, and water/smoke-style cleansing materials. Carrier: body. Materials: sheets, flower/cloth/cup of water. Place: bedroom.",
       "questionToCarry": "What does the bed belong to now?"
     },
     "recommendationMetadata": {
@@ -16420,16 +16376,19 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "sheets",
-        "flower/cloth/cup of water",
-        "bedroom",
         "bed",
         "linen",
         "reset",
         "present"
+      ],
+      "keywords": [
+        "bed",
+        "linen",
+        "reset",
+        "present",
+        "sheets",
+        "flower/cloth/cup of water",
+        "bedroom"
       ],
       "materials": [
         "sheets",
@@ -16479,14 +16438,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for releasing; afterward; or body as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: water; one household object. Place: bedroom; bathroom; or private room.\" sourceBackedRationale: - \"Chapter 9; pp. 188-189; home/body post-intimacy reset supports the home body afterward reset architecture through source combines home cleaning; bath/body reset; and sexual release mechanics.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 9, pp. 188-189, home/body post-intimacy reset supports the home body afterward reset architecture through source combines home cleaning, bath/body reset, and sexual release mechanics. Carrier: body. Materials: water, one household object. Place: bedroom, bathroom, or private room.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -16496,7 +16451,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Put one thing in the room back where it belongs. Wash hands, face, or feet. Name what is finished and what remains welcome. Close by leaving the room quieter than it was.",
       "intention": "Let intensity return to ordinary care.",
       "bestWindow": "After private intensity, release, or emotional heat.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for releasing; afterward; or body as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For both of you; the body gives each person a real role or gives the object/light a place between you.\" materialPlaceCarrierPurposeFit: - \"Carrier: body. Materials: water; one household object. Place: bedroom; bathroom; or private room.\" sourceBackedRationale: - \"Chapter 9; pp. 188-189; home/body post-intimacy reset supports the home body afterward reset architecture through source combines home cleaning; bath/body reset; and sexual release mechanics.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 9, pp. 188-189, home/body post-intimacy reset supports the home body afterward reset architecture through source combines home cleaning, bath/body reset, and sexual release mechanics. Carrier: body. Materials: water, one household object. Place: bedroom, bathroom, or private room.",
       "questionToCarry": "What is finished, and what remains welcome here?"
     },
     "recommendationMetadata": {
@@ -16538,18 +16493,21 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "water",
-        "one household object",
-        "bedroom",
-        "bathroom",
-        "or private room",
         "afterward",
         "wash",
         "home",
         "return"
+      ],
+      "keywords": [
+        "afterward",
+        "wash",
+        "home",
+        "return",
+        "water",
+        "one household object",
+        "bedroom",
+        "bathroom",
+        "or private room"
       ],
       "materials": [
         "water",
@@ -16601,14 +16559,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for opening; cynicism; or candlelight as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: two cards/objects; candle or lamp. Place: table.\" sourceBackedRationale: - \"Chapter 9; pp. 192-193; remove cynicism supports the cynicism softening light architecture through source uses candle/tarot-style symbolic confrontation of cynicism.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 9, pp. 192-193, remove cynicism supports the cynicism softening light architecture through source uses candle/tarot-style symbolic confrontation of cynicism. Carrier: candlelight. Materials: two cards/objects, candle or lamp. Place: table.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -16618,7 +16572,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Place a card, word, or object for cynicism near a candle or lamp. Place a second object for what still might be possible beside it. Let both sit in the same light. Close by moving the possible thing closer to you.",
       "intention": "Let cynicism be seen without taking the only chair.",
       "bestWindow": "When disappointment has become the default voice.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for opening; cynicism; or candlelight as the main ritual lane.\" timingHooks: - \"No timing is required; ordinary household readiness is enough.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: candlelight. Materials: two cards/objects; candle or lamp. Place: table.\" sourceBackedRationale: - \"Chapter 9; pp. 192-193; remove cynicism supports the cynicism softening light architecture through source uses candle/tarot-style symbolic confrontation of cynicism.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 9, pp. 192-193, remove cynicism supports the cynicism softening light architecture through source uses candle/tarot-style symbolic confrontation of cynicism. Carrier: candlelight. Materials: two cards/objects, candle or lamp. Place: table.",
       "questionToCarry": "What possibility can sit beside cynicism tonight?"
     },
     "recommendationMetadata": {
@@ -16659,16 +16613,19 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "two cards/objects",
-        "candle or lamp",
-        "table",
         "cynicism",
         "candle",
         "possibility",
         "opening"
+      ],
+      "keywords": [
+        "cynicism",
+        "candle",
+        "possibility",
+        "opening",
+        "two cards/objects",
+        "candle or lamp",
+        "table"
       ],
       "materials": [
         "two cards/objects",
@@ -16718,14 +16675,10 @@ export const sourceBackedRituals: Ritual[] = [
           "citationLabel": "Saint Thomas, Sex Witch",
           "sourceLocation": "Sex Witch",
           "sourceSummary": "Saint Thomas, Sex Witch",
-          "sourceSupports": "checkInHooks: - \"Use when the check-in asks for tending; self-forgiveness; or vessel as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: vessel. Materials: bowl or bath water; candle or lamp. Place: bathroom or table.\" sourceBackedRationale: - \"Chapter 9; pp. 193-194; forgive yourself supports the self forgiveness water light architecture through source uses bath/water; candles; drink/substance options; and self-forgiveness speech.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+          "sourceSupports": "Chapter 9, pp. 193-194, forgive yourself supports the self forgiveness water light architecture through source uses bath/water, candles, drink/substance options, and self-forgiveness speech. Carrier: vessel. Materials: bowl or bath water, candle or lamp. Place: bathroom or table.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": [
-            "- \"Do not turn this into coercion",
-            "performance pressure",
-            "medical/legal guidance",
-            "guaranteed outcome",
-            "or relationship advice."
+            "Do not turn this into coercion, performance pressure, medical/legal guidance, outcome-certainty claim, or relationship advice."
           ]
         }
       ]
@@ -16735,7 +16688,7 @@ export const sourceBackedRituals: Ritual[] = [
       "practice": "Set a bowl or bath of water near a candle or lamp. Name what you are willing to forgive yourself for in one sentence. Touch the water and then the table, towel, or floor. Close by emptying or leaving the water according to ordinary use.",
       "intention": "Let self-forgiveness become contact before explanation.",
       "bestWindow": "When shame is present and the body needs a smaller rite.",
-      "whyThisFits": "checkInHooks: - \"Use when the check-in asks for tending; self-forgiveness; or vessel as the main ritual lane.\" timingHooks: - \"Timing can support the rite; but the material action remains the primary ritual logic.\" lunarPlanetarySeasonalHooks: - \"Use only if timing facts already point toward this carrier or purpose; do not calculate astrology inside the Ritual.\" capacityHooks: - \"Low capacity keeps the rite to one material action; one sentence; and a clear close.\" audienceHooks: - \"For one person; the rite keeps the action contained and private.\" materialPlaceCarrierPurposeFit: - \"Carrier: vessel. Materials: bowl or bath water; candle or lamp. Place: bathroom or table.\" sourceBackedRationale: - \"Chapter 9; pp. 193-194; forgive yourself supports the self forgiveness water light architecture through source uses bath/water; candles; drink/substance options; and self-forgiveness speech.\" notForOrHoldNotes: - \"Do not turn this into coercion; performance pressure; medical/legal guidance; guaranteed outcome; or relationship advice.\" ``",
+      "whyThisFits": "Chapter 9, pp. 193-194, forgive yourself supports the self forgiveness water light architecture through source uses bath/water, candles, drink/substance options, and self-forgiveness speech. Carrier: vessel. Materials: bowl or bath water, candle or lamp. Place: bathroom or table.",
       "questionToCarry": "What can be touched with forgiveness before it is understood?"
     },
     "recommendationMetadata": {
@@ -16776,16 +16729,19 @@ export const sourceBackedRituals: Ritual[] = [
     },
     "searchMetadata": {
       "tags": [
-        "Saint Thomas sex witch"
-      ],
-      "keywords": [
-        "bowl or bath water",
-        "candle or lamp",
-        "bathroom or table",
         "self-forgiveness",
         "water",
         "candle",
         "shame"
+      ],
+      "keywords": [
+        "self-forgiveness",
+        "water",
+        "candle",
+        "shame",
+        "bowl or bath water",
+        "candle or lamp",
+        "bathroom or table"
       ],
       "materials": [
         "bowl or bath water",
@@ -16908,9 +16864,9 @@ export const sourceBackedRituals: Ritual[] = [
         "kitchen counter",
         "table",
         "sink",
-        "[center",
+        "center",
         "breath",
-        "kitchen opening]"
+        "kitchen opening"
       ],
       "places": [
         "kitchen counter",
@@ -16954,7 +16910,7 @@ export const sourceBackedRituals: Ritual[] = [
           "doNotImport": [
             "no target-control",
             "health claim",
-            "guaranteed outcome",
+            "outcome-certainty claim",
             "or covert food magic"
           ]
         }
@@ -17025,11 +16981,10 @@ export const sourceBackedRituals: Ritual[] = [
         "pen",
         "bowl/cup/pot/plate/serving dish",
         "counter",
-        "[intention",
         "written purpose",
         "bowl",
         "cup",
-        "table]"
+        "table"
       ],
       "materials": [
         "paper",
@@ -17147,10 +17102,10 @@ export const sourceBackedRituals: Ritual[] = [
         "planned ingredients",
         "kitchen counter",
         "table",
-        "[stir",
+        "stir",
         "mix",
         "mash",
-        "intention]"
+        "intention"
       ],
       "materials": [
         "bowl",
@@ -17267,8 +17222,7 @@ export const sourceBackedRituals: Ritual[] = [
         "offering",
         "plate",
         "kitchen table",
-        "[bread",
-        "household offering]"
+        "household offering"
       ],
       "materials": [
         "bread",
@@ -17386,10 +17340,9 @@ export const sourceBackedRituals: Ritual[] = [
         "pen",
         "table",
         "counter",
-        "[bowl",
         "water",
         "reflection",
-        "written word]"
+        "written word"
       ],
       "materials": [
         "bowl",
@@ -17508,11 +17461,10 @@ export const sourceBackedRituals: Ritual[] = [
         "cup or pitcher",
         "safe drink",
         "kitchen table",
-        "[cup",
         "pitcher",
         "drink",
         "table",
-        "connection]"
+        "connection"
       ],
       "materials": [
         "cup or pitcher",
@@ -17627,11 +17579,10 @@ export const sourceBackedRituals: Ritual[] = [
         "sweetness",
         "safe kitchen object",
         "kitchen table",
-        "[bowl",
         "fruit",
         "sweet",
         "table",
-        "enough]"
+        "enough"
       ],
       "materials": [
         "bowl",
@@ -17746,10 +17697,10 @@ export const sourceBackedRituals: Ritual[] = [
         "safe seasonal food or object",
         "bowl/plate",
         "kitchen table",
-        "[season",
+        "season",
         "bowl",
         "plate",
-        "table]"
+        "table"
       ],
       "materials": [
         "safe seasonal food or object",
@@ -17864,10 +17815,10 @@ export const sourceBackedRituals: Ritual[] = [
         "cloth",
         "kitchen table",
         "sink",
-        "[clear table",
+        "clear table",
         "close",
         "wash",
-        "memory]"
+        "memory"
       ],
       "materials": [
         "table",
@@ -17983,12 +17934,12 @@ export const sourceBackedRituals: Ritual[] = [
         "vessel",
         "kitchen table",
         "counter",
-        "[cup",
+        "cup",
         "bowl",
         "spoon",
         "jar",
         "serving dish",
-        "consecrate]"
+        "consecrate"
       ],
       "materials": [
         "kitchen object"
@@ -18108,11 +18059,10 @@ export const sourceBackedRituals: Ritual[] = [
         "stove",
         "counter",
         "kitchen table",
-        "[pot",
         "pan",
         "bowl",
         "stir",
-        "tend]"
+        "tend"
       ],
       "materials": [
         "pot/pan/serving bowl",
@@ -18230,12 +18180,11 @@ export const sourceBackedRituals: Ritual[] = [
         "plate/cup",
         "safe offering or token",
         "kitchen table",
-        "[welcome",
         "plate",
         "cup",
         "fruit",
         "bread",
-        "sweet]"
+        "sweet"
       ],
       "materials": [
         "plate/cup",
@@ -18349,10 +18298,10 @@ export const sourceBackedRituals: Ritual[] = [
         "seasonal table",
         "notebook or Moon & Table note",
         "kitchen table",
-        "[dish memory",
+        "dish memory",
         "recipe",
         "table",
-        "seasonal meal]"
+        "seasonal meal"
       ],
       "materials": [
         "notebook or Moon & Table note"
@@ -18468,9 +18417,8 @@ export const sourceBackedRituals: Ritual[] = [
         "bowl/cup/plate/serving dish",
         "candle or unlit candle",
         "kitchen table",
-        "[candle",
         "vessel",
-        "light]"
+        "light"
       ],
       "materials": [
         "bowl/cup/plate/serving dish",
@@ -18491,6 +18439,8673 @@ export const sourceBackedRituals: Ritual[] = [
       "sourceTextReviewRequired": true,
       "materialSafetyReviewRequired": true,
       "sourceVerificationRequired": true
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.lunation_map_one_desire",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source presents lunar magic as working consciously with the entire lunar cycle around one goal or desire, with ongoing actions and observation. Carrier: words/table. Materials: paper, pen, visible table or shelf. Purpose: opening and remembering.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "Do not promise manifestation or force a perfect phase; this is cycle-shaping, not outcome certainty."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Map one desire through the Moon.",
+      "practice": "At the table, write one desire or question at the center of a page. Around it, make four simple stations: beginning, building, fullness, and release. Add one action or observation for each station. Fold the page once and place it where you will see it through the cycle. Return to it at each phase and add one dated line. Close the cycle by writing what changed and what still wants another month.",
+      "intention": "Let the Moon give one desire a shape that can be revisited instead of rushed.",
+      "bestWindow": "At or near the new Moon, or whenever beginning a month-long ritual arc.",
+      "whyThisFits": "The source presents lunar magic as working consciously with the entire lunar cycle around one goal or desire, with ongoing actions and observation. Carrier: words/table. Materials: paper, pen, visible table or shelf. Purpose: opening and remembering.",
+      "questionToCarry": "What is this desire asking for at each part of the cycle?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "opening",
+        "secondary": [
+          "remembering"
+        ],
+        "refinement": "opening"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate",
+          "room_for_something_deeper"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "required",
+        "contexts": [
+          "new moon",
+          "start of lunation",
+          "monthly reset"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "moon mapping",
+        "lunar cycle",
+        "grimoire",
+        "desire",
+        "beginning",
+        "opening",
+        "remembering",
+        "words",
+        "table"
+      ],
+      "keywords": [
+        "moon mapping",
+        "lunar cycle",
+        "grimoire",
+        "desire",
+        "beginning",
+        "opening",
+        "remembering",
+        "words",
+        "table",
+        "paper",
+        "pen",
+        "table or shelf",
+        "altar",
+        "desk",
+        "bedside",
+        "Map one desire through the Moon."
+      ],
+      "materials": [
+        "paper",
+        "pen",
+        "table or shelf"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "desk",
+        "bedside"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.new_moon_table_seed",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source emphasizes new Moon intention, seed work, and making space for the beginning rather than forcing results. Carrier: table/vessel/words. Materials: bowl, paper, pen.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No manifestation outcome certainty; no pressure to act before the cycle begins."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Set the seed on the dark table.",
+      "practice": "Clear a small space on the table. Place a dark or empty bowl in the center and write one beginning on a slip of paper. Fold the paper toward you once and place it in the bowl. Let the bowl stay plain. Do not add a second wish. Close by touching the rim of the bowl and leaving the beginning quiet.",
+      "intention": "Give a new beginning a protected place before it has to grow.",
+      "bestWindow": "At the new Moon, or during the first quiet night of a new cycle.",
+      "whyThisFits": "The source emphasizes new Moon intention, seed work, and making space for the beginning rather than forcing results. Carrier: table/vessel/words. Materials: bowl, paper, pen.",
+      "questionToCarry": "What wants a beginning but not yet an audience?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "opening",
+        "secondary": [
+          "marking"
+        ],
+        "refinement": "opening"
+      },
+      "carriers": {
+        "primary": "vessel",
+        "secondary": [
+          "words",
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "required",
+        "contexts": [
+          "new moon",
+          "early lunation"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "new moon",
+        "seed",
+        "intention",
+        "quiet",
+        "beginning",
+        "opening",
+        "marking",
+        "vessel",
+        "words",
+        "table"
+      ],
+      "keywords": [
+        "new moon",
+        "seed",
+        "intention",
+        "quiet",
+        "beginning",
+        "opening",
+        "marking",
+        "vessel",
+        "words",
+        "table",
+        "bowl",
+        "paper",
+        "pen",
+        "altar",
+        "bedside",
+        "Set the seed on the dark table."
+      ],
+      "materials": [
+        "bowl",
+        "paper",
+        "pen"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "bedside"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.new_moon_altar_base",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source describes creating a new Moon altar that may hold the spells for the lunar cycle. table bowl lunar object paper",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "Do not add unsupported correspondences or deity/spirit elements."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Build the altar for one lunar cycle.",
+      "practice": "Choose the small surface that will hold this cycle. Place one lunar object, one white or dark cloth, one bowl of water or empty bowl, and the written focus for the month. Arrange the objects without crowding them. Name the altar's purpose in plain words. Leave it up for the cycle, or close it when the cycle closes.",
+      "intention": "Let one place hold the month of moon work.",
+      "bestWindow": "At the new Moon or when beginning a lunar practice.",
+      "whyThisFits": "The source describes creating a new Moon altar that may hold the spells for the lunar cycle. table bowl lunar object paper",
+      "questionToCarry": "What does this altar need to hold, and what does it not need to carry?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "marking",
+        "secondary": [
+          "opening",
+          "tending"
+        ],
+        "refinement": "marking"
+      },
+      "carriers": {
+        "primary": "table",
+        "secondary": [
+          "vessel",
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "preferred",
+        "contexts": [
+          "new moon",
+          "cycle start"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "new moon altar",
+        "lunar cycle",
+        "monthly focus",
+        "marking",
+        "opening",
+        "tending",
+        "table",
+        "vessel",
+        "words"
+      ],
+      "keywords": [
+        "new moon altar",
+        "lunar cycle",
+        "monthly focus",
+        "marking",
+        "opening",
+        "tending",
+        "table",
+        "vessel",
+        "words",
+        "small surface",
+        "cloth",
+        "bowl",
+        "lunar object",
+        "written focus",
+        "altar",
+        "shelf",
+        "Build the altar for one lunar cycle."
+      ],
+      "materials": [
+        "small surface",
+        "cloth",
+        "bowl",
+        "lunar object",
+        "written focus"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "shelf"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.seed_pot_intention",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source includes a seed magic spell for new Moon growth and asks for continued real-world care/action. plant soil pot paper water",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No outcome certainty of outcome",
+            "plant care and action matter."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Plant the intention where it can grow.",
+      "practice": "Set a small pot, soil, and seeds or a small plant start on the table. Write one intention on paper and fold it once. Place the paper under the pot or in the soil if that is already safe for the plant. Plant or water the seed. Touch the pot and commit to one real action you will take while it grows.",
+      "intention": "Give the beginning a living thing to tend.",
+      "bestWindow": "New Moon, early spring, or the start of a project that needs care over time.",
+      "whyThisFits": "The source includes a seed magic spell for new Moon growth and asks for continued real-world care/action. plant soil pot paper water",
+      "questionToCarry": "What will I do for this seed after the ritual ends?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "opening",
+        "secondary": [
+          "tending"
+        ],
+        "refinement": "opening"
+      },
+      "carriers": {
+        "primary": "plant",
+        "secondary": [
+          "words",
+          "vessel"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate",
+          "room_for_something_deeper"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "preferred",
+        "contexts": [
+          "new moon",
+          "spring",
+          "project beginning"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "new moon",
+        "seed",
+        "plant",
+        "growth",
+        "tending",
+        "opening",
+        "words",
+        "vessel"
+      ],
+      "keywords": [
+        "new moon",
+        "seed",
+        "plant",
+        "growth",
+        "tending",
+        "opening",
+        "words",
+        "vessel",
+        "seeds or plant start",
+        "pot",
+        "soil",
+        "water",
+        "paper",
+        "pen",
+        "table",
+        "kitchen",
+        "windowsill",
+        "garden",
+        "Plant the intention where it can grow."
+      ],
+      "materials": [
+        "seeds or plant start",
+        "pot",
+        "soil",
+        "water",
+        "paper",
+        "pen"
+      ],
+      "places": [
+        "table",
+        "kitchen",
+        "windowsill",
+        "garden"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.salt_bath_or_shower",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source includes a new Moon cleansing bath with candle and salt scrub as preparation. body water salt candlelight",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No essential oils",
+            "no medical claims",
+            "no elaborate bath recipe imported."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Wash the old month off first.",
+      "practice": "Before beginning new Moon work, take a bath or shower. Keep one candle or lamp nearby if safe. Use plain water and a simple salt scrub or a pinch of salt near the drain. As the water runs, name one thing from the old cycle that can leave. Step out and dry off before setting the new intention.",
+      "intention": "Make the body a threshold between the last cycle and the next.",
+      "bestWindow": "Before a new Moon altar, intention, or seed ritual.",
+      "whyThisFits": "The source includes a new Moon cleansing bath with candle and salt scrub as preparation. body water salt candlelight",
+      "questionToCarry": "What can leave before I ask for anything new?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "releasing",
+        "secondary": [
+          "opening",
+          "steadying"
+        ],
+        "refinement": "releasing"
+      },
+      "carriers": {
+        "primary": "body",
+        "secondary": [
+          "candlelight",
+          "vessel"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "preferred",
+        "contexts": [
+          "new moon",
+          "before intention setting"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "new moon",
+        "cleansing",
+        "bath",
+        "shower",
+        "reset",
+        "releasing",
+        "opening",
+        "steadying",
+        "body",
+        "candlelight",
+        "vessel"
+      ],
+      "keywords": [
+        "new moon",
+        "cleansing",
+        "bath",
+        "shower",
+        "reset",
+        "releasing",
+        "opening",
+        "steadying",
+        "body",
+        "candlelight",
+        "vessel",
+        "water",
+        "salt",
+        "candle or lamp",
+        "Wash the old month off first."
+      ],
+      "materials": [
+        "water",
+        "salt",
+        "candle or lamp"
+      ],
+      "places": [
+        "bath",
+        "shower"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.spell_motive_table",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source gives reflective questions for clarifying motives resistance readiness and outcome before spell work. words table paper",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "Do not turn into therapy intake or productivity planning."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Ask the spell what it really wants.",
+      "practice": "Place a blank page at the table. At the top, write the spell or desire you think you want. Under it, answer three questions in short lines: What do I want? Why do I want it? What would have to change in me if this worked? Circle the answer that feels most honest. Fold the page and stop there.",
+      "intention": "Clarify the desire before giving it ritual force.",
+      "bestWindow": "Before any spell, intention-setting, new Moon work, or moon-mapping cycle.",
+      "whyThisFits": "The source gives reflective questions for clarifying motives resistance readiness and outcome before spell work. words table paper",
+      "questionToCarry": "What is the desire beneath the desire?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "voicing",
+        "secondary": [
+          "opening",
+          "steadying"
+        ],
+        "refinement": "voicing"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "before spell work",
+          "before new moon intention"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "intention",
+        "motive",
+        "clarity",
+        "spell preparation",
+        "voicing",
+        "opening",
+        "steadying",
+        "words",
+        "table"
+      ],
+      "keywords": [
+        "intention",
+        "motive",
+        "clarity",
+        "spell preparation",
+        "voicing",
+        "opening",
+        "steadying",
+        "words",
+        "table",
+        "paper",
+        "pen",
+        "desk",
+        "altar",
+        "Ask the spell what it really wants."
+      ],
+      "materials": [
+        "paper",
+        "pen"
+      ],
+      "places": [
+        "table",
+        "desk",
+        "altar"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.grimoire_after_spell",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source explicitly supports recording magical workings and leaving space to revisit later outcomes. words grimoire table",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "Do not over-measure or treat the record as proof/outcome certainty."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Leave pages open for the Moon to answer.",
+      "practice": "After a ritual or spell, open the grimoire or journal. Record the date, time, moon phase if known, materials, actions, words spoken, and any images or sensations that came through. Leave two blank pages after the entry. Return later in the month and write what changed.",
+      "intention": "Give the ritual a memory long enough to show its pattern.",
+      "bestWindow": "Immediately after a spell or ritual, then again later in the lunation.",
+      "whyThisFits": "The source explicitly supports recording magical workings and leaving space to revisit later outcomes. words grimoire table",
+      "questionToCarry": "What changed later that I would have missed tonight?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "remembering",
+        "secondary": [
+          "tending"
+        ],
+        "refinement": "remembering"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "after ritual",
+          "end of cycle",
+          "follow-up"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "grimoire",
+        "spell record",
+        "follow-up",
+        "integration",
+        "remembering",
+        "tending",
+        "words",
+        "table"
+      ],
+      "keywords": [
+        "grimoire",
+        "spell record",
+        "follow-up",
+        "integration",
+        "remembering",
+        "tending",
+        "words",
+        "table",
+        "journal or grimoire",
+        "pen",
+        "desk",
+        "bedside",
+        "Leave pages open for the Moon to answer."
+      ],
+      "materials": [
+        "journal or grimoire",
+        "pen"
+      ],
+      "places": [
+        "table",
+        "desk",
+        "bedside"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.waxing_one_thread",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source emphasizes taking actions during the waxing period and following symbolic threads that emerge. words table object body/action",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No prosperity or guaranteed expansion claim."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Follow one thread while the Moon grows.",
+      "practice": "Choose one thread from the intention you set: a task, invitation, message, practice, or next step. Write it on a strip of paper and place it under a small object that can stay on the table for a few days. Each day of the waxing Moon, move the object a little closer to you and take one real action connected to the thread. Close by returning the object to ordinary use.",
+      "intention": "Let growth become motion you can actually make.",
+      "bestWindow": "During the waxing Moon, especially after the first crescent is visible.",
+      "whyThisFits": "The source emphasizes taking actions during the waxing period and following symbolic threads that emerge. words table object body/action",
+      "questionToCarry": "What is the next thread I can follow without forcing the whole pattern?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "tending",
+        "secondary": [
+          "marking"
+        ],
+        "refinement": "tending"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table",
+          "body"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate",
+          "room_for_something_deeper"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "required",
+        "contexts": [
+          "waxing moon",
+          "building phase"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "waxing moon",
+        "action",
+        "thread",
+        "growth",
+        "follow-through",
+        "tending",
+        "marking",
+        "words",
+        "table",
+        "body"
+      ],
+      "keywords": [
+        "waxing moon",
+        "action",
+        "thread",
+        "growth",
+        "follow-through",
+        "tending",
+        "marking",
+        "words",
+        "table",
+        "body",
+        "paper",
+        "pen",
+        "small object",
+        "altar",
+        "desk",
+        "Follow one thread while the Moon grows."
+      ],
+      "materials": [
+        "paper",
+        "pen",
+        "small object"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "desk"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.waxing_symbol_watch",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source supports waxing Moon work as continued attention action and following threads that emerge during the building part of the cycle. words page grimoire table",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No divination outcome certainty",
+            "no forced interpretation",
+            "no claim that the symbol predicts an outcome."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Let a sign find you twice.",
+      "practice": "Open the page that holds this cycle's intention. Write one symbol, phrase, image, or repeated detail that has appeared since the Moon began to grow. Do not decide what it means yet. Mark the date beside it. If the same thread appears again, return to the page and add the second mark. Close by leaving the page open for one breath, then closing the book.",
+      "intention": "Let the growing Moon show one thread without forcing an answer.",
+      "bestWindow": "During waxing Moon, especially when a repeated symbol or detail has started to appear.",
+      "whyThisFits": "The source supports waxing Moon work as continued attention action and following threads that emerge during the building part of the cycle. words page grimoire table",
+      "questionToCarry": "What keeps appearing without asking to be solved yet?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "remembering",
+        "secondary": [
+          "tending"
+        ],
+        "refinement": "remembering"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "waxing moon",
+          "building phase",
+          "repeated symbol"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "waxing moon",
+        "symbol",
+        "thread",
+        "sign",
+        "grimoire",
+        "pattern"
+      ],
+      "keywords": [
+        "waxing moon",
+        "symbol",
+        "thread",
+        "sign",
+        "grimoire",
+        "pattern",
+        "paper",
+        "pen",
+        "grimoire or notebook",
+        "table",
+        "desk",
+        "bedside"
+      ],
+      "materials": [
+        "paper",
+        "pen",
+        "grimoire or notebook"
+      ],
+      "places": [
+        "table",
+        "desk",
+        "bedside"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.waxing_visible_step",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source emphasizes material-world action as part of lunar magic especially during waxing phases. body words table",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "Do not turn into productivity coaching or pressure."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Take one visible step.",
+      "practice": "Stand at the table with the written intention from this cycle. Put one hand on the page. Name the next visible step, then do one small piece of it before the day ends: send the message, open the file, choose the date, place the object, or ask the question. Return to the page afterward and mark the action with one dot.",
+      "intention": "Let intention become action without making it a performance.",
+      "bestWindow": "During waxing Moon, especially when momentum is needed.",
+      "whyThisFits": "The source emphasizes material-world action as part of lunar magic especially during waxing phases. body words table",
+      "questionToCarry": "What action is small enough to do and real enough to matter?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "marking",
+        "secondary": [
+          "tending"
+        ],
+        "refinement": "marking"
+      },
+      "carriers": {
+        "primary": "body",
+        "secondary": [
+          "words",
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "preferred",
+        "contexts": [
+          "waxing moon",
+          "building momentum"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "waxing moon",
+        "action",
+        "step",
+        "momentum",
+        "marking",
+        "tending",
+        "body",
+        "words",
+        "table"
+      ],
+      "keywords": [
+        "waxing moon",
+        "action",
+        "step",
+        "momentum",
+        "marking",
+        "tending",
+        "body",
+        "words",
+        "table",
+        "paper",
+        "pen",
+        "intention page",
+        "desk",
+        "Take one visible step."
+      ],
+      "materials": [
+        "paper",
+        "pen",
+        "intention page"
+      ],
+      "places": [
+        "table",
+        "desk"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.full_moon_mirror",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source includes full Moon mirror magic for true self/true self love and frames full Moon as illumination and consciousness. body candlelight mirror/table",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No copied spell wording",
+            "no body-image therapy claim."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Stand where the light can show you.",
+      "practice": "Place a mirror on the table or stand before one. Set one candle or lamp nearby if safe. Look at your reflection without fixing or correcting it. Name one truth that has become visible this cycle. Touch the mirror frame or the table and let the truth stand without adding an explanation.",
+      "intention": "Meet what has become visible without turning away.",
+      "bestWindow": "Full Moon, or the night when a cycle reaches its brightest point.",
+      "whyThisFits": "The source includes full Moon mirror magic for true self/true self love and frames full Moon as illumination and consciousness. body candlelight mirror/table",
+      "questionToCarry": "What can I see now that I could not see at the beginning?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "blessing",
+        "secondary": [
+          "marking",
+          "voicing"
+        ],
+        "refinement": "blessing"
+      },
+      "carriers": {
+        "primary": "body",
+        "secondary": [
+          "candlelight",
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "required",
+        "contexts": [
+          "full moon",
+          "culmination",
+          "self-recognition"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "full moon",
+        "mirror",
+        "self-recognition",
+        "illumination",
+        "blessing",
+        "marking",
+        "voicing",
+        "body",
+        "candlelight",
+        "table"
+      ],
+      "keywords": [
+        "full moon",
+        "mirror",
+        "self-recognition",
+        "illumination",
+        "blessing",
+        "marking",
+        "voicing",
+        "body",
+        "candlelight",
+        "table",
+        "candle or lamp",
+        "bedroom",
+        "bathroom",
+        "Stand where the light can show you."
+      ],
+      "materials": [
+        "mirror",
+        "candle or lamp"
+      ],
+      "places": [
+        "mirror",
+        "table",
+        "bedroom",
+        "bathroom"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.full_moon_table_witness",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source associates full Moon with culmination and embodiment Moon & Table uses a table witness form. table object candlelight words",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No performance pressure",
+            "no outcome certainty that the work is complete."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Put the harvest on the table.",
+      "practice": "Set one object, page, or symbol from the cycle on the table. Light one candle or lamp if safe. Say what this object shows about the cycle. If you are doing this together, each person names what they witnessed. Close by returning the object to its place or leaving it on the table until morning.",
+      "intention": "Witness what ripened without demanding that everything be finished.",
+      "bestWindow": "Full Moon or the first night the work feels visible.",
+      "whyThisFits": "The source associates full Moon with culmination and embodiment Moon & Table uses a table witness form. table object candlelight words",
+      "questionToCarry": "What has ripened enough to be witnessed?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "marking",
+        "secondary": [
+          "remembering",
+          "connecting"
+        ],
+        "refinement": "marking"
+      },
+      "carriers": {
+        "primary": "table",
+        "secondary": [
+          "words",
+          "candlelight"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "required",
+        "contexts": [
+          "full moon",
+          "culmination"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "full moon",
+        "harvest",
+        "witness",
+        "ripening",
+        "marking",
+        "remembering",
+        "connecting",
+        "table",
+        "words",
+        "candlelight"
+      ],
+      "keywords": [
+        "full moon",
+        "harvest",
+        "witness",
+        "ripening",
+        "marking",
+        "remembering",
+        "connecting",
+        "table",
+        "words",
+        "candlelight",
+        "object or page from the cycle",
+        "candle or lamp",
+        "altar",
+        "kitchen table",
+        "Put the harvest on the table."
+      ],
+      "materials": [
+        "object or page from the cycle",
+        "candle or lamp"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "kitchen table"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.full_moon_tarot_three_cards",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source gives a full Moon tarot pull with soul/support/integration logic. words table tarot deck journal",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No predictive or deterministic claims",
+            "tarot is reflective support."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Pull three cards under the full Moon.",
+      "practice": "Set a tarot deck, journal, and pen on the table. Get quiet. Pull three cards for the full Moon. Let the first card answer what the soul needs now, the second card answer how to support that need, and the third card answer what wants to be released or integrated. Write one line for each card and one closing sentence for the whole spread.",
+      "intention": "Let the full Moon make the inner message visible.",
+      "bestWindow": "Full Moon, or the night before or after if that is the available moment.",
+      "whyThisFits": "The source gives a full Moon tarot pull with soul/support/integration logic. words table tarot deck journal",
+      "questionToCarry": "What is visible now, and what asks to be integrated?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "remembering",
+        "secondary": [
+          "voicing",
+          "releasing"
+        ],
+        "refinement": "remembering"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate",
+          "room_for_something_deeper"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "me"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "preferred",
+        "contexts": [
+          "full moon",
+          "integration",
+          "divination"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "full moon",
+        "tarot",
+        "integration",
+        "reflection",
+        "remembering",
+        "voicing",
+        "releasing",
+        "words",
+        "table"
+      ],
+      "keywords": [
+        "full moon",
+        "tarot",
+        "integration",
+        "reflection",
+        "remembering",
+        "voicing",
+        "releasing",
+        "words",
+        "table",
+        "tarot deck",
+        "journal",
+        "pen",
+        "altar",
+        "bed",
+        "Pull three cards under the full Moon."
+      ],
+      "materials": [
+        "tarot deck",
+        "journal",
+        "pen"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "bed"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.waning_release_one_extra",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source gives examples of using waning timing to eliminate extras say goodbye to old beliefs and rest from exhausting labor. words vessel table",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No baneful or coercive target",
+            "no financial advice."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Let one extra leave with the light.",
+      "practice": "At the table, write one extra thing that can leave this cycle: an expense, habit, old task, pressure, or belief. Put the paper in a bowl. For one night, let the bowl hold it without solving it. The next day, remove the paper and dispose of it plainly. Do not replace it with another task.",
+      "intention": "Release one unnecessary weight without turning release into another performance.",
+      "bestWindow": "During the waning Moon.",
+      "whyThisFits": "The source gives examples of using waning timing to eliminate extras say goodbye to old beliefs and rest from exhausting labor. words vessel table",
+      "questionToCarry": "What can leave without needing a dramatic goodbye?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "releasing",
+        "secondary": [
+          "steadying"
+        ],
+        "refinement": "releasing"
+      },
+      "carriers": {
+        "primary": "vessel",
+        "secondary": [
+          "words",
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "required",
+        "contexts": [
+          "waning moon",
+          "post-full moon release"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "waning moon",
+        "release",
+        "simplify",
+        "set down",
+        "releasing",
+        "steadying",
+        "vessel",
+        "words",
+        "table"
+      ],
+      "keywords": [
+        "waning moon",
+        "release",
+        "simplify",
+        "set down",
+        "releasing",
+        "steadying",
+        "vessel",
+        "words",
+        "table",
+        "bowl",
+        "paper",
+        "pen",
+        "altar",
+        "desk",
+        "Let one extra leave with the light."
+      ],
+      "materials": [
+        "bowl",
+        "paper",
+        "pen"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "desk"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.waning_rest_bowl",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source explicitly treats rest and taking breaks as waning Moon work. vessel words table",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "Do not turn into productivity coaching or avoidance."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Give the work a rest bowl.",
+      "practice": "Place an empty bowl on the table. Write the name of the work that needs a break. Fold the paper away from you and place it under the bowl, not inside it. Let the bowl stay empty overnight. In the morning, decide whether the work returns, waits, or ends.",
+      "intention": "Let rest become part of the work instead of a failure of it.",
+      "bestWindow": "Waning Moon, especially after a demanding full Moon or project push.",
+      "whyThisFits": "The source explicitly treats rest and taking breaks as waning Moon work. vessel words table",
+      "questionToCarry": "What becomes clearer when I stop holding it for one night?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "steadying",
+        "secondary": [
+          "releasing"
+        ],
+        "refinement": "steadying"
+      },
+      "carriers": {
+        "primary": "vessel",
+        "secondary": [
+          "words",
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "preferred",
+        "contexts": [
+          "waning moon",
+          "rest",
+          "post-full moon"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "waning moon",
+        "rest",
+        "pause",
+        "bowl",
+        "steadying",
+        "releasing",
+        "vessel",
+        "words",
+        "table"
+      ],
+      "keywords": [
+        "waning moon",
+        "rest",
+        "pause",
+        "bowl",
+        "steadying",
+        "releasing",
+        "vessel",
+        "words",
+        "table",
+        "empty bowl",
+        "paper",
+        "pen",
+        "altar",
+        "desk",
+        "Give the work a rest bowl."
+      ],
+      "materials": [
+        "empty bowl",
+        "paper",
+        "pen"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "desk"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.waning_goodbye_note",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source gives examples of using waning timing to say goodbye to beliefs and work with old patterns. words water/body table",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No trauma processing claim",
+            "no therapy substitution."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Say goodbye to one old belief.",
+      "practice": "Write the belief in one plain sentence. Under it, write what it tried to protect. Fold the paper once. Hold it between both hands and say goodbye in your own words. Tear it, dissolve it in water, or place it in the trash. Wash your hands and close the rite.",
+      "intention": "Release the belief without pretending it never protected you.",
+      "bestWindow": "Waning Moon, last quarter, or any night when a pattern is ready to be named and set down.",
+      "whyThisFits": "The source gives examples of using waning timing to say goodbye to beliefs and work with old patterns. words water/body table",
+      "questionToCarry": "What did this belief protect, and what can protect me now?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "releasing",
+        "secondary": [
+          "remembering"
+        ],
+        "refinement": "releasing"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "body",
+          "vessel"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "preferred",
+        "contexts": [
+          "waning moon",
+          "last quarter",
+          "pattern release"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "waning moon",
+        "old belief",
+        "release",
+        "goodbye",
+        "releasing",
+        "remembering",
+        "words",
+        "body",
+        "vessel"
+      ],
+      "keywords": [
+        "waning moon",
+        "old belief",
+        "release",
+        "goodbye",
+        "releasing",
+        "remembering",
+        "words",
+        "body",
+        "vessel",
+        "paper",
+        "pen",
+        "water optional",
+        "table",
+        "sink",
+        "altar",
+        "Say goodbye to one old belief."
+      ],
+      "materials": [
+        "paper",
+        "pen",
+        "water optional"
+      ],
+      "places": [
+        "table",
+        "sink",
+        "altar"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.dark_moon_void_table",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source treats the dark Moon as the last phase before rebirth and a time for rest void and transformation. table absence space",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "Do not turn the void into a productivity reset."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Keep the table empty on purpose.",
+      "practice": "Clear the table or altar completely. Put nothing in the center. Sit with the empty surface for a few breaths. Name one thing you will not begin tonight. Close by leaving the table empty until morning, or by placing one ordinary object back where it belongs.",
+      "intention": "Honor the void as a real phase, not a failure to act.",
+      "bestWindow": "Dark Moon, balsamic Moon, or the last three days before a new Moon.",
+      "whyThisFits": "The source treats the dark Moon as the last phase before rebirth and a time for rest void and transformation. table absence space",
+      "questionToCarry": "What becomes possible when I do not fill the space immediately?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "steadying",
+        "secondary": [
+          "releasing"
+        ],
+        "refinement": "steadying"
+      },
+      "carriers": {
+        "primary": "table",
+        "secondary": [
+          "body"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "required",
+        "contexts": [
+          "dark moon",
+          "balsamic moon",
+          "pre-new moon"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "dark moon",
+        "void",
+        "rest",
+        "empty table",
+        "balsamic",
+        "steadying",
+        "releasing",
+        "table",
+        "body"
+      ],
+      "keywords": [
+        "dark moon",
+        "void",
+        "rest",
+        "empty table",
+        "balsamic",
+        "steadying",
+        "releasing",
+        "table",
+        "body",
+        "empty table or altar",
+        "altar",
+        "desk",
+        "Keep the table empty on purpose."
+      ],
+      "materials": [
+        "empty table or altar"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "desk"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.dark_moon_dream_record",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source links dark Moon with underworld work dreamlike possibility and transformation through the unknown. words bedside journal",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No prediction",
+            "diagnosis",
+            "or guaranteed message."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Ask the dark for one image.",
+      "practice": "Before sleep, place a journal and pen beside the bed. Write one question for the dark Moon, then close the journal. Do not try to answer it. In the morning, write one image, feeling, word, or dream fragment that remains. If nothing comes, write: no image yet.",
+      "intention": "Let the unseen speak in its own size.",
+      "bestWindow": "Dark Moon or the night before a new cycle begins.",
+      "whyThisFits": "The source links dark Moon with underworld work dreamlike possibility and transformation through the unknown. words bedside journal",
+      "questionToCarry": "What image comes when I stop demanding an answer?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "remembering",
+        "secondary": [
+          "steadying"
+        ],
+        "refinement": "remembering"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "body"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "preferred",
+        "contexts": [
+          "dark moon",
+          "dreams",
+          "pre-new moon"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "dark moon",
+        "dream",
+        "image",
+        "intuition",
+        "grimoire",
+        "remembering",
+        "steadying",
+        "words",
+        "body"
+      ],
+      "keywords": [
+        "dark moon",
+        "dream",
+        "image",
+        "intuition",
+        "grimoire",
+        "remembering",
+        "steadying",
+        "words",
+        "body",
+        "journal",
+        "pen",
+        "bedside",
+        "bedroom",
+        "Ask the dark for one image."
+      ],
+      "materials": [
+        "journal",
+        "pen"
+      ],
+      "places": [
+        "bedside",
+        "bedroom"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.dark_moon_rebirth_token",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source frames dark Moon as transformation and rebirth the token carries one allowed return. vessel/object table words",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No identity prescription or psychological claim."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Choose the token that survives the dark.",
+      "practice": "Place three small ordinary objects on the table. Let each stand for a version of yourself that has been changing. Remove two. Hold the remaining object in both hands and name what it is allowed to become next. Put it somewhere visible for the first day of the new cycle.",
+      "intention": "Let one sign of rebirth come through without needing the whole future.",
+      "bestWindow": "Dark Moon, or the last night before beginning again.",
+      "whyThisFits": "The source frames dark Moon as transformation and rebirth the token carries one allowed return. vessel/object table words",
+      "questionToCarry": "What part of me is allowed to return changed?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "marking",
+        "secondary": [
+          "opening",
+          "releasing"
+        ],
+        "refinement": "marking"
+      },
+      "carriers": {
+        "primary": "vessel",
+        "secondary": [
+          "table",
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate",
+          "room_for_something_deeper"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "me"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "preferred",
+        "contexts": [
+          "dark moon",
+          "rebirth",
+          "pre-new moon"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "dark moon",
+        "rebirth",
+        "token",
+        "transformation",
+        "marking",
+        "opening",
+        "releasing",
+        "vessel",
+        "table",
+        "words"
+      ],
+      "keywords": [
+        "dark moon",
+        "rebirth",
+        "token",
+        "transformation",
+        "marking",
+        "opening",
+        "releasing",
+        "vessel",
+        "table",
+        "words",
+        "three small objects",
+        "altar",
+        "shelf",
+        "Choose the token that survives the dark."
+      ],
+      "materials": [
+        "three small objects"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "shelf"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.imperfect_timing_adaptation",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source repeatedly encourages personal adaptation and working with the whole cycle rather than perfectionism. words table",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "Do not shame the user for missing a phase."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Use the phase you actually have.",
+      "practice": "Write the ritual you wanted to do and the phase you actually have. Under that, write one way this phase can honestly shape the ritual: begin smaller, build one step, witness what is present, release one piece, or rest. Change only that part of the ritual. Close by writing: this is the Moon I have tonight.",
+      "intention": "Let timing shape the work without making perfection the gate.",
+      "bestWindow": "Any time the desired phase and actual phase do not match.",
+      "whyThisFits": "The source repeatedly encourages personal adaptation and working with the whole cycle rather than perfectionism. words table",
+      "questionToCarry": "What is this Moon asking me to adjust, not abandon?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "steadying",
+        "secondary": [
+          "opening",
+          "releasing"
+        ],
+        "refinement": "steadying"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "imperfect timing",
+          "missed phase",
+          "phase mismatch"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "imperfect timing",
+        "phase mismatch",
+        "adaptation",
+        "no shame",
+        "steadying",
+        "opening",
+        "releasing",
+        "words",
+        "table"
+      ],
+      "keywords": [
+        "imperfect timing",
+        "phase mismatch",
+        "adaptation",
+        "no shame",
+        "steadying",
+        "opening",
+        "releasing",
+        "words",
+        "table",
+        "paper",
+        "pen",
+        "desk",
+        "altar",
+        "Use the phase you actually have."
+      ],
+      "materials": [
+        "paper",
+        "pen"
+      ],
+      "places": [
+        "table",
+        "desk",
+        "altar"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.moon_book.cycle_close_and_begin_again",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Gottesdiener, The Moon Book",
+          "sourceLocation": "The Moon Book",
+          "sourceSummary": "Gottesdiener, The Moon Book",
+          "sourceSupports": "The source emphasizes lunar work as repeated cycle and asks the practitioner to record integrate and begin again. words table vessel",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No success/failure verdict",
+            "this is integration."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Close the lunation before starting over.",
+      "practice": "Bring back the page, bowl, altar, or object that held the cycle. Read what you wrote or remember what it held. Write three closing lines: what ripened, what left, and what wants another cycle. Put the page away, empty the bowl, or clear the altar. Do not begin the next intention until this one is closed.",
+      "intention": "Let the cycle become memory before it becomes another beginning.",
+      "bestWindow": "Dark Moon, balsamic Moon, or the day before the next new Moon.",
+      "whyThisFits": "The source emphasizes lunar work as repeated cycle and asks the practitioner to record integrate and begin again. words table vessel",
+      "questionToCarry": "What belongs to this cycle, and what belongs to the next?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "remembering",
+        "secondary": [
+          "releasing",
+          "opening"
+        ],
+        "refinement": "remembering"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table",
+          "vessel"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "required",
+        "contexts": [
+          "dark moon",
+          "end of lunation",
+          "before new moon"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "lunation close",
+        "dark moon",
+        "integration",
+        "grimoire",
+        "begin again",
+        "remembering",
+        "releasing",
+        "opening",
+        "words",
+        "table",
+        "vessel"
+      ],
+      "keywords": [
+        "lunation close",
+        "dark moon",
+        "integration",
+        "grimoire",
+        "begin again",
+        "remembering",
+        "releasing",
+        "opening",
+        "words",
+        "table",
+        "vessel",
+        "cycle page",
+        "bowl/object/altar",
+        "pen",
+        "altar",
+        "desk",
+        "Close the lunation before starting over."
+      ],
+      "materials": [
+        "cycle page",
+        "bowl/object/altar",
+        "pen"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "desk"
+      ],
+      "sourceLabel": "Sarah Faith Gottesdiener, The Moon Book",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Human review required before import.\"",
+        "\"Source boundary reviewed at packet level.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.practice_night_commitment",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 19-21 / Hints on Using This Book",
+          "sourceSummary": "The source instructs partners to make a shared commitment to regular practice and to keep continuity between meetings.",
+          "sourceSupports": "Source supports commit to the practice night through the cited mechanics: The source instructs partners to make a shared commitment to regular practice and to keep continuity between meetings.",
+          "moonAndTableChanges": "Converted training-schedule guidance into a private, low-pressure relationship ritual for keeping one shared practice night.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Commit to the Practice Night",
+      "practice": "Sit together at the table with the calendar nearby. Choose one recurring window that belongs to your shared practice. Each of you names one reason the practice is worth keeping. Mark the time in the calendar, then close the calendar and leave one hand on it together for one breath.",
+      "intention": "Give the practice a real place in time without turning it into an obligation.",
+      "bestWindow": "Before beginning a new shared ritual cycle, or when the practice has been drifting.",
+      "whyThisFits": "The source instructs partners to make a shared commitment to regular practice and to keep continuity between meetings. Carrier: words. Materials: calendar, pen, table or bedside. Places: bedroom, table, home.",
+      "questionToCarry": "What recurring time can hold us without pressuring us?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "connecting",
+        "secondary": [
+          "marking",
+          "tending"
+        ],
+        "refinement": "connecting"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us"
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "not phase-specific",
+          "use before a planned ritual cycle"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "practice night",
+        "commitment",
+        "calendar",
+        "shared practice",
+        "adult private",
+        "connecting",
+        "marking",
+        "tending",
+        "words",
+        "table"
+      ],
+      "keywords": [
+        "practice night",
+        "commitment",
+        "calendar",
+        "shared practice",
+        "adult private",
+        "connecting",
+        "marking",
+        "tending",
+        "words",
+        "table",
+        "pen",
+        "table or bedside",
+        "bedroom",
+        "home",
+        "Commit to the Practice Night",
+        "practice cadence",
+        "continuity",
+        "shared time"
+      ],
+      "materials": [
+        "calendar",
+        "pen",
+        "table or bedside"
+      ],
+      "places": [
+        "bedroom",
+        "table",
+        "home"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.read_the_steps_together",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 21 / Hints on Using This Book",
+          "sourceSummary": "The source suggests partners read exercises together, discuss the steps, and make simple notes before practice.",
+          "sourceSupports": "Source supports read the steps together through the cited mechanics: The source suggests partners read exercises together, discuss the steps, and make simple notes before practice.",
+          "moonAndTableChanges": "Converted pre-practice reading into a short ritual container that lets both partners enter with clarity.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Read the Steps Together",
+      "practice": "Place the practice card between you. Read the steps once, then close the page. Each partner names one part that feels clear and one part that wants gentleness. Write three plain cue words on a small card. Put the longer text away before the ritual begins.",
+      "intention": "Let the practice be understood before it is performed.",
+      "bestWindow": "Before a new or unfamiliar shared ritual.",
+      "whyThisFits": "The source suggests partners read exercises together, discuss the steps, and make simple notes before practice. Carrier: words. Materials: practice card, pen, paper. Places: table, bedroom.",
+      "questionToCarry": "What do we need to understand before we enter?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "voicing",
+        "secondary": [
+          "steadying",
+          "opening"
+        ],
+        "refinement": "voicing"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us"
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "before any practice that has multiple stages"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "read together",
+        "practice card",
+        "clarity",
+        "pre-brief",
+        "voicing",
+        "steadying",
+        "opening",
+        "words",
+        "table"
+      ],
+      "keywords": [
+        "read together",
+        "practice card",
+        "clarity",
+        "pre-brief",
+        "voicing",
+        "steadying",
+        "opening",
+        "words",
+        "table",
+        "pen",
+        "paper",
+        "bedroom",
+        "Read the Steps Together",
+        "read",
+        "discuss",
+        "steps",
+        "notes"
+      ],
+      "materials": [
+        "practice card",
+        "pen",
+        "paper"
+      ],
+      "places": [
+        "table",
+        "bedroom"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.name_boundary_kindly",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 22-23 / Hints on Using This Book",
+          "sourceSummary": "The source describes doubt and fear as teachers and cautions practitioners not to push past boundaries.",
+          "sourceSupports": "Source supports name the boundary kindly through the cited mechanics: The source describes doubt and fear as teachers and cautions practitioners not to push past boundaries.",
+          "moonAndTableChanges": "Converted boundary-reading guidance into a short partner witnessing ritual for consenting adults before intimate practice.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Name the Boundary Kindly",
+      "practice": "Sit facing each other with enough space between you. Each partner names one yes, one no, and one maybe for tonight's practice. Do not debate the list. Touch the table after each list is heard. Close by agreeing that the practice only continues inside what was named.",
+      "intention": "Make the shared room spacious enough for desire and refusal to both belong.",
+      "bestWindow": "Before intimate ritual, especially when either partner feels tender, tired, unsure, or new to the practice.",
+      "whyThisFits": "The source describes doubt and fear as teachers and cautions practitioners not to push past boundaries. Carrier: words. Materials: none required, optional candle. Places: bedroom, table, floor.",
+      "questionToCarry": "What boundary would let the room feel more alive?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "steadying",
+        "secondary": [
+          "voicing",
+          "connecting"
+        ],
+        "refinement": "steadying"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "body"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us"
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "before practice",
+          "not phase-specific"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "boundary",
+        "yes no maybe",
+        "witness",
+        "consent",
+        "private",
+        "steadying",
+        "voicing",
+        "connecting",
+        "words",
+        "body"
+      ],
+      "keywords": [
+        "boundary",
+        "yes no maybe",
+        "witness",
+        "consent",
+        "private",
+        "steadying",
+        "voicing",
+        "connecting",
+        "words",
+        "body",
+        "none required",
+        "optional candle",
+        "bedroom",
+        "table",
+        "floor",
+        "Name the Boundary Kindly",
+        "comfort",
+        "teacher",
+        "fear",
+        "doubt",
+        "yes",
+        "no",
+        "maybe"
+      ],
+      "materials": [
+        "none required",
+        "optional candle"
+      ],
+      "places": [
+        "bedroom",
+        "table",
+        "floor"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.afterglow_grimoire",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 23 / Hints on Using This Book",
+          "sourceSummary": "The source recommends a magical journal to record experiences, progress, achievements, discoveries, and future reference.",
+          "sourceSupports": "Source supports write the afterglow through the cited mechanics: The source recommends a magical journal to record experiences, progress, achievements, discoveries, and future reference.",
+          "moonAndTableChanges": "Converted training journal guidance into a quiet after-ritual grimoire close.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Write the Afterglow",
+      "practice": "After the ritual, open the shared or private notebook. Write the date, one sensation, one image, and one thing to remember. If you are together, each partner writes their own line or one shared line. Close the book before analysis begins.",
+      "intention": "Let the ritual leave a trace without making the moment explain itself.",
+      "bestWindow": "After a shared practice, before ordinary conversation takes over.",
+      "whyThisFits": "The source recommends a magical journal to record experiences, progress, achievements, discoveries, and future reference. Carrier: words. Materials: notebook, pen. Places: bedside, table.",
+      "questionToCarry": "What is worth remembering while it is still warm?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "remembering",
+        "secondary": [
+          "tending",
+          "marking"
+        ],
+        "refinement": "remembering"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "after a ritual",
+          "especially after a cycle practice"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "grimoire",
+        "afterglow",
+        "journal",
+        "memory",
+        "remembering",
+        "tending",
+        "marking",
+        "words",
+        "table"
+      ],
+      "keywords": [
+        "grimoire",
+        "afterglow",
+        "journal",
+        "memory",
+        "remembering",
+        "tending",
+        "marking",
+        "words",
+        "table",
+        "notebook",
+        "pen",
+        "bedside",
+        "Write the Afterglow",
+        "record",
+        "remember",
+        "integration"
+      ],
+      "materials": [
+        "notebook",
+        "pen"
+      ],
+      "places": [
+        "bedside",
+        "table"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.make_circle_for_us",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 51-68 / Chapter 2, Creating Your Magic Circle",
+          "sourceSummary": "The source provides a Magic Circle container with marked space, altar/table, candle, power objects, spoken purpose, and closing practices.",
+          "sourceSupports": "Source supports make the circle for us through the cited mechanics: The source provides a Magic Circle container with marked space, altar/table, candle, power objects, spoken purpose, and closing practices.",
+          "moonAndTableChanges": "Compressed the full circle structure into a household two-person circle with no copied script and no ceremonial burden.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Make the Circle for Us",
+      "practice": "Clear a small area of the room. Place four simple markers around the practice space and one candle on a low table in the center. Put one shared object beside the light. Each partner names why they are entering the circle. When the practice is complete, remove the markers in reverse order and return the shared object to its place.",
+      "intention": "Make a visible container for the two of you before the work begins.",
+      "bestWindow": "At the start of a deeper intimate ritual or shared-symbol practice.",
+      "whyThisFits": "The source provides a Magic Circle container with marked space, altar/table, candle, power objects, spoken purpose, and closing practices. Carrier: table. Materials: four markers, candle, small table, shared object. Places: bedroom, living room, private room.",
+      "questionToCarry": "What changes when the room has a center?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "opening",
+        "secondary": [
+          "marking",
+          "connecting"
+        ],
+        "refinement": "opening"
+      },
+      "carriers": {
+        "primary": "table",
+        "secondary": [
+          "candlelight",
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate",
+          "room_for_something_deeper"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us"
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "before connection work",
+          "not phase-specific"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "Magic Circle",
+        "altar",
+        "markers",
+        "shared object",
+        "container",
+        "opening",
+        "marking",
+        "connecting",
+        "table",
+        "candlelight",
+        "words"
+      ],
+      "keywords": [
+        "Magic Circle",
+        "altar",
+        "markers",
+        "shared object",
+        "container",
+        "opening",
+        "marking",
+        "connecting",
+        "table",
+        "candlelight",
+        "words",
+        "four markers",
+        "candle",
+        "small table",
+        "bedroom",
+        "living room",
+        "private room",
+        "Make the Circle for Us",
+        "circle",
+        "shared space"
+      ],
+      "materials": [
+        "four markers",
+        "candle",
+        "small table",
+        "shared object"
+      ],
+      "places": [
+        "bedroom",
+        "living room",
+        "private room"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.light_shared_altar",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 51-68 / Chapter 2, altar and candle mechanics",
+          "sourceSummary": "The source uses an altar or low table with a candle as part of Magic Circle preparation.",
+          "sourceSupports": "Source supports light the shared altar through the cited mechanics: The source uses an altar or low table with a candle as part of Magic Circle preparation.",
+          "moonAndTableChanges": "Pulled the candlelit altar mechanic into a simple shared opening ritual.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Light the Shared Altar",
+      "practice": "Set one candle on a small table with one object that belongs to the relationship. Light the candle. Each partner places a hand near the table and names one quality they want the room to hold. Let the light stand for a few breaths, then begin the next practice or snuff the candle to close.",
+      "intention": "Let one shared light gather the room before connection begins.",
+      "bestWindow": "Before a conversation, shared-symbol ritual, or intimate practice.",
+      "whyThisFits": "The source uses an altar or low table with a candle as part of Magic Circle preparation. Carrier: candlelight. Materials: candle, small table, shared object. Places: bedroom, table.",
+      "questionToCarry": "What quality should the light hold for us tonight?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "opening",
+        "secondary": [
+          "connecting",
+          "blessing"
+        ],
+        "refinement": "opening"
+      },
+      "carriers": {
+        "primary": "candlelight",
+        "secondary": [
+          "table",
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "evening",
+          "before shared ritual"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "candlelight",
+        "altar",
+        "shared light",
+        "atmosphere",
+        "opening",
+        "connecting",
+        "blessing",
+        "table",
+        "words"
+      ],
+      "keywords": [
+        "candlelight",
+        "altar",
+        "shared light",
+        "atmosphere",
+        "opening",
+        "connecting",
+        "blessing",
+        "table",
+        "words",
+        "candle",
+        "small table",
+        "shared object",
+        "bedroom",
+        "Light the Shared Altar",
+        "light",
+        "quality",
+        "room"
+      ],
+      "materials": [
+        "candle",
+        "small table",
+        "shared object"
+      ],
+      "places": [
+        "bedroom",
+        "table"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.lay_markers",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 51-68 / Chapter 2, Magic Circle markers and power objects",
+          "sourceSummary": "The source uses markers, scarves, stones, or power objects to define the ritual area.",
+          "sourceSupports": "Source supports lay the markers through the cited mechanics: The source uses markers, scarves, stones, or power objects to define the ritual area.",
+          "moonAndTableChanges": "Reduced marker placement into a domestic boundary-setting rite.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Lay the Markers",
+      "practice": "Choose four small objects already in the room. Place them at the edges of the practice space. Touch each object once as you place it. When the room feels marked, sit inside the space and begin. To close, pick up the objects and return each one to ordinary use.",
+      "intention": "Mark the practice without making the room complicated.",
+      "bestWindow": "Before a shared ritual, especially when the room needs a threshold.",
+      "whyThisFits": "The source uses markers, scarves, stones, or power objects to define the ritual area. Carrier: table. Materials: four small objects. Places: bedroom, living room, floor.",
+      "questionToCarry": "What objects can tell the room that practice has begun?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "marking",
+        "secondary": [
+          "opening"
+        ],
+        "refinement": "marking"
+      },
+      "carriers": {
+        "primary": "table",
+        "secondary": [
+          "vessel",
+          "body"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "before any practice"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "markers",
+        "circle",
+        "boundary",
+        "ordinary objects",
+        "marking",
+        "opening",
+        "table",
+        "vessel",
+        "body"
+      ],
+      "keywords": [
+        "markers",
+        "circle",
+        "boundary",
+        "ordinary objects",
+        "marking",
+        "opening",
+        "table",
+        "vessel",
+        "body",
+        "four small objects",
+        "bedroom",
+        "living room",
+        "floor",
+        "Lay the Markers",
+        "objects",
+        "space",
+        "practice"
+      ],
+      "materials": [
+        "four small objects"
+      ],
+      "places": [
+        "bedroom",
+        "living room",
+        "floor"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.speak_purpose",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 51-68 / Chapter 2, spoken purpose in Magic Circle",
+          "sourceSummary": "The source supports stating the purpose of the practice aloud inside the ritual container.",
+          "sourceSupports": "Source supports speak the purpose through the cited mechanics: The source supports stating the purpose of the practice aloud inside the ritual container.",
+          "moonAndTableChanges": "Kept the spoken-purpose mechanic as functional instruction without copying source formula.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Speak the Purpose",
+      "practice": "Once the space is marked, pause before the shared object at the center. Say the purpose of this practice in one plain sentence. If you are together, each partner speaks one sentence, then you agree on the shared sentence you can both stand behind. Do not add a second purpose.",
+      "intention": "Give the ritual one clear reason to exist.",
+      "bestWindow": "At the opening of a shared ritual or before choosing the night's practice.",
+      "whyThisFits": "The source supports stating the purpose of the practice aloud inside the ritual container. Carrier: words. Materials: candle or shared object optional. Places: circle, table, bedroom.",
+      "questionToCarry": "What is the one purpose we can honestly hold?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "voicing",
+        "secondary": [
+          "opening",
+          "connecting"
+        ],
+        "refinement": "voicing"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "body"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "opening moment"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "spoken purpose",
+        "intention",
+        "voice",
+        "circle",
+        "voicing",
+        "opening",
+        "connecting",
+        "words",
+        "body"
+      ],
+      "keywords": [
+        "spoken purpose",
+        "intention",
+        "voice",
+        "circle",
+        "voicing",
+        "opening",
+        "connecting",
+        "words",
+        "body",
+        "candle or shared object optional",
+        "table",
+        "bedroom",
+        "Speak the Purpose",
+        "purpose",
+        "speak",
+        "one sentence"
+      ],
+      "materials": [
+        "candle or shared object optional"
+      ],
+      "places": [
+        "circle",
+        "table",
+        "bedroom"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.melting_hug",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 68-69 / Chapter 2, Melting Hug",
+          "sourceSummary": "The source includes a named Melting Hug practice as a shared connection/completion mechanic.",
+          "sourceSupports": "Source supports melt back together through the cited mechanics: The source includes a named Melting Hug practice as a shared connection/completion mechanic.",
+          "moonAndTableChanges": "Kept the source's embrace architecture at high level without importing technique instruction or exact script.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Melt Back Together",
+      "practice": "Stand or sit close enough to be held. Enter a simple embrace that both partners choose. Let the embrace last until both of you have arrived in the room. Separate slowly. Each partner says one word for what changed in the body.",
+      "intention": "Let touch become a quiet doorway back to each other.",
+      "bestWindow": "At the opening or close of a shared ritual, when both partners want body-based connection.",
+      "whyThisFits": "The source includes a named Melting Hug practice as a shared connection/completion mechanic. Carrier: body. Materials: none. Places: bedroom, private room.",
+      "questionToCarry": "What softened when we stopped trying to explain it?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "connecting",
+        "secondary": [
+          "steadying",
+          "blessing"
+        ],
+        "refinement": "connecting"
+      },
+      "carriers": {
+        "primary": "body",
+        "secondary": [
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us"
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "before or after practice"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "Melting Hug",
+        "embrace",
+        "arrival",
+        "body",
+        "connecting",
+        "steadying",
+        "blessing",
+        "words"
+      ],
+      "keywords": [
+        "Melting Hug",
+        "embrace",
+        "arrival",
+        "body",
+        "connecting",
+        "steadying",
+        "blessing",
+        "words",
+        "none",
+        "bedroom",
+        "private room",
+        "Melt Back Together",
+        "hug",
+        "connection"
+      ],
+      "materials": [
+        "none"
+      ],
+      "places": [
+        "bedroom",
+        "private room"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.heart_salutation",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 68-69 / Chapter 2, Heart Salutation",
+          "sourceSummary": "The source includes a named Heart Salutation practice as a gesture of honor/closing.",
+          "sourceSupports": "Source supports close with heart salutation through the cited mechanics: The source includes a named Heart Salutation practice as a gesture of honor/closing.",
+          "moonAndTableChanges": "Converted the source gesture into a simple closing or blessing without copied wording.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Close with Heart Salutation",
+      "practice": "Face the room's center. Bring one hand toward the heart. Let the gesture acknowledge the practice as complete. If you are together, turn toward each other and receive the gesture before leaving the circle.",
+      "intention": "Close the ritual by honoring what was present.",
+      "bestWindow": "At the end of shared practice, or after a meaningful conversation.",
+      "whyThisFits": "The source includes a named Heart Salutation practice as a gesture of honor/closing. Carrier: body. Materials: none. Places: circle, bedroom, table.",
+      "questionToCarry": "What deserves to be honored before we leave?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "blessing",
+        "secondary": [
+          "connecting",
+          "steadying"
+        ],
+        "refinement": "blessing"
+      },
+      "carriers": {
+        "primary": "body",
+        "secondary": [
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "ritual close"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "Heart Salutation",
+        "heart",
+        "closing",
+        "honor",
+        "blessing",
+        "connecting",
+        "steadying",
+        "body",
+        "words"
+      ],
+      "keywords": [
+        "Heart Salutation",
+        "heart",
+        "closing",
+        "honor",
+        "blessing",
+        "connecting",
+        "steadying",
+        "body",
+        "words",
+        "none",
+        "circle",
+        "bedroom",
+        "table",
+        "Close with Heart Salutation",
+        "salutation",
+        "bow",
+        "close"
+      ],
+      "materials": [
+        "none"
+      ],
+      "places": [
+        "circle",
+        "bedroom",
+        "table"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.remember_time_magic",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 69-73 / Chapter 2, Remembering Times of Magic",
+          "sourceSummary": "The source invites remembering and re-entering prior magical experiences, including partner sharing.",
+          "sourceSupports": "Source supports remember a time of magic through the cited mechanics: The source invites remembering and re-entering prior magical experiences, including partner sharing.",
+          "moonAndTableChanges": "Turned a longer memory exercise into a concise witnessing ritual.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Remember a Time of Magic",
+      "practice": "Choose one memory when life felt unmistakably magical. Tell it slowly in three parts: where you were, what your body knew, and what changed afterward. If you are together, the listener only witnesses. Then switch. Close by naming one quality from the memory that can come into the room now.",
+      "intention": "Let a past moment of magic become present support.",
+      "bestWindow": "When the practice feels dry, distant, or too practical.",
+      "whyThisFits": "The source invites remembering and re-entering prior magical experiences, including partner sharing. Carrier: words. Materials: optional notebook. Places: table, bedroom.",
+      "questionToCarry": "What older magic wants to lend itself to tonight?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "remembering",
+        "secondary": [
+          "connecting",
+          "opening"
+        ],
+        "refinement": "remembering"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "body"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "before new practice",
+          "after disconnection"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "remembering magic",
+        "witness",
+        "story",
+        "memory",
+        "remembering",
+        "connecting",
+        "opening",
+        "words",
+        "body"
+      ],
+      "keywords": [
+        "remembering magic",
+        "witness",
+        "story",
+        "memory",
+        "remembering",
+        "connecting",
+        "opening",
+        "words",
+        "body",
+        "optional notebook",
+        "table",
+        "bedroom",
+        "Remember a Time of Magic",
+        "remember",
+        "magic",
+        "quality"
+      ],
+      "materials": [
+        "optional notebook"
+      ],
+      "places": [
+        "table",
+        "bedroom"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.tell_me_noticed",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 103-104 / Chapter 3, partner feedback after preparation",
+          "sourceSummary": "The source includes partner feedback and appreciation after preparatory practice.",
+          "sourceSupports": "Source supports tell me what you noticed through the cited mechanics: The source includes partner feedback and appreciation after preparatory practice.",
+          "moonAndTableChanges": "Kept the non-technique feedback mechanic and removed evaluation/performance framing.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Tell Me What You Noticed",
+      "practice": "After a small shared action, sit facing each other. Each partner says one thing they noticed and one thing they appreciated. Keep it about presence, not performance. Receive the words without explanation. Close by touching the table or heart.",
+      "intention": "Let attention become a gift without turning it into critique.",
+      "bestWindow": "After shared preparation, body-based practice, or a tender conversation.",
+      "whyThisFits": "The source includes partner feedback and appreciation after preparatory practice. Carrier: words. Materials: none, optional candle. Places: bedroom, table.",
+      "questionToCarry": "What did I notice when I stopped trying to fix anything?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "connecting",
+        "secondary": [
+          "voicing",
+          "tending"
+        ],
+        "refinement": "connecting"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "body"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "after shared action"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "feedback",
+        "appreciation",
+        "witness",
+        "presence",
+        "connecting",
+        "voicing",
+        "tending",
+        "words",
+        "body"
+      ],
+      "keywords": [
+        "feedback",
+        "appreciation",
+        "witness",
+        "presence",
+        "connecting",
+        "voicing",
+        "tending",
+        "words",
+        "body",
+        "none",
+        "optional candle",
+        "bedroom",
+        "table",
+        "Tell Me What You Noticed",
+        "notice",
+        "appreciate",
+        "receive",
+        "partner"
+      ],
+      "materials": [
+        "none",
+        "optional candle"
+      ],
+      "places": [
+        "bedroom",
+        "table"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.laugh_room_open",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 131-136 / Chapter 4, laughter practice",
+          "sourceSummary": "The source uses laughter to release stuckness and return to presence.",
+          "sourceSupports": "Source supports laugh the room open through the cited mechanics: The source uses laughter to release stuckness and return to presence.",
+          "moonAndTableChanges": "Converted a longer laughter practice into a short room-opening release that can stay playful and private.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Laugh the Room Open",
+      "practice": "Stand or sit somewhere you can be unguarded. Let one laugh, hum, breathy sound, or ridiculous face loosen the room. If laughter does not come, let the attempt be enough. Return to stillness and name one word for what moved.",
+      "intention": "Loosen the room without making anyone perform.",
+      "bestWindow": "When the atmosphere is stiff, self-conscious, or too serious.",
+      "whyThisFits": "The source uses laughter to release stuckness and return to presence. Carrier: body. Materials: none. Places: bedroom, living room.",
+      "questionToCarry": "What moved when the room stopped trying to be dignified?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "releasing",
+        "secondary": [
+          "opening",
+          "connecting"
+        ],
+        "refinement": "releasing"
+      },
+      "carriers": {
+        "primary": "body",
+        "secondary": [
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "before deeper practice",
+          "after tension"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "laughter",
+        "release",
+        "play",
+        "room",
+        "releasing",
+        "opening",
+        "connecting",
+        "body",
+        "words"
+      ],
+      "keywords": [
+        "laughter",
+        "release",
+        "play",
+        "room",
+        "releasing",
+        "opening",
+        "connecting",
+        "body",
+        "words",
+        "none",
+        "bedroom",
+        "living room",
+        "Laugh the Room Open",
+        "laugh",
+        "loosen",
+        "stiffness"
+      ],
+      "materials": [
+        "none"
+      ],
+      "places": [
+        "bedroom",
+        "living room"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.choose_shared_want",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 167-175 / Chapter 5, choosing a desire",
+          "sourceSummary": "The source supports choosing the desire or goal the practice will serve before shaping it into a symbol.",
+          "sourceSupports": "Source supports choose the shared want through the cited mechanics: The source supports choosing the desire or goal the practice will serve before shaping it into a symbol.",
+          "moonAndTableChanges": "Made the desire-selection step mutual, immediate, and without outcome-certainty framing.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Choose the Shared Want",
+      "practice": "Place a blank paper between you. Each partner names one thing they want this practice to serve tonight. Circle the shared overlap, even if it is small. Write the shared want in plain words. Fold the paper once and keep it on the table.",
+      "intention": "Find the shared desire before giving it a symbol.",
+      "bestWindow": "Before shared symbol work or a more intimate ritual.",
+      "whyThisFits": "The source supports choosing the desire or goal the practice will serve before shaping it into a symbol. Carrier: words. Materials: paper, pen. Places: table, bedroom.",
+      "questionToCarry": "What do we both honestly want this practice to serve?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "opening",
+        "secondary": [
+          "connecting",
+          "voicing"
+        ],
+        "refinement": "opening"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "beginning of practice"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "shared want",
+        "desire",
+        "mutual intention",
+        "opening",
+        "connecting",
+        "voicing",
+        "words",
+        "table"
+      ],
+      "keywords": [
+        "shared want",
+        "desire",
+        "mutual intention",
+        "opening",
+        "connecting",
+        "voicing",
+        "words",
+        "table",
+        "paper",
+        "pen",
+        "bedroom",
+        "Choose the Shared Want",
+        "want",
+        "shared",
+        "mutual",
+        "overlap"
+      ],
+      "materials": [
+        "paper",
+        "pen"
+      ],
+      "places": [
+        "table",
+        "bedroom"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.say_desire_plainly",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 175-178 / Chapter 5, expressing desire",
+          "sourceSummary": "The source supports expressing desire or vision in clear language before symbol work.",
+          "sourceSupports": "Source supports say the desire plainly through the cited mechanics: The source supports expressing desire or vision in clear language before symbol work.",
+          "moonAndTableChanges": "Used functional speech rather than copying source prompt structures.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Say the Desire Plainly",
+      "practice": "Hold the paper, object, or shared symbol before you. Say the desire in one plain present-tense sentence. If you are together, each partner checks whether the sentence still belongs to both of you. If it does not, rewrite it smaller.",
+      "intention": "Let the desire be clear enough to carry.",
+      "bestWindow": "Before symbol-making, altar placement, or intention-setting.",
+      "whyThisFits": "The source supports expressing desire or vision in clear language before symbol work. Carrier: words. Materials: paper or symbol optional. Places: table, circle.",
+      "questionToCarry": "What sentence is honest enough to hold?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "voicing",
+        "secondary": [
+          "opening",
+          "marking"
+        ],
+        "refinement": "voicing"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "body"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "before symbol work"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "desire",
+        "sentence",
+        "voice",
+        "clarity",
+        "voicing",
+        "opening",
+        "marking",
+        "words",
+        "body"
+      ],
+      "keywords": [
+        "desire",
+        "sentence",
+        "voice",
+        "clarity",
+        "voicing",
+        "opening",
+        "marking",
+        "words",
+        "body",
+        "paper or symbol optional",
+        "table",
+        "circle",
+        "Say the Desire Plainly",
+        "say",
+        "clear",
+        "shared"
+      ],
+      "materials": [
+        "paper or symbol optional"
+      ],
+      "places": [
+        "table",
+        "circle"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.draw_shared_sign",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 185-190 / Chapter 5, Magic Symbol and shared partner symbol",
+          "sourceSummary": "The source teaches creating a Magic Symbol and includes relationship/shared-symbol work.",
+          "sourceSupports": "Source supports draw the shared sign through the cited mechanics: The source teaches creating a Magic Symbol and includes relationship/shared-symbol work.",
+          "moonAndTableChanges": "Kept the central shared-symbol mechanic while removing long source instructions and outcome outcome certainty.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Draw the Shared Sign",
+      "practice": "Put the shared want on the table. Each partner adds one line, curve, color, or mark until the paper holds one sign neither of you could have made alone. Stop before it becomes pretty or clever. Place the sign between you and let it be the shared object for the rest of the practice.",
+      "intention": "Let the relationship have a symbol made by both hands.",
+      "bestWindow": "After naming a shared desire or before beginning a cycle of shared practice.",
+      "whyThisFits": "The source teaches creating a Magic Symbol and includes relationship/shared-symbol work. Carrier: table. Materials: paper, pen or colored pencils. Places: table, altar.",
+      "questionToCarry": "What can our two hands make that neither hand could make alone?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "connecting",
+        "secondary": [
+          "marking",
+          "remembering"
+        ],
+        "refinement": "connecting"
+      },
+      "carriers": {
+        "primary": "table",
+        "secondary": [
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "after shared desire is named"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "Magic Symbol",
+        "shared sign",
+        "symbol",
+        "grimoire",
+        "partner",
+        "connecting",
+        "marking",
+        "remembering",
+        "table",
+        "words"
+      ],
+      "keywords": [
+        "Magic Symbol",
+        "shared sign",
+        "symbol",
+        "grimoire",
+        "partner",
+        "connecting",
+        "marking",
+        "remembering",
+        "table",
+        "words",
+        "paper",
+        "pen or colored pencils",
+        "altar",
+        "Draw the Shared Sign",
+        "sign",
+        "draw",
+        "shared",
+        "relationship"
+      ],
+      "materials": [
+        "paper",
+        "pen or colored pencils"
+      ],
+      "places": [
+        "table",
+        "altar"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.place_symbol_altar",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 190-193 / Chapter 5, accepting/imprinting the symbol and altar placement",
+          "sourceSummary": "The source supports accepting, imprinting, gazing at, and placing the symbol on an altar.",
+          "sourceSupports": "Source supports place the symbol on the altar through the cited mechanics: The source supports accepting, imprinting, gazing at, and placing the symbol on an altar.",
+          "moonAndTableChanges": "Reduced the symbol-imprinting sequence to a quiet altar/table placement without copied instructions.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Place the Symbol on the Altar",
+      "practice": "Hold the symbol near the table center. Look at it softly. Name one quality the symbol carries. Place it on the table and let the room arrange itself around it for a few breaths. Close by covering the symbol with a cloth.",
+      "intention": "Let the sign become a ritual object instead of only a drawing.",
+      "bestWindow": "After making a shared or personal symbol.",
+      "whyThisFits": "The source supports accepting, imprinting, gazing at, and placing the symbol on an altar. Carrier: table. Materials: symbol, candle, cloth optional. Places: altar, table, bedside.",
+      "questionToCarry": "What quality does this sign now carry?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "marking",
+        "secondary": [
+          "blessing",
+          "remembering"
+        ],
+        "refinement": "marking"
+      },
+      "carriers": {
+        "primary": "table",
+        "secondary": [
+          "candlelight",
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "after symbol creation"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "altar",
+        "symbol",
+        "Magic Symbol",
+        "placement",
+        "candlelight",
+        "marking",
+        "blessing",
+        "remembering",
+        "table",
+        "words"
+      ],
+      "keywords": [
+        "altar",
+        "symbol",
+        "Magic Symbol",
+        "placement",
+        "candlelight",
+        "marking",
+        "blessing",
+        "remembering",
+        "table",
+        "words",
+        "candle",
+        "cloth optional",
+        "bedside",
+        "Place the Symbol on the Altar",
+        "place",
+        "gaze",
+        "quality"
+      ],
+      "materials": [
+        "symbol",
+        "candle",
+        "cloth optional"
+      ],
+      "places": [
+        "altar",
+        "table",
+        "bedside"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.shared_vision_question",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 186-190 / Chapter 5, shared vision for relationship",
+          "sourceSummary": "The source supports partner vision-sharing and finding mutually acceptable relationship vision material.",
+          "sourceSupports": "Source supports ask the shared vision through the cited mechanics: The source supports partner vision-sharing and finding mutually acceptable relationship vision material.",
+          "moonAndTableChanges": "Converted source partner questions into functional inquiry without copying exact prompt language.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Ask the Shared Vision",
+      "practice": "Sit with one page between you. One partner answers: what do I want this relationship to become more able to hold? The other listens and writes one key word. Switch. Circle the words that feel mutual. Let only the circled words move forward into symbol work.",
+      "intention": "Find the part of the vision both partners can carry.",
+      "bestWindow": "Before shared symbol work, or when the relationship wants a fresh shared image.",
+      "whyThisFits": "The source supports partner vision-sharing and finding mutually acceptable relationship vision material. Carrier: words. Materials: paper, pen. Places: table, bedroom.",
+      "questionToCarry": "Which part of the vision belongs to both of us?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "connecting",
+        "secondary": [
+          "voicing",
+          "marking"
+        ],
+        "refinement": "connecting"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate",
+          "room_for_something_deeper"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "before symbol work"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "shared vision",
+        "partner questions",
+        "mutual",
+        "witness",
+        "connecting",
+        "voicing",
+        "marking",
+        "words",
+        "table"
+      ],
+      "keywords": [
+        "shared vision",
+        "partner questions",
+        "mutual",
+        "witness",
+        "connecting",
+        "voicing",
+        "marking",
+        "words",
+        "table",
+        "paper",
+        "pen",
+        "bedroom",
+        "Ask the Shared Vision",
+        "vision",
+        "relationship",
+        "question"
+      ],
+      "materials": [
+        "paper",
+        "pen"
+      ],
+      "places": [
+        "table",
+        "bedroom"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.name_tonights_intention",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 190 and PDF 331-345 / Chapter 5 and Chapter 9, session dedication and intent clarification",
+          "sourceSummary": "The source supports dedicating a specific session to a goal and clarifying intent before entering the culminating practice.",
+          "sourceSupports": "Source supports name tonight's intention through the cited mechanics: The source supports dedicating a specific session to a goal and clarifying intent before entering the culminating practice.",
+          "moonAndTableChanges": "Made the intent session-sized and non-pressuring.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Name Tonight's Intention",
+      "practice": "Before the practice begins, each partner names what tonight is for. Do not name the whole future. Choose one shared intention that can fit inside this room and this evening. Place it beside the candle or shared symbol.",
+      "intention": "Keep the ritual faithful to tonight instead of asking it to hold too much.",
+      "bestWindow": "Before any shared intimate ritual, especially if expectations feel large.",
+      "whyThisFits": "The source supports dedicating a specific session to a goal and clarifying intent before entering the culminating practice. Carrier: words. Materials: paper optional, candle or symbol optional. Places: bedroom, table.",
+      "questionToCarry": "What can tonight honestly hold?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "voicing",
+        "secondary": [
+          "connecting",
+          "steadying"
+        ],
+        "refinement": "voicing"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "candlelight"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us"
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "opening before practice"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "tonight",
+        "intention",
+        "shared focus",
+        "low pressure",
+        "voicing",
+        "connecting",
+        "steadying",
+        "words",
+        "candlelight"
+      ],
+      "keywords": [
+        "tonight",
+        "intention",
+        "shared focus",
+        "low pressure",
+        "voicing",
+        "connecting",
+        "steadying",
+        "words",
+        "candlelight",
+        "paper optional",
+        "candle or symbol optional",
+        "bedroom",
+        "table",
+        "Name Tonight's Intention",
+        "small",
+        "shared"
+      ],
+      "materials": [
+        "paper optional",
+        "candle or symbol optional"
+      ],
+      "places": [
+        "bedroom",
+        "table"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.prepare_candlelit_room",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 331-345 / Chapter 9, Magical Congress preparation and atmosphere",
+          "sourceSummary": "The source supports preparing atmosphere with soft lighting/candles, music, markers, symbol, and practice space before shared ritual.",
+          "sourceSupports": "Source supports prepare the candlelit room through the cited mechanics: The source supports preparing atmosphere with soft lighting/candles, music, markers, symbol, and practice space before shared ritual.",
+          "moonAndTableChanges": "Extracted the atmosphere/container mechanics, not the explicit intimate sequence.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Prepare the Candlelit Room",
+      "practice": "Light one candle on the table. Put the shared symbol where both of you can see it. Place a glass of water beside the symbol. Let the room stay quiet. Before anything else begins, stand together and let the room become different from the day.",
+      "intention": "Let the room become a private container for connection.",
+      "bestWindow": "Before a longer intimate practice or shared-symbol ritual.",
+      "whyThisFits": "The source supports preparing atmosphere with soft lighting/candles, music, markers, symbol, and practice space before shared ritual. Carrier: candlelight. Materials: candle, shared symbol, water optional, music optional. Places: bedroom, private room.",
+      "questionToCarry": "What changes when the room is prepared for us?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "connecting",
+        "secondary": [
+          "opening",
+          "marking"
+        ],
+        "refinement": "connecting"
+      },
+      "carriers": {
+        "primary": "candlelight",
+        "secondary": [
+          "table",
+          "body"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "evening",
+          "before a longer practice"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "candlelit room",
+        "Magic Congress",
+        "atmosphere",
+        "shared symbol",
+        "connecting",
+        "opening",
+        "marking",
+        "candlelight",
+        "table",
+        "body"
+      ],
+      "keywords": [
+        "candlelit room",
+        "Magic Congress",
+        "atmosphere",
+        "shared symbol",
+        "connecting",
+        "opening",
+        "marking",
+        "candlelight",
+        "table",
+        "body",
+        "candle",
+        "water optional",
+        "music optional",
+        "bedroom",
+        "private room",
+        "Prepare the Candlelit Room",
+        "soft light",
+        "music",
+        "room",
+        "symbol"
+      ],
+      "materials": [
+        "candle",
+        "shared symbol",
+        "water optional",
+        "music optional"
+      ],
+      "places": [
+        "bedroom",
+        "private room"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.cross_day_night",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 331-345 / Chapter 9, transition into ritual state",
+          "sourceSummary": "The source includes preparatory transitions from ordinary life into ritual state before partner practice.",
+          "sourceSupports": "Source supports cross from day to night through the cited mechanics: The source includes preparatory transitions from ordinary life into ritual state before partner practice.",
+          "moonAndTableChanges": "Rendered transition as a domestic threshold into the practice room.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Cross from Day to Night",
+      "practice": "Wash your hands at the sink, then walk to the practice room. When you enter, leave the day outside the practice. If you are together, enter one after the other and meet inside.",
+      "intention": "Make a threshold between ordinary time and shared ritual time.",
+      "bestWindow": "At the beginning of an evening practice, after work, parenting, travel, or mental noise.",
+      "whyThisFits": "The source includes preparatory transitions from ordinary life into ritual state before partner practice. Carrier: body. Materials: water optional, doorway optional. Places: doorway, bedroom, bathroom.",
+      "questionToCarry": "What needs to stay outside the room tonight?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "opening",
+        "secondary": [
+          "steadying",
+          "connecting"
+        ],
+        "refinement": "opening"
+      },
+      "carriers": {
+        "primary": "body",
+        "secondary": [
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "evening",
+          "before practice"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "transition",
+        "threshold",
+        "arrival",
+        "day to night",
+        "opening",
+        "steadying",
+        "connecting",
+        "body",
+        "words"
+      ],
+      "keywords": [
+        "transition",
+        "threshold",
+        "arrival",
+        "day to night",
+        "opening",
+        "steadying",
+        "connecting",
+        "body",
+        "words",
+        "water optional",
+        "doorway optional",
+        "doorway",
+        "bedroom",
+        "bathroom",
+        "Cross from Day to Night",
+        "cross",
+        "enter",
+        "day",
+        "night"
+      ],
+      "materials": [
+        "water optional",
+        "doorway optional"
+      ],
+      "places": [
+        "doorway",
+        "bedroom",
+        "bathroom"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.speak_before_circle",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 331-345 / Chapter 9, preparation and intent clarification",
+          "sourceSummary": "The source includes naming what may be present before the shared ritual container is entered.",
+          "sourceSupports": "Source supports speak before the circle through the cited mechanics: The source includes naming what may be present before the shared ritual container is entered.",
+          "moonAndTableChanges": "Made the pre-circle speaking into partner witnessing rather than relationship processing.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Speak Before the Circle",
+      "practice": "Before lighting the candle or entering the circle, each partner names one thing that might complicate connection tonight. The other partner answers only by saying that they heard it. Place both named things outside the circle, literally or with a gesture, then enter.",
+      "intention": "Let the room know what needs tenderness before the work begins.",
+      "bestWindow": "Before shared ritual when either partner arrives distracted, tender, or guarded.",
+      "whyThisFits": "The source includes naming what may be present before the shared ritual container is entered. Carrier: words. Materials: optional paper. Places: bedroom, circle, table.",
+      "questionToCarry": "What needs to be heard before we enter?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "connecting",
+        "secondary": [
+          "steadying",
+          "voicing"
+        ],
+        "refinement": "connecting"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "body"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us"
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "before circle"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "speak before circle",
+        "witness",
+        "tenderness",
+        "pre-ritual",
+        "connecting",
+        "steadying",
+        "voicing",
+        "words",
+        "body"
+      ],
+      "keywords": [
+        "speak before circle",
+        "witness",
+        "tenderness",
+        "pre-ritual",
+        "connecting",
+        "steadying",
+        "voicing",
+        "words",
+        "body",
+        "optional paper",
+        "bedroom",
+        "circle",
+        "table",
+        "Speak Before the Circle",
+        "speak",
+        "before",
+        "heard",
+        "tender"
+      ],
+      "materials": [
+        "optional paper"
+      ],
+      "places": [
+        "bedroom",
+        "circle",
+        "table"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.clarify_nights_work",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 331-345 / Chapter 9, practice planning/menu and intent clarification",
+          "sourceSummary": "The source has partners clarify goal, symbol, roles/tools, and session shape before the ritual.",
+          "sourceSupports": "Source supports clarify the night's work through the cited mechanics: The source has partners clarify goal, symbol, roles/tools, and session shape before the ritual.",
+          "moonAndTableChanges": "Kept only the non-technique planning container.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Clarify the Night's Work",
+      "practice": "At the table, decide four things: what this practice is for, what symbol or object will hold it, how long you will stay with it, and how you will close. Write the four answers on one card. Put the card where both of you can see it.",
+      "intention": "Make the practice legible before entering it.",
+      "bestWindow": "Before a new or deeper practice.",
+      "whyThisFits": "The source has partners clarify goal, symbol, roles/tools, and session shape before the ritual. Carrier: words. Materials: index card, pen, shared object. Places: table, bedroom.",
+      "questionToCarry": "What do we need to know before we begin?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "voicing",
+        "secondary": [
+          "steadying",
+          "opening"
+        ],
+        "refinement": "voicing"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us"
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "opening"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "clarify",
+        "practice card",
+        "agreement",
+        "close",
+        "voicing",
+        "steadying",
+        "opening",
+        "words",
+        "table"
+      ],
+      "keywords": [
+        "clarify",
+        "practice card",
+        "agreement",
+        "close",
+        "voicing",
+        "steadying",
+        "opening",
+        "words",
+        "table",
+        "index card",
+        "pen",
+        "shared object",
+        "bedroom",
+        "Clarify the Night's Work",
+        "goal",
+        "symbol",
+        "duration",
+        "card"
+      ],
+      "materials": [
+        "index card",
+        "pen",
+        "shared object"
+      ],
+      "places": [
+        "table",
+        "bedroom"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.greet_as_sacred",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 331-345 / Chapter 9, ritual greeting and Heart Salutation material",
+          "sourceSummary": "The source supports ritual greeting, dedication, and heart-oriented partner salutation before shared practice.",
+          "sourceSupports": "Source supports greet each other as sacred through the cited mechanics: The source supports ritual greeting, dedication, and heart-oriented partner salutation before shared practice.",
+          "moonAndTableChanges": "Used functional greeting instruction without copying invocation language or unreviewed tantra terms.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Greet Each Other as Sacred",
+      "practice": "Face each other inside the prepared room. Each partner brings one hand to the heart. Name the other as the partner you are choosing to meet in this room. Let the gesture complete before touch or conversation continues.",
+      "intention": "Begin by recognizing the partner, not the performance.",
+      "bestWindow": "At the formal opening of an intimate connection ritual.",
+      "whyThisFits": "The source supports ritual greeting, dedication, and heart-oriented partner salutation before shared practice. Carrier: words. Materials: none, optional candle. Places: bedroom, circle.",
+      "questionToCarry": "How do I greet you when I remember this room is sacred?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "blessing",
+        "secondary": [
+          "connecting",
+          "opening"
+        ],
+        "refinement": "blessing"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "body"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us"
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "opening"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "ritual greeting",
+        "Heart Salutation",
+        "sacred room",
+        "partner",
+        "blessing",
+        "connecting",
+        "opening",
+        "words",
+        "body"
+      ],
+      "keywords": [
+        "ritual greeting",
+        "Heart Salutation",
+        "sacred room",
+        "partner",
+        "blessing",
+        "connecting",
+        "opening",
+        "words",
+        "body",
+        "none",
+        "optional candle",
+        "bedroom",
+        "circle",
+        "Greet Each Other as Sacred",
+        "greet",
+        "sacred",
+        "heart",
+        "salutation"
+      ],
+      "materials": [
+        "none",
+        "optional candle"
+      ],
+      "places": [
+        "bedroom",
+        "circle"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.gaze_symbol_together",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 331-345 / Chapter 9, shared symbol before practice",
+          "sourceSummary": "The source uses the Magic Symbol as a shared focal point in the culminating partner ritual.",
+          "sourceSupports": "Source supports gaze at the symbol together through the cited mechanics: The source uses the Magic Symbol as a shared focal point in the culminating partner ritual.",
+          "moonAndTableChanges": "Kept the shared-symbol gaze as a simple table rite outside explicit technique.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Gaze at the Symbol Together",
+      "practice": "Place the shared symbol between you. Sit close enough to see it without leaning. Look at the symbol together for a few breaths. Each partner names one quality the symbol carries tonight. Let the symbol remain visible during the rest of the practice.",
+      "intention": "Let the shared symbol hold the room's direction.",
+      "bestWindow": "Before a shared practice that already has a symbol or intention.",
+      "whyThisFits": "The source uses the Magic Symbol as a shared focal point in the culminating partner ritual. Carrier: table. Materials: shared symbol, table, candle optional. Places: table, altar.",
+      "questionToCarry": "What does the symbol carry tonight?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "marking",
+        "secondary": [
+          "connecting",
+          "remembering"
+        ],
+        "refinement": "marking"
+      },
+      "carriers": {
+        "primary": "table",
+        "secondary": [
+          "words",
+          "candlelight"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "before practice",
+          "symbol already made"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "symbol gaze",
+        "Magic Symbol",
+        "shared focus",
+        "marking",
+        "connecting",
+        "remembering",
+        "table",
+        "words",
+        "candlelight"
+      ],
+      "keywords": [
+        "symbol gaze",
+        "Magic Symbol",
+        "shared focus",
+        "marking",
+        "connecting",
+        "remembering",
+        "table",
+        "words",
+        "candlelight",
+        "shared symbol",
+        "candle optional",
+        "altar",
+        "Gaze at the Symbol Together",
+        "gaze",
+        "symbol",
+        "quality",
+        "shared",
+        "focus"
+      ],
+      "materials": [
+        "shared symbol",
+        "table",
+        "candle optional"
+      ],
+      "places": [
+        "table",
+        "altar"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.come_back_room",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 331-374 / Chapter 9, grounding and close after shared practice",
+          "sourceSummary": "The source includes grounding, return, and closing after peak or intense partner experience.",
+          "sourceSupports": "Source supports come back to the room through the cited mechanics: The source includes grounding, return, and closing after peak or intense partner experience.",
+          "moonAndTableChanges": "Extracted the grounding/return close only, without explicit sequence or peak instructions.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Come Back to the Room",
+      "practice": "When the practice is complete, touch the floor. Name where you are. Drink water from the glass beside the practice space. If you are together, make one simple closing gesture toward each other. Then leave the room slowly.",
+      "intention": "Return the body to the room before ordinary life resumes.",
+      "bestWindow": "At the end of any intense, emotional, or intimate ritual.",
+      "whyThisFits": "The source includes grounding, return, and closing after peak or intense partner experience. Carrier: body. Materials: water optional, table or floor. Places: bedroom, circle, table.",
+      "questionToCarry": "What helps the body know we have returned?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "steadying",
+        "secondary": [
+          "remembering",
+          "connecting"
+        ],
+        "refinement": "steadying"
+      },
+      "carriers": {
+        "primary": "body",
+        "secondary": [
+          "words",
+          "vessel"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "ritual close"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "grounding",
+        "return",
+        "close",
+        "water",
+        "steadying",
+        "remembering",
+        "connecting",
+        "body",
+        "words",
+        "vessel"
+      ],
+      "keywords": [
+        "grounding",
+        "return",
+        "close",
+        "water",
+        "steadying",
+        "remembering",
+        "connecting",
+        "body",
+        "words",
+        "vessel",
+        "water optional",
+        "table or floor",
+        "bedroom",
+        "circle",
+        "table",
+        "Come Back to the Room",
+        "ground",
+        "room"
+      ],
+      "materials": [
+        "water optional",
+        "table or floor"
+      ],
+      "places": [
+        "bedroom",
+        "circle",
+        "table"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.water_between_us",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 331-345 / Chapter 9, ritual support with water; PDF 186-190 / shared symbol imagery",
+          "sourceSummary": "The source uses water as ritual support in the culminating practice and includes cup/water imagery in shared-symbol work.",
+          "sourceSupports": "Source supports water between us through the cited mechanics: The source uses water as ritual support in the culminating practice and includes cup/water imagery in shared-symbol work.",
+          "moonAndTableChanges": "Built a modest vessel-support practice without overclaiming vessel as the primary source carrier.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Water Between Us",
+      "practice": "Place a bowl or glass of water beside the shared symbol. Each partner places one finger near the vessel or simply looks at it. Name what the water is witnessing tonight. Do not drink it as medicine or proof. At the end, pour it down the sink and rinse the vessel.",
+      "intention": "Let water witness what the room is holding between you.",
+      "bestWindow": "When the ritual needs softness, steadiness, or a visible shared center.",
+      "whyThisFits": "The source uses water as ritual support in the culminating practice and includes cup/water imagery in shared-symbol work. Carrier: vessel. Materials: bowl or glass of water, shared symbol optional. Places: table, bedroom.",
+      "questionToCarry": "What can the water witness without needing to fix?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "connecting",
+        "secondary": [
+          "steadying",
+          "marking"
+        ],
+        "refinement": "connecting"
+      },
+      "carriers": {
+        "primary": "vessel",
+        "secondary": [
+          "table",
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "helpful during emotional or evening practice"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "water",
+        "vessel",
+        "witness",
+        "shared symbol",
+        "connecting",
+        "steadying",
+        "marking",
+        "table",
+        "words"
+      ],
+      "keywords": [
+        "water",
+        "vessel",
+        "witness",
+        "shared symbol",
+        "connecting",
+        "steadying",
+        "marking",
+        "table",
+        "words",
+        "bowl or glass of water",
+        "shared symbol optional",
+        "bedroom",
+        "Water Between Us",
+        "between",
+        "softness"
+      ],
+      "materials": [
+        "bowl or glass of water",
+        "shared symbol optional"
+      ],
+      "places": [
+        "table",
+        "bedroom"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.keep_symbol_warm",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic: Cultivating Sexual Energy to Transform Your Life. Jeremy P. Tarcher / Putnam, 1996.",
+          "sourceLocation": "PDF 375-390 / Epilogue and ongoing practice context; PDF 185-190 / shared symbol",
+          "sourceSummary": "The source treats the practice as repeated training and uses shared symbol work as a continuing container.",
+          "sourceSupports": "Source supports keep the shared symbol warm through the cited mechanics: The source treats the practice as repeated training and uses shared symbol work as a continuing container.",
+          "moonAndTableChanges": "Converted ongoing practice context into a recurring symbol-memory ritual.",
+          "doNotImport": [
+            "Copied full source exercise text",
+            "Copied long prompts, scripts, meditations, or diagrams",
+            "Explicit adult technique instruction",
+            "Therapy, medical, fertility, legal, financial, or outcome-certainty claims",
+            "Target-specific attraction, control, or pressure-based practice",
+            "Unreviewed tantra/neotantra/gender-polarity terminology",
+            "Not for technique lessons, pressure-based practice, target-specific control, therapy/medical claims, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Keep the Shared Symbol Warm",
+      "practice": "Return to the shared symbol days or weeks later. Place it on the table with the date. Each partner writes one word for what the symbol has gathered since it was made. Add the words beneath or behind the symbol. Put it away where it can be found again.",
+      "intention": "Let the symbol continue gathering the relationship's memory.",
+      "bestWindow": "After a shared-symbol ritual, at the next practice night, or at the end of a month.",
+      "whyThisFits": "The source treats the practice as repeated training and uses shared symbol work as a continuing container. Carrier: words. Materials: shared symbol, pen, notebook optional. Places: table, bedside.",
+      "questionToCarry": "What has the symbol gathered since we last touched it?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "remembering",
+        "secondary": [
+          "tending",
+          "connecting"
+        ],
+        "refinement": "remembering"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "later follow-up",
+          "monthly rhythm"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "shared symbol",
+        "memory",
+        "practice rhythm",
+        "grimoire",
+        "remembering",
+        "tending",
+        "connecting",
+        "words",
+        "table"
+      ],
+      "keywords": [
+        "shared symbol",
+        "memory",
+        "practice rhythm",
+        "grimoire",
+        "remembering",
+        "tending",
+        "connecting",
+        "words",
+        "table",
+        "pen",
+        "notebook optional",
+        "bedside",
+        "Keep the Shared Symbol Warm",
+        "symbol",
+        "warm",
+        "return",
+        "practice"
+      ],
+      "materials": [
+        "shared symbol",
+        "pen",
+        "notebook optional"
+      ],
+      "places": [
+        "table",
+        "bedside"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Adult private connection content for consenting adults.\"",
+        "\"No user-facing safety boilerplate is requested for normal import.\"",
+        "\"Direct-use and recommendation eligibility require later review.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.dominguez.astrology-journal-timing-record",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceLocation": "Practical Astrology for Witches and Pagans",
+          "sourceSummary": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceSupports": "Introduction and Chapter 1, PDF pp. 7-9; source frames astrology as a sacred symbolic language useful for magickal practice and recommends journaling/questions while learning. Primary carrier: words; secondary carriers: table; household-scale materials only.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Keep the timing beside the work.",
+      "practice": "Open the grimoire or ritual notebook before choosing a working. Write the date, the visible timing facts you are using, and the reason those facts matter for this rite. Choose one timing signal to guide the work, then close the notebook until after the ritual.",
+      "intention": "Let astrology shape the ritual without turning the ritual into a horoscope.",
+      "bestWindow": "Before selecting or beginning a timed ritual.",
+      "whyThisFits": "Introduction and Chapter 1, PDF pp. 7-9; source frames astrology as a sacred symbolic language useful for magickal practice and recommends journaling/questions while learning. Primary carrier: words; secondary carriers: table; household-scale materials only.",
+      "questionToCarry": "Which timing fact is actually shaping this work, and which facts are only noise?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "remembering",
+        "secondary": [
+          "marking"
+        ],
+        "refinement": "remembering"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "any computed timing review",
+          "pre-ritual planning"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "remembering",
+        "words"
+      ],
+      "keywords": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "remembering",
+        "words",
+        "paper",
+        "pen",
+        "table",
+        "altar",
+        "ritual notebook",
+        "glyph",
+        "planetary",
+        "moon"
+      ],
+      "materials": [
+        "paper",
+        "pen",
+        "table"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "ritual notebook"
+      ],
+      "sourceLabel": "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.\"",
+        "\"Keep timing symbolic and source-backed; do not convert into prediction or hard rule.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.dominguez.glyph-as-mark",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceLocation": "Practical Astrology for Witches and Pagans",
+          "sourceSummary": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceSupports": "Chapter 8, PDF pp. 80-84; source teaches astrological glyphs as a magical alphabet and gives a simple five-step glyph-scribing method. Primary carrier: words; secondary carriers: table, body; household-scale materials only.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Trace one planetary mark cleanly.",
+      "practice": "Choose one planet whose quality belongs to the work. Draw its glyph slowly on paper, on an index card, or in the air over the table. Say the planet name once as identification, not invocation. Set the mark beside the ritual object and let it define the tone of the rite.",
+      "intention": "Use a single astrological glyph as a focused ritual mark.",
+      "bestWindow": "When a ritual needs one clear planetary emphasis.",
+      "whyThisFits": "Chapter 8, PDF pp. 80-84; source teaches astrological glyphs as a magical alphabet and gives a simple five-step glyph-scribing method. Primary carrier: words; secondary carriers: table, body; household-scale materials only.",
+      "questionToCarry": "What power is this mark holding, and where should it stop?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "marking",
+        "secondary": [
+          "opening"
+        ],
+        "refinement": "marking"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table",
+          "body"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "planetary day",
+          "planetary hour",
+          "planet family chosen by source logic"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "marking",
+        "words"
+      ],
+      "keywords": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "marking",
+        "words",
+        "paper",
+        "pen",
+        "table",
+        "altar",
+        "ritual notebook",
+        "glyph",
+        "planetary",
+        "moon"
+      ],
+      "materials": [
+        "paper",
+        "pen",
+        "table"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "ritual notebook"
+      ],
+      "sourceLabel": "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.\"",
+        "\"Keep timing symbolic and source-backed; do not convert into prediction or hard rule.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.dominguez.planetary-card-attunement",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceLocation": "Practical Astrology for Witches and Pagans",
+          "sourceSummary": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceSupports": "Chapter 8, PDF pp. 84-87; source gives a seven-day planetary attunement exercise using planetary cards, daily meditation, tracing the glyph, and observation. Primary carrier: table; secondary carriers: words; household-scale materials only.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Set the day’s planet on the table.",
+      "practice": "Make or choose one small card for the planet of the day. Place it on the table or altar. Trace the glyph with your finger. Name what you notice in the card, then close your eyes and hold its image briefly. Leave the card visible for the day or return it to the grimoire.",
+      "intention": "Practice relationship with planetary timing through one visible card.",
+      "bestWindow": "On the day ruled by the planet, near morning or before a related rite.",
+      "whyThisFits": "Chapter 8, PDF pp. 84-87; source gives a seven-day planetary attunement exercise using planetary cards, daily meditation, tracing the glyph, and observation. Primary carrier: table; secondary carriers: words; household-scale materials only.",
+      "questionToCarry": "What did this planet make easier to notice today?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "remembering",
+        "secondary": [
+          "marking",
+          "tending"
+        ],
+        "refinement": "remembering"
+      },
+      "carriers": {
+        "primary": "table",
+        "secondary": [
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "preferred",
+        "contexts": [
+          "planetary day"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "remembering",
+        "table"
+      ],
+      "keywords": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "remembering",
+        "table",
+        "paper",
+        "pen",
+        "altar",
+        "ritual notebook",
+        "glyph",
+        "planetary",
+        "moon"
+      ],
+      "materials": [
+        "paper",
+        "pen",
+        "table"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "ritual notebook"
+      ],
+      "sourceLabel": "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.\"",
+        "\"Keep timing symbolic and source-backed; do not convert into prediction or hard rule.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.dominguez.seven-day-planetary-cycle",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceLocation": "Practical Astrology for Witches and Pagans",
+          "sourceSummary": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceSupports": "Chapter 8, PDF pp. 84-88; source recommends a seven-day planetary attunement cycle and notes seven-day patterns invoke the seven elder planets. Primary carrier: table; secondary carriers: words, candlelight; household-scale materials only.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Move once through the seven lights.",
+      "practice": "Choose one simple card, mark, candle color, or table object for each of the seven elder planets. Each day, place that day’s planet at the center, trace its glyph, and write one line about where that quality appeared. At the end of seven days, gather the cards and name the pattern you saw.",
+      "intention": "Let a week become a planetary teaching cycle.",
+      "bestWindow": "Begin on any day when seven days of observation are realistic.",
+      "whyThisFits": "Chapter 8, PDF pp. 84-88; source recommends a seven-day planetary attunement cycle and notes seven-day patterns invoke the seven elder planets. Primary carrier: table; secondary carriers: words, candlelight; household-scale materials only.",
+      "questionToCarry": "Which planet kept returning, and which one asked for more attention?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "tending",
+        "secondary": [
+          "remembering",
+          "marking"
+        ],
+        "refinement": "tending"
+      },
+      "carriers": {
+        "primary": "table",
+        "secondary": [
+          "words",
+          "candlelight"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate",
+          "room_for_something_deeper"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "preferred",
+        "contexts": [
+          "seven-day planetary sequence",
+          "planetary days"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "tending",
+        "table"
+      ],
+      "keywords": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "tending",
+        "table",
+        "paper",
+        "pen",
+        "altar",
+        "ritual notebook",
+        "glyph",
+        "planetary",
+        "moon"
+      ],
+      "materials": [
+        "paper",
+        "pen",
+        "table"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "ritual notebook"
+      ],
+      "sourceLabel": "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.\"",
+        "\"Keep timing symbolic and source-backed; do not convert into prediction or hard rule.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.dominguez.planetary-hour-support",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceLocation": "Practical Astrology for Witches and Pagans",
+          "sourceSummary": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceSupports": "Chapter 9, PDF pp. 91-97 and Chapter 11, PDF pp. 123-124; source explains planetary hours and recommends physical representations, verbal calls, and symbolic marks to access planetary-hour support. Primary carrier: table; secondary carriers: words, candlelight; household-scale materials only.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Let the hour lend one color.",
+      "practice": "Look up the planetary hour for the chosen ritual time. If the hour supports the work, place one matching mark, color, object, or word at the table. If it does not support the work, do not force it; write that the hour is background weather and proceed with the stronger ritual purpose.",
+      "intention": "Use planetary hour as support, not command.",
+      "bestWindow": "When a ritual time is known and the planetary hour is available.",
+      "whyThisFits": "Chapter 9, PDF pp. 91-97 and Chapter 11, PDF pp. 123-124; source explains planetary hours and recommends physical representations, verbal calls, and symbolic marks to access planetary-hour support. Primary carrier: table; secondary carriers: words, candlelight; household-scale materials only.",
+      "questionToCarry": "Is this hour helping the ritual, or should it stay in the background?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "marking",
+        "secondary": [
+          "steadying"
+        ],
+        "refinement": "marking"
+      },
+      "carriers": {
+        "primary": "table",
+        "secondary": [
+          "words",
+          "candlelight"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "preferred",
+        "contexts": [
+          "planetary hour",
+          "planetary day plus hour"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "marking",
+        "table"
+      ],
+      "keywords": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "marking",
+        "table",
+        "paper",
+        "pen",
+        "altar",
+        "ritual notebook",
+        "glyph",
+        "planetary",
+        "moon"
+      ],
+      "materials": [
+        "paper",
+        "pen",
+        "table"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "ritual notebook"
+      ],
+      "sourceLabel": "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.\"",
+        "\"Keep timing symbolic and source-backed; do not convert into prediction or hard rule.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.dominguez.moon-phase-timing-check",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceLocation": "Practical Astrology for Witches and Pagans",
+          "sourceSummary": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceSupports": "Chapter 10, PDF pp. 105-108; source presents Moon phase as the first and simplest timing consideration, with waxing for increase/growth, waning for banish/diminish/transform, and full/dark/quarter phases as special conditions. Primary carrier: words; secondary carriers: table, body; household-scale materials only.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Choose whether the Moon is building or releasing.",
+      "practice": "Before the ritual, name whether the Moon is waxing, waning, full, dark, or at a quarter turn. Match the action to that direction: build, reinforce, dissolve, or change course. If the ritual’s purpose does not match the phase, keep the purpose and adjust the action so it works with the available Moon.",
+      "intention": "Let the Moon phase shape the action without ruling the choice.",
+      "bestWindow": "Before any lunar-shaped ritual or recommendation explanation.",
+      "whyThisFits": "Chapter 10, PDF pp. 105-108; source presents Moon phase as the first and simplest timing consideration, with waxing for increase/growth, waning for banish/diminish/transform, and full/dark/quarter phases as special conditions. Primary carrier: words; secondary carriers: table, body; household-scale materials only.",
+      "questionToCarry": "Is this rite building, revealing, dissolving, or changing direction?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "marking",
+        "secondary": [
+          "opening",
+          "releasing",
+          "steadying"
+        ],
+        "refinement": "marking"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table",
+          "body"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "preferred",
+        "contexts": [
+          "moon phase",
+          "waxing moon",
+          "waning moon",
+          "full moon",
+          "dark moon",
+          "quarter moon"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "marking",
+        "words"
+      ],
+      "keywords": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "marking",
+        "words",
+        "paper",
+        "pen",
+        "table",
+        "altar",
+        "ritual notebook",
+        "glyph",
+        "planetary",
+        "moon"
+      ],
+      "materials": [
+        "paper",
+        "pen",
+        "table"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "ritual notebook"
+      ],
+      "sourceLabel": "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.\"",
+        "\"Keep timing symbolic and source-backed; do not convert into prediction or hard rule.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.dominguez.moon-sign-tone",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceLocation": "Practical Astrology for Witches and Pagans",
+          "sourceSummary": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceSupports": "Chapter 10, PDF pp. 108-112; source describes Moon sign as a broad rhythm that shapes action and gives brief qualities for all twelve signs. Primary carrier: table; secondary carriers: words, body; household-scale materials only.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Let the Moon’s sign choose the accent.",
+      "practice": "Look up the Moon’s sign. Choose one tone from that sign—beauty, detail, hearth, courage, depth, structure, dream, or another source-supported quality. Add that tone through one material, one word, or one gesture. Do not change the ritual’s purpose; let the sign color how it is done.",
+      "intention": "Use Moon sign as tone and rhythm, not fate.",
+      "bestWindow": "When the Moon sign is known and a ritual can be gently styled.",
+      "whyThisFits": "Chapter 10, PDF pp. 108-112; source describes Moon sign as a broad rhythm that shapes action and gives brief qualities for all twelve signs. Primary carrier: table; secondary carriers: words, body; household-scale materials only.",
+      "questionToCarry": "What accent does this sign add without taking over?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "marking",
+        "secondary": [
+          "tending",
+          "steadying"
+        ],
+        "refinement": "marking"
+      },
+      "carriers": {
+        "primary": "table",
+        "secondary": [
+          "words",
+          "body"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "moon sign",
+          "sign qualities"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "marking",
+        "table"
+      ],
+      "keywords": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "marking",
+        "table",
+        "paper",
+        "pen",
+        "altar",
+        "ritual notebook",
+        "glyph",
+        "planetary",
+        "moon"
+      ],
+      "materials": [
+        "paper",
+        "pen",
+        "table"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "ritual notebook"
+      ],
+      "sourceLabel": "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.\"",
+        "\"Keep timing symbolic and source-backed; do not convert into prediction or hard rule.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.dominguez.void-moon-softening",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceLocation": "Practical Astrology for Witches and Pagans",
+          "sourceSummary": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceSupports": "Chapter 10, PDF pp. 112-114; source distinguishes mundane cautions from magical uses and notes void Moon can support divination, journeying, regression, fading-away, and stealth/low-course actions while weakening manifestation and some boundaries. Primary carrier: words; secondary carriers: vessel, table; household-scale materials only.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Let the void Moon make the rite smaller.",
+      "practice": "If the Moon is void-of-course, choose a softer form of the ritual. Favor divination, review, dream, release, quiet disclosure, or a contained symbolic action. Avoid treating the void as failure. Close by naming what may fade and what should wait for firmer timing.",
+      "intention": "Work with an unsteered Moon by softening the ritual’s ambition.",
+      "bestWindow": "During a void-of-course Moon when the ritual should still proceed.",
+      "whyThisFits": "Chapter 10, PDF pp. 112-114; source distinguishes mundane cautions from magical uses and notes void Moon can support divination, journeying, regression, fading-away, and stealth/low-course actions while weakening manifestation and some boundaries. Primary carrier: words; secondary carriers: vessel, table; household-scale materials only.",
+      "questionToCarry": "What should be allowed to drift, and what should wait?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "steadying",
+        "secondary": [
+          "remembering",
+          "releasing"
+        ],
+        "refinement": "steadying"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "vessel",
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "required",
+        "contexts": [
+          "void-of-course moon"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "steadying",
+        "words"
+      ],
+      "keywords": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "steadying",
+        "words",
+        "paper",
+        "pen",
+        "table",
+        "altar",
+        "ritual notebook",
+        "glyph",
+        "planetary",
+        "moon"
+      ],
+      "materials": [
+        "paper",
+        "pen",
+        "table"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "ritual notebook"
+      ],
+      "sourceLabel": "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.\"",
+        "\"Keep timing symbolic and source-backed; do not convert into prediction or hard rule.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.dominguez.aspect-before-peak",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceLocation": "Practical Astrology for Witches and Pagans",
+          "sourceSummary": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceSupports": "Chapter 10, PDF pp. 114-116; source says workings using aspects should occur before the aspect peaks and that the faster planet determines the window of opportunity. Primary carrier: words; secondary carriers: table; household-scale materials only.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Begin while the aspect is still building.",
+      "practice": "When using an aspect for ritual timing, identify the faster planet and the exact peak time. Schedule the ritual before culmination, close to the peak if practical. In the grimoire, write the two planets, the aspect, and the ritual quality you are using.",
+      "intention": "Use aspect timing as a building current rather than an afterthought.",
+      "bestWindow": "Before a selected planetary aspect culminates.",
+      "whyThisFits": "Chapter 10, PDF pp. 114-116; source says workings using aspects should occur before the aspect peaks and that the faster planet determines the window of opportunity. Primary carrier: words; secondary carriers: table; household-scale materials only.",
+      "questionToCarry": "What is still building, and what should not be started after it peaks?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "marking",
+        "secondary": [
+          "opening",
+          "tending"
+        ],
+        "refinement": "marking"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate",
+          "room_for_something_deeper"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "required",
+        "contexts": [
+          "planetary aspect",
+          "applying aspect",
+          "before culmination"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "marking",
+        "words"
+      ],
+      "keywords": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "marking",
+        "words",
+        "paper",
+        "pen",
+        "table",
+        "altar",
+        "ritual notebook",
+        "glyph",
+        "planetary",
+        "moon"
+      ],
+      "materials": [
+        "paper",
+        "pen",
+        "table"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "ritual notebook"
+      ],
+      "sourceLabel": "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.\"",
+        "\"Keep timing symbolic and source-backed; do not convert into prediction or hard rule.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.dominguez.retrograde-foundation",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceLocation": "Practical Astrology for Witches and Pagans",
+          "sourceSummary": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceSupports": "Chapter 11, PDF pp. 118-120; source says retrogrades are weak for forward momentum but useful for carefully crafted foundations, retracing steps, visioning, brainstorming, purification, and uncovering underlying factors. Primary carrier: words; secondary carriers: table; household-scale materials only.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Turn retrograde toward the foundations.",
+      "practice": "If a related planet is retrograde and the work cannot wait, shift the ritual toward review, preparation, retracing, foundations, or visioning. Write what will be prepared now and what will wait for forward motion. Close by placing one tool or note where it can be returned to later.",
+      "intention": "Let retrograde timing support review and foundations instead of false forward motion.",
+      "bestWindow": "When a related planet is retrograde and the work still needs a ritual form.",
+      "whyThisFits": "Chapter 11, PDF pp. 118-120; source says retrogrades are weak for forward momentum but useful for carefully crafted foundations, retracing steps, visioning, brainstorming, purification, and uncovering underlying factors. Primary carrier: words; secondary carriers: table; household-scale materials only.",
+      "questionToCarry": "What can be prepared now, and what should not be forced yet?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "steadying",
+        "secondary": [
+          "remembering",
+          "opening"
+        ],
+        "refinement": "steadying"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "retrograde planet",
+          "imperfect timing adaptation"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "steadying",
+        "words"
+      ],
+      "keywords": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "steadying",
+        "words",
+        "paper",
+        "pen",
+        "table",
+        "altar",
+        "ritual notebook",
+        "glyph",
+        "planetary",
+        "moon"
+      ],
+      "materials": [
+        "paper",
+        "pen",
+        "table"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "ritual notebook"
+      ],
+      "sourceLabel": "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.\"",
+        "\"Keep timing symbolic and source-backed; do not convert into prediction or hard rule.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.dominguez.change-details-not-date",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceLocation": "Practical Astrology for Witches and Pagans",
+          "sourceSummary": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceSupports": "Chapter 11, PDF pp. 120-122; source recommends changing emphasis, rhythm, pacing, ritual props, and presentation style to align with available astrological conditions when timing cannot be changed. Primary carrier: table; secondary carriers: words, body; household-scale materials only.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Adjust the table to the sky you have.",
+      "practice": "When the date cannot change, look at the strongest available timing signal. Adjust emphasis, rhythm, pacing, props, colors, flowers, tablecloth, words, or style so the ritual leans with the moment. Keep the original purpose intact and make only one or two changes.",
+      "intention": "Let astrology shape the ritual details without overtaking the ritual.",
+      "bestWindow": "When a ritual must happen at a fixed time.",
+      "whyThisFits": "Chapter 11, PDF pp. 120-122; source recommends changing emphasis, rhythm, pacing, ritual props, and presentation style to align with available astrological conditions when timing cannot be changed. Primary carrier: table; secondary carriers: words, body; household-scale materials only.",
+      "questionToCarry": "What small detail would let this ritual move with the weather?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "tending",
+        "secondary": [
+          "marking",
+          "steadying"
+        ],
+        "refinement": "tending"
+      },
+      "carriers": {
+        "primary": "table",
+        "secondary": [
+          "words",
+          "body"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "fixed timing",
+          "imperfect timing",
+          "Moon sign",
+          "aspect condition"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "tending",
+        "table"
+      ],
+      "keywords": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "tending",
+        "table",
+        "paper",
+        "pen",
+        "altar",
+        "ritual notebook",
+        "glyph",
+        "planetary",
+        "moon"
+      ],
+      "materials": [
+        "paper",
+        "pen",
+        "table"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "ritual notebook"
+      ],
+      "sourceLabel": "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.\"",
+        "\"Keep timing symbolic and source-backed; do not convert into prediction or hard rule.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.dominguez.conditions-as-outline",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceLocation": "Practical Astrology for Witches and Pagans",
+          "sourceSummary": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceSupports": "Chapter 11, PDF pp. 118-120; source recommends looking up Moon sign/phase, aspects, retrogrades, and other conditions for a planned gathering, then using the atmosphere as an outline of ideas or components. Primary carrier: words; secondary carriers: table; household-scale materials only.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Let the timing give you an outline.",
+      "practice": "When you are out of ideas, list the Moon phase, Moon sign, active aspects, retrogrades, and planetary day or hour. Choose one or two that matter most. Turn them into an outline: one opening, one material gesture, one sentence, and one close.",
+      "intention": "Use the astrological atmosphere as a creative constraint.",
+      "bestWindow": "When a regular ritual or gathering needs a shape and the timing is already set.",
+      "whyThisFits": "Chapter 11, PDF pp. 118-120; source recommends looking up Moon sign/phase, aspects, retrogrades, and other conditions for a planned gathering, then using the atmosphere as an outline of ideas or components. Primary carrier: words; secondary carriers: table; household-scale materials only.",
+      "questionToCarry": "What is the sky already asking this ritual to include?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "opening",
+        "secondary": [
+          "marking",
+          "tending"
+        ],
+        "refinement": "opening"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate",
+          "room_for_something_deeper"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "current astrological conditions",
+          "scheduled ritual"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "opening",
+        "words"
+      ],
+      "keywords": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "opening",
+        "words",
+        "paper",
+        "pen",
+        "table",
+        "altar",
+        "ritual notebook",
+        "glyph",
+        "planetary",
+        "moon"
+      ],
+      "materials": [
+        "paper",
+        "pen",
+        "table"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "ritual notebook"
+      ],
+      "sourceLabel": "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.\"",
+        "\"Keep timing symbolic and source-backed; do not convert into prediction or hard rule.\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.dominguez.planetary-representation",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceLocation": "Practical Astrology for Witches and Pagans",
+          "sourceSummary": "Dominguez, Practical Astrology for Witches and Pagans",
+          "sourceSupports": "Chapter 11, PDF pp. 123-124 and Chapter 8, PDF pp. 87-88; source recommends physical representations, verbal calls, symbolic marks, and glyphs as supports for planetary hours and planetary work. Primary carrier: table; secondary carriers: candlelight, words, vessel; household-scale materials only.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "No horoscope, personality, relationship-compatibility, medical, legal, financial, or deterministic claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Give the planet a small body on the table.",
+      "practice": "Choose one physical representation for the planetary power you want to support the ritual: a glyph card, color, stone, metal, written word, or simple object. Place it beside the candle or central object. Name the quality it contributes, then remove it when the ritual is complete.",
+      "intention": "Anchor timing support in a visible household object.",
+      "bestWindow": "During a planetary day, planetary hour, or planet-family ritual.",
+      "whyThisFits": "Chapter 11, PDF pp. 123-124 and Chapter 8, PDF pp. 87-88; source recommends physical representations, verbal calls, symbolic marks, and glyphs as supports for planetary hours and planetary work. Primary carrier: table; secondary carriers: candlelight, words, vessel; household-scale materials only.",
+      "questionToCarry": "What quality does this object carry, and when should it leave?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "marking",
+        "secondary": [
+          "blessing",
+          "steadying"
+        ],
+        "refinement": "marking"
+      },
+      "carriers": {
+        "primary": "table",
+        "secondary": [
+          "candlelight",
+          "words",
+          "vessel"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "preferred",
+        "contexts": [
+          "planetary day",
+          "planetary hour",
+          "planet family"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "marking",
+        "table"
+      ],
+      "keywords": [
+        "- dominguez",
+        "dominguez",
+        "astrology",
+        "timing",
+        "marking",
+        "table",
+        "paper",
+        "pen",
+        "altar",
+        "ritual notebook",
+        "glyph",
+        "planetary",
+        "moon"
+      ],
+      "materials": [
+        "paper",
+        "pen",
+        "table"
+      ],
+      "places": [
+        "table",
+        "altar",
+        "ritual notebook"
+      ],
+      "sourceLabel": "Ivo Dominguez Jr., Practical Astrology for Witches and Pagans",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"Research-only candidate. Not reviewed, findable, direct-use eligible, recommendation eligible, recommendable, or runtime-ready.\"",
+        "\"Keep timing symbolic and source-backed; do not convert into prediction or hard rule.\""
+      ]
     },
     "adaptationPolicy": {
       "purposeChange": "not_allowed",

@@ -16,7 +16,7 @@ function resultIds(query: string, selectedChips: string[] = []): string[] {
 describe("Ritual search", () => {
   it("does not return draft source-backed rituals in the direct-use search flow", () => {
     expect(resultIds("")).toEqual([]);
-    expect(sourceBackedRituals).toHaveLength(156);
+    expect(sourceBackedRituals).toHaveLength(218);
     expect(sourceBackedRituals.every((ritual) => ritual.availability.findable)).toBe(
       true,
     );
@@ -74,6 +74,29 @@ describe("Ritual search", () => {
     ).toEqual(
       expect.arrayContaining(["ritual-buckland-candle-prepare-table"]),
     );
+  });
+
+  it("can inspect the remaining imported packet families only in inspection/debug search", () => {
+    expect(
+      searchRituals(sourceBackedRituals, {
+        query: "new moon",
+        includeNonDirectUse: true,
+      }).map((ritual) => ritual.id),
+    ).toEqual(expect.arrayContaining(["candidate.moon_book.new_moon_table_seed"]));
+    expect(
+      searchRituals(sourceBackedRituals, {
+        query: "practice night",
+        includeNonDirectUse: true,
+      }).map((ritual) => ritual.id),
+    ).toEqual(
+      expect.arrayContaining(["candidate.anand.practice_night_commitment"]),
+    );
+    expect(
+      searchRituals(sourceBackedRituals, {
+        query: "glyph",
+        includeNonDirectUse: true,
+      }).map((ritual) => ritual.id),
+    ).toEqual(expect.arrayContaining(["candidate.dominguez.glyph-as-mark"]));
   });
 
   it("filters by carrier chips only for direct-use eligible rituals", () => {

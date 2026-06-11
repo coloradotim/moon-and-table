@@ -11,15 +11,15 @@ describe("Ritual readiness report", () => {
   it("summarizes the current source-backed import records", () => {
     const report = createRitualReadinessReport(sourceBackedRituals);
 
-    expect(report.total).toBe(156);
+    expect(report.total).toBe(218);
     expect(report.byStatus).toEqual({
       pilot: 0,
-      draft: 156,
+      draft: 218,
       reviewed: 0,
       recommendable: 0,
     });
     expect(report.availability).toEqual({
-      findable: 156,
+      findable: 218,
       directUseEligible: 0,
       recommendationEligible: 0,
     });
@@ -45,7 +45,7 @@ describe("Ritual readiness report", () => {
     const report = createRitualReadinessReport(sourceBackedRituals);
     const formatted = formatRitualReadinessReport(report);
 
-    expect(report.records).toHaveLength(156);
+    expect(report.records).toHaveLength(218);
 
     for (const record of report.records) {
       expect(record.missing).toEqual([

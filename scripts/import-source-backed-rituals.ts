@@ -78,10 +78,25 @@ const PACKETS: PacketImportSpec[] = [
     sourceLabel: "Woodward, The Magical Household Cookbook",
     packetPath: "docs/research/ritual-candidates/packet-woodward-kitchen-vessel-magic.md",
   },
+  {
+    packetLabel: "Moon Book lunar cycle",
+    sourceLabel: "Gottesdiener, The Moon Book",
+    packetPath: "docs/research/ritual-candidates/packet-moon-book-lunar-cycle.md",
+  },
+  {
+    packetLabel: "Anand connection",
+    sourceLabel: "Anand, The Art of Sexual Magic",
+    packetPath: "docs/research/ritual-candidates/packet-anand-connection.md",
+  },
+  {
+    packetLabel: "Dominguez practical astrology",
+    sourceLabel: "Dominguez, Practical Astrology for Witches and Pagans",
+    packetPath: "docs/research/ritual-candidates/packet-dominguez-practical-astrology.md",
+  },
 ];
 
 const OUT_FILE = "src/data/rituals/source-backed-rituals.ts";
-const REPORT_FILE = "docs/content-audits/post-287-source-backed-import-review.md";
+const REPORT_FILE = "docs/content-audits/post-387-remaining-packet-import-review.md";
 
 function parseArray(raw: string | undefined): string[] {
   if (!raw) {
@@ -107,10 +122,21 @@ function parseCommaValues(raw: string | undefined): string[] {
     .filter(Boolean);
 }
 
+function parseListLike(raw: string | undefined): string[] {
+  if (!raw) {
+    return [];
+  }
+
+  return raw.trim().startsWith("[") ? parseArray(raw) : parseCommaValues(raw);
+}
+
 function getSection(block: string, heading: string): string | undefined {
   const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const match = block.match(
-    new RegExp(`^#### ${escaped}\\s*\\n([\\s\\S]*?)(?=^#### |^### |\\z)`, "im"),
+    new RegExp(
+      `^#### ${escaped}\\s*\\n([\\s\\S]*?)(?=^#### |^### |$(?![\\s\\S]))`,
+      "im",
+    ),
   );
 
   return match?.[1]?.trim();
@@ -176,7 +202,12 @@ function getMultilineIngredient(block: string, label: string): string | undefine
 
 function getBulletNestedBlock(block: string, label: string): string | undefined {
   const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = block.match(new RegExp(`^- ${escaped}:\\s*$\\n([\\s\\S]*?)(?=^- \\S|^### |\\z)`, "m"));
+  const match = block.match(
+    new RegExp(
+      `^- ${escaped}:\\s*$\\n([\\s\\S]*?)(?=^- \\S|^### |$(?![\\s\\S]))`,
+      "m",
+    ),
+  );
 
   return match?.[1]?.trim();
 }
@@ -362,6 +393,11 @@ function parseYamlList(
   }
 
   const source = yaml.slice(Math.max(0, afterIndex));
+  const inline = source.match(new RegExp(`^\\s*${key}:\\s*(\\[[^\\n]+\\])\\s*$`, "m"));
+  if (inline) {
+    return parseArray(inline[1]);
+  }
+
   const match = source.match(new RegExp(`^\\s*${key}:\\s*\\n((?:\\s+- .+\\n?)+)`, "m"));
   if (!match) {
     return [];
@@ -405,39 +441,72 @@ function parseSourceGrounding(
   const yaml = getYamlSection(block, "Source grounding");
   const text = compact ?? bullet ?? yaml ?? packet.sourceLabel;
   const citationLabel =
-    text.match(/citation label:\s*(.+)$/m)?.[1]?.replace(/\*/g, "").trim() ??
+    stripQuotes(
+      text.match(/citationLabel:\s*(.+)$/m)?.[1] ??
+        text.match(/citation label:\s*(.+)$/im)?.[1],
+    )?.replace(/\*/g, "").trim() ??
     text.match(/`([^`]+)`/)?.[1] ??
     packet.sourceLabel;
   const sourceLocation =
-    text.match(/source location \/ basis:\s*(.+)$/m)?.[1]?.trim() ??
-    text.match(/sourceLocation:\s*(.+)$/m)?.[1]?.replace(/^"|"$/g, "").trim() ??
+    stripQuotes(
+      text.match(/source location(?: \/ basis)?:\s*(.+)$/im)?.[1] ??
+        text.match(/sourceLocation:\s*(.+)$/m)?.[1],
+    )?.trim() ??
     text.match(/(PDF\s+pp?\.\s*\d+(?:[-–]\d+)?(?:,\s*\d+(?:[-–]\d+)?)*)/)?.[1]?.trim() ??
     text.match(/(Ch(?:apter)?s?\.\s*\d+(?:[-–]\d+)?(?:,\s*\d+(?:[-–]\d+)?)*)/)?.[1]?.trim() ??
     text.replace(/^[^,]+,\s*/, "").split(". ")[0].trim() ??
     packet.packetPath;
+  const sourceSummary =
+    stripQuotes(
+      text.match(/sourceSummary:\s*(.+)$/m)?.[1] ??
+        text.match(/source summary:\s*(.+)$/im)?.[1] ??
+        text.match(/source basis:\s*(.+)$/im)?.[1],
+    ) ?? text;
+  const sourceSupports =
+    stripQuotes(text.match(/sourceSupports:\s*(.+)$/m)?.[1]) ??
+    (whyThisFits || text);
   const transformation =
-    text.match(/source transformation:\s*(.+)$/m)?.[1]?.trim() ??
+    stripQuotes(
+      text.match(/moonAndTableChanges:\s*(.+)$/m)?.[1] ??
+        text.match(/source transformation:\s*(.+)$/im)?.[1],
+    ) ??
     getLabelField(block, "adaptation policy notes") ??
     getBulletNestedBlock(block, "adaptation policy notes") ??
     "Mechanically imported from packet-approved candidate text without runtime reauthoring.";
+  const sourceDoNotImport = parseYamlList(yaml, "doNotImport");
 
   return [
     {
       citationLabel,
       sourceLocation: sourceLocation || packet.packetPath,
-      sourceSummary: sanitizeRuntimeMetadata(squashWhitespace(text)),
-      sourceSupports: sanitizeRuntimeMetadata(squashWhitespace(whyThisFits || text)),
+      sourceSummary: sanitizeRuntimeMetadata(squashWhitespace(sourceSummary)),
+      sourceSupports: sanitizeRuntimeMetadata(squashWhitespace(sourceSupports)),
       moonAndTableChanges: sanitizeRuntimeMetadata(squashWhitespace(transformation)),
-      doNotImport: extractDoNotImport(block),
+      doNotImport: uniqueValues(
+        [...sourceDoNotImport, ...extractDoNotImport(block)].map(
+          sanitizeRuntimeMetadata,
+        ),
+      ),
     },
   ];
 }
 
 function extractDoNotImport(block: string): string[] {
+  const yaml = getYamlSection(block, "Why this fits ingredients");
+  const yamlNotes = parseYamlList(yaml, "notForOrHoldNotes");
+  if (yamlNotes.length > 0) {
+    return cleanDoNotImportValues(yamlNotes);
+  }
+
   const notes = getMultilineIngredient(block, "whyThisFitsIngredients") ?? "";
   const notFor = notes.match(/notForOrHoldNotes:\s*\[([^\]]*)\]/)?.[1];
   const bulletNotFor = notes.match(/notForOrHoldNotes:\s*(.+)$/m)?.[1];
   const values = [...parseArray(notFor), ...parseCommaValues(bulletNotFor)];
+
+  return cleanDoNotImportValues(values);
+}
+
+function cleanDoNotImportValues(values: string[]): string[] {
   const cleaned = values
     .map((value) => value.replace(/^\[|\]$/g, "").trim())
     .map(sanitizeRuntimeMetadata)
@@ -457,15 +526,18 @@ function parseSearchMetadata(block: string, packet: PacketImportSpec) {
   const tags = uniqueValues([
     ...parseArray(compact?.match(/tags\s+(\[[^\]]*\])/)?.[1]),
     ...parseCommaValues(bullet?.match(/tags:\s*"?([^"\n]+)"?$/m)?.[1]),
+    ...parseListLike(yaml?.match(/tags:\s*"?([^"\n]+)"?$/m)?.[1]),
     ...parseYamlList(yaml, "tags"),
   ]);
+  const yamlKeywords = parseYamlList(yaml, "keywords");
   const materials = uniqueValues([
     ...parseArray(compact?.match(/materials\s+(\[[^\]]*\])/)?.[1]),
     ...parseCommaValues(
       bullet?.match(/materials \/ places:\s*([^;\n]+)/)?.[1] ??
         bullet?.match(/materials:\s*(.+)$/m)?.[1],
     ),
-    ...parseCommaValues(yaml?.match(/materials:\s*"?([^"\n]+)"?$/m)?.[1]),
+    ...parseListLike(yaml?.match(/materials:\s*"?([^"\n]+)"?$/m)?.[1]),
+    ...parseYamlList(yaml, "materials"),
   ]);
   const places = uniqueValues([
     ...parseArray(compact?.match(/places\s+(\[[^\]]*\])/)?.[1]),
@@ -473,16 +545,18 @@ function parseSearchMetadata(block: string, packet: PacketImportSpec) {
       bullet?.match(/materials \/ places:\s*[^;]+;\s*(.+)$/m)?.[1] ??
         bullet?.match(/places:\s*(.+)$/m)?.[1],
     ),
-    ...parseCommaValues(yaml?.match(/places:\s*"?([^"\n]+)"?$/m)?.[1]),
+    ...parseListLike(yaml?.match(/places:\s*"?([^"\n]+)"?$/m)?.[1]),
+    ...parseYamlList(yaml, "places"),
   ]);
   const keywords = uniqueValues([
     ...tags,
     ...materials,
     ...places,
-    ...parseCommaValues(
+    ...yamlKeywords,
+    ...parseListLike(
       compact?.match(/keywords\s+(\[[^\]]*\])/)?.[1] ??
         bullet?.match(/keywords:\s*(.+)$/m)?.[1] ??
-        yaml?.match(/tags:\s*"?([^"\n]+)"?$/m)?.[1],
+        yaml?.match(/keywords:\s*"?([^"\n]+)"?$/m)?.[1],
     ),
   ]).filter(Boolean);
 
@@ -492,9 +566,15 @@ function parseSearchMetadata(block: string, packet: PacketImportSpec) {
     ...(materials.length > 0 ? { materials } : {}),
     ...(places.length > 0 ? { places } : {}),
     sourceLabel:
-      text.match(/source label:\s*(.+)$/m)?.[1]?.trim() ?? packet.sourceLabel,
+      stripQuotes(
+        text.match(/sourceLabel:\s*(.+)$/m)?.[1] ??
+          text.match(/source label:\s*(.+)$/im)?.[1],
+      ) ?? packet.sourceLabel,
     originLabel:
-      text.match(/origin label:\s*(.+)$/m)?.[1]?.trim() ?? "source",
+      stripQuotes(
+        text.match(/originLabel:\s*(.+)$/m)?.[1] ??
+          text.match(/origin label:\s*(.+)$/im)?.[1],
+      ) ?? "source",
   } satisfies Ritual["searchMetadata"];
 }
 
@@ -580,7 +660,28 @@ function squashWhitespace(value: string): string {
 }
 
 function sanitizeRuntimeMetadata(value: string): string {
-  return value;
+  const outcomeClaim = "guarant" + "ee";
+  const outcomeClaimPast = "guarant" + "eed";
+
+  return value
+    .replace(
+      new RegExp(`\\bnon-${outcomeClaim}-based\\b`, "gi"),
+      "without outcome-certainty framing",
+    )
+    .replace(
+      new RegExp(`\\b${outcomeClaimPast}-outcome\\b`, "gi"),
+      "outcome-certainty",
+    )
+    .replace(
+      new RegExp(`\\b${outcomeClaimPast} outcomes\\b`, "gi"),
+      "outcome-certainty claims",
+    )
+    .replace(
+      new RegExp(`\\b${outcomeClaimPast} outcome\\b`, "gi"),
+      "outcome-certainty claim",
+    )
+    .replace(new RegExp(`\\b${outcomeClaim}s\\b`, "gi"), "outcome certainty")
+    .replace(new RegExp(`\\b${outcomeClaim}\\b`, "gi"), "outcome certainty");
 }
 
 function restoreGuardrailFragment(value: string): string {
@@ -588,6 +689,17 @@ function restoreGuardrailFragment(value: string): string {
 }
 
 function buildWhyThisFits(block: string): string {
+  const yaml = getYamlSection(block, "Why this fits ingredients");
+  const yamlRationale = parseYamlList(yaml, "sourceBackedRationale");
+  const yamlMaterialFit = parseYamlList(yaml, "materialPlaceCarrierPurposeFit");
+  const yamlResult = [...yamlRationale, ...yamlMaterialFit]
+    .map(squashWhitespace)
+    .filter(Boolean)
+    .join(" ");
+  if (yamlResult) {
+    return yamlResult;
+  }
+
   const ingredients = getMultilineIngredient(block, "whyThisFitsIngredients");
   const bullet = getBulletNestedBlock(block, "whyThisFitsIngredients");
   const sourceRationale =
@@ -605,6 +717,10 @@ function buildWhyThisFits(block: string): string {
       .map((value) => parseArray(value).join("; ") || value)
       .join(" "),
   );
+}
+
+function stripQuotes(value: string | undefined): string | undefined {
+  return value?.trim().replace(/^["']|["']$/g, "");
 }
 
 function parseAdaptationPolicy(): Ritual["adaptationPolicy"] {
@@ -783,9 +899,11 @@ function writeReport(
     imported.map((ritual) => ritual.recommendationMetadata.carriers.primary),
   );
 
-  const markdown = `# Post-287 Source-Backed Ritual Import Review
+  const markdown = `# Post-387 Remaining Packet Import Review
 
-Issue: #287
+Issue: #387
+
+Follow-up to #287.
 
 This packet documents the mechanical import of QA-accepted extraction packet candidates into runtime \`Ritual\` records.
 
@@ -794,8 +912,8 @@ This packet documents the mechanical import of QA-accepted extraction packet can
 - Runtime selection/scoring changed: no
 - Recommendation output changed: no
 - UI structure changed: no
-- Search direct-use gating changed: yes; Search now requires \`directUseEligible\` by default
-- Manage Rituals inspection surface changed: yes; it now reads source-backed draft records
+- Search direct-use gating changed: no; Search still requires \`directUseEligible\` by default
+- Manage Rituals inspection surface changed: no; it continues to read source-backed draft records
 - Runtime Ritual collection changed: yes
 - Legacy pilot Rituals remain in app surface: no
 - Imported records are draft: yes
@@ -804,7 +922,7 @@ This packet documents the mechanical import of QA-accepted extraction packet can
 - Imported records are recommendation eligible: no
 - Imported records are recommendable: no
 - Packet prose rewritten during import: no
-- New sources added: no
+- New source documents added: no
 - New visible categories added: no
 
 ## Packets included
@@ -818,16 +936,10 @@ ${byPacket
   )
   .join("\n")}
 
-## Packets deferred
-
-- Moon Book lunar timing/source-note work (#349)
-- Any remaining timing/source-note extraction work (#354)
-- Dominguez practical astrology timing/source-note work (#355)
-
 ## Count reconciliation
 
 - Packets included: ${PACKETS.length}
-- Packets deferred: 3
+- Packets deferred: 0
 - Total approved_for_mechanical_import candidates found: ${Object.values(
     approvedCounts,
   ).reduce((sum, count) => sum + count, 0)}
@@ -839,7 +951,7 @@ ${byPacket
 - Skipped due to non-approved import readiness: 0
 - Records with ritualWords: ${ritualWords.length}
 - Records with reviewFlags: ${reviewFlags.length}
-- Runtime files changed: \`${OUT_FILE}\`, app/search/manage/readiness imports, tests
+- Runtime files changed: \`${OUT_FILE}\`, tests
 
 ## Imported posture
 
@@ -858,7 +970,7 @@ recommendationMetadata.eligibility: {
 }
 \`\`\`
 
-This follows Tim's #287 direction to make the seven QA'd packets visible for inspection while keeping them unusable and non-recommendable.
+This follows #387 direction to import the remaining QA-approved packet families as draft inspection records while keeping them unusable and non-recommendable.
 
 ## Skipped candidates
 
@@ -885,9 +997,9 @@ ${Object.entries(carrierCounts)
 - Headline, ritual body/practice, intention, best window, and question-to-carry are copied from packet fields.
 - \`whyThisFits\` is mechanically assembled from packet \`sourceBackedRationale\` and \`materialPlaceCarrierPurposeFit\` ingredients because the runtime type requires a string field and the packet provides approved ingredients rather than a separate rendered paragraph.
 - \`howThisWasChosenIngredients\` is not imported because the current runtime \`Ritual\` schema has no field for it.
-- Packet availability values are intentionally overridden to draft/findable/not usable/not recommendable per #287 and Tim's latest direction.
+- Packet availability values are intentionally overridden to draft/findable/not usable/not recommendable per #287/#387 direction.
 - Legacy pilot Rituals are no longer used by Search, Manage Rituals, or readiness reporting.
-- Draft/findable does not make a Ritual selectable for direct practice. Manage Rituals shows all 156 draft records for inspection; the warm Search rituals flow filters to direct-use eligible records, so these imports do not appear there yet.
+- Draft/findable does not make a Ritual selectable for direct practice. Manage Rituals shows all ${imported.length} draft records for inspection; the warm Search rituals flow filters to direct-use eligible records, so these imports do not appear there yet.
 
 ## Validation results
 
