@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { pilotRituals } from "../../src/data/rituals/pilot-rituals";
+import { sourceBackedRituals } from "../../src/data/rituals/source-backed-rituals";
 import {
   getRitualSearchChips,
   searchRituals,
@@ -8,67 +8,108 @@ import {
 import type { Ritual } from "../../src/data/rituals/types";
 
 function resultIds(query: string, selectedChips: string[] = []): string[] {
-  return searchRituals(pilotRituals, { query, selectedChips }).map(
+  return searchRituals(sourceBackedRituals, { query, selectedChips }).map(
     (ritual) => ritual.id,
   );
 }
 
 describe("Ritual search", () => {
-  it("returns all findable pilot rituals for an empty query", () => {
-    expect(resultIds("")).toEqual([
-      "ritual.wet_the_seed_and_wait",
-      "ritual.set_grain_at_the_table",
-      "ritual.kindle_the_first_household_light",
-    ]);
+  it("does not return draft source-backed rituals in the direct-use search flow", () => {
+    expect(resultIds("")).toEqual([]);
+    expect(sourceBackedRituals).toHaveLength(156);
+    expect(sourceBackedRituals.every((ritual) => ritual.availability.findable)).toBe(
+      true,
+    );
+    expect(
+      sourceBackedRituals.every(
+        (ritual) => ritual.availability.directUseEligible === false,
+      ),
+    ).toBe(true);
   });
 
-  it("finds the seed ritual by seed", () => {
-    expect(resultIds("seed")).toEqual(["ritual.wet_the_seed_and_wait"]);
+  it("can include draft records only for inspection/debug search", () => {
+    const ids = searchRituals(sourceBackedRituals, {
+      query: "seed",
+      includeNonDirectUse: true,
+    }).map((ritual) => ritual.id);
+
+    expect(ids).toEqual(
+      expect.arrayContaining(["ritual-green-garden-welcome-existing-plant"]),
+    );
   });
 
-  it("finds the table ritual by bread or grain", () => {
-    expect(resultIds("bread")).toEqual(["ritual.set_grain_at_the_table"]);
-    expect(resultIds("grain")).toEqual(["ritual.set_grain_at_the_table"]);
+  it("can inspect source-backed table rituals by bread or grain when requested", () => {
+    expect(
+      searchRituals(sourceBackedRituals, {
+        query: "bread",
+        includeNonDirectUse: true,
+      }).map((ritual) => ritual.id),
+    ).toEqual(
+      expect.arrayContaining(["ritual-woodward-bread-table-offering"]),
+    );
+    expect(
+      searchRituals(sourceBackedRituals, {
+        query: "grain",
+        includeNonDirectUse: true,
+      }).map((ritual) => ritual.id),
+    ).toEqual(
+      expect.arrayContaining(["ritual-woodward-bread-table-offering"]),
+    );
   });
 
-  it("finds the first-light ritual by lamp or light", () => {
-    expect(resultIds("lamp")).toEqual([
-      "ritual.kindle_the_first_household_light",
-    ]);
-    expect(resultIds("light")).toEqual([
-      "ritual.kindle_the_first_household_light",
-    ]);
+  it("can inspect source-backed candle and light rituals by lamp or light when requested", () => {
+    expect(
+      searchRituals(sourceBackedRituals, {
+        query: "lamp",
+        includeNonDirectUse: true,
+      }).map((ritual) => ritual.id),
+    ).toEqual(
+      expect.arrayContaining(["candidate.saint_thomas.intimate_altar_table"]),
+    );
+    expect(
+      searchRituals(sourceBackedRituals, {
+        query: "light",
+        includeNonDirectUse: true,
+      }).map((ritual) => ritual.id),
+    ).toEqual(
+      expect.arrayContaining(["ritual-buckland-candle-prepare-table"]),
+    );
   });
 
-  it("filters by carrier chips", () => {
-    expect(resultIds("", ["plant"])).toEqual([
-      "ritual.wet_the_seed_and_wait",
-    ]);
-    expect(resultIds("", ["table"])).toEqual([
-      "ritual.set_grain_at_the_table",
-    ]);
+  it("filters by carrier chips only for direct-use eligible rituals", () => {
+    expect(resultIds("", ["plant"])).toEqual([]);
+    expect(resultIds("", ["table"])).toEqual([]);
   });
 
-  it("filters by purpose chips", () => {
-    expect(resultIds("", ["opening"])).toEqual([
-      "ritual.wet_the_seed_and_wait",
-      "ritual.kindle_the_first_household_light",
-    ]);
+  it("filters by purpose chips only for direct-use eligible rituals", () => {
+    expect(resultIds("", ["opening"])).toEqual([]);
   });
 
   it("narrows when selected chips and text search are combined", () => {
-    expect(resultIds("beginning", ["plant"])).toEqual([
-      "ritual.wet_the_seed_and_wait",
-    ]);
-    expect(resultIds("beginning", ["table"])).toEqual([]);
+    expect(
+      searchRituals(sourceBackedRituals, {
+        query: "seed",
+        selectedChips: ["plant"],
+        includeNonDirectUse: true,
+      }).map((ritual) => ritual.id),
+    ).toEqual(
+      expect.arrayContaining(["ritual-green-garden-welcome-existing-plant"]),
+    );
+    expect(
+      searchRituals(sourceBackedRituals, {
+        query: "seed",
+        selectedChips: ["doorway"],
+        includeNonDirectUse: true,
+      }).map((ritual) => ritual.id),
+    ).toEqual([]);
   });
 
   it("excludes non-findable rituals from normal search results", () => {
     const hiddenRitual = {
-      ...pilotRituals[0],
+      ...sourceBackedRituals[0],
       id: "ritual.hidden_seed",
       availability: {
-        ...pilotRituals[0].availability,
+        ...sourceBackedRituals[0].availability,
         findable: false,
       },
     } satisfies Ritual;
@@ -80,26 +121,9 @@ describe("Ritual search", () => {
     ).toEqual([]);
   });
 
-  it("derives useful chips from current findable pilot metadata", () => {
-    const chips = getRitualSearchChips(pilotRituals).map((chip) => chip.value);
+  it("does not derive direct-use chips from draft source-backed metadata", () => {
+    const chips = getRitualSearchChips(sourceBackedRituals).map((chip) => chip.value);
 
-    expect(chips).toEqual(
-      expect.arrayContaining([
-        "candlelight",
-        "table",
-        "plant",
-        "vessel",
-        "opening",
-        "tending",
-        "steadying",
-        "blessing",
-        "seed",
-        "water",
-        "bread",
-        "grain",
-        "lamp",
-        "light",
-      ]),
-    );
+    expect(chips).toEqual([]);
   });
 });

@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 
 import { describe, expect, it } from "vitest";
 
-import { pilotRituals } from "../../src/data/rituals/pilot-rituals";
+import { sourceBackedRituals } from "../../src/data/rituals/source-backed-rituals";
 import {
   RITUAL_AUDIENCES,
   RITUAL_CAPACITY_MODES,
@@ -16,136 +16,104 @@ import {
   validateRituals,
 } from "../../src/data/rituals/validate-rituals";
 
-describe("inert Ritual pilot data", () => {
-  it("contains exactly the three reviewed pilot Ritual records", () => {
-    expect(pilotRituals.map((ritual) => ritual.id)).toEqual([
-      "ritual.wet_the_seed_and_wait",
-      "ritual.set_grain_at_the_table",
-      "ritual.kindle_the_first_household_light",
-    ]);
-    expect(pilotRituals).toHaveLength(3);
-    expect(pilotRituals.every((ritual) => ritual.status === "pilot")).toBe(true);
-    expect(pilotRituals.every((ritual) => ritual.origin.type === "source")).toBe(
+describe("source-backed Ritual import data", () => {
+  it("contains the seven-packet mechanical import batch as draft records", () => {
+    expect(sourceBackedRituals).toHaveLength(156);
+    expect(sourceBackedRituals.map((ritual) => ritual.id)).toEqual(
+      expect.arrayContaining([
+        "ritual-buckland-candle-prepare-table",
+        "ritual-house-witch-spiritual-hearth-recognition",
+        "ritual-magical-household-center-house-mind",
+        "ritual-green-garden-one-green-check-in",
+        "whitehurst-flower-on-the-table",
+        "candidate.saint_thomas.intimate_altar_table",
+        "ritual-woodward-center-at-counter",
+      ]),
+    );
+    expect(sourceBackedRituals.every((ritual) => ritual.status === "draft")).toBe(true);
+    expect(sourceBackedRituals.every((ritual) => ritual.origin.type === "source")).toBe(
       true,
     );
     expect(
-      pilotRituals.every((ritual) => ritual.availability.findable === true),
+      sourceBackedRituals.every((ritual) => ritual.availability.findable === true),
     ).toBe(true);
     expect(
-      pilotRituals.every((ritual) => ritual.availability.directUseEligible === true),
+      sourceBackedRituals.every((ritual) => ritual.availability.directUseEligible === false),
     ).toBe(true);
     expect(
-      pilotRituals.every(
+      sourceBackedRituals.every(
         (ritual) => ritual.availability.recommendationEligible === false,
       ),
     ).toBe(true);
     expect(
-      pilotRituals.every(
+      sourceBackedRituals.every(
         (ritual) =>
           ritual.recommendationMetadata.eligibility.recommendable === false &&
           ritual.recommendationMetadata.eligibility.missing?.includes(
-            "pilot_review",
+            "direct_use_review",
+          ) &&
+          ritual.recommendationMetadata.eligibility.missing?.includes(
+            "recommendation_review",
           ),
       ),
     ).toBe(true);
   });
 
-  it("keeps reviewed pilot presentation prose unchanged", () => {
-    expect(pilotRituals).toEqual(
+  it("maps packet presentation fields without legacy pilot records", () => {
+    expect(sourceBackedRituals).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
+          id: "ritual-buckland-candle-prepare-table",
           presentation: expect.objectContaining({
-            headline: "Wet the seed and wait.",
+            headline: "Prepare the Candle Table",
             practice:
-              "Place one seed in a small dish. Touch it with a little water. Name the beginning it will hold in one sentence. Set the dish where it can wait undisturbed. Do not ask it to prove anything tonight. The ritual is complete when the seed has been placed into waiting.",
-            intention:
-              "Let the beginning have a small body and enough time to wait.",
-            bestWindow:
-              "When beginning something that should not become work immediately. Spring, new-phase, or first-step timing can strengthen the fit.",
-            whyThisFits:
-              "Seed and water make beginning material without promising the result. The Ritual ends by placing the seed into waiting, not by demanding growth.",
-            questionToCarry: "What beginning can be placed into waiting?",
+              expect.stringContaining("Set two white altar candles at the back corners."),
+            intention: "Prepare the table so candle work has a clear physical beginning and end.",
+            bestWindow: "Before a longer Buckland-derived candle working.",
+            questionToCarry: "What am I setting apart for this work?",
           }),
         }),
         expect.objectContaining({
+          id: "whitehurst-flower-on-the-table",
           presentation: expect.objectContaining({
-            headline: "Set grain at the table.",
-            practice:
-              "Place one small piece of bread at the center of the table. Name one way this household is being fed or held right now. Let the table hold that sentence for one breath. Eat the bread, share it, or put it away. The ritual is complete when the table is clear again.",
-            intention:
-              "Let ordinary nourishment have one clear place at the center.",
-            bestWindow:
-              "Near a meal, after the room has scattered, or when the household needs one ordinary point of care.",
-            whyThisFits:
-              "The source connects grain with household rhythm and table warmth. This Ritual keeps the table and food-family material specific so it does not become a generic object ritual.",
-            questionToCarry:
-              "What ordinary thing is holding more than you noticed?",
-          }),
-        }),
-        expect.objectContaining({
-          presentation: expect.objectContaining({
-            headline: "Kindle the first household light.",
-            practice:
-              "Turn on one lamp before you begin anything else. Let it be the first household light of this ritual. Stand near it and name what is beginning in one plain sentence. Leave the lamp on while you take the first ordinary step. The ritual is complete when the beginning has been named and the light remains.",
-            intention: "Let one first light make the beginning visible.",
-            bestWindow:
-              "At the beginning of the day, a task, a conversation, or a new phase. Strong beginning timing can make this especially fitting.",
-            whyThisFits:
-              "The source structure treats kindling as an opening act for the household. This Ritual keeps the first-light structure but uses ordinary household light rather than hearth fire.",
-            questionToCarry: "What beginning wants one clear first sign?",
+            headline: "Set one flower on the table.",
+            practice: expect.stringContaining("Put it in a small vase or bowl and set it at the table."),
           }),
         }),
       ]),
     );
+    expect(sourceBackedRituals.map((ritual) => ritual.id)).not.toEqual(
+      expect.arrayContaining([
+        "ritual.wet_the_seed_and_wait",
+        "ritual.set_grain_at_the_table",
+        "ritual.kindle_the_first_household_light",
+      ]),
+    );
   });
 
-  it("keeps pilot Ritual metadata valid and findable", () => {
-    expect(validateRituals(pilotRituals)).toEqual({
+  it("keeps source-backed Ritual metadata valid and findable", () => {
+    expect(validateRituals(sourceBackedRituals)).toEqual({
       valid: true,
       findings: [],
     });
 
     expect(
-      pilotRituals.map((ritual) => ({
-        id: ritual.id,
-        primaryPurpose: ritual.recommendationMetadata.purposes.primary,
-        primaryCarrier: ritual.recommendationMetadata.carriers.primary,
-        timingRelationship: ritual.recommendationMetadata.timing.relationship,
-      })),
-    ).toEqual([
-      {
-        id: "ritual.wet_the_seed_and_wait",
-        primaryPurpose: "opening",
-        primaryCarrier: "plant",
-        timingRelationship: "helpful",
-      },
-      {
-        id: "ritual.set_grain_at_the_table",
-        primaryPurpose: "tending",
-        primaryCarrier: "table",
-        timingRelationship: "none",
-      },
-      {
-        id: "ritual.kindle_the_first_household_light",
-        primaryPurpose: "opening",
-        primaryCarrier: "candlelight",
-        timingRelationship: "preferred",
-      },
-    ]);
+      sourceBackedRituals.map((ritual) => ritual.recommendationMetadata.purposes.primary),
+    ).toEqual(expect.arrayContaining(["opening", "tending", "blessing"]));
 
     expect(
-      pilotRituals.find((ritual) => ritual.id === "ritual.set_grain_at_the_table")
+      sourceBackedRituals.find((ritual) => ritual.id === "ritual-woodward-bread-table-offering")
         ?.searchMetadata.materials,
-    ).toEqual(["bread", "grain", "table"]);
+    ).toEqual(expect.arrayContaining(["bread"]));
     expect(
-      pilotRituals.find(
-        (ritual) => ritual.id === "ritual.kindle_the_first_household_light",
+      sourceBackedRituals.find(
+        (ritual) => ritual.id === "ritual-buckland-candle-prepare-table",
       )?.searchMetadata.keywords,
-    ).toEqual(expect.arrayContaining(["lamp", "light"]));
+    ).toEqual(expect.arrayContaining(["table"]));
   });
 
   it("uses only valid purpose, carrier, capacity, audience, and timing values", () => {
-    for (const ritual of pilotRituals) {
+    for (const ritual of sourceBackedRituals) {
       expect(RITUAL_PURPOSES).toContain(
         ritual.recommendationMetadata.purposes.primary,
       );
@@ -171,7 +139,7 @@ describe("inert Ritual pilot data", () => {
   });
 
   it("keeps source grounding local to the inert Ritual records", () => {
-    for (const ritual of pilotRituals) {
+    for (const ritual of sourceBackedRituals) {
       expect(ritual.origin.type).toBe("source");
       if (ritual.origin.type !== "source") {
         throw new Error(`${ritual.id} should be source-origin.`);
@@ -193,9 +161,9 @@ describe("inert Ritual pilot data", () => {
 
   it("catches missing required presentation fields", () => {
     const invalid = {
-      ...pilotRituals[0],
+      ...sourceBackedRituals[0],
       presentation: {
-        ...pilotRituals[0].presentation,
+        ...sourceBackedRituals[0].presentation,
         practice: "",
       },
     } satisfies Ritual;
@@ -211,15 +179,15 @@ describe("inert Ritual pilot data", () => {
 
   it("catches invalid enum values", () => {
     const invalid = {
-      ...pilotRituals[0],
+      ...sourceBackedRituals[0],
       recommendationMetadata: {
-        ...pilotRituals[0].recommendationMetadata,
+        ...sourceBackedRituals[0].recommendationMetadata,
         purposes: {
-          ...pilotRituals[0].recommendationMetadata.purposes,
+          ...sourceBackedRituals[0].recommendationMetadata.purposes,
           primary: "generic" as Ritual["recommendationMetadata"]["purposes"]["primary"],
         },
         carriers: {
-          ...pilotRituals[0].recommendationMetadata.carriers,
+          ...sourceBackedRituals[0].recommendationMetadata.carriers,
           primary: "room" as Ritual["recommendationMetadata"]["carriers"]["primary"],
         },
         capacity: {
@@ -262,14 +230,14 @@ describe("inert Ritual pilot data", () => {
 
   it("catches recommendation-eligible records without required metadata", () => {
     const invalid = {
-      ...pilotRituals[0],
+      ...sourceBackedRituals[0],
       status: "recommendable",
       availability: {
-        ...pilotRituals[0].availability,
+        ...sourceBackedRituals[0].availability,
         recommendationEligible: true,
       },
       recommendationMetadata: {
-        ...pilotRituals[0].recommendationMetadata,
+        ...sourceBackedRituals[0].recommendationMetadata,
         capacity: {
           supports: [],
         },
@@ -287,10 +255,10 @@ describe("inert Ritual pilot data", () => {
 
   it("catches recommendation-eligible records with missing metadata objects", () => {
     const invalid = {
-      ...pilotRituals[0],
+      ...sourceBackedRituals[0],
       status: "recommendable",
       availability: {
-        ...pilotRituals[0].availability,
+        ...sourceBackedRituals[0].availability,
         recommendationEligible: true,
       },
       recommendationMetadata: undefined,
@@ -305,18 +273,18 @@ describe("inert Ritual pilot data", () => {
     );
   });
 
-  it("prevents pilot Rituals from self-identifying as recommendation-ready", () => {
+  it("prevents source-backed Rituals from self-identifying as recommendation-ready", () => {
     const recommendationEligiblePilot = {
-      ...pilotRituals[0],
+      ...sourceBackedRituals[0],
       availability: {
-        ...pilotRituals[0].availability,
+        ...sourceBackedRituals[0].availability,
         recommendationEligible: true,
       },
     } satisfies Ritual;
     const recommendablePilot = {
-      ...pilotRituals[0],
+      ...sourceBackedRituals[0],
       recommendationMetadata: {
-        ...pilotRituals[0].recommendationMetadata,
+        ...sourceBackedRituals[0].recommendationMetadata,
         eligibility: {
           recommendable: true,
         },
@@ -341,18 +309,18 @@ describe("inert Ritual pilot data", () => {
 
   it("requires recommendable status for recommendation-eligible records", () => {
     const recommendationEligibleDraft = {
-      ...pilotRituals[0],
+      ...sourceBackedRituals[0],
       status: "reviewed",
       availability: {
-        ...pilotRituals[0].availability,
+        ...sourceBackedRituals[0].availability,
         recommendationEligible: true,
       },
     } satisfies Ritual;
     const recommendableDraft = {
-      ...pilotRituals[0],
+      ...sourceBackedRituals[0],
       status: "reviewed",
       recommendationMetadata: {
-        ...pilotRituals[0].recommendationMetadata,
+        ...sourceBackedRituals[0].recommendationMetadata,
         eligibility: {
           recommendable: true,
         },
@@ -376,16 +344,16 @@ describe("inert Ritual pilot data", () => {
   });
 
   it("validates source and household origins by origin type", () => {
-    const validSource = pilotRituals[0];
+    const validSource = sourceBackedRituals[0];
     const invalidSource = {
-      ...pilotRituals[0],
+      ...sourceBackedRituals[0],
       origin: {
         type: "source",
         sourceGrounding: [],
       },
     } satisfies Ritual;
     const validHousehold = {
-      ...pilotRituals[0],
+      ...sourceBackedRituals[0],
       origin: {
         type: "household",
         contributedBy: "Both",
@@ -393,14 +361,14 @@ describe("inert Ritual pilot data", () => {
       },
     } satisfies Ritual;
     const invalidHousehold = {
-      ...pilotRituals[0],
+      ...sourceBackedRituals[0],
       origin: {
         type: "household",
         householdContext: "",
       },
     } satisfies Ritual;
     const invalidOrigin = {
-      ...pilotRituals[0],
+      ...sourceBackedRituals[0],
       origin: {
         type: "library",
       },
@@ -441,7 +409,7 @@ describe("inert Ritual pilot data", () => {
   });
 
   it("catches duplicate ids", () => {
-    expect(validateRituals([pilotRituals[0], pilotRituals[0]]).findings).toEqual(
+    expect(validateRituals([sourceBackedRituals[0], sourceBackedRituals[0]]).findings).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           path: "id",
@@ -451,13 +419,13 @@ describe("inert Ritual pilot data", () => {
     );
   });
 
-  it("keeps pilot Ritual records out of the current generator", () => {
+  it("keeps source-backed Ritual records out of the current generator", () => {
     const generatorSource = readFileSync(
       new URL("../../src/lib/generate-weekly-brief.ts", import.meta.url),
       "utf8",
     );
 
     expect(generatorSource).not.toContain("data/rituals");
-    expect(generatorSource).not.toContain("pilotRituals");
+    expect(generatorSource).not.toContain("sourceBackedRituals");
   });
 });

@@ -32,7 +32,7 @@ test("dev visual QA mode renders signed-in Manage rituals on mobile", async ({ p
   await expect(page.getByText("Imported Ritual records")).toBeVisible();
   await expect(
     page.locator(".manage-rituals__ritual-title", {
-      hasText: "Wet the seed and wait.",
+      hasText: "Prepare the Candle Table",
     }),
   ).toBeVisible();
 

@@ -36,7 +36,7 @@ import {
   type ProfileTuningProfile,
   type ProfileTuningSettings,
 } from "../lib/profile-tuning";
-import { pilotRituals } from "../data/rituals/pilot-rituals";
+import { sourceBackedRituals } from "../data/rituals/source-backed-rituals";
 import {
   createManageRitualsViewModel,
   defaultManageRitualFilters,
@@ -1027,9 +1027,9 @@ export function renderSearchRitualsSection(options: {
   const selectedChips = options.selectedChips ?? [];
   const selectedSort = options.sort ?? "match";
   const selectedChipSet = new Set(selectedChips);
-  const chips = getRitualSearchChips(pilotRituals);
+  const chips = getRitualSearchChips(sourceBackedRituals);
   const visibleChips = getVisibleRitualSearchChips(chips, selectedChips);
-  const results = sortRitualSearchResults(searchRituals(pilotRituals, {
+  const results = sortRitualSearchResults(searchRituals(sourceBackedRituals, {
     query,
     selectedChips,
   }), selectedSort);
@@ -1209,7 +1209,7 @@ function renderManageRitualsFilters(filters: ManageRitualFilters): string {
 export function renderManageRitualsSection(options: {
   filters?: Partial<ManageRitualFilters>;
 } = {}): string {
-  const viewModel = createManageRitualsViewModel(pilotRituals, options.filters);
+  const viewModel = createManageRitualsViewModel(sourceBackedRituals, options.filters);
   const counts = viewModel.counts;
   const statusSummary = [
     `${viewModel.total} imported Ritual${viewModel.total === 1 ? "" : "s"}`,

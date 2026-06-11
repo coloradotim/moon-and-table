@@ -1,6 +1,6 @@
 import { fileURLToPath } from "node:url";
 
-import { pilotRituals } from "../src/data/rituals/pilot-rituals";
+import { sourceBackedRituals } from "../src/data/rituals/source-backed-rituals";
 import {
   createRitualReadinessReport,
   formatRitualReadinessReport,
@@ -8,7 +8,7 @@ import {
 
 export function createCurrentRitualReadinessReport(): string {
   return formatRitualReadinessReport(
-    createRitualReadinessReport(pilotRituals),
+    createRitualReadinessReport(sourceBackedRituals),
   );
 }
 
