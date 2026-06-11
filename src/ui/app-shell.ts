@@ -1744,7 +1744,7 @@ function renderCheckInQuestion(draft: RitualCheckInDraft): string {
     return `
       <section class="check-in-step" aria-label="Time scope">
         <h3>Are you wanting something for today, or looking across the week?</h3>
-        <div class="check-in-options check-in-options--choice-pair">
+        <div class="check-in-options">
           ${timeScopeOptions.map((option) => renderCheckInOptionButton({
             action: "time_scope",
             value: option.key,
