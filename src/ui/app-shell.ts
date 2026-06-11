@@ -1656,15 +1656,19 @@ function renderCheckInOptionButton({
   value,
   label,
   description,
+  className,
 }: {
   action: string;
   value: string;
   label: string;
   description?: string;
+  className?: string;
 }): string {
+  const classes = ["check-in-option", className].filter(Boolean).join(" ");
+
   return `
     <button
-      class="check-in-option"
+      class="${escapeHtml(classes)}"
       type="button"
       data-check-in-action="${escapeHtml(action)}"
       data-check-in-value="${escapeHtml(value)}"
@@ -1788,19 +1792,20 @@ function renderCheckInQuestion(draft: RitualCheckInDraft): string {
       value: "open",
       label: "I'm open",
       description: "Let Moon & Table choose the carrier.",
+      className: "check-in-option--open",
     });
 
     return `
       <section class="check-in-step" aria-label="Carrier">
         <h3>Where should the ritual live?</h3>
         <div class="check-in-options">
-          ${openOption}
           ${carrierOptions.map((option) => renderCheckInOptionButton({
             action: "carrier",
             value: option.key,
             label: option.label,
             description: option.description,
           })).join("")}
+          ${openOption}
         </div>
       </section>
     `;
