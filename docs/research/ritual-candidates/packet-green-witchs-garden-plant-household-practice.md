@@ -32,7 +32,7 @@ Every `approved_for_mechanical_import` record below has a complete `ritual body 
 
 ## Source text posture
 
-The source gate for this source is stricter than the general short-quote rule. It allows mechanics extraction and private exact-text handling, but says runtime text should not reproduce direct source quotes from exercises, blessings, charms, rituals, recipes, or distinctive prose. Therefore this packet does not use `source_exact_short` for this source. Where exact wording matters, it is tracked as `private_source_excerpt`; where a complete public packet body needs a spoken line, the line is `moon_and_table_original` and the note explains the source-supported action it completes.
+The approved source gate for this source is `docs/research/source-gates/src-plant-murphy-hiscock-green-witchs-garden.md`. That gate is stricter than the general short-quote rule: it allows mechanics extraction and private exact-text handling, but says runtime text should not reproduce direct source quotes from exercises, blessings, charms, rituals, recipes, or distinctive prose. Therefore this packet does not use `source_exact_short` for this source. Where exact wording matters, it is tracked as `private_source_excerpt`; where a complete public packet body needs a spoken line, the line is `moon_and_table_original` and the note explains the source-supported action it completes.
 
 ## Source sections used
 
@@ -133,6 +133,7 @@ Primary coverage only counts candidates marked `approved_for_mechanical_import`.
 | plant | blessing | 2 | `ritual-green-garden-garden-blessing`; `ritual-green-garden-living-energy-beside-plant` |
 | plant | releasing | 2 | `ritual-green-garden-compost-old-leaf`; `ritual-green-garden-rededicate-plant-corner` |
 | plant | remembering | 2 | `ritual-green-garden-record-page`; `ritual-green-garden-harvest-gratitude` |
+| plant | connecting | 1 | `ritual-green-garden-plant-witness-greeting` |
 | vessel | opening | 1 | `ritual-green-garden-window-vessel-threshold` |
 
 ## Candidate records
@@ -176,7 +177,7 @@ recommendation metadata: primaryPurpose opening; secondaryPurposes [steadying, b
 
 search metadata: tags [green-witchs-garden, existing plant, houseplant, welcome]; materials [living plant in pot]; places [plant table, windowsill, room]
 
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; plantSafetyReviewRequired true; materialSafetyReviewRequired true; notes [identify plant before runtime; check pet, child, pregnancy, allergy, skin-contact, sap, scent, smoke, and ingestion risks].
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [identify plant before runtime; check pet, child, pregnancy, allergy, toxicity, skin contact, sap, scent, smoke, ingestion, and invasive-plant risks].
 
 adaptation policy notes: source_backed_moon_and_table_form; no named plant recommendation; no water unless care calls for it.
 
@@ -223,7 +224,7 @@ recommendation metadata: primaryPurpose tending; secondaryPurposes [steadying]; 
 
 search metadata: tags [green-witchs-garden, plant care, watering, tending]; materials [living plant, optional water, optional compost/waste bowl]; places [plant stand, windowsill, table]
 
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; plantSafetyReviewRequired true; materialSafetyReviewRequired true; notes [plant care should not become horticultural advice without plant identification].
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [plant identification and care-needs review; toxicity, pets, children, pregnancy, allergies, sap/skin contact, scent, ingestion, and tool/pruning risks should be checked before runtime].
 
 adaptation policy notes: source_backed_moon_and_table_form; care action must be real care.
 
@@ -270,7 +271,7 @@ recommendation metadata: primaryPurpose steadying; secondaryPurposes [rememberin
 
 search metadata: tags [green-witchs-garden, elements, earth air fire water, plant sensing]; materials [living plant or container garden, record/notebook optional]; places [plant corner, windowsill, garden area]
 
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; plantSafetyReviewRequired true; materialSafetyReviewRequired false.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; notes [plant/place identification, allergies, scent sensitivity, soil contact, outdoor placement, weather, pets, and children should be reviewed before direct use].
 
 adaptation policy notes: direct_source_ritual paraphrased; exact exercise wording is not reproduced under source gate.
 
@@ -317,7 +318,7 @@ recommendation metadata: primaryPurpose connecting; secondaryPurposes [voicing, 
 
 search metadata: tags [green-witchs-garden, plant witness, plant greeting]; materials [living plant]; places [plant table, windowsill, room]
 
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; plantSafetyReviewRequired true; productBoundaryReviewRequired true; notes [spirit/familiar/deity commitments held].
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [spirit/familiar/deity commitments held; check plant identification, toxicity, pets, children, pregnancy, allergies, sap, scent, and ingestion risk before direct use].
 
 adaptation policy notes: source_backed_moon_and_table_form; no plant-familiar commitment, no obligation, no guaranteed messages.
 
@@ -364,7 +365,7 @@ recommendation metadata: primaryPurpose releasing; secondaryPurposes [marking, b
 
 search metadata: tags [green-witchs-garden, plant corner, rededication, reset]; materials [living plants, cloth if needed]; places [plant corner, windowsill, shelf, balcony container]
 
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; plantSafetyReviewRequired true; materialSafetyReviewRequired true.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [plant identification, surface/shelf stability, soil contact, sap, allergens, pets, children, and object-placement risks].
 
 adaptation policy notes: source_backed_moon_and_table_form; no added stones, herbs, smoke, or buried charms from the source examples.
 
@@ -411,7 +412,7 @@ recommendation metadata: primaryPurpose opening; secondaryPurposes [marking, rel
 
 search metadata: tags [green-witchs-garden, kitchen scrap, regrowth, roots]; materials [safe kitchen scrap, cup/jar/bowl, water, optional potting soil later]; places [windowsill, bright table]
 
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; plantSafetyReviewRequired true; foodSafetyReviewRequired true; materialSafetyReviewRequired true; notes [mold, ingestion, pet/child, and food provenance review].
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [mold, ingestion, food provenance, pets, children, pregnancy, allergy, and food-safety review; do not recommend eating regrowth without separate review].
 
 adaptation policy notes: source_backed_moon_and_table_form; no runtime food recommendation.
 
@@ -458,7 +459,7 @@ recommendation metadata: primaryPurpose steadying; secondaryPurposes [tending, r
 
 search metadata: tags [green-witchs-garden, winter garden, indoor plant, terrarium]; materials [indoor plant or terrarium, optional camera/record]; places [windowsill, indoor plant shelf, table]
 
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; plantSafetyReviewRequired true; materialSafetyReviewRequired true.
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [plant identification, toxicity, pets, children, pregnancy, allergies, humidity/mold, soil contact, grow-light/electrical safety, and surface stability review].
 
 adaptation policy notes: source_backed_moon_and_table_form; do not turn this into seasonal therapy or plant shopping advice.
 
@@ -505,7 +506,7 @@ recommendation metadata: primaryPurpose opening; secondaryPurposes [protecting, 
 
 search metadata: tags [green-witchs-garden, windowsill, window box, threshold plant]; materials [safe plant, pot/container, tray]; places [windowsill, window table, window box]
 
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; plantSafetyReviewRequired true; materialSafetyReviewRequired true; notes [surface, drainage, falling object, pet/child safety].
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [plant identification, toxicity, pets, children, pregnancy, allergies, drainage, falling-object risk, surface damage, outdoor placement, and weather exposure review].
 
 adaptation policy notes: source_backed_moon_and_table_form; avoids warding/protection guarantees.
 
@@ -552,7 +553,7 @@ recommendation metadata: primaryPurpose blessing; secondaryPurposes [opening, pr
 
 search metadata: tags [green-witchs-garden, garden blessing, plant place, elements]; materials [air representation, fire symbol, water, soil]; places [plant corner, container grouping, balcony planter, garden bed]
 
-review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; plantSafetyReviewRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [fire/pollinator/outdoor/local ecology review].
+review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [fire, water, soil contact, plant identification, pets, children, pregnancy, allergies, invasive plants, outdoor placement, pollinator/wildlife claims, and local ecology review].
 
 adaptation policy notes: direct_source_ritual paraphrased; no exact blessing reproduced publicly.
 
@@ -599,7 +600,7 @@ recommendation metadata: primaryPurpose releasing; secondaryPurposes [blessing, 
 
 search metadata: tags [green-witchs-garden, compost, decomposition, dead leaf]; materials [dead leaf/spent bloom/trimming, compost/yard-waste container]; places [plant table, garden bed, compost area]
 
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; plantSafetyReviewRequired true; materialSafetyReviewRequired true; notes [soil/compost hygiene, toxic plant, sap, mold, pet/child review].
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [soil/compost hygiene, toxic plant, sap, mold, pets, children, pregnancy, allergies, invasive plants, and local compost/disposal rules].
 
 adaptation policy notes: source_backed_moon_and_table_form; do not harvest living material for this rite.
 
@@ -646,7 +647,7 @@ recommendation metadata: primaryPurpose opening; secondaryPurposes [blessing, pr
 
 search metadata: tags [green-witchs-garden, new plant, welcome, plant safety]; materials [new plant, pot/tray, record]; places [plant table, windowsill, shelf]
 
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; plantSafetyReviewRequired true; productBoundaryReviewRequired true; notes [plant identification, toxicity, pests, pet/child/pregnancy/allergy review].
+review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [plant identification, toxicity, pests, pets, children, pregnancy, allergy, skin contact, sap, scent, ingestion, and invasive-plant review].
 
 adaptation policy notes: source_backed_moon_and_table_form; no named-plant recommendation.
 
@@ -693,7 +694,7 @@ recommendation metadata: primaryPurpose tending; secondaryPurposes [blessing, co
 
 search metadata: tags [green-witchs-garden, offering, attention, plant thanks]; materials [living plant, optional water if needed]; places [plant place, windowsill, table]
 
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; plantSafetyReviewRequired true; productBoundaryReviewRequired true; notes [offerings that affect plant soil or environment require safety review].
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [offerings that affect plant soil or environment require safety review; check plant identification, toxicity, pets, children, pregnancy, allergies, water need, soil additives, and outdoor/wildlife effects].
 
 adaptation policy notes: source_backed_moon_and_table_form; safe no-obligation offering only.
 
@@ -740,7 +741,7 @@ recommendation metadata: primaryPurpose remembering; secondaryPurposes [blessing
 
 search metadata: tags [green-witchs-garden, harvest gratitude, plant record]; materials [harvest/fallen plant material, table, record, compost if unused]; places [garden, windowsill, table]
 
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; plantSafetyReviewRequired true; foodSafetyReviewRequired true; materialSafetyReviewRequired true; notes [ingestion and recipes are held].
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [ingestion and recipes are held; check plant identification, toxicity, pets, children, pregnancy, allergies, harvesting tool safety, skin contact/sap, soil/compost, and food provenance].
 
 adaptation policy notes: source_backed_moon_and_table_form; no added harvest or food use.
 
@@ -787,7 +788,7 @@ recommendation metadata: primaryPurpose remembering; secondaryPurposes [marking,
 
 search metadata: tags [green-witchs-garden, green record, plant page, plant safety]; materials [notebook/binder/Moon & Table note, optional photo]; places [table, plant place]
 
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; plantSafetyReviewRequired true; privacyReviewRequired true; notes [record can include safety warnings but not medical claims].
+review flags: privateExcerptRequired true; sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; privacyReviewRequired true; notes [record can include safety warnings but not medical claims; track plant identification, toxicity, pets, children, pregnancy, allergies, ingestion, skin contact/sap, scent, smoke, invasive status, soil, and care risks].
 
 adaptation policy notes: source_backed_moon_and_table_form; public packet does not reproduce the source's full plant-entry template.
 
@@ -834,7 +835,7 @@ recommendation metadata: primaryPurpose blessing; secondaryPurposes [connecting,
 
 search metadata: tags [green-witchs-garden, living plant energy, non-harvest, plant connection]; materials [living plant]; places [garden, plant corner, windowsill]
 
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; plantSafetyReviewRequired true; productBoundaryReviewRequired true; notes [spirit/familiar commitment held; no depletion language].
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [spirit/familiar commitment held; check plant identification, toxicity, pets, children, pregnancy, allergies, sap/skin contact, scent, ingestion risk, and outdoor placement before direct use].
 
 adaptation policy notes: source_backed_moon_and_table_form; no harvest, no offering obligation, no guaranteed message.
 
@@ -881,7 +882,7 @@ recommendation metadata: primaryPurpose steadying; secondaryPurposes [connecting
 
 search metadata: tags [green-witchs-garden, garden meditation, plant quiet]; materials [living plant or garden place, optional record]; places [plant corner, container garden, balcony, garden]
 
-review flags: sourceTextReviewRequired true; sourceVerificationRequired true; plantSafetyReviewRequired true; productBoundaryReviewRequired true; notes [no therapy or guaranteed communication claims].
+review flags: sourceTextReviewRequired true; sourceVerificationRequired true; materialSafetyReviewRequired true; productBoundaryReviewRequired true; notes [no therapy or guaranteed communication claims; check plant identification, toxicity, pets, children, pregnancy, allergies, soil/skin contact, scent sensitivity, outdoor placement, and safe seating before direct use].
 
 adaptation policy notes: direct_source_ritual paraphrased; exact meditation prose not reproduced.
 
@@ -935,15 +936,16 @@ import readiness label: `approved_for_mechanical_import`
 
 ## Required self-check results
 
-Checked the revised packet for blocking placeholder mechanics and invalid runtime posture. No approved candidate body uses source pattern, source period, source close, source layout, source diagram, as the source shows, as the diagram shows, chosen version, source-supported order, not needed, appropriate season, source timing, source placement, source plant list, source instructions, or use the source recipe. Approved candidates use only runtime-valid capacity values: `only_a_little`, `enough_to_participate`, and `room_for_something_deeper`. The term garden record appears only where source-backed recordkeeping is the candidate's actual mechanic. Material, plant, pet, child, pregnancy, allergy, ingestion, smoke, oil, topical, soil, compost, invasive, outdoor fire, sharp-tool, and medical/health boundaries are kept in review flags or held rows.
+Checked the revised packet for blocking placeholder mechanics and invalid runtime posture. No approved candidate body uses source pattern, source period, source close, source layout, source diagram, as the source shows, as the diagram shows, chosen version, source-supported order, not needed, appropriate season, source timing, source placement, source plant list, source instructions, use the source recipe, or QA/process text. No approved candidate uses invalid review flag `plantSafetyReviewRequired`; plant-specific safety concerns are preserved under valid flags and `notes`. Approved candidates use only runtime-valid capacity values: `only_a_little`, `enough_to_participate`, and `room_for_something_deeper`. The term garden record appears only where source-backed recordkeeping is the candidate's actual mechanic. `plant` remains a runtime carrier where content-supported and has not been remapped for enum reasons. The source-exact wording posture cites the approved source gate path and follows that source-specific gate. Material, plant, pet, child, pregnancy, allergy, ingestion, smoke, oil, topical, soil, compost, invasive, outdoor fire, sharp-tool, and medical/health boundaries are kept in valid review flags/notes or held rows.
 
 ## Validation checklist
 
 - [x] Every `candidate_extract_now` has a complete operational ritual body / practice.
 - [x] No approved candidate requires source lookup for materials, plant/place, placement, sequence, timing, repetition, wording handling, close, disposal, rest, or recordkeeping.
 - [x] Long/substantial source wording uses `private_source_excerpt`.
-- [x] Green Witch's Garden source-gate direct-quote restrictions are honored.
-- [x] Plant/garden safety and product-boundary notes are explicit.
+- [x] Green Witch's Garden source-gate direct-quote restrictions are cited and honored.
+- [x] Plant/garden safety and product-boundary notes are explicit under valid review flags.
+- [x] No invalid `plantSafetyReviewRequired` flag remains.
 - [x] Components/mechanics are held unless made into complete source-backed forms.
 - [x] Packet metrics and coverage are internally consistent.
 - [x] Runtime enum values are valid.
