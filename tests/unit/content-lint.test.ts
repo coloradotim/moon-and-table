@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 
 import {
   formatContentLintResult,
@@ -28,15 +28,24 @@ describe("content lint", () => {
       "../../docs/content-packets/__content-lint-skip-test.md",
       import.meta.url,
     );
+    const researchFixture = new URL(
+      "../../docs/research/__content-lint-skip-test.md",
+      import.meta.url,
+    );
 
     try {
+      mkdirSync(new URL("../../docs/research/", import.meta.url), {
+        recursive: true,
+      });
       writeFileSync(auditFixture, "This guarantees an outcome.");
       writeFileSync(packetFixture, "Use smoke cleansing here.");
+      writeFileSync(researchFixture, "Use smoke cleansing here.");
 
       expect(runContentLint().findings).toEqual([]);
     } finally {
       rmSync(auditFixture, { force: true });
       rmSync(packetFixture, { force: true });
+      rmSync(researchFixture, { force: true });
     }
   });
 
