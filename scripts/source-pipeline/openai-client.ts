@@ -1,3 +1,5 @@
+import { loadLocalEnv } from "./env";
+
 type StructuredJsonOptions = {
   prompt: string;
   schemaName: string;
@@ -9,6 +11,7 @@ export async function callOpenAiForJson<T>({
   schemaName,
   schema,
 }: StructuredJsonOptions): Promise<T> {
+  loadLocalEnv();
   const apiKey = process.env.OPENAI_API_KEY;
 
   if (!apiKey) {

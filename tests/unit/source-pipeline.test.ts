@@ -17,6 +17,7 @@ import {
   recordReviewDecision,
 } from "../../scripts/source-pipeline/stages";
 import { writeJsonFile } from "../../scripts/source-pipeline/json";
+import { loadLocalEnv } from "../../scripts/source-pipeline/env";
 import type { ExtractionPacket } from "../../scripts/source-pipeline/types";
 
 const sourceId = "unit-test-source";
@@ -180,5 +181,30 @@ describe("source pipeline", () => {
     expect(state.direct_use_count).toBe(1);
     expect(state.recommendable_count).toBe(0);
     expect(state.open_review_items).toEqual([]);
+  });
+
+  it("loads source-pipeline secrets from gitignored .env.local", () => {
+    const originalCwd = process.cwd();
+    const originalKey = process.env.OPENAI_API_KEY;
+
+    try {
+      delete process.env.OPENAI_API_KEY;
+      fs.writeFileSync(
+        path.join(tempDir, ".env.local"),
+        "# local source pipeline secrets\nOPENAI_API_KEY=\"test-key\"\n",
+      );
+      process.chdir(tempDir);
+
+      loadLocalEnv();
+
+      expect(process.env.OPENAI_API_KEY).toBe("test-key");
+    } finally {
+      process.chdir(originalCwd);
+      if (originalKey === undefined) {
+        delete process.env.OPENAI_API_KEY;
+      } else {
+        process.env.OPENAI_API_KEY = originalKey;
+      }
+    }
   });
 });

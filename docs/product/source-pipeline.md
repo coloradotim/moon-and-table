@@ -47,6 +47,16 @@ OPENAI_API_KEY=...
 
 `OPENAI_MODEL` is optional and defaults to `gpt-4.1-mini`.
 
+For local use, put the key in the repo's gitignored `.env.local` file:
+
+```text
+OPENAI_API_KEY=sk-...
+OPENAI_MODEL=gpt-4.1-mini
+```
+
+The source-pipeline OpenAI stages load `.env.local` automatically. An already
+exported shell variable wins over the file value.
+
 The PDF preprocess stage uses local Poppler tools:
 
 ```text
