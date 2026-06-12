@@ -1,5 +1,7 @@
 # Source Packet: Saint Thomas, *Sex Witch* — Intimate Connection Ritual Candidates
 
+> Superseded packet: this packet is retained as historical source trail and prior extraction evidence. For current Saint Thomas extraction/disposition decisions, use `docs/research/ritual-candidates/packet-anand-saint-thomas-ritual-only-reextract.md`, which supersedes this packet after the #414 complete-extraction repair and Tim's review. In particular, the older Chapter 2, Chapter 8, body-fluid, revenge/enemy, and explicit adult exclusions below are not current extraction doctrine.
+
 ## Packet Metadata
 
 - packet ID: `packet.saint_thomas.sex_witch.connection.reextract`

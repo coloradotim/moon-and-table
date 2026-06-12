@@ -1,5 +1,7 @@
 # Ritual candidate packet: Anand connection complete canonical extraction
 
+> Superseded packet: this packet is retained as historical source trail and prior extraction evidence. For current Anand extraction/disposition decisions, use `docs/research/ritual-candidates/packet-anand-saint-thomas-ritual-only-reextract.md`, which supersedes this packet after the #414 complete-extraction repair and Tim's review.
+
 ## Packet metadata
 
 - packet ID: `packet-anand-connection-complete-extraction`
