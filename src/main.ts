@@ -38,7 +38,10 @@ import {
   type RitualCheckInDraft,
   type RitualCheckInStep,
 } from "./lib/current-ritual-check-in";
-import { getTimingWindowCandidates } from "./lib/timing-window-candidates";
+import {
+  getTimingWindowCandidates,
+  type TimingWindowCandidate,
+} from "./lib/timing-window-candidates";
 import { getDefaultTimingTimezone, getTimingFactsForDate } from "./lib/timing-facts";
 import { createTodaysShapeBrief } from "./lib/todays-shape-brief";
 import {
@@ -75,6 +78,10 @@ import {
 } from "./data/rituals/manage-rituals";
 import { sourceBackedRituals } from "./data/rituals/source-backed-rituals";
 import {
+  ritualTimingPresetOptions,
+  type RitualTimingFilter,
+} from "./data/rituals/search-rituals";
+import {
   chooseWithMeRitual,
   type ChooseWithMeResult,
 } from "./data/rituals/choose-with-me-selector";
@@ -109,6 +116,7 @@ let activeRitualSearchSort: RitualSearchSort = "match";
 let activeRitualSearchSource = "all";
 let activeRitualSearchPurpose = "all";
 let activeRitualSearchCarrier = "all";
+let activeRitualSearchTiming: RitualTimingFilter = "all";
 let activeSelectedRitualId: string | null = null;
 let activeManageRitualFilters: ManageRitualFilters = {
   ...defaultManageRitualFilters,
@@ -122,7 +130,75 @@ function resetRitualSearchState(): void {
   activeRitualSearchSource = "all";
   activeRitualSearchPurpose = "all";
   activeRitualSearchCarrier = "all";
+  activeRitualSearchTiming = "all";
   activeSelectedRitualId = null;
+}
+
+function normalizeRitualSearchTimingFilter(value: unknown): RitualTimingFilter {
+  const stringValue = String(value ?? "all");
+
+  if (
+    stringValue === "all" ||
+    stringValue === "current" ||
+    ritualTimingPresetOptions.some((option) => option.value === stringValue)
+  ) {
+    return stringValue as RitualTimingFilter;
+  }
+
+  return "all";
+}
+
+function isStrongTimingWindow(
+  candidate: TimingWindowCandidate | undefined,
+): candidate is TimingWindowCandidate {
+  return candidate !== undefined && candidate.strength !== "accent" && candidate.score >= 10;
+}
+
+function isNearCurrentTimingWindow(
+  candidate: TimingWindowCandidate,
+  currentDate: Date,
+): boolean {
+  const startsAt = new Date(candidate.startsAtIso);
+  const endsAt = candidate.endsAtIso ? new Date(candidate.endsAtIso) : undefined;
+  const threeDaysMs = 3 * 24 * 60 * 60 * 1000;
+
+  if (Number.isNaN(startsAt.getTime())) {
+    return false;
+  }
+
+  if (startsAt <= currentDate && (!endsAt || endsAt >= currentDate)) {
+    return true;
+  }
+
+  return startsAt > currentDate && startsAt.getTime() - currentDate.getTime() <= threeDaysMs;
+}
+
+function getCurrentTimingWindowForSearch(): TimingWindowCandidate | undefined {
+  const currentDateValue = activePrivateBriefData?.input.currentDate ?? new Date();
+  const currentDate = currentDateValue instanceof Date
+    ? currentDateValue
+    : new Date(currentDateValue);
+
+  if (Number.isNaN(currentDate.getTime())) {
+    return undefined;
+  }
+
+  const candidates =
+    activePrivateBriefData?.input.timingWindowCandidates ??
+    getTimingWindowCandidates({
+      startDate: currentDate,
+      timezone: activePrivateBriefData?.input.timezone,
+      privateNatalProfiles: activePrivateBriefData?.natalProfiles ?? [],
+      astrologyVisibility: activePrivateBriefData?.input.astrologyVisibility,
+      daysAhead: 4,
+      options: { maxCandidates: 8 },
+    });
+
+  return candidates.find(
+    (candidate) =>
+      isStrongTimingWindow(candidate) &&
+      isNearCurrentTimingWindow(candidate, currentDate),
+  );
 }
 
 function getRequestedSignedInView(): SignedInView | null {
@@ -207,6 +283,7 @@ function renderActiveCheckInShell(): void {
       privateNatalProfiles: activePrivateBriefData?.natalProfiles,
       astrologyVisibility: activePrivateBriefData?.input.astrologyVisibility,
     }),
+    currentTimingWindow: getCurrentTimingWindowForSearch(),
   });
 }
 
@@ -255,6 +332,8 @@ function renderActiveSignedInShell(options: {
     ritualSearchSource: activeRitualSearchSource,
     ritualSearchPurpose: activeRitualSearchPurpose,
     ritualSearchCarrier: activeRitualSearchCarrier,
+    ritualSearchTiming: activeRitualSearchTiming,
+    currentTimingWindow: getCurrentTimingWindowForSearch(),
     selectedRitualId: activeSelectedRitualId,
     manageRitualFilters: activeManageRitualFilters,
   });
@@ -1015,6 +1094,15 @@ appRoot.addEventListener("click", (event) => {
   }
 
   if (target.closest("[data-search-rituals-entry='true']")) {
+    activeRitualSearchTiming = "all";
+    renderSearchRituals();
+    return;
+  }
+
+  if (target.closest("[data-timing-rituals-entry='true']")) {
+    activeRitualSearchTiming = "current";
+    activeRitualSearchSort = "match";
+    activeSelectedRitualId = null;
     renderSearchRituals();
     return;
   }
@@ -1199,7 +1287,8 @@ appRoot.addEventListener("change", (event) => {
       target.matches("[data-ritual-search-sort='true']") ||
       target.matches("[data-ritual-search-source='true']") ||
       target.matches("[data-ritual-search-purpose='true']") ||
-      target.matches("[data-ritual-search-carrier='true']")
+      target.matches("[data-ritual-search-carrier='true']") ||
+      target.matches("[data-ritual-search-timing='true']")
     )
   ) {
     activeRitualSearchSort = (
@@ -1215,6 +1304,10 @@ appRoot.addEventListener("change", (event) => {
     activeRitualSearchCarrier =
       document.querySelector<HTMLSelectElement>("[name='ritualSearchCarrier']")
         ?.value ?? activeRitualSearchCarrier;
+    activeRitualSearchTiming = normalizeRitualSearchTimingFilter(
+      document.querySelector<HTMLSelectElement>("[name='ritualSearchTiming']")
+        ?.value ?? activeRitualSearchTiming,
+    );
     activeSelectedRitualId = null;
     renderSearchRituals();
   }
@@ -1340,6 +1433,9 @@ appRoot.addEventListener("submit", (event) => {
     );
     activeRitualSearchCarrier = String(
       formData.get("ritualSearchCarrier") ?? activeRitualSearchCarrier,
+    );
+    activeRitualSearchTiming = normalizeRitualSearchTimingFilter(
+      formData.get("ritualSearchTiming") ?? activeRitualSearchTiming,
     );
     activeSelectedRitualId = null;
     renderSearchRituals();

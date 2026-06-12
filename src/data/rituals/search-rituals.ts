@@ -5,9 +5,29 @@ import {
   type RitualCarrier,
   type RitualPurpose,
 } from "./types";
+import type {
+  TimingWindowCandidate,
+} from "../../lib/timing-window-candidates";
+import type { TimingFact } from "../../lib/timing-facts";
 
 export type RitualSearchChipKind = "carrier" | "purpose" | "material";
 export type RitualOriginFilter = "all" | "source" | "household";
+export type RitualTimingPresetFilter =
+  | "new_moon"
+  | "full_moon"
+  | "waxing_moon"
+  | "waning_moon"
+  | "spring_equinox"
+  | "fall_equinox"
+  | "winter_solstice"
+  | "summer_solstice"
+  | "beginning_of_month"
+  | "beginning_of_year"
+  | "end_of_year";
+export type RitualTimingFilter =
+  | "all"
+  | "current"
+  | RitualTimingPresetFilter;
 export type RitualSortKey =
   | "match"
   | "title"
@@ -40,10 +60,174 @@ export type RitualSearchCriteria = {
   includeNonFindable?: boolean;
   includeNonDirectUse?: boolean;
   sort?: RitualSortKey;
+  timingWindow?: TimingWindowCandidate;
+  timingFilter?: RitualTimingFilter;
+};
+
+export type RitualTimingSearchMatch = {
+  matchedContexts: string[];
+  relationship: Exclude<
+    Ritual["recommendationMetadata"]["timing"]["relationship"],
+    "none"
+  >;
+  windowLabel: string;
+};
+
+export type RitualTimingSearchTarget = {
+  label: string;
+  evidence: string[];
+  timingWindow?: TimingWindowCandidate;
+};
+
+export type RitualTimingFilterOption = {
+  value: RitualTimingPresetFilter;
+  label: string;
+};
+
+export const ritualTimingPresetOptions: RitualTimingFilterOption[] = [
+  { value: "new_moon", label: "New Moon" },
+  { value: "full_moon", label: "Full Moon" },
+  { value: "waxing_moon", label: "Waxing Moon" },
+  { value: "waning_moon", label: "Waning Moon" },
+  { value: "spring_equinox", label: "Spring Equinox" },
+  { value: "fall_equinox", label: "Fall Equinox" },
+  { value: "winter_solstice", label: "Winter Solstice" },
+  { value: "summer_solstice", label: "Summer Solstice" },
+  { value: "beginning_of_month", label: "Beginning of month" },
+  { value: "end_of_year", label: "End of year" },
+  { value: "beginning_of_year", label: "Beginning of year" },
+];
+
+const ritualTimingPresetTargets: Record<
+  RitualTimingPresetFilter,
+  RitualTimingSearchTarget
+> = {
+  new_moon: {
+    label: "New Moon",
+    evidence: [
+      "new moon",
+      "new_moon",
+      "pre new moon",
+      "before new moon",
+      "start of lunation",
+      "early lunation",
+    ],
+  },
+  full_moon: {
+    label: "Full Moon",
+    evidence: [
+      "full moon",
+      "full_moon",
+      "seven days before the full moon",
+    ],
+  },
+  waxing_moon: {
+    label: "Waxing Moon",
+    evidence: ["waxing moon", "waxing"],
+  },
+  waning_moon: {
+    label: "Waning Moon",
+    evidence: [
+      "waning moon",
+      "waning",
+      "last quarter",
+    ],
+  },
+  spring_equinox: {
+    label: "Spring Equinox",
+    evidence: [
+      "spring equinox",
+      "march equinox",
+      "equinox",
+      "spring",
+      "seasonal turn",
+      "seasonal marker",
+    ],
+  },
+  fall_equinox: {
+    label: "Fall Equinox",
+    evidence: [
+      "fall equinox",
+      "autumn equinox",
+      "september equinox",
+      "equinox",
+      "fall",
+      "autumn",
+      "harvest",
+      "seasonal turn",
+      "seasonal marker",
+    ],
+  },
+  winter_solstice: {
+    label: "Winter Solstice",
+    evidence: [
+      "winter solstice",
+      "december solstice",
+      "solstice",
+      "winter",
+      "seasonal turn",
+      "seasonal marker",
+    ],
+  },
+  summer_solstice: {
+    label: "Summer Solstice",
+    evidence: [
+      "summer solstice",
+      "june solstice",
+      "solstice",
+      "summer",
+      "seasonal turn",
+      "seasonal marker",
+    ],
+  },
+  beginning_of_month: {
+    label: "Beginning of month",
+    evidence: [
+      "beginning of month",
+      "first day of month",
+      "month turn",
+      "calendar threshold",
+    ],
+  },
+  beginning_of_year: {
+    label: "Beginning of year",
+    evidence: [
+      "beginning of year",
+      "new year",
+      "year start",
+      "first day of year",
+      "year",
+      "seasonal turn",
+    ],
+  },
+  end_of_year: {
+    label: "End of year",
+    evidence: [
+      "end of year",
+      "year end",
+      "last day of year",
+      "year",
+      "seasonal turn",
+    ],
+  },
 };
 
 function normalize(value: string): string {
   return value.trim().toLowerCase();
+}
+
+function normalizeTimingText(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[_./-]+/g, " ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function timingTokens(value: string): string[] {
+  return normalizeTimingText(value)
+    .split(" ")
+    .filter((token) => token.length > 2);
 }
 
 function uniqueValues(values: Array<string | undefined>): string[] {
@@ -92,6 +276,227 @@ function isRitualPurpose(value: string): value is RitualPurpose {
 
 function isRitualCarrier(value: string): value is RitualCarrier {
   return RITUAL_CARRIERS.includes(value as RitualCarrier);
+}
+
+function timingFactEvidence(fact: TimingFact): string[] {
+  const common = [fact.id, fact.label, fact.type];
+
+  switch (fact.type) {
+    case "moon_phase":
+      return [...common, fact.phase, `${fact.phase} moon`];
+    case "lunation":
+      return [...common, fact.lunation, fact.lunation.replaceAll("_", " ")];
+    case "moon_sign":
+    case "sun_sign":
+      return [...common, fact.sign, `${fact.type.replace("_", " ")} ${fact.sign}`];
+    case "planet_sign":
+      return [...common, fact.planet, fact.sign, `${fact.planet} in ${fact.sign}`];
+    case "planet_retrograde":
+      return [
+        ...common,
+        fact.planet,
+        fact.isRetrograde ? "retrograde" : "direct",
+        `${fact.planet} retrograde`,
+      ];
+    case "planetary_aspect":
+      return [
+        ...common,
+        fact.bodyA,
+        fact.bodyB,
+        fact.aspect,
+        `${fact.bodyA} ${fact.aspect} ${fact.bodyB}`,
+        `${fact.bodyB} ${fact.aspect} ${fact.bodyA}`,
+      ];
+    case "numerology_date":
+      return [...common, "numerology", String(fact.number)];
+    case "calendar_threshold":
+      return [
+        ...common,
+        fact.threshold,
+        fact.threshold.replaceAll("_", " "),
+        fact.monthName,
+      ];
+    case "solar_season":
+      return [...common, fact.marker, fact.marker.replaceAll("_", " ")];
+  }
+}
+
+function timingWindowEvidence(candidate: TimingWindowCandidate): string[] {
+  return [
+    candidate.id,
+    candidate.label,
+    candidate.strength,
+    ...candidate.signalKeys,
+    ...candidate.scoreReasons.flatMap((reason) => [
+      reason.code,
+      reason.label,
+      reason.detail ?? "",
+    ]),
+    ...candidate.timingFacts.flatMap(timingFactEvidence),
+  ];
+}
+
+function isRitualTimingSearchTarget(
+  target: RitualTimingSearchTarget | TimingWindowCandidate,
+): target is RitualTimingSearchTarget {
+  return "evidence" in target;
+}
+
+function getTimingWindowSearchTarget(
+  timingWindow: TimingWindowCandidate,
+): RitualTimingSearchTarget {
+  return {
+    label: timingWindow.label,
+    evidence: timingWindowEvidence(timingWindow),
+    timingWindow,
+  };
+}
+
+export function getRitualTimingSearchTarget(
+  timingFilter: RitualTimingFilter,
+  timingWindow?: TimingWindowCandidate,
+): RitualTimingSearchTarget | undefined {
+  if (timingFilter === "all") {
+    return undefined;
+  }
+
+  if (timingFilter === "current") {
+    return timingWindow ? getTimingWindowSearchTarget(timingWindow) : undefined;
+  }
+
+  return ritualTimingPresetTargets[timingFilter];
+}
+
+function contextMatchesEvidence(context: string, evidence: string[]): boolean {
+  const normalizedContext = normalizeTimingText(context);
+
+  if (!normalizedContext) {
+    return false;
+  }
+
+  const normalizedEvidence = evidence.map(normalizeTimingText);
+
+  const contextTokenSet = new Set(timingTokens(context));
+  const timingWords = [
+    "moon",
+    "phase",
+    "sign",
+    "lunation",
+    "full",
+    "new",
+    "dark",
+    "balsamic",
+    "quarter",
+    "waxing",
+    "waning",
+    "void",
+    "retrograde",
+    "conjunction",
+    "opposition",
+    "square",
+    "trine",
+    "sextile",
+    "applying",
+    "solstice",
+    "equinox",
+    "month",
+    "threshold",
+    "season",
+    "seasonal",
+    "year",
+    "spring",
+    "summer",
+    "autumn",
+    "fall",
+    "winter",
+    "venus",
+    "mars",
+    "mercury",
+    "jupiter",
+    "saturn",
+    "sun",
+  ];
+  const timingContextTokens = timingWords.filter((word) =>
+    contextTokenSet.has(word),
+  );
+  const lunarPhaseTokens = [
+    "full",
+    "new",
+    "dark",
+    "balsamic",
+    "quarter",
+    "waxing",
+    "waning",
+  ];
+  const hasStandaloneLunarPhaseToken = lunarPhaseTokens.some((word) =>
+    contextTokenSet.has(word),
+  );
+  const hasExplicitLunarContext =
+    contextTokenSet.has("moon") ||
+    contextTokenSet.has("lunation") ||
+    contextTokenSet.has("phase");
+  const hasCalendarThresholdContext =
+    contextTokenSet.has("calendar") ||
+    contextTokenSet.has("month") ||
+    contextTokenSet.has("year");
+
+  if (timingContextTokens.length === 0) {
+    return false;
+  }
+
+  if (hasStandaloneLunarPhaseToken && !hasExplicitLunarContext) {
+    return false;
+  }
+
+  if (contextTokenSet.has("threshold") && !hasCalendarThresholdContext) {
+    return false;
+  }
+
+  return normalizedEvidence.some((candidate) => {
+    const candidateTokens = new Set(timingTokens(candidate));
+    const candidateHasLunarPhaseToken = lunarPhaseTokens.some((word) =>
+      candidateTokens.has(word),
+    );
+
+    if (
+      candidateHasLunarPhaseToken &&
+      !hasStandaloneLunarPhaseToken &&
+      !contextTokenSet.has("lunation")
+    ) {
+      return false;
+    }
+
+    return timingContextTokens.every((token) => candidateTokens.has(token));
+  });
+}
+
+export function getRitualTimingSearchMatch(
+  ritual: Ritual,
+  target: RitualTimingSearchTarget | TimingWindowCandidate | undefined,
+): RitualTimingSearchMatch | null {
+  const relationship = ritual.recommendationMetadata.timing.relationship;
+
+  if (!target || relationship === "none") {
+    return null;
+  }
+
+  const timingTarget = isRitualTimingSearchTarget(target)
+    ? target
+    : getTimingWindowSearchTarget(target);
+  const matchedContexts =
+    ritual.recommendationMetadata.timing.contexts?.filter((context) =>
+      contextMatchesEvidence(context, timingTarget.evidence),
+    ) ?? [];
+
+  if (matchedContexts.length === 0) {
+    return null;
+  }
+
+  return {
+    matchedContexts,
+    relationship,
+    windowLabel: timingTarget.label,
+  };
 }
 
 export function getRitualSourceLabels(ritual: Ritual): string[] {
@@ -262,6 +667,11 @@ export function searchRituals(
   const carrier = criteria.carrier && isRitualCarrier(criteria.carrier)
     ? criteria.carrier
     : "all";
+  const timingFilter = criteria.timingFilter ?? "all";
+  const timingTarget = getRitualTimingSearchTarget(
+    timingFilter,
+    criteria.timingWindow,
+  );
 
   const filtered = rituals.filter((ritual) => {
     if (!criteria.includeNonFindable && !ritual.availability.findable) {
@@ -301,6 +711,13 @@ export function searchRituals(
       return false;
     }
 
+    if (
+      timingFilter !== "all" &&
+      !getRitualTimingSearchMatch(ritual, timingTarget)
+    ) {
+      return false;
+    }
+
     const searchableText = getRitualSearchableValues(ritual)
       .map(normalize)
       .join(" ");
@@ -311,7 +728,10 @@ export function searchRituals(
     return queryMatches && chipsMatch;
   });
 
-  return sortRituals(filtered, criteria.sort ?? "match", rituals);
+  return sortRituals(filtered, criteria.sort ?? "match", rituals, {
+    timingWindow: criteria.timingWindow,
+    timingFilter,
+  });
 }
 
 function getPrimaryRitualMaterial(ritual: Ritual): string {
@@ -357,10 +777,40 @@ export function sortRituals(
   rituals: Ritual[],
   sort: RitualSortKey,
   originalOrder: Ritual[] = rituals,
+  options: Pick<RitualSearchCriteria, "timingWindow" | "timingFilter"> = {},
 ): Ritual[] {
   const order = originalIndexMap(originalOrder);
   const sorted = [...rituals];
   const originalIndex = (ritual: Ritual) => order.get(ritual.id) ?? 0;
+  const timingRelationshipRank: Record<
+    Exclude<Ritual["recommendationMetadata"]["timing"]["relationship"], "none">,
+    number
+  > = {
+    required: 3,
+    preferred: 2,
+    helpful: 1,
+  };
+
+  if (
+    options.timingFilter &&
+    options.timingFilter !== "all" &&
+    sort === "match"
+  ) {
+    const timingTarget = getRitualTimingSearchTarget(
+      options.timingFilter,
+      options.timingWindow,
+    );
+
+    return sorted.sort((a, b) => {
+      const aMatch = getRitualTimingSearchMatch(a, timingTarget);
+      const bMatch = getRitualTimingSearchMatch(b, timingTarget);
+      const timingCompare =
+        (bMatch ? timingRelationshipRank[bMatch.relationship] : 0) -
+        (aMatch ? timingRelationshipRank[aMatch.relationship] : 0);
+
+      return timingCompare || originalIndex(a) - originalIndex(b);
+    });
+  }
 
   switch (sort) {
     case "title":

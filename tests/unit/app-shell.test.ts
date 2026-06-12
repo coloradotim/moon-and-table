@@ -19,6 +19,22 @@ import {
 import { resolvePrivateBriefData } from "../../src/lib/private-data";
 import { generateWeeklyBrief } from "../../src/lib/generate-weekly-brief";
 import { sourceBackedRituals } from "../../src/data/rituals/source-backed-rituals";
+import { getTimingWindowCandidates } from "../../src/lib/timing-window-candidates";
+
+function getNewMoonWindow() {
+  const window = getTimingWindowCandidates({
+    startDate: "2026-06-12T12:00:00.000Z",
+    timezone: "UTC",
+    daysAhead: 4,
+    options: { maxCandidates: 8 },
+  }).find((candidate) => candidate.label === "New Moon");
+
+  if (!window) {
+    throw new Error("Expected a New Moon timing window fixture.");
+  }
+
+  return window;
+}
 
 describe("app shell rendering", () => {
   it("aligns entry/loading and check-in headlines while keeping check-in top-anchored", () => {
@@ -54,6 +70,7 @@ describe("app shell rendering", () => {
     expect(html).toContain("Choose with me");
     expect(html).toContain("I have something in mind");
     expect(html).toContain('aria-label="Choose how to find a ritual"');
+    expect(html).not.toContain("Rituals for this timing");
     expect(html).toContain('data-check-in-action="start_guided"');
     expect(html).toContain('data-check-in-value="choose_with_me"');
     expect(html).toContain('data-search-rituals-entry="true"');
@@ -79,6 +96,20 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("AI");
     expect(html).not.toContain("algorithm");
     expect(html).not.toContain("generated");
+  });
+
+  it("adds a timing-window entry path when a strong timing window is available", () => {
+    const html = renderRitualCheckInShell({
+      draft: { step: "entry_path" },
+      displayName: "Morgan Example",
+      currentTimingWindow: getNewMoonWindow(),
+    });
+
+    expect(html).toContain("Choose with me");
+    expect(html).toContain("I have something in mind");
+    expect(html).toContain("Rituals for this timing");
+    expect(html).toContain("Browse rituals that match new moon.");
+    expect(html).toContain('data-timing-rituals-entry="true"');
   });
 
   it("renders the guided check-in first question after the entry path is chosen", () => {
@@ -699,6 +730,11 @@ describe("app shell rendering", () => {
     expect(html).toContain('name="ritualSearchSource"');
     expect(html).toContain('name="ritualSearchPurpose"');
     expect(html).toContain('name="ritualSearchCarrier"');
+    expect(html).toContain('name="ritualSearchTiming"');
+    expect(html).toContain("New Moon");
+    expect(html).toContain("Full Moon");
+    expect(html).toContain("Spring Equinox");
+    expect(html).toContain("End of year");
     expect(html).toContain('data-ritual-select=');
     expect(html).toContain('class="ritual-result-card__expanded"');
     expect(html).not.toContain("Wet the seed and wait.");
@@ -817,6 +853,18 @@ describe("app shell rendering", () => {
     expect(renderSearchRitualsSource).not.toContain("activeBrief");
   });
 
+  it("wires the timing-window entry path into a prefiltered search view", () => {
+    const mainSource = readFileSync(
+      new URL("../../src/main.ts", import.meta.url),
+      "utf8",
+    );
+
+    expect(mainSource).toContain("data-timing-rituals-entry");
+    expect(mainSource).toContain('activeRitualSearchTiming = "current"');
+    expect(mainSource).toContain('activeRitualSearchSort = "match"');
+    expect(mainSource).toContain("data-ritual-search-timing");
+  });
+
   it("filters the Search rituals view by query, source, and chips", () => {
     const seedHtml = renderSearchRitualsSection({ query: "seed" });
     const tableHtml = renderSearchRitualsSection({
@@ -837,6 +885,41 @@ describe("app shell rendering", () => {
     expect(bucklandHtml).toContain("Raymond Buckland, Practical Candleburning Rituals");
     expect(bucklandHtml).toContain("13 rituals found");
     expect(emptyHtml).toContain("Nothing matched that exact reach.");
+  });
+
+  it("renders a timing-match search filter with timing-specific results", () => {
+    const html = renderSearchRitualsSection({
+      timing: "current",
+      currentTimingWindow: getNewMoonWindow(),
+    });
+
+    expect(html).toContain('name="ritualSearchTiming"');
+    expect(html).toContain('data-ritual-search-timing="true"');
+    expect(html).toContain(">This timing window</option>");
+    expect(html).toContain("11 rituals found");
+    expect(html).toContain("Matches: New Moon");
+    expect(html).toContain("Timing required");
+    expect(html).toContain("Timing preferred");
+    expect(html).toContain("Timing helpful");
+    expect(html).toContain("Best around: Monday");
+    expect(html).not.toContain("timing_window_signal");
+    expect(html).not.toContain("timing.lunation");
+    expect(html).not.toContain("candidate.saint_thomas.long_distance_calendar_light");
+  });
+
+  it("renders named timing filter results without needing a current timing window", () => {
+    const html = renderSearchRitualsSection({
+      timing: "full_moon",
+    });
+
+    expect(html).toContain('name="ritualSearchTiming"');
+    expect(html).toContain('<option value="full_moon" selected>Full Moon</option>');
+    expect(html).not.toContain("This timing window");
+    expect(html).toContain("7 rituals found");
+    expect(html).toContain("Matches: Full Moon");
+    expect(html).toContain("Timing required");
+    expect(html).not.toContain("Best around:");
+    expect(html).not.toContain("timing_window_signal");
   });
 
   it("renders the shared Ritual preview from presentation fields", () => {

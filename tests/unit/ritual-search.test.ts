@@ -2,11 +2,30 @@ import { describe, expect, it } from "vitest";
 
 import { sourceBackedRituals } from "../../src/data/rituals/source-backed-rituals";
 import {
+  getRitualTimingSearchMatch,
+  getRitualTimingSearchTarget,
   getRitualSearchChips,
   getRitualSourceOptions,
+  ritualTimingPresetOptions,
   searchRituals,
 } from "../../src/data/rituals/search-rituals";
 import type { Ritual } from "../../src/data/rituals/types";
+import { getTimingWindowCandidates } from "../../src/lib/timing-window-candidates";
+
+function getNewMoonWindow() {
+  const window = getTimingWindowCandidates({
+    startDate: "2026-06-12T12:00:00.000Z",
+    timezone: "UTC",
+    daysAhead: 4,
+    options: { maxCandidates: 8 },
+  }).find((candidate) => candidate.label === "New Moon");
+
+  if (!window) {
+    throw new Error("Expected a New Moon timing window fixture.");
+  }
+
+  return window;
+}
 
 function resultIds(query: string, selectedChips: string[] = []): string[] {
   return searchRituals(sourceBackedRituals, { query, selectedChips }).map(
@@ -204,6 +223,130 @@ describe("Ritual search", () => {
     expect(
       searchRituals(sourceBackedRituals, { sort: "recently_added" })[0].id,
     ).toBe(sourceBackedRituals[sourceBackedRituals.length - 1].id);
+  });
+
+  it("filters direct-use rituals by actual timing evidence for a current window", () => {
+    const window = getNewMoonWindow();
+    const results = searchRituals(sourceBackedRituals, {
+      timingFilter: "current",
+      timingWindow: window,
+    });
+    const ids = results.map((ritual) => ritual.id);
+
+    expect(results).toHaveLength(11);
+    expect(ids).toEqual(
+      expect.arrayContaining([
+        "candidate.moon_book.lunation_map_one_desire",
+        "candidate.moon_book.new_moon_table_seed",
+        "candidate.moon_book.dark_moon_void_table",
+        "candidate.moon_book.cycle_close_and_begin_again",
+        "candidate.saint_thomas.bedroom_leaf_blessing",
+      ]),
+    );
+    expect(ids).not.toEqual(
+      expect.arrayContaining([
+        "ritual-house-witch-cauldron-blessing",
+        "ritual-house-witch-bless-kitchen-tool",
+        "candidate.saint_thomas.long_distance_calendar_light",
+      ]),
+    );
+    expect(
+      results.every(
+        (ritual) => ritual.recommendationMetadata.timing.relationship !== "none",
+      ),
+    ).toBe(true);
+    expect(
+      results.every((ritual) =>
+        Boolean(getRitualTimingSearchMatch(ritual, window)),
+      ),
+    ).toBe(true);
+  });
+
+  it("supports named timing filters without falling back to broad text search", () => {
+    const newMoonResults = searchRituals(sourceBackedRituals, {
+      timingFilter: "new_moon",
+    });
+    const fullMoonResults = searchRituals(sourceBackedRituals, {
+      timingFilter: "full_moon",
+    });
+    const waxingResults = searchRituals(sourceBackedRituals, {
+      timingFilter: "waxing_moon",
+    });
+    const waningResults = searchRituals(sourceBackedRituals, {
+      timingFilter: "waning_moon",
+    });
+    const monthResults = searchRituals(sourceBackedRituals, {
+      timingFilter: "beginning_of_month",
+    });
+
+    expect(ritualTimingPresetOptions.map((option) => option.label)).toEqual([
+      "New Moon",
+      "Full Moon",
+      "Waxing Moon",
+      "Waning Moon",
+      "Spring Equinox",
+      "Fall Equinox",
+      "Winter Solstice",
+      "Summer Solstice",
+      "Beginning of month",
+      "End of year",
+      "Beginning of year",
+    ]);
+    expect(newMoonResults).toHaveLength(11);
+    expect(fullMoonResults).toHaveLength(7);
+    expect(waxingResults).toHaveLength(4);
+    expect(waningResults).toHaveLength(7);
+    expect(monthResults.map((ritual) => ritual.id)).toEqual([
+      "candidate.dominguez.astrology-journal-timing-record",
+      "candidate.dominguez.conditions-as-outline",
+    ]);
+    expect(waxingResults.map((ritual) => ritual.id)).not.toEqual(
+      expect.arrayContaining(["candidate.saint_thomas.long_distance_calendar_light"]),
+    );
+    expect(monthResults.map((ritual) => ritual.id)).not.toEqual(
+      expect.arrayContaining(["ritual-magical-household-door-guardian-object"]),
+    );
+  });
+
+  it("uses broad seasonal timing presets only against timing metadata", () => {
+    const springTarget = getRitualTimingSearchTarget("spring_equinox");
+    const springResults = searchRituals(sourceBackedRituals, {
+      timingFilter: "spring_equinox",
+    });
+
+    expect(springResults).toHaveLength(10);
+    expect(springResults.map((ritual) => ritual.id)).toEqual(
+      expect.arrayContaining([
+        "candidate.moon_book.seed_pot_intention",
+        "whitehurst-narcissus-morning-vase",
+        "ritual-woodward-repeated-recipe-memory",
+      ]),
+    );
+    expect(
+      springResults.every((ritual) =>
+        Boolean(getRitualTimingSearchMatch(ritual, springTarget)),
+      ),
+    ).toBe(true);
+  });
+
+  it("sorts timing-window search matches by timing relationship strength", () => {
+    const window = getNewMoonWindow();
+    const relationships = searchRituals(sourceBackedRituals, {
+      timingFilter: "current",
+      timingWindow: window,
+      sort: "match",
+    }).map((ritual) => ritual.recommendationMetadata.timing.relationship);
+    const ranks = relationships.map((relationship) => {
+      if (relationship === "required") return 3;
+      if (relationship === "preferred") return 2;
+      if (relationship === "helpful") return 1;
+      return 0;
+    });
+
+    expect(relationships).toEqual(
+      expect.arrayContaining(["required", "preferred", "helpful"]),
+    );
+    expect(ranks).toEqual([...ranks].sort((a, b) => b - a));
   });
 
   it("excludes non-findable rituals from normal search results", () => {
