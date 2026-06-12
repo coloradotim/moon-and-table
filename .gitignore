@@ -6,6 +6,7 @@ playwright-report/
 test-results/
 .env.local
 private/
+.moon-table-private/
 *.local.json
 *service-account*.json
 *serviceAccount*.json
