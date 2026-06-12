@@ -34,7 +34,7 @@ type RecommendationMetadataUpdate = {
 
 const RECOMMENDATION_HOLDS: Record<string, string[]> = {
   "ritual-candlelight-buckland-marking-seven-night-increase": [
-    "timing_engine_wiring",
+    "full_moon_lead_time_not_supported",
   ],
 
   "candidate.saint_thomas.grimoire_record_after_rite": [
@@ -68,15 +68,6 @@ const RECOMMENDATION_HOLDS: Record<string, string[]> = {
     "too_context_specific_for_recommendation",
   ],
 
-  "candidate.moon_book.lunation_map_one_desire": ["timing_engine_wiring"],
-  "candidate.moon_book.new_moon_table_seed": ["timing_engine_wiring"],
-  "candidate.moon_book.waxing_one_thread": ["timing_engine_wiring"],
-  "candidate.moon_book.full_moon_mirror": ["timing_engine_wiring"],
-  "candidate.moon_book.full_moon_table_witness": ["timing_engine_wiring"],
-  "candidate.moon_book.waning_release_one_extra": ["timing_engine_wiring"],
-  "candidate.moon_book.dark_moon_void_table": ["timing_engine_wiring"],
-  "candidate.moon_book.cycle_close_and_begin_again": ["timing_engine_wiring"],
-
   "candidate.anand.practice_night_commitment": [
     "too_context_specific_for_recommendation",
   ],
@@ -90,24 +81,56 @@ const RECOMMENDATION_HOLDS: Record<string, string[]> = {
     "too_context_specific_for_recommendation",
   ],
 
-  "candidate.dominguez.astrology-journal-timing-record": [
-    "timing_engine_wiring",
+  "candidate.dominguez.glyph-as-mark": [
+    "planetary_day_or_hour_not_supported",
   ],
-  "candidate.dominguez.glyph-as-mark": ["timing_engine_wiring"],
-  "candidate.dominguez.planetary-card-attunement": ["timing_engine_wiring"],
+  "candidate.dominguez.planetary-card-attunement": [
+    "planetary_day_or_hour_not_supported",
+  ],
   "candidate.dominguez.seven-day-planetary-cycle": [
-    "timing_engine_wiring",
+    "planetary_day_or_hour_not_supported",
   ],
-  "candidate.dominguez.planetary-hour-support": ["timing_engine_wiring"],
-  "candidate.dominguez.moon-phase-timing-check": ["timing_engine_wiring"],
-  "candidate.dominguez.moon-sign-tone": ["timing_engine_wiring"],
-  "candidate.dominguez.void-moon-softening": ["timing_engine_wiring"],
-  "candidate.dominguez.aspect-before-peak": ["timing_engine_wiring"],
-  "candidate.dominguez.retrograde-foundation": ["timing_engine_wiring"],
-  "candidate.dominguez.change-details-not-date": ["timing_engine_wiring"],
-  "candidate.dominguez.conditions-as-outline": ["timing_engine_wiring"],
-  "candidate.dominguez.planetary-representation": ["timing_engine_wiring"],
+  "candidate.dominguez.planetary-hour-support": [
+    "planetary_day_or_hour_not_supported",
+  ],
+  "candidate.dominguez.void-moon-softening": ["void_moon_not_supported"],
+  "candidate.dominguez.aspect-before-peak": [
+    "applying_aspect_timing_not_supported",
+  ],
+  "candidate.dominguez.planetary-representation": [
+    "planetary_day_or_hour_not_supported",
+  ],
 };
+
+const ENGINE_UNSUPPORTED_REQUIRED_TIMING = new Set([
+  "ritual-candlelight-buckland-releasing-habit-surrounded",
+  "ritual-candlelight-buckland-tending-home-settling",
+  "ritual-candlelight-buckland-protecting-boundary-circle",
+  "ritual-candlelight-buckland-remembering-photo-peace-light",
+  "ritual-buckland-candle-courage-circle",
+  "ritual-buckland-candle-welcome-joy",
+  "ritual-buckland-candle-dream-door",
+  "ritual-house-witch-bank-the-inner-flame",
+  "ritual-house-witch-kitchen-sacred-flame",
+  "ritual-house-witch-consecrate-candle-fuel",
+  "ritual-house-witch-cauldron-blessing",
+  "ritual-house-witch-create-small-sacred-space",
+  "ritual-house-witch-household-grimoire-entry",
+  "ritual-magical-household-center-house-mind",
+  "ritual-magical-household-working-rug",
+  "ritual-magical-household-leave-old-rooms-clear",
+  "ritual-magical-household-altar-place",
+  "ritual-green-garden-welcome-new-plant",
+  "ritual-green-garden-harvest-gratitude",
+  "whitehurst-ask-before-gathering",
+  "whitehurst-small-offering",
+  "whitehurst-return-flower-earth",
+  "whitehurst-tend-flower-intention",
+  "ritual-woodward-center-at-counter",
+  "ritual-woodward-kitchen-table-intention",
+  "ritual-woodward-clear-table-closing",
+  "ritual-woodward-repeated-recipe-memory",
+]);
 
 const RECOMMENDATION_METADATA_UPDATES: Record<
   string,
@@ -243,14 +266,83 @@ const RECOMMENDATION_METADATA_UPDATES: Record<
       default: "room_for_something_deeper",
     },
   },
+  "candidate.moon_book.dark_moon_void_table": {
+    timing: {
+      contexts: ["new moon", "dark moon", "balsamic moon", "pre-new moon"],
+    },
+  },
+  "candidate.moon_book.cycle_close_and_begin_again": {
+    timing: {
+      contexts: ["new moon", "dark moon", "end of lunation", "before new moon"],
+    },
+  },
+  "candidate.dominguez.astrology-journal-timing-record": {
+    timing: {
+      contexts: [
+        "moon phase",
+        "moon sign",
+        "planetary aspect",
+        "retrograde planet",
+        "calendar threshold",
+      ],
+    },
+  },
+  "candidate.dominguez.change-details-not-date": {
+    timing: {
+      contexts: [
+        "moon sign",
+        "planetary aspect",
+        "retrograde planet",
+        "imperfect timing",
+      ],
+    },
+  },
+  "candidate.dominguez.conditions-as-outline": {
+    timing: {
+      contexts: [
+        "moon phase",
+        "moon sign",
+        "planetary aspect",
+        "retrograde planet",
+        "calendar threshold",
+      ],
+    },
+  },
 };
+
+function getReviewedTimingMetadata(ritual: Ritual): Ritual["recommendationMetadata"]["timing"] {
+  const baseTiming = ritual.recommendationMetadata.timing;
+  const contexts =
+    baseTiming.contexts && baseTiming.contexts.length > 0
+      ? baseTiming.contexts
+      : [ritual.presentation.bestWindow];
+  const relationship =
+    baseTiming.relationship === "required" &&
+    ENGINE_UNSUPPORTED_REQUIRED_TIMING.has(ritual.id)
+      ? "helpful"
+      : baseTiming.relationship;
+
+  return {
+    ...baseTiming,
+    relationship,
+    contexts,
+  };
+}
 
 function applyMetadataUpdate(
   ritual: Ritual,
   update: RecommendationMetadataUpdate | undefined,
 ): Ritual {
+  const reviewedTiming = getReviewedTimingMetadata(ritual);
+
   if (!update) {
-    return ritual;
+    return {
+      ...ritual,
+      recommendationMetadata: {
+        ...ritual.recommendationMetadata,
+        timing: reviewedTiming,
+      },
+    };
   }
 
   return {
@@ -274,7 +366,7 @@ function applyMetadataUpdate(
         ...update.audience,
       },
       timing: {
-        ...ritual.recommendationMetadata.timing,
+        ...reviewedTiming,
         ...update.timing,
       },
     },

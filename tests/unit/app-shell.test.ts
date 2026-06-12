@@ -734,7 +734,7 @@ describe("app shell rendering", () => {
 
     expect(html).toContain('aria-label="Manage Rituals"');
     expect(html).toContain('aria-pressed="true">Manage rituals</button>');
-    expect(html).toContain("218 imported Rituals. 36 reviewed. 218 direct-use eligible.");
+    expect(html).toContain("218 imported Rituals. 22 reviewed. 218 direct-use eligible.");
     expect(html).toContain("Readiness summary");
     expect(html).toContain("recommendation-ready");
     expect(html).toContain("Missing readiness");
@@ -763,7 +763,7 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("<dt>Why this fits</dt>");
     expect(html).toContain("ritual-buckland-candle-prepare-table");
     expect(html).not.toContain("direct_use_review");
-    expect(html).toContain("timing_engine_wiring");
+    expect(html).toContain("planetary_day_or_hour_not_supported");
     expect(html).toContain("Raw full object");
     expect(html).toContain("&quot;id&quot;: &quot;ritual-buckland-candle-prepare-table&quot;");
     expect(html).not.toContain("Search by material, mood, purpose, place, or phrase.");
@@ -787,9 +787,9 @@ describe("app shell rendering", () => {
     expect(sourceHtml).toContain("Prepare the Candle Table");
     expect(householdHtml).toContain("0 Rituals shown");
     expect(householdHtml).not.toContain("Prepare the Candle Table");
-    expect(missingReadinessHtml).toContain("36 Rituals shown");
+    expect(missingReadinessHtml).toContain("22 Rituals shown");
     expect(missingReadinessHtml).not.toContain("direct_use_review");
-    expect(missingReadinessHtml).toContain("timing_engine_wiring");
+    expect(missingReadinessHtml).toContain("planetary_day_or_hour_not_supported");
   });
 
   it("keeps the search ritual path renderable before a brief exists", () => {

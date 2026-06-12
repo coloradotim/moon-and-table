@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { chooseWithMeRitual } from "../../src/data/rituals/choose-with-me-selector";
+import { sourceBackedRituals } from "../../src/data/rituals/source-backed-rituals";
 import type { Ritual } from "../../src/data/rituals/types";
 import type { TimingFact } from "../../src/lib/timing-facts";
 import type { TimingWindowCandidate } from "../../src/lib/timing-window-candidates";
@@ -428,6 +429,34 @@ describe("chooseWithMeRitual", () => {
     expect(result.debug.timing.matchedRitualTiming).toEqual([]);
   });
 
+  it("does not let a dark moon context match a generic moon fact", () => {
+    const requiredDarkMoon = makeRitual({
+      id: "required-dark-moon",
+      recommendationMetadata: {
+        ...makeRitual({}).recommendationMetadata,
+        timing: {
+          relationship: "required",
+          contexts: ["dark moon"],
+        },
+      },
+    });
+
+    const result = chooseWithMeRitual([requiredDarkMoon], {
+      timeScope: "today",
+      energyCapacity: "enough_to_engage",
+      capacityMode: "steady",
+      audience: "me",
+      purpose: "tending",
+      carrier: "table",
+      timingContext: {
+        computedTimingFacts: [makeMoonPhaseFact("new")],
+      },
+    });
+
+    expect(result.status).toBe("no_result");
+    expect(result.debug.exclusions.required_timing_unmatched).toBe(1);
+  });
+
   it("uses a strong selected timing window for across-the-week recommendations", () => {
     const requiredNewMoon = makeRitual({
       id: "required-new-moon-window",
@@ -657,5 +686,121 @@ describe("chooseWithMeRitual", () => {
     expect(result.howThisWasChosen).toContain("new moon");
     expect(result.howThisWasChosen).not.toContain("moon_phase.new.test");
     expect(result.debug.timing.suppliedFacts).toContain("moon_phase.new.test");
+  });
+
+  it("can recommend a promoted Moon Book required-timing ritual with matching lunar evidence", () => {
+    const newMoonSeed = sourceBackedRituals.find(
+      (ritual) => ritual.id === "candidate.moon_book.new_moon_table_seed",
+    );
+
+    if (!newMoonSeed) {
+      throw new Error("Moon Book new moon fixture is missing.");
+    }
+
+    const result = chooseWithMeRitual([newMoonSeed], {
+      timeScope: "today",
+      energyCapacity: "a_little",
+      capacityMode: "low",
+      audience: "me",
+      purpose: "opening",
+      carrier: "vessel",
+      timingContext: {
+        computedTimingFacts: [makeMoonPhaseFact("new")],
+      },
+    });
+
+    expect(result.status).toBe("selected");
+    expect(result.selectedRitual?.id).toBe("candidate.moon_book.new_moon_table_seed");
+    expect(result.debug.timing.matchedRitualTiming).toContain("new moon");
+  });
+
+  it("keeps unsupported Dominguez planetary-day rituals out of recommendations", () => {
+    const glyph = sourceBackedRituals.find(
+      (ritual) => ritual.id === "candidate.dominguez.glyph-as-mark",
+    );
+
+    if (!glyph) {
+      throw new Error("Dominguez glyph fixture is missing.");
+    }
+
+    const result = chooseWithMeRitual([glyph], {
+      timeScope: "today",
+      energyCapacity: "a_little",
+      capacityMode: "low",
+      audience: "me",
+      purpose: "marking",
+      carrier: "words",
+      timingContext: {
+        computedTimingFacts: [makePlanetaryAspectFact()],
+      },
+    });
+
+    expect(result.status).toBe("no_result");
+    expect(result.debug.exclusions.not_recommendation_eligible).toBe(1);
+  });
+
+  it("can recommend a Dominguez moon-phase timing ritual with computed phase evidence", () => {
+    const moonPhaseCheck = sourceBackedRituals.find(
+      (ritual) => ritual.id === "candidate.dominguez.moon-phase-timing-check",
+    );
+
+    if (!moonPhaseCheck) {
+      throw new Error("Dominguez moon phase fixture is missing.");
+    }
+
+    const result = chooseWithMeRitual([moonPhaseCheck], {
+      timeScope: "today",
+      energyCapacity: "a_little",
+      capacityMode: "low",
+      audience: "me",
+      purpose: "marking",
+      carrier: "words",
+      timingContext: {
+        computedTimingFacts: [makeMoonPhaseFact("full")],
+      },
+    });
+
+    expect(result.status).toBe("selected");
+    expect(result.selectedRitual?.id).toBe(
+      "candidate.dominguez.moon-phase-timing-check",
+    );
+    expect(result.debug.timing.matchedRitualTiming).toEqual(
+      expect.arrayContaining(["moon phase", "full moon"]),
+    );
+  });
+
+  it("holds the Buckland full-moon lead-time ritual out of automatic recommendation", () => {
+    const sevenMarks = sourceBackedRituals.find(
+      (ritual) =>
+        ritual.id === "ritual-candlelight-buckland-marking-seven-night-increase",
+    );
+
+    if (!sevenMarks) {
+      throw new Error("Buckland seven-night fixture is missing.");
+    }
+
+    const result = chooseWithMeRitual([sevenMarks], {
+      timeScope: "best_moment_this_week",
+      energyCapacity: "room_for_something_deeper",
+      capacityMode: "high",
+      audience: "me",
+      purpose: "marking",
+      carrier: "candlelight",
+      timingContext: {
+        computedTimingFacts: [makeMoonPhaseFact("full")],
+        timingWindowCandidates: [
+          makeTimingWindow({
+            id: "timing_window.full_moon.test",
+            label: "Full moon window",
+            timingFacts: [makeMoonPhaseFact("full")],
+            signalKeys: ["timing_rule.moon_phase.full"],
+          }),
+        ],
+        timingWindowCandidateIds: ["timing_window.full_moon.test"],
+      },
+    });
+
+    expect(result.status).toBe("no_result");
+    expect(result.debug.exclusions.not_recommendation_eligible).toBe(1);
   });
 });

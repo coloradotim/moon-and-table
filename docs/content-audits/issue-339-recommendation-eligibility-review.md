@@ -1,5 +1,10 @@
 # Issue 339 Recommendation Eligibility Review
 
+> Follow-up note: issue 398 / 402 revisited the timing-held records after the
+> timing selector wiring landed. Current timing-context and timing-held
+> recommendation counts are reported in
+> `docs/content-audits/issue-398-402-timing-context-and-eligibility-review.md`.
+
 ## Scope
 
 Reviewed the 218 source-backed Ritual records that were already findable and direct-use eligible after the direct-use QA pass.
