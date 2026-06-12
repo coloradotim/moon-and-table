@@ -4,12 +4,15 @@ import type {
   RitualCarrier,
   RitualPurpose,
 } from "./types";
+import type { TimingWindowCandidate } from "../../lib/timing-window-candidates";
+import type { TimingFact } from "../../lib/timing-facts";
+import type { LunarTimingFact } from "../../lib/lunar-timing";
 import type {
   RitualCheckInAudience,
   RitualCheckInEnergyCapacity,
   RitualCheckInTimeScope,
 } from "../../lib/current-ritual-check-in";
-import type { CapacityMode } from "../../lib/generate-weekly-brief";
+import type { CapacityMode, TimingFactKey } from "../../lib/generate-weekly-brief";
 
 export type ChooseWithMeRequest = {
   timeScope: RitualCheckInTimeScope;
@@ -22,7 +25,12 @@ export type ChooseWithMeRequest = {
   freeTextIntent?: string | null;
   materialsAvailable?: string[];
   timingContext?: {
+    timingFacts?: TimingFactKey[];
+    timingFactDetails?: LunarTimingFact[];
+    computedTimingFacts?: TimingFact[];
+    timingWindowCandidates?: TimingWindowCandidate[];
     timingWindowCandidateIds?: string[];
+    selectedTimingWindow?: TimingWindowCandidate;
   };
 };
 
@@ -46,6 +54,17 @@ export type ChooseWithMeDebugCandidate = {
   score: number;
   breakdown: ChooseWithMeScoreBreakdown;
   evidence: string[];
+  timing: ChooseWithMeTimingDebug;
+};
+
+export type ChooseWithMeTimingDebug = {
+  suppliedFacts: string[];
+  suppliedWindows: string[];
+  selectedWindow?: string;
+  matchedRitualTiming: string[];
+  timingScore: number;
+  requiredTimingSatisfied: boolean;
+  timingCouldNotBeVerified: string[];
 };
 
 export type ChooseWithMeDebug = {
@@ -58,6 +77,7 @@ export type ChooseWithMeDebug = {
   topCandidates: ChooseWithMeDebugCandidate[];
   exclusions: Record<string, number>;
   fallback?: string;
+  timing: ChooseWithMeTimingDebug;
   timingEvidence: string[];
   explanationEvidence: string[];
 };
@@ -82,6 +102,7 @@ type ScoredRitual = {
   ritual: Ritual;
   breakdown: ChooseWithMeScoreBreakdown;
   evidence: string[];
+  timing: ChooseWithMeTimingDebug;
 };
 
 const purposeLabels: Record<RitualPurpose, string> = {
@@ -210,6 +231,276 @@ function countQueryMatches(
   return terms.filter((term) => text.includes(term)).length;
 }
 
+function uniqueStrings(values: string[]): string[] {
+  return [...new Set(values.filter((value) => value.trim().length > 0))];
+}
+
+function normalizeTimingText(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[_./-]+/g, " ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function timingTokens(value: string): string[] {
+  return normalizeTimingText(value)
+    .split(" ")
+    .filter((token) => token.length > 2);
+}
+
+function timingFactEvidence(fact: TimingFact): string[] {
+  const common = [fact.id, fact.label, fact.type];
+
+  switch (fact.type) {
+    case "moon_phase":
+      return [...common, fact.phase, `${fact.phase} moon`];
+    case "lunation":
+      return [...common, fact.lunation, fact.lunation.replaceAll("_", " ")];
+    case "moon_sign":
+    case "sun_sign":
+      return [...common, fact.sign, `${fact.type.replace("_", " ")} ${fact.sign}`];
+    case "planet_sign":
+      return [...common, fact.planet, fact.sign, `${fact.planet} in ${fact.sign}`];
+    case "planet_retrograde":
+      return [
+        ...common,
+        fact.planet,
+        fact.isRetrograde ? "retrograde" : "direct",
+        `${fact.planet} retrograde`,
+      ];
+    case "planetary_aspect":
+      return [
+        ...common,
+        fact.bodyA,
+        fact.bodyB,
+        fact.aspect,
+        `${fact.bodyA} ${fact.aspect} ${fact.bodyB}`,
+        `${fact.bodyB} ${fact.aspect} ${fact.bodyA}`,
+      ];
+    case "numerology_date":
+      return [...common, "numerology", String(fact.number)];
+    case "calendar_threshold":
+      return [
+        ...common,
+        fact.threshold,
+        fact.threshold.replaceAll("_", " "),
+        fact.monthName,
+      ];
+    case "solar_season":
+      return [...common, fact.marker, fact.marker.replaceAll("_", " ")];
+  }
+}
+
+function lunarTimingFactEvidence(fact: LunarTimingFact): string[] {
+  return [fact.id, fact.key, fact.label, fact.phase, `${fact.phase} moon`];
+}
+
+function timingWindowEvidence(candidate: TimingWindowCandidate): string[] {
+  return [
+    candidate.id,
+    candidate.label,
+    candidate.strength,
+    ...candidate.signalKeys,
+    ...candidate.scoreReasons.flatMap((reason) => [
+      reason.code,
+      reason.label,
+      reason.detail ?? "",
+    ]),
+    ...candidate.timingFacts.flatMap(timingFactEvidence),
+  ];
+}
+
+function isStrongTimingWindow(
+  candidate: TimingWindowCandidate | undefined,
+): candidate is TimingWindowCandidate {
+  return candidate !== undefined && candidate.strength !== "accent" && candidate.score >= 10;
+}
+
+function selectTimingWindow(
+  request: ChooseWithMeRequest,
+): TimingWindowCandidate | undefined {
+  const context = request.timingContext;
+
+  if (request.timeScope !== "best_moment_this_week") {
+    return undefined;
+  }
+
+  if (isStrongTimingWindow(context?.selectedTimingWindow)) {
+    return context.selectedTimingWindow;
+  }
+
+  const candidates = context?.timingWindowCandidates ?? [];
+
+  for (const candidateId of context?.timingWindowCandidateIds ?? []) {
+    const match = candidates.find((candidate) => candidate.id === candidateId);
+
+    if (isStrongTimingWindow(match)) {
+      return match;
+    }
+  }
+
+  return candidates.find(isStrongTimingWindow);
+}
+
+function getSuppliedTimingEvidence(request: ChooseWithMeRequest): {
+  facts: string[];
+  windows: string[];
+  selectedWindow?: TimingWindowCandidate;
+  evidenceText: string[];
+} {
+  const context = request.timingContext;
+  const selectedWindow = selectTimingWindow(request);
+  const factEvidence = uniqueStrings([
+    ...(context?.timingFacts ?? []),
+    ...(context?.timingFactDetails ?? []).flatMap(lunarTimingFactEvidence),
+    ...(context?.computedTimingFacts ?? []).flatMap(timingFactEvidence),
+    ...(request.timeScope === "best_moment_this_week" && selectedWindow
+      ? timingWindowEvidence(selectedWindow)
+      : []),
+  ]);
+  const windowEvidence = uniqueStrings(
+    (context?.timingWindowCandidates ?? []).flatMap((candidate) => [
+      candidate.id,
+      candidate.label,
+      candidate.strength,
+      ...candidate.signalKeys,
+    ]),
+  );
+
+  return {
+    facts: factEvidence,
+    windows: windowEvidence,
+    selectedWindow,
+    evidenceText: factEvidence,
+  };
+}
+
+function getRitualTimingContexts(ritual: Ritual): string[] {
+  return ritual.recommendationMetadata.timing.contexts ?? [];
+}
+
+function contextMatchesEvidence(context: string, evidence: string[]): boolean {
+  const normalizedContext = normalizeTimingText(context);
+
+  if (!normalizedContext) {
+    return false;
+  }
+
+  const normalizedEvidence = evidence.map(normalizeTimingText);
+
+  if (
+    normalizedEvidence.some(
+      (candidate) =>
+        candidate.length > 0 &&
+        (candidate.includes(normalizedContext) ||
+          normalizedContext.includes(candidate)),
+    )
+  ) {
+    return true;
+  }
+
+  const contextTokenSet = new Set(timingTokens(context));
+  const timingWords = [
+    "moon",
+    "lunation",
+    "full",
+    "new",
+    "waxing",
+    "waning",
+    "retrograde",
+    "conjunction",
+    "opposition",
+    "square",
+    "trine",
+    "sextile",
+    "solstice",
+    "equinox",
+    "month",
+    "threshold",
+    "venus",
+    "mars",
+    "mercury",
+    "jupiter",
+    "saturn",
+    "sun",
+  ];
+  const timingContextTokens = timingWords.filter((word) =>
+    contextTokenSet.has(word),
+  );
+
+  if (timingContextTokens.length === 0) {
+    return false;
+  }
+
+  return normalizedEvidence.some((candidate) => {
+    const candidateTokens = new Set(timingTokens(candidate));
+
+    return timingContextTokens.every((token) => candidateTokens.has(token));
+  });
+}
+
+function evaluateTimingFit(
+  ritual: Ritual,
+  request: ChooseWithMeRequest,
+): ChooseWithMeTimingDebug {
+  const relationship = ritual.recommendationMetadata.timing.relationship;
+  const contexts = getRitualTimingContexts(ritual);
+  const supplied = getSuppliedTimingEvidence(request);
+  const matchedRitualTiming =
+    relationship === "none"
+      ? []
+      : contexts.filter((context) =>
+          contextMatchesEvidence(context, supplied.evidenceText),
+        );
+  const timingCouldNotBeVerified =
+    relationship !== "none" && contexts.length === 0
+      ? ["ritual_timing_context_missing"]
+      : [];
+  const hasTimingMatch = matchedRitualTiming.length > 0;
+  const requiredTimingSatisfied =
+    relationship !== "required" ||
+    (contexts.length > 0 && hasTimingMatch);
+  let timingScore = 0;
+
+  if (hasTimingMatch) {
+    if (relationship === "required") {
+      timingScore = 24;
+    } else if (relationship === "preferred") {
+      timingScore = 16;
+    } else if (relationship === "helpful") {
+      timingScore = 6;
+    }
+  }
+
+  return {
+    suppliedFacts: supplied.facts,
+    suppliedWindows: supplied.windows,
+    selectedWindow: supplied.selectedWindow?.id,
+    matchedRitualTiming,
+    timingScore,
+    requiredTimingSatisfied,
+    timingCouldNotBeVerified:
+      relationship === "required" && contexts.length > 0 && !hasTimingMatch
+        ? [...timingCouldNotBeVerified, ...contexts]
+        : timingCouldNotBeVerified,
+  };
+}
+
+function emptyTimingDebug(request: ChooseWithMeRequest): ChooseWithMeTimingDebug {
+  const supplied = getSuppliedTimingEvidence(request);
+
+  return {
+    suppliedFacts: supplied.facts,
+    suppliedWindows: supplied.windows,
+    selectedWindow: supplied.selectedWindow?.id,
+    matchedRitualTiming: [],
+    timingScore: 0,
+    requiredTimingSatisfied: true,
+    timingCouldNotBeVerified: [],
+  };
+}
+
 function scoreRitual(
   ritual: Ritual,
   request: ChooseWithMeRequest,
@@ -275,12 +566,20 @@ function scoreRitual(
     breakdown.capacity += 4;
   }
 
-  if (metadata.timing.relationship === "required") {
-    breakdown.timing += request.timeScope === "best_moment_this_week" ? 12 : 4;
-  } else if (metadata.timing.relationship === "preferred") {
-    breakdown.timing += request.timeScope === "best_moment_this_week" ? 8 : 3;
-  } else if (metadata.timing.relationship === "helpful") {
-    breakdown.timing += 4;
+  const timing = evaluateTimingFit(ritual, request);
+  breakdown.timing += timing.timingScore;
+
+  if (timing.matchedRitualTiming.length > 0) {
+    evidence.push(
+      `timing matched ${joinNaturalList(timing.matchedRitualTiming)}`,
+    );
+  }
+
+  if (
+    metadata.timing.relationship === "required" &&
+    timing.timingCouldNotBeVerified.length > 0
+  ) {
+    evidence.push("required timing could not be verified");
   }
 
   const availableMaterials = request.materialsAvailable ?? [];
@@ -320,7 +619,7 @@ function scoreRitual(
     .filter(([key]) => key !== "total")
     .reduce((sum, [, value]) => sum + value, 0);
 
-  return { ritual, breakdown, evidence };
+  return { ritual, breakdown, evidence, timing };
 }
 
 function getEligibleRituals(
@@ -373,6 +672,13 @@ function getEligibleRituals(
 
     if (metadata.eligibility.notFor && metadata.eligibility.notFor.length > 0) {
       addExclusion(exclusions, "eligibility_not_for");
+      return false;
+    }
+
+    const timing = evaluateTimingFit(ritual, request);
+
+    if (!timing.requiredTimingSatisfied) {
+      addExclusion(exclusions, "required_timing_unmatched");
       return false;
     }
 
@@ -467,6 +773,20 @@ function describeRankingSignals(debug: ChooseWithMeDebug): string {
   return `From there, Moon & Table ranked the remaining rituals; this one scored highest with ${joinNaturalList(signals)}.`;
 }
 
+function describeTimingSelection(debug: ChooseWithMeDebug): string | null {
+  const timing = debug.timing;
+
+  if (timing.matchedRitualTiming.length > 0) {
+    return `Timing mattered here: ${joinNaturalList(timing.matchedRitualTiming)} matched the ritual's timing record.`;
+  }
+
+  if (timing.selectedWindow) {
+    return "The week had a usable timing window, but it did not match this ritual's timing record strongly enough to drive the choice.";
+  }
+
+  return null;
+}
+
 function describePracticeFit(ritual: Ritual): string {
   const practiceOpening = getFirstSentence(ritual.presentation.practice);
 
@@ -509,8 +829,17 @@ function buildHowThisWasChosen(
     ? describeRitualMetadataFit(ritual, request)
     : "Moon & Table did not choose a ritual outside that request.";
   const ranking = describeRankingSignals(debug);
+  const timing = describeTimingSelection(debug);
 
-  return `Selection gates: ${hardGates}. ${remainingPhrase}. ${metadataFit} ${ranking}`;
+  return [
+    `Selection gates: ${hardGates}.`,
+    `${remainingPhrase}.`,
+    metadataFit,
+    timing,
+    ranking,
+  ]
+    .filter(Boolean)
+    .join(" ");
 }
 
 function buildDebug(
@@ -526,7 +855,9 @@ function buildDebug(
     score: candidate.breakdown.total,
     breakdown: candidate.breakdown,
     evidence: candidate.evidence,
+    timing: candidate.timing,
   }));
+  const selectedTiming = selected?.timing ?? emptyTimingDebug(request);
 
   return {
     normalizedRequest: request,
@@ -544,11 +875,18 @@ function buildDebug(
       eligible.length === 0
         ? "no_eligible_ritual_for_requested_cell"
         : undefined,
-    timingEvidence: request.timingContext?.timingWindowCandidateIds?.length
-      ? [
-          `${request.timingContext.timingWindowCandidateIds.length} timing windows available`,
-        ]
-      : ["timing did not override the selected carrier and purpose"],
+    timing: selectedTiming,
+    timingEvidence: [
+      ...selectedTiming.matchedRitualTiming.map(
+        (context) => `matched timing: ${context}`,
+      ),
+      ...(selectedTiming.selectedWindow
+        ? [`selected timing window: ${selectedTiming.selectedWindow}`]
+        : []),
+      ...(selectedTiming.timingScore === 0
+        ? ["timing did not override the selected carrier and purpose"]
+        : []),
+    ],
     explanationEvidence: selected?.evidence ?? [],
   };
 }
