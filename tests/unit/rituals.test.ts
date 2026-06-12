@@ -18,7 +18,7 @@ import {
 
 describe("source-backed Ritual import data", () => {
   it("contains source-backed records with direct-use and recommendation review overlays applied", () => {
-    expect(sourceBackedRituals).toHaveLength(218);
+    expect(sourceBackedRituals).toHaveLength(225);
     expect(sourceBackedRituals.map((ritual) => ritual.id)).toEqual(
       expect.arrayContaining([
         "ritual-buckland-candle-prepare-table",
@@ -41,7 +41,7 @@ describe("source-backed Ritual import data", () => {
     ).toHaveLength(22);
     expect(
       sourceBackedRituals.filter((ritual) => ritual.status === "recommendable"),
-    ).toHaveLength(196);
+    ).toHaveLength(203);
     expect(sourceBackedRituals.every((ritual) => ritual.origin.type === "source")).toBe(
       true,
     );
@@ -50,10 +50,10 @@ describe("source-backed Ritual import data", () => {
     ).toBe(true);
     expect(
       sourceBackedRituals.filter((ritual) => ritual.availability.directUseEligible),
-    ).toHaveLength(218);
+    ).toHaveLength(225);
     expect(
       sourceBackedRituals.filter((ritual) => ritual.availability.recommendationEligible),
-    ).toHaveLength(196);
+    ).toHaveLength(203);
     expect(
       sourceBackedRituals.every(
         (ritual) =>
@@ -326,16 +326,41 @@ describe("source-backed Ritual import data", () => {
     );
   });
 
-  it("holds only the context-dependent Anand records", () => {
+  it("imports the superseding Anand packet records as findable, direct-use, and recommendable where metadata supports it", () => {
     const anand = sourceBackedRituals.filter(
       (ritual) =>
         ritual.searchMetadata.sourceLabel ===
         "Margot Anand, The Art of Sexual Magic",
     );
+    const newAnandRecords = [
+      "candidate.anand.partner_dance_witness",
+      "candidate.anand.shared_symbol_lovemaking",
+      "candidate.anand.body_symbol_charge",
+      "candidate.anand.magical_congress_container",
+    ];
 
-    expect(anand).toHaveLength(28);
+    expect(anand).toHaveLength(32);
+    expect(anand.every((ritual) => ritual.availability.findable)).toBe(true);
+    expect(anand.every((ritual) => ritual.availability.directUseEligible)).toBe(
+      true,
+    );
     expect(anand.filter((ritual) => ritual.availability.recommendationEligible)).toHaveLength(
-      24,
+      28,
+    );
+    expect(
+      anand
+        .filter((ritual) => newAnandRecords.includes(ritual.id))
+        .map((ritual) => ({
+          id: ritual.id,
+          directUseEligible: ritual.availability.directUseEligible,
+          recommendationEligible: ritual.availability.recommendationEligible,
+        })),
+    ).toEqual(
+      newAnandRecords.map((id) => ({
+        id,
+        directUseEligible: true,
+        recommendationEligible: true,
+      })),
     );
     expect(
       anand
@@ -346,6 +371,60 @@ describe("source-backed Ritual import data", () => {
       "candidate.anand.read_the_steps_together",
       "candidate.anand.afterglow_grimoire",
       "candidate.anand.keep_symbol_warm",
+    ]);
+  });
+
+  it("imports the superseding Saint Thomas packet records as findable, direct-use, and recommendable where metadata supports it", () => {
+    const saintThomas = sourceBackedRituals.filter(
+      (ritual) =>
+        ritual.searchMetadata.sourceLabel === "Saint Thomas, Sex Witch",
+    );
+    const newSaintThomasRecords = [
+      "candidate.saint_thomas.body_fluid_sigil_candle",
+      "candidate.saint_thomas.kink_desire_body_release",
+      "candidate.saint_thomas.partner_body_intention",
+    ];
+
+    expect(saintThomas).toHaveLength(50);
+    expect(saintThomas.every((ritual) => ritual.availability.findable)).toBe(
+      true,
+    );
+    expect(
+      saintThomas.every((ritual) => ritual.availability.directUseEligible),
+    ).toBe(true);
+    expect(
+      saintThomas.filter((ritual) => ritual.availability.recommendationEligible),
+    ).toHaveLength(40);
+    expect(
+      saintThomas
+        .filter((ritual) => newSaintThomasRecords.includes(ritual.id))
+        .map((ritual) => ({
+          id: ritual.id,
+          directUseEligible: ritual.availability.directUseEligible,
+          recommendationEligible: ritual.availability.recommendationEligible,
+        })),
+    ).toEqual(
+      newSaintThomasRecords.map((id) => ({
+        id,
+        directUseEligible: true,
+        recommendationEligible: true,
+      })),
+    );
+    expect(
+      saintThomas
+        .filter((ritual) => !ritual.availability.recommendationEligible)
+        .map((ritual) => ritual.id),
+    ).toEqual([
+      "candidate.saint_thomas.grimoire_record_after_rite",
+      "candidate.saint_thomas.first_date_threshold_blessing",
+      "candidate.saint_thomas.long_distance_calendar_light",
+      "candidate.saint_thomas.three_month_marker",
+      "candidate.saint_thomas.moving_in_room_blessing",
+      "candidate.saint_thomas.former_lover_release",
+      "candidate.saint_thomas.friendship_benefits_vessel",
+      "candidate.saint_thomas.breakup_boldness_mirror",
+      "candidate.saint_thomas.unsent_contact_boundary",
+      "candidate.saint_thomas.bed_linen_reset",
     ]);
   });
 

@@ -24,6 +24,7 @@ type PacketImportSpec = {
   packetLabel: string;
   sourceLabel: string;
   packetPath: string;
+  supersededByPacketPath?: string;
 };
 
 type ImportedRitual = Ritual & {
@@ -72,6 +73,8 @@ const PACKETS: PacketImportSpec[] = [
     packetLabel: "Saint Thomas sex witch",
     sourceLabel: "Saint Thomas, Sex Witch",
     packetPath: "docs/research/ritual-candidates/packet-saint-thomas-sex-witch.md",
+    supersededByPacketPath:
+      "docs/research/ritual-candidates/packet-anand-saint-thomas-ritual-only-reextract.md",
   },
   {
     packetLabel: "Woodward kitchen vessel magic",
@@ -87,6 +90,14 @@ const PACKETS: PacketImportSpec[] = [
     packetLabel: "Anand connection",
     sourceLabel: "Anand, The Art of Sexual Magic",
     packetPath: "docs/research/ritual-candidates/packet-anand-connection.md",
+    supersededByPacketPath:
+      "docs/research/ritual-candidates/packet-anand-saint-thomas-ritual-only-reextract.md",
+  },
+  {
+    packetLabel: "Anand and Saint Thomas ritual-only adult re-extraction",
+    sourceLabel: "Anand / Saint Thomas superseding adult re-extraction",
+    packetPath:
+      "docs/research/ritual-candidates/packet-anand-saint-thomas-ritual-only-reextract.md",
   },
   {
     packetLabel: "Dominguez practical astrology",
@@ -96,7 +107,17 @@ const PACKETS: PacketImportSpec[] = [
 ];
 
 const OUT_FILE = "src/data/rituals/source-backed-rituals.ts";
-const REPORT_FILE = "docs/content-audits/post-387-remaining-packet-import-review.md";
+const REPORT_FILE = "docs/content-audits/post-420-anand-saint-thomas-import-review.md";
+const ANAND_SAINT_THOMAS_CANONICAL_PACKET =
+  "docs/research/ritual-candidates/packet-anand-saint-thomas-ritual-only-reextract.md";
+const ANAND_SAINT_THOMAS_PREFIXES = [
+  "candidate.anand.",
+  "candidate.saint_thomas.",
+];
+const ANAND_SAINT_THOMAS_EXPECTED_OLD_REUSED_RECORDS = 75;
+const ANAND_SAINT_THOMAS_EXPECTED_NEW_INLINE_RECORDS = 7;
+const ANAND_SAINT_THOMAS_APPROVED_ROWS = 71;
+const ANAND_SAINT_THOMAS_STRUCTURAL_NON_IMPORT_ROWS = 14;
 
 function parseArray(raw: string | undefined): string[] {
   if (!raw) {
@@ -560,22 +581,32 @@ function parseSearchMetadata(block: string, packet: PacketImportSpec) {
     ),
   ]).filter(Boolean);
 
+  const sourceLabel =
+    stripQuotes(
+      text.match(/sourceLabel:\s*(.+)$/m)?.[1] ??
+        text.match(/source label:\s*(.+)$/im)?.[1],
+    ) ?? packet.sourceLabel;
+
   return {
     tags: tags.length > 0 ? tags : [packet.packetLabel],
     keywords: keywords.length > 0 ? keywords : [packet.packetLabel, packet.sourceLabel],
     ...(materials.length > 0 ? { materials } : {}),
     ...(places.length > 0 ? { places } : {}),
-    sourceLabel:
-      stripQuotes(
-        text.match(/sourceLabel:\s*(.+)$/m)?.[1] ??
-          text.match(/source label:\s*(.+)$/im)?.[1],
-      ) ?? packet.sourceLabel,
+    sourceLabel: normalizeSourceLabel(sourceLabel),
     originLabel:
       stripQuotes(
         text.match(/originLabel:\s*(.+)$/m)?.[1] ??
           text.match(/origin label:\s*(.+)$/im)?.[1],
       ) ?? "source",
   } satisfies Ritual["searchMetadata"];
+}
+
+function normalizeSourceLabel(sourceLabel: string): string {
+  if (sourceLabel === "Sophie Saint Thomas, Sex Witch") {
+    return "Saint Thomas, Sex Witch";
+  }
+
+  return sourceLabel;
 }
 
 function parseReviewFlags(block: string) {
@@ -670,6 +701,10 @@ function sanitizeRuntimeMetadata(value: string): string {
     )
     .replace(
       new RegExp(`\\b${outcomeClaimPast}-outcome\\b`, "gi"),
+      "outcome-certainty",
+    )
+    .replace(
+      new RegExp(`\\b${outcomeClaimPast}-effect\\b`, "gi"),
       "outcome-certainty",
     )
     .replace(
@@ -910,40 +945,62 @@ function writeReport(
     imported.map((ritual) => ritual.recommendationMetadata.carriers.primary),
   );
 
-  const markdown = `# Post-387 Remaining Packet Import Review
+  const anandSaintThomasRecords = imported.filter((ritual) =>
+    ANAND_SAINT_THOMAS_PREFIXES.some((prefix) => ritual.id.startsWith(prefix)),
+  );
+  const anandSaintThomasReusedRecords = anandSaintThomasRecords.filter(
+    (ritual) => ritual.__packetPath !== ANAND_SAINT_THOMAS_CANONICAL_PACKET,
+  );
+  const anandSaintThomasNewInlineRecords = anandSaintThomasRecords.filter(
+    (ritual) => ritual.__packetPath === ANAND_SAINT_THOMAS_CANONICAL_PACKET,
+  );
 
-Issue: #387
+  const markdown = `# Post-420 Anand/Saint Thomas Import Review
 
-Follow-up to #287.
+Issue: #420
 
-This packet documents the mechanical import of QA-accepted extraction packet candidates into runtime \`Ritual\` records.
+Follow-up to #413, #414, and #287.
+
+This packet documents the mechanical import of the superseding Anand/Saint Thomas adult re-extraction packet into runtime \`Ritual\` records.
 
 ## Scope confirmation
 
 - Runtime selection/scoring changed: no
 - Recommendation output changed: no
 - UI structure changed: no
-- Search direct-use gating changed: no; Search still requires \`directUseEligible\` by default
-- Manage Rituals inspection surface changed: no; it continues to read source-backed draft records
+- Search direct-use gating changed: no
+- Manage Rituals inspection surface changed: no
 - Runtime Ritual collection changed: yes
 - Legacy pilot Rituals remain in app surface: no
-- Imported records are draft: yes
-- Imported records are findable: yes
-- Imported records are direct-use eligible: no
-- Imported records are recommendation eligible: no
-- Imported records are recommendable: no
+- Mechanically imported records begin as draft/findable before review overlays: yes
+- Direct-use review overlays can promote imported records: yes
+- Recommendation review overlays can promote records whose metadata supports recommendation: yes
 - Packet prose rewritten during import: no
 - New source documents added: no
 - New visible categories added: no
 
+## Anand/Saint Thomas doctrine applied
+
+- The canonical extraction ledger is \`${ANAND_SAINT_THOMAS_CANONICAL_PACKET}\`.
+- The two older Anand and Saint Thomas packets are superseded as doctrine, but their existing approved candidate blocks are reused as import scaffolding where the canonical ledger approved the same source-backed lanes.
+- Explicit adult content is not a hold reason.
+- Search visibility, direct-use eligibility, and recommendation eligibility remain separate decisions.
+- If a Ritual has complete metadata that supports recommendation and is direct-use reviewed, it is eligible for \`Choose with me\`.
+
 ## Packets included
 
-| Packet | Approved candidates found | Imported as draft/findable | Skipped |
-| --- | ---: | ---: | ---: |
+| Packet | Approved candidate blocks found | Imported as source-backed records | Skipped | Notes |
+| --- | ---: | ---: | ---: | --- |
 ${byPacket
   .map(
     ({ packet, approved, imported: count, skipped: skippedCount }) =>
-      `| ${packet.packetLabel} | ${approved} | ${count} | ${skippedCount} |`,
+      `| ${packet.packetLabel} | ${approved} | ${count} | ${skippedCount} | ${
+        packet.supersededByPacketPath
+          ? `Superseded by \`${packet.supersededByPacketPath}\`; reused as import-block scaffolding.`
+          : packet.packetPath === ANAND_SAINT_THOMAS_CANONICAL_PACKET
+            ? "Canonical Anand/Saint Thomas ledger plus seven complete inline records."
+            : ""
+      } |`,
   )
   .join("\n")}
 
@@ -955,6 +1012,15 @@ ${byPacket
     approvedCounts,
   ).reduce((sum, count) => sum + count, 0)}
 - Imported as draft/findable: ${imported.length}
+- Anand/Saint Thomas approved ledger rows: ${ANAND_SAINT_THOMAS_APPROVED_ROWS}
+- Anand/Saint Thomas structural non-import rows: ${ANAND_SAINT_THOMAS_STRUCTURAL_NON_IMPORT_ROWS}
+- Anand/Saint Thomas runtime records after this import: ${anandSaintThomasRecords.length}
+- Existing Anand/Saint Thomas records overwritten/reused from superseded packet blocks: ${anandSaintThomasReusedRecords.length}
+- Newly added Anand/Saint Thomas inline records from the canonical packet: ${anandSaintThomasNewInlineRecords.length}
+- Expected reused old Anand/Saint Thomas records: ${ANAND_SAINT_THOMAS_EXPECTED_OLD_REUSED_RECORDS}
+- Expected new inline Anand/Saint Thomas records: ${ANAND_SAINT_THOMAS_EXPECTED_NEW_INLINE_RECORDS}
+- Removed/superseded runtime records: 0
+- Reconciliation note: approved source-visible ledger rows are not one-to-one with runtime records. Some canonical ledger rows are broad source lanes, while the reused older packet blocks split those lanes into finer-grained Ritual records.
 - Skipped due to malformed packet record: ${skipped.length}
 - Skipped due to unsupported runtime enum: 0
 - Skipped due to unsupported metadata shape: 0
@@ -964,9 +1030,9 @@ ${byPacket
 - Records with reviewFlags: ${reviewFlags.length}
 - Runtime files changed: \`${OUT_FILE}\`, tests
 
-## Imported posture
+## Baseline imported posture
 
-Every imported record is mechanically forced to:
+Every imported record is mechanically created as:
 
 \`\`\`ts
 status: "draft"
@@ -981,7 +1047,7 @@ recommendationMetadata.eligibility: {
 }
 \`\`\`
 
-This follows #387 direction to import the remaining QA-approved packet families as draft inspection records while keeping them unusable and non-recommendable.
+The exported runtime collection then applies \`direct-use-review.ts\` and \`recommendation-eligibility-review.ts\`. For #420, the Anand/Saint Thomas records that have direct-use review and recommendation metadata are promoted to direct-use and recommendation eligibility. Records without that review remain findable drafts rather than being hidden.
 
 ## Skipped candidates
 
@@ -1008,9 +1074,9 @@ ${Object.entries(carrierCounts)
 - Headline, ritual body/practice, intention, best window, and question-to-carry are copied from packet fields.
 - \`whyThisFits\` is mechanically assembled from packet \`sourceBackedRationale\` and \`materialPlaceCarrierPurposeFit\` ingredients because the runtime type requires a string field and the packet provides approved ingredients rather than a separate rendered paragraph.
 - \`howThisWasChosenIngredients\` is not imported because the current runtime \`Ritual\` schema has no field for it.
-- Packet availability values are intentionally overridden to draft/findable/not usable/not recommendable per #287/#387 direction.
+- Packet availability values are intentionally normalized on raw import, then the review overlays set direct-use and recommendation readiness.
 - Legacy pilot Rituals are no longer used by Search, Manage Rituals, or readiness reporting.
-- Draft/findable does not make a Ritual selectable for direct practice. Manage Rituals shows all ${imported.length} draft records for inspection; the warm Search rituals flow filters to direct-use eligible records, so these imports do not appear there yet.
+- Findability does not require recommendation eligibility. Direct-use and recommendation remain review decisions after import.
 
 ## Validation results
 
@@ -1020,13 +1086,12 @@ Run before merge:
 npm run lint:content
 npm run typecheck
 npm run test
-npm run check
 npm run diagnose:content
 \`\`\`
 
 ## Merge recommendation
 
-Hold for human review of imported count, app visibility, and import fidelity before merge.
+Ready for human review of imported count, app visibility, and import fidelity before merge.
 `;
 
   fs.writeFileSync(REPORT_FILE, markdown);
