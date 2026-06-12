@@ -122,6 +122,58 @@ function makeTimingWindow(
   };
 }
 
+const unsupportedRequiredTimingPattern =
+  /seven days before|lead[- ]?time|planetary day|planetary hour|void[- ]of[- ]course|applying aspect|before culmination/i;
+
+function getGuardrailTimingFact(contexts: string[]): TimingFact | null {
+  const normalizedContexts = contexts.map((context) => context.toLowerCase());
+
+  if (
+    normalizedContexts.some(
+      (context) =>
+        context.includes("new moon") ||
+        context.includes("dark moon") ||
+        context.includes("balsamic moon") ||
+        context.includes("lunation") ||
+        context.includes("monthly reset") ||
+        context.includes("before new moon"),
+    )
+  ) {
+    return makeMoonPhaseFact("new");
+  }
+
+  if (normalizedContexts.some((context) => context.includes("waxing moon"))) {
+    return makeMoonPhaseFact("waxing");
+  }
+
+  if (normalizedContexts.some((context) => context.includes("full moon"))) {
+    return makeMoonPhaseFact("full");
+  }
+
+  if (normalizedContexts.some((context) => context.includes("waning moon"))) {
+    return makeMoonPhaseFact("waning");
+  }
+
+  return null;
+}
+
+function getGuardrailCapacityRequest(ritual: Ritual): {
+  energyCapacity: "a_little" | "room_for_something_deeper";
+  capacityMode: "low" | "high";
+} {
+  return ritual.recommendationMetadata.capacity.supports.includes(
+    "room_for_something_deeper",
+  )
+    ? {
+        energyCapacity: "room_for_something_deeper",
+        capacityMode: "high",
+      }
+    : {
+        energyCapacity: "a_little",
+        capacityMode: "low",
+      };
+}
+
 describe("chooseWithMeRitual", () => {
   it("preserves the requested primary carrier and purpose cell", () => {
     const selected = makeRitual({
@@ -802,5 +854,79 @@ describe("chooseWithMeRitual", () => {
 
     expect(result.status).toBe("no_result");
     expect(result.debug.exclusions.not_recommendation_eligible).toBe(1);
+  });
+
+  it("guards every recommendation-eligible required timing ritual with realistic evidence", () => {
+    const requiredTimingRituals = sourceBackedRituals.filter(
+      (ritual) =>
+        ritual.availability.recommendationEligible &&
+        ritual.recommendationMetadata.timing.relationship === "required",
+    );
+
+    expect(requiredTimingRituals.map((ritual) => ritual.id)).toEqual([
+      "candidate.moon_book.lunation_map_one_desire",
+      "candidate.moon_book.new_moon_table_seed",
+      "candidate.moon_book.waxing_one_thread",
+      "candidate.moon_book.full_moon_mirror",
+      "candidate.moon_book.full_moon_table_witness",
+      "candidate.moon_book.waning_release_one_extra",
+      "candidate.moon_book.dark_moon_void_table",
+      "candidate.moon_book.cycle_close_and_begin_again",
+    ]);
+
+    for (const ritual of requiredTimingRituals) {
+      const contexts = ritual.recommendationMetadata.timing.contexts ?? [];
+      const timingFact = getGuardrailTimingFact(contexts);
+      const unsupportedContext = contexts.find((context) =>
+        unsupportedRequiredTimingPattern.test(context),
+      );
+      const capacity = getGuardrailCapacityRequest(ritual);
+
+      expect(contexts.length, `${ritual.id} needs timing contexts`).toBeGreaterThan(
+        0,
+      );
+      expect(
+        unsupportedContext,
+        `${ritual.id} has required timing the current engine cannot verify`,
+      ).toBeUndefined();
+      expect(
+        timingFact,
+        `${ritual.id} needs at least one fixture-supported required timing context`,
+      ).not.toBeNull();
+
+      if (!timingFact) {
+        continue;
+      }
+
+      const result = chooseWithMeRitual([ritual], {
+        timeScope: "today",
+        energyCapacity: capacity.energyCapacity,
+        capacityMode: capacity.capacityMode,
+        audience: ritual.recommendationMetadata.audience.default ?? "me",
+        purpose: ritual.recommendationMetadata.purposes.primary,
+        carrier: ritual.recommendationMetadata.carriers.primary,
+        timingContext: {
+          computedTimingFacts: [timingFact],
+        },
+      });
+
+      expect(result.status, `${ritual.id} should be selectable`).toBe("selected");
+      expect(result.selectedRitual?.id).toBe(ritual.id);
+      expect(
+        result.debug.timing.matchedRitualTiming.length,
+        `${ritual.id} should match at least one timing context`,
+      ).toBeGreaterThan(0);
+      expect(
+        result.debug.timing.matchedRitualTiming.some((context) =>
+          contexts.includes(context),
+        ),
+        `${ritual.id} matched timing must come from its metadata contexts`,
+      ).toBe(true);
+      expect(
+        `${result.whyThisFits} ${result.howThisWasChosen}`,
+      ).not.toMatch(
+        /moon_phase|planetary_aspect|timing_rule|timing_window|calendar_threshold|moon\.(new|waxing|full|waning)/,
+      );
+    }
   });
 });
