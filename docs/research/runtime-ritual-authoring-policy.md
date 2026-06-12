@@ -311,6 +311,31 @@ It does not mean reviewed, direct-use eligible, recommendation eligible, recomme
 
 Do not treat import approval as product approval.
 
+## Availability review sequence
+
+Runtime authoring must keep these decisions separate:
+
+```text
+Ritual exists?
+Search can find it?
+Direct-use/openable?
+Choose with me can recommend it?
+```
+
+A self-contained source-backed Ritual can exist when it has a beginning/container, middle/core action, end/closing, intrinsic purpose, source-backed ritual logic, and enough completeness to perform from the app without reopening the source.
+
+Search visibility and direct-use/openability are not the same as recommendation eligibility. A record can be:
+
+```text
+availability.findable: true
+availability.directUseEligible: true
+availability.recommendationEligible: false
+```
+
+Use that posture for complete Rituals that should be available through I have something in mind but should not yet be selected by Choose with me because of timing support, narrow context, metadata confidence, product-boundary review, or non-default recommendation fit.
+
+Do not reject or hide a complete Ritual from import, search, or direct use merely because it is adult, explicit, sex-forward, consent-sensitive, kink-adjacent, body-fluid-related, technique-heavy, culturally loaded, targeted, revenge/hex/protection-oriented, spirit/deity-oriented, awkward, or not default-recommendation-ready. Label it honestly, keep user-facing copy usable, and leave `recommendationEligible` false when guided recommendation is not appropriate.
+
 ## Import scope and batching
 
 The goal of #287 is full accepted coverage soonest.
@@ -336,6 +361,8 @@ omitted as quoted speech when the source merely asks the practitioner to name, w
 ```
 
 Do not make recommendation eligibility part of direct-use review unless a separate issue explicitly says so.
+
+Direct-use review should decide whether the Ritual can be opened and practiced from the app. It may leave `recommendationEligible` false.
 
 ## Codex preamble for future ritual work
 

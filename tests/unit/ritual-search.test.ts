@@ -26,6 +26,41 @@ describe("Ritual search", () => {
     ).toHaveLength(218);
   });
 
+  it("surfaces searchable direct-use Rituals even when they are not recommendation eligible", () => {
+    const searchOnlyRitual = {
+      ...sourceBackedRituals[0],
+      id: "ritual.search_only_direct_use_fixture",
+      status: "reviewed",
+      presentation: {
+        ...sourceBackedRituals[0].presentation,
+        headline: "Search Only Direct Use Fixture",
+      },
+      searchMetadata: {
+        ...sourceBackedRituals[0].searchMetadata,
+        tags: ["search-only-direct-use-fixture"],
+        keywords: ["search-only-direct-use-fixture"],
+      },
+      availability: {
+        findable: true,
+        directUseEligible: true,
+        recommendationEligible: false,
+      },
+      recommendationMetadata: {
+        ...sourceBackedRituals[0].recommendationMetadata,
+        eligibility: {
+          recommendable: false,
+          missing: ["recommendation_review"],
+        },
+      },
+    } satisfies Ritual;
+
+    expect(
+      searchRituals([searchOnlyRitual], {
+        query: "search-only-direct-use-fixture",
+      }).map((ritual) => ritual.id),
+    ).toEqual(["ritual.search_only_direct_use_fixture"]);
+  });
+
   it("can include draft records only for inspection/debug search", () => {
     const ids = searchRituals(sourceBackedRituals, {
       query: "seed",

@@ -604,6 +604,31 @@ describe("source-backed Ritual import data", () => {
     );
   });
 
+  it("allows direct-use searchable Rituals to remain out of recommendation eligibility", () => {
+    const valid = {
+      ...sourceBackedRituals[0],
+      id: "ritual.search_only_direct_use_fixture",
+      status: "reviewed",
+      availability: {
+        findable: true,
+        directUseEligible: true,
+        recommendationEligible: false,
+      },
+      recommendationMetadata: {
+        ...sourceBackedRituals[0].recommendationMetadata,
+        eligibility: {
+          recommendable: false,
+          missing: ["recommendation_review"],
+        },
+      },
+    } satisfies Ritual;
+
+    expect(validateRitual(valid)).toEqual({
+      valid: true,
+      findings: [],
+    });
+  });
+
   it("catches recommendation-eligible records with missing metadata objects", () => {
     const invalid = {
       ...sourceBackedRituals[0],
