@@ -32,6 +32,15 @@ Decide whether this source can be used for future Moon & Table extraction, and i
 
 A source can be approved narrowly. It does not need to support every carrier or every purpose.
 
+Source-gate review must not pre-filter the future source inventory for product
+comfort. Adult, explicit, sex-forward, consent-sensitive, kink-adjacent,
+body-fluid, technique-heavy, culturally or gender loaded, therapy-adjacent,
+awkward, or non-default-recommendation-ready material should be named as
+repository-safe source ranges, likely inventory items, review labels, or Tim
+decision-required lanes. Those qualities may affect later extraction,
+adaptation, direct-source-only handling, runtime eligibility, or rejection.
+They do not justify silently omitting material from the future inventory.
+
 ## Text and ritual language posture
 
 Words, prayers, blessings, invocations, prompts, meditations, spells, charms, and recipes are valid Ritual mechanics and may be central to a Ritual.
@@ -55,7 +64,7 @@ If exact operative source wording is more than 20 words:
   - it should be tracked as ritualWords.mode = "adapted_source_words" with source location and a note explaining what ritual function was adapted.
 ```
 
-A source gate may impose stricter limits only for source-specific reasons, such as explicit sexualized commands, coercive wording, revenge/hex language, distinctive author voice, culturally sensitive language, medical/legal/therapy claims, or other product-boundary concerns.
+A source gate may impose stricter exact-text limits only for source-specific reasons, such as distinctive author voice, culturally sensitive language, medical/legal/therapy claims, coercive wording, revenge/hex language, explicit sexualized commands, or other product-boundary concerns. Exact-text limits control reproduction and runtime readiness; they do not remove the underlying source item from inventory.
 
 Do not write a blanket ban on exact short operative phrases unless the source-specific reason is explicit.
 
@@ -71,6 +80,8 @@ When exact wording is important but longer than 20 words, preserve its ritual fu
 4. Identify reusable Ritual mechanics.
 5. Identify exact source text areas that may matter ritually.
 6. Identify excluded or limited material.
+   - Do not treat adult/explicit/intimacy complexity as an exclusion by itself.
+   - If material needs Tim's later product call, classify it as decision-required.
 7. Separate mechanics from authored wording, scripts, prayers, spells, meditations, recipes, prompts, diagrams, and distinctive sequence language.
 8. Classify verbal/expressive/recipe handling:
    - `use_directly_from_source`
@@ -104,6 +115,7 @@ When exact wording is important but longer than 20 words, preserve its ritual fu
 12. Identify likely high-yield extraction lanes for a future extraction issue.
 13. Identify sections that should remain context-only and never become direct extraction material.
 14. Identify likely source inventory scope: estimate how many source rite inventory items a future extraction packet should expect.
+15. Identify likely Tim decision-required material: source ranges or lanes that should be inventoried in repository-safe paraphrase before Tim decides import, adapt, direct-source-only, hold, or reject.
 
 ## Output required
 
@@ -168,7 +180,7 @@ sourceTextPolicy: {
     "unavailable_by_default",
     "not_recommendation_eligible_until_human_review"
   ];
-  notes: "Default rule: exact operative source wording of 20 words or fewer may be used inline during extraction when source-attributed, non-substitutive, ritually important, and not source-prohibited. Longer/substantial exact wording may be adapted into Moon & Table words only as a justified candidate-level exception; otherwise use functional instruction or hold the candidate. Add stricter limits only for source-specific product-boundary reasons."
+  notes: "Default rule: exact operative source wording of 20 words or fewer may be used inline during extraction when source-attributed, non-substitutive, ritually important, and not source-prohibited. Longer/substantial exact wording may be adapted into Moon & Table words only as a justified candidate-level exception; otherwise use functional instruction or hold the candidate. Add stricter exact-text limits only for source-specific product-boundary reasons. Adult/explicit/consent-sensitive material must still be inventoried in repository-safe paraphrase unless a privacy or source-expression boundary prevents even describing the item."
 }
 ```
 
@@ -209,6 +221,10 @@ For each excluded/limited range, specify why:
 - not a Ritual mechanics source;
 - outside Moon & Table scope.
 
+Do not use this section to hide adult intimacy source material. If an adult or
+explicit range is unsuitable for extraction, list it with repository-safe
+description, review labels, and whether Tim decision is required.
+
 ## Reusable mechanics
 
 Use this table:
@@ -232,6 +248,24 @@ Use type:
 - `paraphrase_for_app`
 - `mechanics_only`
 - `do_not_use`
+
+## Tim decision-required lanes
+
+List source ranges or source-item families that should be inventoried even
+though later use needs Tim's explicit decision.
+
+| Source range / lane | Why decision is needed | Review labels | Likely carriers | Likely purposes | Possible outcomes |
+| --- | --- | --- | --- | --- | --- |
+
+Possible outcomes include:
+
+- `candidate_extract_now`
+- `candidate_extract_later`
+- `direct_source_only`
+- `adaptation_review`
+- `private_household_only`
+- `hold`
+- `reject`
 
 ## Best-fit carriers
 

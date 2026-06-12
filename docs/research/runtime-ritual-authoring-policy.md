@@ -21,6 +21,15 @@ Moon & Table is not a public consumer safety product, therapy product, wellness 
 
 Moon & Table is private software for two competent adults. It should sound and behave like a warm, source-backed, private household grimoire.
 
+Adult intimacy source material should not disappear before runtime review.
+Extraction must surface adult, explicit, sex-forward, consent-sensitive,
+kink-adjacent, body-fluid, technique-heavy, culturally or gender loaded,
+therapy-adjacent, or house-voice-challenging material in repository-safe
+inventory records when the source contains it. Runtime authoring may later hold,
+adapt, mark direct-source-only, keep private-household-only, reject, or import
+that material after Tim's explicit decision. A missing extraction row is not a
+runtime product decision.
+
 Runtime Rituals should preserve source-backed magical language when it fits the approved source lane:
 
 ```text
@@ -165,6 +174,10 @@ adaptation policy notes, if needed
 operative words metadata
 import readiness label
 ```
+
+For adult intimacy or other decision-sensitive source material, the canonical
+packet must also preserve the inventory row and Tim decision state, even when no
+runtime candidate is imported yet.
 
 Runtime mapping:
 
