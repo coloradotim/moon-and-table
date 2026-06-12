@@ -202,17 +202,17 @@ Count reconciliation:
 
 | Candidate ID | Headline | Primary carrier | Primary purpose | Source | Explicit adult? | Body-fluid metadata? | Import readiness |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| `candidate.anand.partner_dance_witness` | Offer the Body, Receive the Witness | `body` | `connecting` | Anand Ch. 3 | yes | no | `approved_for_mechanical_import` |
+| `candidate.anand.partner_dance_witness` | Let the Body Be Witnessed | `body` | `connecting` | Anand Ch. 3 | yes | no | `approved_for_mechanical_import` |
 | `candidate.anand.shared_symbol_lovemaking` | Carry the Shared Symbol Into Touch | `body` | `connecting` | Anand Ch. 5 | yes | no | `approved_for_mechanical_import` |
-| `candidate.anand.body_symbol_charge` | Let the Body Charge the Symbol | `body` | `opening` | Anand Ch. 9 | yes | no | `approved_for_mechanical_import` |
-| `candidate.anand.magical_congress_container` | Enter the Congress Container | `body` | `connecting` | Anand Ch. 9 | yes | no | `approved_for_mechanical_import` |
-| `candidate.saint_thomas.body_fluid_sigil_candle` | Mark Desire With the Body's Own Ink | `body` | `voicing` | Saint Thomas Ch. 5 | yes | yes | `approved_for_mechanical_import` |
+| `candidate.anand.body_symbol_charge` | Charge the Symbol With the Body | `body` | `opening` | Anand Ch. 9 | yes | no | `approved_for_mechanical_import` |
+| `candidate.anand.magical_congress_container` | Prepare the Congress Container | `body` | `connecting` | Anand Ch. 9 | yes | no | `approved_for_mechanical_import` |
+| `candidate.saint_thomas.body_fluid_sigil_candle` | Mark Desire With the Body | `body` | `voicing` | Saint Thomas Ch. 5 | yes | yes | `approved_for_mechanical_import` |
 | `candidate.saint_thomas.kink_desire_body_release` | Cut the Shame From the Desire | `body` | `voicing` | Saint Thomas Ch. 5 | yes | no | `approved_for_mechanical_import` |
 | `candidate.saint_thomas.partner_body_intention` | Carry One Intention Through the Body | `body` | `connecting` | Saint Thomas Ch. 5 | yes | no | `approved_for_mechanical_import` |
 
 ## Approved candidate records
 
-### `candidate.anand.partner_dance_witness` — Offer the Body, Receive the Witness
+### `candidate.anand.partner_dance_witness` — Let the Body Be Witnessed
 
 - candidate ID: `candidate.anand.partner_dance_witness`
 - disposition: `candidate_extract_now`
@@ -221,15 +221,15 @@ Count reconciliation:
 
 #### Headline
 
-Offer the Body, Receive the Witness
+Let the Body Be Witnessed
 
 #### Ritual body / practice
 
-Choose a private room and agree who will offer movement first and who will witness. Light one candle or dim one lamp. The offering partner moves, undresses, stays clothed, dances, or simply stands in the way that feels true for this rite. The witnessing partner keeps attention on appreciation, not correction. When the offering is complete, the witness names one thing they received. Switch roles if both want to, or close by touching hands and saying that the offering has been received.
+Choose a private room and agree who will move first and who will witness. Light one candle or dim one lamp. The moving partner dances, undresses, stays clothed, stands, or lets the body take the shape that feels true for this rite. The witnessing partner keeps attention on appreciation, not correction. When the movement is complete, the witness names one thing they received. Switch roles if both want to, or close by touching hands and naming that the offering has been received.
 
 #### Intention
 
-Let the body be met as an offering instead of a performance.
+Let the body be met without turning it into performance.
 
 #### Best window
 
@@ -237,7 +237,7 @@ When both of you want explicit embodied connection without turning the evening i
 
 #### Question to carry
 
-What changes when the body is witnessed without being corrected?
+What becomes possible when the body is witnessed without being corrected?
 
 #### Why this fits ingredients
 
@@ -423,7 +423,7 @@ Draw or place the shared symbol where both of you can see it. Sit together and n
 
 #### Intention
 
-Let shared desire have a visible sign before it enters the body.
+Give shared desire a visible sign before touch carries it.
 
 #### Best window
 
@@ -431,7 +431,7 @@ Before consensual private touch or lovemaking that both of you want to treat as 
 
 #### Question to carry
 
-What symbol can hold our shared desire without forcing it?
+What symbol can hold our shared desire lightly enough to let it move?
 
 #### Why this fits ingredients
 
@@ -602,7 +602,7 @@ adaptation policy notes: `source_backed_moon_and_table_form`; the symbol and bod
 
 operative words metadata: []
 
-### `candidate.anand.body_symbol_charge` — Let the Body Charge the Symbol
+### `candidate.anand.body_symbol_charge` — Charge the Symbol With the Body
 
 - candidate ID: `candidate.anand.body_symbol_charge`
 - disposition: `candidate_extract_now`
@@ -611,15 +611,15 @@ operative words metadata: []
 
 #### Headline
 
-Let the Body Charge the Symbol
+Charge the Symbol With the Body
 
 #### Ritual body / practice
 
-Place your Magic Symbol where you can see it. Put one hand on or near your own body and name the desire the symbol is carrying. Let private pleasure, arousal, breath, or body attention gather around the symbol without forcing a result. When the charge feels complete, touch the paper once, fold it, and place it on the altar, in a journal, or beside the bed. Close by washing your hands or taking one drink of water.
+Place your Magic Symbol where you can see it. Put one hand on or near your own body and name the desire the symbol is carrying. Let private pleasure, arousal, breath, or body attention gather around the symbol without forcing a result. When the charge feels complete, touch the paper once, fold it, and place it on the altar, in a journal, or beside the bed. Close by washing your hands or drinking a little water.
 
 #### Intention
 
-Let the body give warmth to a chosen sign without making a promise of outcome.
+Let the body give warmth to a chosen sign without demanding an outcome.
 
 #### Best window
 
@@ -627,7 +627,7 @@ When a personal desire needs a private embodied container.
 
 #### Question to carry
 
-What does my body know about this desire before I explain it?
+What does the body know about this desire before I explain it?
 
 #### Why this fits ingredients
 
@@ -800,7 +800,7 @@ adaptation policy notes: `source_backed_moon_and_table_form`; purpose change not
 
 operative words metadata: []
 
-### `candidate.anand.magical_congress_container` — Enter the Congress Container
+### `candidate.anand.magical_congress_container` — Prepare the Congress Container
 
 - candidate ID: `candidate.anand.magical_congress_container`
 - disposition: `candidate_extract_now`
@@ -809,11 +809,11 @@ operative words metadata: []
 
 #### Headline
 
-Enter the Congress Container
+Prepare the Congress Container
 
 #### Ritual body / practice
 
-Prepare the private room before either of you enters the heart of the rite. Set the shared symbol, one candle or lamp, and a cup of water where both of you can reach them. Stand together and name the work of the night in one sentence. Greet each other as the partner in the rite. If both of you choose to continue, let touch, sex, breath, stillness, or closeness carry the shared symbol without following instructions from the app. When the rite is complete, return to the cup of water. Each person drinks or touches the cup, names one word for the return, and the candle or lamp is closed.
+Prepare the private room before the rite begins. Set the shared symbol, one candle or lamp, and a cup of water where both of you can reach them. Stand together and name the work of the night in one sentence. Greet each other as partners in the rite. If both of you choose to continue, let touch, sex, breath, stillness, or closeness carry the shared symbol without following instructions from the app. When the rite is complete, return to the cup of water. Each person drinks or touches the cup and names one word for the return. Extinguish the candle or turn off the lamp.
 
 #### Intention
 
@@ -825,7 +825,7 @@ When both of you have room for a deeper private adult ritual and want the whole 
 
 #### Question to carry
 
-What container lets the body go deeper and still come home?
+What kind of container lets the body go deep and still come home?
 
 #### Why this fits ingredients
 
@@ -998,7 +998,7 @@ adaptation policy notes: `source_backed_moon_and_table_form`; no technique seque
 
 operative words metadata: []
 
-### `candidate.saint_thomas.body_fluid_sigil_candle` — Mark Desire With the Body's Own Ink
+### `candidate.saint_thomas.body_fluid_sigil_candle` — Mark Desire With the Body
 
 - candidate ID: `candidate.saint_thomas.body_fluid_sigil_candle`
 - disposition: `candidate_extract_now`
@@ -1007,23 +1007,23 @@ operative words metadata: []
 
 #### Headline
 
-Mark Desire With the Body's Own Ink
+Mark Desire With the Body
 
 #### Ritual body / practice
 
-Write one consensual, non-targeted erotic intention. Reduce it to a simple sigil or mark. Set one candle on a plate or holder. Touch the sigil to the candle with one body-sourced material that belongs only to you, or keep the body material on the paper if the candle should stay clean. Light the candle and let the mark stand for the desire without naming another person as the object of the spell. When the candle work is complete, fold the paper and put it away or discard it.
+Write one erotic intention that belongs to you. Reduce it to a simple sigil or mark. Set one candle on a plate or holder. Touch the sigil to the candle with one body-sourced material, or keep the body material on the paper if the candle should stay clean. Light the candle and let the mark stand for the desire. When the candle work is complete, fold the paper and put it away or discard it.
 
 #### Intention
 
-Let private desire speak through the body without turning another person into a target.
+Let private desire speak through the body and take a visible mark.
 
 #### Best window
 
-When a private erotic desire needs to be named, contained, and kept non-coercive.
+When a private erotic desire needs to be named, marked, and contained.
 
 #### Question to carry
 
-What does desire want when it is not aimed at control?
+What desire wants a mark of its own?
 
 #### Why this fits ingredients
 
@@ -1212,7 +1212,7 @@ Cut the Shame From the Desire
 
 #### Ritual body / practice
 
-Set two candles or two steady lights on the table. Sit with one loose length of cord, ribbon, or thread around one wrist or held between both hands. Name the desire, kink, or fantasy in one plain sentence. Let the cord hold the shame, fear, or embarrassment around the sentence. When the sentence feels named, cut the cord or untie it. Put the cord away from the body. Close by writing one next honest conversation or boundary the desire asks for.
+Set two candles or two steady lights on the table. Sit with one loose length of cord, ribbon, or thread around one wrist or held between both hands. Name the desire, kink, or fantasy in one plain sentence. Let the cord hold the shame, fear, or embarrassment around that sentence. When the desire has been named, cut the cord or untie it. Put the cord away from the body. Close by writing one honest conversation or boundary the desire asks for next.
 
 #### Intention
 
@@ -1413,7 +1413,7 @@ Carry One Intention Through the Body
 
 #### Ritual body / practice
 
-Sit or stand together before private touch begins. Each person names one word for what the shared adult time should carry. Choose one word together and write it on a small paper. Place the paper near the bed, under a candle, or under a shared object. If both of you choose to continue into sex or touch, let the body carry that one word without adding instructions. Close by returning to the paper, reading the word once, and deciding whether to keep, fold, or discard it.
+Sit or stand together before private touch begins. Each person names one word for what the shared time should carry. Choose one word together and write it on a small paper. Place the paper near the bed, under a candle, or under a shared object. If both of you choose to continue into sex or touch, let the body carry that one word without adding instructions. Close by returning to the paper, reading the word once, and deciding whether to keep, fold, or discard it.
 
 #### Intention
 
