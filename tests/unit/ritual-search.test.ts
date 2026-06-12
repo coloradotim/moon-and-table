@@ -16,14 +16,14 @@ function resultIds(query: string, selectedChips: string[] = []): string[] {
 
 describe("Ritual search", () => {
   it("returns reviewed direct-use records in the direct-selection search flow", () => {
-    expect(resultIds("")).toHaveLength(218);
-    expect(sourceBackedRituals).toHaveLength(218);
+    expect(resultIds("")).toHaveLength(225);
+    expect(sourceBackedRituals).toHaveLength(225);
     expect(sourceBackedRituals.every((ritual) => ritual.availability.findable)).toBe(
       true,
     );
     expect(
       sourceBackedRituals.filter((ritual) => ritual.availability.directUseEligible),
-    ).toHaveLength(218);
+    ).toHaveLength(225);
   });
 
   it("surfaces searchable direct-use Rituals even when they are not recommendation eligible", () => {

@@ -25381,6 +25381,1043 @@ const importedSourceBackedRituals: Ritual[] = [
     }
   },
   {
+    "id": "candidate.anand.partner_dance_witness",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic",
+          "sourceLocation": "PDF pp. 136-144 / Chapter 3, partner movement and witnessing material",
+          "sourceSummary": "The source presents partner movement/witnessing as an embodied erotic preparation lane.",
+          "sourceSupports": "A private container, chosen roles, embodied offering, partner witnessing, and completion through acknowledgment.",
+          "moonAndTableChanges": "Converted the source-supported movement lane into a high-level household ritual without copied exercise text or technique instruction.",
+          "doNotImport": [
+            "Copied source exercise text",
+            "Explicit technique instruction",
+            "Performance pressure",
+            "Therapy or body-image treatment claims",
+            "Third-party participation",
+            "Not for performance pressure, correction, public display, third-party participation, therapy claims, or technique instruction."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Let the Body Be Witnessed",
+      "practice": "Choose a private room and agree who will move first and who will witness. Light one candle or dim one lamp. The moving partner dances, undresses, stays clothed, stands, or lets the body take the shape that feels true for this rite. The witnessing partner keeps attention on appreciation, not correction. When the movement is complete, the witness names one thing they received. Switch roles if both want to, or close by touching hands and naming that the offering has been received.",
+      "intention": "Let the body be met without turning it into performance.",
+      "bestWindow": "When both of you want explicit embodied connection without turning the evening into a technique lesson.",
+      "whyThisFits": "Anand supports partner movement/witnessing as part of erotic-magical preparation and shared body connection. Carrier: body. Materials: candle or lamp. Place: private room or bedroom.",
+      "questionToCarry": "What becomes possible when the body is witnessed without being corrected?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "connecting",
+        "secondary": [
+          "opening",
+          "blessing"
+        ],
+        "refinement": "connecting"
+      },
+      "carriers": {
+        "primary": "body",
+        "secondary": [
+          "candlelight",
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "room_for_something_deeper"
+        ],
+        "default": "room_for_something_deeper"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us"
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "private room with enough time for chosen embodied attention"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- Anand",
+        "Anand",
+        "adult intimacy",
+        "body",
+        "connecting",
+        "partner witness",
+        "movement"
+      ],
+      "keywords": [
+        "- Anand",
+        "Anand",
+        "adult intimacy",
+        "body",
+        "connecting",
+        "partner witness",
+        "movement",
+        "- candle or lamp",
+        "candle or lamp",
+        "- private room",
+        "private room",
+        "bedroom",
+        "embodied connection",
+        "dance",
+        "witness",
+        "erotic offering",
+        "appreciation",
+        "- embodied connection"
+      ],
+      "materials": [
+        "- candle or lamp",
+        "candle or lamp"
+      ],
+      "places": [
+        "- private room",
+        "private room",
+        "bedroom"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"explicit adult private partner practice\"",
+        "\"consent-sensitive role structure\"",
+        "\"not recommendation-ready\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.shared_symbol_lovemaking",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic",
+          "sourceLocation": "PDF pp. 238-249 / Chapter 5, shared Magic Symbol and lovemaking lane",
+          "sourceSummary": "The source links shared Magic Symbol work with adult partner lovemaking and sexual energy.",
+          "sourceSupports": "A shared symbol, shared intention, visible placement, adult body practice, and return/integration.",
+          "moonAndTableChanges": "Authored a high-level private household form that preserves symbol/body logic without importing explicit technique.",
+          "doNotImport": [
+            "Copied source visualization or technique text",
+            "Fertility, manifestation, or outcome-certainty claims",
+            "Third-party targeting",
+            "Pressure to proceed into touch",
+            "Not for coercive manifestation, fertility claims, outcome-certainty claims, or technique instruction."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Carry the Shared Symbol Into Touch",
+      "practice": "Draw or place the shared symbol where both of you can see it. Sit together and name the shared intention the symbol is holding. Choose whether the rite will continue into touch, sex, or quiet closeness. If it does, keep the symbol in view or near the bed as the body carries the intention. When the touch is complete, return attention to the symbol. Cover it, fold it, or place it back on the altar, then each person names one word for what should come forward from the rite.",
+      "intention": "Give shared desire a visible sign before touch carries it.",
+      "bestWindow": "Before consensual private touch or lovemaking that both of you want to treat as ritual.",
+      "whyThisFits": "Anand supports shared Magic Symbol work and carrying the symbol through lovemaking/sexual energy. Carrier: body. Materials: shared symbol, paper, pen, altar or bedside.",
+      "questionToCarry": "What symbol can hold our shared desire lightly enough to let it move?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "connecting",
+        "secondary": [
+          "opening",
+          "marking",
+          "voicing"
+        ],
+        "refinement": "connecting"
+      },
+      "carriers": {
+        "primary": "body",
+        "secondary": [
+          "table",
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "room_for_something_deeper"
+        ],
+        "default": "room_for_something_deeper"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "before consensual private touch or lovemaking"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- Anand",
+        "Anand",
+        "Magic Symbol",
+        "adult intimacy",
+        "body",
+        "connecting",
+        "shared intention"
+      ],
+      "keywords": [
+        "- Anand",
+        "Anand",
+        "Magic Symbol",
+        "adult intimacy",
+        "body",
+        "connecting",
+        "shared intention",
+        "- shared symbol",
+        "shared symbol",
+        "paper",
+        "pen",
+        "- altar",
+        "altar",
+        "bedside",
+        "bedroom",
+        "lovemaking",
+        "sexual energy",
+        "desire"
+      ],
+      "materials": [
+        "- shared symbol",
+        "shared symbol",
+        "paper",
+        "pen"
+      ],
+      "places": [
+        "- altar",
+        "altar",
+        "bedside",
+        "bedroom"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"explicit adult partner ritual\"",
+        "\"source supports symbol/body logic\"",
+        "\"not recommendation-ready\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.body_symbol_charge",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic",
+          "sourceLocation": "PDF pp. 421-429 / Chapter 9, sexual self-empowerment and symbol lane",
+          "sourceSummary": "The source supports using personal sexual/embodied energy with a symbol.",
+          "sourceSupports": "A personal symbol, body energy, private attention, and later keeping/placing the symbol.",
+          "moonAndTableChanges": "Converted the explicit body-symbol lane into a self-contained Moon & Table form without technique instruction or outcome claims.",
+          "doNotImport": [
+            "Copied source exercise text",
+            "Orgasm-performance instructions",
+            "Fertility, therapy, medical, or manifestation outcome certainty",
+            "Third-party target work",
+            "Not for fertility claims, medical claims, third-party targeting, or orgasm-performance pressure."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Charge the Symbol With the Body",
+      "practice": "Place your Magic Symbol where you can see it. Put one hand on or near your own body and name the desire the symbol is carrying. Let private pleasure, arousal, breath, or body attention gather around the symbol without forcing a result. When the charge feels complete, touch the paper once, fold it, and place it on the altar, in a journal, or beside the bed. Close by washing your hands or drinking a little water.",
+      "intention": "Let the body give warmth to a chosen sign without demanding an outcome.",
+      "bestWindow": "When a personal desire needs a private embodied container.",
+      "whyThisFits": "Anand supports charging a symbol through sexual/embodied energy and later placing or keeping the symbol. Carrier: body. Materials: Magic Symbol, paper, pen, water optional.",
+      "questionToCarry": "What does the body know about this desire before I explain it?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "opening",
+        "secondary": [
+          "voicing",
+          "connecting"
+        ],
+        "refinement": "opening"
+      },
+      "carriers": {
+        "primary": "body",
+        "secondary": [
+          "words",
+          "table",
+          "vessel"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate",
+          "room_for_something_deeper"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "me"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "private embodied desire work"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- Anand",
+        "Anand",
+        "Magic Symbol",
+        "body",
+        "desire",
+        "adult intimacy"
+      ],
+      "keywords": [
+        "- Anand",
+        "Anand",
+        "Magic Symbol",
+        "body",
+        "desire",
+        "adult intimacy",
+        "- Magic Symbol",
+        "paper",
+        "pen",
+        "water",
+        "- altar",
+        "altar",
+        "journal",
+        "bedside",
+        "bedroom",
+        "symbol",
+        "arousal",
+        "private pleasure",
+        "body attention",
+        "- symbol"
+      ],
+      "materials": [
+        "- Magic Symbol",
+        "Magic Symbol",
+        "paper",
+        "pen",
+        "water"
+      ],
+      "places": [
+        "- altar",
+        "altar",
+        "journal",
+        "bedside",
+        "bedroom"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"explicit solo adult body ritual\"",
+        "\"no body-fluid material\"",
+        "\"not recommendation-ready\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.anand.magical_congress_container",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Margot Anand, The Art of Sexual Magic",
+          "sourceLocation": "PDF pp. 331-374 / Chapter 9, Magical Congress",
+          "sourceSummary": "The source presents a culminating adult ritual with preparation, symbol, intention, sexual energy, and grounding return.",
+          "sourceSupports": "Prepared private room, shared symbol, candle/atmosphere, intention, adult body practice, greeting/recognition, and return/grounding.",
+          "moonAndTableChanges": "Authored only the high-level ritual container and close; did not import explicit technique sequence or long source text.",
+          "doNotImport": [
+            "Copied explicit sequence",
+            "Technique instruction",
+            "Fertility, manifestation, therapy, medical, or outcome-certainty claims",
+            "Pressure to continue into sex",
+            "Not for low capacity, technique instruction, fertility/manifestation outcome certainty, or pressure to continue into sex."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Prepare the Congress Container",
+      "practice": "Prepare the private room before the rite begins. Set the shared symbol, one candle or lamp, and a cup of water where both of you can reach them. Stand together and name the work of the night in one sentence. Greet each other as partners in the rite. If both of you choose to continue, let touch, sex, breath, stillness, or closeness carry the shared symbol without following instructions from the app. When the rite is complete, return to the cup of water. Each person drinks or touches the cup and names one word for the return. Extinguish the candle or turn off the lamp.",
+      "intention": "Let explicit private intimacy live inside a beginning, a shared sign, and a real return.",
+      "bestWindow": "When both of you have room for a deeper private adult ritual and want the whole encounter held as ritual.",
+      "whyThisFits": "Anand's Magical Congress material supports a prepared room, shared symbol/intention, adult sexual energy, ritual greeting, and grounding return. Carrier: body. Materials: shared symbol, candle or lamp, cup of water. Place: bedroom/private room.",
+      "questionToCarry": "What kind of container lets the body go deep and still come home?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "connecting",
+        "secondary": [
+          "marking",
+          "steadying",
+          "opening"
+        ],
+        "refinement": "connecting"
+      },
+      "carriers": {
+        "primary": "body",
+        "secondary": [
+          "candlelight",
+          "table",
+          "words",
+          "vessel"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "room_for_something_deeper"
+        ],
+        "default": "room_for_something_deeper"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "private time with room for a deeper adult ritual and return"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- Anand",
+        "Anand",
+        "Magical Congress",
+        "adult intimacy",
+        "body",
+        "connecting",
+        "shared symbol"
+      ],
+      "keywords": [
+        "- Anand",
+        "Anand",
+        "Magical Congress",
+        "adult intimacy",
+        "body",
+        "connecting",
+        "shared symbol",
+        "- shared symbol",
+        "candle or lamp",
+        "cup of water",
+        "- bedroom",
+        "bedroom",
+        "private room",
+        "private adult ritual",
+        "lovemaking",
+        "sexual energy",
+        "symbol",
+        "candle",
+        "water",
+        "grounding",
+        "- private adult ritual"
+      ],
+      "materials": [
+        "- shared symbol",
+        "shared symbol",
+        "candle or lamp",
+        "cup of water"
+      ],
+      "places": [
+        "- bedroom",
+        "bedroom",
+        "private room"
+      ],
+      "sourceLabel": "Margot Anand, The Art of Sexual Magic",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"explicit adult partner ritual\"",
+        "\"high-level container only; no technique instruction\"",
+        "\"not recommendation-ready\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.saint_thomas.body_fluid_sigil_candle",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Sophie Saint Thomas, Sex Witch",
+          "sourceLocation": "Chapter 1 pp. 28-29 and Chapter 5 pp. 105-106, body-fluid and sex-sigil/candle material",
+          "sourceSummary": "The source identifies body fluids as sex-magic material and gives erotic sigil/candle architecture.",
+          "sourceSupports": "Written erotic intention, sigil creation, candle work, and body-fluid material as a possible carrier.",
+          "moonAndTableChanges": "Narrowed the candidate to a non-targeted private desire rite without copied spell text, oils, smoke, or attraction-control claims.",
+          "doNotImport": [
+            "Copied spell text",
+            "Targeted attraction or control",
+            "Medical, STI, fertility, or outcome-certainty claims",
+            "Oil/smoke/recipe requirements",
+            "Public or shared body-fluid handling",
+            "Not for targeting another person, attraction-control, medical claims, public sharing, or recommendation before review."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Mark Desire With the Body",
+      "practice": "Write one erotic intention that belongs to you. Reduce it to a simple sigil or mark. Set one candle on a plate or holder. Touch the sigil to the candle with one body-sourced material, or keep the body material on the paper if the candle should stay clean. Light the candle and let the mark stand for the desire. When the candle work is complete, fold the paper and put it away or discard it.",
+      "intention": "Let private desire speak through the body and take a visible mark.",
+      "bestWindow": "When a private erotic desire needs to be named, marked, and contained.",
+      "whyThisFits": "Saint Thomas supports erotic sigil/candle work and names body fluids among possible sex-magic materials. Carrier: body. Materials: candle, plate or holder, paper, pen, body-sourced material.",
+      "questionToCarry": "What desire wants a mark of its own?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "voicing",
+        "secondary": [
+          "opening",
+          "connecting"
+        ],
+        "refinement": "voicing"
+      },
+      "carriers": {
+        "primary": "body",
+        "secondary": [
+          "candlelight",
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "me"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "private erotic intention and candle work"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- Saint Thomas",
+        "Saint Thomas",
+        "Sex Witch",
+        "body fluid",
+        "sigil",
+        "candle",
+        "explicit",
+        "desire"
+      ],
+      "keywords": [
+        "- Saint Thomas",
+        "Saint Thomas",
+        "Sex Witch",
+        "body fluid",
+        "sigil",
+        "candle",
+        "explicit",
+        "desire",
+        "- candle",
+        "plate or holder",
+        "paper",
+        "pen",
+        "body-sourced material",
+        "- private room",
+        "private room",
+        "altar",
+        "bedside",
+        "sexual fluid",
+        "erotic intention",
+        "non-targeted",
+        "- body fluid"
+      ],
+      "materials": [
+        "- candle",
+        "candle",
+        "plate or holder",
+        "paper",
+        "pen",
+        "body-sourced material"
+      ],
+      "places": [
+        "- private room",
+        "private room",
+        "altar",
+        "bedside"
+      ],
+      "sourceLabel": "Saint Thomas, Sex Witch",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"body-fluid material present\"",
+        "\"explicit solo adult ritual\"",
+        "\"non-targeted formulation required\"",
+        "\"not direct-use or recommendation-ready\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.saint_thomas.kink_desire_body_release",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Sophie Saint Thomas, Sex Witch",
+          "sourceLocation": "Chapter 5 pp. 108-110, kink/desire clarity rite",
+          "sourceSummary": "The source uses candles, symbolic restraint, reflection on kink/desire, and cutting/release.",
+          "sourceSupports": "Two lights/candles, symbolic cord, naming desire, releasing shame/fear, and a next communication step.",
+          "moonAndTableChanges": "Removed rope technique instruction and preserved the ritual function as a body/voicing clarity rite.",
+          "doNotImport": [
+            "Rope technique instruction",
+            "Partner pressure",
+            "Consent negotiation replacement",
+            "Copied source spell text",
+            "outcome certainty that a partner will agree",
+            "Not a rope technique lesson, not consent negotiation by itself, not pressure on a partner."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Cut the Shame From the Desire",
+      "practice": "Set two candles or two steady lights on the table. Sit with one loose length of cord, ribbon, or thread around one wrist or held between both hands. Name the desire, kink, or fantasy in one plain sentence. Let the cord hold the shame, fear, or embarrassment around that sentence. When the desire has been named, cut the cord or untie it. Put the cord away from the body. Close by writing one honest conversation or boundary the desire asks for next.",
+      "intention": "Let desire be named without letting shame keep the body bound.",
+      "bestWindow": "When a private kink, fantasy, or desire needs voice before it becomes a conversation.",
+      "whyThisFits": "Saint Thomas supports a kink/desire clarity rite using candles, symbolic binding, meditation on desire, and cutting/releasing the restraint. Carrier: body. Materials: two candles or lights, cord/ribbon/thread, scissors optional, paper, pen.",
+      "questionToCarry": "What desire needs a clean sentence before it needs action?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "voicing",
+        "secondary": [
+          "opening",
+          "releasing",
+          "connecting"
+        ],
+        "refinement": "voicing"
+      },
+      "carriers": {
+        "primary": "body",
+        "secondary": [
+          "candlelight",
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate",
+          "room_for_something_deeper"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "me"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "none",
+        "contexts": [
+          "before a desire or kink conversation"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- Saint Thomas",
+        "Saint Thomas",
+        "Sex Witch",
+        "kink",
+        "desire",
+        "body",
+        "voicing"
+      ],
+      "keywords": [
+        "- Saint Thomas",
+        "Saint Thomas",
+        "Sex Witch",
+        "kink",
+        "desire",
+        "body",
+        "voicing",
+        "- two candles or steady lights",
+        "two candles or steady lights",
+        "cord, ribbon, or thread",
+        "scissors",
+        "paper",
+        "pen",
+        "- private room",
+        "private room",
+        "altar",
+        "table",
+        "fantasy",
+        "cord",
+        "ribbon",
+        "shame",
+        "voice",
+        "candles",
+        "- kink"
+      ],
+      "materials": [
+        "- two candles or steady lights",
+        "two candles or steady lights",
+        "cord, ribbon, or thread",
+        "scissors",
+        "paper",
+        "pen"
+      ],
+      "places": [
+        "- private room",
+        "private room",
+        "altar",
+        "table"
+      ],
+      "sourceLabel": "Saint Thomas, Sex Witch",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"kink-adjacent adult ritual\"",
+        "\"symbolic cord only; not technique instruction\"",
+        "\"not recommendation-ready\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "candidate.saint_thomas.partner_body_intention",
+    "status": "draft",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Sophie Saint Thomas, Sex Witch",
+          "sourceLocation": "Chapter 5 pp. 121-122, partner sex magick",
+          "sourceSummary": "The source describes partnered sex magick around shared intention and focused adult energy.",
+          "sourceSupports": "Shared intention, adult partner body practice, symbolic support object/light, and intentional close.",
+          "moonAndTableChanges": "Re-centered the existing lane as primary body+connecting while avoiding explicit technique and outcome claims.",
+          "doNotImport": [
+            "Technique instruction",
+            "Coercive partner pressure",
+            "Third-party targeting",
+            "Copied spell text",
+            "outcome-certainty claim",
+            "Not for coercion, partner pressure, performance goals, or outcome-certainty claims."
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Carry One Intention Through the Body",
+      "practice": "Sit or stand together before private touch begins. Each person names one word for what the shared time should carry. Choose one word together and write it on a small paper. Place the paper near the bed, under a candle, or under a shared object. If both of you choose to continue into sex or touch, let the body carry that one word without adding instructions. Close by returning to the paper, reading the word once, and deciding whether to keep, fold, or discard it.",
+      "intention": "Let the body carry one shared word without turning touch into pressure.",
+      "bestWindow": "Before consensual private touch, sex, or a shared connecting rite.",
+      "whyThisFits": "Saint Thomas supports partner sex magick around shared intention and focused adult energy. Carrier: body. Materials: paper, pen, candle or shared object optional. Place: bedroom or private room.",
+      "questionToCarry": "What one word belongs between us before the body speaks?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "connecting",
+        "secondary": [
+          "voicing",
+          "marking"
+        ],
+        "refinement": "connecting"
+      },
+      "carriers": {
+        "primary": "body",
+        "secondary": [
+          "words",
+          "candlelight",
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate",
+          "room_for_something_deeper"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "both_of_us"
+        ],
+        "default": "both_of_us",
+        "bothOfUsStructure": "Packet notes shared witness/action structure."
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "before consensual private touch or sex"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "direct_use_review",
+          "recommendation_review"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "- Saint Thomas",
+        "Saint Thomas",
+        "Sex Witch",
+        "partner sex magick",
+        "body",
+        "connecting",
+        "shared intention"
+      ],
+      "keywords": [
+        "- Saint Thomas",
+        "Saint Thomas",
+        "Sex Witch",
+        "partner sex magick",
+        "body",
+        "connecting",
+        "shared intention",
+        "- paper",
+        "paper",
+        "pen",
+        "candle or shared object",
+        "- bedroom",
+        "bedroom",
+        "private room",
+        "bedside",
+        "partner",
+        "sex magic",
+        "shared word",
+        "touch",
+        "candle",
+        "- partner"
+      ],
+      "materials": [
+        "- paper",
+        "paper",
+        "pen",
+        "candle or shared object"
+      ],
+      "places": [
+        "- bedroom",
+        "bedroom",
+        "private room",
+        "bedside"
+      ],
+      "sourceLabel": "Saint Thomas, Sex Witch",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": false,
+      "recommendationEligible": false
+    },
+    "reviewFlags": {
+      "sourceTextReviewRequired": true,
+      "materialSafetyReviewRequired": true,
+      "sourceVerificationRequired": true,
+      "productBoundaryReviewRequired": true,
+      "notes": [
+        "reviewFlags:",
+        "notes:",
+        "\"explicit partner adult ritual\"",
+        "\"primary body+connecting variant of an existing candlelight lane\"",
+        "\"not recommendation-ready\""
+      ]
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
     "id": "candidate.dominguez.astrology-journal-timing-record",
     "status": "draft",
     "origin": {

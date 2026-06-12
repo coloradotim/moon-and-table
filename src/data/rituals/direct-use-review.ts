@@ -1349,6 +1349,30 @@ const ANAND_DIRECT_USE_REVIEWS: Record<string, DirectUseReviewDecision> = {
         "Returning to the symbol lets it gather memory across practice nights instead of ending as a one-time drawing.",
     },
   },
+  "candidate.anand.partner_dance_witness": {
+    presentation: {
+      whyThisFits:
+        "Chosen roles, one witness, and a clean close let the body be offered without turning the rite into performance.",
+    },
+  },
+  "candidate.anand.shared_symbol_lovemaking": {
+    presentation: {
+      whyThisFits:
+        "The shared symbol gives desire one visible place before touch carries the intention.",
+    },
+  },
+  "candidate.anand.body_symbol_charge": {
+    presentation: {
+      whyThisFits:
+        "The symbol receives body attention and then returns to the altar, journal, or bedside with a clear close.",
+    },
+  },
+  "candidate.anand.magical_congress_container": {
+    presentation: {
+      whyThisFits:
+        "Candle, water, symbol, body, and closing action give the explicit shared rite a bounded container.",
+    },
+  },
 };
 
 const SAINT_THOMAS_DIRECT_USE_REVIEWS: Record<string, DirectUseReviewDecision> = {
@@ -1686,6 +1710,24 @@ const SAINT_THOMAS_DIRECT_USE_REVIEWS: Record<string, DirectUseReviewDecision> =
       headline: "Let Self-Forgiveness Have Water and Light",
       whyThisFits:
         "Water and light let self-forgiveness become contact before it has to become explanation.",
+    },
+  },
+  "candidate.saint_thomas.body_fluid_sigil_candle": {
+    presentation: {
+      whyThisFits:
+        "The body mark, sigil, and candle keep the desire specific, visible, and bounded before it is folded away.",
+    },
+  },
+  "candidate.saint_thomas.kink_desire_body_release": {
+    presentation: {
+      whyThisFits:
+        "Rope, ribbon, light, and the body give kink shame a form that can be named and released without apology.",
+    },
+  },
+  "candidate.saint_thomas.partner_body_intention": {
+    presentation: {
+      whyThisFits:
+        "One shared intention is named before the body carries it, then returned to words at the close.",
     },
   },
 };
