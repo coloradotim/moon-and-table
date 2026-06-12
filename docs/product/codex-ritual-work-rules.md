@@ -33,6 +33,7 @@ If the issue does not state scope clearly, do not infer scope.
   - `best window`
   - `why this fits`
   - `question to carry`
+- Separate Ritual creation, search visibility, direct-use/openability, and recommendation eligibility. A self-contained source-backed Ritual can be created, made findable, and made direct-use eligible even when `recommendationEligible` remains false.
 
 ## Source / Research Rules
 
@@ -41,6 +42,7 @@ If the issue does not state scope clearly, do not infer scope.
 - Any source-backed Ritual must have source grounding reviewed before it becomes recommendation-eligible.
 - Source research must separate inventory from eligibility. Inventory the source first in repository-safe paraphrase; decide import, direct-use, recommendation eligibility, hold, or reject later.
 - Do not silently exclude adult, explicit, sex-forward, consent-sensitive, kink-adjacent, body-fluid, technique-heavy, culturally loaded, therapy-adjacent, awkward, or non-default-recommendation-ready material from source inventory for those reasons alone. Label it, preserve the source location, and surface it for Tim decision.
+- Do not treat adult, explicit, sex-forward, consent-sensitive, kink-adjacent, body-fluid, technique-heavy, culturally loaded, targeted, revenge/hex/protection, spirit/deity, awkward, or non-default-recommendation-ready material as an automatic import, search, or direct-use exclusion when it otherwise satisfies the Ritual architecture/source-support gate.
 - Copyright, privacy, and exact-source-text limits still control what can be stored in the repository. They limit reproduction, not whether an item is named in the inventory.
 
 ## Migration Rules
@@ -57,3 +59,5 @@ If the issue does not state scope clearly, do not infer scope.
 - Do not add runtime wiring, scoring, UI, `SourceNotes`, `SymbolicCards`, `RitualPatterns`, migrations, history, favorites, feedback, or intake unless explicitly requested.
 - Do not use composer bridge language to create Ritual identity.
 - Runtime recommendation work must preserve the Ritual-first doctrine.
+- Choose with me must remain limited to recommendation-eligible Rituals.
+- Search and direct selection must not require recommendation eligibility.

@@ -65,6 +65,32 @@ Metadata describes a Ritual so the app can recommend it, search it, select it di
 
 `readiness/eligibility audit`: A review layer that decides whether a Ritual is findable, direct-use eligible, recommendation eligible, or still pilot/review-only.
 
+## Availability Decisions
+
+Ritual existence, search visibility, direct use, and recommendation eligibility are separate product decisions.
+
+A Moon & Table Ritual may exist when it has:
+
+- a beginning/container;
+- a middle/core action;
+- an end/closing;
+- an intrinsic purpose;
+- source-backed ritual logic;
+- enough self-containment to perform from the app without opening the source.
+
+That gate decides whether the record is a real Moon & Table Ritual. It does not decide whether Choose with me may recommend it.
+
+Keep these decisions distinct:
+
+- `Ritual exists?`: the source or household material supports a complete, self-contained Ritual record.
+- `Search can find it?`: the Ritual is appropriate to surface in the direct library/search path.
+- `Direct-use/openable?`: the Ritual can be opened and practiced from the app without returning to the source.
+- `Choose with me can recommend it?`: the Ritual has enough reviewed metadata, timing/capacity/audience fit, and product confidence for guided recommendation.
+
+A valid self-contained source-backed Ritual may be findable and direct-use eligible while remaining ineligible for Choose with me. Recommendation eligibility is an additional review outcome, not the price of admission for Ritual creation or search.
+
+Adult, explicit, sex-forward, consent-sensitive, kink-adjacent, body-fluid, technique-heavy, culturally loaded, targeted, spirit/deity, revenge/hex/protection, awkward, or non-default-recommendation-ready material must not be excluded from Ritual creation or search merely because of category. If the material can support a complete Moon & Table Ritual, preserve it for review and label it honestly. Recommendation eligibility can remain false.
+
 ## Current Runtime vs Target Architecture
 
 The current runtime still uses `RitualPattern`, `SymbolicCard`, composer logic, and generated `WeeklyBrief` output. That is the app's current implementation architecture.

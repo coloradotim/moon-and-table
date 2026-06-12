@@ -39,6 +39,13 @@ Choose with me starts the adaptive check-in. The user is asking Moon & Table to 
 
 I have something in mind opens the library, search, favorites, and direct-selection path. The user already has a ritual, material, carrier, favorite, or general direction in mind and should not be forced through the adaptive recommendation check-in.
 
+The two paths use different eligibility gates:
+
+- Choose with me may select only recommendation-eligible Rituals.
+- I have something in mind may surface searchable/direct-use Rituals even when they are not recommendation-eligible.
+
+Do not use recommendation eligibility as the library/search gate. A Ritual can be real, findable, and openable while still held out of guided recommendation.
+
 ## 4. Choose with me: adaptive flow
 
 The first question is always:

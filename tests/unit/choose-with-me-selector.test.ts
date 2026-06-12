@@ -856,6 +856,38 @@ describe("chooseWithMeRitual", () => {
     expect(result.debug.exclusions.not_recommendation_eligible).toBe(1);
   });
 
+  it("does not recommend direct-use search Rituals that are not recommendation eligible", () => {
+    const searchOnlyRitual = makeRitual({
+      id: "ritual.search_only_direct_use_fixture",
+      status: "reviewed",
+      availability: {
+        findable: true,
+        directUseEligible: true,
+        recommendationEligible: false,
+      },
+      recommendationMetadata: {
+        ...makeRitual({}).recommendationMetadata,
+        eligibility: {
+          recommendable: false,
+          missing: ["recommendation_review"],
+        },
+      },
+    });
+
+    const result = chooseWithMeRitual([searchOnlyRitual], {
+      timeScope: "today",
+      energyCapacity: "enough_to_engage",
+      capacityMode: "steady",
+      audience: "me",
+      purpose: "tending",
+      carrier: "table",
+    });
+
+    expect(result.status).toBe("no_result");
+    expect(result.debug.exclusions.not_recommendation_eligible).toBe(1);
+    expect(result.debug.exclusions.metadata_not_recommendable).toBeUndefined();
+  });
+
   it("guards every recommendation-eligible required timing ritual with realistic evidence", () => {
     const requiredTimingRituals = sourceBackedRituals.filter(
       (ritual) =>

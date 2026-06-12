@@ -76,6 +76,23 @@ If Codex must invent user-facing Ritual prose during #287, the extraction packet
 
 For every `candidate_extract_now` item, provide full runtime-mapped candidate fields. Do not provide only rough notes or enough copy to preview.
 
+## Ritual architecture before recommendation eligibility
+
+Do not ask first whether Choose with me should recommend the material. Ask first whether the source can support a real Moon & Table Ritual.
+
+A viable Ritual candidate needs:
+
+- a beginning/container;
+- a middle/core action;
+- an end/closing;
+- an intrinsic purpose;
+- source-backed ritual logic;
+- enough self-containment to perform from the app without opening the source.
+
+Recommendation eligibility is a later, separate decision. A complete source-backed Ritual candidate may be intended for search/direct use while remaining not recommendation eligible.
+
+Do not omit a complete Ritual candidate merely because it is adult, explicit, sex-forward, consent-sensitive, kink-adjacent, body-fluid-related, technique-heavy, culturally loaded, targeted, revenge/hex/protection-oriented, spirit/deity-oriented, awkward, or not default-recommendation-ready. Preserve the candidate in repository-safe form, label the relevant review concerns, and mark recommendation posture separately.
+
 ## Required extraction layers
 
 You must produce both:
