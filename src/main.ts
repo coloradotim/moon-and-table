@@ -39,6 +39,7 @@ import {
   type RitualCheckInStep,
 } from "./lib/current-ritual-check-in";
 import { getTimingWindowCandidates } from "./lib/timing-window-candidates";
+import { getDefaultTimingTimezone, getTimingFactsForDate } from "./lib/timing-facts";
 import { createTodaysShapeBrief } from "./lib/todays-shape-brief";
 import {
   isBriefFeedbackType,
@@ -397,6 +398,29 @@ function renderActiveBriefStatus(
 }
 
 function completeCheckIn(checkIn: CurrentRitualCheckIn): void {
+  const timezone =
+    activePrivateBriefData?.input.timezone ?? getDefaultTimingTimezone();
+  const currentDate = activePrivateBriefData?.input.currentDate ?? new Date();
+  const timingWindowCandidates =
+    checkIn.timeScope === "best_moment_this_week"
+      ? activePrivateBriefData?.input.timingWindowCandidates ??
+        getTimingWindowCandidates({
+          startDate: currentDate,
+          timezone,
+          privateNatalProfiles: activePrivateBriefData?.natalProfiles ?? [],
+          astrologyVisibility: activePrivateBriefData?.input.astrologyVisibility,
+          options: { maxCandidates: 4 },
+        })
+      : [];
+  const selectedTimingWindow = checkIn.timingWindowCandidateIds
+    ?.map((candidateId) =>
+      timingWindowCandidates.find((candidate) => candidate.id === candidateId),
+    )
+    .find((candidate) => candidate !== undefined);
+  const computedTimingFacts =
+    activePrivateBriefData?.input.computedTimingFacts ??
+    getTimingFactsForDate(currentDate, { timezone });
+
   activeCurrentRitualCheckIn = checkIn;
   activeSignedInView = "this_week";
   activeProfileSettingsTabId = null;
@@ -412,7 +436,12 @@ function completeCheckIn(checkIn: CurrentRitualCheckIn): void {
     refinement: checkIn.refinement ?? null,
     freeTextIntent: checkIn.ritualFocusText ?? null,
     timingContext: {
+      timingFacts: activePrivateBriefData?.input.timingFacts,
+      timingFactDetails: activePrivateBriefData?.input.timingFactDetails,
+      computedTimingFacts,
+      timingWindowCandidates,
       timingWindowCandidateIds: checkIn.timingWindowCandidateIds,
+      selectedTimingWindow,
     },
   });
   renderActiveSignedInShell();
@@ -436,7 +465,8 @@ function addTimingWindowCandidateIds(
   }
 
   const candidates = getTimingWindowCandidates({
-    startDate: new Date(),
+    startDate: activePrivateBriefData?.input.currentDate ?? new Date(),
+    timezone: activePrivateBriefData?.input.timezone,
     privateNatalProfiles: activePrivateBriefData?.natalProfiles ?? [],
     astrologyVisibility: activePrivateBriefData?.input.astrologyVisibility,
     options: { maxCandidates: 4 },
