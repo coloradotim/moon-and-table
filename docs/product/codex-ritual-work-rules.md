@@ -39,6 +39,9 @@ If the issue does not state scope clearly, do not infer scope.
 - Old content packets are supporting source research, not implementation plans.
 - Source packets written for `RitualPattern` / `SourceNote` / `SymbolicCard` implementation must not be used as runtime instructions.
 - Any source-backed Ritual must have source grounding reviewed before it becomes recommendation-eligible.
+- Source research must separate inventory from eligibility. Inventory the source first in repository-safe paraphrase; decide import, direct-use, recommendation eligibility, hold, or reject later.
+- Do not silently exclude adult, explicit, sex-forward, consent-sensitive, kink-adjacent, body-fluid, technique-heavy, culturally loaded, therapy-adjacent, awkward, or non-default-recommendation-ready material from source inventory for those reasons alone. Label it, preserve the source location, and surface it for Tim decision.
+- Copyright, privacy, and exact-source-text limits still control what can be stored in the repository. They limit reproduction, not whether an item is named in the inventory.
 
 ## Migration Rules
 

@@ -6,6 +6,42 @@ The goal is ritual depth and variety, not a small polished sample. Agents must n
 
 For any item marked `candidate_extract_now`, the packet must also provide complete, source-backed Ritual authoring content mapped to the current runtime schema. Codex should not have to invent user-facing Ritual prose during import.
 
+## Inventory before eligibility
+
+Source inventory is not an eligibility gate.
+
+Extraction must name and classify the source's ritual material before deciding
+whether any item can become a Moon & Table Ritual, direct-source reference,
+recommendation candidate, later extraction candidate, hold, or reject.
+
+Agents must not silently drop source material from the inventory because it is:
+
+- adult;
+- explicit;
+- sex-forward;
+- consent-sensitive;
+- kink-adjacent;
+- body-fluid-related;
+- technique-heavy;
+- culturally or gender loaded;
+- therapy-adjacent;
+- awkward in house voice;
+- unsuitable for default recommendation;
+- likely to require Tim's explicit import, hold, adapt, direct-source-only, or reject decision.
+
+Those qualities are review labels and decision aids. They are not automatic
+inventory blockers.
+
+The repository boundary still controls source expression. Do not reproduce long
+copyrighted source text, private source text, scripts, meditations, recipes,
+or distinctive passages in the repo. Use repository-safe paraphrase, precise
+source location, classification, and decision metadata instead.
+
+Only exclude an item from inventory when the source item cannot be identified
+or described without violating privacy, source-text, or legal boundaries. In
+that case, record the existence of the blocked range, the reason it cannot be
+described, and the private follow-up needed.
+
 Controls:
 
 ```text
@@ -37,6 +73,7 @@ Every approved extraction source requires three layers:
 
 1. **Source rite inventory**
    - A source-facing inventory of rituals, spells, blessings, prayers, prompts, recipes, meditations, invocations, charms, exercises, correspondences-with-action, and other practice material.
+   - This inventory must include adult or difficult material in repository-safe paraphrase. Review sensitivity affects disposition and later eligibility, not whether the item is visible in the inventory.
 
 2. **Candidate extraction packet**
    - Moon & Table-shaped draft Ritual candidates derived from selected inventory items.
@@ -51,6 +88,7 @@ Every approved extraction source requires three layers:
      - `context_only`
      - `hold`
      - `reject`
+   - When the correct disposition depends on Tim's explicit product choice, mark it `tim_decision_required` in addition to the provisional disposition.
 
 ## Definition of done
 
@@ -72,8 +110,8 @@ An extraction packet is not complete until it includes:
 
 Every extraction packet must include this table:
 
-| Source item | Source pages | Source location precision | Type | Research use | Brief source description | Likely carriers | Likely purposes | Exact text importance | Disposition | Reason | Future action |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Source item | Source pages | Source location precision | Type | Research use | Brief source description | Review labels | Likely carriers | Likely purposes | Exact text importance | Disposition | Tim decision needed? | Reason | Future action |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
 Allowed source location precision values:
 
@@ -91,6 +129,27 @@ Allowed research use values:
 - `context_only`
 - `hold`
 - `reject`
+
+Allowed review labels include:
+
+- `adult_intimacy`
+- `explicit`
+- `sex_forward`
+- `consent_sensitive`
+- `kink_adjacent`
+- `body_fluid`
+- `technique_heavy`
+- `cultural_or_gender_load`
+- `therapy_adjacent`
+- `medical_or_somatic_claim`
+- `coercive_or_target_control`
+- `exact_text_sensitive`
+- `house_voice_challenge`
+- `direct_source_only_candidate`
+- `recommendation_lane_unclear`
+
+Review labels may justify hold, direct-source-only, adaptation, private review,
+or later rejection. They do not justify omitting the item from the inventory.
 
 Allowed item types include:
 
@@ -285,6 +344,7 @@ source_note_only:
 context_only:
 hold:
 reject:
+tim_decision_required:
 remaining_unreviewed_source_sections:
 remaining_extraction_backlog:
 ```
@@ -374,6 +434,8 @@ Reviewers must also check:
 
 - whether primary coverage claims are inflated by secondary support;
 - whether operative text review needs are counted even when the item is also a candidate;
+- whether adult, explicit, sex-forward, consent-sensitive, body-fluid, kink-adjacent, technique-heavy, culturally loaded, or therapy-adjacent material was inventoried and labeled instead of silently dropped;
+- whether Tim decision-required items are visible as a decision queue rather than hidden in hold/reject counts;
 - whether broad candidates need variant/split tracking;
 - whether rough source locations are marked `needs_tightening` or `chapter_range` rather than treated as exact page support;
 - whether product follow-up patterns have been wrongly forced into Ritual candidate status;
@@ -409,6 +471,7 @@ QA must verify:
 - longer exact wording is handled by functional instruction or, when justified candidate by candidate, adapted into inline Moon & Table words and tracked as `adapted_source_words`;
 - no generic Moon & Table replacement words are created where usable source words exist;
 - `whyThisFitsIngredients` and `howThisWasChosenIngredients` use the required structure;
+- adult or difficult source material is represented through repository-safe inventory rows, review labels, and Tim decision flags instead of automated exclusion;
 - no runtime eligibility flags are changed.
 
 ## Runtime / schema normalization wall

@@ -26,6 +26,16 @@ Author-provided words that the practitioner is meant to say, write, chant, bless
 The task is to classify and preserve source text use, not erase it and not hide
 behind process language.
 
+Adult or explicit operative language is still operative language.
+
+Agents must not erase, downgrade, or omit adult, explicit, sex-forward,
+consent-sensitive, kink-adjacent, body-fluid, technique-heavy, culturally or
+gender loaded, therapy-adjacent, or house-voice-challenging words and rites
+from source inventory for those reasons alone. Classify them, record precise
+source location, use repository-safe paraphrase when exact text is not allowed,
+and surface Tim decision-required cases instead of making the decision by
+omission.
+
 ## Distinction to preserve
 
 There are five different uses of source text:
@@ -199,7 +209,13 @@ mechanics_only:
   Use for sequence, materials, timing, carriers, purposes, preparation, close, and adaptation guidance.
 
 do_not_use:
-  Use for coercive, unsafe, medicalized, culturally inappropriate, out-of-scope, or guaranteed-effect material.
+  Use for material Tim or a later reviewed policy decision has rejected as
+  coercive, unsafe, medicalized, culturally inappropriate, out-of-scope, or
+  guaranteed-effect material. During source inventory, do not use
+  `do_not_use` merely because material is adult, explicit, sex-forward,
+  consent-sensitive, kink-adjacent, body-fluid-related, technique-heavy,
+  awkward, or not default-recommendation-ready. Use review labels and Tim
+  decision-required handling instead.
 ```
 
 ## What “close to the source” means
@@ -257,6 +273,12 @@ sourceTextPolicy: {
 Do not over-sanitize the source.
 
 Moon & Table is not trying to turn witchcraft, hearthcraft, candle magic, kitchen magic, prayer, blessing, invocation, recipe, spoken ritual, or spellcraft into generic wellness mechanics.
+
+Moon & Table is also not trying to turn adult intimacy, sensuality, erotic
+magic, body ritual, or partner practice into coy abstractions. Keep the source
+ritual function visible in inventory and extraction records, while still
+respecting copyright, privacy, exact-source-text, and runtime eligibility
+boundaries.
 
 Preserve the ritual force of the source. Use words like blessing, prayer, spell, invocation, incantation, charm, consecration, purification, protection, hearth, spirit, ancestor, sacred, and offering when the source uses those concepts and when they fit the approved product scope.
 
@@ -317,3 +339,6 @@ The correct handling is:
 - use `adapted_source_words` ritualWords metadata only for justified longer operative wording;
 - avoid agent-generated long reproduction of copyrighted text in public repo files;
 - keep unresolved exact wording out of runtime until cited and human-reviewed before any recommendation path.
+- inventory adult or explicit operative wording in repository-safe paraphrase,
+  with review labels and Tim decision-required flags when needed, instead of
+  silently excluding it before Tim can decide.
