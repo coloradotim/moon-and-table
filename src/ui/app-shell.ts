@@ -60,11 +60,16 @@ import {
   getRitualPurposeOptions,
   getRitualSourceLabels,
   getRitualSourceOptions,
+  getRitualTimingSearchTarget,
+  getRitualTimingSearchMatch,
+  ritualTimingPresetOptions,
   searchRituals,
+  type RitualTimingFilter,
   type RitualSortKey,
 } from "../data/rituals/search-rituals";
 import type { ChooseWithMeResult } from "../data/rituals/choose-with-me-selector";
 import { RITUAL_STATUSES, type Ritual } from "../data/rituals/types";
+import type { TimingWindowCandidate } from "../lib/timing-window-candidates";
 
 const feedbackLabels: Record<BriefFeedbackType, string> = {
   good: "This feels right.",
@@ -130,6 +135,8 @@ export type SignedInShellOptions = {
   ritualSearchSource?: string;
   ritualSearchPurpose?: string;
   ritualSearchCarrier?: string;
+  ritualSearchTiming?: RitualTimingFilter;
+  currentTimingWindow?: TimingWindowCandidate;
   manageRitualFilters?: Partial<ManageRitualFilters>;
 };
 
@@ -861,6 +868,34 @@ function getRitualSearchSummary(ritual: Ritual): string {
   return ritual.presentation.intention || ritual.presentation.questionToCarry;
 }
 
+function formatTimingRelationshipLabel(
+  relationship: Exclude<
+    Ritual["recommendationMetadata"]["timing"]["relationship"],
+    "none"
+  >,
+): string {
+  if (relationship === "required") {
+    return "Timing required";
+  }
+
+  if (relationship === "preferred") {
+    return "Timing preferred";
+  }
+
+  return "Timing helpful";
+}
+
+function getTimingWindowTimezone(timingWindow: TimingWindowCandidate): string {
+  return timingWindow.timingFacts.find((fact) => fact.timezone)?.timezone ?? "UTC";
+}
+
+function formatTimingWindowDay(timingWindow: TimingWindowCandidate): string {
+  return new Intl.DateTimeFormat("en-US", {
+    weekday: "long",
+    timeZone: getTimingWindowTimezone(timingWindow),
+  }).format(new Date(timingWindow.startsAtIso));
+}
+
 export function renderRitualPreview(
   ritual: Ritual,
   options: { showWhyThisFits?: boolean } = {},
@@ -1021,7 +1056,14 @@ function renderChooseWithMeResult(result: ChooseWithMeResult): string {
   `;
 }
 
-function renderRitualResultCard(ritual: Ritual, selectedRitualId: string): string {
+function renderRitualResultCard(
+  ritual: Ritual,
+  selectedRitualId: string,
+  options: {
+    timingWindow?: TimingWindowCandidate;
+    timingFilter?: RitualTimingFilter;
+  } = {},
+): string {
   const isSelected = ritual.id === selectedRitualId;
   const materialsAndTags = [
     ...(ritual.searchMetadata.materials ?? []),
@@ -1039,6 +1081,26 @@ function renderRitualResultCard(ritual: Ritual, selectedRitualId: string): strin
       ? `For: ${ritual.recommendationMetadata.audience.supports.map(formatRitualLabel).join(", ")}`
       : undefined,
   ].filter((item): item is string => Boolean(item));
+  const timingMatch =
+    options.timingFilter && options.timingFilter !== "all"
+      ? getRitualTimingSearchMatch(
+          ritual,
+          getRitualTimingSearchTarget(
+            options.timingFilter,
+            options.timingWindow,
+          ),
+        )
+      : null;
+  const timingLine =
+    timingMatch
+      ? [
+          `Matches: ${timingMatch.windowLabel}`,
+          formatTimingRelationshipLabel(timingMatch.relationship),
+          ...(options.timingFilter === "current" && options.timingWindow
+            ? [`Best around: ${formatTimingWindowDay(options.timingWindow)}`]
+            : []),
+        ].join(" · ")
+      : "";
 
   return `
     <details class="ritual-result-card-shell" ${isSelected ? "open" : ""}>
@@ -1050,6 +1112,7 @@ function renderRitualResultCard(ritual: Ritual, selectedRitualId: string): strin
         <strong>${escapeHtml(ritual.presentation.headline)}</strong>
         <span>${escapeHtml(getRitualSearchSummary(ritual))}</span>
         <span class="ritual-result-card__metadata">${escapeHtml(metadata.join(" · "))}</span>
+        ${timingLine ? `<span class="ritual-result-card__timing">${escapeHtml(timingLine)}</span>` : ""}
         <span class="ritual-result-card__tags">${escapeHtml(materialsAndTags.join(" · ") || "No materials listed")}</span>
       </summary>
       ${isSelected
@@ -1095,6 +1158,8 @@ export function renderSearchRitualsSection(options: {
   source?: string;
   purpose?: string;
   carrier?: string;
+  timing?: RitualTimingFilter;
+  currentTimingWindow?: TimingWindowCandidate;
 } = {}): string {
   const query = options.query ?? "";
   const selectedChips = options.selectedChips ?? [];
@@ -1102,6 +1167,9 @@ export function renderSearchRitualsSection(options: {
   const selectedSource = options.source ?? "all";
   const selectedPurpose = options.purpose ?? "all";
   const selectedCarrier = options.carrier ?? "all";
+  const selectedTiming = options.timing === "current" && !options.currentTimingWindow
+    ? "all"
+    : options.timing ?? "all";
   const sourceOptions = getRitualSourceOptions(sourceBackedRituals);
   const purposeOptions = getRitualPurposeOptions(sourceBackedRituals);
   const carrierOptions = getRitualCarrierOptions(sourceBackedRituals);
@@ -1112,13 +1180,16 @@ export function renderSearchRitualsSection(options: {
     purpose: selectedPurpose,
     carrier: selectedCarrier,
     sort: selectedSort,
+    timingFilter: selectedTiming,
+    timingWindow: options.currentTimingWindow,
   });
   const hasSearchCriteria =
     query.trim().length > 0 ||
     selectedChips.length > 0 ||
     selectedSource !== "all" ||
     selectedPurpose !== "all" ||
-    selectedCarrier !== "all";
+    selectedCarrier !== "all" ||
+    selectedTiming !== "all";
   const selectedRitual =
     results.find((ritual) => ritual.id === options.selectedRitualId) ??
     results[0];
@@ -1190,6 +1261,22 @@ export function renderSearchRitualsSection(options: {
             </select>
           </label>
           <label class="ritual-search__select">
+            <span>Timing</span>
+            <select
+              name="ritualSearchTiming"
+              form="ritual-search-form"
+              data-ritual-search-timing="true"
+            >
+              ${renderSelectOption("all", "Any timing", selectedTiming)}
+              ${options.currentTimingWindow
+                ? renderSelectOption("current", "This timing window", selectedTiming)
+                : ""}
+              ${ritualTimingPresetOptions.map((option) =>
+                renderSelectOption(option.value, option.label, selectedTiming),
+              ).join("")}
+            </select>
+          </label>
+          <label class="ritual-search__select">
             <span>Sort</span>
             <select
               name="ritualSearchSort"
@@ -1218,7 +1305,14 @@ export function renderSearchRitualsSection(options: {
             </div>
           </div>
           ${results.length > 0
-            ? results.map((ritual) => renderRitualResultCard(ritual, selectedRitual?.id ?? "")).join("")
+            ? results.map((ritual) => renderRitualResultCard(
+              ritual,
+              selectedRitual?.id ?? "",
+              {
+                timingFilter: selectedTiming,
+                timingWindow: options.currentTimingWindow,
+              },
+            )).join("")
             : `
               <div class="ritual-search__empty" role="status">
                 <p>Nothing matched that exact reach.</p>
@@ -2034,7 +2128,9 @@ function renderTodaysShapeBrief(brief: TodaysShapeBrief): string {
   `;
 }
 
-function renderRitualEntryPaths(): string {
+function renderRitualEntryPaths(
+  currentTimingWindow?: TimingWindowCandidate,
+): string {
   return `
     <section class="ritual-entry-paths" aria-label="Choose how to find a ritual">
       <button
@@ -2054,6 +2150,16 @@ function renderRitualEntryPaths(): string {
         <span>I have something in mind</span>
         <small>Search by material, mood, purpose, place, or phrase.</small>
       </button>
+      ${currentTimingWindow ? `
+        <button
+          class="ritual-entry-action"
+          type="button"
+          data-timing-rituals-entry="true"
+        >
+          <span>Rituals for this timing</span>
+          <small>Browse rituals that match ${escapeHtml(currentTimingWindow.label.toLowerCase())}.</small>
+        </button>
+      ` : ""}
     </section>
   `;
 }
@@ -2155,11 +2261,13 @@ export function renderRitualCheckInShell({
   displayName,
   introMode = "returning",
   todaysShapeBrief,
+  currentTimingWindow,
 }: {
   draft: RitualCheckInDraft;
   displayName?: string | null;
   introMode?: "returning" | "first_login";
   todaysShapeBrief?: TodaysShapeBrief | null;
+  currentTimingWindow?: TimingWindowCandidate;
 }): string {
   const intro = draft.step === "entry_path"
     ? `
@@ -2175,7 +2283,9 @@ export function renderRitualCheckInShell({
   const todaysShape = draft.step === "entry_path"
     ? renderTodaysShapeBrief(todaysShapeBrief ?? createTodaysShapeBrief())
     : "";
-  const entryPaths = draft.step === "entry_path" ? renderRitualEntryPaths() : "";
+  const entryPaths = draft.step === "entry_path"
+    ? renderRitualEntryPaths(currentTimingWindow)
+    : "";
   const checkInContent = draft.step === "entry_path"
     ? ""
     : draft.step === "review"
@@ -2314,6 +2424,8 @@ export function renderSignedInShell(
     source: options.ritualSearchSource,
     purpose: options.ritualSearchPurpose,
     carrier: options.ritualSearchCarrier,
+    timing: options.ritualSearchTiming,
+    currentTimingWindow: options.currentTimingWindow,
   });
   const manageRituals = renderManageRitualsSection({
     filters: options.manageRitualFilters,

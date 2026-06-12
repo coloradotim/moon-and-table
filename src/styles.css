@@ -1658,6 +1658,7 @@ h2 {
 
 .ritual-result-card__metadata,
 .ritual-result-card__tags,
+.ritual-result-card__timing,
 .ritual-result-card__badge,
 .ritual-preview__badge {
   color: #66736a;
@@ -1667,8 +1668,13 @@ h2 {
 }
 
 .ritual-result-card__metadata,
-.ritual-result-card__tags {
+.ritual-result-card__tags,
+.ritual-result-card__timing {
   overflow-wrap: anywhere;
+}
+
+.ritual-result-card__timing {
+  color: #53665b;
 }
 
 .ritual-result-card__tags {
