@@ -38,10 +38,10 @@ describe("source-backed Ritual import data", () => {
     );
     expect(
       sourceBackedRituals.filter((ritual) => ritual.status === "reviewed"),
-    ).toHaveLength(36);
+    ).toHaveLength(22);
     expect(
       sourceBackedRituals.filter((ritual) => ritual.status === "recommendable"),
-    ).toHaveLength(182);
+    ).toHaveLength(196);
     expect(sourceBackedRituals.every((ritual) => ritual.origin.type === "source")).toBe(
       true,
     );
@@ -53,7 +53,7 @@ describe("source-backed Ritual import data", () => {
     ).toHaveLength(218);
     expect(
       sourceBackedRituals.filter((ritual) => ritual.availability.recommendationEligible),
-    ).toHaveLength(182);
+    ).toHaveLength(196);
     expect(
       sourceBackedRituals.every(
         (ritual) =>
@@ -290,7 +290,7 @@ describe("source-backed Ritual import data", () => {
     ).not.toMatch(/reviewed flower|reviewed bouquet|reviewed petals/i);
   });
 
-  it("promotes timing-flexible Moon Book records and holds phase-required records", () => {
+  it("promotes Moon Book phase-required records after timing selector wiring", () => {
     const moonBook = sourceBackedRituals.filter(
       (ritual) =>
         ritual.searchMetadata.sourceLabel ===
@@ -303,15 +303,14 @@ describe("source-backed Ritual import data", () => {
     );
     expect(
       moonBook.filter((ritual) => ritual.availability.recommendationEligible),
-    ).toHaveLength(13);
+    ).toHaveLength(21);
+    expect(moonBook.every((ritual) => ritual.status === "recommendable")).toBe(
+      true,
+    );
     expect(
       moonBook
-        .filter((ritual) => !ritual.availability.recommendationEligible)
-        .every((ritual) =>
-          ritual.recommendationMetadata.eligibility.missing?.includes(
-            "timing_engine_wiring",
-          ),
-        ),
+        .filter((ritual) => ritual.recommendationMetadata.timing.relationship !== "none")
+        .every((ritual) => (ritual.recommendationMetadata.timing.contexts ?? []).length > 0),
     ).toBe(true);
     expect(
       moonBook.find(
@@ -350,7 +349,7 @@ describe("source-backed Ritual import data", () => {
     ]);
   });
 
-  it("keeps Dominguez timing records direct-use only until timing wiring exists", () => {
+  it("promotes Dominguez records supported by timing facts and holds unsupported timing concepts", () => {
     const dominguez = sourceBackedRituals.filter(
       (ritual) =>
         ritual.searchMetadata.sourceLabel ===
@@ -358,17 +357,41 @@ describe("source-backed Ritual import data", () => {
     );
 
     expect(dominguez).toHaveLength(13);
-    expect(dominguez.every((ritual) => ritual.status === "reviewed")).toBe(true);
     expect(
       dominguez.every((ritual) => ritual.availability.directUseEligible),
     ).toBe(true);
     expect(
-      dominguez.every((ritual) => !ritual.availability.recommendationEligible),
-    ).toBe(true);
+      dominguez.filter((ritual) => ritual.availability.recommendationEligible),
+    ).toHaveLength(6);
     expect(
-      dominguez.every((ritual) =>
+      dominguez
+        .filter((ritual) => !ritual.availability.recommendationEligible)
+        .map((ritual) => ritual.id),
+    ).toEqual([
+      "candidate.dominguez.glyph-as-mark",
+      "candidate.dominguez.planetary-card-attunement",
+      "candidate.dominguez.seven-day-planetary-cycle",
+      "candidate.dominguez.planetary-hour-support",
+      "candidate.dominguez.void-moon-softening",
+      "candidate.dominguez.aspect-before-peak",
+      "candidate.dominguez.planetary-representation",
+    ]);
+    expect(
+      dominguez
+        .filter((ritual) => ritual.availability.recommendationEligible)
+        .map((ritual) => ritual.id),
+    ).toEqual([
+      "candidate.dominguez.astrology-journal-timing-record",
+      "candidate.dominguez.moon-phase-timing-check",
+      "candidate.dominguez.moon-sign-tone",
+      "candidate.dominguez.retrograde-foundation",
+      "candidate.dominguez.change-details-not-date",
+      "candidate.dominguez.conditions-as-outline",
+    ]);
+    expect(
+      dominguez.some((ritual) =>
         ritual.recommendationMetadata.eligibility.missing?.includes(
-          "timing_engine_wiring",
+          "planetary_day_or_hour_not_supported",
         ),
       ),
     ).toBe(true);
@@ -450,6 +473,19 @@ describe("source-backed Ritual import data", () => {
       expect(ritual.recommendationMetadata.timing.relationship).not.toBe(
         "required_or_preferred",
       );
+      if (ritual.recommendationMetadata.timing.relationship !== "none") {
+        expect(ritual.recommendationMetadata.timing.contexts?.length).toBeGreaterThan(
+          0,
+        );
+      }
+      if (
+        ritual.availability.recommendationEligible &&
+        ritual.recommendationMetadata.timing.relationship === "required"
+      ) {
+        expect(ritual.recommendationMetadata.timing.contexts?.length).toBeGreaterThan(
+          0,
+        );
+      }
     }
   });
 

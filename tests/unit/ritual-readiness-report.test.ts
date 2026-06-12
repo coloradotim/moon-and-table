@@ -15,13 +15,13 @@ describe("Ritual readiness report", () => {
     expect(report.byStatus).toEqual({
       pilot: 0,
       draft: 0,
-      reviewed: 36,
-      recommendable: 182,
+      reviewed: 22,
+      recommendable: 196,
     });
     expect(report.availability).toEqual({
       findable: 218,
       directUseEligible: 218,
-      recommendationEligible: 182,
+      recommendationEligible: 196,
     });
     expect(report.validation).toEqual({
       valid: true,
@@ -35,7 +35,7 @@ describe("Ritual readiness report", () => {
     );
 
     expect(formatted).toContain("Ritual readiness report");
-    expect(formatted).toContain("- recommendation eligible: 182");
+    expect(formatted).toContain("- recommendation eligible: 196");
     expect(formatted).toContain("- valid: true");
     expect(formatted).toContain("- findings: 0");
     expect(formatted).not.toContain("undefined");
@@ -73,9 +73,9 @@ describe("Ritual readiness report", () => {
     ).toHaveLength(218);
     expect(
       report.records.filter((record) =>
-        record.missing.includes("timing_engine_wiring"),
+        record.missing.includes("planetary_day_or_hour_not_supported"),
       ),
-    ).toHaveLength(22);
+    ).toHaveLength(5);
   });
 
   it("surfaces validation findings when invalid data is passed", () => {
