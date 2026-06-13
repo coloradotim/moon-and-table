@@ -18,6 +18,8 @@ These docs control the Ritual-first reset. If an older doc conflicts with them, 
 - `docs/product/ritual-model-pilot-extraction-review.md`
 - `docs/product/ritual-pattern-purpose-migration-audit.md`
 - `docs/product/ritual-content-architecture-audit.md`
+- `docs/product/source-ingestion-prompt-workflow.md`
+- `docs/product/source-pipeline.md`
 
 These docs can support model review and migration planning. They are not runtime implementation instructions.
 
