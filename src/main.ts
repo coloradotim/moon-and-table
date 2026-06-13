@@ -84,10 +84,18 @@ import {
   RITUAL_FEEDBACK_REASONS,
   type RecommendationCandidateInput,
   type RecommendationInstance,
+  type RitualFavorite,
+  type RitualInteractionEvent,
   type RitualFavoriteSourceSurface,
   type RitualFeedbackFit,
   type RitualFeedbackReason,
 } from "./data/rituals/household-state";
+import {
+  loadHouseholdRitualState,
+  saveRecommendationInstance,
+  saveRitualFavorite,
+  saveRitualInteractionEvent,
+} from "./data/rituals/household-state-firestore";
 import type { Ritual } from "./data/rituals/types";
 import "./styles.css";
 
@@ -293,7 +301,10 @@ function createRecommendationInstanceForResult(
     },
   });
 
-  ritualInteractionStore.recordRecommendationShown(instance);
+  const shownEvent = ritualInteractionStore.recordRecommendationShown(instance);
+  void persistRecommendationRecord(instance, shownEvent).catch(() => {
+    activeChooseWithMeInteractionStatus = "Could not save recommendation history.";
+  });
 
   return instance;
 }
@@ -432,7 +443,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
     state.user.email,
     state.user.displayName,
   )
-    .then((privateBriefData) => {
+    .then(async (privateBriefData) => {
       if (requestId === privateDataRequestId) {
         if (!hasLoadedPrivateData(privateBriefData)) {
           activeSignedInState = null;
@@ -454,6 +465,16 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activePrivateBriefData = privateBriefData;
         activeProfileSettingsTabId = null;
         resetRitualSearchState();
+        try {
+          await loadPersistedHouseholdRitualState();
+        } catch {
+          if (requestId === privateDataRequestId) {
+            resetRitualInteractionState();
+          }
+        }
+        if (requestId !== privateDataRequestId) {
+          return;
+        }
         activeManageRitualFilters = { ...defaultManageRitualFilters };
         activeChooseWithMeResult = null;
         activeChooseWithMeRecommendationInstance = null;
@@ -1062,7 +1083,70 @@ function getRecommendationInstanceId(
     activeChooseWithMeRecommendationInstance?.id;
 }
 
-function handleRitualFavoriteToggle(target: HTMLElement): void {
+function getActiveHouseholdId(): string | undefined {
+  return activePrivateBriefData?.householdId;
+}
+
+async function loadPersistedHouseholdRitualState(): Promise<void> {
+  const householdId = getActiveHouseholdId();
+
+  resetRitualInteractionState();
+
+  if (!firebaseServices || !householdId) {
+    return;
+  }
+
+  const householdState = await loadHouseholdRitualState(
+    firebaseServices.db,
+    householdId,
+  );
+
+  ritualFavoriteStore = createRitualFavoriteStore(householdState.favorites);
+  ritualInteractionStore = createRecommendationEventStore(
+    householdState.recommendationInstances,
+    householdState.interactionEvents,
+  );
+}
+
+async function persistRitualFavorite(favorite: RitualFavorite): Promise<void> {
+  const householdId = getActiveHouseholdId();
+
+  if (!firebaseServices || !householdId) {
+    return;
+  }
+
+  await saveRitualFavorite(firebaseServices.db, householdId, favorite);
+}
+
+async function persistRitualInteractionEvent(
+  event: RitualInteractionEvent,
+): Promise<void> {
+  const householdId = getActiveHouseholdId();
+
+  if (!firebaseServices || !householdId) {
+    return;
+  }
+
+  await saveRitualInteractionEvent(firebaseServices.db, householdId, event);
+}
+
+async function persistRecommendationRecord(
+  instance: RecommendationInstance,
+  shownEvent: RitualInteractionEvent,
+): Promise<void> {
+  const householdId = getActiveHouseholdId();
+
+  if (!firebaseServices || !householdId) {
+    return;
+  }
+
+  await Promise.all([
+    saveRecommendationInstance(firebaseServices.db, householdId, instance),
+    saveRitualInteractionEvent(firebaseServices.db, householdId, shownEvent),
+  ]);
+}
+
+async function handleRitualFavoriteToggle(target: HTMLElement): Promise<void> {
   const ritualId = target.dataset.ritualFavoriteToggle;
   const sourceSurface = target.dataset.ritualFavoriteSource;
 
@@ -1080,15 +1164,16 @@ function handleRitualFavoriteToggle(target: HTMLElement): void {
     sourceSurface === "choose_with_me"
       ? getRecommendationInstanceId(target)
       : undefined;
+  let event: RitualInteractionEvent;
 
   if (favorite.active) {
-    ritualInteractionStore.recordFavoriteAdded({
+    event = ritualInteractionStore.recordFavoriteAdded({
       ritualId,
       surface: sourceSurface,
       recommendationInstanceId,
     });
   } else {
-    ritualInteractionStore.recordFavoriteRemoved({
+    event = ritualInteractionStore.recordFavoriteRemoved({
       ritualId,
       surface: sourceSurface,
       recommendationInstanceId,
@@ -1096,22 +1181,39 @@ function handleRitualFavoriteToggle(target: HTMLElement): void {
   }
 
   if (sourceSurface === "choose_with_me") {
-    renderChooseWithMeInteractionStatus(
-      favorite.active ? "Saved favorite." : "Removed favorite.",
-    );
+    try {
+      await Promise.all([
+        persistRitualFavorite(favorite),
+        persistRitualInteractionEvent(event),
+      ]);
+      renderChooseWithMeInteractionStatus(
+        favorite.active ? "Saved favorite." : "Removed favorite.",
+      );
+    } catch {
+      renderChooseWithMeInteractionStatus("Could not save favorite.");
+    }
     return;
+  }
+
+  try {
+    await Promise.all([
+      persistRitualFavorite(favorite),
+      persistRitualInteractionEvent(event),
+    ]);
+  } catch {
+    // Search has no inline status surface yet; keep the local state responsive.
   }
 
   renderSearchRituals();
 }
 
-function recordChooseWithMeFeedback(input: {
+async function recordChooseWithMeFeedback(input: {
   ritualId: string;
   recommendationInstanceId?: string;
   fit: RitualFeedbackFit;
   reasons: RitualFeedbackReason[];
   note?: string;
-}): void {
+}): Promise<void> {
   const recommendationInstanceId =
     input.recommendationInstanceId ??
     activeChooseWithMeRecommendationInstance?.id;
@@ -1120,7 +1222,7 @@ function recordChooseWithMeFeedback(input: {
     throw new Error("Choose with me feedback needs a recommendation instance.");
   }
 
-  ritualInteractionStore.recordRitualFeedback({
+  const event = ritualInteractionStore.recordRitualFeedback({
     recommendationInstanceId,
     ritualId: input.ritualId,
     feedback: {
@@ -1129,9 +1231,11 @@ function recordChooseWithMeFeedback(input: {
       note: input.note,
     },
   });
+
+  await persistRitualInteractionEvent(event);
 }
 
-function handleChooseWithMeFitFeedback(target: HTMLElement): void {
+async function handleChooseWithMeFitFeedback(target: HTMLElement): Promise<void> {
   const ritualId = target.dataset.ritualId;
 
   if (!ritualId) {
@@ -1139,7 +1243,7 @@ function handleChooseWithMeFitFeedback(target: HTMLElement): void {
   }
 
   try {
-    recordChooseWithMeFeedback({
+    await recordChooseWithMeFeedback({
       ritualId,
       recommendationInstanceId: getRecommendationInstanceId(target),
       fit: "fit",
@@ -1153,7 +1257,7 @@ function handleChooseWithMeFitFeedback(target: HTMLElement): void {
   }
 }
 
-function handleChooseWithMeTryAnother(target: HTMLElement): void {
+async function handleChooseWithMeTryAnother(target: HTMLElement): Promise<void> {
   const ritualId = target.dataset.ritualId;
   const recommendationInstanceId = getRecommendationInstanceId(target);
   const checkIn = activeCurrentRitualCheckIn;
@@ -1164,10 +1268,11 @@ function handleChooseWithMeTryAnother(target: HTMLElement): void {
   }
 
   try {
-    ritualInteractionStore.recordTryAnotherRequested({
+    const tryAnotherEvent = ritualInteractionStore.recordTryAnotherRequested({
       recommendationInstanceId,
       ritualId,
     });
+    await persistRitualInteractionEvent(tryAnotherEvent);
 
     const previousExcludedRitualIds = activeChooseWithMeExcludedRitualIds;
     activeChooseWithMeExcludedRitualIds = [
@@ -1201,7 +1306,9 @@ function handleChooseWithMeTryAnother(target: HTMLElement): void {
   }
 }
 
-function handleChooseWithMeNotQuiteFeedback(form: HTMLFormElement): void {
+async function handleChooseWithMeNotQuiteFeedback(
+  form: HTMLFormElement,
+): Promise<void> {
   const ritualId = form.dataset.ritualId;
   const formData = new FormData(form);
   const reasons = formData
@@ -1223,7 +1330,7 @@ function handleChooseWithMeNotQuiteFeedback(form: HTMLFormElement): void {
   }
 
   try {
-    recordChooseWithMeFeedback({
+    await recordChooseWithMeFeedback({
       ritualId,
       recommendationInstanceId: getRecommendationInstanceId(form),
       fit,
@@ -1236,6 +1343,22 @@ function handleChooseWithMeNotQuiteFeedback(form: HTMLFormElement): void {
       error instanceof Error ? error.message : "Could not save feedback.",
     );
   }
+}
+
+async function handleRitualSelected(ritualId: string): Promise<void> {
+  activeSelectedRitualId = ritualId;
+  const event = ritualInteractionStore.recordRitualSelected({
+    ritualId,
+    surface: "search",
+  });
+
+  try {
+    await persistRitualInteractionEvent(event);
+  } catch {
+    // Direct search selection stays local if persistence is temporarily unavailable.
+  }
+
+  renderSearchRituals();
 }
 
 function toggleRitualSearchChip(chip: string): void {
@@ -1398,30 +1521,25 @@ appRoot.addEventListener("click", (event) => {
 
   if (ritualFavoriteTarget) {
     event.preventDefault();
-    handleRitualFavoriteToggle(ritualFavoriteTarget);
+    void handleRitualFavoriteToggle(ritualFavoriteTarget);
     return;
   }
 
   if (ritualFeedbackFitTarget) {
     event.preventDefault();
-    handleChooseWithMeFitFeedback(ritualFeedbackFitTarget);
+    void handleChooseWithMeFitFeedback(ritualFeedbackFitTarget);
     return;
   }
 
   if (ritualTryAnotherTarget) {
     event.preventDefault();
-    handleChooseWithMeTryAnother(ritualTryAnotherTarget);
+    void handleChooseWithMeTryAnother(ritualTryAnotherTarget);
     return;
   }
 
   if (ritualSelect) {
     event.preventDefault();
-    activeSelectedRitualId = ritualSelect;
-    ritualInteractionStore.recordRitualSelected({
-      ritualId: ritualSelect,
-      surface: "search",
-    });
-    renderSearchRituals();
+    void handleRitualSelected(ritualSelect);
     return;
   }
 
@@ -1653,7 +1771,7 @@ appRoot.addEventListener("submit", (event) => {
 
   if (target.matches("[data-ritual-feedback-form='feedback']")) {
     event.preventDefault();
-    handleChooseWithMeNotQuiteFeedback(target);
+    void handleChooseWithMeNotQuiteFeedback(target);
     return;
   }
 

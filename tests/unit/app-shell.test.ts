@@ -1064,6 +1064,10 @@ describe("app shell rendering", () => {
 
     expect(mainSource).toContain("createRitualFavoriteStore");
     expect(mainSource).toContain("createRecommendationEventStore");
+    expect(mainSource).toContain("loadHouseholdRitualState");
+    expect(mainSource).toContain("saveRitualFavorite");
+    expect(mainSource).toContain("saveRecommendationInstance");
+    expect(mainSource).toContain("saveRitualInteractionEvent");
     expect(mainSource).toContain("recordFavoriteAdded");
     expect(mainSource).toContain("recordFavoriteRemoved");
     expect(mainSource).toContain("recordRitualFeedback");
