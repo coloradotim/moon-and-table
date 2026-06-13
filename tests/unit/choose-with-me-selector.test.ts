@@ -210,6 +210,46 @@ describe("chooseWithMeRitual", () => {
     expect(result.debug.exclusions.requested_primary_purpose_unmatched).toBe(1);
   });
 
+  it("can exclude an already offered ritual and select the next ranked option", () => {
+    const first = makeRitual({
+      id: "first-offered",
+      presentation: {
+        ...makeRitual({}).presentation,
+        headline: "A First Offered",
+      },
+    });
+    const next = makeRitual({
+      id: "next-offered",
+      presentation: {
+        ...makeRitual({}).presentation,
+        headline: "B Next Offered",
+      },
+    });
+    const request = {
+      timeScope: "today" as const,
+      energyCapacity: "enough_to_engage" as const,
+      capacityMode: "steady" as const,
+      audience: "me" as const,
+      purpose: "tending" as const,
+      carrier: "table" as const,
+      refinement: "the home",
+    };
+
+    const firstResult = chooseWithMeRitual([next, first], request);
+    const nextResult = chooseWithMeRitual([next, first], {
+      ...request,
+      excludedRitualIds: ["first-offered"],
+    });
+
+    expect(firstResult.status).toBe("selected");
+    expect(firstResult.selectedRitual?.id).toBe("first-offered");
+    expect(nextResult.status).toBe("selected");
+    expect(nextResult.selectedRitual?.id).toBe("next-offered");
+    expect(nextResult.debug.exclusions.already_offered).toBe(1);
+    expect(nextResult.debug.topCandidates.map((candidate) => candidate.ritualId))
+      .not.toContain("first-offered");
+  });
+
   it("holds deeper-only rituals until the user has room for something deeper", () => {
     const deeperOnly = makeRitual({
       id: "deeper-ritual",
