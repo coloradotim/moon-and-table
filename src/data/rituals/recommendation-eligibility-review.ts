@@ -431,6 +431,17 @@ export function applySourceBackedRecommendationEligibilityReview(
       return keepDirectUseOnly(reviewed, holdReasons);
     }
 
+    const existingMissing =
+      reviewed.recommendationMetadata.eligibility.missing ?? [];
+    const hasRecordLevelRecommendationHold =
+      !reviewed.recommendationMetadata.eligibility.recommendable &&
+      existingMissing.length > 0 &&
+      !existingMissing.includes("recommendation_review");
+
+    if (hasRecordLevelRecommendationHold) {
+      return keepDirectUseOnly(reviewed, existingMissing);
+    }
+
     return markRecommendationEligible(reviewed);
   });
 }

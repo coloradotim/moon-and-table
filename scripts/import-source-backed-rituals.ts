@@ -18,6 +18,8 @@ import {
   type RitualWordUseContext,
   type RitualWords,
 } from "../src/data/rituals/types";
+import { applySourceBackedDirectUseReview } from "../src/data/rituals/direct-use-review";
+import { applySourceBackedRecommendationEligibilityReview } from "../src/data/rituals/recommendation-eligibility-review";
 import { validateRituals } from "../src/data/rituals/validate-rituals";
 
 type PacketImportSpec = {
@@ -30,6 +32,24 @@ type PacketImportSpec = {
 type ImportedRitual = Ritual & {
   __packetLabel: string;
   __packetPath: string;
+};
+
+type ImportPrepManifestEntry = {
+  ritualizationType: string;
+  primaryPurpose: RitualPurpose;
+  primaryCarrier: RitualCarrier;
+  secondaryCarriers: RitualCarrier[];
+  capacitySupports: RitualCapacityMode[];
+  audienceSupports: RitualAudience[];
+  timing: {
+    relationship: RitualTimingRelationship;
+    contexts: string[];
+  };
+  recommendationEligible: boolean;
+  recommendationStatus: string;
+  missing: string[];
+  bestWindowBasis: string;
+  reviewLabels: string[];
 };
 
 type SkippedCandidate = {
@@ -104,10 +124,62 @@ const PACKETS: PacketImportSpec[] = [
     sourceLabel: "Dominguez, Practical Astrology for Witches and Pagans",
     packetPath: "docs/research/ritual-candidates/packet-dominguez-practical-astrology.md",
   },
+  {
+    packetLabel: "Herstik Sacred Sex complete extraction",
+    sourceLabel: "Herstik, Sacred Sex",
+    packetPath:
+      "docs/research/ritual-candidates/packet-herstik-sacred-sex-complete-extraction.md",
+  },
+  {
+    packetLabel: "Miller Sex, Sorcery, and Spirit complete extraction",
+    sourceLabel: "Miller, Sex, Sorcery, and Spirit",
+    packetPath:
+      "docs/research/ritual-candidates/packet-miller-sex-sorcery-spirit-complete-extraction.md",
+  },
+  {
+    packetLabel: "Carrellas Urban Tantra complete extraction",
+    sourceLabel: "Carrellas, Urban Tantra",
+    packetPath:
+      "docs/research/ritual-candidates/packet-carrellas-urban-tantra-complete-extraction.md",
+  },
+  {
+    packetLabel: "Pamita Book of Candle Magic complete extraction",
+    sourceLabel: "Madame Pamita, The Book of Candle Magic",
+    packetPath:
+      "docs/research/ritual-candidates/packet-pamita-book-candle-magic-complete-extraction.md",
+  },
+  {
+    packetLabel: "Gamache Master Book of Candle Burning complete extraction",
+    sourceLabel: "Gamache, The Master Book of Candle Burning",
+    packetPath:
+      "docs/research/ritual-candidates/packet-gamache-master-candle-burning-complete-extraction.md",
+  },
+  {
+    packetLabel: "Dykes/Gibson Astrological Magic complete extraction",
+    sourceLabel: "Dykes/Gibson, Astrological Magic",
+    packetPath:
+      "docs/research/ritual-candidates/packet-dykes-gibson-astrological-magic-complete-extraction.md",
+  },
+  {
+    packetLabel: "Whitehurst Magical Housekeeping complete extraction",
+    sourceLabel: "Whitehurst, Magical Housekeeping",
+    packetPath:
+      "docs/research/ritual-candidates/packet-whitehurst-magical-housekeeping-complete-extraction.md",
+  },
+  {
+    packetLabel: "Blonde Hearth and Home Witchcraft complete extraction",
+    sourceLabel: "Blonde, Hearth and Home Witchcraft",
+    packetPath:
+      "docs/research/ritual-candidates/packet-blonde-hearth-home-witchcraft-complete-extraction.md",
+  },
 ];
 
 const OUT_FILE = "src/data/rituals/source-backed-rituals.ts";
 const REPORT_FILE = "docs/content-audits/post-420-anand-saint-thomas-import-review.md";
+const FULL_SOURCE_IMPORT_REPORT_FILE =
+  "docs/content-audits/post-433-source-packet-mechanical-import-review.md";
+const IMPORT_PREP_MANIFEST_FILE =
+  "docs/research/ritual-candidates/source-packet-import-prep-manifest.md";
 const ANAND_SAINT_THOMAS_CANONICAL_PACKET =
   "docs/research/ritual-candidates/packet-anand-saint-thomas-ritual-only-reextract.md";
 const ANAND_SAINT_THOMAS_PREFIXES = [
@@ -151,6 +223,126 @@ function parseListLike(raw: string | undefined): string[] {
   return raw.trim().startsWith("[") ? parseArray(raw) : parseCommaValues(raw);
 }
 
+function parseBacktickValues(raw: string): string[] {
+  return [...raw.matchAll(/`([^`]+)`/g)].map((match) => match[1]);
+}
+
+function splitMarkdownTableRow(row: string): string[] {
+  return row
+    .trim()
+    .replace(/^\|/, "")
+    .replace(/\|$/, "")
+    .split(/(?<!\\)\|/g)
+    .map((cell) => cell.replace(/\\\|/g, "|").trim());
+}
+
+function parseManifestTiming(raw: string): ImportPrepManifestEntry["timing"] {
+  if (raw === "none") {
+    return {
+      relationship: "none",
+      contexts: [],
+    };
+  }
+
+  const [relationshipRaw, contextsRaw = ""] = raw.split(/:\s*/, 2);
+  const relationship =
+    coerceTiming(relationshipRaw) ??
+    (contextsRaw.length > 0 ? "helpful" : "none");
+
+  return {
+    relationship,
+    contexts: contextsRaw
+      .split(/;\s*/)
+      .map((context) => context.trim())
+      .filter(Boolean),
+  };
+}
+
+function parseRecommendationStatus(raw: string): {
+  status: string;
+  missing: string[];
+} {
+  const [status, missingRaw] = raw.split(/:\s*/, 2);
+
+  return {
+    status: status.trim(),
+    missing: missingRaw
+      ? missingRaw
+          .split(/;\s*/)
+          .map((item) => item.trim())
+          .filter(Boolean)
+      : [],
+  };
+}
+
+function parseImportPrepManifest(): Map<string, ImportPrepManifestEntry> {
+  if (!fs.existsSync(IMPORT_PREP_MANIFEST_FILE)) {
+    return new Map();
+  }
+
+  const manifest = fs.readFileSync(IMPORT_PREP_MANIFEST_FILE, "utf8");
+  const entries = new Map<string, ImportPrepManifestEntry>();
+
+  for (const line of manifest.split("\n")) {
+    if (!line.startsWith("| `")) {
+      continue;
+    }
+
+    const cells = splitMarkdownTableRow(line);
+    const [
+      candidateCell,
+      ritualizationTypeCell,
+      primaryPurposeCell,
+      primaryCarrierCell,
+      secondaryCarriersCell,
+      capacityCell,
+      audienceCell,
+      timingCell,
+      recommendationEligibleCell,
+      recommendationStatusCell,
+      bestWindowBasisCell,
+      reviewLabelsCell,
+    ] = cells;
+    const id = candidateCell?.match(/`([^`]+)`/)?.[1];
+    const primaryPurpose = coercePurpose(parseBacktickValues(primaryPurposeCell)[0]);
+    const primaryCarrier = coerceCarrier(parseBacktickValues(primaryCarrierCell)[0]);
+
+    if (!id || !primaryPurpose || !primaryCarrier) {
+      continue;
+    }
+
+    const recommendation = parseRecommendationStatus(
+      recommendationStatusCell ?? "ready",
+    );
+
+    entries.set(id, {
+      ritualizationType:
+        parseBacktickValues(ritualizationTypeCell)[0] ?? "direct_source_ritual",
+      primaryPurpose,
+      primaryCarrier,
+      secondaryCarriers: parseBacktickValues(secondaryCarriersCell)
+        .map(coerceCarrier)
+        .filter((carrier): carrier is RitualCarrier => Boolean(carrier)),
+      capacitySupports: parseBacktickValues(capacityCell)
+        .map(coerceCapacity)
+        .filter((mode): mode is RitualCapacityMode => Boolean(mode)),
+      audienceSupports: parseBacktickValues(audienceCell)
+        .map(coerceAudience)
+        .filter((audience): audience is RitualAudience => Boolean(audience)),
+      timing: parseManifestTiming(timingCell ?? "none"),
+      recommendationEligible: recommendationEligibleCell?.includes("true") ?? false,
+      recommendationStatus: recommendation.status,
+      missing: recommendation.missing,
+      bestWindowBasis: bestWindowBasisCell ?? "",
+      reviewLabels: reviewLabelsCell
+        ? parseCommaValues(reviewLabelsCell)
+        : [],
+    });
+  }
+
+  return entries;
+}
+
 function getSection(block: string, heading: string): string | undefined {
   const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const match = block.match(
@@ -172,14 +364,14 @@ function getYamlSection(block: string, heading: string): string | undefined {
 
 function getLabelField(block: string, label: string): string | undefined {
   const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = block.match(new RegExp(`^${escaped}:\\s*(.+)$`, "m"));
+  const match = block.match(new RegExp(`^${escaped}:\\s*(.+)$`, "im"));
 
   return match?.[1]?.trim();
 }
 
 function getBulletField(block: string, label: string): string | undefined {
   const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const match = block.match(new RegExp(`^- ${escaped}:\\s*(.+)$`, "m"));
+  const match = block.match(new RegExp(`^- ${escaped}:\\s*(.+)$`, "im"));
 
   return match?.[1]?.trim();
 }
@@ -189,7 +381,8 @@ function getField(block: string, label: string): string | undefined {
     getSection(block, titleCaseLabel(label)) ??
     getSection(block, label.replace(/([A-Z])/g, " $1").trim()) ??
     getLabelField(block, label) ??
-    getBulletField(block, label)
+    getBulletField(block, label) ??
+    getBulletField(block, titleCaseLabel(label))
   );
 }
 
@@ -237,7 +430,9 @@ function extractCandidateBlocks(markdown: string): string[] {
   return markdown
     .split(/\n(?=### )/g)
     .filter((block) =>
-      block.includes("import readiness label: `approved_for_mechanical_import`"),
+      /(?:import readiness label|Import readiness):\s*`approved_for_mechanical_import`/i.test(
+        block,
+      ),
     );
 }
 
@@ -295,7 +490,55 @@ function coerceWordContext(value: string | undefined): RitualWordUseContext {
     : "other";
 }
 
-function parseRecommendationMetadata(block: string) {
+function parseRecommendationMetadata(
+  block: string,
+  manifestEntry?: ImportPrepManifestEntry,
+) {
+  if (manifestEntry) {
+    return {
+      purposes: {
+        primary: manifestEntry.primaryPurpose,
+        secondary: [],
+        refinement: manifestEntry.primaryPurpose,
+      },
+      carriers: {
+        primary: manifestEntry.primaryCarrier,
+        secondary: uniqueValues(manifestEntry.secondaryCarriers),
+      },
+      capacity: {
+        supports:
+          manifestEntry.capacitySupports.length > 0
+            ? uniqueValues(manifestEntry.capacitySupports)
+            : ["only_a_little" as const],
+        default: manifestEntry.capacitySupports[0],
+      },
+      audience: {
+        supports:
+          manifestEntry.audienceSupports.length > 0
+            ? uniqueValues(manifestEntry.audienceSupports)
+            : ["me" as const],
+        default: manifestEntry.audienceSupports[0],
+      },
+      timing: {
+        relationship: manifestEntry.timing.relationship,
+        ...(manifestEntry.timing.contexts.length > 0
+          ? { contexts: manifestEntry.timing.contexts }
+          : {}),
+      },
+      eligibility: manifestEntry.recommendationEligible
+        ? {
+            recommendable: true,
+          }
+        : {
+            recommendable: false,
+            missing:
+              manifestEntry.missing.length > 0
+                ? manifestEntry.missing
+                : [`recommendation_${manifestEntry.recommendationStatus}`],
+          },
+    } satisfies Ritual["recommendationMetadata"];
+  }
+
   const compact = getLabelField(block, "recommendation metadata");
   const bullet = getBulletNestedBlock(block, "recommendation metadata");
   const yaml = getYamlSection(block, "Recommendation metadata");
@@ -469,6 +712,7 @@ function parseSourceGrounding(
     text.match(/`([^`]+)`/)?.[1] ??
     packet.sourceLabel;
   const sourceLocation =
+    getField(block, "Source location") ??
     stripQuotes(
       text.match(/source location(?: \/ basis)?:\s*(.+)$/im)?.[1] ??
         text.match(/sourceLocation:\s*(.+)$/m)?.[1],
@@ -481,9 +725,11 @@ function parseSourceGrounding(
     stripQuotes(
       text.match(/sourceSummary:\s*(.+)$/m)?.[1] ??
         text.match(/source summary:\s*(.+)$/im)?.[1] ??
+        getField(block, "Source support") ??
         text.match(/source basis:\s*(.+)$/im)?.[1],
     ) ?? text;
   const sourceSupports =
+    getField(block, "Source support") ??
     stripQuotes(text.match(/sourceSupports:\s*(.+)$/m)?.[1]) ??
     (whyThisFits || text);
   const transformation =
@@ -539,12 +785,29 @@ function cleanDoNotImportValues(values: string[]): string[] {
   return cleaned.length > 0 ? uniqueValues(cleaned) : [];
 }
 
-function parseSearchMetadata(block: string, packet: PacketImportSpec) {
+function parseSearchMetadata(
+  block: string,
+  packet: PacketImportSpec,
+  manifestEntry?: ImportPrepManifestEntry,
+) {
   const compact = getLabelField(block, "search metadata");
   const bullet = getBulletNestedBlock(block, "search metadata");
   const yaml = getYamlSection(block, "Search metadata");
   const text = compact ?? bullet ?? yaml ?? "";
+  const manifestTags = manifestEntry
+    ? [
+        manifestEntry.primaryPurpose,
+        manifestEntry.primaryCarrier,
+        ...manifestEntry.secondaryCarriers,
+        ...manifestEntry.capacitySupports,
+        ...manifestEntry.audienceSupports,
+        manifestEntry.timing.relationship,
+        ...manifestEntry.timing.contexts,
+        ...manifestEntry.reviewLabels,
+      ]
+    : [];
   const tags = uniqueValues([
+    ...manifestTags,
     ...parseArray(compact?.match(/tags\s+(\[[^\]]*\])/)?.[1]),
     ...parseCommaValues(bullet?.match(/tags:\s*"?([^"\n]+)"?$/m)?.[1]),
     ...parseListLike(yaml?.match(/tags:\s*"?([^"\n]+)"?$/m)?.[1]),
@@ -771,14 +1034,25 @@ function parseAdaptationPolicy(): Ritual["adaptationPolicy"] {
 function importBlock(
   block: string,
   packet: PacketImportSpec,
+  importPrepManifest: Map<string, ImportPrepManifestEntry>,
 ): ImportedRitual | SkippedCandidate {
   const candidateId = extractCandidateId(block) ?? "(missing candidate id)";
+  const manifestEntry = importPrepManifest.get(candidateId);
   const headline = getField(block, "headline");
-  const practice = getField(block, "ritual body / practice");
+  const practice =
+    getField(block, "ritual body / practice") ?? getField(block, "practice");
   const intention = getField(block, "intention");
-  const bestWindow = getField(block, "bestWindow");
-  const questionToCarry = getField(block, "questionToCarry");
-  const whyThisFits = buildWhyThisFits(block);
+  const bestWindow =
+    getField(block, "bestWindow") ??
+    getField(block, "Best window") ??
+    manifestEntry?.bestWindowBasis;
+  const questionToCarry =
+    getField(block, "questionToCarry") ?? getField(block, "question");
+  const whyThisFits =
+    buildWhyThisFits(block) ||
+    getField(block, "Source support") ||
+    manifestEntry?.bestWindowBasis ||
+    "";
 
   const missingFields = [
     ["headline", headline],
@@ -809,7 +1083,11 @@ function importBlock(
 
   const ritual: ImportedRitual = {
     id: candidateId,
-    status: "draft",
+    status: manifestEntry
+      ? manifestEntry.recommendationEligible
+        ? "recommendable"
+        : "reviewed"
+      : "draft",
     origin: {
       type: "source",
       sourceGrounding: parseSourceGrounding(block, packet, whyThisFits),
@@ -822,12 +1100,12 @@ function importBlock(
       whyThisFits,
       questionToCarry: presentation.questionToCarry.trim(),
     },
-    recommendationMetadata: parseRecommendationMetadata(block),
-    searchMetadata: parseSearchMetadata(block, packet),
+    recommendationMetadata: parseRecommendationMetadata(block, manifestEntry),
+    searchMetadata: parseSearchMetadata(block, packet, manifestEntry),
     availability: {
       findable: true,
-      directUseEligible: false,
-      recommendationEligible: false,
+      directUseEligible: Boolean(manifestEntry),
+      recommendationEligible: manifestEntry?.recommendationEligible ?? false,
     },
     ...(parseRitualWords(block) ? { ritualWords: parseRitualWords(block) } : {}),
     ...(parseReviewFlags(block) ? { reviewFlags: parseReviewFlags(block) } : {}),
@@ -843,6 +1121,7 @@ function importPackets() {
   const imported: ImportedRitual[] = [];
   const skipped: SkippedCandidate[] = [];
   const approvedCounts: Record<string, number> = {};
+  const importPrepManifest = parseImportPrepManifest();
 
   for (const packet of PACKETS) {
     const markdown = fs.readFileSync(packet.packetPath, "utf8");
@@ -850,7 +1129,7 @@ function importPackets() {
     approvedCounts[packet.packetLabel] = blocks.length;
 
     for (const block of blocks) {
-      const result = importBlock(block, packet);
+      const result = importBlock(block, packet, importPrepManifest);
       if ("reason" in result) {
         skipped.push(result);
       } else {
@@ -1095,6 +1374,92 @@ Ready for human review of imported count, app visibility, and import fidelity be
 `;
 
   fs.writeFileSync(REPORT_FILE, markdown);
+  writeFullSourcePacketReport(imported, skipped, approvedCounts);
+}
+
+function writeFullSourcePacketReport(
+  imported: ImportedRitual[],
+  skipped: SkippedCandidate[],
+  approvedCounts: Record<string, number>,
+) {
+  const runtimeById = new Map(
+    applySourceBackedRecommendationEligibilityReview(
+      applySourceBackedDirectUseReview(imported.map(withoutPrivateKeys)),
+    ).map((ritual) => [ritual.id, ritual]),
+  );
+  const byPacket = PACKETS.map((packet) => {
+    const packetImported = imported.filter(
+      (ritual) => ritual.__packetLabel === packet.packetLabel,
+    );
+    const packetRuntime = packetImported
+      .map((ritual) => runtimeById.get(ritual.id))
+      .filter((ritual): ritual is Ritual => Boolean(ritual));
+
+    return {
+      packet,
+      approved: approvedCounts[packet.packetLabel] ?? 0,
+      imported: packetImported.length,
+      directUse: packetRuntime.filter(
+        (ritual) => ritual.availability.directUseEligible,
+      ).length,
+      recommendationEligible: packetRuntime.filter(
+        (ritual) => ritual.availability.recommendationEligible,
+      ).length,
+      skipped: skipped.filter((item) => item.packetLabel === packet.packetLabel)
+        .length,
+    };
+  });
+  const runtimeRecords = [...runtimeById.values()];
+  const directUse = runtimeRecords.filter(
+    (ritual) => ritual.availability.directUseEligible,
+  );
+  const recommendationEligible = runtimeRecords.filter(
+    (ritual) => ritual.availability.recommendationEligible,
+  );
+
+  const markdown = `# Post-433 Source Packet Mechanical Import Review
+
+PR: source packet mechanical import
+
+This report documents the mechanical import posture after adding the eight
+no-API extraction packets and their import-prep manifest to the existing
+source-backed Ritual import pipeline.
+
+## Import Summary
+
+- Packets included: ${PACKETS.length}
+- Total source-backed Ritual records: ${runtimeRecords.length}
+- Findable records: ${runtimeRecords.filter((ritual) => ritual.availability.findable).length}
+- Direct-use records: ${directUse.length}
+- Recommendation-eligible records: ${recommendationEligible.length}
+- Recommendation-held records: ${imported.length - recommendationEligible.length}
+- Skipped candidates: ${skipped.length}
+
+## Packet Reconciliation
+
+| Packet | Approved candidate blocks found | Imported | Direct-use | Recommendation-eligible | Skipped |
+| --- | ---: | ---: | ---: | ---: | ---: |
+${byPacket
+  .map(
+    ({ packet, approved, imported: count, directUse: directUseCount, recommendationEligible: recommendationCount, skipped: skippedCount }) =>
+      `| ${packet.packetLabel} | ${approved} | ${count} | ${directUseCount} | ${recommendationCount} | ${skippedCount} |`,
+  )
+  .join("\n")}
+
+## Import Notes
+
+- The eight new packets are imported through \`${IMPORT_PREP_MANIFEST_FILE}\`.
+- Every manifest-approved record imports as findable and direct-use eligible.
+- Recommendation eligibility follows the manifest: adult/private/high-capacity material can be recommendation-eligible when current purpose, carrier, capacity, audience, and timing metadata can represent it.
+- Records held from recommendation remain findable/direct-use; holds are for selector gates or owner-review decisions, not import blockers.
+- Packet prose remains canonical for headline, practice, intention, best window, question, and source grounding.
+
+## Skipped Candidates
+
+${skipped.length === 0 ? "None." : skipped.map((item) => `- ${item.packetLabel}: ${item.candidateId} — ${item.reason}`).join("\n")}
+`;
+
+  fs.writeFileSync(FULL_SOURCE_IMPORT_REPORT_FILE, markdown);
 }
 
 function countBy(values: string[]): Record<string, number> {

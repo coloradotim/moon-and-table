@@ -779,7 +779,7 @@ All candidates below are source-backed and should be findable after import. Reco
 - Capacity: high
 - Review labels: group, explicit, BDSM_optional, birthday, passage, high_capacity
 - Recommendation constraints: direct-use until group/BDSM/surprise-play gates are available
-- Headline: Make One Person the Celebrated Center
+- Headline: Celebrate the One at the Center
 - Summary: A group pleasure rite pattern for celebrating a birthday or passage through planned sensation, rest, bath, and massage.
 - Practice: Plan the rite around the celebrated person’s known desires and explicit consent. Agree beforehand on any blindfold, restraint, sensation play, travel, bath, or massage. Begin with masking or reveal only if welcome. Offer waves of sensation, then rest. Move to water, food, or warmth. If the rite continues, move into massage or touch by clear agreement. Close with gratitude to the celebrated person and the group.
 - Intention: We let celebration become embodied care.

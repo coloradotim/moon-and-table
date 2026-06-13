@@ -45,13 +45,21 @@ This packet documents the mechanical import of the superseding Anand/Saint Thoma
 | Anand connection | 28 | 28 | 0 | Superseded by `docs/research/ritual-candidates/packet-anand-saint-thomas-ritual-only-reextract.md`; reused as import-block scaffolding. |
 | Anand and Saint Thomas ritual-only adult re-extraction | 7 | 7 | 0 | Canonical Anand/Saint Thomas ledger plus seven complete inline records. |
 | Dominguez practical astrology | 13 | 13 | 0 |  |
+| Herstik Sacred Sex complete extraction | 69 | 69 | 0 |  |
+| Miller Sex, Sorcery, and Spirit complete extraction | 22 | 22 | 0 |  |
+| Carrellas Urban Tantra complete extraction | 55 | 55 | 0 |  |
+| Pamita Book of Candle Magic complete extraction | 42 | 42 | 0 |  |
+| Gamache Master Book of Candle Burning complete extraction | 24 | 24 | 0 |  |
+| Dykes/Gibson Astrological Magic complete extraction | 26 | 26 | 0 |  |
+| Whitehurst Magical Housekeeping complete extraction | 27 | 27 | 0 |  |
+| Blonde Hearth and Home Witchcraft complete extraction | 26 | 26 | 0 |  |
 
 ## Count reconciliation
 
-- Packets included: 11
+- Packets included: 19
 - Packets deferred: 0
-- Total approved_for_mechanical_import candidates found: 225
-- Imported as draft/findable: 225
+- Total approved_for_mechanical_import candidates found: 516
+- Imported as draft/findable: 516
 - Anand/Saint Thomas approved ledger rows: 71
 - Anand/Saint Thomas structural non-import rows: 14
 - Anand/Saint Thomas runtime records after this import: 82
@@ -97,28 +105,28 @@ None.
 
 | Purpose | Count |
 | --- | ---: |
-| opening | 31 |
-| steadying | 18 |
-| releasing | 26 |
-| tending | 22 |
-| marking | 24 |
-| protecting | 6 |
-| remembering | 23 |
-| blessing | 33 |
-| voicing | 19 |
-| connecting | 23 |
+| opening | 41 |
+| steadying | 73 |
+| releasing | 61 |
+| tending | 31 |
+| marking | 50 |
+| protecting | 35 |
+| remembering | 26 |
+| blessing | 59 |
+| voicing | 69 |
+| connecting | 71 |
 
 ## Primary carrier distribution
 
 | Carrier | Count |
 | --- | ---: |
-| candlelight | 32 |
-| table | 33 |
-| vessel | 34 |
-| doorway | 8 |
-| body | 32 |
-| words | 46 |
-| plant | 40 |
+| candlelight | 165 |
+| table | 35 |
+| vessel | 45 |
+| doorway | 15 |
+| body | 94 |
+| words | 117 |
+| plant | 45 |
 
 ## Import fidelity notes
 

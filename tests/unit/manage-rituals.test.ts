@@ -10,30 +10,32 @@ describe("Manage Rituals view model", () => {
   it("summarizes imported Ritual records with recommendation review overlays", () => {
     const viewModel = createManageRitualsViewModel(sourceBackedRituals);
 
-    expect(viewModel.total).toBe(225);
-    expect(viewModel.filteredTotal).toBe(225);
+    expect(viewModel.total).toBe(516);
+    expect(viewModel.filteredTotal).toBe(516);
     expect(viewModel.filters).toEqual(defaultManageRitualFilters);
     expect(viewModel.counts.byStatus).toEqual({
       pilot: 0,
       draft: 0,
-      reviewed: 22,
-      recommendable: 203,
+      reviewed: 53,
+      recommendable: 463,
     });
     expect(viewModel.counts.byOrigin).toEqual({
-      source: 225,
+      source: 516,
       household: 0,
     });
-    expect(viewModel.counts.findable).toBe(225);
-    expect(viewModel.counts.directUseEligible).toBe(225);
-    expect(viewModel.counts.recommendationEligible).toBe(203);
-    expect(viewModel.counts.recommendable).toBe(203);
+    expect(viewModel.counts.findable).toBe(516);
+    expect(viewModel.counts.directUseEligible).toBe(516);
+    expect(viewModel.counts.recommendationEligible).toBe(463);
+    expect(viewModel.counts.recommendable).toBe(463);
     expect(viewModel.counts.withValidationFindings).toBe(0);
-    expect(viewModel.counts.withMissingReadiness).toBe(22);
-    expect(viewModel.sourceOptions).toHaveLength(10);
+    expect(viewModel.counts.withMissingReadiness).toBe(53);
+    expect(viewModel.sourceOptions).toHaveLength(18);
     expect(viewModel.sourceOptions.map((option) => option.label)).toEqual(
       expect.arrayContaining([
         "Raymond Buckland, Practical Candleburning Rituals",
         "Laurel Woodward, Kitchen Witchery: Unlocking the Magick in Everyday Ingredients",
+        "Herstik, Sacred Sex",
+        "Carrellas, Urban Tantra",
       ]),
     );
     expect(viewModel.rows.map((row) => row.id)).toEqual(
@@ -48,7 +50,7 @@ describe("Manage Rituals view model", () => {
     );
     expect(
       viewModel.rows.filter((row) => row.missingReadiness.length > 0),
-    ).toHaveLength(22);
+    ).toHaveLength(53);
     expect(
       viewModel.rows.some((row) =>
         row.missingReadiness.includes("planetary_day_or_hour_not_supported"),
@@ -64,15 +66,15 @@ describe("Manage Rituals view model", () => {
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { status: "reviewed" })
         .filteredTotal,
-    ).toBe(22);
+    ).toBe(53);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { status: "recommendable" })
         .filteredTotal,
-    ).toBe(203);
+    ).toBe(463);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { origin: "source" })
         .filteredTotal,
-    ).toBe(225);
+    ).toBe(516);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { origin: "household" })
         .filteredTotal,
@@ -86,12 +88,12 @@ describe("Manage Rituals view model", () => {
       createManageRitualsViewModel(sourceBackedRituals, {
         readiness: "missing_readiness",
       }).filteredTotal,
-    ).toBe(22);
+    ).toBe(53);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, {
         readiness: "recommendation_ready",
       }).filteredTotal,
-    ).toBe(203);
+    ).toBe(463);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, {
         readiness: "validation_findings",
@@ -100,7 +102,7 @@ describe("Manage Rituals view model", () => {
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { validation: "valid" })
         .filteredTotal,
-    ).toBe(225);
+    ).toBe(516);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { validation: "findings" })
         .filteredTotal,

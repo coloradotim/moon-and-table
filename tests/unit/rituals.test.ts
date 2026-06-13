@@ -18,7 +18,7 @@ import {
 
 describe("source-backed Ritual import data", () => {
   it("contains source-backed records with direct-use and recommendation review overlays applied", () => {
-    expect(sourceBackedRituals).toHaveLength(225);
+    expect(sourceBackedRituals).toHaveLength(516);
     expect(sourceBackedRituals.map((ritual) => ritual.id)).toEqual(
       expect.arrayContaining([
         "ritual-buckland-candle-prepare-table",
@@ -38,10 +38,10 @@ describe("source-backed Ritual import data", () => {
     );
     expect(
       sourceBackedRituals.filter((ritual) => ritual.status === "reviewed"),
-    ).toHaveLength(22);
+    ).toHaveLength(53);
     expect(
       sourceBackedRituals.filter((ritual) => ritual.status === "recommendable"),
-    ).toHaveLength(203);
+    ).toHaveLength(463);
     expect(sourceBackedRituals.every((ritual) => ritual.origin.type === "source")).toBe(
       true,
     );
@@ -50,10 +50,10 @@ describe("source-backed Ritual import data", () => {
     ).toBe(true);
     expect(
       sourceBackedRituals.filter((ritual) => ritual.availability.directUseEligible),
-    ).toHaveLength(225);
+    ).toHaveLength(516);
     expect(
       sourceBackedRituals.filter((ritual) => ritual.availability.recommendationEligible),
-    ).toHaveLength(203);
+    ).toHaveLength(463);
     expect(
       sourceBackedRituals.every(
         (ritual) =>
