@@ -557,6 +557,21 @@ generated DB-shaped output and reports skipped or invalid records with reasons.
 It does not read from or write to Firestore, import source packets, change
 runtime selection, or modify Ritual content.
 
+The deterministic static export step uses DB-shaped Ritual pointer documents,
+published immutable version documents, and valid validation snapshots to produce
+the reviewed TypeScript runtime export:
+
+```bash
+npm run rituals:export-db-to-static
+```
+
+By default the command is a dry run against the current in-memory DB-shaped
+mirror records. It validates before generating source text, reports invalid,
+unreviewed, unpublished, or unvalidated records, and performs no Firestore reads
+or writes. Passing `-- --write` updates
+`src/data/rituals/source-backed-rituals.ts` so the result can move through a
+normal PR review and remain git-revertable.
+
 ## 9. Relationship To Favorites, Feedback, And History
 
 Favorites should target Ritual identity:

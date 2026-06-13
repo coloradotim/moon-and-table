@@ -15,6 +15,7 @@
     "diagnose:content": "tsx scripts/content-reachability.ts",
     "rituals:readiness": "tsx scripts/ritual-readiness-report.ts",
     "rituals:mirror-static-to-db": "tsx scripts/mirror-static-rituals-to-db.ts",
+    "rituals:export-db-to-static": "tsx scripts/export-db-rituals-to-static.ts",
     "recommendation:quality": "tsx scripts/recommendation-quality-report.ts",
     "recommendation:quality:delta": "tsx scripts/recommendation-quality-delta.ts",
     "recommendation:quality:packet": "tsx scripts/recommendation-quality-review-packet.ts",
