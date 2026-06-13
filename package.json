@@ -17,6 +17,7 @@
     "rituals:mirror-static-to-db": "tsx scripts/mirror-static-rituals-to-db.ts",
     "rituals:export-db-to-static": "tsx scripts/export-db-rituals-to-static.ts",
     "rituals:db-parity": "tsx scripts/ritual-db-parity-report.ts",
+    "rituals:backfill-static-to-db": "tsx scripts/backfill-static-rituals-to-firestore.ts",
     "recommendation:quality": "tsx scripts/recommendation-quality-report.ts",
     "recommendation:quality:delta": "tsx scripts/recommendation-quality-delta.ts",
     "recommendation:quality:packet": "tsx scripts/recommendation-quality-review-packet.ts",
