@@ -53,13 +53,14 @@ This packet documents the mechanical import of the superseding Anand/Saint Thoma
 | Dykes/Gibson Astrological Magic complete extraction | 26 | 26 | 0 |  |
 | Whitehurst Magical Housekeeping complete extraction | 27 | 27 | 0 |  |
 | Blonde Hearth and Home Witchcraft complete extraction | 26 | 26 | 0 |  |
+| Diaz Plant Witchery complete extraction | 12 | 12 | 0 |  |
 
 ## Count reconciliation
 
-- Packets included: 19
+- Packets included: 20
 - Packets deferred: 0
-- Total approved_for_mechanical_import candidates found: 516
-- Imported as draft/findable: 516
+- Total approved_for_mechanical_import candidates found: 528
+- Imported as draft/findable: 528
 - Anand/Saint Thomas approved ledger rows: 71
 - Anand/Saint Thomas structural non-import rows: 14
 - Anand/Saint Thomas runtime records after this import: 82
@@ -105,15 +106,15 @@ None.
 
 | Purpose | Count |
 | --- | ---: |
-| opening | 41 |
+| opening | 44 |
 | steadying | 73 |
-| releasing | 61 |
-| tending | 31 |
-| marking | 50 |
-| protecting | 35 |
+| releasing | 62 |
+| tending | 32 |
+| marking | 51 |
+| protecting | 39 |
 | remembering | 26 |
 | blessing | 59 |
-| voicing | 69 |
+| voicing | 71 |
 | connecting | 71 |
 
 ## Primary carrier distribution
@@ -122,11 +123,11 @@ None.
 | --- | ---: |
 | candlelight | 165 |
 | table | 35 |
-| vessel | 45 |
-| doorway | 15 |
-| body | 94 |
-| words | 117 |
-| plant | 45 |
+| vessel | 49 |
+| doorway | 17 |
+| body | 95 |
+| words | 118 |
+| plant | 49 |
 
 ## Import fidelity notes
 

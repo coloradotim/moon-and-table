@@ -1,8 +1,8 @@
 # Source Packet Import Prep Manifest
 
 Status: `import_prep_ready_for_owner_review`  
-PR: #433  
-Scope: normalized import-prep overlay for the eight no-API extraction packets.
+PR: #433 plus later Diaz packet import  
+Scope: normalized import-prep overlay for the no-API extraction packets.
 
 ## Purpose
 
@@ -410,13 +410,36 @@ Recommendation-held: 0
 | `blonde-item-protection-enchantment` | `direct_source_ritual` | `protecting` | `candlelight` | none | `only_a_little` | `me` | none | `true` | ready | When a small, contained practice would be enough. | object_charm, protection, candle, low_capacity |
 | `blonde-jewelry-enchantment` | `direct_source_ritual` | `voicing` | `words` | `body` | `only_a_little` | `me` | none | `true` | ready | When a small, contained practice would be enough. | jewelry, object_charm, words, low_capacity |
 
+### Juliet Diaz, _Plant Witchery_
+
+Packet: `docs/research/ritual-candidates/packet-diaz-plant-witchery-complete-extraction.md`  
+Approved candidates: 12  
+Findable/direct-use: 12  
+Recommendation-eligible now: 2  
+Recommendation-held: 10
+
+| Candidate | ritualizationType | primaryPurpose | primaryCarrier | secondaryCarriers | capacity.supports | audience.supports | timing | recommendationEligible | recommendation status / missing gates | bestWindow basis | review/search labels |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `pw-diaz-book-seed-pact` | `direct_source_ritual` | `marking` | `plant` | `words`, `body` | `enough_to_participate` | `me` | helpful: beginning of plant-magic study/practice arc | `false` | hold: operative_words_review_needed; material_safety_gate_needed | When beginning a plant-study arc, opening a new grimoire, or committing to tend one source or plant relationship with care. | plant_spirit, seed, earth, book, initiation, humming, operative_words_functional, material_review |
+| `pw-diaz-sunflower-seed-tending` | `direct_source_ritual` | `opening` | `plant` | `body`, `vessel` | `room_for_something_deeper` | `me` | required: 7-10 day repeated tending; sunlight symbolically central | `false` | hold: timing_context_not_supported | When there is room for a repeated practice and a real place to sprout sunflower seeds. | sunflower, seed, edible_seed, planting, repeated_practice, sun |
+| `pw-diaz-ague-threshold-protection-glass` | `direct_source_ritual` | `protecting` | `doorway` | `plant`, `vessel` | `enough_to_participate` | `me`, `both_of_us` | required: 3-day working | `false` | hold: material_safety_gate_needed; disposal_review_needed | When the home boundary needs clear marking and there is capacity to complete the 3-day close. | protection, threshold, herb_powder, onion, salt, chili, disposal, apartment_adaptation, material_safety |
+| `pw-diaz-apple-written-wish` | `direct_source_ritual` | `opening` | `vessel` | `plant`, `words`, `candlelight` | `enough_to_participate` | `me` | required: remove when apple begins to rot | `false` | hold: material_safety_gate_needed; manifestation_review_needed | When a single wish or beginning needs a concrete container and you can tend the altar until the apple is removed. | apple, written_wish, candle, altar, honey_or_oil, decay_close, manifestation_language |
+| `pw-diaz-blue-lotus-protection-glass` | `direct_source_ritual` | `protecting` | `vessel` | `plant`, `words` | `enough_to_participate` | `me` | required: weekly renewal over 3 weeks | `false` | hold: material_safety_gate_needed; target_linked_or_adversarial_gate_needed | When a clear protection boundary can be tended weekly for 3 weeks. | protection, blue_lotus, eggshell, glass, high_place, repeated_practice, target_sensitive |
+| `pw-diaz-cactus-intention-keeper` | `direct_source_ritual` | `protecting` | `plant` | `vessel`, `words` | `enough_to_participate` | `me` | helpful: ongoing until intention is released | `false` | hold: material_safety_gate_needed; plant_care_review_needed | When one habit, promise, or protection needs a living witness and there is capacity to tend the plant afterward. | cactus, living_plant, rainwater, intention_note, spine_release_optional, tobacco_leaf_optional, plant_care_required |
+| `pw-diaz-centaury-emotion-leaf` | `direct_source_ritual` | `releasing` | `words` | `plant`, `vessel` | `only_a_little`, `enough_to_participate` | `me` | helpful: repeat from the beginning for one emotion at a time | `false` | hold: material_safety_gate_needed | When one emotion needs symbolic release and there is enough steadiness to keep the work simple. | bay_leaf, centaury, salt, pepper, boil, drain_disposal, emotion_release |
+| `pw-diaz-honesty-mirror-scan` | `direct_source_ritual` | `voicing` | `body` | `vessel`, `candlelight`, `plant` | `enough_to_participate` | `me` | helpful: monthly; when feeling off | `true` | constrained | Once a month, or when the inner weather feels off and there is privacy for a mirror practice. | mirror, water_bowl, honesty_petals, white_candle, seedpod_sweep, reflection_dialogue, intensity_notice |
+| `pw-diaz-hibiscus-room-water` | `direct_source_ritual` | `tending` | `vessel` | `plant`, `table`, `words` | `only_a_little`, `enough_to_participate` | `me`, `both_of_us` | helpful: freshness-based close; spring/summer flower availability | `false` | hold: material_safety_gate_needed; household_exposure_review_needed | When a room, relationship space, or private self-love practice needs a visible vessel. | hibiscus, water_bowl, rose_quartz, rose_essential_oil, room_harmony, bedroom_love, journaling_optional |
+| `pw-diaz-juniper-door-dirt` | `direct_source_ritual` | `protecting` | `doorway` | `plant`, `vessel`, `words` | `enough_to_participate` | `me`, `both_of_us` | none | `false` | hold: material_safety_gate_needed; disposal_review_needed | When a doorway needs protective marking and the plant materials have been reviewed as safe for the household. | juniper, dirt, rue, salt, witch_hazel, doorway, warding, evil_language |
+| `pw-diaz-lilac-three-breath-question` | `direct_source_ritual` | `voicing` | `plant` | `body`, `words` | `only_a_little` | `me` | helpful: fresh lilac availability | `true` | constrained | When lilacs are fresh and one question needs a quiet plant witness. | lilac, bouquet, breath, hum, scent, question, answer_claim_softened |
+| `pw-diaz-turmeric-passion-bowl` | `direct_source_ritual` | `opening` | `vessel` | `plant`, `table` | `only_a_little`, `enough_to_participate` | `me`, `both_of_us` | helpful: freshness-based close | `false` | hold: material_safety_gate_needed; household_exposure_review_needed; relationship_context_review_needed | When warmth, desire, or creative fire needs a simple vessel and the bowl can be safely tended. | turmeric, rose, chili, sunflower_seed, salt_water, under_bed, project_workspace, passion, relationship_or_project |
+
 ## Whole-Set Summary
 
-- Sources normalized: 8 (Herstik, Miller, Carrellas, Pamita, Gamache, Dykes/Gibson, Whitehurst, Blonde)
-- Approved candidates normalized: 291
-- Findable/direct-use after import: 291
-- Recommendation-eligible now: 260
-- Recommendation-held pending gate/owner decision: 31
+- Sources normalized: 9 (Herstik, Miller, Carrellas, Pamita, Gamache, Dykes/Gibson, Whitehurst, Blonde, Diaz)
+- Approved candidates normalized: 303
+- Findable/direct-use after import: 303
+- Recommendation-eligible now: 262
+- Recommendation-held pending gate/owner decision: 41
 
 ## Mechanical Import Notes
 

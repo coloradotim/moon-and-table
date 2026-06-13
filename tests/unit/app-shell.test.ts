@@ -510,7 +510,7 @@ describe("app shell rendering", () => {
     expect(html).toContain("moon-phase-tooltip");
     expect(html).toContain("Current phase:");
     expect(html).toContain("Next lunar milestone:");
-    expect(html).toContain("New moon on");
+    expect(html).toMatch(/Next lunar milestone:<\/strong> [^<]+ moon on /);
     expect(html).toContain('class="masthead__home"');
     expect(html).toContain('data-home-action="this_week"');
     expect(html).toContain('aria-label="Show this week\'s brief"');
@@ -741,7 +741,7 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("Set grain at the table.");
     expect(html).not.toContain("Kindle the first household light.");
     expect(html).toContain("Select a ritual");
-    expect(html).toContain("516 rituals available");
+    expect(html).toContain("528 rituals available");
     expect(html).toContain('name="ritualSearchSort"');
     expect(html).toContain("Best match");
     expect(html).toContain("Recently added");
@@ -770,7 +770,7 @@ describe("app shell rendering", () => {
 
     expect(html).toContain('aria-label="Manage Rituals"');
     expect(html).toContain('aria-pressed="true">Manage rituals</button>');
-    expect(html).toContain("516 imported Rituals. 53 reviewed. 516 direct-use eligible.");
+    expect(html).toContain("528 imported Rituals. 63 reviewed. 528 direct-use eligible.");
     expect(html).toContain("Readiness summary");
     expect(html).toContain("recommendation-ready");
     expect(html).toContain("Missing readiness");
@@ -819,11 +819,11 @@ describe("app shell rendering", () => {
       filters: { readiness: "missing_readiness" },
     });
 
-    expect(sourceHtml).toContain("516 Rituals shown");
+    expect(sourceHtml).toContain("528 Rituals shown");
     expect(sourceHtml).toContain("Prepare the Candle Table");
     expect(householdHtml).toContain("0 Rituals shown");
     expect(householdHtml).not.toContain("Prepare the Candle Table");
-    expect(missingReadinessHtml).toContain("53 Rituals shown");
+    expect(missingReadinessHtml).toContain("63 Rituals shown");
     expect(missingReadinessHtml).not.toContain("direct_use_review");
     expect(missingReadinessHtml).toContain("planetary_day_or_hour_not_supported");
   });
@@ -844,7 +844,7 @@ describe("app shell rendering", () => {
     expect(html).toContain("Search rituals");
     expect(html).toContain("&larr; Go back</button>");
     expect(html).not.toContain("I have something in mind.");
-    expect(html).toContain("516 rituals available");
+    expect(html).toContain("528 rituals available");
     expect(html).toContain('data-ritual-select=');
     expect(html).not.toContain('data-testid="recommended-ritual"');
     expect(renderSearchRitualsSource).toContain(

@@ -57550,6 +57550,1449 @@ const importedSourceBackedRituals: Ritual[] = [
       "audienceAdaptation": "allowed_if_authored",
       "timingAdaptation": "may_shape_best_window"
     }
+  },
+  {
+    "id": "pw-diaz-book-seed-pact",
+    "status": "reviewed",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Diaz, Plant Witchery",
+          "sourceLocation": "Welcome / Book Anointing Ritual, pp. 24-25",
+          "sourceSummary": "Source gives a complete book-and-seed ritual with earth or potted soil, seed choice, breath/humming, green-light visualization, planting, spoken devotion, and holding the book to the heart.",
+          "sourceSupports": "Source gives a complete book-and-seed ritual with earth or potted soil, seed choice, breath/humming, green-light visualization, planting, spoken devotion, and holding the book to the heart.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "not a generic book blessing",
+            "avoid exact source words unless reviewed"
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Plant the Book's First Seed",
+      "practice": "Choose one seed that matches the kind of plant work you are beginning. Sit on the ground, near a garden bed, or beside a pot of soil. Set the seed on top of the book and rest both hands over it. Take three slow breaths. On the next exhale, hum into your hands and picture green light moving through the seed, the book, and your body. Hum this way three times. Pick up the seed and speak a short vow of kinship with the earth, the plant, and your own practice. Plant the seed gently. Hold the book to your heart and speak a closing promise that this work will be guided, reciprocal, and tended.",
+      "intention": "Mark the beginning of plant practice as a living exchange, not a thing taken from the earth.",
+      "bestWindow": "When beginning a plant-study arc, opening a new grimoire, or committing to tend one source or plant relationship with care.",
+      "whyThisFits": "source makes the seed and book the pact objects and closes through planting and heart-holding plant/earth/book/words carry the vow",
+      "questionToCarry": "What am I willing to tend as this seed begins?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "marking",
+        "secondary": [],
+        "refinement": "marking"
+      },
+      "carriers": {
+        "primary": "plant",
+        "secondary": [
+          "words",
+          "body"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "me"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "beginning of plant-magic study/practice arc"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "operative_words_review_needed",
+          "material_safety_gate_needed"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "marking",
+        "plant",
+        "words",
+        "body",
+        "enough_to_participate",
+        "me",
+        "helpful",
+        "beginning of plant-magic study/practice arc",
+        "plant_spirit",
+        "seed",
+        "earth",
+        "book",
+        "initiation",
+        "humming",
+        "operative_words_functional",
+        "material_review"
+      ],
+      "keywords": [
+        "marking",
+        "plant",
+        "words",
+        "body",
+        "enough_to_participate",
+        "me",
+        "helpful",
+        "beginning of plant-magic study/practice arc",
+        "plant_spirit",
+        "seed",
+        "earth",
+        "book",
+        "initiation",
+        "humming",
+        "operative_words_functional",
+        "material_review"
+      ],
+      "sourceLabel": "Diaz, Plant Witchery",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": true,
+      "recommendationEligible": false
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "pw-diaz-sunflower-seed-tending",
+    "status": "reviewed",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Diaz, Plant Witchery",
+          "sourceLocation": "Part 2 / Sun Spell, p. 53",
+          "sourceSummary": "Source pairs edible and plantable sunflower seeds, planting and eating, watering seed and self, and 7-10 days of repeated spoken intention until sprouting.",
+          "sourceSupports": "Source pairs edible and plantable sunflower seeds, planting and eating, watering seed and self, and 7-10 days of repeated spoken intention until sprouting.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "not for low capacity",
+            "check seed/food safety"
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Tend the Sunflower Seed",
+      "practice": "Hold one edible sunflower seed in one hand and one plantable sunflower seed in the other. Name the beginning that needs sun behind it. Plant the plantable seed in soil, then eat the edible seed with thanks. Water the planted seed and take a drink of water yourself. Repeat with the remaining paired seeds if you are planting more than one. For the next 7-10 days, water the seeds daily, drink water, and speak the same intention to the place where the seeds are growing. When the first sprouts appear, thank the plants and mark the practice as underway.",
+      "intention": "Give this beginning a living place to grow and a daily act of attention.",
+      "bestWindow": "When there is room for a repeated practice and a real place to sprout sunflower seeds.",
+      "whyThisFits": "source binds planting; eating; watering; and repeated spoken intention seed; water; body; and sunlight support growth",
+      "questionToCarry": "What grows when I feed the beginning every day?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "opening",
+        "secondary": [],
+        "refinement": "opening"
+      },
+      "carriers": {
+        "primary": "plant",
+        "secondary": [
+          "body",
+          "vessel"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "room_for_something_deeper"
+        ],
+        "default": "room_for_something_deeper"
+      },
+      "audience": {
+        "supports": [
+          "me"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "required",
+        "contexts": [
+          "7-10 day repeated tending",
+          "sunlight symbolically central"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "timing_context_not_supported"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "opening",
+        "plant",
+        "body",
+        "vessel",
+        "room_for_something_deeper",
+        "me",
+        "required",
+        "7-10 day repeated tending",
+        "sunlight symbolically central",
+        "sunflower",
+        "seed",
+        "edible_seed",
+        "planting",
+        "repeated_practice",
+        "sun"
+      ],
+      "keywords": [
+        "opening",
+        "plant",
+        "body",
+        "vessel",
+        "room_for_something_deeper",
+        "me",
+        "required",
+        "7-10 day repeated tending",
+        "sunlight symbolically central",
+        "sunflower",
+        "seed",
+        "edible_seed",
+        "planting",
+        "repeated_practice",
+        "sun"
+      ],
+      "sourceLabel": "Diaz, Plant Witchery",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": true,
+      "recommendationEligible": false
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "pw-diaz-ague-threshold-protection-glass",
+    "status": "reviewed",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Diaz, Plant Witchery",
+          "sourceLocation": "Ague Root House Protection Ritual, pp. 88-89",
+          "sourceSummary": "Source gives a home protection ritual using one portion of ague at the exterior or front door and another portion held in water with salt, chili, and onion for 3 days before disposal.",
+          "sourceSupports": "Source gives a home protection ritual using one portion of ague at the exterior or front door and another portion held in water with salt, chili, and onion for 3 days before disposal.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "material safety and disposal review required",
+            "source uses trash removal and toilet disposal",
+            "which should be approved or replaced before direct use"
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Set an Ague Boundary at the Door",
+      "practice": "Prepare two portions of dried ague. Grind one portion and carry it to the outside edge of the home. If you have a yard, mark the outside perimeter with the herb while holding the purpose of protection. If you live in an apartment, mark one small symbol at the front door. Place the second portion in a large glass of cold water. Add a pinch of salt, a pinch of chili powder, and half an onion. Set the glass high in the home for 3 days. On the third day, remove the contents from the home, dispose of the onion and plant matter by the reviewed route that removes them from the house, pour the water away by the reviewed route, and take the trash out immediately.",
+      "intention": "Mark the home boundary and give unwanted influence a place to be gathered and removed.",
+      "bestWindow": "When the home boundary needs clear marking and there is capacity to complete the 3-day close.",
+      "whyThisFits": "source uses both exterior/front-door marking and a 3-day absorbing glass doorway mark plus high vessel carry protection",
+      "questionToCarry": "What belongs inside this boundary?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "protecting",
+        "secondary": [],
+        "refinement": "protecting"
+      },
+      "carriers": {
+        "primary": "doorway",
+        "secondary": [
+          "plant",
+          "vessel"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "required",
+        "contexts": [
+          "3-day working"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "material_safety_gate_needed",
+          "disposal_review_needed"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "protecting",
+        "doorway",
+        "plant",
+        "vessel",
+        "enough_to_participate",
+        "me",
+        "both_of_us",
+        "required",
+        "3-day working",
+        "protection",
+        "threshold",
+        "herb_powder",
+        "onion",
+        "salt",
+        "chili",
+        "disposal",
+        "apartment_adaptation",
+        "material_safety"
+      ],
+      "keywords": [
+        "protecting",
+        "doorway",
+        "plant",
+        "vessel",
+        "enough_to_participate",
+        "me",
+        "both_of_us",
+        "required",
+        "3-day working",
+        "protection",
+        "threshold",
+        "herb_powder",
+        "onion",
+        "salt",
+        "chili",
+        "disposal",
+        "apartment_adaptation",
+        "material_safety"
+      ],
+      "sourceLabel": "Diaz, Plant Witchery",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": true,
+      "recommendationEligible": false
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "pw-diaz-apple-written-wish",
+    "status": "reviewed",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Diaz, Plant Witchery",
+          "sourceLocation": "Apple Manifestation Spell, pp. 112-113",
+          "sourceSummary": "Source gives a hollow apple as container for a written wish and herb mixture, with candle dressing, spoken desire, altar placement, and removal when decay begins.",
+          "sourceSupports": "Source gives a hollow apple as container for a written wish and herb mixture, with candle dressing, spoken desire, altar placement, and removal when decay begins.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "avoid prosperity/fertility outcome certainty",
+            "review honey/oil/candle safety"
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Place the Wish in the Apple",
+      "practice": "Hollow a small space in one apple. Mix one bay leaf, one teaspoon cinnamon, one teaspoon dried basil, one clove, and one tablespoon honey or olive oil. Write one wish or desired beginning on a small piece of paper. Fold the paper and place it inside the apple, then spoon in the plant mixture. Set the apple on the altar. Dress one yellow candle with the remaining mixture, light it, and speak the desire plainly. Leave the apple in place only while it stays fresh. When it begins to soften or rot, remove it from the altar and close the working.",
+      "intention": "Give one desired beginning a body, a flame, and a clear ending.",
+      "bestWindow": "When a single wish or beginning needs a concrete container and you can tend the altar until the apple is removed.",
+      "whyThisFits": "source gives full container; candle; placement; and removal structure apple functions as vessel; candle and words activate the wish",
+      "questionToCarry": "What am I asking to ripen, and what will I stop feeding when it is done?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "opening",
+        "secondary": [],
+        "refinement": "opening"
+      },
+      "carriers": {
+        "primary": "vessel",
+        "secondary": [
+          "plant",
+          "words",
+          "candlelight"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "me"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "required",
+        "contexts": [
+          "remove when apple begins to rot"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "material_safety_gate_needed",
+          "manifestation_review_needed"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "opening",
+        "vessel",
+        "plant",
+        "words",
+        "candlelight",
+        "enough_to_participate",
+        "me",
+        "required",
+        "remove when apple begins to rot",
+        "apple",
+        "written_wish",
+        "candle",
+        "altar",
+        "honey_or_oil",
+        "decay_close",
+        "manifestation_language"
+      ],
+      "keywords": [
+        "opening",
+        "vessel",
+        "plant",
+        "words",
+        "candlelight",
+        "enough_to_participate",
+        "me",
+        "required",
+        "remove when apple begins to rot",
+        "apple",
+        "written_wish",
+        "candle",
+        "altar",
+        "honey_or_oil",
+        "decay_close",
+        "manifestation_language"
+      ],
+      "sourceLabel": "Diaz, Plant Witchery",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": true,
+      "recommendationEligible": false
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "pw-diaz-blue-lotus-protection-glass",
+    "status": "reviewed",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Diaz, Plant Witchery",
+          "sourceLocation": "Blue Lotus Protection Spell, pp. 152-153",
+          "sourceSummary": "Source gives a protective water glass with eggshells and blue lotus, three taps, named protection focus, high placement for 1 week, disposal, and renewal for 3 weeks.",
+          "sourceSupports": "Source gives a protective water glass with eggshells and blue lotus, three taps, named protection focus, high placement for 1 week, disposal, and renewal for 3 weeks.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "material review for blue lotus",
+            "avoid targeting/control language"
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Keep the Protection Glass High",
+      "practice": "Place eggshells from one egg and one tablespoon dried blue lotus in a clear glass and fill it with water. Tap the glass three times. Name the situation, influence, or boundary from which protection is needed. Set the glass in a high place where it can remain undisturbed for 1 week. At the end of the week, dispose of the contents, clean the glass, and begin again. Work the glass for 3 weeks total, then close by leaving the high place empty.",
+      "intention": "Give this boundary a visible vessel and renew it until the work is complete.",
+      "bestWindow": "When a clear protection boundary can be tended weekly for 3 weeks.",
+      "whyThisFits": "source uses the glass as a repeated protective container water glass and high placement carry the protective boundary",
+      "questionToCarry": "What am I protecting, and what does not get to decide for me?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "protecting",
+        "secondary": [],
+        "refinement": "protecting"
+      },
+      "carriers": {
+        "primary": "vessel",
+        "secondary": [
+          "plant",
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "me"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "required",
+        "contexts": [
+          "weekly renewal over 3 weeks"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "material_safety_gate_needed",
+          "target_linked_or_adversarial_gate_needed"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "protecting",
+        "vessel",
+        "plant",
+        "words",
+        "enough_to_participate",
+        "me",
+        "required",
+        "weekly renewal over 3 weeks",
+        "protection",
+        "blue_lotus",
+        "eggshell",
+        "glass",
+        "high_place",
+        "repeated_practice",
+        "target_sensitive"
+      ],
+      "keywords": [
+        "protecting",
+        "vessel",
+        "plant",
+        "words",
+        "enough_to_participate",
+        "me",
+        "required",
+        "weekly renewal over 3 weeks",
+        "protection",
+        "blue_lotus",
+        "eggshell",
+        "glass",
+        "high_place",
+        "repeated_practice",
+        "target_sensitive"
+      ],
+      "sourceLabel": "Diaz, Plant Witchery",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": true,
+      "recommendationEligible": false
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "pw-diaz-cactus-intention-keeper",
+    "status": "reviewed",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Diaz, Plant Witchery",
+          "sourceLocation": "Cactus Self-Sabotage Protection Spell, pp. 162-163",
+          "sourceSummary": "Source gives a living cactus as a specific intention-bearer, rainwater spoken over and used to water it, optional spine release and burial, a note under the pot, and a clear release when the intention is done.",
+          "sourceSupports": "Source gives a living cactus as a specific intention-bearer, rainwater spoken over and used to water it, optional spine release and burial, a note under the pot, and a clear release when the intention is done.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "avoid addiction-treatment claims",
+            "spine handling",
+            "tobacco-leaf use",
+            "and plant safety review needed"
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Give the Cactus One Intention",
+      "practice": "Set a small cactus with spines in front of you. Clear the space with a bell or another source-supported clearing signal. Hold rainwater in both hands and name one specific promise, pattern, or protection you are asking the cactus to help hold. Pour a little of the rainwater into the soil. Ask the cactus to take this one intention and keep it strong as it grows. If a release is needed, touch one spine carefully, name what is being released, wrap the fallen or removed spine in a banana leaf, tobacco leaf, or banana peel, and bury it. Write the intention on a note and place it under the cactus. When the work is complete, water the cactus with ordinary water, thank it, and tell it the spell is released.",
+      "intention": "Let a living plant hold one promise while I keep caring for it.",
+      "bestWindow": "When one habit, promise, or protection needs a living witness and there is capacity to tend the plant afterward.",
+      "whyThisFits": "source makes the cactus the bearer of one specific intention and includes a release close cactus; rainwater; and note support a durable intention",
+      "questionToCarry": "What changes when the promise has roots?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "protecting",
+        "secondary": [],
+        "refinement": "protecting"
+      },
+      "carriers": {
+        "primary": "plant",
+        "secondary": [
+          "vessel",
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "me"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "ongoing until intention is released"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "material_safety_gate_needed",
+          "plant_care_review_needed"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "protecting",
+        "plant",
+        "vessel",
+        "words",
+        "enough_to_participate",
+        "me",
+        "helpful",
+        "ongoing until intention is released",
+        "cactus",
+        "living_plant",
+        "rainwater",
+        "intention_note",
+        "spine_release_optional",
+        "tobacco_leaf_optional",
+        "plant_care_required"
+      ],
+      "keywords": [
+        "protecting",
+        "plant",
+        "vessel",
+        "words",
+        "enough_to_participate",
+        "me",
+        "helpful",
+        "ongoing until intention is released",
+        "cactus",
+        "living_plant",
+        "rainwater",
+        "intention_note",
+        "spine_release_optional",
+        "tobacco_leaf_optional",
+        "plant_care_required"
+      ],
+      "sourceLabel": "Diaz, Plant Witchery",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": true,
+      "recommendationEligible": false
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "pw-diaz-centaury-emotion-leaf",
+    "status": "reviewed",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Diaz, Plant Witchery",
+          "sourceLocation": "Centaury Banishing Spell, p. 187",
+          "sourceSummary": "Source gives a bay leaf named with one emotion, boiled with centaury/salt/pepper, breath visualization, and drain disposal, repeated only one emotion at a time.",
+          "sourceSupports": "Source gives a bay leaf named with one emotion, boiled with centaury/salt/pepper, breath visualization, and drain disposal, repeated only one emotion at a time.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "not mental-health treatment",
+            "material review for centaury"
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Boil One Feeling Down",
+      "practice": "Write one emotion on a bay leaf. Keep it to one feeling only. Bring two cups of water to a boil, add the bay leaf, then add one-quarter cup dried centaury, one tablespoon salt, and one teaspoon pepper. Let the water boil for a few minutes. While it boils, close your eyes and breathe steadily, picturing that one feeling loosening from the body and entering the water. When the working feels complete, pour the water away. If another feeling needs release, begin again from the start with a new leaf.",
+      "intention": "Give one feeling a name, a heat, and a way out.",
+      "bestWindow": "When one emotion needs symbolic release and there is enough steadiness to keep the work simple.",
+      "whyThisFits": "source gives naming; heating; breath; and disposal as the ritual engine written leaf and boiling water carry release",
+      "questionToCarry": "What happens when I release only one thing at a time?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "releasing",
+        "secondary": [],
+        "refinement": "releasing"
+      },
+      "carriers": {
+        "primary": "words",
+        "secondary": [
+          "plant",
+          "vessel"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "repeat from the beginning for one emotion at a time"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "material_safety_gate_needed"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "releasing",
+        "words",
+        "plant",
+        "vessel",
+        "only_a_little",
+        "enough_to_participate",
+        "me",
+        "helpful",
+        "repeat from the beginning for one emotion at a time",
+        "bay_leaf",
+        "centaury",
+        "salt",
+        "pepper",
+        "boil",
+        "drain_disposal",
+        "emotion_release"
+      ],
+      "keywords": [
+        "releasing",
+        "words",
+        "plant",
+        "vessel",
+        "only_a_little",
+        "enough_to_participate",
+        "me",
+        "helpful",
+        "repeat from the beginning for one emotion at a time",
+        "bay_leaf",
+        "centaury",
+        "salt",
+        "pepper",
+        "boil",
+        "drain_disposal",
+        "emotion_release"
+      ],
+      "sourceLabel": "Diaz, Plant Witchery",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": true,
+      "recommendationEligible": false
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "pw-diaz-honesty-mirror-scan",
+    "status": "recommendable",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Diaz, Plant Witchery",
+          "sourceLocation": "Honesty Self-Reflection Scan, pp. 309-310",
+          "sourceSummary": "Source gives a monthly/private mirror scan with water/petals, candle, seedpod sweeping over the body three times, 7-10 breaths, and reflection dialogue.",
+          "sourceSupports": "Source gives a monthly/private mirror scan with water/petals, candle, seedpod sweeping over the body three times, 7-10 breaths, and reflection dialogue.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "not for acute distress",
+            "avoid therapy framing"
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Sweep the Mirror Clear",
+      "practice": "Sit in a quiet private place with a mirror in front of you. Set a bowl of water before the mirror and float a few honesty petals in it. Light a white candle beside the bowl. Hold a bundle of dried honesty seedpods and sweep it down the body from head toward ground three times, making one clear sweeping sound each time. Picture the clouded layer moving away. Sit still with the seedpods in your hands. Look into your own eyes and take 7-10 deep breaths. Ask one honest question inwardly and let the reflection answer without forcing it. Close by setting the seedpods down and letting the candle go out safely.",
+      "intention": "Clear enough surface noise to ask one honest question.",
+      "bestWindow": "Once a month, or when the inner weather feels off and there is privacy for a mirror practice.",
+      "whyThisFits": "source gives full scan structure and monthly use context mirror; water; candle; and seedpods support self-reflection",
+      "questionToCarry": "What is my reflection trying to tell me plainly?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "voicing",
+        "secondary": [],
+        "refinement": "voicing"
+      },
+      "carriers": {
+        "primary": "body",
+        "secondary": [
+          "vessel",
+          "candlelight",
+          "plant"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "me"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "monthly",
+          "when feeling off"
+        ]
+      },
+      "eligibility": {
+        "recommendable": true
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "voicing",
+        "body",
+        "vessel",
+        "candlelight",
+        "plant",
+        "enough_to_participate",
+        "me",
+        "helpful",
+        "monthly",
+        "when feeling off",
+        "mirror",
+        "water_bowl",
+        "honesty_petals",
+        "white_candle",
+        "seedpod_sweep",
+        "reflection_dialogue",
+        "intensity_notice"
+      ],
+      "keywords": [
+        "voicing",
+        "body",
+        "vessel",
+        "candlelight",
+        "plant",
+        "enough_to_participate",
+        "me",
+        "helpful",
+        "monthly",
+        "when feeling off",
+        "mirror",
+        "water_bowl",
+        "honesty_petals",
+        "white_candle",
+        "seedpod_sweep",
+        "reflection_dialogue",
+        "intensity_notice"
+      ],
+      "sourceLabel": "Diaz, Plant Witchery",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": true,
+      "recommendationEligible": true
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "pw-diaz-hibiscus-room-water",
+    "status": "reviewed",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Diaz, Plant Witchery",
+          "sourceLocation": "Healing Hibiscus Waters Ritual, pp. 296-297",
+          "sourceSummary": "Source gives a cold-water glass bowl with hibiscus blossoms, rose quartz, rose essential oil, room placement for harmony/love, and optional self-love journaling near the bowl.",
+          "sourceSupports": "Source gives a cold-water glass bowl with hibiscus blossoms, rose quartz, rose essential oil, room placement for harmony/love, and optional self-love journaling near the bowl.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "essential oil and plant/pet safety review required"
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Set Hibiscus Water in the Room",
+      "practice": "Fill a clear glass bowl with cold water. Float 5-7 fresh hibiscus blossoms on the surface. Place rose quartz at the bottom of the bowl and add 1-2 drops rose essential oil only if that material has been reviewed as safe for the household. Set the bowl in the room that needs more harmony, beside the bed if the work is intimate love, or beside you if the work is self-love. Sit near the bowl and write one page, one paragraph, or one line about the kind of love the room is ready to hold. Close by leaving the bowl in place only as long as it stays fresh and safe.",
+      "intention": "Let hibiscus hold love and harmony in the room without forcing it.",
+      "bestWindow": "When a room, relationship space, or private self-love practice needs a visible vessel.",
+      "whyThisFits": "source gives bowl; blossoms; stone; oil; placement; and journaling option water bowl carries room harmony and love",
+      "questionToCarry": "Where does love need a place to gather?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "tending",
+        "secondary": [],
+        "refinement": "tending"
+      },
+      "carriers": {
+        "primary": "vessel",
+        "secondary": [
+          "plant",
+          "table",
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "freshness-based close",
+          "spring/summer flower availability"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "material_safety_gate_needed",
+          "household_exposure_review_needed"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "tending",
+        "vessel",
+        "plant",
+        "table",
+        "words",
+        "only_a_little",
+        "enough_to_participate",
+        "me",
+        "both_of_us",
+        "helpful",
+        "freshness-based close",
+        "spring/summer flower availability",
+        "hibiscus",
+        "water_bowl",
+        "rose_quartz",
+        "rose_essential_oil",
+        "room_harmony",
+        "bedroom_love",
+        "journaling_optional"
+      ],
+      "keywords": [
+        "tending",
+        "vessel",
+        "plant",
+        "table",
+        "words",
+        "only_a_little",
+        "enough_to_participate",
+        "me",
+        "both_of_us",
+        "helpful",
+        "freshness-based close",
+        "spring/summer flower availability",
+        "hibiscus",
+        "water_bowl",
+        "rose_quartz",
+        "rose_essential_oil",
+        "room_harmony",
+        "bedroom_love",
+        "journaling_optional"
+      ],
+      "sourceLabel": "Diaz, Plant Witchery",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": true,
+      "recommendationEligible": false
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "pw-diaz-juniper-door-dirt",
+    "status": "reviewed",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Diaz, Plant Witchery",
+          "sourceLocation": "Juniper Berry Dirt to Ward Off Evil, pp. 335-336",
+          "sourceSummary": "Source gives a protective dirt mixture made by grinding juniper berries, rue, dirt, salt, and witch hazel with intention, then placing it at door corners or using it with a name paper burial.",
+          "sourceSupports": "Source gives a protective dirt mixture made by grinding juniper berries, rue, dirt, salt, and witch hazel with intention, then placing it at door corners or using it with a name paper burial.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "material review for rue/juniper/witch hazel",
+            "avoid fear-based copy"
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Put Juniper Dirt at the Door",
+      "practice": "Grind 5-10 juniper berries, one teaspoon rue, one cup dirt, two tablespoons salt, and one teaspoon witch hazel together in a mortar or bowl while naming the protection the doorway needs. Carry the mixture to the front door or another door that needs warding. Sprinkle a small amount in each corner of the doorway. If the work is for personal protection, write your name on paper, cover it with some of the dirt, and bury it in earth. Close by washing your hands and leaving the door undisturbed.",
+      "intention": "Mark the door so ill will does not settle here.",
+      "bestWindow": "When a doorway needs protective marking and the plant materials have been reviewed as safe for the household.",
+      "whyThisFits": "source uses ground dirt and plant materials to ward a doorway dirt mixture belongs at the door/corner",
+      "questionToCarry": "What may enter, and what must stay outside?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "protecting",
+        "secondary": [],
+        "refinement": "protecting"
+      },
+      "carriers": {
+        "primary": "doorway",
+        "secondary": [
+          "plant",
+          "vessel",
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "enough_to_participate"
+        ],
+        "default": "enough_to_participate"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "none"
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "material_safety_gate_needed",
+          "disposal_review_needed"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "protecting",
+        "doorway",
+        "plant",
+        "vessel",
+        "words",
+        "enough_to_participate",
+        "me",
+        "both_of_us",
+        "none",
+        "juniper",
+        "dirt",
+        "rue",
+        "salt",
+        "witch_hazel",
+        "warding",
+        "evil_language"
+      ],
+      "keywords": [
+        "protecting",
+        "doorway",
+        "plant",
+        "vessel",
+        "words",
+        "enough_to_participate",
+        "me",
+        "both_of_us",
+        "none",
+        "juniper",
+        "dirt",
+        "rue",
+        "salt",
+        "witch_hazel",
+        "warding",
+        "evil_language"
+      ],
+      "sourceLabel": "Diaz, Plant Witchery",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": true,
+      "recommendationEligible": false
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "pw-diaz-lilac-three-breath-question",
+    "status": "recommendable",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Diaz, Plant Witchery",
+          "sourceLocation": "Lilac Finding Answers Spell, pp. 344-345",
+          "sourceSummary": "Source gives a lilac bouquet, three hummed breaths through scent, and a closed-eye question.",
+          "sourceSupports": "Source gives a lilac bouquet, three hummed breaths through scent, and a closed-eye question.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "avoid fortune-telling certainty"
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Ask Lilac on the Third Breath",
+      "practice": "Set a bouquet of lilac blossoms in front of you. Take one deep breath, close the mouth, and hum on a high comfortable note for the length of the exhale. Inhale through the nose and take in the scent. Repeat this two more times. On the third breath, close your eyes and ask one question. Do not chase the answer. Notice the first image, word, feeling, or silence that arrives, then thank the lilac and step away.",
+      "intention": "Ask one question clearly and leave room for the answer to arrive in its own shape.",
+      "bestWindow": "When lilacs are fresh and one question needs a quiet plant witness.",
+      "whyThisFits": "source gives three-breath hum and question sequence scent; breath; and question are the ritual engine",
+      "questionToCarry": "What came before I tried to explain it?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "voicing",
+        "secondary": [],
+        "refinement": "voicing"
+      },
+      "carriers": {
+        "primary": "plant",
+        "secondary": [
+          "body",
+          "words"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "fresh lilac availability"
+        ]
+      },
+      "eligibility": {
+        "recommendable": true
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "voicing",
+        "plant",
+        "body",
+        "words",
+        "only_a_little",
+        "me",
+        "helpful",
+        "fresh lilac availability",
+        "lilac",
+        "bouquet",
+        "breath",
+        "hum",
+        "scent",
+        "question",
+        "answer_claim_softened"
+      ],
+      "keywords": [
+        "voicing",
+        "plant",
+        "body",
+        "words",
+        "only_a_little",
+        "me",
+        "helpful",
+        "fresh lilac availability",
+        "lilac",
+        "bouquet",
+        "breath",
+        "hum",
+        "scent",
+        "question",
+        "answer_claim_softened"
+      ],
+      "sourceLabel": "Diaz, Plant Witchery",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": true,
+      "recommendationEligible": true
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
+  },
+  {
+    "id": "pw-diaz-turmeric-passion-bowl",
+    "status": "reviewed",
+    "origin": {
+      "type": "source",
+      "sourceGrounding": [
+        {
+          "citationLabel": "Diaz, Plant Witchery",
+          "sourceLocation": "Turmeric Passion Bowl, pp. 500-501",
+          "sourceSummary": "Source gives a bowl with turmeric, red roses, chili pepper, sunflower seeds, water, and salt, placed under the bed for passion in self/partner relationship or beside a project.",
+          "sourceSupports": "Source gives a bowl with turmeric, red roses, chili pepper, sunflower seeds, water, and salt, placed under the bed for passion in self/partner relationship or beside a project.",
+          "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
+          "doNotImport": [
+            "material staining",
+            "pet/child safety",
+            "under-bed placement",
+            "and relationship context review"
+          ]
+        }
+      ]
+    },
+    "presentation": {
+      "headline": "Set the Turmeric Passion Bowl",
+      "practice": "Add turmeric, red roses, one red chili pepper, 11 sunflower seeds, water, and Himalayan pink salt to a large bowl. Name where passion is needed: in your relationship with yourself, with a partner, or with a project. Place the bowl under the bed for intimate or self-relationship work, or beside you while working on the project. Leave it only while the water and plant materials stay fresh and safe. Close by emptying the bowl and cleaning it thoroughly.",
+      "intention": "Give passion a warm, visible bowl without demanding what it must become.",
+      "bestWindow": "When warmth, desire, or creative fire needs a simple vessel and the bowl can be safely tended.",
+      "whyThisFits": "source gives the bowl contents and two placement contexts bowl; turmeric; rose; chili; seeds; water; and salt carry warmth/passion",
+      "questionToCarry": "Where does the fire want to return?"
+    },
+    "recommendationMetadata": {
+      "purposes": {
+        "primary": "opening",
+        "secondary": [],
+        "refinement": "opening"
+      },
+      "carriers": {
+        "primary": "vessel",
+        "secondary": [
+          "plant",
+          "table"
+        ]
+      },
+      "capacity": {
+        "supports": [
+          "only_a_little",
+          "enough_to_participate"
+        ],
+        "default": "only_a_little"
+      },
+      "audience": {
+        "supports": [
+          "me",
+          "both_of_us"
+        ],
+        "default": "me"
+      },
+      "timing": {
+        "relationship": "helpful",
+        "contexts": [
+          "freshness-based close"
+        ]
+      },
+      "eligibility": {
+        "recommendable": false,
+        "missing": [
+          "material_safety_gate_needed",
+          "household_exposure_review_needed",
+          "relationship_context_review_needed"
+        ]
+      }
+    },
+    "searchMetadata": {
+      "tags": [
+        "opening",
+        "vessel",
+        "plant",
+        "table",
+        "only_a_little",
+        "enough_to_participate",
+        "me",
+        "both_of_us",
+        "helpful",
+        "freshness-based close",
+        "turmeric",
+        "rose",
+        "chili",
+        "sunflower_seed",
+        "salt_water",
+        "under_bed",
+        "project_workspace",
+        "passion",
+        "relationship_or_project"
+      ],
+      "keywords": [
+        "opening",
+        "vessel",
+        "plant",
+        "table",
+        "only_a_little",
+        "enough_to_participate",
+        "me",
+        "both_of_us",
+        "helpful",
+        "freshness-based close",
+        "turmeric",
+        "rose",
+        "chili",
+        "sunflower_seed",
+        "salt_water",
+        "under_bed",
+        "project_workspace",
+        "passion",
+        "relationship_or_project"
+      ],
+      "sourceLabel": "Diaz, Plant Witchery",
+      "originLabel": "source"
+    },
+    "availability": {
+      "findable": true,
+      "directUseEligible": true,
+      "recommendationEligible": false
+    },
+    "adaptationPolicy": {
+      "purposeChange": "not_allowed",
+      "materialSubstitution": "defined_only",
+      "capacityAdaptation": "allowed_if_authored",
+      "audienceAdaptation": "allowed_if_authored",
+      "timingAdaptation": "may_shape_best_window"
+    }
   }
 ];
 

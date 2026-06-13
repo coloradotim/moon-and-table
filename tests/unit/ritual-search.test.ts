@@ -35,14 +35,14 @@ function resultIds(query: string, selectedChips: string[] = []): string[] {
 
 describe("Ritual search", () => {
   it("returns reviewed direct-use records in the direct-selection search flow", () => {
-    expect(resultIds("")).toHaveLength(516);
-    expect(sourceBackedRituals).toHaveLength(516);
+    expect(resultIds("")).toHaveLength(528);
+    expect(sourceBackedRituals).toHaveLength(528);
     expect(sourceBackedRituals.every((ritual) => ritual.availability.findable)).toBe(
       true,
     );
     expect(
       sourceBackedRituals.filter((ritual) => ritual.availability.directUseEligible),
-    ).toHaveLength(516);
+    ).toHaveLength(528);
   });
 
   it("surfaces searchable direct-use Rituals even when they are not recommendation eligible", () => {
@@ -193,7 +193,7 @@ describe("Ritual search", () => {
   it("filters by canonical source labels", () => {
     const sourceOptions = getRitualSourceOptions(sourceBackedRituals);
 
-    expect(sourceOptions).toHaveLength(18);
+    expect(sourceOptions).toHaveLength(19);
     expect(sourceOptions.map((option) => option.label)).toEqual(
       expect.arrayContaining([
         "Raymond Buckland, Practical Candleburning Rituals",
@@ -202,6 +202,7 @@ describe("Ritual search", () => {
         "Herstik, Sacred Sex",
         "Madame Pamita, The Book of Candle Magic",
         "Dykes/Gibson, Astrological Magic",
+        "Diaz, Plant Witchery",
       ]),
     );
     expect(sourceOptions.map((option) => option.label)).not.toEqual(

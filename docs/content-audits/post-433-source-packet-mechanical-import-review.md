@@ -8,12 +8,12 @@ source-backed Ritual import pipeline.
 
 ## Import Summary
 
-- Packets included: 19
-- Total source-backed Ritual records: 516
-- Findable records: 516
-- Direct-use records: 516
-- Recommendation-eligible records: 463
-- Recommendation-held records: 53
+- Packets included: 20
+- Total source-backed Ritual records: 528
+- Findable records: 528
+- Direct-use records: 528
+- Recommendation-eligible records: 465
+- Recommendation-held records: 63
 - Skipped candidates: 0
 
 ## Packet Reconciliation
@@ -39,6 +39,7 @@ source-backed Ritual import pipeline.
 | Dykes/Gibson Astrological Magic complete extraction | 26 | 26 | 26 | 26 | 0 |
 | Whitehurst Magical Housekeeping complete extraction | 27 | 27 | 27 | 23 | 0 |
 | Blonde Hearth and Home Witchcraft complete extraction | 26 | 26 | 26 | 26 | 0 |
+| Diaz Plant Witchery complete extraction | 12 | 12 | 12 | 2 | 0 |
 
 ## Import Notes
 
