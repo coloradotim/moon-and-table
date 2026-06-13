@@ -322,11 +322,20 @@ type ReviewDecisionDocument = {
     | "hold_recommendation"
     | "mark_needs_source_recheck"
     | "mark_needs_packet_correction"
+    | "add_review_note"
     | "toggle_review_flag"
+    | "archive_ritual"
     | "archive_version"
     | "supersede_version"
-    | "reject_version";
-  decision: "approved" | "held" | "rejected" | "archived" | "superseded";
+    | "reject_version"
+    | "rollback_published_version";
+  decision:
+    | "approved"
+    | "held"
+    | "rejected"
+    | "archived"
+    | "superseded"
+    | "noted";
   reasons: string[];
   reviewer: "owner" | "person_a" | "person_b" | "automation" | "codex";
   sourceRunId?: string;

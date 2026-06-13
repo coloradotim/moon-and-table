@@ -153,10 +153,13 @@ export const REVIEW_DECISION_TYPES = [
   "hold_recommendation",
   "mark_needs_source_recheck",
   "mark_needs_packet_correction",
+  "add_review_note",
   "toggle_review_flag",
+  "archive_ritual",
   "archive_version",
   "supersede_version",
   "reject_version",
+  "rollback_published_version",
 ] as const;
 
 export type ReviewDecisionType = (typeof REVIEW_DECISION_TYPES)[number];
@@ -167,6 +170,7 @@ export const REVIEW_DECISIONS = [
   "rejected",
   "archived",
   "superseded",
+  "noted",
 ] as const;
 
 export type ReviewDecision = (typeof REVIEW_DECISIONS)[number];
@@ -223,6 +227,7 @@ export const RITUAL_AUDIT_EVENT_TYPES = [
   "validation_snapshot_created",
   "static_export_generated",
   "published_pointer_changed",
+  "review_decision_recorded",
   "runtime_read_fallback_used",
   "rollback_performed",
 ] as const;
