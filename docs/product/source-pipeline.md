@@ -7,6 +7,9 @@ otherwise private PDF source into repository-safe source inventory,
 classification, draft Moon & Table Ritual candidates, packet QA, and Tim review
 state.
 
+For no-API extraction using ChatGPT or Codex subscription access, use
+`docs/product/source-ingestion-prompt-workflow.md`.
+
 It does not build an admin UI, does not import a real new source by itself, and
 does not create a second app content model. Candidate data is shaped around the
 current runtime `Ritual` model in `src/data/rituals/types.ts`.
