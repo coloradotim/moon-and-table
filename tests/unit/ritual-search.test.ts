@@ -35,14 +35,14 @@ function resultIds(query: string, selectedChips: string[] = []): string[] {
 
 describe("Ritual search", () => {
   it("returns reviewed direct-use records in the direct-selection search flow", () => {
-    expect(resultIds("")).toHaveLength(225);
-    expect(sourceBackedRituals).toHaveLength(225);
+    expect(resultIds("")).toHaveLength(516);
+    expect(sourceBackedRituals).toHaveLength(516);
     expect(sourceBackedRituals.every((ritual) => ritual.availability.findable)).toBe(
       true,
     );
     expect(
       sourceBackedRituals.filter((ritual) => ritual.availability.directUseEligible),
-    ).toHaveLength(225);
+    ).toHaveLength(516);
   });
 
   it("surfaces searchable direct-use Rituals even when they are not recommendation eligible", () => {
@@ -193,12 +193,15 @@ describe("Ritual search", () => {
   it("filters by canonical source labels", () => {
     const sourceOptions = getRitualSourceOptions(sourceBackedRituals);
 
-    expect(sourceOptions).toHaveLength(10);
+    expect(sourceOptions).toHaveLength(18);
     expect(sourceOptions.map((option) => option.label)).toEqual(
       expect.arrayContaining([
         "Raymond Buckland, Practical Candleburning Rituals",
         "Arin Murphy-Hiscock, The House Witch: Your Complete Guide to Creating a Magical Space with Rituals and Spells for Hearth and Home",
         "Sophie Saint Thomas, Sex Witch: Magickal Spells for Love, Lust, and Self-Protection",
+        "Herstik, Sacred Sex",
+        "Madame Pamita, The Book of Candle Magic",
+        "Dykes/Gibson, Astrological Magic",
       ]),
     );
     expect(sourceOptions.map((option) => option.label)).not.toEqual(
@@ -233,7 +236,7 @@ describe("Ritual search", () => {
     });
     const ids = results.map((ritual) => ritual.id);
 
-    expect(results).toHaveLength(11);
+    expect(results).toHaveLength(17);
     expect(ids).toEqual(
       expect.arrayContaining([
         "candidate.moon_book.lunation_map_one_desire",
@@ -292,10 +295,10 @@ describe("Ritual search", () => {
       "End of year",
       "Beginning of year",
     ]);
-    expect(newMoonResults).toHaveLength(11);
-    expect(fullMoonResults).toHaveLength(7);
-    expect(waxingResults).toHaveLength(4);
-    expect(waningResults).toHaveLength(7);
+    expect(newMoonResults).toHaveLength(17);
+    expect(fullMoonResults).toHaveLength(16);
+    expect(waxingResults).toHaveLength(5);
+    expect(waningResults).toHaveLength(12);
     expect(monthResults.map((ritual) => ritual.id)).toEqual([
       "candidate.dominguez.astrology-journal-timing-record",
       "candidate.dominguez.conditions-as-outline",
