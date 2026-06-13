@@ -172,6 +172,12 @@ const PACKETS: PacketImportSpec[] = [
     packetPath:
       "docs/research/ritual-candidates/packet-blonde-hearth-home-witchcraft-complete-extraction.md",
   },
+  {
+    packetLabel: "Diaz Plant Witchery complete extraction",
+    sourceLabel: "Diaz, Plant Witchery",
+    packetPath:
+      "docs/research/ritual-candidates/packet-diaz-plant-witchery-complete-extraction.md",
+  },
 ];
 
 const OUT_FILE = "src/data/rituals/source-backed-rituals.ts";
@@ -384,6 +390,20 @@ function getField(block: string, label: string): string | undefined {
     getBulletField(block, label) ??
     getBulletField(block, titleCaseLabel(label))
   );
+}
+
+function getPresentationField(block: string, label: string): string | undefined {
+  const presentation = block.match(
+    /^- Presentation:\s*\n([\s\S]*?)(?=^- \S|^### |$(?![\s\S]))/m,
+  )?.[1];
+  if (!presentation) {
+    return undefined;
+  }
+
+  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = presentation.match(new RegExp(`^\\s*- ${escaped}:\\s*(.+)$`, "im"));
+
+  return match?.[1]?.trim();
 }
 
 function titleCaseLabel(label: string): string {
@@ -1038,16 +1058,22 @@ function importBlock(
 ): ImportedRitual | SkippedCandidate {
   const candidateId = extractCandidateId(block) ?? "(missing candidate id)";
   const manifestEntry = importPrepManifest.get(candidateId);
-  const headline = getField(block, "headline");
+  const headline =
+    getField(block, "headline") ?? getPresentationField(block, "Headline");
   const practice =
-    getField(block, "ritual body / practice") ?? getField(block, "practice");
-  const intention = getField(block, "intention");
+    getField(block, "ritual body / practice") ??
+    getField(block, "practice") ??
+    getPresentationField(block, "Practice");
+  const intention =
+    getField(block, "intention") ?? getPresentationField(block, "Intention");
   const bestWindow =
     getField(block, "bestWindow") ??
     getField(block, "Best window") ??
     manifestEntry?.bestWindowBasis;
   const questionToCarry =
-    getField(block, "questionToCarry") ?? getField(block, "question");
+    getField(block, "questionToCarry") ??
+    getField(block, "question") ??
+    getPresentationField(block, "Question");
   const whyThisFits =
     buildWhyThisFits(block) ||
     getField(block, "Source support") ||

@@ -11,17 +11,17 @@ describe("Ritual readiness report", () => {
   it("summarizes the current source-backed import records", () => {
     const report = createRitualReadinessReport(sourceBackedRituals);
 
-    expect(report.total).toBe(516);
+    expect(report.total).toBe(528);
     expect(report.byStatus).toEqual({
       pilot: 0,
       draft: 0,
-      reviewed: 53,
-      recommendable: 463,
+      reviewed: 63,
+      recommendable: 465,
     });
     expect(report.availability).toEqual({
-      findable: 516,
-      directUseEligible: 516,
-      recommendationEligible: 463,
+      findable: 528,
+      directUseEligible: 528,
+      recommendationEligible: 465,
     });
     expect(report.validation).toEqual({
       valid: true,
@@ -35,7 +35,7 @@ describe("Ritual readiness report", () => {
     );
 
     expect(formatted).toContain("Ritual readiness report");
-    expect(formatted).toContain("- recommendation eligible: 463");
+    expect(formatted).toContain("- recommendation eligible: 465");
     expect(formatted).toContain("- valid: true");
     expect(formatted).toContain("- findings: 0");
     expect(formatted).not.toContain("undefined");
@@ -45,7 +45,7 @@ describe("Ritual readiness report", () => {
     const report = createRitualReadinessReport(sourceBackedRituals);
     const formatted = formatRitualReadinessReport(report);
 
-    expect(report.records).toHaveLength(516);
+    expect(report.records).toHaveLength(528);
 
     for (const record of report.records.filter(
       (candidate) => candidate.recommendationEligible,
@@ -70,7 +70,7 @@ describe("Ritual readiness report", () => {
         (record) =>
           record.directUseEligible && !record.missing.includes("direct_use_review"),
       ),
-    ).toHaveLength(516);
+    ).toHaveLength(528);
     expect(
       report.records.filter((record) =>
         record.missing.includes("planetary_day_or_hour_not_supported"),

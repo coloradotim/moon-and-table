@@ -18,7 +18,7 @@ import {
 
 describe("source-backed Ritual import data", () => {
   it("contains source-backed records with direct-use and recommendation review overlays applied", () => {
-    expect(sourceBackedRituals).toHaveLength(516);
+    expect(sourceBackedRituals).toHaveLength(528);
     expect(sourceBackedRituals.map((ritual) => ritual.id)).toEqual(
       expect.arrayContaining([
         "ritual-buckland-candle-prepare-table",
@@ -31,6 +31,9 @@ describe("source-backed Ritual import data", () => {
         "candidate.moon_book.new_moon_table_seed",
         "candidate.anand.practice_night_commitment",
         "candidate.dominguez.glyph-as-mark",
+        "pw-diaz-sunflower-seed-tending",
+        "pw-diaz-honesty-mirror-scan",
+        "pw-diaz-lilac-three-breath-question",
       ]),
     );
     expect(sourceBackedRituals.filter((ritual) => ritual.status === "draft")).toHaveLength(
@@ -38,10 +41,10 @@ describe("source-backed Ritual import data", () => {
     );
     expect(
       sourceBackedRituals.filter((ritual) => ritual.status === "reviewed"),
-    ).toHaveLength(53);
+    ).toHaveLength(63);
     expect(
       sourceBackedRituals.filter((ritual) => ritual.status === "recommendable"),
-    ).toHaveLength(463);
+    ).toHaveLength(465);
     expect(sourceBackedRituals.every((ritual) => ritual.origin.type === "source")).toBe(
       true,
     );
@@ -50,10 +53,10 @@ describe("source-backed Ritual import data", () => {
     ).toBe(true);
     expect(
       sourceBackedRituals.filter((ritual) => ritual.availability.directUseEligible),
-    ).toHaveLength(516);
+    ).toHaveLength(528);
     expect(
       sourceBackedRituals.filter((ritual) => ritual.availability.recommendationEligible),
-    ).toHaveLength(463);
+    ).toHaveLength(465);
     expect(
       sourceBackedRituals.every(
         (ritual) =>
