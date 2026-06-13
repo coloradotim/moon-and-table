@@ -17,9 +17,10 @@ import {
   renderUnauthorizedShell,
 } from "../../src/ui/app-shell";
 import { resolvePrivateBriefData } from "../../src/lib/private-data";
-import { generateWeeklyBrief } from "../../src/lib/generate-weekly-brief";
 import { sourceBackedRituals } from "../../src/data/rituals/source-backed-rituals";
 import { getTimingWindowCandidates } from "../../src/lib/timing-window-candidates";
+import type { ChooseWithMeResult } from "../../src/data/rituals/choose-with-me-selector";
+import type { RitualFavorite } from "../../src/data/rituals/household-state";
 
 function getNewMoonWindow() {
   const window = getTimingWindowCandidates({
@@ -34,6 +35,99 @@ function getNewMoonWindow() {
   }
 
   return window;
+}
+
+const chooseWithMeFixtureRitual =
+  sourceBackedRituals.find(
+    (ritual) => ritual.id === "ritual-woodward-bread-table-offering",
+  ) ?? sourceBackedRituals[0];
+
+function createChooseWithMeResultFixture(): ChooseWithMeResult {
+  return {
+    status: "selected",
+    selectedRitual: chooseWithMeFixtureRitual,
+    whyThisFits: "This fits the selected check-in.",
+    howThisWasChosen: "Moon & Table chose one eligible Ritual.",
+    debug: {
+      normalizedRequest: {
+        timeScope: "today",
+        energyCapacity: "a_little",
+        capacityMode: "low",
+        audience: "me",
+        purpose: "tending",
+        carrier: "table",
+        refinement: null,
+        freeTextIntent: null,
+      },
+      eligibleCount: 1,
+      excludedCount: 0,
+      selectedRitualId: chooseWithMeFixtureRitual.id,
+      selectedScore: 42,
+      selectedBreakdown: {
+        purpose: 10,
+        carrier: 10,
+        refinement: 0,
+        audience: 6,
+        capacity: 8,
+        timing: 0,
+        materialPlaceFit: 4,
+        freeText: 0,
+        sourceConfidence: 4,
+        penalties: 0,
+        total: 42,
+      },
+      topCandidates: [
+        {
+          ritualId: chooseWithMeFixtureRitual.id,
+          headline: chooseWithMeFixtureRitual.presentation.headline,
+          score: 42,
+          breakdown: {
+            purpose: 10,
+            carrier: 10,
+            refinement: 0,
+            audience: 6,
+            capacity: 8,
+            timing: 0,
+            materialPlaceFit: 4,
+            freeText: 0,
+            sourceConfidence: 4,
+            penalties: 0,
+            total: 42,
+          },
+          evidence: ["purpose match"],
+          timing: {
+            suppliedFacts: [],
+            suppliedWindows: [],
+            matchedRitualTiming: [],
+            timingScore: 0,
+            requiredTimingSatisfied: true,
+            timingCouldNotBeVerified: [],
+          },
+        },
+      ],
+      exclusions: {},
+      timing: {
+        suppliedFacts: [],
+        suppliedWindows: [],
+        matchedRitualTiming: [],
+        timingScore: 0,
+        requiredTimingSatisfied: true,
+        timingCouldNotBeVerified: [],
+      },
+      timingEvidence: [],
+      explanationEvidence: [],
+    },
+  };
+}
+
+function createFavorite(ritualId: string): RitualFavorite {
+  return {
+    ritualId,
+    favoritedVersionId: "test-version",
+    active: true,
+    createdAt: "2026-01-01T00:00:00.000Z",
+    sourceSurface: "search",
+  };
 }
 
 describe("app shell rendering", () => {
@@ -445,22 +539,10 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("relationship details");
   });
 
-  it("renders the weekly brief only when signed in", () => {
+  it("renders Ritual-first entry choices when signed in without a selected ritual", () => {
     const privateBriefData = resolvePrivateBriefData({});
     const html = renderSignedInShell(privateBriefData);
     const moonIndex = html.indexOf("Moon &amp; Table");
-    const practiceIndex = html.indexOf('data-testid="recommended-ritual"');
-    const intentionIndex = html.indexOf('class="brief__intention"');
-    const windowIndex = html.indexOf("When you have five quiet minutes.");
-    const questionIndex = html.indexOf("Question to carry");
-    const howIndex = html.indexOf("How this was chosen");
-    const whyIndex = html.indexOf("Why this fits");
-    const materialFitIndex = html.indexOf("<h3>Material and ritual fit</h3>");
-    const rightIndex = html.indexOf("This feels right.");
-    const tryAgainIndex = html.indexOf("Give me another option");
-    const checkInAgainIndex = html.indexOf("I want to check in again");
-    const feedbackIndex = html.indexOf("Give feedback");
-    const actionsIndex = html.indexOf('class="brief__actions"');
     const menuThisWeekIndex = html.indexOf('data-menu-action="this_week"');
     const menuChooseRitualIndex = html.indexOf(
       'data-menu-action="choose_ritual"',
@@ -475,31 +557,15 @@ describe("app shell rendering", () => {
     const menuProfileIndex = html.indexOf('data-menu-action="profile_settings"');
     const menuSignOutIndex = html.indexOf('data-auth-action="sign-out"');
 
-    expect(html).toContain('class="brief__core"');
-    expect(html).toContain('class="brief__theme"');
-    expect(html).toContain("<h2");
-    expect(html).toContain('class="brief__depth"');
-    expect(html).toContain('class="brief__actions"');
-    expect(html).toContain('class="brief__closing-actions"');
-    expect(html).toContain('class="brief__actions-question"');
-    expect(html).toContain('class="brief__closing-secondary"');
-    expect(html).toContain('class="brief__meta-actions"');
-    expect(html).toContain("This feels right.");
-    expect(html).toContain("How does this feel to you?");
-    expect(html).toContain("Give me another option");
-    expect(html).toContain("I want to check in again");
-    expect(html).not.toContain("Capacity: <span>Bare minimum</span>");
-    expect(html).not.toContain("Current capacity:");
-    expect(html).not.toContain('data-capacity-toggle="true"');
-    expect(html).not.toContain('data-capacity-control="true"');
-    expect(html).not.toContain("How much do you have this week?");
-    expect(actionsIndex).toBeGreaterThan(-1);
-    expect(rightIndex).toBeGreaterThan(actionsIndex);
-    expect(tryAgainIndex).toBeGreaterThan(rightIndex);
-    expect(checkInAgainIndex).toBeGreaterThan(tryAgainIndex);
-    expect(feedbackIndex).toBeGreaterThan(checkInAgainIndex);
+    expect(html).toContain('class="check-in check-in--embedded"');
+    expect(html).toContain('aria-label="Choose a ritual"');
     expect(html).toContain("Current ritual");
     expect(html).toContain("Choose a ritual");
+    expect(html).toContain("Choose with me");
+    expect(html).toContain("I have something in mind");
+    expect(html).toContain('data-check-in-action="start_guided"');
+    expect(html).toContain('data-check-in-value="choose_with_me"');
+    expect(html).toContain('data-search-rituals-entry="true"');
     expect(html).toContain("Search rituals");
     expect(html).toContain("Manage rituals");
     expect(html).toContain("Profile settings");
@@ -513,7 +579,7 @@ describe("app shell rendering", () => {
     expect(html).toMatch(/Next lunar milestone:<\/strong> [^<]+ moon on /);
     expect(html).toContain('class="masthead__home"');
     expect(html).toContain('data-home-action="this_week"');
-    expect(html).toContain('aria-label="Show this week\'s brief"');
+    expect(html).toContain('aria-label="Show current ritual"');
     expect(html).toContain('aria-hidden="true"');
     expect(html).toContain("data-moon-phase-glyph=");
     expect(html).toContain('aria-label="Open menu"');
@@ -535,7 +601,15 @@ describe("app shell rendering", () => {
     expect(menuManageRitualsIndex).toBeLessThan(menuProfileIndex);
     expect(menuProfileIndex).toBeLessThan(menuHowItWorksIndex);
     expect(menuHowItWorksIndex).toBeLessThan(menuSignOutIndex);
-    expect(html).toContain("data-testid=\"recommended-ritual\"");
+    expect(html).not.toContain("data-testid=\"recommended-ritual\"");
+    expect(html).not.toContain('class="brief__core"');
+    expect(html).not.toContain('class="brief__theme"');
+    expect(html).not.toContain('class="brief__depth"');
+    expect(html).not.toContain('class="brief__actions"');
+    expect(html).not.toContain('data-feedback-type="good"');
+    expect(html).not.toContain("How does this feel to you?");
+    expect(html).not.toContain("Give me another option");
+    expect(html).not.toContain("I want to check in again");
     expect(html).not.toContain("This week's signals");
     expect(html).not.toContain('class="brief__signal-list"');
     expect(html).not.toContain('data-signal-type="schedule"');
@@ -543,24 +617,24 @@ describe("app shell rendering", () => {
     expect(html).toMatch(
       new RegExp("Current phase:</strong> [A-Z][a-z]+(?: [a-z]+)* moon"),
     );
-    expect(html).toContain("Capacity and audience fit");
+    expect(html).not.toContain("Capacity and audience fit");
     expect(html).not.toContain("Schedule — realistic window");
-    expect(html).toContain("Why this fits");
+    expect(html).not.toContain("Why this fits");
     expect(html).not.toContain("Private chart fit");
     expect(html).not.toContain("No saved natal placements were loaded for this brief.");
-    expect(html).toContain("How this was chosen");
-    expect(html).toContain("Material and ritual fit");
-    expect(html).toContain("Timing fit");
+    expect(html).not.toContain("How this was chosen");
+    expect(html).not.toContain("Material and ritual fit");
+    expect(html).not.toContain("Timing fit");
     expect(html).not.toContain("Private timing fit");
     expect(html).not.toContain("Safety and fit");
     expect(html).not.toContain("Household safety guardrails");
     expect(html).not.toContain("Safety filters applied");
-    expect(html).toContain('<details class="brief__choice-details" aria-label="How this was chosen">');
+    expect(html).not.toContain('<details class="brief__choice-details" aria-label="How this was chosen">');
     expect(html).not.toContain('<details class="brief__choice-details" aria-label="How this was chosen" open');
     expect(html).not.toContain('class="brief__chosen-section" aria-label="Material lineage"');
-    expect(html).toContain("hearth/table first-and-last logic");
+    expect(html).not.toContain("hearth/table first-and-last logic");
     expect(html).not.toContain('<section class="brief__sources" aria-label="Sources used">');
-    expect(html).toContain("When you have five quiet minutes.");
+    expect(html).not.toContain("When you have five quiet minutes.");
     expect(html).not.toContain("Thursday evening");
     expect(html).not.toContain("Tuesday evening");
     expect(html).not.toContain("Saturday morning");
@@ -568,46 +642,34 @@ describe("app shell rendering", () => {
     expect(html).not.toContain(">The practice<");
     expect(html).not.toContain(">A good window<");
     expect(html).not.toContain(">Optional<");
-    expect(html).toContain(">Intention<");
-    expect(html).toContain(">Best window<");
+    expect(html).not.toContain(">Intention<");
+    expect(html).not.toContain(">Best window<");
     expect(html).not.toContain("No add-on needed.");
-    expect(html).toContain('class="brief__intention"');
-    expect(html).toContain("Question to carry");
+    expect(html).not.toContain('class="brief__intention"');
+    expect(html).not.toContain("Question to carry");
     expect(html).not.toContain("Need a different suggestion?");
-    expect(html).toContain("Give feedback");
+    expect(html).not.toContain("Give feedback");
     expect(html).not.toContain("Share feedback");
-    expect(html).toContain('data-feedback-type="good"');
     expect(html).not.toContain('data-feedback-type="too_much"');
     expect(html).not.toContain("Simpler, please");
-    expect(html).toContain('data-feedback-type="too_generic"');
-    expect(html).toContain('data-feedback-type="more_like_this"');
-    expect(html).toContain('data-feedback-type="not_this_style"');
-    expect(html).toContain('data-feedback-type="skipped"');
-    expect(html).toContain('data-feedback-type="try_again"');
-    expect(html).toContain("Give me another option");
-    expect(html).toContain("I want to check in again");
+    expect(html).not.toContain('data-feedback-type="too_generic"');
+    expect(html).not.toContain('data-feedback-type="more_like_this"');
+    expect(html).not.toContain('data-feedback-type="not_this_style"');
+    expect(html).not.toContain('data-feedback-type="skipped"');
+    expect(html).not.toContain('data-feedback-type="try_again"');
     expect(html).not.toContain("Try something else");
     expect(html).not.toContain(">Start over</button>");
-    expect(html).toContain('data-check-in-start-over="true"');
-    expect(html).toContain('<section class="brief__question" aria-label="Question to carry">');
+    expect(html).not.toContain('data-check-in-start-over="true"');
+    expect(html).not.toContain('<section class="brief__question" aria-label="Question to carry">');
     expect(html).not.toContain('class="brief__question-details"');
-    expect(html).toContain('<section class="why-this" aria-label="Why this fits">');
-    expect(html).toContain("<h3>Why this fits</h3>");
+    expect(html).not.toContain('<section class="why-this" aria-label="Why this fits">');
+    expect(html).not.toContain("<h3>Why this fits</h3>");
     expect(html).not.toContain('class="why-this__reasons"');
     expect(html).not.toContain('<details class="why-this"');
-    expect(html).toContain('<details class="feedback" aria-label="Feedback">');
+    expect(html).not.toContain('<details class="feedback" aria-label="Feedback">');
     expect(html).not.toContain('<details class="feedback" open');
     expect(moonIndex).toBeGreaterThan(-1);
     expect(html.slice(0, moonIndex)).not.toContain("Private weekly ritual brief");
-    expect(practiceIndex).toBeLessThan(intentionIndex);
-    expect(intentionIndex).toBeLessThan(windowIndex);
-    expect(windowIndex).toBeLessThan(whyIndex);
-    expect(intentionIndex).toBeLessThan(questionIndex);
-    expect(whyIndex).toBeLessThan(questionIndex);
-    expect(questionIndex).toBeLessThan(howIndex);
-    expect(howIndex).toBeLessThan(materialFitIndex);
-    expect(materialFitIndex).toBeLessThan(tryAgainIndex);
-    expect(tryAgainIndex).toBeLessThan(feedbackIndex);
     expect(html).not.toContain("Private weekly ritual brief");
     expect(html).not.toContain("Using your household settings.");
     expect(html).not.toContain("Using starter settings until your private settings are ready.");
@@ -644,25 +706,7 @@ describe("app shell rendering", () => {
         timezone: "America/Denver",
       },
     };
-    const selectedTimingBrief = generateWeeklyBrief(privateBriefData.input);
-    const briefWithFutureSelectedTiming: typeof selectedTimingBrief = {
-      ...selectedTimingBrief,
-      trace: {
-        ...selectedTimingBrief.trace,
-        timingFactDetails: [
-          {
-            ...selectedTimingBrief.trace.timingFactDetails[0],
-            label: "Last quarter moon",
-            phaseAngleDegrees: 270,
-            exactIso: "2026-06-08T10:00:59.929Z",
-          },
-        ],
-      },
-    };
-
-    const html = renderSignedInShell(privateBriefData, {
-      brief: briefWithFutureSelectedTiming,
-    });
+    const html = renderSignedInShell(privateBriefData);
 
     expect(html).toContain("Current phase:</strong> Waning gibbous moon");
     expect(html).toContain("Next lunar milestone:</strong> Last quarter moon on June 8, 2026");
@@ -831,7 +875,6 @@ describe("app shell rendering", () => {
   it("keeps the search ritual path renderable before a brief exists", () => {
     const html = renderSignedInShell(resolvePrivateBriefData({}), {
       activeView: "search_rituals",
-      brief: undefined,
     });
     const mainSource = readFileSync(
       new URL("../../src/main.ts", import.meta.url),
@@ -865,6 +908,85 @@ describe("app shell rendering", () => {
     expect(mainSource).toContain("data-ritual-search-timing");
   });
 
+  it("renders Choose with me favorites and fit feedback on the selected result", () => {
+    const favorite = createFavorite(chooseWithMeFixtureRitual.id);
+    const html = renderSignedInShell(resolvePrivateBriefData({}), {
+      chooseWithMeResult: createChooseWithMeResultFixture(),
+      chooseWithMeRecommendationInstanceId: "recommendation_fixture",
+      ritualFavorites: [],
+    });
+    const savedHtml = renderSignedInShell(resolvePrivateBriefData({}), {
+      chooseWithMeResult: createChooseWithMeResultFixture(),
+      chooseWithMeRecommendationInstanceId: "recommendation_fixture",
+      ritualFavorites: [favorite],
+    });
+    const checkInAgainIndex = html.indexOf("I want to check in again");
+    const secondaryActionsIndex = html.indexOf('class="choose-result__secondary-actions"');
+    const saveFavoriteIndex = html.indexOf(">Save favorite</button>");
+    const feedbackIndex = html.indexOf(">Give feedback</summary>");
+
+    expect(html).toContain("How does this feel to you?");
+    expect(html).toContain("This feels right.");
+    expect(html).toContain("Give feedback");
+    expect(html).toContain("Give me another option");
+    expect(html).toContain("I want to check in again");
+    expect(html).toContain('class="choose-result__title-row"');
+    expect(html).toContain("ritual-favorite-button--icon");
+    expect(html).toContain(">♡</button>");
+    expect(html).toContain(">Save favorite</button>");
+    expect(savedHtml).toContain(">♥</button>");
+    expect(savedHtml).toContain(">Saved</button>");
+    expect(html).toContain('data-ritual-favorite-source="choose_with_me"');
+    expect(html).toContain('data-recommendation-instance-id="recommendation_fixture"');
+    expect(html).toContain('data-ritual-feedback-fit="fit"');
+    expect(html).toContain('data-ritual-feedback-form="feedback"');
+    expect(html).toContain('value="more_like_this"');
+    expect(html).toContain('value="never_recommend_this"');
+    expect(html).toContain("Optional note");
+    expect(html).not.toContain("This fit</button>");
+    expect(html).not.toContain(">Not quite</summary>");
+    expect(secondaryActionsIndex).toBeGreaterThan(checkInAgainIndex);
+    expect(saveFavoriteIndex).toBeGreaterThan(secondaryActionsIndex);
+    expect(feedbackIndex).toBeGreaterThan(saveFavoriteIndex);
+  });
+
+  it("does not render favorite or feedback controls for a no-result Choose with me state", () => {
+    const html = renderSignedInShell(resolvePrivateBriefData({}), {
+      chooseWithMeResult: {
+        status: "no_result",
+        whyThisFits: "Nothing matched that exact reach.",
+        howThisWasChosen: "No eligible Ritual remained.",
+        debug: {
+          normalizedRequest: {
+            timeScope: "today",
+            energyCapacity: "a_little",
+            capacityMode: "low",
+          },
+          eligibleCount: 0,
+          excludedCount: 1,
+          topCandidates: [],
+          exclusions: { not_recommendation_eligible: 1 },
+          timing: {
+            suppliedFacts: [],
+            suppliedWindows: [],
+            matchedRitualTiming: [],
+            timingScore: 0,
+            requiredTimingSatisfied: true,
+            timingCouldNotBeVerified: [],
+          },
+          timingEvidence: [],
+          explanationEvidence: [],
+        },
+      },
+    });
+
+    expect(html).toContain("Nothing fit that exact reach.");
+    expect(html).not.toContain("data-ritual-favorite-toggle");
+    expect(html).not.toContain("data-ritual-feedback-fit");
+    expect(html).not.toContain("data-ritual-feedback-form");
+    expect(html).not.toContain("data-ritual-try-another");
+  });
+
   it("filters the Search rituals view by query, source, and chips", () => {
     const seedHtml = renderSearchRitualsSection({ query: "seed" });
     const tableHtml = renderSearchRitualsSection({
@@ -885,6 +1007,57 @@ describe("app shell rendering", () => {
     expect(bucklandHtml).toContain("Raymond Buckland, Practical Candleburning Rituals");
     expect(bucklandHtml).toContain("13 rituals found");
     expect(emptyHtml).toContain("Nothing matched that exact reach.");
+  });
+
+  it("renders Search favorites as small heart controls and filters to favorites only", () => {
+    const favorite = createFavorite(chooseWithMeFixtureRitual.id);
+    const unsavedHtml = renderSearchRitualsSection({
+      query: chooseWithMeFixtureRitual.presentation.headline,
+      favorites: [],
+    });
+    const savedHtml = renderSearchRitualsSection({
+      favorites: [favorite],
+      favoritesOnly: true,
+      selectedRitualId: chooseWithMeFixtureRitual.id,
+    });
+    const emptyFavoritesHtml = renderSearchRitualsSection({
+      favorites: [],
+      favoritesOnly: true,
+    });
+
+    expect(unsavedHtml).toContain('class="ritual-result-card__title-row"');
+    expect(unsavedHtml).toContain('data-ritual-favorite-source="search"');
+    expect(unsavedHtml).toContain('aria-label="Save ');
+    expect(unsavedHtml).toContain(">♡</button>");
+    expect(unsavedHtml).not.toContain(">Save favorite</button>");
+    expect(savedHtml).toContain('name="ritualSearchFavoritesOnly"');
+    expect(savedHtml).toContain('data-ritual-search-favorites-only="true"');
+    expect(savedHtml).toContain("checked");
+    expect(savedHtml).toContain("1 ritual found");
+    expect(savedHtml).toContain(">♥</button>");
+    expect(savedHtml).not.toContain(">Saved</button>");
+    expect(emptyFavoritesHtml).toContain("No saved favorites matched that exact reach.");
+  });
+
+  it("wires Ritual-first favorite and feedback interactions through main", () => {
+    const mainSource = readFileSync(
+      new URL("../../src/main.ts", import.meta.url),
+      "utf8",
+    );
+
+    expect(mainSource).toContain("createRitualFavoriteStore");
+    expect(mainSource).toContain("createRecommendationEventStore");
+    expect(mainSource).toContain("recordFavoriteAdded");
+    expect(mainSource).toContain("recordFavoriteRemoved");
+    expect(mainSource).toContain("recordRitualFeedback");
+    expect(mainSource).toContain("recordTryAnotherRequested");
+    expect(mainSource).toContain("activeChooseWithMeExcludedRitualIds");
+    expect(mainSource).toContain("chooseRitualForActiveCheckIn");
+    expect(mainSource).toContain("Here is another strong option.");
+    expect(mainSource).toContain("recordRitualSelected");
+    expect(mainSource).toContain("data-ritual-search-favorites-only");
+    expect(mainSource).toContain('surface: "search"');
+    expect(mainSource).not.toContain("handleTryAgainClick");
   });
 
   it("renders a timing-match search filter with timing-specific results", () => {
@@ -961,21 +1134,28 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("natal placement");
   });
 
-  it("does not render the capacity picker in the brief footer", () => {
-    const privateBriefData = resolvePrivateBriefData({});
-    const brief = generateWeeklyBrief({
-      ...privateBriefData.input,
-      capacityMode: "steady",
-    });
-    const html = renderSignedInShell(privateBriefData, {
-      brief,
-    });
+  it("does not render legacy weekly brief content on the current ritual surface", () => {
+    const html = renderSignedInShell(resolvePrivateBriefData({}));
 
-    const actionsIndex = html.indexOf('class="brief__actions"');
-
+    expect(html).toContain('class="check-in check-in--embedded"');
+    expect(html).toContain("Choose with me");
+    expect(html).toContain("I have something in mind");
+    expect(html).not.toContain('data-testid="recommended-ritual"');
+    expect(html).not.toContain('class="brief__actions"');
+    expect(html).not.toContain('class="brief__intention"');
+    expect(html).not.toContain("Optional: light a candle if that feels supportive and safe.");
+    expect(html).not.toContain("Notice what is already clear.");
+    expect(html).not.toContain("Question to carry");
+    expect(html).not.toContain("Developer decision record");
+    expect(html).not.toContain("Selected score reasons");
+    expect(html).not.toContain("Evaluated ritual patterns");
+    expect(html).not.toContain("Here is another approved option.");
+    expect(html).not.toContain("Got it.");
+    expect(html).not.toContain(">Saving</button>");
+    expect(html).not.toContain("feedback-button--selected");
+    expect(html).not.toContain('data-feedback-type="too_generic"');
     expect(html).not.toContain("Capacity: <span>Steady</span>");
     expect(html).not.toContain("Current capacity:");
-    expect(actionsIndex).toBeGreaterThan(-1);
     expect(html).not.toContain('data-capacity-control="true"');
     expect(html).not.toContain('data-capacity-toggle="true"');
     expect(html).not.toContain('aria-expanded="true"');
@@ -987,153 +1167,20 @@ describe("app shell rendering", () => {
     expect(html).not.toContain('data-capacity-mode="high"');
   });
 
-  it("renders a real optional add-on as a quiet inline line", () => {
-    const privateBriefData = resolvePrivateBriefData({});
-    const brief = generateWeeklyBrief(privateBriefData.input);
-    const html = renderSignedInShell(privateBriefData, {
-      brief: {
-        ...brief,
-        optionalAddOn: "Light a candle if that feels supportive and safe.",
-      },
-    });
-    const windowIndex = html.indexOf("When you have five quiet minutes.");
-    const optionalIndex = html.indexOf("Optional: light a candle if that feels supportive and safe.");
-    const intentionIndex = html.indexOf("Let attention gather gently.");
-
-    expect(html).toContain("Optional: light a candle if that feels supportive and safe.");
-    expect(html).not.toContain(">Optional<");
-    expect(windowIndex).toBeLessThan(optionalIndex);
-    expect(intentionIndex).toBeLessThan(windowIndex);
-  });
-
-  it("splits two-sentence brief themes into two visual lines", () => {
-    const privateBriefData = resolvePrivateBriefData({});
-    const brief = generateWeeklyBrief(privateBriefData.input);
-    const html = renderSignedInShell(privateBriefData, {
-      brief: {
-        ...brief,
-        theme: "Notice what is already clear. Tend one living thing.",
-      },
-    });
-
-    expect(html).toContain(
-      '<span class="brief__theme-line">Notice what is already clear.</span><span class="brief__theme-line">Tend one living thing.</span>',
-    );
-  });
-
-  it("hides the optional line when no add-on is needed", () => {
-    const privateBriefData = resolvePrivateBriefData({});
-    const brief = generateWeeklyBrief(privateBriefData.input);
-    const html = renderSignedInShell(privateBriefData, {
-      brief: {
-        ...brief,
-        optionalAddOn: "No add-on needed.",
-      },
-    });
-
-    expect(html).not.toContain("Optional:");
-    expect(html).not.toContain("No add-on needed.");
-    expect(html).toContain('class="brief__intention"');
-    expect(html).toContain("Question to carry");
-  });
-
   it("renders profile tuning only when the profile settings view is selected", () => {
     const defaultHtml = renderSignedInShell(resolvePrivateBriefData({}));
     const settingsHtml = renderSignedInShell(resolvePrivateBriefData({}), {
       activeView: "profile_settings",
     });
 
-    expect(defaultHtml).toContain("data-testid=\"recommended-ritual\"");
+    expect(defaultHtml).toContain('class="check-in check-in--embedded"');
+    expect(defaultHtml).not.toContain("data-testid=\"recommended-ritual\"");
     expect(defaultHtml).not.toContain("What is usually true?");
     expect(settingsHtml).toContain("Profile settings");
     expect(settingsHtml).toContain("Profile settings will appear here");
     expect(settingsHtml).not.toContain("data-testid=\"recommended-ritual\"");
     expect(settingsHtml).toContain('data-menu-action="this_week"');
     expect(settingsHtml).toContain('aria-pressed="true">Profile settings');
-  });
-
-  it("renders developer trace only when debug trace is requested", () => {
-    const brief = generateWeeklyBrief({
-      ...resolvePrivateBriefData({}).input,
-      currentRitualCheckIn: {
-        timeScope: "best_moment_this_week",
-        energyCapacity: "room_for_something_deeper",
-        capacityMode: "high",
-        audience: "both_of_us",
-        practiceTypeHints: ["seasonal"],
-        practiceTypeLabel: "Seasonal",
-        ritualFocusKey: "marking_a_threshold",
-        ritualFocusLabel: "Marking a threshold",
-      },
-    });
-    const html = renderSignedInShell(resolvePrivateBriefData({}), {
-      brief,
-      showDebugTrace: true,
-    });
-
-    expect(html).toContain("Developer decision record");
-    expect(html).toContain("Selected score reasons");
-    expect(html).toContain("Evaluated ritual patterns");
-    expect(html).toContain("Rejected ritual patterns");
-    expect(html).toContain("Source references");
-    expect(html).toContain("Diagnostic explanation");
-    expect(html).toContain("Chosen for");
-    expect(html).toContain("Private timing fit");
-    expect(html).toContain("Selected");
-    expect(html).toContain("Inputs");
-    expect(html).toContain("Check-in choices");
-    expect(html).toContain("Timing:</strong> Best moment this week");
-    expect(html).toContain("Capacity:</strong> Room for something deeper");
-    expect(html).toContain("Audience:</strong> Both of us");
-    expect(html).toContain("Practice:</strong> Seasonal");
-    expect(html).toContain("Intention:</strong> Marking a threshold");
-    expect(html).toContain("Check-in contribution:");
-    expect(html).toContain("Private chart status:");
-    expect(html).toContain("No placement records loaded.");
-    expect(html).toContain("Check-in intention match");
-    expect(html).toContain("Private profile theme match");
-    expect(html).toContain("private_profile.");
-    expect(html).not.toContain("Developer trace");
-  });
-
-  it("renders feedback status after save or try-again", () => {
-    const html = renderSignedInShell(resolvePrivateBriefData({}), {
-      feedbackStatus: "Got it.",
-      tryAgainStatus: "Here is another approved option.",
-      selectedFeedbackType: "try_again",
-    });
-
-    expect(html).toContain("Here is another approved option.");
-    expect(html).toContain("Got it.");
-    expect(html).toContain('class="quiet-action try-again-button"');
-    expect(html).toContain('data-try-again-action="true"');
-    expect(html).toContain('aria-pressed="false"');
-    expect(html).not.toContain("try-again-button feedback-button--selected");
-    expect(html).not.toContain("Feedback saves to your private profile.");
-  });
-
-  it("renders the positive acknowledgement status copy", () => {
-    const html = renderSignedInShell(resolvePrivateBriefData({}), {
-      feedbackStatus: "I’m very glad.",
-      selectedFeedbackType: "good",
-    });
-
-    expect(html).toContain("This feels right.");
-    expect(html).toContain("I’m very glad.");
-    expect(html).toContain('data-feedback-type="good"');
-  });
-
-  it("renders a saving state for clicked feedback buttons", () => {
-    const html = renderSignedInShell(resolvePrivateBriefData({}), {
-      feedbackStatus: "Saving.",
-      selectedFeedbackType: "too_generic",
-      savingFeedbackType: "too_generic",
-    });
-
-    expect(html).toContain(">Saving</button>");
-    expect(html).toContain("Saving.");
-    expect(html).toContain("feedback-button--selected");
-    expect(html).toContain(" disabled");
   });
 
   it("renders editable profile tuning for loaded private data", () => {

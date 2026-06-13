@@ -197,6 +197,26 @@ export type RecommendationInstanceInput = {
 export type RecommendationEventStore = {
   createRecommendationInstance(input: RecommendationInstanceInput): RecommendationInstance;
   recordRecommendationShown(instance: RecommendationInstance): RitualInteractionEvent;
+  recordRitualSelected(input: {
+    ritualId: string;
+    surface: RitualInteractionSurface;
+    actor?: RitualHouseholdActor;
+    createdAt?: string;
+  }): RitualInteractionEvent;
+  recordFavoriteAdded(input: {
+    ritualId: string;
+    surface: RitualFavoriteSourceSurface;
+    actor?: RitualHouseholdActor;
+    recommendationInstanceId?: string;
+    createdAt?: string;
+  }): RitualInteractionEvent;
+  recordFavoriteRemoved(input: {
+    ritualId: string;
+    surface: RitualFavoriteSourceSurface;
+    actor?: RitualHouseholdActor;
+    recommendationInstanceId?: string;
+    createdAt?: string;
+  }): RitualInteractionEvent;
   recordRitualFeedback(input: {
     recommendationInstanceId: string;
     ritualId: string;
@@ -477,6 +497,18 @@ function getSelectedInstanceForEvent(
   return instance;
 }
 
+function validateRecommendationInstanceForEvent(
+  instances: RecommendationInstance[],
+  recommendationInstanceId: string | undefined,
+  ritualId: string,
+): void {
+  if (!recommendationInstanceId) {
+    return;
+  }
+
+  getSelectedInstanceForEvent(instances, recommendationInstanceId, ritualId);
+}
+
 function createRecommendationRitualSnapshot(
   ritual: Ritual,
 ): RecommendationRitualSnapshot {
@@ -570,6 +602,75 @@ export function createRecommendationEventStore(
         surface: "choose_with_me",
         createdAt: instance.createdAt,
         recommendationInstanceId: instance.id,
+      };
+
+      events.push(event);
+
+      return cloneEvent(event);
+    },
+    recordRitualSelected(input) {
+      const createdAt = input.createdAt ?? now();
+      const event: RitualInteractionEvent = {
+        id: createEventId("ritual_selected", input.ritualId, createdAt),
+        ritualId: input.ritualId,
+        eventType: "ritual_selected",
+        surface: input.surface,
+        createdAt,
+        actor: input.actor,
+      };
+
+      events.push(event);
+
+      return cloneEvent(event);
+    },
+    recordFavoriteAdded(input) {
+      validateRecommendationInstanceForEvent(
+        instances,
+        input.recommendationInstanceId,
+        input.ritualId,
+      );
+
+      const createdAt = input.createdAt ?? now();
+      const event: RitualInteractionEvent = {
+        id: createEventId(
+          "favorite_added",
+          input.ritualId,
+          createdAt,
+          input.recommendationInstanceId,
+        ),
+        ritualId: input.ritualId,
+        eventType: "favorite_added",
+        surface: input.surface,
+        createdAt,
+        actor: input.actor,
+        recommendationInstanceId: input.recommendationInstanceId,
+      };
+
+      events.push(event);
+
+      return cloneEvent(event);
+    },
+    recordFavoriteRemoved(input) {
+      validateRecommendationInstanceForEvent(
+        instances,
+        input.recommendationInstanceId,
+        input.ritualId,
+      );
+
+      const createdAt = input.createdAt ?? now();
+      const event: RitualInteractionEvent = {
+        id: createEventId(
+          "favorite_removed",
+          input.ritualId,
+          createdAt,
+          input.recommendationInstanceId,
+        ),
+        ritualId: input.ritualId,
+        eventType: "favorite_removed",
+        surface: input.surface,
+        createdAt,
+        actor: input.actor,
+        recommendationInstanceId: input.recommendationInstanceId,
       };
 
       events.push(event);

@@ -15,11 +15,7 @@ import {
   updatePrivateProfileTuning,
   type PrivateBriefData,
 } from "./lib/private-data";
-import {
-  generateWeeklyBrief,
-  type CapacityMode,
-  type WeeklyBrief,
-} from "./lib/generate-weekly-brief";
+import { type CapacityMode } from "./lib/generate-weekly-brief";
 import {
   createInitialRitualCheckInDraft,
   carrierOptions,
@@ -44,11 +40,6 @@ import {
 } from "./lib/timing-window-candidates";
 import { getDefaultTimingTimezone, getTimingFactsForDate } from "./lib/timing-facts";
 import { createTodaysShapeBrief } from "./lib/todays-shape-brief";
-import {
-  isBriefFeedbackType,
-  saveBriefFeedback,
-  type BriefFeedbackType,
-} from "./lib/brief-feedback";
 import type { AstrologyVisibility } from "./lib/private-data-schema";
 import {
   PROFILE_TUNING_ASTROLOGY_VISIBILITY,
@@ -83,8 +74,21 @@ import {
 } from "./data/rituals/search-rituals";
 import {
   chooseWithMeRitual,
+  type ChooseWithMeRequest,
   type ChooseWithMeResult,
 } from "./data/rituals/choose-with-me-selector";
+import {
+  createRecommendationEventStore,
+  createRitualFavoriteStore,
+  RITUAL_FAVORITE_SOURCE_SURFACES,
+  RITUAL_FEEDBACK_REASONS,
+  type RecommendationCandidateInput,
+  type RecommendationInstance,
+  type RitualFavoriteSourceSurface,
+  type RitualFeedbackFit,
+  type RitualFeedbackReason,
+} from "./data/rituals/household-state";
+import type { Ritual } from "./data/rituals/types";
 import "./styles.css";
 
 const app = document.querySelector<HTMLElement>("#app");
@@ -102,8 +106,8 @@ const devVisualQaMode =
 let privateDataRequestId = 0;
 let activeSignedInState: Extract<AppAuthState, { status: "signed_in" }> | null = null;
 let activePrivateBriefData: PrivateBriefData | null = null;
-let activeBrief: WeeklyBrief | null = null;
 let activeChooseWithMeResult: ChooseWithMeResult | null = null;
+let activeChooseWithMeExcludedRitualIds: string[] = [];
 let activeSignedInView: SignedInView = "this_week";
 let activeProfileSettingsTabId: string | null = null;
 let activeCheckInDraft: RitualCheckInDraft = createInitialRitualCheckInDraft();
@@ -117,11 +121,15 @@ let activeRitualSearchSource = "all";
 let activeRitualSearchPurpose = "all";
 let activeRitualSearchCarrier = "all";
 let activeRitualSearchTiming: RitualTimingFilter = "all";
+let activeRitualSearchFavoritesOnly = false;
 let activeSelectedRitualId: string | null = null;
 let activeManageRitualFilters: ManageRitualFilters = {
   ...defaultManageRitualFilters,
 };
-const showDebugTrace = new URLSearchParams(window.location.search).get("debug") === "true";
+let ritualFavoriteStore = createRitualFavoriteStore();
+let ritualInteractionStore = createRecommendationEventStore();
+let activeChooseWithMeRecommendationInstance: RecommendationInstance | null = null;
+let activeChooseWithMeInteractionStatus: string | undefined;
 
 function resetRitualSearchState(): void {
   activeRitualSearchQuery = "";
@@ -131,7 +139,16 @@ function resetRitualSearchState(): void {
   activeRitualSearchPurpose = "all";
   activeRitualSearchCarrier = "all";
   activeRitualSearchTiming = "all";
+  activeRitualSearchFavoritesOnly = false;
   activeSelectedRitualId = null;
+}
+
+function resetRitualInteractionState(): void {
+  ritualFavoriteStore = createRitualFavoriteStore();
+  ritualInteractionStore = createRecommendationEventStore();
+  activeChooseWithMeExcludedRitualIds = [];
+  activeChooseWithMeRecommendationInstance = null;
+  activeChooseWithMeInteractionStatus = undefined;
 }
 
 function normalizeRitualSearchTimingFilter(value: unknown): RitualTimingFilter {
@@ -201,6 +218,82 @@ function getCurrentTimingWindowForSearch(): TimingWindowCandidate | undefined {
   );
 }
 
+function isRitualFavoriteSourceSurface(
+  value: string | undefined,
+): value is RitualFavoriteSourceSurface {
+  return RITUAL_FAVORITE_SOURCE_SURFACES.includes(
+    value as RitualFavoriteSourceSurface,
+  );
+}
+
+function isRitualFeedbackReason(value: unknown): value is RitualFeedbackReason {
+  return (
+    typeof value === "string" &&
+    RITUAL_FEEDBACK_REASONS.includes(value as RitualFeedbackReason)
+  );
+}
+
+function getRitualOrThrow(ritualId: string): Ritual {
+  const ritual = staticRitualRepository.getRitualById(ritualId);
+
+  if (!ritual) {
+    throw new Error(`Unknown Ritual: ${ritualId}`);
+  }
+
+  return ritual;
+}
+
+function getTopRecommendationCandidates(
+  result: Extract<ChooseWithMeResult, { status: "selected" }>,
+): RecommendationCandidateInput[] {
+  return result.debug.topCandidates.flatMap((candidate) => {
+    const ritual = staticRitualRepository.getRitualById(candidate.ritualId);
+
+    return ritual
+      ? [{
+          ritual,
+          score: candidate.score,
+          breakdown: candidate.breakdown,
+        }]
+      : [];
+  });
+}
+
+function createRecommendationInstanceForResult(
+  checkIn: CurrentRitualCheckIn,
+  result: ChooseWithMeResult,
+): RecommendationInstance | null {
+  if (result.status !== "selected") {
+    return null;
+  }
+
+  const instance = ritualInteractionStore.createRecommendationInstance({
+    selectedRitual: result.selectedRitual,
+    checkInSnapshot: {
+      timeScope: checkIn.timeScope,
+      capacityMode: checkIn.capacityMode,
+      energyCapacity: checkIn.energyCapacity,
+      audience: checkIn.audience,
+      purpose: checkIn.purpose ?? null,
+      carrier: checkIn.carrier ?? null,
+      refinement: checkIn.refinement ?? null,
+      freeTextIntent: checkIn.ritualFocusText ?? null,
+    },
+    selectorSnapshot: {
+      selectorVersion: "choose-with-me-static-v1",
+      selectedScore: result.debug.selectedScore,
+      selectedBreakdown: result.debug.selectedBreakdown,
+      matchedTiming: result.debug.timing.matchedRitualTiming,
+      topCandidates: getTopRecommendationCandidates(result),
+      exclusionSummary: result.debug.exclusions,
+    },
+  });
+
+  ritualInteractionStore.recordRecommendationShown(instance);
+
+  return instance;
+}
+
 function getRequestedSignedInView(): SignedInView | null {
   const requestedView = new URLSearchParams(window.location.search).get("view");
   const requestedHash = window.location.hash.replace(/^#/, "");
@@ -242,30 +335,6 @@ function render(state: AppAuthState): void {
   appRoot.innerHTML = renderAppShell(state);
 }
 
-function getActiveBriefInput(
-  excludedRitualPatternKeys?: string[],
-): Parameters<typeof generateWeeklyBrief>[0] {
-  if (!activePrivateBriefData) {
-    return {};
-  }
-
-  return {
-    ...activePrivateBriefData.input,
-    ...(activeCurrentRitualCheckIn
-      ? {
-          currentRitualCheckIn: activeCurrentRitualCheckIn,
-          capacityMode: activeCurrentRitualCheckIn.capacityMode,
-          audience: activeCurrentRitualCheckIn.audience === "both_of_us"
-            ? "together"
-            : activePrivateBriefData.input.audience,
-        }
-      : {}),
-    ...(excludedRitualPatternKeys
-      ? { excludedRitualPatternKeys }
-      : {}),
-  };
-}
-
 function renderActiveCheckInShell(): void {
   if (!activeSignedInState) {
     return;
@@ -292,8 +361,9 @@ function renderPrivateWelcomeOrCheckIn(): void {
 
   if (requestedView && requestedView !== "this_week") {
     activeSignedInView = requestedView;
-    activeBrief = generateWeeklyBrief(getActiveBriefInput());
     activeChooseWithMeResult = null;
+    activeChooseWithMeRecommendationInstance = null;
+    activeChooseWithMeInteractionStatus = undefined;
     renderActiveSignedInShell();
     return;
   }
@@ -307,24 +377,18 @@ function renderPrivateWelcomeOrCheckIn(): void {
 }
 
 function renderActiveSignedInShell(options: {
-  feedbackStatus?: string;
-  tryAgainStatus?: string;
-  selectedFeedbackType?: BriefFeedbackType;
-  savingFeedbackType?: BriefFeedbackType;
+  chooseWithMeInteractionStatus?: string;
 } = {}): void {
   if (!activePrivateBriefData) {
     return;
   }
 
+  const chooseWithMeInteractionStatus =
+    options.chooseWithMeInteractionStatus ?? activeChooseWithMeInteractionStatus;
+
   appRoot.innerHTML = renderSignedInShell(activePrivateBriefData, {
     activeView: activeSignedInView,
-    brief: activeBrief ?? undefined,
     chooseWithMeResult: activeChooseWithMeResult ?? undefined,
-    feedbackStatus: options.feedbackStatus,
-    tryAgainStatus: options.tryAgainStatus,
-    selectedFeedbackType: options.selectedFeedbackType,
-    savingFeedbackType: options.savingFeedbackType,
-    showDebugTrace,
     activeProfileSettingsTabId,
     ritualSearchQuery: activeRitualSearchQuery,
     selectedRitualSearchChips: activeRitualSearchChips,
@@ -333,6 +397,11 @@ function renderActiveSignedInShell(options: {
     ritualSearchPurpose: activeRitualSearchPurpose,
     ritualSearchCarrier: activeRitualSearchCarrier,
     ritualSearchTiming: activeRitualSearchTiming,
+    ritualSearchFavoritesOnly: activeRitualSearchFavoritesOnly,
+    ritualFavorites: ritualFavoriteStore.listRitualFavorites(),
+    chooseWithMeRecommendationInstanceId:
+      activeChooseWithMeRecommendationInstance?.id,
+    chooseWithMeInteractionStatus,
     currentTimingWindow: getCurrentTimingWindowForSearch(),
     selectedRitualId: activeSelectedRitualId,
     manageRitualFilters: activeManageRitualFilters,
@@ -362,11 +431,11 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         if (!hasLoadedPrivateData(privateBriefData)) {
           activeSignedInState = null;
           activePrivateBriefData = null;
-          activeBrief = null;
           activeChooseWithMeResult = null;
           activeSignedInView = "this_week";
           activeProfileSettingsTabId = null;
           resetRitualSearchState();
+          resetRitualInteractionState();
           activeManageRitualFilters = { ...defaultManageRitualFilters };
           activeFirstLoginCheckIn = false;
           appRoot.innerHTML = renderAppShell({
@@ -380,8 +449,9 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         activeProfileSettingsTabId = null;
         resetRitualSearchState();
         activeManageRitualFilters = { ...defaultManageRitualFilters };
-        activeBrief = null;
         activeChooseWithMeResult = null;
+        activeChooseWithMeRecommendationInstance = null;
+        activeChooseWithMeInteractionStatus = undefined;
         activeCurrentRitualCheckIn = null;
         activeFirstLoginCheckIn = false;
         activeCheckInDraft = createInitialRitualCheckInDraft();
@@ -392,11 +462,11 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
       if (requestId === privateDataRequestId) {
         activeSignedInState = null;
         activePrivateBriefData = null;
-        activeBrief = null;
         activeChooseWithMeResult = null;
         activeSignedInView = "this_week";
         activeProfileSettingsTabId = null;
         resetRitualSearchState();
+        resetRitualInteractionState();
         activeManageRitualFilters = { ...defaultManageRitualFilters };
         activeCurrentRitualCheckIn = null;
         activeFirstLoginCheckIn = false;
@@ -422,6 +492,7 @@ function renderDevVisualQaState(): void {
   activeSignedInView = getRequestedSignedInView() ?? "this_week";
   activeProfileSettingsTabId = null;
   resetRitualSearchState();
+  resetRitualInteractionState();
   activeManageRitualFilters = { ...defaultManageRitualFilters };
   activeCurrentRitualCheckIn = null;
   activeChooseWithMeResult = null;
@@ -429,14 +500,16 @@ function renderDevVisualQaState(): void {
   activeCheckInDraft = createInitialRitualCheckInDraft();
 
   if (activeSignedInView !== "this_week") {
-    activeBrief = generateWeeklyBrief(getActiveBriefInput());
     activeChooseWithMeResult = null;
+    activeChooseWithMeRecommendationInstance = null;
+    activeChooseWithMeInteractionStatus = undefined;
     renderActiveSignedInShell();
     return;
   }
 
-  activeBrief = null;
   activeChooseWithMeResult = null;
+  activeChooseWithMeRecommendationInstance = null;
+  activeChooseWithMeInteractionStatus = undefined;
   renderPrivateWelcomeOrCheckIn();
 }
 
@@ -458,25 +531,10 @@ async function handlePrivateWelcomeDismiss(): Promise<void> {
   renderActiveCheckInShell();
 }
 
-function renderActiveBriefStatus(
-  feedbackStatus: string,
-  tryAgainStatus?: string,
-  selectedFeedbackType?: BriefFeedbackType,
-  savingFeedbackType?: BriefFeedbackType,
-): void {
-  if (!activePrivateBriefData || !activeBrief) {
-    return;
-  }
-
-  renderActiveSignedInShell({
-    feedbackStatus,
-    tryAgainStatus,
-    selectedFeedbackType,
-    savingFeedbackType,
-  });
-}
-
-function completeCheckIn(checkIn: CurrentRitualCheckIn): void {
+function createChooseWithMeRequest(
+  checkIn: CurrentRitualCheckIn,
+  excludedRitualIds: string[] = [],
+): ChooseWithMeRequest {
   const timezone =
     activePrivateBriefData?.input.timezone ?? getDefaultTimingTimezone();
   const currentDate = activePrivateBriefData?.input.currentDate ?? new Date();
@@ -500,31 +558,47 @@ function completeCheckIn(checkIn: CurrentRitualCheckIn): void {
     activePrivateBriefData?.input.computedTimingFacts ??
     getTimingFactsForDate(currentDate, { timezone });
 
+  return {
+    timeScope: checkIn.timeScope,
+    energyCapacity: checkIn.energyCapacity,
+    capacityMode: checkIn.capacityMode,
+    audience: checkIn.audience,
+    carrier: checkIn.carrier ?? null,
+    purpose: checkIn.purpose ?? null,
+    refinement: checkIn.refinement ?? null,
+    freeTextIntent: checkIn.ritualFocusText ?? null,
+    excludedRitualIds,
+    timingContext: {
+      timingFacts: activePrivateBriefData?.input.timingFacts,
+      timingFactDetails: activePrivateBriefData?.input.timingFactDetails,
+      computedTimingFacts,
+      timingWindowCandidates,
+      timingWindowCandidateIds: checkIn.timingWindowCandidateIds,
+      selectedTimingWindow,
+    },
+  };
+}
+
+function chooseRitualForActiveCheckIn(
+  checkIn: CurrentRitualCheckIn,
+): ChooseWithMeResult {
+  return chooseWithMeRitual(
+    staticRitualRepository.getRecommendationEligibleRitualsForChooseWithMe(),
+    createChooseWithMeRequest(checkIn, activeChooseWithMeExcludedRitualIds),
+  );
+}
+
+function completeCheckIn(checkIn: CurrentRitualCheckIn): void {
   activeCurrentRitualCheckIn = checkIn;
   activeSignedInView = "this_week";
   activeProfileSettingsTabId = null;
   activeFirstLoginCheckIn = false;
-  activeBrief = null;
-  activeChooseWithMeResult = chooseWithMeRitual(
-    staticRitualRepository.getRecommendationEligibleRitualsForChooseWithMe(),
-    {
-      timeScope: checkIn.timeScope,
-      energyCapacity: checkIn.energyCapacity,
-      capacityMode: checkIn.capacityMode,
-      audience: checkIn.audience,
-      carrier: checkIn.carrier ?? null,
-      purpose: checkIn.purpose ?? null,
-      refinement: checkIn.refinement ?? null,
-      freeTextIntent: checkIn.ritualFocusText ?? null,
-      timingContext: {
-        timingFacts: activePrivateBriefData?.input.timingFacts,
-        timingFactDetails: activePrivateBriefData?.input.timingFactDetails,
-        computedTimingFacts,
-        timingWindowCandidates,
-        timingWindowCandidateIds: checkIn.timingWindowCandidateIds,
-        selectedTimingWindow,
-      },
-    },
+  activeChooseWithMeExcludedRitualIds = [];
+  activeChooseWithMeInteractionStatus = undefined;
+  activeChooseWithMeResult = chooseRitualForActiveCheckIn(checkIn);
+  activeChooseWithMeRecommendationInstance = createRecommendationInstanceForResult(
+    checkIn,
+    activeChooseWithMeResult,
   );
   renderActiveSignedInShell();
 }
@@ -942,78 +1016,6 @@ async function handleProfileTuningSubmit(form: HTMLFormElement): Promise<void> {
   }
 }
 
-async function saveActiveBriefFeedback(
-  feedbackType: BriefFeedbackType,
-): Promise<void> {
-  if (!firebaseServices || !activeSignedInState || !activePrivateBriefData || !activeBrief) {
-    throw new Error("Sign in and load a brief before saving feedback.");
-  }
-
-  await saveBriefFeedback(firebaseServices.db, {
-    feedbackType,
-    brief: activeBrief,
-    userId: activeSignedInState.user.uid,
-    userEmail: activeSignedInState.user.email,
-    householdId: activePrivateBriefData.householdId,
-  });
-}
-
-async function handleFeedbackClick(feedbackType: BriefFeedbackType): Promise<void> {
-  try {
-    renderActiveBriefStatus("Saving.", undefined, feedbackType, feedbackType);
-    await saveActiveBriefFeedback(feedbackType);
-    renderActiveBriefStatus(
-      feedbackType === "good" ? "I’m very glad." : "Got it.",
-      undefined,
-      feedbackType,
-    );
-  } catch (error) {
-    renderActiveBriefStatus(
-      error instanceof Error ? error.message : "Could not save feedback.",
-    );
-  }
-}
-
-async function handleTryAgainClick(): Promise<void> {
-  const currentBrief = activeBrief;
-
-  try {
-    renderActiveBriefStatus("Saving try again.", undefined, "try_again", "try_again");
-    await saveActiveBriefFeedback("try_again");
-
-    if (!activePrivateBriefData || !currentBrief) {
-      throw new Error("Load a brief before trying again.");
-    }
-
-    const alternateBrief = generateWeeklyBrief(
-      getActiveBriefInput(currentBrief.trace.ritualPatterns),
-    );
-
-    if (
-      alternateBrief.trace.ritualPatterns[0] ===
-      currentBrief.trace.ritualPatterns[0]
-    ) {
-      renderActiveBriefStatus(
-        "Saved.",
-        "I do not have another safe option yet. Try changing capacity or practice preferences.",
-        "try_again",
-      );
-      return;
-    }
-
-    activeBrief = alternateBrief;
-    activeChooseWithMeResult = null;
-    renderActiveSignedInShell({
-      tryAgainStatus: "Here is another approved option.",
-      selectedFeedbackType: "try_again",
-    });
-  } catch (error) {
-    renderActiveBriefStatus(
-      error instanceof Error ? error.message : "Could not try again.",
-    );
-  }
-}
-
 function closeOpenOverlays(): void {
   document
     .querySelectorAll("details[data-app-menu='true'][open]")
@@ -1022,8 +1024,10 @@ function closeOpenOverlays(): void {
 
 function startCheckInOver(): void {
   clearCheckInLoadingTimeout();
-  activeBrief = null;
   activeChooseWithMeResult = null;
+  activeChooseWithMeExcludedRitualIds = [];
+  activeChooseWithMeRecommendationInstance = null;
+  activeChooseWithMeInteractionStatus = undefined;
   activeCurrentRitualCheckIn = null;
   activeCheckInDraft = createInitialRitualCheckInDraft();
   activeSignedInView = "this_week";
@@ -1037,6 +1041,194 @@ function renderSearchRituals(): void {
 
   if (activePrivateBriefData) {
     renderActiveSignedInShell();
+  }
+}
+
+function renderChooseWithMeInteractionStatus(status: string): void {
+  activeChooseWithMeInteractionStatus = status;
+  renderActiveSignedInShell({ chooseWithMeInteractionStatus: status });
+}
+
+function getRecommendationInstanceId(
+  element: HTMLElement,
+): string | undefined {
+  return element.dataset.recommendationInstanceId ||
+    activeChooseWithMeRecommendationInstance?.id;
+}
+
+function handleRitualFavoriteToggle(target: HTMLElement): void {
+  const ritualId = target.dataset.ritualFavoriteToggle;
+  const sourceSurface = target.dataset.ritualFavoriteSource;
+
+  if (!ritualId || !isRitualFavoriteSourceSurface(sourceSurface)) {
+    return;
+  }
+
+  const ritual = getRitualOrThrow(ritualId);
+  const favorite = ritualFavoriteStore.toggleRitualFavorite({
+    ritualId,
+    ritual,
+    sourceSurface,
+  });
+  const recommendationInstanceId =
+    sourceSurface === "choose_with_me"
+      ? getRecommendationInstanceId(target)
+      : undefined;
+
+  if (favorite.active) {
+    ritualInteractionStore.recordFavoriteAdded({
+      ritualId,
+      surface: sourceSurface,
+      recommendationInstanceId,
+    });
+  } else {
+    ritualInteractionStore.recordFavoriteRemoved({
+      ritualId,
+      surface: sourceSurface,
+      recommendationInstanceId,
+    });
+  }
+
+  if (sourceSurface === "choose_with_me") {
+    renderChooseWithMeInteractionStatus(
+      favorite.active ? "Saved favorite." : "Removed favorite.",
+    );
+    return;
+  }
+
+  renderSearchRituals();
+}
+
+function recordChooseWithMeFeedback(input: {
+  ritualId: string;
+  recommendationInstanceId?: string;
+  fit: RitualFeedbackFit;
+  reasons: RitualFeedbackReason[];
+  note?: string;
+}): void {
+  const recommendationInstanceId =
+    input.recommendationInstanceId ??
+    activeChooseWithMeRecommendationInstance?.id;
+
+  if (!recommendationInstanceId) {
+    throw new Error("Choose with me feedback needs a recommendation instance.");
+  }
+
+  ritualInteractionStore.recordRitualFeedback({
+    recommendationInstanceId,
+    ritualId: input.ritualId,
+    feedback: {
+      fit: input.fit,
+      reasons: input.reasons,
+      note: input.note,
+    },
+  });
+}
+
+function handleChooseWithMeFitFeedback(target: HTMLElement): void {
+  const ritualId = target.dataset.ritualId;
+
+  if (!ritualId) {
+    return;
+  }
+
+  try {
+    recordChooseWithMeFeedback({
+      ritualId,
+      recommendationInstanceId: getRecommendationInstanceId(target),
+      fit: "fit",
+      reasons: ["right_ritual"],
+    });
+    renderChooseWithMeInteractionStatus("Saved feedback.");
+  } catch (error) {
+    renderChooseWithMeInteractionStatus(
+      error instanceof Error ? error.message : "Could not save feedback.",
+    );
+  }
+}
+
+function handleChooseWithMeTryAnother(target: HTMLElement): void {
+  const ritualId = target.dataset.ritualId;
+  const recommendationInstanceId = getRecommendationInstanceId(target);
+  const checkIn = activeCurrentRitualCheckIn;
+
+  if (!ritualId || !recommendationInstanceId || !checkIn) {
+    renderChooseWithMeInteractionStatus("Could not save that request.");
+    return;
+  }
+
+  try {
+    ritualInteractionStore.recordTryAnotherRequested({
+      recommendationInstanceId,
+      ritualId,
+    });
+
+    const previousExcludedRitualIds = activeChooseWithMeExcludedRitualIds;
+    activeChooseWithMeExcludedRitualIds = [
+      ...new Set([...activeChooseWithMeExcludedRitualIds, ritualId]),
+    ];
+
+    const nextResult = chooseRitualForActiveCheckIn(checkIn);
+
+    if (
+      nextResult.status !== "selected" ||
+      nextResult.selectedRitual.id === ritualId
+    ) {
+      activeChooseWithMeExcludedRitualIds = previousExcludedRitualIds;
+      renderChooseWithMeInteractionStatus(
+        "I do not have another recommendation-ready option for those answers yet.",
+      );
+      return;
+    }
+
+    activeChooseWithMeResult = nextResult;
+    activeChooseWithMeRecommendationInstance = createRecommendationInstanceForResult(
+      checkIn,
+      nextResult,
+    );
+    activeChooseWithMeInteractionStatus = "Here is another strong option.";
+    renderActiveSignedInShell();
+  } catch (error) {
+    renderChooseWithMeInteractionStatus(
+      error instanceof Error ? error.message : "Could not save that request.",
+    );
+  }
+}
+
+function handleChooseWithMeNotQuiteFeedback(form: HTMLFormElement): void {
+  const ritualId = form.dataset.ritualId;
+  const formData = new FormData(form);
+  const reasons = formData
+    .getAll("ritualFeedbackReason")
+    .filter(isRitualFeedbackReason);
+  const hasNegativeReason = reasons.some(
+    (reason) => reason !== "more_like_this" && reason !== "right_ritual",
+  );
+  const fit: RitualFeedbackFit = hasNegativeReason
+    ? "not_fit"
+    : reasons.includes("more_like_this")
+      ? "fit"
+      : "mixed";
+  const noteValue = String(formData.get("ritualFeedbackNote") ?? "").trim();
+  const note = noteValue.length > 0 ? noteValue : undefined;
+
+  if (!ritualId) {
+    return;
+  }
+
+  try {
+    recordChooseWithMeFeedback({
+      ritualId,
+      recommendationInstanceId: getRecommendationInstanceId(form),
+      fit,
+      reasons,
+      note,
+    });
+    renderChooseWithMeInteractionStatus("Saved feedback.");
+  } catch (error) {
+    renderChooseWithMeInteractionStatus(
+      error instanceof Error ? error.message : "Could not save feedback.",
+    );
   }
 }
 
@@ -1076,7 +1268,6 @@ appRoot.addEventListener("click", (event) => {
     "[data-profile-settings-tab]",
   );
   const profileSettingsTab = profileSettingsTabTarget?.dataset.profileSettingsTab;
-  const feedbackType = target.dataset.feedbackType;
   const checkInActionTarget = target.closest<HTMLElement>("[data-check-in-action]");
   const checkInAction = checkInActionTarget?.dataset.checkInAction;
   const checkInValue = checkInActionTarget?.dataset.checkInValue;
@@ -1084,6 +1275,15 @@ appRoot.addEventListener("click", (event) => {
     "[data-ritual-search-chip]",
   );
   const ritualSearchChip = ritualSearchChipTarget?.dataset.ritualSearchChip;
+  const ritualFavoriteTarget = target.closest<HTMLElement>(
+    "[data-ritual-favorite-toggle]",
+  );
+  const ritualFeedbackFitTarget = target.closest<HTMLElement>(
+    "[data-ritual-feedback-fit]",
+  );
+  const ritualTryAnotherTarget = target.closest<HTMLElement>(
+    "[data-ritual-try-another='true']",
+  );
   const ritualSelectTarget = target.closest<HTMLElement>("[data-ritual-select]");
   const ritualSelect = ritualSelectTarget?.dataset.ritualSelect;
   const manageRitualSortTarget = target.closest<HTMLElement>(
@@ -1174,7 +1374,6 @@ appRoot.addEventListener("click", (event) => {
     if (
       activePrivateBriefData &&
       menuAction === "this_week" &&
-      !activeBrief &&
       !activeChooseWithMeResult
     ) {
       renderActiveCheckInShell();
@@ -1191,9 +1390,31 @@ appRoot.addEventListener("click", (event) => {
     return;
   }
 
+  if (ritualFavoriteTarget) {
+    event.preventDefault();
+    handleRitualFavoriteToggle(ritualFavoriteTarget);
+    return;
+  }
+
+  if (ritualFeedbackFitTarget) {
+    event.preventDefault();
+    handleChooseWithMeFitFeedback(ritualFeedbackFitTarget);
+    return;
+  }
+
+  if (ritualTryAnotherTarget) {
+    event.preventDefault();
+    handleChooseWithMeTryAnother(ritualTryAnotherTarget);
+    return;
+  }
+
   if (ritualSelect) {
     event.preventDefault();
     activeSelectedRitualId = ritualSelect;
+    ritualInteractionStore.recordRitualSelected({
+      ritualId: ritualSelect,
+      surface: "search",
+    });
     renderSearchRituals();
     return;
   }
@@ -1223,16 +1444,6 @@ appRoot.addEventListener("click", (event) => {
     return;
   }
 
-  if (feedbackType && isBriefFeedbackType(feedbackType)) {
-    if (target.dataset.tryAgainAction === "true") {
-      void handleTryAgainClick();
-      return;
-    }
-
-    void handleFeedbackClick(feedbackType);
-    return;
-  }
-
   if (action === "sign-in") {
     void signInWithGoogle(firebaseServices, googleSignInMode).catch(() => {
       render({ status: "signed_out", configReady: Boolean(firebaseServices) });
@@ -1244,6 +1455,7 @@ appRoot.addEventListener("click", (event) => {
     target.closest("details[data-app-menu='true']")?.removeAttribute("open");
     activeCurrentRitualCheckIn = null;
     activeChooseWithMeResult = null;
+    resetRitualInteractionState();
     activeCheckInDraft = createInitialRitualCheckInDraft();
     void signOutOfFirebase(firebaseServices);
   }
@@ -1311,6 +1523,15 @@ appRoot.addEventListener("change", (event) => {
       document.querySelector<HTMLSelectElement>("[name='ritualSearchTiming']")
         ?.value ?? activeRitualSearchTiming,
     );
+    activeSelectedRitualId = null;
+    renderSearchRituals();
+  }
+
+  if (
+    target instanceof HTMLInputElement &&
+    target.matches("[data-ritual-search-favorites-only='true']")
+  ) {
+    activeRitualSearchFavoritesOnly = target.checked;
     activeSelectedRitualId = null;
     renderSearchRituals();
   }
@@ -1395,11 +1616,11 @@ if (devVisualQaMode) {
 
     activeSignedInState = null;
     activePrivateBriefData = null;
-    activeBrief = null;
     activeChooseWithMeResult = null;
     activeSignedInView = "this_week";
     activeProfileSettingsTabId = null;
     resetRitualSearchState();
+    resetRitualInteractionState();
     activeManageRitualFilters = { ...defaultManageRitualFilters };
     activeCurrentRitualCheckIn = null;
     activeCheckInDraft = createInitialRitualCheckInDraft();
@@ -1413,6 +1634,12 @@ appRoot.addEventListener("submit", (event) => {
   const target = event.target;
 
   if (!(target instanceof HTMLFormElement)) {
+    return;
+  }
+
+  if (target.matches("[data-ritual-feedback-form='feedback']")) {
+    event.preventDefault();
+    handleChooseWithMeNotQuiteFeedback(target);
     return;
   }
 
@@ -1440,6 +1667,8 @@ appRoot.addEventListener("submit", (event) => {
     activeRitualSearchTiming = normalizeRitualSearchTimingFilter(
       formData.get("ritualSearchTiming") ?? activeRitualSearchTiming,
     );
+    activeRitualSearchFavoritesOnly =
+      formData.get("ritualSearchFavoritesOnly") === "on";
     activeSelectedRitualId = null;
     renderSearchRituals();
   }
