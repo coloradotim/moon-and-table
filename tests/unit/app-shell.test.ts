@@ -774,7 +774,14 @@ describe("app shell rendering", () => {
     expect(html).toContain('name="ritualSearchSource"');
     expect(html).toContain('name="ritualSearchPurpose"');
     expect(html).toContain('name="ritualSearchCarrier"');
+    expect(html).toContain('name="ritualSearchCapacity"');
+    expect(html).toContain('name="ritualSearchAudience"');
+    expect(html).not.toContain('name="ritualSearchPlace"');
     expect(html).toContain('name="ritualSearchTiming"');
+    expect(html).toContain("Only a little");
+    expect(html).toContain("Enough to participate");
+    expect(html).toContain("Room for something deeper");
+    expect(html).toContain("Both of us");
     expect(html).toContain("New Moon");
     expect(html).toContain("Full Moon");
     expect(html).toContain("Spring Equinox");
@@ -987,13 +994,19 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("data-ritual-try-another");
   });
 
-  it("filters the Search rituals view by query, source, and chips", () => {
+  it("filters the Search rituals view by query, source, chips, energy, and audience", () => {
     const seedHtml = renderSearchRitualsSection({ query: "seed" });
     const tableHtml = renderSearchRitualsSection({
       selectedChips: ["table"],
     });
     const bucklandHtml = renderSearchRitualsSection({
       source: "raymond_buckland_practical_candleburning_rituals",
+    });
+    const lowEnergyHtml = renderSearchRitualsSection({
+      capacity: "only_a_little",
+    });
+    const sharedHtml = renderSearchRitualsSection({
+      audience: "both_of_us",
     });
     const emptyHtml = renderSearchRitualsSection({
       query: "no such ritual",
@@ -1006,6 +1019,10 @@ describe("app shell rendering", () => {
     expect(tableHtml).toContain("Bread on the Table");
     expect(bucklandHtml).toContain("Raymond Buckland, Practical Candleburning Rituals");
     expect(bucklandHtml).toContain("13 rituals found");
+    expect(lowEnergyHtml).toContain('<option value="only_a_little" selected>Only a little</option>');
+    expect(lowEnergyHtml).toContain("254 rituals found");
+    expect(sharedHtml).toContain('<option value="both_of_us" selected>Both of us</option>');
+    expect(sharedHtml).toContain("264 rituals found");
     expect(emptyHtml).toContain("Nothing matched that exact reach.");
   });
 
@@ -1056,6 +1073,8 @@ describe("app shell rendering", () => {
     expect(mainSource).toContain("Here is another strong option.");
     expect(mainSource).toContain("recordRitualSelected");
     expect(mainSource).toContain("data-ritual-search-favorites-only");
+    expect(mainSource).toContain("data-ritual-search-capacity");
+    expect(mainSource).toContain("data-ritual-search-audience");
     expect(mainSource).toContain('surface: "search"');
     expect(mainSource).not.toContain("handleTryAgainClick");
   });

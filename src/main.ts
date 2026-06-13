@@ -120,6 +120,8 @@ let activeRitualSearchSort: RitualSearchSort = "match";
 let activeRitualSearchSource = "all";
 let activeRitualSearchPurpose = "all";
 let activeRitualSearchCarrier = "all";
+let activeRitualSearchCapacity = "all";
+let activeRitualSearchAudience = "all";
 let activeRitualSearchTiming: RitualTimingFilter = "all";
 let activeRitualSearchFavoritesOnly = false;
 let activeSelectedRitualId: string | null = null;
@@ -138,6 +140,8 @@ function resetRitualSearchState(): void {
   activeRitualSearchSource = "all";
   activeRitualSearchPurpose = "all";
   activeRitualSearchCarrier = "all";
+  activeRitualSearchCapacity = "all";
+  activeRitualSearchAudience = "all";
   activeRitualSearchTiming = "all";
   activeRitualSearchFavoritesOnly = false;
   activeSelectedRitualId = null;
@@ -396,6 +400,8 @@ function renderActiveSignedInShell(options: {
     ritualSearchSource: activeRitualSearchSource,
     ritualSearchPurpose: activeRitualSearchPurpose,
     ritualSearchCarrier: activeRitualSearchCarrier,
+    ritualSearchCapacity: activeRitualSearchCapacity,
+    ritualSearchAudience: activeRitualSearchAudience,
     ritualSearchTiming: activeRitualSearchTiming,
     ritualSearchFavoritesOnly: activeRitualSearchFavoritesOnly,
     ritualFavorites: ritualFavoriteStore.listRitualFavorites(),
@@ -1139,7 +1145,7 @@ function handleChooseWithMeFitFeedback(target: HTMLElement): void {
       fit: "fit",
       reasons: ["right_ritual"],
     });
-    renderChooseWithMeInteractionStatus("Saved feedback.");
+    renderChooseWithMeInteractionStatus("I'm very glad.");
   } catch (error) {
     renderChooseWithMeInteractionStatus(
       error instanceof Error ? error.message : "Could not save feedback.",
@@ -1503,6 +1509,8 @@ appRoot.addEventListener("change", (event) => {
       target.matches("[data-ritual-search-source='true']") ||
       target.matches("[data-ritual-search-purpose='true']") ||
       target.matches("[data-ritual-search-carrier='true']") ||
+      target.matches("[data-ritual-search-capacity='true']") ||
+      target.matches("[data-ritual-search-audience='true']") ||
       target.matches("[data-ritual-search-timing='true']")
     )
   ) {
@@ -1519,6 +1527,12 @@ appRoot.addEventListener("change", (event) => {
     activeRitualSearchCarrier =
       document.querySelector<HTMLSelectElement>("[name='ritualSearchCarrier']")
         ?.value ?? activeRitualSearchCarrier;
+    activeRitualSearchCapacity =
+      document.querySelector<HTMLSelectElement>("[name='ritualSearchCapacity']")
+        ?.value ?? activeRitualSearchCapacity;
+    activeRitualSearchAudience =
+      document.querySelector<HTMLSelectElement>("[name='ritualSearchAudience']")
+        ?.value ?? activeRitualSearchAudience;
     activeRitualSearchTiming = normalizeRitualSearchTimingFilter(
       document.querySelector<HTMLSelectElement>("[name='ritualSearchTiming']")
         ?.value ?? activeRitualSearchTiming,
@@ -1663,6 +1677,12 @@ appRoot.addEventListener("submit", (event) => {
     );
     activeRitualSearchCarrier = String(
       formData.get("ritualSearchCarrier") ?? activeRitualSearchCarrier,
+    );
+    activeRitualSearchCapacity = String(
+      formData.get("ritualSearchCapacity") ?? activeRitualSearchCapacity,
+    );
+    activeRitualSearchAudience = String(
+      formData.get("ritualSearchAudience") ?? activeRitualSearchAudience,
     );
     activeRitualSearchTiming = normalizeRitualSearchTimingFilter(
       formData.get("ritualSearchTiming") ?? activeRitualSearchTiming,

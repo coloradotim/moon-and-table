@@ -44,6 +44,8 @@ import {
   type ManageRitualValidationFilter,
 } from "../data/rituals/manage-rituals";
 import {
+  getRitualAudienceOptions,
+  getRitualCapacityOptions,
   getRitualCarrierOptions,
   getRitualPurposeOptions,
   getRitualSourceLabels,
@@ -93,6 +95,17 @@ const profileWorksOptions = [
   { value: "seasonal", label: "Seasonal" },
 ];
 
+const ritualCapacityFilterLabels: Record<string, string> = {
+  only_a_little: "Only a little",
+  enough_to_participate: "Enough to participate",
+  room_for_something_deeper: "Room for something deeper",
+};
+
+const ritualAudienceFilterLabels: Record<string, string> = {
+  me: "Me",
+  both_of_us: "Both of us",
+};
+
 export type SignedInView =
   | "this_week"
   | "search_rituals"
@@ -113,6 +126,8 @@ export type SignedInShellOptions = {
   ritualSearchSource?: string;
   ritualSearchPurpose?: string;
   ritualSearchCarrier?: string;
+  ritualSearchCapacity?: string;
+  ritualSearchAudience?: string;
   ritualSearchTiming?: RitualTimingFilter;
   ritualSearchFavoritesOnly?: boolean;
   ritualFavorites?: RitualFavorite[];
@@ -858,6 +873,8 @@ export function renderSearchRitualsSection(options: {
   source?: string;
   purpose?: string;
   carrier?: string;
+  capacity?: string;
+  audience?: string;
   timing?: RitualTimingFilter;
   favoritesOnly?: boolean;
   favorites?: RitualFavorite[];
@@ -869,6 +886,8 @@ export function renderSearchRitualsSection(options: {
   const selectedSource = options.source ?? "all";
   const selectedPurpose = options.purpose ?? "all";
   const selectedCarrier = options.carrier ?? "all";
+  const selectedCapacity = options.capacity ?? "all";
+  const selectedAudience = options.audience ?? "all";
   const selectedTiming = options.timing === "current" && !options.currentTimingWindow
     ? "all"
     : options.timing ?? "all";
@@ -880,12 +899,16 @@ export function renderSearchRitualsSection(options: {
   const sourceOptions = getRitualSourceOptions(searchRitualLibrary);
   const purposeOptions = getRitualPurposeOptions(searchRitualLibrary);
   const carrierOptions = getRitualCarrierOptions(searchRitualLibrary);
+  const capacityOptions = getRitualCapacityOptions(searchRitualLibrary);
+  const audienceOptions = getRitualAudienceOptions(searchRitualLibrary);
   const searchedResults = searchRituals(searchRitualLibrary, {
     query,
     selectedChips,
     source: selectedSource,
     purpose: selectedPurpose,
     carrier: selectedCarrier,
+    capacity: selectedCapacity,
+    audience: selectedAudience,
     sort: selectedSort,
     timingFilter: selectedTiming,
     timingWindow: options.currentTimingWindow,
@@ -899,8 +922,18 @@ export function renderSearchRitualsSection(options: {
     selectedSource !== "all" ||
     selectedPurpose !== "all" ||
     selectedCarrier !== "all" ||
+    selectedCapacity !== "all" ||
+    selectedAudience !== "all" ||
     selectedTiming !== "all" ||
     favoritesOnly;
+  const activeRefinementCount = [
+    selectedSource !== "all",
+    selectedPurpose !== "all",
+    selectedCarrier !== "all",
+    selectedCapacity !== "all",
+    selectedAudience !== "all",
+    selectedTiming !== "all",
+  ].filter(Boolean).length;
   const selectedRitual =
     results.find((ritual) => ritual.id === options.selectedRitualId) ??
     results[0];
@@ -929,74 +962,105 @@ export function renderSearchRitualsSection(options: {
               placeholder="seed, bread, lamp, opening..."
             />
           </label>
-          <button class="ritual-search__submit" type="submit">Search</button>
         </div>
-        <div class="ritual-search__filters-row" aria-label="Search filters">
-          <label class="ritual-search__select">
-            <span>Source</span>
-            <select
-              name="ritualSearchSource"
-              form="ritual-search-form"
-              data-ritual-search-source="true"
-            >
-              ${renderSelectOption("all", "All sources", selectedSource)}
-              ${sourceOptions.map((option) =>
-                renderSelectOption(option.value, option.label, selectedSource),
-              ).join("")}
-            </select>
-          </label>
-          <label class="ritual-search__select">
-            <span>Purpose</span>
-            <select
-              name="ritualSearchPurpose"
-              form="ritual-search-form"
-              data-ritual-search-purpose="true"
-            >
-              ${renderSelectOption("all", "All purposes", selectedPurpose)}
-              ${purposeOptions.map((option) =>
-                renderSelectOption(option.value, formatRitualLabel(option.label), selectedPurpose),
-              ).join("")}
-            </select>
-          </label>
-          <label class="ritual-search__select">
-            <span>Carrier</span>
-            <select
-              name="ritualSearchCarrier"
-              form="ritual-search-form"
-              data-ritual-search-carrier="true"
-            >
-              ${renderSelectOption("all", "All carriers", selectedCarrier)}
-              ${carrierOptions.map((option) =>
-                renderSelectOption(option.value, formatRitualLabel(option.label), selectedCarrier),
-              ).join("")}
-            </select>
-          </label>
-          <label class="ritual-search__select">
-            <span>Timing</span>
-            <select
-              name="ritualSearchTiming"
-              form="ritual-search-form"
-              data-ritual-search-timing="true"
-            >
-              ${renderSelectOption("all", "Any timing", selectedTiming)}
-              ${options.currentTimingWindow
-                ? renderSelectOption("current", "This timing window", selectedTiming)
-                : ""}
-              ${ritualTimingPresetOptions.map((option) =>
-                renderSelectOption(option.value, option.label, selectedTiming),
-              ).join("")}
-            </select>
-          </label>
-          <label class="ritual-search__toggle">
-            <input
-              name="ritualSearchFavoritesOnly"
-              type="checkbox"
-              data-ritual-search-favorites-only="true"
-              ${favoritesOnly ? "checked" : ""}
-            />
-            <span>Favorites only</span>
-          </label>
-          <label class="ritual-search__select">
+        <div class="ritual-search__filter-bar" aria-label="Refine search results">
+          <details class="ritual-search__filter-menu"${activeRefinementCount > 0 ? " open" : ""}>
+            <summary>${activeRefinementCount > 0
+              ? `Filters (${activeRefinementCount})`
+              : "Filters"}</summary>
+            <div class="ritual-search__filters-row" aria-label="Search filters">
+              <label class="ritual-search__select">
+                <span>Source</span>
+                <select
+                  name="ritualSearchSource"
+                  form="ritual-search-form"
+                  data-ritual-search-source="true"
+                >
+                  ${renderSelectOption("all", "All sources", selectedSource)}
+                  ${sourceOptions.map((option) =>
+                    renderSelectOption(option.value, option.label, selectedSource),
+                  ).join("")}
+                </select>
+              </label>
+              <label class="ritual-search__select">
+                <span>Purpose</span>
+                <select
+                  name="ritualSearchPurpose"
+                  form="ritual-search-form"
+                  data-ritual-search-purpose="true"
+                >
+                  ${renderSelectOption("all", "All purposes", selectedPurpose)}
+                  ${purposeOptions.map((option) =>
+                    renderSelectOption(option.value, formatRitualLabel(option.label), selectedPurpose),
+                  ).join("")}
+                </select>
+              </label>
+              <label class="ritual-search__select">
+                <span>Carrier</span>
+                <select
+                  name="ritualSearchCarrier"
+                  form="ritual-search-form"
+                  data-ritual-search-carrier="true"
+                >
+                  ${renderSelectOption("all", "All carriers", selectedCarrier)}
+                  ${carrierOptions.map((option) =>
+                    renderSelectOption(option.value, formatRitualLabel(option.label), selectedCarrier),
+                  ).join("")}
+                </select>
+              </label>
+              <label class="ritual-search__select">
+                <span>Energy</span>
+                <select
+                  name="ritualSearchCapacity"
+                  form="ritual-search-form"
+                  data-ritual-search-capacity="true"
+                >
+                  ${renderSelectOption("all", "Any energy", selectedCapacity)}
+                  ${capacityOptions.map((option) =>
+                    renderSelectOption(
+                      option.value,
+                      ritualCapacityFilterLabels[option.label] ?? formatRitualLabel(option.label),
+                      selectedCapacity,
+                    ),
+                  ).join("")}
+                </select>
+              </label>
+              <label class="ritual-search__select">
+                <span>For</span>
+                <select
+                  name="ritualSearchAudience"
+                  form="ritual-search-form"
+                  data-ritual-search-audience="true"
+                >
+                  ${renderSelectOption("all", "Anyone", selectedAudience)}
+                  ${audienceOptions.map((option) =>
+                    renderSelectOption(
+                      option.value,
+                      ritualAudienceFilterLabels[option.label] ?? formatRitualLabel(option.label),
+                      selectedAudience,
+                    ),
+                  ).join("")}
+                </select>
+              </label>
+              <label class="ritual-search__select">
+                <span>Timing</span>
+                <select
+                  name="ritualSearchTiming"
+                  form="ritual-search-form"
+                  data-ritual-search-timing="true"
+                >
+                  ${renderSelectOption("all", "Any timing", selectedTiming)}
+                  ${options.currentTimingWindow
+                    ? renderSelectOption("current", "This timing window", selectedTiming)
+                    : ""}
+                  ${ritualTimingPresetOptions.map((option) =>
+                    renderSelectOption(option.value, option.label, selectedTiming),
+                  ).join("")}
+                </select>
+              </label>
+            </div>
+          </details>
+          <label class="ritual-search__sort-control">
             <span>Sort</span>
             <select
               name="ritualSearchSort"
@@ -1008,11 +1072,22 @@ export function renderSearchRitualsSection(options: {
               ).join("")}
             </select>
           </label>
-          <button
-            class="ritual-search__clear"
-            type="button"
-            data-ritual-search-clear="true"
-          >Clear filters</button>
+          <label class="ritual-search__favorite-chip">
+            <input
+              name="ritualSearchFavoritesOnly"
+              type="checkbox"
+              data-ritual-search-favorites-only="true"
+              ${favoritesOnly ? "checked" : ""}
+            />
+            <span>Favorites only</span>
+          </label>
+          <div class="ritual-search__clear-slot">
+            <button
+              class="ritual-search__clear"
+              type="button"
+              data-ritual-search-clear="true"
+            >Clear filters</button>
+          </div>
         </div>
       </form>
 
@@ -2106,6 +2181,8 @@ export function renderSignedInShell(
     source: options.ritualSearchSource,
     purpose: options.ritualSearchPurpose,
     carrier: options.ritualSearchCarrier,
+    capacity: options.ritualSearchCapacity,
+    audience: options.ritualSearchAudience,
     timing: options.ritualSearchTiming,
     favoritesOnly: options.ritualSearchFavoritesOnly,
     favorites: options.ritualFavorites,
