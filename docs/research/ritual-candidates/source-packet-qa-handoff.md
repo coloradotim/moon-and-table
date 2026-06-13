@@ -14,6 +14,8 @@ Scope: no-API/manual extraction workflow plus six repository-safe extraction pac
 | Madame Pamita, _The Book of Candle Magic_ | 42 | 7 | Candle method coverage, coercive/souring/direct-use labels, avoiding table/catalog over-import. |
 | Henri Gamache, _The Master Book of Candle Burning_ | 24 | 6 | Adversarial candle work labels, Psalm/sacred-text optionality, direct-use/recommendation separation. |
 | Dykes/Gibson, _Astrological Magic_ | 26 | 8 | Timing metadata, high-capacity gates, ceremonial-source transformation, element/planet/sign coverage. |
+| Tess Whitehurst, _Magical Housekeeping_ | 27 | 7 | Home clearing/blessing/protection coverage, spirit/target-linked holds, timing notes for moon and thresholds. |
+| Jennie Blonde, _Hearth and Home Witchcraft_ | 26 | 9 | Low-capacity home/kitchen/altar coverage, recipe/support separation, deity/faery optionality. |
 
 ## QA Questions To Answer
 
