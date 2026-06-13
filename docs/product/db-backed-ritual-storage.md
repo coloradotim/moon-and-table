@@ -183,6 +183,20 @@ type RitualVersionDocument = {
 };
 ```
 
+#### Content version versus current lifecycle
+
+`ritualVersions` may store a full `Ritual` snapshot for compatibility with the
+current runtime model. Lifecycle and availability fields inside that snapshot
+are historical snapshot values.
+
+Current lifecycle, availability, recommendation readiness, missing-readiness,
+and hold state are controlled by `rituals/{ritualId}.lifecycle` and explicit
+`reviewDecisions`.
+
+A promotion, hold, release, archive, rollback, or eligibility decision does not
+create a new immutable content version unless the underlying Ritual content or
+selector-relevant metadata changed.
+
 Version naming:
 
 ```text
@@ -194,16 +208,31 @@ Version numbers are monotonically increasing per Ritual. They do not encode
 status. Status can change through review decisions without rewriting the
 immutable content version.
 
-New versions are required when any of these change:
+New immutable Ritual versions are required when content or selector-relevant
+metadata changes:
 
 - presentation fields;
 - source grounding;
 - `ritualWords`;
-- recommendation metadata;
-- search metadata that affects direct selection or filtering;
-- availability flags;
+- recommendation metadata that affects selection/scoring;
+- search metadata that affects search/filtering/direct selection;
 - adaptation policy;
-- origin data.
+- origin/source identity;
+- Ritual body/content;
+- selector-relevant timing/purpose/carrier/capacity/audience metadata.
+
+New immutable Ritual versions are not required for lifecycle-only changes:
+
+- direct-use promotion;
+- recommendation promotion;
+- hold/release decisions;
+- validation snapshots;
+- review notes;
+- audit events;
+- lifecycle state changes;
+- missing-readiness changes;
+- current availability flags;
+- rollback pointer changes.
 
 Old versions remain readable. They may be archived or superseded but not
 deleted as part of normal review workflow.
@@ -539,6 +568,12 @@ That preserves the historical recommendation even if the Ritual is revised
 later. A recommendation instance should never depend on the current mutable
 `rituals/{ritualId}` pointer to explain what happened in the past.
 
+While static TypeScript remains the production runtime gate, the static runtime
+library should still expose or derive stable version identity. Favorites may
+reference `ritualId` plus `favoritedVersionId`; recommendation instances,
+feedback, and history should store `ritualId`, `versionId`, presentation
+snapshot, recommendation metadata snapshot, and selector snapshot.
+
 Search visibility remains separate from feedback. A future
 `never_recommend_this` signal can block Choose with me for a household while the
 Ritual stays findable/direct-use eligible in Search.
@@ -592,4 +627,3 @@ reviewed.
 - Should `Ritual.status` keep the current four values while DB lifecycle adds
   `held`, `rejected`, and `archived`, or should a later typed-data issue expand
   the runtime enum?
-
