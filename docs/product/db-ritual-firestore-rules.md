@@ -32,6 +32,9 @@ Authenticated clients may read only published/findable Ritual content:
 
 - `rituals/{ritualId}` is readable when the pointer is schema-compatible,
   findable, and has a `publishedVersionId`.
+- `rituals` collection queries are allowed only when constrained to
+  schema-compatible, findable Ritual pointers. Broad Ritual pointer listing is
+  denied.
 - `ritualVersions/{versionId}` is readable by exact document lookup when the
   matching Ritual pointer is findable and points at that version as published.
 
@@ -67,6 +70,8 @@ natal placements, private profile payloads, and private artifact paths.
 The emulator-backed rules tests cover:
 
 - authenticated reads of published/findable Ritual pointers and versions;
+- allowed constrained queries for findable Ritual pointers;
+- denied broad Ritual pointer and immutable version collection reads;
 - denied unauthenticated Ritual reads;
 - denied reads of unfindable Ritual pointers and versions;
 - denied client writes to canonical Ritual pointers and immutable versions;
