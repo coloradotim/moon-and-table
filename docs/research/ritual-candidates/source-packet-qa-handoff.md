@@ -1,8 +1,37 @@
 # Source Packet QA Handoff
 
-Status: `ready_for_owner_packet_review`  
+Status: `qa_reviewed_import_prep_ready_for_owner_review`
 PR: #433  
-Scope: no-API/manual extraction workflow plus six repository-safe extraction packets.
+Scope: no-API/manual extraction workflow plus eight repository-safe extraction packets.
+
+## QA Status
+
+These packets are ready for owner review as repository-safe extraction packets,
+with an import-prep manifest now added for mechanical normalization:
+
+```text
+docs/research/ritual-candidates/source-packet-import-prep-manifest.md
+```
+
+The manifest normalizes all approved candidates into runtime enum fields,
+availability decisions, timing relationships, and recommendation eligibility.
+It keeps every approved candidate findable and direct-use eligible, while
+holding only the records whose recommendation lane needs a selector gate or
+owner-review decision that the current model cannot express cleanly.
+
+Before import, the mechanical import issue should:
+
+- consume the packet prose for headline, practice, intention, question, and source grounding;
+- consume the import-prep manifest for `ritualizationType`, enum metadata, availability, timing, and recommendation eligibility;
+- assemble `whyThisFits` and `howThisWasChosenIngredients` from the manifest plus packet source-support lines;
+- preserve adult/private/explicit/spirit/target-linked/adversarial/high-capacity labels as search/review metadata, not import blockers.
+
+Import-prep result:
+
+- Approved candidates normalized: 291
+- Findable/direct-use after import: 291
+- Recommendation-eligible now: 260
+- Recommendation-held pending gate/owner decision: 31
 
 ## Packets Ready For Review
 

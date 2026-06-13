@@ -56,7 +56,7 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Review labels: hearth, deity_optional, candle, rosemary, salt, protection, low_capacity
 - Headline: Light a Candle for the House Goddess
 - Summary: A simple candle rite inviting domestic blessing, warmth, and protection into the home.
-- Practice: Choose a home surface in the kitchen, living room, hearth, or another fitting place. Set a brown candle on a dish and circle it with rosemary and salt. Light the candle and invite the domestic goddess, hearth spirit, or spirit of home to bless the house and all within it. Let the candle burn down safely or for a set time, then close the work.
+- Practice: Choose a home surface in the kitchen, living room, hearth, or another fitting place. Set a brown candle on a dish and circle it with rosemary and salt. Light the candle and invite the domestic goddess, hearth spirit, or spirit of home to bless the house and all within it. Let the candle burn down or keep it lit for a set time, then close the work.
 - Intention: I ask the home to be held in warmth and protection.
 - Question: Where did the house most want a blessing?
 
@@ -92,7 +92,7 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Recommendation constraints: deity wording optional; smoke constraints apply
 - Headline: Burn Warmth for the Hearth
 - Summary: A hearth incense ritual for calling warmth, domestic steadiness, and Hestia's presence before evening or hearth work.
-- Practice: Prepare or choose a warming incense. In the evening, light it safely near the hearth, kitchen, or chosen home center. Invite Hestia, hearth warmth, or domestic fire to fill the room. Sit with the scent for a few minutes before beginning other work or settling in. Close with thanks.
+- Practice: Prepare or choose a warming incense. In the evening, light it near the hearth, kitchen, or chosen home center. Invite Hestia, hearth warmth, or domestic fire to fill the room. Sit with the scent for a few minutes before beginning other work or settling in. Close with thanks.
 - Intention: I let warmth rise through the heart of the home.
 - Question: What did the hearth want to warm first?
 
@@ -111,7 +111,7 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Timing notes: source uses October 31 or November 1
 - Headline: Set a Place for the Ancestors
 - Summary: A meal ritual that welcomes ancestors, serves them first, and keeps memory alive through stories.
-- Practice: Prepare dinner and set an extra place for the ancestors. Place three black candles in the center of the table and light them safely. Invite ancestors of the highest good to share the meal. Serve their place first, then everyone else. During the meal, speak stories and names. Close by thanking them and clearing the place with care.
+- Practice: Prepare dinner and set an extra place for the ancestors. Place three black candles in the center of the table and light them. Invite ancestors of the highest good to share the meal. Serve their place first, then everyone else. During the meal, speak stories and names. Close by thanking them and clearing the place with care.
 - Intention: I make room at the table for those who came before.
 - Question: Which story needed a place at the meal?
 
@@ -132,7 +132,7 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Intention: I ask this porch to welcome goodwill and turn aside what cannot enter cleanly.
 - Question: What kind of welcome does this doorway need to give?
 
-### `blonde-office-productivity-charm`
+### `blonde-work-space-focus-charm`
 
 - Source location: Ch. 2, p. 62
 - Import readiness: `approved_for_mechanical_import`
@@ -143,10 +143,10 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Audience: self
 - Capacity: low
 - Review labels: office, words, focus, low_capacity
-- Headline: Clear the Desk for Good Work
+- Headline: Give the Work Space One Clear Thread
 - Summary: A short charm for making a workspace free from distraction and open to useful ideas.
 - Practice: Tidy the workspace enough to begin. Place both hands on the desk, steering wheel, table, or work surface. Speak a charm asking the space to be free from distraction and filled with good thought and action. Begin the first task immediately.
-- Intention: I ask this work space to hold focus.
+- Intention: I ask this work space to hold one clear thread.
 - Question: What first task belongs in the cleared space?
 
 ### `blonde-doorway-blessing`
@@ -180,7 +180,7 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Timing notes: source suggests new moon but allows any time
 - Headline: Light Blessings Room by Room
 - Summary: A set of quick candle charms for blessing bedrooms, kitchen, living room, and other rooms by their purpose.
-- Practice: Choose the room that needs blessing. Light a candle in a fitting color or a plain white candle. Speak a blessing that names what the room should hold: rest, nourishment, peace, welcome, focus, or protection. Let the candle burn safely for a short time, then close the blessing.
+- Practice: Choose the room that needs blessing. Light a candle in a fitting color or a plain white candle. Speak a blessing that names what the room should hold: rest, nourishment, peace, welcome, focus, or protection. Let the candle burn for a short time, then close the blessing.
 - Intention: I let each room remember its good work.
 - Question: Which room needed its purpose named?
 
@@ -370,7 +370,7 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Review labels: garden, plant, growth, low_capacity
 - Headline: Speak Growth Into the Garden
 - Summary: A plant or garden charm for encouraging growth, nourishment, and connection with the land.
-- Practice: Stand near the garden, pot, or plant. Place hands near the soil or leaves. Speak a charm for healthy growth, nourishment, and reciprocal care. Water if needed. Close by thanking the plant or garden.
+- Practice: Stand near the garden, pot, or plant. Place hands near the soil or leaves. Speak a charm for healthy growth, nourishment, and reciprocal care. Offer water if the plant needs it. Close by thanking the plant or garden.
 - Intention: I ask this green place to grow with care.
 - Question: What does this plant need from me after the charm?
 

@@ -47,7 +47,7 @@ All candidates below should be findable after import. Recommendation eligibility
 - Review labels: candle, learning, beginner, low_capacity
 - Headline: Charge One Candle and Watch
 - Summary: A simple comparison practice for feeling the difference between an untouched candle and one charged with intention.
-- Practice: Set out two small matching candles on a heat-safe dish. Leave one alone. Hold the other, breathe, and place one clear intention into it through visualization or words. Light both safely and watch how they burn. Close by noting any difference in flame, speed, wax, or feeling.
+- Practice: Set out two small matching candles on a dish. Leave one alone. Hold the other, breathe, and place one clear intention into it through visualization or words. Light both and watch how they burn. Close by noting any difference in flame, speed, wax, or feeling.
 - Intention: I learn how attention changes the candle I touch.
 - Question: What changed when one candle had been held with purpose?
 
@@ -64,7 +64,7 @@ All candidates below should be findable after import. Recommendation eligibility
 - Review labels: candle, beginner, words, low_capacity
 - Headline: Light One Clear Wish
 - Summary: A minimal candle spell using a new candle, a clear intention, spoken words, and completion.
-- Practice: Choose a new candle and a heat-safe holder. Say the wish plainly before lighting. Light the candle while speaking the intention again. Let it burn while you are awake and nearby, snuffing and relighting if needed. When complete, dispose of remains according to the direction of the work.
+- Practice: Choose a new candle and holder. Say the wish plainly before lighting. Light the candle while speaking the intention again. Let it burn while you are awake and nearby, snuffing and relighting if needed. When complete, dispose of remains according to the direction of the work.
 - Intention: I give one wish a flame and a finish.
 - Question: What became clearer once the candle was lit?
 
@@ -132,7 +132,7 @@ All candidates below should be findable after import. Recommendation eligibility
 - Review labels: candle, oil, herbs, preparation, low_capacity
 - Headline: Dress the Candle in the Right Direction
 - Summary: A candle preparation ritual using oil, herbs, and directional application.
-- Practice: Choose a candle, oil, and a very small amount of herbs that fit the intention. Rub oil upward from base to wick for drawing work or downward from wick to base for clearing work. Sprinkle herbs lightly and safely. Speak the intention while preparing the candle. Close by placing it on its tray or holder.
+- Practice: Choose a candle, oil, and a very small amount of herbs that fit the intention. Rub oil upward from base to wick for drawing work or downward from wick to base for clearing work. Sprinkle herbs lightly. Speak the intention while preparing the candle. Close by placing it on its tray or holder.
 - Intention: I prepare the candle so the work knows where to move.
 - Question: Was this a drawing-in spell or a clearing-out spell?
 
@@ -167,7 +167,7 @@ All candidates below should be findable after import. Recommendation eligibility
 - Recommendation constraints: direct-use until hidden/targeted work gates are available
 - Headline: Tuck the Petition Inside the Candle
 - Summary: A loaded-candle preparation that hides petition and supporting materials inside the wax.
-- Practice: Carve a small opening in the bottom of a pillar or suitable candle. Fold the petition and add only a tiny amount of dry material. Place the packet inside and seal it with wax. Dress the candle lightly. Burn safely on a tray, never leaving it unattended.
+- Practice: Carve a small opening in the bottom of a pillar or suitable candle. Fold the petition and add only a tiny amount of dry material. Place the packet inside and seal it with wax. Dress the candle lightly. Burn it on a tray.
 - Intention: I let the candle hold what does not need to show.
 - Question: What part of the work belonged inside?
 
@@ -202,7 +202,7 @@ All candidates below should be findable after import. Recommendation eligibility
 - Recommendation constraints: direct-use until hot-wax/high-capacity gates are available
 - Headline: Build the Taper One Dip at a Time
 - Summary: A high-capacity candle-making ritual that repeats spell words with each layer of wax.
-- Practice: Prepare wax safely and keep fire/heat precautions first. Dip the wick into wax, let the layer cool, and repeat. Speak the intention with each dip or at chosen intervals. Stop when the candle is the right size. Let it harden fully. Close by naming the candle’s purpose before storing or burning it.
+- Practice: Prepare wax and wick. Dip the wick into wax, let the layer cool, and repeat. Speak the intention with each dip or at chosen intervals. Stop when the candle is the right size. Let it harden fully. Close by naming the candle’s purpose before storing or burning it.
 - Intention: I build the spell in layers.
 - Question: What did repetition add that one action could not?
 
@@ -236,7 +236,7 @@ All candidates below should be findable after import. Recommendation eligibility
 - Review labels: candle, vigil, petition, medium_capacity
 - Headline: Fix the Vigil Before Lighting
 - Summary: A vigil-candle spell architecture using oil, herbs, symbols, petition, and safe relighting.
-- Practice: Choose a vigil candle and a petition. Poke a small number of holes around the wick, speaking the intention. Add one drop of oil to each hole and only a pinch of herbs or glitter. Mark the glass if desired. Place the petition beneath the candle. Pray or visualize over the top, light it, and snuff/relight safely until complete.
+- Practice: Choose a vigil candle and a petition. Poke a small number of holes around the wick, speaking the intention. Add one drop of oil to each hole and only a pinch of herbs or glitter. Mark the glass if desired. Place the petition beneath the candle. Pray or visualize over the top, light it, and snuff/relight until complete.
 - Intention: I prepare the vigil to hold one steady work.
 - Question: What did the vigil need before it could keep watch?
 
@@ -289,7 +289,7 @@ All candidates below should be findable after import. Recommendation eligibility
 - Recommendation constraints: direct-use until secrecy/targeted-work gates are available
 - Headline: Hide the Spell in Plain Sight
 - Summary: A low-visibility candle spell for privacy-sensitive households.
-- Practice: Choose an ordinary-looking candle that will not draw attention. Use oil rather than visible herbs if discretion matters. Hide a tiny petition beneath or inside the holder, or load it into the candle if needed. Burn only when privacy and fire safety are available. Close by putting away remains without display.
+- Practice: Choose an ordinary-looking candle that will not draw attention. Use oil rather than visible herbs if discretion matters. Hide a tiny petition beneath or inside the holder, or load it into the candle if needed. Burn only when privacy is available. Close by putting away remains without display.
 - Intention: I keep the work private without making it weaker.
 - Question: What needed privacy rather than spectacle?
 
@@ -623,7 +623,7 @@ All candidates below should be findable after import. Recommendation eligibility
 - Recommendation constraints: direct-use; do not recommend without adversarial/coercive gates and explicit user intent
 - Headline: Sour the Tie in Vinegar
 - Summary: A vinegar jar spell for souring feelings, breaking alliances, or creating separation.
-- Practice: Prepare a petition and target concerns if used. Fold the packet away while speaking the intention. Place it in vinegar and close the jar. Dress a small candle downward for banishing and burn it on the lid. Repeat on the chosen schedule. Watch for pressure in the jar and handle safely. Dispose away from home or according to the target logic of the work.
+- Practice: Prepare a petition and target concerns if used. Fold the packet away while speaking the intention. Place it in vinegar and close the jar. Dress a small candle downward for banishing and burn it on the lid. Repeat on the chosen schedule. Dispose away from home or according to the target logic of the work.
 - Intention: I make the souring explicit and contained.
 - Question: What exactly was meant to sour or separate?
 
@@ -640,7 +640,7 @@ All candidates below should be findable after import. Recommendation eligibility
 - Review labels: divination, candle, reading, medium_capacity
 - Headline: Read What the Candle Says
 - Summary: A post-lighting and post-burn ritual for reading wax, flame, smoke, soot, and burn behavior.
-- Practice: Keep the candle safely in sight. Note unusual flame, wax, smoke, soot, tunneling, pace, or breaks, after checking mundane causes first. When the candle is complete, read the remains by shape, direction, and material behavior. Record the interpretation and any practical or spiritual follow-up. Close by deciding whether the work is complete, needs support, or should be reframed.
+- Practice: Keep the candle in sight. Note unusual flame, wax, smoke, soot, tunneling, pace, or breaks. When the candle is complete, read the remains by shape, direction, and material behavior. Record the interpretation and any practical or spiritual follow-up. Close by deciding whether the work is complete, needs support, or should be reframed.
 - Intention: I listen to the candle without surrendering my judgment.
 - Question: What message repeated across flame, wax, or smoke?
 
@@ -708,7 +708,7 @@ All candidates below should be findable after import. Recommendation eligibility
 - Review labels: altar, candle, home, preparation, low_capacity
 - Headline: Make the Altar Flame-Safe First
 - Summary: A practical altar setup ritual that makes candle magic beautiful, focused, and safe.
-- Practice: Choose a side table, shelf, mantel, windowsill, or outdoor place that can be watched safely. Put a nonflammable tile, stone, or tray under the candle area. Add only objects that support the work and keep flammables away from flame. Place tools nearby. Close by naming the altar as the place where this work will happen.
+- Practice: Choose a side table, shelf, mantel, windowsill, or outdoor place. Put a tile, stone, or tray under the candle area. Add objects that support the work. Place tools nearby. Close by naming the altar as the place where this work will happen.
 - Intention: I make a place beautiful enough for magic and practical enough for fire.
 - Question: What did the altar need to become safe and alive?
 

@@ -44,7 +44,7 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Recommendation constraints: recommend for opening/clearing when capacity is at least enough to engage
 - Headline: Light the First Clear Space
 - Summary: A candle-and-drink ritual for beginning a manageable clutter clearing area without overwhelming the whole house.
-- Practice: Choose one small area that pushes you gently but does not overwhelm you. Clap around it to loosen stuck energy, then wash your hands and prepare a warm energizing drink. Hold a white candle and name yourself able to clear. Light it, hold the drink, charge it with lightness and motivation, then drink before beginning. Let the candle stay lit while you clear safely nearby.
+- Practice: Choose one small area that pushes you gently but does not overwhelm you. Clap around it to loosen stuck energy, then wash your hands and prepare a warm energizing drink. Hold a white candle and name yourself able to clear. Light it, hold the drink, charge it with lightness and motivation, then drink before beginning. Let the candle stay lit while you clear nearby.
 - Intention: I begin with one place and let the clearing gather strength.
 - Question: What became easier once the first place was chosen?
 
@@ -95,7 +95,7 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Review labels: floor_wash, harmony, cleaning, home, medium_capacity
 - Headline: Wash Harmony Into the Floor
 - Summary: A floor-wash ritual for bringing harmony and bright energy through mopping or misting.
-- Practice: Mix water with citrus scent, salt, and any chosen flower essence. Stir clockwise. Hold your hands near the wash and picture bright harmonious light entering it. Mop hard floors and mist carpets or thresholds lightly if appropriate. Close by pouring away the leftover wash and letting the house dry into its new feeling.
+- Practice: Mix water with citrus scent, salt, and any chosen flower essence. Stir clockwise. Hold your hands near the wash and picture bright harmonious light entering it. Mop hard floors and mist carpets or thresholds lightly. Close by pouring away the leftover wash and letting the house dry into its new feeling.
 - Intention: I wash harmony through the places we stand.
 - Question: Where did the house feel brighter after being washed?
 
@@ -164,7 +164,7 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Recommendation constraints: recommend only for room-for-something-deeper home clearing work
 - Headline: Clear the House Room by Room
 - Summary: A full space-clearing rite using candle, salt, clapping, smoke, mist, and personal cleansing afterward.
-- Practice: Place a white candle ringed with salt in each room. Light the candles safely, then clap around each room's edges and corners to loosen stuck energy. Open windows, move cleansing smoke through each room if appropriate, then close the windows and mist with rose water. Ring a bell or chime if using one. Let the candles burn safely for a time, dispose of the salt, then bathe or shower and eat something grounding.
+- Practice: Place a white candle ringed with salt in each room. Light the candles, then clap around each room's edges and corners to loosen stuck energy. Open windows, move cleansing smoke through each room, then close the windows and mist with rose water. Ring a bell or chime if using one. Let the candles burn for a time, dispose of the salt, then bathe or shower and eat something grounding.
 - Intention: I clear the house fully and return myself fully.
 - Question: What felt different after every room had been addressed?
 
@@ -201,7 +201,7 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Recommendation constraints: recommend only for deeper bedroom/sleep/relationship clearing
 - Headline: Clear the Bed for Rest and Love
 - Summary: A bedroom rite for clearing old patterns from the bed and restoring sleep, tenderness, and receptivity.
-- Practice: Strip and clean the bed area. Set white candles safely around the room and bring in roses or rose water. Mist or bless the bed with sweetness and clear intention. Work especially around the mattress and sleeping place, asking old patterns to leave. Close by placing a small blessed cloth or charm between mattress and box spring if used, then make the bed fresh.
+- Practice: Strip and clean the bed area. Set white candles around the room and bring in roses or rose water. Mist or bless the bed with sweetness and clear intention. Work especially around the mattress and sleeping place, asking old patterns to leave. Close by placing a small blessed cloth or charm between mattress and box spring if used, then make the bed fresh.
 - Intention: I clear the bed so rest and tenderness can return.
 - Question: What old pattern no longer belongs where we sleep?
 
@@ -237,7 +237,7 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Timing notes: source prefers between full moon and new moon, midnight if possible
 - Headline: Burn the Old Hold in the Hearth
 - Summary: A fireplace banishing rite for releasing a habit, fear, belief, memory, or situation that has held power too long.
-- Practice: During the waning half of the moon, build a safe fireplace fire. Write or draw the thing to banish on paper. Hold it, feel the weight of what it has been carrying, and name that it no longer gets to hold you. Feed it to the fire and watch it burn completely. Close by grounding and tending the ashes safely.
+- Practice: During the waning half of the moon, build a fireplace fire. Write or draw the thing to banish on paper. Hold it, feel the weight of what it has been carrying, and name that it no longer gets to hold you. Feed it to the fire and watch it burn completely. Close by grounding and tending the ashes.
 - Intention: I give the old hold to the fire and take back my space.
 - Question: What power returned when the paper burned?
 
@@ -254,7 +254,7 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Review labels: altar, spirit_optional, devotional, medium_capacity
 - Headline: Make a Small Altar That Can Listen
 - Summary: A simple altar-building ritual for inviting a household helper, deity, angel, fairy, or intention into relationship.
-- Practice: Choose a small surface and clear it. Add a cloth if desired, then place one candle, image, object, or offering that represents the helper or intention. Speak why the altar is being made. Light the candle safely for a short time or simply touch the altar. Close by thanking the presence and keeping the space tended.
+- Practice: Choose a small surface and clear it. Add a cloth if desired, then place one candle, image, object, or offering that represents the helper or intention. Speak why the altar is being made. Light the candle for a short time or simply touch the altar. Close by thanking the presence and keeping the space tended.
 - Intention: I give this relationship a clean place to stand.
 - Question: What changed when the helper had a place?
 
@@ -272,7 +272,7 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Recommendation constraints: recommend when household/hearth harmony is requested; deity language should be optional at import
 - Headline: Warm the Heart of the Home
 - Summary: A hearth invocation that asks the home's center to open, warm, and hold harmony.
-- Practice: Choose the home's hearth: fireplace, oven, mantel, or central gathering place. Set an orange or red-orange candle there with cinnamon incense if appropriate. Light both safely. Invite Hestia or the spirit of the hearth to warm the home, heal discord, and sustain the household. Let the candle burn for a while, then close with thanks.
+- Practice: Choose the home's hearth: fireplace, oven, mantel, or central gathering place. Set an orange or red-orange candle there with cinnamon incense. Light both. Invite Hestia or the spirit of the hearth to warm the home, heal discord, and sustain the household. Let the candle burn for a while, then close with thanks.
 - Intention: I ask the heart of this home to warm and open.
 - Question: Where did the house feel cold before the hearth was named?
 
@@ -380,7 +380,7 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Review labels: house_blessing, simple, low_capacity
 - Headline: Bless the House Simply
 - Summary: A quick refresher blessing for a home that needs harmony without a large ritual.
-- Practice: Tidy and do a quick cleanse. Light a simple candle or cleansing bundle if appropriate. Move through the home with one clear blessing for peace, health, harmony, and protection. Let the blessing touch each room. Close by grounding the remains or disposing of them respectfully.
+- Practice: Tidy and do a quick cleanse. Light a simple candle or cleansing bundle. Move through the home with one clear blessing for peace, health, harmony, and protection. Let the blessing touch each room. Close by grounding the remains or disposing of them respectfully.
 - Intention: I give this home a simple blessing it can hold today.
 - Question: Which room received the blessing first?
 
@@ -417,7 +417,7 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Timing notes: source prefers full moon or near full moon unless urgent
 - Headline: Guard the Door With Garlic and Yarrow
 - Summary: A home protection rite using a red candle, garlic, yarrow, and threshold placement.
-- Practice: Cleanse the home first if possible. Light a red candle safely. Prepare garlic and yarrow as the protective material. Move through doors and windows or the home boundary, placing or blessing the protection against ill wishes and unwanted influence. Return to the candle, seal the protection aloud, and extinguish it.
+- Practice: Cleanse the home first if possible. Light a red candle. Prepare garlic and yarrow as the protective material. Move through doors and windows or the home boundary, placing or blessing the protection against ill wishes and unwanted influence. Return to the candle, seal the protection aloud, and extinguish it.
 - Intention: I ask this home to admit only what can live here cleanly.
 - Question: Which threshold needed firmer protection?
 
@@ -472,7 +472,7 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Timing notes: source prefers Moon in Cancer or Libra, waxing moon, not Tuesday
 - Headline: Bring Happiness Back Through the Rooms
 - Summary: A whole-home harmony rite for old stagnant energy, chronic discord, or relationship unease in a shared home.
-- Practice: Clean the house and clear its energy first. Prepare the herbs and a warm-colored candle for each room. Anoint or bless the candles with tangerine or another bright scent. Move through the rooms, lighting the candles and asking buried discord to surface cleanly and resolve into true harmony. Let the candles burn safely for a set time.
+- Practice: Clean the house and clear its energy first. Prepare the herbs and a warm-colored candle for each room. Anoint or bless the candles with tangerine or another bright scent. Move through the rooms, lighting the candles and asking buried discord to surface cleanly and resolve into true harmony. Let the candles burn for a set time.
 - Intention: I invite true harmony, even where the house must first tell the truth.
 - Question: What old discord came up because it was ready to move?
 
@@ -491,7 +491,7 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Timing notes: source uses day after full moon
 - Headline: Send the Unwanted Guest Away
 - Summary: A target-linked banishing rite for a person who needs to leave the home after ordinary options have failed.
-- Practice: Light a candle and center yourself. Call up the cleanest part of your intention and wish the person well in a different place. Burn a copied image or name paper safely. Mix the cooled ash with pepper and garlic and place a fine line around the home boundary, doors, or windows where practical. Return to the candle, close the work, wash your hands, and clean up the remains.
+- Practice: Light a candle and center yourself. Call up the cleanest part of your intention and wish the person well in a different place. Burn a copied image or name paper. Mix the cooled ash with pepper and garlic and place a fine line around the home boundary, doors, or windows where practical. Return to the candle, close the work, wash your hands, and clean up the remains.
 - Intention: I release this person from my home and toward their own right place.
 - Question: What boundary needs ordinary follow-through after the ritual?
 
@@ -510,7 +510,7 @@ All approved candidates should be findable after import. Recommendation eligibil
 - Timing notes: source prefers after dark between full and new moon
 - Headline: Help the Spirit Leave the House
 - Summary: A spirit-banishing rite that lights each room, calls bright assistance, and opens the house after the work.
-- Practice: After dark in the waning moon, prepare a white candle for each room with angelica or a substitute. Place copal incense safely in each room. Light the candle and incense room by room, asking bright protection to remove any stuck spirits and take them to the light. Leave the house briefly if safe. Return, turn on lights, open doors/windows, run water briefly, play uplifting music, and invite protective presences to keep the space clear.
+- Practice: After dark in the waning moon, prepare a white candle for each room with angelica or a substitute. Place copal incense in each room. Light the candle and incense room by room, asking bright protection to remove any stuck spirits and take them to the light. Step outside the house for a short interval. Return, turn on lights, open doors/windows, run water briefly, play uplifting music, and invite protective presences to keep the space clear.
 - Intention: I help what is stuck leave, and I return the house to bright protection.
 - Question: What changed when the house was opened afterward?
 
