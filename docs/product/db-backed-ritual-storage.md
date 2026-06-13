@@ -512,6 +512,12 @@ or another gitignored local/admin store.
 
 ## 8. Static Export And Runtime Fallback
 
+The DB query and index checklist for the transition lives in
+`docs/product/db-ritual-query-index-checklist.md`. That checklist names the
+query shapes, denormalized pointer fields, likely composite indexes, and
+client-side query boundaries that should be reviewed before DB-backed Ritual
+reads or writes are implemented.
+
 Recommended staged migration:
 
 1. Keep `src/data/rituals/source-backed-rituals.ts` as production canonical.
@@ -596,13 +602,16 @@ Recommended follow-up order:
 
 1. Review and accept this design.
 2. Add typed DB document models and pure validators.
-3. Add DB mirror/export tooling for current static Rituals.
-4. Add read-only Manage Rituals DB parity checks.
-5. Add source pipeline import into draft `ritualVersions`.
-6. Add review decision tooling for direct-use and recommendation promotion.
-7. Add static export from promoted DB versions to TypeScript.
-8. Make Manage Rituals actionable for draft edit and review decisions.
-9. Add runtime DB read adapter only after parity, validation, fallback, and
+3. Define the DB query and index checklist before DB reads or writes.
+4. Design and test Firestore security rules for canonical content and household
+   state.
+5. Add static-to-DB mirror dry-run tooling for current static Rituals.
+6. Add deterministic static export from promoted DB versions to TypeScript.
+7. Add read-only Manage Rituals DB parity checks.
+8. Add source pipeline import into draft `ritualVersions`.
+9. Add review decision tooling for direct-use and recommendation promotion.
+10. Make Manage Rituals actionable for draft edit and review decisions.
+11. Add runtime DB read adapter only after parity, validation, fallback, and
    rollback are proven.
 
 Issues #435 and #436 can proceed after this design if they reference
