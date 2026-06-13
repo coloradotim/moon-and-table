@@ -544,6 +544,19 @@ Rollback:
 - Recommendation instances and history must keep the original `versionId` and
   presentation snapshot so rollback does not rewrite what was shown.
 
+The first mirror step is an in-memory dry run, not a Firestore write:
+
+```bash
+npm run rituals:mirror-static-to-db
+```
+
+That command generates DB-shaped Ritual pointer documents, immutable version
+documents, validation snapshots, and audit events from
+`src/data/rituals/source-backed-rituals.ts`. It reconciles static counts against
+generated DB-shaped output and reports skipped or invalid records with reasons.
+It does not read from or write to Firestore, import source packets, change
+runtime selection, or modify Ritual content.
+
 ## 9. Relationship To Favorites, Feedback, And History
 
 Favorites should target Ritual identity:
