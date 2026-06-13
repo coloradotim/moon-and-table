@@ -8,13 +8,15 @@ import {
   type RulesTestEnvironment,
 } from "@firebase/rules-unit-testing";
 import {
+  collection,
   deleteDoc,
   doc,
   getDoc,
   getDocs,
+  query,
   setDoc,
   updateDoc,
-  collection,
+  where,
 } from "firebase/firestore";
 import { afterAll, beforeAll, beforeEach, describe, it } from "vitest";
 
@@ -126,6 +128,27 @@ describe("Firestore Ritual content rules", () => {
 
     await assertSucceeds(getDoc(doc(db, "rituals/findable-ritual")));
     await assertSucceeds(getDoc(doc(db, "ritualVersions/findable-ritual__v001")));
+  });
+
+  it("allow constrained queries for findable Ritual pointers", async () => {
+    const db = memberContext().firestore();
+
+    await assertSucceeds(
+      getDocs(
+        query(
+          collection(db, "rituals"),
+          where("schemaVersion", "==", "ritual-db-v1"),
+          where("lifecycle.findable", "==", true),
+        ),
+      ),
+    );
+  });
+
+  it("deny broad Ritual pointer and version collection reads", async () => {
+    const db = memberContext().firestore();
+
+    await assertFails(getDocs(collection(db, "rituals")));
+    await assertFails(getDocs(collection(db, "ritualVersions")));
   });
 
   it("deny unauthenticated and non-findable Ritual content reads", async () => {

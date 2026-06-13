@@ -37,6 +37,12 @@ service cloud.firestore {
         && resource.data.publishedVersionId is string;
     }
 
+    function isFindableRitualPointerForQuery() {
+      return signedIn()
+        && resource.data.schemaVersion == "ritual-db-v1"
+        && resource.data.lifecycle.findable == true;
+    }
+
     function isPublishedFindableRitualVersion(versionId) {
       let pointer = get(/databases/$(database)/documents/rituals/$(resource.data.ritualId));
 
@@ -156,7 +162,8 @@ service cloud.firestore {
     }
 
     match /rituals/{ritualId} {
-      allow get, list: if isPublishedFindableRitualPointer();
+      allow get: if isPublishedFindableRitualPointer();
+      allow list: if isFindableRitualPointerForQuery();
       allow create, update, delete: if false;
 
       match /{document=**} {
