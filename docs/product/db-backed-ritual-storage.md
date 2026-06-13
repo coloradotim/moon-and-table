@@ -574,6 +574,18 @@ reference `ritualId` plus `favoritedVersionId`; recommendation instances,
 feedback, and history should store `ritualId`, `versionId`, presentation
 snapshot, recommendation metadata snapshot, and selector snapshot.
 
+The static runtime helper uses content-derived identity for now:
+
+```text
+versionId = <ritualId>__<first 12 hex characters of contentHash>
+contentHash = fnv1a128:<32 hex characters>
+```
+
+The hash is a deterministic content fingerprint over selector/content-relevant
+Ritual fields. It avoids unstable timestamps and keeps repo-backed household
+state able to point at the exact shown content while static TypeScript remains
+the production gate.
+
 Search visibility remains separate from feedback. A future
 `never_recommend_this` signal can block Choose with me for a household while the
 Ritual stays findable/direct-use eligible in Search.

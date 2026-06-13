@@ -76,7 +76,7 @@ import {
   type ManageRitualStatusFilter,
   type ManageRitualValidationFilter,
 } from "./data/rituals/manage-rituals";
-import { sourceBackedRituals } from "./data/rituals/source-backed-rituals";
+import { staticRitualRepository } from "./data/rituals/ritual-repository";
 import {
   ritualTimingPresetOptions,
   type RitualTimingFilter,
@@ -505,24 +505,27 @@ function completeCheckIn(checkIn: CurrentRitualCheckIn): void {
   activeProfileSettingsTabId = null;
   activeFirstLoginCheckIn = false;
   activeBrief = null;
-  activeChooseWithMeResult = chooseWithMeRitual(sourceBackedRituals, {
-    timeScope: checkIn.timeScope,
-    energyCapacity: checkIn.energyCapacity,
-    capacityMode: checkIn.capacityMode,
-    audience: checkIn.audience,
-    carrier: checkIn.carrier ?? null,
-    purpose: checkIn.purpose ?? null,
-    refinement: checkIn.refinement ?? null,
-    freeTextIntent: checkIn.ritualFocusText ?? null,
-    timingContext: {
-      timingFacts: activePrivateBriefData?.input.timingFacts,
-      timingFactDetails: activePrivateBriefData?.input.timingFactDetails,
-      computedTimingFacts,
-      timingWindowCandidates,
-      timingWindowCandidateIds: checkIn.timingWindowCandidateIds,
-      selectedTimingWindow,
+  activeChooseWithMeResult = chooseWithMeRitual(
+    staticRitualRepository.getRecommendationEligibleRitualsForChooseWithMe(),
+    {
+      timeScope: checkIn.timeScope,
+      energyCapacity: checkIn.energyCapacity,
+      capacityMode: checkIn.capacityMode,
+      audience: checkIn.audience,
+      carrier: checkIn.carrier ?? null,
+      purpose: checkIn.purpose ?? null,
+      refinement: checkIn.refinement ?? null,
+      freeTextIntent: checkIn.ritualFocusText ?? null,
+      timingContext: {
+        timingFacts: activePrivateBriefData?.input.timingFacts,
+        timingFactDetails: activePrivateBriefData?.input.timingFactDetails,
+        computedTimingFacts,
+        timingWindowCandidates,
+        timingWindowCandidateIds: checkIn.timingWindowCandidateIds,
+        selectedTimingWindow,
+      },
     },
-  });
+  );
   renderActiveSignedInShell();
 }
 

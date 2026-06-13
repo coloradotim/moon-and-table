@@ -39,7 +39,7 @@ import {
   type ProfileTuningProfile,
   type ProfileTuningSettings,
 } from "../lib/profile-tuning";
-import { sourceBackedRituals } from "../data/rituals/source-backed-rituals";
+import { staticRitualRepository } from "../data/rituals/ritual-repository";
 import {
   createManageRitualsViewModel,
   defaultManageRitualFilters,
@@ -1170,10 +1170,12 @@ export function renderSearchRitualsSection(options: {
   const selectedTiming = options.timing === "current" && !options.currentTimingWindow
     ? "all"
     : options.timing ?? "all";
-  const sourceOptions = getRitualSourceOptions(sourceBackedRituals);
-  const purposeOptions = getRitualPurposeOptions(sourceBackedRituals);
-  const carrierOptions = getRitualCarrierOptions(sourceBackedRituals);
-  const results = searchRituals(sourceBackedRituals, {
+  const searchRitualLibrary =
+    staticRitualRepository.getFindableDirectUseRitualsForSearch();
+  const sourceOptions = getRitualSourceOptions(searchRitualLibrary);
+  const purposeOptions = getRitualPurposeOptions(searchRitualLibrary);
+  const carrierOptions = getRitualCarrierOptions(searchRitualLibrary);
+  const results = searchRituals(searchRitualLibrary, {
     query,
     selectedChips,
     source: selectedSource,
@@ -1535,7 +1537,10 @@ function renderManageSortHeader(
 export function renderManageRitualsSection(options: {
   filters?: Partial<ManageRitualFilters>;
 } = {}): string {
-  const viewModel = createManageRitualsViewModel(sourceBackedRituals, options.filters);
+  const viewModel = createManageRitualsViewModel(
+    staticRitualRepository.getAllRitualsForManager(),
+    options.filters,
+  );
   const counts = viewModel.counts;
   const statusSummary = [
     `${viewModel.total} imported Ritual${viewModel.total === 1 ? "" : "s"}`,
