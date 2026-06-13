@@ -1,7 +1,11 @@
 import {
+  RITUAL_AUDIENCES,
+  RITUAL_CAPACITY_MODES,
   RITUAL_CARRIERS,
   RITUAL_PURPOSES,
   type Ritual,
+  type RitualAudience,
+  type RitualCapacityMode,
   type RitualCarrier,
   type RitualPurpose,
 } from "./types";
@@ -57,6 +61,8 @@ export type RitualSearchCriteria = {
   source?: string;
   purpose?: string;
   carrier?: string;
+  capacity?: string;
+  audience?: string;
   includeNonFindable?: boolean;
   includeNonDirectUse?: boolean;
   sort?: RitualSortKey;
@@ -276,6 +282,14 @@ function isRitualPurpose(value: string): value is RitualPurpose {
 
 function isRitualCarrier(value: string): value is RitualCarrier {
   return RITUAL_CARRIERS.includes(value as RitualCarrier);
+}
+
+function isRitualCapacityMode(value: string): value is RitualCapacityMode {
+  return RITUAL_CAPACITY_MODES.includes(value as RitualCapacityMode);
+}
+
+function isRitualAudience(value: string): value is RitualAudience {
+  return RITUAL_AUDIENCES.includes(value as RitualAudience);
 }
 
 function timingFactEvidence(fact: TimingFact): string[] {
@@ -568,6 +582,34 @@ export function getRitualCarrierOptions(rituals: Ritual[]): RitualSourceOption[]
     .map((value) => ({ value, label: value }));
 }
 
+export function getRitualCapacityOptions(rituals: Ritual[]): RitualSourceOption[] {
+  const values = new Set<string>();
+
+  for (const ritual of rituals.filter(isSearchEligible)) {
+    for (const capacity of ritual.recommendationMetadata.capacity.supports) {
+      values.add(capacity);
+    }
+  }
+
+  return RITUAL_CAPACITY_MODES
+    .filter((value) => values.has(value))
+    .map((value) => ({ value, label: value }));
+}
+
+export function getRitualAudienceOptions(rituals: Ritual[]): RitualSourceOption[] {
+  const values = new Set<string>();
+
+  for (const ritual of rituals.filter(isSearchEligible)) {
+    for (const audience of ritual.recommendationMetadata.audience.supports) {
+      values.add(audience);
+    }
+  }
+
+  return RITUAL_AUDIENCES
+    .filter((value) => values.has(value))
+    .map((value) => ({ value, label: value }));
+}
+
 export function getRitualSearchableValues(ritual: Ritual): string[] {
   return [
     ritual.presentation.headline,
@@ -667,6 +709,12 @@ export function searchRituals(
   const carrier = criteria.carrier && isRitualCarrier(criteria.carrier)
     ? criteria.carrier
     : "all";
+  const capacity = criteria.capacity && isRitualCapacityMode(criteria.capacity)
+    ? criteria.capacity
+    : "all";
+  const audience = criteria.audience && isRitualAudience(criteria.audience)
+    ? criteria.audience
+    : "all";
   const timingFilter = criteria.timingFilter ?? "all";
   const timingTarget = getRitualTimingSearchTarget(
     timingFilter,
@@ -707,6 +755,20 @@ export function searchRituals(
       carrier !== "all" &&
       ritual.recommendationMetadata.carriers.primary !== carrier &&
       !ritual.recommendationMetadata.carriers.secondary.includes(carrier)
+    ) {
+      return false;
+    }
+
+    if (
+      capacity !== "all" &&
+      !ritual.recommendationMetadata.capacity.supports.includes(capacity)
+    ) {
+      return false;
+    }
+
+    if (
+      audience !== "all" &&
+      !ritual.recommendationMetadata.audience.supports.includes(audience)
     ) {
       return false;
     }
