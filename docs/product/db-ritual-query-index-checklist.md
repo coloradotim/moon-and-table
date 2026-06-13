@@ -296,7 +296,8 @@ Firestore will not join household memory to Ritual content. Household state
 queries should return household records first, then the app/server should fetch
 matching Ritual pointer/version records by exact IDs.
 
-Recommended household-state collections for #457 to confirm:
+Issue #457 implements the first runtime household-state writes through these
+collections:
 
 ```text
 households/{householdId}/ritualFavorites/{ritualId}
@@ -317,34 +318,43 @@ eventType
 surface
 feedback.fit
 feedback.reasons
-createdAtIso
-updatedAtIso
+createdAt
+updatedAt
 ritualSnapshot
 presentationSnapshot
 recommendationMetadataSnapshot
 selectorSnapshot summary
 ```
 
+The current runtime adapter lives in
+`src/data/rituals/household-state-firestore.ts`. It hydrates active and inactive
+favorites, recommendation instances, and interaction events after private
+household data loads. It writes favorite active-state changes, recommendation
+instances, recommendation-shown events, direct Search selections,
+try-another requests, and recommendation feedback. Search selection remains a
+`ritual_selected` event with no `feedback`, while `try_another_requested`
+remains its own event type rather than negative feedback.
+
 Required query shapes:
 
 | View | Collection | Filters | Sort | Notes |
 | --- | --- | --- | --- | --- |
-| Active favorites | household favorites | `active == true` | `updatedAtIso desc` | Overlay onto Search/Choose surfaces. |
+| Active favorites | household favorites | `active == true` | `updatedAt desc` | Overlay onto Search/Choose surfaces. |
 | Favorite by Ritual | household favorite doc | exact `ritualId` | none | Save/unsave idempotently. |
-| Recommendation instances | household recommendation instances | optional `selectedRitualId == <id>` | `createdAtIso desc` | Historical recommendation context. |
-| Feedback by instance | household interaction events | `recommendationInstanceId == <id>`, `eventType == feedback_submitted` | `createdAtIso desc` | Fit feedback belongs to a recommendation instance. |
-| Feedback by Ritual | household interaction events | `ritualId == <id>`, `eventType == feedback_submitted` | `createdAtIso desc` | Reporting/tuning input. |
-| Try another events | household interaction events | `eventType == try_another_requested` | `createdAtIso desc` | Not negative feedback by itself. |
+| Recommendation instances | household recommendation instances | optional `selectedRitualId == <id>` | `createdAt desc` | Historical recommendation context. |
+| Feedback by instance | household interaction events | `recommendationInstanceId == <id>`, `eventType == feedback_submitted` | `createdAt desc` | Fit feedback belongs to a recommendation instance. |
+| Feedback by Ritual | household interaction events | `ritualId == <id>`, `eventType == feedback_submitted` | `createdAt desc` | Reporting/tuning input. |
+| Try another events | household interaction events | `eventType == try_another_requested` | `createdAt desc` | Not negative feedback by itself. |
 
 Likely composite indexes for collection-group or top-level variants:
 
 ```text
-ritualFavorites: householdId ASC, active ASC, updatedAtIso DESC
-recommendationInstances: householdId ASC, createdAtIso DESC
-recommendationInstances: householdId ASC, selectedRitualId ASC, createdAtIso DESC
-ritualInteractionEvents: householdId ASC, eventType ASC, createdAtIso DESC
-ritualInteractionEvents: householdId ASC, ritualId ASC, eventType ASC, createdAtIso DESC
-ritualInteractionEvents: householdId ASC, recommendationInstanceId ASC, eventType ASC, createdAtIso DESC
+ritualFavorites: householdId ASC, active ASC, updatedAt DESC
+recommendationInstances: householdId ASC, createdAt DESC
+recommendationInstances: householdId ASC, selectedRitualId ASC, createdAt DESC
+ritualInteractionEvents: householdId ASC, eventType ASC, createdAt DESC
+ritualInteractionEvents: householdId ASC, ritualId ASC, eventType ASC, createdAt DESC
+ritualInteractionEvents: householdId ASC, recommendationInstanceId ASC, eventType ASC, createdAt DESC
 ```
 
 Search selection is direct intent, not positive recommendation feedback.
