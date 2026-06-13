@@ -588,6 +588,20 @@ records can export back to equivalent static Rituals. It performs no Firestore
 reads or writes. The same parity logic should be reused by the production
 backfill step when real Firestore payloads are available.
 
+The production backfill runbook lives in
+`docs/product/ritual-db-backfill-runbook.md`. The backfill command is dry-run by
+default:
+
+```bash
+npm run rituals:backfill-static-to-db
+```
+
+It writes gitignored backup/report artifacts under
+`.moon-table-private/ritual-backfills/`. A production write requires explicit
+admin credentials and both `--write` and `--confirm-production-backfill`; it
+refuses unsafe existing-document conflicts instead of silently overwriting newer
+DB records.
+
 ## 9. Relationship To Favorites, Feedback, And History
 
 Favorites should target Ritual identity:
