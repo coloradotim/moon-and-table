@@ -15,6 +15,7 @@ These docs control the Ritual-first reset. If an older doc conflicts with them, 
 ## Current Supporting Artifacts
 
 - `docs/product/db-backed-ritual-storage.md`
+- `docs/product/db-ritual-firestore-rules.md`
 - `docs/product/db-ritual-query-index-checklist.md`
 - `docs/product/manage-rituals-workflow.md`
 - `docs/product/ritual-model-pilot-extraction-review.md`

@@ -15,6 +15,7 @@
     "scripts/**/*.ts",
     "src/**/*.ts",
     "tests/**/*.ts",
-    "vitest.config.ts"
+    "vitest.config.ts",
+    "vitest.firestore.config.ts"
   ]
 }
