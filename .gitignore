@@ -4,6 +4,9 @@ coverage/
 dist/
 playwright-report/
 test-results/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
 .env.local
 private/
 .moon-table-private/

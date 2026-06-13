@@ -30,6 +30,24 @@ service cloud.firestore {
         );
     }
 
+    function isPublishedFindableRitualPointer() {
+      return signedIn()
+        && resource.data.schemaVersion == "ritual-db-v1"
+        && resource.data.lifecycle.findable == true
+        && resource.data.publishedVersionId is string;
+    }
+
+    function isPublishedFindableRitualVersion(versionId) {
+      let pointer = get(/databases/$(database)/documents/rituals/$(resource.data.ritualId));
+
+      return signedIn()
+        && resource.data.schemaVersion == "ritual-db-v1"
+        && resource.data.versionId == versionId
+        && pointer.data.schemaVersion == "ritual-db-v1"
+        && pointer.data.lifecycle.findable == true
+        && pointer.data.publishedVersionId == versionId;
+    }
+
     function ownsPrivateDocument(documentId) {
       return ownsUserScopedDocument(documentId)
         || ownsEmailScopedDocument()
@@ -59,6 +77,41 @@ service cloud.firestore {
       return signedIn() && request.resource.data.userId == request.auth.uid;
     }
 
+    function requestHouseholdIdMatchesPath(householdId) {
+      return !("householdId" in request.resource.data)
+        || request.resource.data.householdId == householdId;
+    }
+
+    function hasNoForbiddenHouseholdStateKeys() {
+      return !request.resource.data.keys().hasAny([
+        "birthDate",
+        "birthPlace",
+        "birthTime",
+        "copiedSourceText",
+        "email",
+        "extractedSourceText",
+        "natalPlacements",
+        "ocrText",
+        "pageImage",
+        "pageImages",
+        "privateArtifactPath",
+        "privateProfile",
+        "privateSourceExcerpt",
+        "privateSourceText",
+        "rawSourceExcerpt",
+        "rawSourceText",
+        "realName",
+        "schedule",
+        "sourceExcerpt"
+      ]);
+    }
+
+    function canWriteHouseholdState(householdId) {
+      return isHouseholdMember(householdId)
+        && requestHouseholdIdMatchesPath(householdId)
+        && hasNoForbiddenHouseholdStateKeys();
+    }
+
     match /households/{householdId} {
       allow read, update, delete: if signedIn()
         && (
@@ -68,6 +121,72 @@ service cloud.firestore {
       allow create: if signedIn()
         && request.auth.uid == request.resource.data.ownerUserId
         && request.auth.uid in request.resource.data.memberUserIds;
+
+      match /ritualFavorites/{ritualId} {
+        allow read: if isHouseholdMember(householdId);
+        allow create, update: if canWriteHouseholdState(householdId)
+          && request.resource.data.ritualId == ritualId;
+        allow delete: if isHouseholdMember(householdId);
+      }
+
+      match /recommendationInstances/{recommendationInstanceId} {
+        allow read: if isHouseholdMember(householdId);
+        allow create, update: if canWriteHouseholdState(householdId)
+          && request.resource.data.id == recommendationInstanceId
+          && request.resource.data.selectedRitualId is string;
+        allow delete: if isHouseholdMember(householdId);
+      }
+
+      match /ritualInteractionEvents/{eventId} {
+        allow read: if isHouseholdMember(householdId);
+        allow create, update: if canWriteHouseholdState(householdId)
+          && request.resource.data.id == eventId
+          && request.resource.data.ritualId is string
+          && request.resource.data.eventType is string;
+        allow delete: if isHouseholdMember(householdId);
+      }
+
+      match /ritualHistory/{eventId} {
+        allow read: if isHouseholdMember(householdId);
+        allow create, update: if canWriteHouseholdState(householdId)
+          && request.resource.data.id == eventId
+          && request.resource.data.ritualId is string;
+        allow delete: if isHouseholdMember(householdId);
+      }
+    }
+
+    match /rituals/{ritualId} {
+      allow get, list: if isPublishedFindableRitualPointer();
+      allow create, update, delete: if false;
+
+      match /{document=**} {
+        allow read, write: if false;
+      }
+    }
+
+    match /ritualVersions/{versionId} {
+      allow get: if isPublishedFindableRitualVersion(versionId);
+      allow list, create, update, delete: if false;
+    }
+
+    match /sourceRuns/{sourceRunId} {
+      allow read, write: if false;
+    }
+
+    match /importBatches/{importBatchId} {
+      allow read, write: if false;
+    }
+
+    match /reviewDecisions/{decisionId} {
+      allow read, write: if false;
+    }
+
+    match /ritualValidationSnapshots/{snapshotId} {
+      allow read, write: if false;
+    }
+
+    match /ritualAuditEvents/{eventId} {
+      allow read, write: if false;
     }
 
     match /profileEmailLinks/{linkId} {
