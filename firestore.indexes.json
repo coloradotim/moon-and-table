@@ -1,0 +1,479 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "rituals",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "schemaVersion",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.findable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "sort.headlineKey",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rituals",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "schemaVersion",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.findable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.directUseEligible",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "sort.headlineKey",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rituals",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "schemaVersion",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.findable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "searchIndex.purposeKeys",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "sort.headlineKey",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rituals",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "schemaVersion",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.findable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "searchIndex.carrierKeys",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "sort.headlineKey",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rituals",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "schemaVersion",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.findable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "searchIndex.searchTokens",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "sort.headlineKey",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rituals",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "schemaVersion",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.findable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "origin.sourceIds",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "sort.headlineKey",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rituals",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "schemaVersion",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.findable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.recommendationEligible",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.recommendable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "sort.headlineKey",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rituals",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "schemaVersion",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.findable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.recommendationEligible",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.recommendable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "recommendationIndex.purposeKeys",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "sort.headlineKey",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rituals",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "schemaVersion",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.findable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.recommendationEligible",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.recommendable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "recommendationIndex.carrierKeys",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "sort.headlineKey",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rituals",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "schemaVersion",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.findable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.recommendationEligible",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.recommendable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "recommendationIndex.eligibilityCells",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "sort.headlineKey",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "rituals",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "schemaVersion",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.findable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.recommendationEligible",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lifecycle.recommendable",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "recommendationIndex.timingKeys",
+          "arrayConfig": "CONTAINS"
+        },
+        {
+          "fieldPath": "sort.headlineKey",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ritualFavorites",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ritualFavorites",
+      "queryScope": "COLLECTION_GROUP",
+      "fields": [
+        {
+          "fieldPath": "householdId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "active",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "recommendationInstances",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "recommendationInstances",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "selectedRitualId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "recommendationInstances",
+      "queryScope": "COLLECTION_GROUP",
+      "fields": [
+        {
+          "fieldPath": "householdId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "recommendationInstances",
+      "queryScope": "COLLECTION_GROUP",
+      "fields": [
+        {
+          "fieldPath": "householdId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "selectedRitualId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ritualInteractionEvents",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "eventType",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ritualInteractionEvents",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "ritualId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "eventType",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ritualInteractionEvents",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "recommendationInstanceId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "eventType",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ritualInteractionEvents",
+      "queryScope": "COLLECTION_GROUP",
+      "fields": [
+        {
+          "fieldPath": "householdId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "eventType",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ritualInteractionEvents",
+      "queryScope": "COLLECTION_GROUP",
+      "fields": [
+        {
+          "fieldPath": "householdId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "ritualId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "eventType",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "ritualInteractionEvents",
+      "queryScope": "COLLECTION_GROUP",
+      "fields": [
+        {
+          "fieldPath": "householdId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "recommendationInstanceId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "eventType",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

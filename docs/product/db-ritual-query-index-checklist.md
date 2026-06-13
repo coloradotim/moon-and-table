@@ -6,6 +6,12 @@ Scope: Architecture/design checklist only. This document does not implement
 Firestore indexes, security rules, runtime DB reads, writes, source import,
 Manage Rituals actions, selector tuning, UI changes, or Ritual content changes.
 
+Implementation note: issue #464 adds the first Firestore index declarations in
+`firestore.indexes.json` and emulator-backed smoke tests for the search,
+recommendation-candidate, and household-memory query families. Runtime DB reads,
+production writes, source import, Manage Rituals actions, selector tuning, UI
+changes, and Ritual content changes remain out of scope.
+
 This checklist preserves `docs/product/app-flow-decisions.md`: Choose with me
 uses recommendation-eligible Rituals, while I have something in mind uses
 search/direct-use/library access and must not require recommendation
@@ -159,6 +165,12 @@ rituals: validation.valid ASC, validation.generatedAtIso DESC
 rituals: review.lastDecisionType ASC, review.lastDecisionAtIso DESC
 ```
 
+Deferred in issue #464: Manage Rituals, review, validation, source/import, and
+audit queue indexes remain design-level until the corresponding admin/read-only
+DB views are implemented. The first declared index set covers user-facing
+library/search, recommendation-candidate, and household memory query shapes
+that block runtime DB read planning.
+
 If filtering by array fields such as `lifecycle.missingReadiness`,
 `origin.sourceIds`, or `review.openFlagKeys`, avoid combining multiple
 array-contains filters in one Firestore query. Use a single array filter plus a
@@ -173,30 +185,30 @@ Required query shapes:
 
 | View | Collection | Filters | Sort | Notes |
 | --- | --- | --- | --- | --- |
-| Searchable library | `rituals` | `lifecycle.findable == true` | `sort.headlineKey` | Does not require recommendation eligibility. |
-| Direct-use library | `rituals` | `lifecycle.findable == true`, `lifecycle.directUseEligible == true` | `sort.headlineKey` | Openable from the app. |
-| Purpose filter | `rituals` | `lifecycle.findable == true`, `searchIndex.purposeKeys array-contains <purpose>` | `sort.headlineKey` | Use primary plus supported purposes if available. |
-| Carrier filter | `rituals` | `lifecycle.findable == true`, `searchIndex.carrierKeys array-contains <carrier>` | `sort.headlineKey` | Use primary plus supported carriers if available. |
-| Source filter | `rituals` | `lifecycle.findable == true`, `origin.sourceIds array-contains <sourceId>` | `sort.headlineKey` | Prefer source ID over `sourceLabel`. |
-| Text-ish search | `rituals` | one `searchIndex.searchTokens array-contains <token>` | `sort.headlineKey` | Firestore is not full text; intersect/rank locally after bounded query if needed. |
+| Searchable library | `rituals` | `schemaVersion == ritual-db-v1`, `lifecycle.findable == true` | `sort.headlineKey` | Does not require recommendation eligibility. |
+| Direct-use library | `rituals` | `schemaVersion == ritual-db-v1`, `lifecycle.findable == true`, `lifecycle.directUseEligible == true` | `sort.headlineKey` | Openable from the app. |
+| Purpose filter | `rituals` | `schemaVersion == ritual-db-v1`, `lifecycle.findable == true`, `searchIndex.purposeKeys array-contains <purpose>` | `sort.headlineKey` | Use primary plus supported purposes if available. |
+| Carrier filter | `rituals` | `schemaVersion == ritual-db-v1`, `lifecycle.findable == true`, `searchIndex.carrierKeys array-contains <carrier>` | `sort.headlineKey` | Use primary plus supported carriers if available. |
+| Source filter | `rituals` | `schemaVersion == ritual-db-v1`, `lifecycle.findable == true`, `origin.sourceIds array-contains <sourceId>` | `sort.headlineKey` | Prefer source ID over `sourceLabel`. |
+| Text-ish search | `rituals` | `schemaVersion == ritual-db-v1`, one `searchIndex.searchTokens array-contains <token>` | `sort.headlineKey` | Firestore is not full text; intersect/rank locally after bounded query if needed. |
 | Favorites overlay | household state + `rituals` | active household favorites, then fetch matching Ritual pointers | favorite recency or Ritual headline | Favorites are household state, not Ritual content. |
 
 Likely composite indexes:
 
 ```text
-rituals: lifecycle.findable ASC, sort.headlineKey ASC
-rituals: lifecycle.findable ASC, lifecycle.directUseEligible ASC, sort.headlineKey ASC
-rituals: lifecycle.findable ASC, searchIndex.primaryPurpose ASC, sort.headlineKey ASC
-rituals: lifecycle.findable ASC, searchIndex.primaryCarrier ASC, sort.headlineKey ASC
+rituals: schemaVersion ASC, lifecycle.findable ASC, sort.headlineKey ASC
+rituals: schemaVersion ASC, lifecycle.findable ASC, lifecycle.directUseEligible ASC, sort.headlineKey ASC
+rituals: schemaVersion ASC, lifecycle.findable ASC, searchIndex.primaryPurpose ASC, sort.headlineKey ASC
+rituals: schemaVersion ASC, lifecycle.findable ASC, searchIndex.primaryCarrier ASC, sort.headlineKey ASC
 ```
 
 Array token searches may require indexes such as:
 
 ```text
-rituals: lifecycle.findable ASC, searchIndex.searchTokens ARRAY, sort.headlineKey ASC
-rituals: lifecycle.findable ASC, searchIndex.purposeKeys ARRAY, sort.headlineKey ASC
-rituals: lifecycle.findable ASC, searchIndex.carrierKeys ARRAY, sort.headlineKey ASC
-rituals: lifecycle.findable ASC, origin.sourceIds ARRAY, sort.headlineKey ASC
+rituals: schemaVersion ASC, lifecycle.findable ASC, searchIndex.searchTokens ARRAY, sort.headlineKey ASC
+rituals: schemaVersion ASC, lifecycle.findable ASC, searchIndex.purposeKeys ARRAY, sort.headlineKey ASC
+rituals: schemaVersion ASC, lifecycle.findable ASC, searchIndex.carrierKeys ARRAY, sort.headlineKey ASC
+rituals: schemaVersion ASC, lifecycle.findable ASC, origin.sourceIds ARRAY, sort.headlineKey ASC
 ```
 
 Do not attempt broad substring search, fuzzy ranking, source-grounding prose
@@ -212,7 +224,7 @@ Required query shapes:
 
 | View | Collection | Filters | Sort | Notes |
 | --- | --- | --- | --- | --- |
-| Candidate pool | `rituals` | `lifecycle.recommendationEligible == true`, `lifecycle.recommendable == true` | deterministic stable key | Base pool only. Selector still validates full metadata. |
+| Candidate pool | `rituals` | `schemaVersion == ritual-db-v1`, `lifecycle.findable == true`, `lifecycle.recommendationEligible == true`, `lifecycle.recommendable == true` | deterministic stable key | Base pool only. Selector still validates full metadata. |
 | Purpose lane | `rituals` | candidate pool + `recommendationIndex.purposeKeys array-contains <purpose>` | stable key | Must preserve explicit check-in purpose. |
 | Carrier lane | `rituals` | candidate pool + `recommendationIndex.carrierKeys array-contains <carrier>` | stable key | Must preserve explicit carrier when asked. |
 | Capacity/audience lane | `rituals` | candidate pool + `recommendationIndex.eligibilityCells array-contains <cell>` | stable key | Use cells when multiple dimensions are needed. |
@@ -221,11 +233,11 @@ Required query shapes:
 Likely composite indexes:
 
 ```text
-rituals: lifecycle.recommendationEligible ASC, lifecycle.recommendable ASC, sort.headlineKey ASC
-rituals: lifecycle.recommendationEligible ASC, lifecycle.recommendable ASC, recommendationIndex.purposeKeys ARRAY, sort.headlineKey ASC
-rituals: lifecycle.recommendationEligible ASC, lifecycle.recommendable ASC, recommendationIndex.carrierKeys ARRAY, sort.headlineKey ASC
-rituals: lifecycle.recommendationEligible ASC, lifecycle.recommendable ASC, recommendationIndex.eligibilityCells ARRAY, sort.headlineKey ASC
-rituals: lifecycle.recommendationEligible ASC, lifecycle.recommendable ASC, recommendationIndex.timingKeys ARRAY, sort.headlineKey ASC
+rituals: schemaVersion ASC, lifecycle.findable ASC, lifecycle.recommendationEligible ASC, lifecycle.recommendable ASC, sort.headlineKey ASC
+rituals: schemaVersion ASC, lifecycle.findable ASC, lifecycle.recommendationEligible ASC, lifecycle.recommendable ASC, recommendationIndex.purposeKeys ARRAY, sort.headlineKey ASC
+rituals: schemaVersion ASC, lifecycle.findable ASC, lifecycle.recommendationEligible ASC, lifecycle.recommendable ASC, recommendationIndex.carrierKeys ARRAY, sort.headlineKey ASC
+rituals: schemaVersion ASC, lifecycle.findable ASC, lifecycle.recommendationEligible ASC, lifecycle.recommendable ASC, recommendationIndex.eligibilityCells ARRAY, sort.headlineKey ASC
+rituals: schemaVersion ASC, lifecycle.findable ASC, lifecycle.recommendationEligible ASC, lifecycle.recommendable ASC, recommendationIndex.timingKeys ARRAY, sort.headlineKey ASC
 ```
 
 Do not rely on the pointer query alone for recommendation truth. The runtime
