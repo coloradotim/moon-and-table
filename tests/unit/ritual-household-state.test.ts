@@ -282,6 +282,74 @@ describe("Choose with me recommendation instances and events", () => {
     });
   });
 
+  it("records favorite and direct-selection interaction events without feedback", () => {
+    const store = createRecommendationEventStore([], [], {
+      now: createClock([
+        "2026-01-02T00:00:00.000Z",
+        "2026-01-03T00:00:00.000Z",
+        "2026-01-04T00:00:00.000Z",
+      ]),
+    });
+    store.createRecommendationInstance({
+      id: "recommendation_fixture",
+      createdAt: "2026-01-01T00:00:00.000Z",
+      selectedRitual: baseRitual,
+      checkInSnapshot: {},
+      selectorSnapshot: {
+        topCandidates: [
+          { ritual: baseRitual, score: 10 },
+          { ritual: secondRitual, score: 8 },
+        ],
+      },
+    });
+
+    const added = store.recordFavoriteAdded({
+      recommendationInstanceId: "recommendation_fixture",
+      ritualId: baseRitual.id,
+      surface: "choose_with_me",
+    });
+    const removed = store.recordFavoriteRemoved({
+      recommendationInstanceId: "recommendation_fixture",
+      ritualId: baseRitual.id,
+      surface: "choose_with_me",
+    });
+    const selected = store.recordRitualSelected({
+      ritualId: secondRitual.id,
+      surface: "search",
+    });
+
+    expect(added).toMatchObject({
+      ritualId: baseRitual.id,
+      eventType: "favorite_added",
+      surface: "choose_with_me",
+      createdAt: "2026-01-02T00:00:00.000Z",
+      recommendationInstanceId: "recommendation_fixture",
+    });
+    expect(removed).toMatchObject({
+      ritualId: baseRitual.id,
+      eventType: "favorite_removed",
+      surface: "choose_with_me",
+      createdAt: "2026-01-03T00:00:00.000Z",
+      recommendationInstanceId: "recommendation_fixture",
+    });
+    expect(selected).toMatchObject({
+      ritualId: secondRitual.id,
+      eventType: "ritual_selected",
+      surface: "search",
+      createdAt: "2026-01-04T00:00:00.000Z",
+    });
+    expect(added.feedback).toBeUndefined();
+    expect(removed.feedback).toBeUndefined();
+    expect(selected.feedback).toBeUndefined();
+    expect(() =>
+      store.recordFavoriteAdded({
+        recommendationInstanceId: "recommendation_fixture",
+        ritualId: secondRitual.id,
+        surface: "choose_with_me",
+      }),
+    ).toThrow(/must target selected Ritual/);
+  });
+
   it("records feedback against the selected recommendation instance only", () => {
     const store = createRecommendationEventStore([], [], {
       now: () => "2026-01-02T00:00:00.000Z",

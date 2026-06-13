@@ -24,6 +24,7 @@ export type ChooseWithMeRequest = {
   refinement?: string | null;
   freeTextIntent?: string | null;
   materialsAvailable?: string[];
+  excludedRitualIds?: string[];
   timingContext?: {
     timingFacts?: TimingFactKey[];
     timingFactDetails?: LunarTimingFact[];
@@ -916,12 +917,22 @@ export function chooseWithMeRitual(
     refinement: request.refinement ?? null,
     freeTextIntent: request.freeTextIntent ?? null,
     materialsAvailable: request.materialsAvailable ?? [],
+    excludedRitualIds: uniqueStrings(request.excludedRitualIds ?? []),
     timingContext: request.timingContext ?? {},
   };
   const exclusions: Record<string, number> = {};
   const allowedCapacities =
     allowedCapacityByMode[normalizedRequest.capacityMode];
-  const eligible = getEligibleRituals(rituals, normalizedRequest, exclusions);
+  const excludedRitualIds = new Set(normalizedRequest.excludedRitualIds);
+  const eligible = getEligibleRituals(rituals, normalizedRequest, exclusions)
+    .filter((ritual) => {
+      if (excludedRitualIds.has(ritual.id)) {
+        addExclusion(exclusions, "already_offered");
+        return false;
+      }
+
+      return true;
+    });
   const scored = eligible
     .map((ritual) => scoreRitual(ritual, normalizedRequest, allowedCapacities))
     .sort(sortScoredRituals);

@@ -1,16 +1,9 @@
-import {
-  generateWeeklyBrief,
-  type BriefExplanation,
-  type BriefSourceSummary,
-  type CapacityMode,
-  type WeeklyBrief,
-} from "../lib/generate-weekly-brief";
+import { type CapacityMode } from "../lib/generate-weekly-brief";
 import { MoonPhase } from "astronomy-engine";
 import {
   audienceOptions,
   carrierOptions,
   energyCapacityOptions,
-  getPracticeOptionsForEnergy,
   getRefinementGroupForPurpose,
   purposeOptions,
   timeScopeOptions,
@@ -18,12 +11,7 @@ import {
   type RitualCheckInEnergyCapacity,
   type RitualCheckInTimeScope,
 } from "../lib/current-ritual-check-in";
-import { ritualFocusOptions } from "../data/ritual-focus-options";
 import type { AppAuthState } from "../lib/auth";
-import {
-  BRIEF_FEEDBACK_TYPES,
-  type BriefFeedbackType,
-} from "../lib/brief-feedback";
 import {
   getMoonPhaseGlyphLabelForAngle,
   getMoonPhaseGlyphSvgForAngle,
@@ -68,18 +56,14 @@ import {
   type RitualSortKey,
 } from "../data/rituals/search-rituals";
 import type { ChooseWithMeResult } from "../data/rituals/choose-with-me-selector";
+import type {
+  RitualFavorite,
+  RitualFavoriteSourceSurface,
+  RitualFeedbackReason,
+} from "../data/rituals/household-state";
 import { RITUAL_STATUSES, type Ritual } from "../data/rituals/types";
 import type { TimingWindowCandidate } from "../lib/timing-window-candidates";
 
-const feedbackLabels: Record<BriefFeedbackType, string> = {
-  good: "This feels right.",
-  too_much: "Simpler, please",
-  too_generic: "This feels off",
-  more_like_this: "More like this",
-  not_this_style: "Not this kind of ritual",
-  skipped: "I skipped it",
-  try_again: "Give me another option",
-};
 const capacityModes: CapacityMode[] = ["pause", "low", "steady", "high"];
 const profileCapacityLabels: Record<CapacityMode, string> = {
   pause: "Barely any",
@@ -120,13 +104,7 @@ export type RitualSearchSort = RitualSortKey;
 
 export type SignedInShellOptions = {
   activeView?: SignedInView;
-  brief?: WeeklyBrief;
   chooseWithMeResult?: ChooseWithMeResult;
-  feedbackStatus?: string;
-  tryAgainStatus?: string;
-  selectedFeedbackType?: BriefFeedbackType;
-  savingFeedbackType?: BriefFeedbackType;
-  showDebugTrace?: boolean;
   activeProfileSettingsTabId?: string | null;
   ritualSearchQuery?: string;
   selectedRitualSearchChips?: string[];
@@ -136,6 +114,10 @@ export type SignedInShellOptions = {
   ritualSearchPurpose?: string;
   ritualSearchCarrier?: string;
   ritualSearchTiming?: RitualTimingFilter;
+  ritualSearchFavoritesOnly?: boolean;
+  ritualFavorites?: RitualFavorite[];
+  chooseWithMeRecommendationInstanceId?: string;
+  chooseWithMeInteractionStatus?: string;
   currentTimingWindow?: TimingWindowCandidate;
   manageRitualFilters?: Partial<ManageRitualFilters>;
 };
@@ -153,457 +135,6 @@ function getFirstName(value: string | null | undefined): string {
   const firstName = value?.trim().split(/\s+/)[0];
 
   return firstName && firstName.length > 0 ? firstName : "there";
-}
-
-function renderOptionalAddOn(value: string): string {
-  if (value.trim() === "No add-on needed.") {
-    return "";
-  }
-
-  const softenedValue = value.charAt(0).toLowerCase() + value.slice(1);
-
-  return `<p class="brief__optional">Optional: ${escapeHtml(softenedValue)}</p>`;
-}
-
-function renderBriefSignals(explanation: BriefExplanation): string {
-  if (explanation.signals.length === 0) {
-    return "";
-  }
-
-  return `
-    <section class="brief__signals" aria-label="This week's signals">
-      <h3>This week's signals</h3>
-      <ul class="brief__signal-list">
-        ${explanation.signals.map((signal) => `
-          <li class="brief__signal" data-signal-type="${escapeHtml(signal.type)}">
-            <span>${escapeHtml(signal.label)}</span>
-          </li>
-        `).join("")}
-      </ul>
-    </section>
-  `;
-}
-
-function getReasonLead(summary: string): string {
-  const sentences = summary.match(/[^.!?]+[.!?]+/g)?.map((sentence) => sentence.trim()) ?? [];
-
-  if (sentences.length === 0) {
-    return summary;
-  }
-
-  return sentences.slice(0, 2).join(" ");
-}
-
-function renderBriefReasoning(brief: WeeklyBrief): string {
-  const whyThisFits =
-    brief.explanation.whyThisFits ??
-    brief.explanation.reasoning[0]?.summary ??
-    brief.whyThis;
-
-  if (!whyThisFits) {
-    return "";
-  }
-
-  return `
-    <section class="why-this" aria-label="Why this fits">
-      <h3>Why this fits</h3>
-      <p>${escapeHtml(getReasonLead(whyThisFits))}</p>
-    </section>
-  `;
-}
-
-function getSourceKindLabel(kind: BriefSourceSummary["kind"]): string {
-  switch (kind) {
-    case "source_review":
-      return "Source review";
-    case "symbolic_card":
-      return "Symbolic card";
-    case "ritual_pattern":
-      return "Ritual pattern";
-    case "safety_guardrail":
-      return "Practical fit";
-    case "timing_fact":
-      return "Timing fact";
-  }
-}
-
-function renderBriefSources(explanation: BriefExplanation): string {
-  if (explanation.sourcesUsed.length === 0) {
-    return "";
-  }
-
-  return `
-    <section class="brief__sources" aria-label="Sources used">
-      <h3>Sources used</h3>
-      <div class="brief__source-list">
-        ${explanation.sourcesUsed.map((source) => `
-          <article class="brief__source">
-            <p class="brief__source-label">${escapeHtml(source.label)}</p>
-            <p><span>${escapeHtml(getSourceKindLabel(source.kind))}</span>${source.summary ? ` — ${escapeHtml(source.summary)}` : ""}</p>
-          </article>
-        `).join("")}
-      </div>
-    </section>
-  `;
-}
-
-function renderBriefFilterNotes(explanation: BriefExplanation): string {
-  if (explanation.filtersApplied.length === 0) {
-    return "";
-  }
-
-  return `
-    <section class="brief__filter-notes" aria-label="Fit notes">
-      <h3>Fit notes</h3>
-      ${explanation.filtersApplied.map((note) => `
-        <p><strong>${escapeHtml(note.label)}:</strong> ${escapeHtml(note.summary)}</p>
-      `).join("")}
-    </section>
-  `;
-}
-
-function renderHowThisWasChosenSections(explanation: BriefExplanation): string {
-  if (!explanation.howThisWasChosen || explanation.howThisWasChosen.length === 0) {
-    return "";
-  }
-
-  return `
-    <div class="brief__chosen-sections">
-      ${explanation.howThisWasChosen
-        .filter((section) => section.visibility !== "debug")
-        .map((section) => `
-          <section class="brief__chosen-section" aria-label="${escapeHtml(section.title)}">
-            <h3>${escapeHtml(section.title)}</h3>
-            <p>${escapeHtml(section.body)}</p>
-          </section>
-        `).join("")}
-    </div>
-  `;
-}
-
-function renderBriefChoiceDetails(explanation: BriefExplanation): string {
-  const chosenSections = renderHowThisWasChosenSections(explanation);
-  const signals = renderBriefSignals(explanation);
-  const filterNotes = renderBriefFilterNotes(explanation);
-  const sources = renderBriefSources(explanation);
-
-  if (!chosenSections && !signals && !filterNotes && !sources) {
-    return "";
-  }
-
-  return `
-    <details class="brief__choice-details" aria-label="How this was chosen">
-      <summary>How this was chosen</summary>
-      <div class="brief__choice-details-body">
-        ${chosenSections || `${signals}${filterNotes}${sources}`}
-      </div>
-    </details>
-  `;
-}
-
-function renderScoreReasons(
-  reasons: Array<{ code: string; label: string; points: number; detail?: string }>,
-): string {
-  if (reasons.length === 0) {
-    return "<li>No scoring reasons recorded.</li>";
-  }
-
-  return reasons.map((reason) => `
-    <li>
-      <span>${escapeHtml(reason.points > 0 ? `+${reason.points}` : `${reason.points}`)}</span>
-      ${escapeHtml(reason.label)}
-      ${reason.detail ? `<small>${escapeHtml(reason.detail)}</small>` : ""}
-    </li>
-  `).join("");
-}
-
-function getMeaningfulScoreReasons(
-  reasons: Array<{ code: string; label: string; points: number; detail?: string }>,
-): Array<{ code: string; label: string; points: number; detail?: string }> {
-  const lowSignalCodes = new Set([
-    "approved_pattern",
-    "capacity_fit",
-    "duration_fit",
-  ]);
-
-  return reasons
-    .filter((reason) => !lowSignalCodes.has(reason.code))
-    .sort((a, b) => {
-      if (b.points !== a.points) {
-        return b.points - a.points;
-      }
-
-      return a.label.localeCompare(b.label);
-    });
-}
-
-function renderTopReasonCodes(
-  reasons: Array<{ code: string; label: string; points: number; detail?: string }>,
-): string {
-  const meaningfulReasons = getMeaningfulScoreReasons(reasons).slice(0, 4);
-  const renderedReasons =
-    meaningfulReasons.length > 0
-      ? meaningfulReasons
-      : reasons.slice(0, 3);
-
-  return renderedReasons
-    .map((reason) =>
-      reason.points > 0
-        ? `${reason.label} (+${reason.points})`
-        : reason.label,
-    )
-    .join(" · ");
-}
-
-function getOptionLabel(
-  options: readonly { key: string; label: string }[],
-  value: string | undefined,
-): string | undefined {
-  if (!value) {
-    return undefined;
-  }
-
-  return options.find((option) => option.key === value)?.label ?? value;
-}
-
-function renderCheckInDebug(brief: WeeklyBrief): string {
-  const checkIn = brief.decision.inputs.currentRitualCheckIn;
-
-  if (!checkIn) {
-    return "<p><strong>Check-in:</strong> none</p>";
-  }
-
-  const practiceOptions = getPracticeOptionsForEnergy(checkIn.energyCapacity);
-  const practiceLabel =
-    checkIn.practiceTypeLabel ??
-    (checkIn.practiceTypeHints && checkIn.practiceTypeHints.length > 0
-      ? checkIn.practiceTypeHints.join(" · ")
-      : undefined);
-  const focusLabel =
-    checkIn.ritualFocusLabel ??
-    ritualFocusOptions.find((option) => option.key === checkIn.ritualFocusKey)?.label ??
-    checkIn.ritualFocusText;
-  const selectedPattern = brief.decision.candidates.ritualPatterns.find(
-    (candidate) => candidate.key === brief.decision.selected.ritualPatternKey,
-  );
-  const checkInReasons =
-    selectedPattern?.scoreReasons.filter((reason) =>
-      reason.code.startsWith("checkin_"),
-    ) ?? [];
-  const checkInPoints = checkInReasons.reduce(
-    (total, reason) => total + reason.points,
-    0,
-  );
-  const practiceChoice = brief.decision.inputs.practiceChoice;
-  const practiceDiagnostic = practiceChoice
-    ? `
-      <p><strong>Visible practice options:</strong> ${escapeHtml(practiceChoice.visibleOptions.map((option) => option.label).join(" · ") || "none")}</p>
-      <p><strong>Practice diagnostic:</strong> ${escapeHtml(`${practiceChoice.status}: ${practiceChoice.note}`)}</p>
-      <p><strong>Practice matches selected pattern:</strong> ${escapeHtml(practiceChoice.selectedPatternMatches.join(" · ") || "none")}</p>
-    `
-    : "";
-
-  return `
-    <div class="decision-debug__check-in">
-      <p><strong>Check-in choices</strong></p>
-      <ul>
-        <li><strong>Timing:</strong> ${escapeHtml(getOptionLabel(timeScopeOptions, checkIn.timeScope) ?? checkIn.timeScope)}</li>
-        <li><strong>Capacity:</strong> ${escapeHtml(getOptionLabel(energyCapacityOptions, checkIn.energyCapacity) ?? checkIn.energyCapacity)}</li>
-        <li><strong>Audience:</strong> ${escapeHtml(getOptionLabel(audienceOptions, checkIn.audience) ?? checkIn.audience ?? "none")}</li>
-        <li><strong>Practice:</strong> ${escapeHtml(practiceLabel ?? getOptionLabel(practiceOptions, checkIn.practiceTypeHints?.[0]) ?? "none")}</li>
-        <li><strong>Intention:</strong> ${escapeHtml(focusLabel ?? "none")}</li>
-      </ul>
-      <p><strong>Check-in contribution:</strong> ${escapeHtml(
-        checkInReasons.length > 0
-          ? `+${checkInPoints} from ${checkInReasons.map((reason) => reason.label.toLowerCase()).join(", ")}`
-          : "none recorded on the selected pattern",
-      )}</p>
-      <p><strong>Check-in influence:</strong> ${escapeHtml(brief.decision.inputs.checkInInfluences.join(" · ") || "none")}</p>
-      ${practiceDiagnostic}
-    </div>
-  `;
-}
-
-function renderTimingWindowDebug(brief: WeeklyBrief): string {
-  const timingWindow = brief.decision.inputs.selectedTimingWindow;
-
-  if (!timingWindow) {
-    return "<p><strong>Timing window:</strong> none</p>";
-  }
-
-  const scoreReasonText = timingWindow.scoreReasons
-    .map((reason) =>
-      reason.detail
-        ? `${reason.label} (+${reason.points}, ${reason.detail})`
-        : `${reason.label} (+${reason.points})`,
-    )
-    .join(" · ");
-
-  return `
-    <div class="decision-debug__timing-window">
-      <p><strong>Timing window:</strong> ${escapeHtml(timingWindow.label)} (${escapeHtml(`${timingWindow.score}`)} points)</p>
-      <p><strong>User window:</strong> ${escapeHtml(timingWindow.isStrong ? timingWindow.userWindow : "No strong timing window stood out; go whenever capacity allows.")}</p>
-      <p><strong>Starts:</strong> ${escapeHtml(timingWindow.startsAtIso)}</p>
-      <p><strong>Strength:</strong> ${escapeHtml(`${timingWindow.strength}${timingWindow.isStrong ? " / strong enough" : " / not strong enough"}`)}</p>
-      <p><strong>Why this window:</strong> ${escapeHtml(scoreReasonText || timingWindow.reasonLabels.join(" · ") || "no score reasons recorded")}</p>
-    </div>
-  `;
-}
-
-function renderNumerologyDebug(brief: WeeklyBrief): string {
-  const numerology = brief.decision.inputs.numerology;
-
-  if (!numerology) {
-    return "<p><strong>Numerology:</strong> no diagnostic recorded</p>";
-  }
-
-  return `
-    <div class="decision-debug__numerology">
-      <p><strong>Numerology:</strong> ${escapeHtml(`${numerology.status}: ${numerology.note}`)}</p>
-      <p><strong>Computed facts:</strong> ${escapeHtml(numerology.computedFactIds.join(" · ") || "none")}</p>
-      <p><strong>Eligible signals:</strong> ${escapeHtml(numerology.eligibleSignalLabels.join(" · ") || "none")}</p>
-      <p><strong>Matched signals:</strong> ${escapeHtml(numerology.matchedSignalLabels.join(" · ") || "none")}</p>
-      <p><strong>Selected signals:</strong> ${escapeHtml(numerology.selectedSignalLabels.join(" · ") || "none")}</p>
-    </div>
-  `;
-}
-
-function renderNatalContactDebug(
-  contacts: WeeklyBrief["decision"]["selected"]["natalContacts"],
-): string {
-  if (contacts.length === 0) {
-    return "<p>No selected natal contacts affected this recommendation.</p>";
-  }
-
-  return `<ol>${contacts.map((contact) => `
-    <li>
-      <strong>${escapeHtml(contact.key)}</strong>
-      <small>${escapeHtml([
-        contact.personKey,
-        contact.transitingBody,
-        contact.contactType,
-        contact.aspectType,
-        contact.natalBodyOrPoint,
-        contact.orbDegrees !== undefined ? `${contact.orbDegrees}° orb` : undefined,
-      ].filter(Boolean).join(" · "))}</small>
-      <small>${escapeHtml(contact.themeKeys.join(" · "))}</small>
-    </li>
-  `).join("")}</ol>`;
-}
-
-function renderNatalDebugStatus(brief: WeeklyBrief): string {
-  const placementCount = Object.values(
-    brief.decision.inputs.natalPlacementCounts,
-  ).reduce((total, count) => total + (count ?? 0), 0);
-  const selectedContactCount = brief.decision.selected.natalContacts.length;
-
-  if (placementCount === 0) {
-    return "No placement records loaded. Saved private profile theme cards can still affect fit, but private timing contacts require astrologyProfile.placements in Firestore.";
-  }
-
-  if (selectedContactCount === 0) {
-    return `${placementCount} placement record${placementCount === 1 ? "" : "s"} loaded and checked; none affected the selected ritual.`;
-  }
-
-  return `${placementCount} placement record${placementCount === 1 ? "" : "s"} loaded; ${selectedContactCount} ranked private timing contact${selectedContactCount === 1 ? "" : "s"} affected the selected ritual.`;
-}
-
-function renderDiagnosticExplanationDebug(brief: WeeklyBrief): string {
-  const sections = brief.explanation.diagnosticHowThisWasChosen;
-
-  if (!sections || sections.length === 0) {
-    return "<p>No diagnostic explanation sections recorded.</p>";
-  }
-
-  return `
-    <ol>
-      ${sections.map((section) => `
-        <li>
-          <strong>${escapeHtml(section.title)}</strong>
-          <small>${escapeHtml(section.kind)}</small>
-          <p>${escapeHtml(section.body)}</p>
-        </li>
-      `).join("")}
-    </ol>
-  `;
-}
-
-function renderDeveloperDecision(brief: WeeklyBrief): string {
-  const selectedPattern = brief.decision.candidates.ritualPatterns.find(
-    (candidate) => candidate.key === brief.decision.selected.ritualPatternKey,
-  );
-  const evaluatedPatterns = brief.decision.candidates.ritualPatterns.slice(0, 8);
-  const rejectedPatterns = brief.decision.rejected.ritualPatterns.slice(0, 8);
-
-  return `
-    <details class="trace decision-debug" aria-label="Developer decision record">
-      <summary>Developer decision record</summary>
-      <div class="decision-debug__grid">
-        <section>
-          <h3>Selected</h3>
-          <p><strong>Pattern:</strong> ${escapeHtml(brief.decision.selected.ritualPatternKey)}</p>
-          <p><strong>Cards:</strong> ${escapeHtml(brief.decision.selected.symbolicCardKeys.join(" · "))}</p>
-          <p><strong>Timing signals:</strong> ${escapeHtml(brief.decision.selected.timingSignalLabels.join(" · ") || "none")}</p>
-          <p><strong>Summary:</strong> ${escapeHtml(brief.decision.explanation.scoreSummary)}</p>
-        </section>
-        <section>
-          <h3>Inputs</h3>
-          <p><strong>Capacity:</strong> ${escapeHtml(brief.decision.inputs.capacityMode)} (${escapeHtml(`${brief.decision.inputs.capacityLimitMinutes}`)} min)</p>
-          <p><strong>Audience:</strong> ${escapeHtml(brief.decision.inputs.audience)}</p>
-          <p><strong>Preferred:</strong> ${escapeHtml(brief.decision.inputs.preferredRitualStyles.join(" · ") || "none")}</p>
-          <p><strong>Avoided:</strong> ${escapeHtml(brief.decision.inputs.avoidedRitualStyles.join(" · ") || "none")}</p>
-          ${renderCheckInDebug(brief)}
-          ${renderTimingWindowDebug(brief)}
-          ${renderNumerologyDebug(brief)}
-          <p><strong>Natal profiles:</strong> ${escapeHtml(`${brief.decision.inputs.privateNatalProfileCount}`)} loaded</p>
-          <p><strong>Natal contacts:</strong> ${escapeHtml(`${brief.decision.inputs.natalContactsComputed}`)} computed</p>
-          <p><strong>Private chart status:</strong> ${escapeHtml(renderNatalDebugStatus(brief))}</p>
-        </section>
-      </div>
-      ${selectedPattern ? `
-      <section class="decision-debug__section">
-        <h3>Selected score reasons</h3>
-        <ul>${renderScoreReasons(selectedPattern.scoreReasons)}</ul>
-      </section>
-      ` : ""}
-      <section class="decision-debug__section">
-        <h3>Diagnostic explanation</h3>
-        ${renderDiagnosticExplanationDebug(brief)}
-      </section>
-      <section class="decision-debug__section">
-        <h3>Evaluated ritual patterns</h3>
-        <ol>
-          ${evaluatedPatterns.map((candidate) => `
-            <li>
-              <strong>${escapeHtml(candidate.key)}</strong>
-              <span>${escapeHtml(`${candidate.score}`)} points</span>
-              <small>${escapeHtml(renderTopReasonCodes(candidate.scoreReasons) || "no meaningful score reasons")}</small>
-            </li>
-          `).join("")}
-        </ol>
-      </section>
-      <section class="decision-debug__section">
-        <h3>Rejected ritual patterns</h3>
-        ${rejectedPatterns.length > 0
-          ? `<ol>${rejectedPatterns.map((candidate) => `
-              <li>
-                <strong>${escapeHtml(candidate.key)}</strong>
-                <small>${escapeHtml(candidate.reasons.map((reason) => reason.code).join(", "))}</small>
-              </li>
-            `).join("")}</ol>`
-          : "<p>No rejected ritual patterns recorded.</p>"
-        }
-      </section>
-      <section class="decision-debug__section">
-        <h3>Selected natal contacts</h3>
-        ${renderNatalContactDebug(brief.decision.selected.natalContacts)}
-      </section>
-      <section class="decision-debug__section">
-        <h3>Source references</h3>
-        <p>${escapeHtml(brief.decision.selected.sourceReferences.join(" · "))}</p>
-      </section>
-    </details>
-  `;
 }
 
 function renderMoonGlyph(
@@ -638,19 +169,6 @@ function renderMoonGlyph(
       </span>
     </span>
   `;
-}
-
-function renderBriefTheme(theme: string): string {
-  const sentences = theme.match(/[^.!?]+[.!?]+/g)?.map((sentence) => sentence.trim()) ?? [];
-  const shouldSplit = sentences.length === 2 && sentences.join(" ") === theme.trim();
-
-  if (!shouldSplit) {
-    return escapeHtml(theme);
-  }
-
-  return sentences
-    .map((sentence) => `<span class="brief__theme-line">${escapeHtml(sentence)}</span>`)
-    .join("");
 }
 
 function renderSelectOptions(
@@ -780,27 +298,6 @@ function renderAstrologyProfileContext(settings: ProfileTuningSettings): string 
   `;
 }
 
-function renderFeedbackButton(
-  type: BriefFeedbackType,
-  options: SignedInShellOptions,
-): string {
-  const isSaving = options.savingFeedbackType === type;
-  const isSelected = options.selectedFeedbackType === type || isSaving;
-  const selectedClass = isSelected ? " feedback-button--selected" : "";
-  const disabledAttribute = options.savingFeedbackType ? " disabled" : "";
-  const pressedAttribute = isSelected ? "true" : "false";
-  const label = isSaving ? "Saving" : feedbackLabels[type];
-
-  return `
-    <button
-      class="feedback-button${selectedClass}"
-      type="button"
-      data-feedback-type="${escapeHtml(type)}"
-      aria-pressed="${pressedAttribute}"${disabledAttribute}
-    >${escapeHtml(label)}</button>
-  `;
-}
-
 function renderProfileSettingsForm(profile: ProfileTuningProfile): string {
   const settings = profile.settings;
 
@@ -898,7 +395,14 @@ function formatTimingWindowDay(timingWindow: TimingWindowCandidate): string {
 
 export function renderRitualPreview(
   ritual: Ritual,
-  options: { showWhyThisFits?: boolean } = {},
+  options: {
+    showWhyThisFits?: boolean;
+    favoriteControl?: {
+      favorites?: readonly RitualFavorite[];
+      sourceSurface: RitualFavoriteSourceSurface;
+      recommendationInstanceId?: string;
+    };
+  } = {},
 ): string {
   const showWhyThisFits = options.showWhyThisFits ?? true;
   const sourceLabel = getRitualSourceLabels(ritual)[0] ?? "none";
@@ -906,8 +410,19 @@ export function renderRitualPreview(
   return `
     <article class="ritual-preview" aria-label="${escapeHtml(ritual.presentation.headline)}">
       <div class="ritual-preview__header">
-        <h2>${escapeHtml(ritual.presentation.headline)}</h2>
-        <p class="ritual-preview__intention">${escapeHtml(ritual.presentation.intention)}</p>
+        <div>
+          <h2>${escapeHtml(ritual.presentation.headline)}</h2>
+          <p class="ritual-preview__intention">${escapeHtml(ritual.presentation.intention)}</p>
+        </div>
+        ${options.favoriteControl
+          ? renderRitualFavoriteButton({
+              ritual,
+              favorites: options.favoriteControl.favorites,
+              sourceSurface: options.favoriteControl.sourceSurface,
+              recommendationInstanceId:
+                options.favoriteControl.recommendationInstanceId,
+            })
+          : ""}
       </div>
 
       <section class="ritual-preview__section" aria-label="Practice">
@@ -998,7 +513,123 @@ function renderChooseWithMeDebug(result: ChooseWithMeResult): string {
   `;
 }
 
-function renderChooseWithMeResult(result: ChooseWithMeResult): string {
+const chooseWithMeFeedbackReasons: Array<{
+  label: string;
+  value: RitualFeedbackReason;
+}> = [
+  { label: "More like this", value: "more_like_this" },
+  { label: "Wrong purpose", value: "wrong_purpose" },
+  { label: "Wrong carrier", value: "wrong_carrier" },
+  { label: "Wrong timing", value: "wrong_timing" },
+  { label: "Too much", value: "too_much" },
+  { label: "Too small", value: "too_small" },
+  { label: "Not for me/us tonight", value: "not_tonight" },
+  { label: "Too generic", value: "too_generic" },
+  { label: "Not magical enough", value: "not_magical_enough" },
+  { label: "Wording felt off", value: "wording_felt_off" },
+  { label: "Wanted more body/bedroom", value: "wanted_more_body_or_bedroom" },
+  { label: "Wanted less body/bedroom", value: "wanted_less_body_or_bedroom" },
+  { label: "Never recommend this", value: "never_recommend_this" },
+];
+
+function renderChooseWithMeFeedbackReasonChip(reason: {
+  label: string;
+  value: RitualFeedbackReason;
+}): string {
+  return `
+    <label class="choice-pill choose-result__feedback-chip">
+      <input
+        type="checkbox"
+        name="ritualFeedbackReason"
+        value="${escapeHtml(reason.value)}"
+      />
+      <span>${escapeHtml(reason.label)}</span>
+    </label>
+  `;
+}
+
+function renderChooseWithMeActions(
+  result: Extract<ChooseWithMeResult, { status: "selected" }>,
+  options: {
+    favorites?: readonly RitualFavorite[];
+    recommendationInstanceId?: string;
+    interactionStatus?: string;
+  },
+): string {
+  const recommendationInstanceAttribute = options.recommendationInstanceId
+    ? `data-recommendation-instance-id="${escapeHtml(options.recommendationInstanceId)}"`
+    : "";
+
+  return `
+    <section class="brief__actions choose-result__actions" aria-label="Ritual actions">
+      <div class="brief__closing-actions">
+        <p class="brief__actions-question">How does this feel to you?</p>
+        <div class="choose-result__primary-actions">
+          <button
+            class="quiet-action"
+            type="button"
+            data-ritual-feedback-fit="fit"
+            data-ritual-id="${escapeHtml(result.selectedRitual.id)}"
+            ${recommendationInstanceAttribute}
+          >This feels right.</button>
+          <button
+            class="quiet-action"
+            type="button"
+            data-ritual-try-another="true"
+            data-ritual-id="${escapeHtml(result.selectedRitual.id)}"
+            ${recommendationInstanceAttribute}
+          >Give me another option</button>
+          <button
+            class="quiet-action"
+            type="button"
+            data-check-in-start-over="true"
+          >I want to check in again</button>
+        </div>
+        <div class="choose-result__secondary-actions">
+          ${renderRitualFavoriteButton({
+            ritual: result.selectedRitual,
+            favorites: options.favorites,
+            sourceSurface: "choose_with_me",
+            recommendationInstanceId: options.recommendationInstanceId,
+            variant: "quiet",
+          })}
+          <details class="choose-result__feedback" aria-label="Feedback">
+            <summary>Give feedback</summary>
+            <form
+              class="choose-result__feedback-form"
+              data-ritual-feedback-form="feedback"
+              data-ritual-id="${escapeHtml(result.selectedRitual.id)}"
+              ${recommendationInstanceAttribute}
+            >
+              <div class="choose-result__feedback-chips">
+                ${chooseWithMeFeedbackReasons
+                  .map(renderChooseWithMeFeedbackReasonChip)
+                  .join("")}
+              </div>
+              <label class="choose-result__feedback-note">
+                <span>Optional note</span>
+                <textarea name="ritualFeedbackNote" rows="2"></textarea>
+              </label>
+              <button class="secondary-action" type="submit">Save feedback</button>
+            </form>
+          </details>
+        </div>
+        ${options.interactionStatus
+          ? `<p class="muted feedback__status" data-ritual-interaction-status="true">${escapeHtml(options.interactionStatus)}</p>`
+          : ""}
+      </div>
+    </section>
+  `;
+}
+
+function renderChooseWithMeResult(
+  result: ChooseWithMeResult,
+  options: {
+    favorites?: readonly RitualFavorite[];
+    recommendationInstanceId?: string;
+    interactionStatus?: string;
+  } = {},
+): string {
   if (result.status === "no_result") {
     return `
       <article class="choose-result choose-result--empty" aria-label="Chosen ritual">
@@ -1022,7 +653,16 @@ function renderChooseWithMeResult(result: ChooseWithMeResult): string {
   return `
     <article class="choose-result" aria-label="Chosen ritual">
       <section class="brief__core choose-result__intro" aria-label="Ritual summary">
-        <h2 class="brief__theme">${escapeHtml(ritual.presentation.headline)}</h2>
+        <div class="choose-result__title-row">
+          <h2 class="brief__theme">${escapeHtml(ritual.presentation.headline)}</h2>
+          ${renderRitualFavoriteButton({
+            ritual,
+            favorites: options.favorites,
+            sourceSurface: "choose_with_me",
+            recommendationInstanceId: options.recommendationInstanceId,
+            variant: "icon",
+          })}
+        </div>
         <p class="brief__practice" data-testid="recommended-ritual">${escapeHtml(ritual.presentation.intention)}</p>
       </section>
 
@@ -1041,15 +681,7 @@ function renderChooseWithMeResult(result: ChooseWithMeResult): string {
         </details>
       </section>
 
-      <section class="brief__actions" aria-label="Ritual actions">
-        <div class="brief__closing-actions">
-          <button
-            class="quiet-action"
-            type="button"
-            data-check-in-start-over="true"
-          >I want to check in again</button>
-        </div>
-      </section>
+      ${renderChooseWithMeActions(result, options)}
 
       ${renderChooseWithMeDebug(result)}
     </article>
@@ -1062,6 +694,7 @@ function renderRitualResultCard(
   options: {
     timingWindow?: TimingWindowCandidate;
     timingFilter?: RitualTimingFilter;
+    favorites?: readonly RitualFavorite[];
   } = {},
 ): string {
   const isSelected = ritual.id === selectedRitualId;
@@ -1109,14 +742,30 @@ function renderRitualResultCard(
         data-ritual-select="${escapeHtml(ritual.id)}"
         aria-current="${isSelected ? "true" : "false"}"
       >
-        <strong>${escapeHtml(ritual.presentation.headline)}</strong>
+        <span class="ritual-result-card__title-row">
+          <strong>${escapeHtml(ritual.presentation.headline)}</strong>
+          ${renderRitualFavoriteButton({
+            ritual,
+            favorites: options.favorites,
+            sourceSurface: "search",
+          })}
+        </span>
         <span>${escapeHtml(getRitualSearchSummary(ritual))}</span>
         <span class="ritual-result-card__metadata">${escapeHtml(metadata.join(" · "))}</span>
         ${timingLine ? `<span class="ritual-result-card__timing">${escapeHtml(timingLine)}</span>` : ""}
         <span class="ritual-result-card__tags">${escapeHtml(materialsAndTags.join(" · ") || "No materials listed")}</span>
       </summary>
       ${isSelected
-        ? `<div class="ritual-result-card__expanded">${renderRitualPreview(ritual, { showWhyThisFits: false })}</div>`
+        ? `<div class="ritual-result-card__expanded">${renderRitualPreview(
+            ritual,
+            {
+              showWhyThisFits: false,
+              favoriteControl: {
+                favorites: options.favorites,
+                sourceSurface: "search",
+              },
+            },
+          )}</div>`
         : ""}
     </details>
   `;
@@ -1150,6 +799,57 @@ function renderSelectOption(
   return `<option value="${escapeHtml(value)}"${selectedValue === value ? " selected" : ""}>${escapeHtml(label)}</option>`;
 }
 
+function getActiveFavoriteIds(favorites: readonly RitualFavorite[] = []): Set<string> {
+  return new Set(
+    favorites
+      .filter((favorite) => favorite.active)
+      .map((favorite) => favorite.ritualId),
+  );
+}
+
+function isRitualFavorited(
+  ritualId: string,
+  favorites: readonly RitualFavorite[] = [],
+): boolean {
+  return getActiveFavoriteIds(favorites).has(ritualId);
+}
+
+function renderRitualFavoriteButton(options: {
+  ritual: Ritual;
+  favorites?: readonly RitualFavorite[];
+  sourceSurface: RitualFavoriteSourceSurface;
+  recommendationInstanceId?: string;
+  variant?: "icon" | "quiet" | "text";
+}): string {
+  const isSaved = isRitualFavorited(options.ritual.id, options.favorites);
+  const isIcon = options.variant === "icon" || options.sourceSurface === "search";
+  const isQuiet = options.variant === "quiet";
+  const label = isIcon
+    ? isSaved ? "♥" : "♡"
+    : isSaved ? "Saved" : "Save favorite";
+  const ariaLabel = isSaved
+    ? `Remove ${options.ritual.presentation.headline} from favorites`
+    : `Save ${options.ritual.presentation.headline} as favorite`;
+
+  return `
+    <button
+      class="${isQuiet
+        ? "quiet-action ritual-favorite-button--quiet"
+        : `ritual-favorite-button${isIcon ? " ritual-favorite-button--icon" : ""}${isSaved ? " ritual-favorite-button--saved" : ""}`}"
+      type="button"
+      data-ritual-favorite-toggle="${escapeHtml(options.ritual.id)}"
+      data-ritual-favorite-source="${escapeHtml(options.sourceSurface)}"
+      data-ritual-favorite-state="${isSaved ? "saved" : "unsaved"}"
+      ${options.recommendationInstanceId
+        ? `data-recommendation-instance-id="${escapeHtml(options.recommendationInstanceId)}"`
+        : ""}
+      aria-pressed="${isSaved ? "true" : "false"}"
+      aria-label="${escapeHtml(ariaLabel)}"
+      title="${escapeHtml(isSaved ? "Saved" : "Save favorite")}"
+    >${label}</button>
+  `;
+}
+
 export function renderSearchRitualsSection(options: {
   query?: string;
   selectedChips?: string[];
@@ -1159,6 +859,8 @@ export function renderSearchRitualsSection(options: {
   purpose?: string;
   carrier?: string;
   timing?: RitualTimingFilter;
+  favoritesOnly?: boolean;
+  favorites?: RitualFavorite[];
   currentTimingWindow?: TimingWindowCandidate;
 } = {}): string {
   const query = options.query ?? "";
@@ -1170,12 +872,15 @@ export function renderSearchRitualsSection(options: {
   const selectedTiming = options.timing === "current" && !options.currentTimingWindow
     ? "all"
     : options.timing ?? "all";
+  const favorites = options.favorites ?? [];
+  const activeFavoriteIds = getActiveFavoriteIds(favorites);
+  const favoritesOnly = options.favoritesOnly ?? false;
   const searchRitualLibrary =
     staticRitualRepository.getFindableDirectUseRitualsForSearch();
   const sourceOptions = getRitualSourceOptions(searchRitualLibrary);
   const purposeOptions = getRitualPurposeOptions(searchRitualLibrary);
   const carrierOptions = getRitualCarrierOptions(searchRitualLibrary);
-  const results = searchRituals(searchRitualLibrary, {
+  const searchedResults = searchRituals(searchRitualLibrary, {
     query,
     selectedChips,
     source: selectedSource,
@@ -1185,13 +890,17 @@ export function renderSearchRitualsSection(options: {
     timingFilter: selectedTiming,
     timingWindow: options.currentTimingWindow,
   });
+  const results = favoritesOnly
+    ? searchedResults.filter((ritual) => activeFavoriteIds.has(ritual.id))
+    : searchedResults;
   const hasSearchCriteria =
     query.trim().length > 0 ||
     selectedChips.length > 0 ||
     selectedSource !== "all" ||
     selectedPurpose !== "all" ||
     selectedCarrier !== "all" ||
-    selectedTiming !== "all";
+    selectedTiming !== "all" ||
+    favoritesOnly;
   const selectedRitual =
     results.find((ritual) => ritual.id === options.selectedRitualId) ??
     results[0];
@@ -1278,6 +987,15 @@ export function renderSearchRitualsSection(options: {
               ).join("")}
             </select>
           </label>
+          <label class="ritual-search__toggle">
+            <input
+              name="ritualSearchFavoritesOnly"
+              type="checkbox"
+              data-ritual-search-favorites-only="true"
+              ${favoritesOnly ? "checked" : ""}
+            />
+            <span>Favorites only</span>
+          </label>
           <label class="ritual-search__select">
             <span>Sort</span>
             <select
@@ -1313,11 +1031,14 @@ export function renderSearchRitualsSection(options: {
               {
                 timingFilter: selectedTiming,
                 timingWindow: options.currentTimingWindow,
+                favorites,
               },
             )).join("")
             : `
               <div class="ritual-search__empty" role="status">
-                <p>Nothing matched that exact reach.</p>
+                <p>${favoritesOnly
+                  ? "No saved favorites matched that exact reach."
+                  : "Nothing matched that exact reach."}</p>
                 <p>Try one material, purpose, place, or phrase from the ritual you are reaching for.</p>
               </div>
             `}
@@ -1325,7 +1046,13 @@ export function renderSearchRitualsSection(options: {
 
         <section class="ritual-search__preview" aria-label="Selected ritual">
           ${selectedRitual
-            ? renderRitualPreview(selectedRitual, { showWhyThisFits: false })
+            ? renderRitualPreview(selectedRitual, {
+                showWhyThisFits: false,
+                favoriteControl: {
+                  favorites,
+                  sourceSurface: "search",
+                },
+              })
             : `
               <div class="ritual-search__preview-empty">
                 <p>Selected ritual</p>
@@ -2341,82 +2068,32 @@ export function renderRitualCheckInLoadingShell(): string {
   `;
 }
 
+function renderCurrentRitualEntry(
+  currentTimingWindow?: TimingWindowCandidate,
+): string {
+  return `
+    <article class="check-in check-in--embedded" aria-label="Choose a ritual">
+      <header class="check-in__header">
+        <h2>Choose a ritual</h2>
+        <p>Start with a few questions, or go straight to the library.</p>
+      </header>
+      ${renderRitualEntryPaths(currentTimingWindow)}
+    </article>
+  `;
+}
+
 export function renderSignedInShell(
   privateBriefData: PrivateBriefData,
   options: SignedInShellOptions = {},
 ): string {
   const activeView = options.activeView ?? "this_week";
-  const weeklyBrief = (() => {
-    const brief = options.brief ?? generateWeeklyBrief(privateBriefData.input);
-    const debugTrace = options.showDebugTrace
-      ? renderDeveloperDecision(brief)
-      : "";
-
-    return `
-    <article class="brief" aria-label="Weekly brief">
-      <section class="brief__core" aria-label="Weekly practice">
-        <h2 class="brief__theme">${renderBriefTheme(brief.theme)}</h2>
-        <p class="brief__practice" data-testid="recommended-ritual">${escapeHtml(brief.recommendedRitual)}</p>
-        <div class="brief__orientation" aria-label="Brief orientation">
-          <section class="brief__orientation-item" aria-label="Intention">
-            <p class="brief__section-label">Intention</p>
-            <p class="brief__intention">${escapeHtml(brief.intention)}</p>
-          </section>
-          <section class="brief__orientation-item" aria-label="Best window">
-            <p class="brief__section-label">Best window</p>
-            <p class="brief__window">${escapeHtml(brief.bestWindow)}</p>
-          </section>
-        </div>
-        ${renderOptionalAddOn(brief.optionalAddOn)}
-      </section>
-
-      <section class="brief__depth" aria-label="Brief explanation">
-        ${renderBriefReasoning(brief)}
-        <section class="brief__question" aria-label="Question to carry">
-          <p class="brief__section-label">Question to carry</p>
-          <p class="prompt">${escapeHtml(brief.reflectionPrompt)}</p>
-        </section>
-        ${renderBriefChoiceDetails(brief.explanation)}
-      </section>
-
-      <section class="brief__actions" aria-label="Brief actions">
-        <div class="brief__closing-actions">
-          <p class="brief__actions-question">How does this feel to you?</p>
-          <div class="brief__closing-secondary">
-            ${renderFeedbackButton("good", options)}
-            <button
-              class="quiet-action try-again-button"
-              type="button"
-              data-feedback-type="try_again"
-              data-try-again-action="true"
-              aria-pressed="false"${options.savingFeedbackType ? " disabled" : ""}
-            >${escapeHtml(options.savingFeedbackType === "try_again" ? "Saving" : feedbackLabels.try_again)}</button>
-            <button
-              class="quiet-action"
-              type="button"
-              data-check-in-start-over="true"
-            >I want to check in again</button>
-          </div>
-          ${options.feedbackStatus ? `<p class="muted feedback__status" data-feedback-status="true">${escapeHtml(options.feedbackStatus)}</p>` : ""}
-        </div>
-        <div class="brief__meta-actions">
-          <details class="feedback" aria-label="Feedback">
-            <summary>Give feedback</summary>
-            <div class="feedback__chips">
-              ${BRIEF_FEEDBACK_TYPES.filter((type) => type !== "try_again" && type !== "too_much" && type !== "good").map((type) => renderFeedbackButton(type, options)).join("")}
-            </div>
-          </details>
-        </div>
-        ${options.tryAgainStatus ? `<p class="muted feedback__status" data-try-again-status="true">${escapeHtml(options.tryAgainStatus)}</p>` : ""}
-      </section>
-
-      ${debugTrace}
-    </article>
-  `;
-  });
   const thisWeekContent = options.chooseWithMeResult
-    ? renderChooseWithMeResult(options.chooseWithMeResult)
-    : weeklyBrief();
+    ? renderChooseWithMeResult(options.chooseWithMeResult, {
+        favorites: options.ritualFavorites,
+        recommendationInstanceId: options.chooseWithMeRecommendationInstanceId,
+        interactionStatus: options.chooseWithMeInteractionStatus,
+      })
+    : renderCurrentRitualEntry(options.currentTimingWindow);
   const profileSettings = renderProfileTuningSection(
     privateBriefData,
     options.activeProfileSettingsTabId,
@@ -2430,6 +2107,8 @@ export function renderSignedInShell(
     purpose: options.ritualSearchPurpose,
     carrier: options.ritualSearchCarrier,
     timing: options.ritualSearchTiming,
+    favoritesOnly: options.ritualSearchFavoritesOnly,
+    favorites: options.ritualFavorites,
     currentTimingWindow: options.currentTimingWindow,
   });
   const manageRituals = renderManageRitualsSection({
@@ -2456,7 +2135,7 @@ export function renderSignedInShell(
             class="masthead__home"
             type="button"
             data-home-action="this_week"
-            aria-label="Show this week's brief"
+            aria-label="Show current ritual"
           >
             <h1 id="app-title">Moon &amp; Table</h1>
           </button>
