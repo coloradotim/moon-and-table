@@ -572,6 +572,22 @@ or writes. Passing `-- --write` updates
 `src/data/rituals/source-backed-rituals.ts` so the result can move through a
 normal PR review and remain git-revertable.
 
+Before a production backfill writes current Rituals to Firestore, run the
+read-only parity report:
+
+```bash
+npm run rituals:db-parity
+```
+
+The current command compares the static runtime Ritual library against the
+in-memory DB-shaped mirror records. It checks counts, Ritual IDs, published
+version pointers, content hashes, presentation fields, source grounding,
+recommendation/search metadata, availability/lifecycle flags, ritual words,
+review flags, adaptation policy, validation snapshots, and whether the DB-shaped
+records can export back to equivalent static Rituals. It performs no Firestore
+reads or writes. The same parity logic should be reused by the production
+backfill step when real Firestore payloads are available.
+
 ## 9. Relationship To Favorites, Feedback, And History
 
 Favorites should target Ritual identity:
