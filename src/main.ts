@@ -1250,6 +1250,32 @@ function isRitualReviewAction(value: unknown): value is RitualReviewAction {
     RITUAL_REVIEW_ACTIONS.includes(value as RitualReviewAction);
 }
 
+function getManageRitualReviewSuccessMessage(
+  action: RitualReviewAction,
+  result: SubmitRitualReviewActionResult & { valid: true },
+): string {
+  switch (action) {
+    case "promote_direct_use":
+      return "Direct use restored. This Ritual can now appear in Search and direct selection.";
+    case "hold_direct_use":
+      return "Removed from direct use. This Ritual is no longer available in Search, direct selection, or recommendations.";
+    case "promote_recommendation":
+      return "Recommendation-ready. Choose with me can now offer this Ritual.";
+    case "hold_recommendation":
+      return "Removed from recommendations. This Ritual can still be used directly.";
+    case "mark_needs_source_recheck":
+      return "Marked for source recheck. This Ritual is held until source grounding is reviewed.";
+    case "mark_needs_packet_correction":
+      return "Marked for packet correction. This Ritual is held until the extraction/import issue is reviewed.";
+    case "add_review_note":
+      return "Review note recorded. Availability was not changed.";
+    case "archive_ritual":
+      return "Ritual archived. It is no longer available in active use paths.";
+    case "rollback_published_version":
+      return `Rollback recorded. Published version is now ${result.publishedVersionId ?? result.currentVersionId}.`;
+  }
+}
+
 async function handleManageRitualReviewSubmit(
   form: HTMLFormElement,
 ): Promise<void> {
@@ -1339,7 +1365,7 @@ async function handleManageRitualReviewSubmit(
     activeManageRitualActionStatus = {
       ritualId,
       tone: "success",
-      message: `Review decision recorded. Lifecycle is now ${result.lifecycleState}.`,
+      message: getManageRitualReviewSuccessMessage(actionValue, result),
     };
     renderActiveSignedInShell();
   } catch (error) {

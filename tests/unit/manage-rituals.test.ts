@@ -199,8 +199,9 @@ describe("Manage Rituals view model", () => {
         }),
         expect.objectContaining({
           action: "promote_direct_use",
+          label: "Restore direct use",
           enabled: false,
-          disabledReason: "Already direct-use eligible.",
+          disabledReason: "Direct use is already available.",
         }),
       ]),
     );
@@ -277,7 +278,46 @@ describe("Manage Rituals view model", () => {
 
     expect(promoteRecommendation).toEqual(expect.objectContaining({
       enabled: true,
+      label: "Make recommendation-ready",
       disabledReason: undefined,
+    }));
+  });
+
+  it("explains that direct use must be restored before recommendations", () => {
+    const rituals = sourceBackedRituals.slice(0, 1);
+    const dbDocuments = createDbDocuments(rituals);
+    const ritualDocument = dbDocuments.ritualDocuments[0];
+    dbDocuments.ritualDocuments = [
+      {
+        ...ritualDocument,
+        lifecycle: {
+          ...ritualDocument.lifecycle,
+          state: "held",
+          directUseEligible: false,
+          recommendationEligible: false,
+          recommendable: false,
+          missingReadiness: ["direct_use_review", "recommendation_review"],
+          holdReasons: ["direct_use_hold"],
+        },
+      },
+    ];
+
+    const viewModel = createManageRitualsViewModel(
+      rituals,
+      undefined,
+      {
+        dbBacked: true,
+        dbDocuments,
+      },
+    );
+    const promoteRecommendation = viewModel.rows[0].reviewState.actions.find(
+      (action) => action.action === "promote_recommendation",
+    );
+
+    expect(promoteRecommendation).toEqual(expect.objectContaining({
+      enabled: false,
+      label: "Make recommendation-ready",
+      disabledReason: "Restore direct use before making this recommendation-ready.",
     }));
   });
 

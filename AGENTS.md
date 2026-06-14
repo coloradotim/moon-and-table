@@ -135,16 +135,25 @@ Ritual body editing unless an issue explicitly requests it.
 
 ## Brief format
 
-Follow `docs/product/moon-and-table-current-direction.md` for the preserved presentation fields. The archived `docs/archive/old-architecture/brief-format.md` describes historical WeeklyBrief format and is not target architecture.
+Follow `docs/product/moon-and-table-current-direction.md` for the preserved
+Ritual body and generated recommendation explanation boundary. The archived
+`docs/archive/old-architecture/brief-format.md` describes historical
+WeeklyBrief format and is not target architecture.
 
-The current generated `WeeklyBrief` runtime structure is legacy current-runtime architecture. Future Ritual-first work should preserve the presentation fields from `docs/product/moon-and-table-current-direction.md`:
+The current generated `WeeklyBrief` runtime structure is legacy current-runtime
+architecture. Future Ritual-first work should preserve the canonical editable
+Ritual body fields from `docs/product/moon-and-table-current-direction.md`:
 
 - `headline`
 - `practice`
 - `intention`
 - `best window`
-- `why this fits`
 - `question to carry`
+
+`why this fits` is generated after a Choose with me path from the selected
+Ritual, check-in inputs, timing context, selector score/breakdown, and later
+household memory. Existing `presentation.whyThisFits` values are
+legacy/fallback compatibility data, not an editor-required Ritual body field.
 
 The legacy current-runtime weekly brief still includes:
 

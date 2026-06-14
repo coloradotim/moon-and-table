@@ -96,7 +96,9 @@ household memory, later
 
 The editor should not make Tim manually maintain `whyThisFits` as canonical Ritual prose.
 
-Current legacy/static records may still carry `presentation.whyThisFits` temporarily as fallback or migration data, but the editor should treat it as read-only/legacy until the model is clarified.
+Current legacy/static records may still carry `presentation.whyThisFits` as
+fallback or migration data, but the editor should treat it as read-only/legacy
+compatibility data.
 
 Canonical editable Ritual body fields for the editor are:
 
@@ -818,6 +820,8 @@ Resolved for now:
 - Source/provenance is read-only for now.
 - Selection metadata editing gets a dedicated issue.
 - `whyThisFits` / `howThisWasChosen` are generated per recommendation run.
+- Existing `presentation.whyThisFits` is legacy/fallback compatibility data, not
+  an editable Ritual body field.
 - Household-origin Rituals can become recommendation eligible.
 - New Rituals start from a blank draft, not templates.
 - Autosave is part of the first editable implementation.
@@ -827,4 +831,4 @@ Still worth revisiting later:
 - Whether templates are helpful after blank household Ritual creation exists.
 - Whether source/provenance safe-summary editing is worth adding.
 - Whether full prose diff is needed beyond section-level diff.
-- Whether `presentation.whyThisFits` should be removed, renamed, or kept as legacy fallback in the runtime schema.
+- When a later migration should remove or rename legacy `presentation.whyThisFits`.

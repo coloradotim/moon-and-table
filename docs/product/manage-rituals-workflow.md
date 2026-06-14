@@ -105,7 +105,8 @@ Important fields:
 * `id`
 * `status`: `pilot`, `draft`, `reviewed`, or `recommendable`
 * `origin`: source or household
-* `presentation`: headline, practice, intention, bestWindow, whyThisFits, and questionToCarry
+* `presentation`: headline, practice, intention, bestWindow, questionToCarry,
+  and legacy/read-only whyThisFits compatibility data when present
 * `recommendationMetadata`: purpose, carrier, capacity, audience, timing, and eligibility
 * `searchMetadata`: tags, keywords, materials, places, and labels
 * `availability`: findable, directUseEligible, and recommendationEligible
@@ -513,14 +514,20 @@ Text editing must avoid:
 * generic spell-database voice;
 * metadata recaps standing in for ritual meaning.
 
-Manage Rituals should show prose fields in the same structure the app uses:
+Manage Rituals should show canonical body fields in the same structure the app
+uses:
 
 * headline;
 * practice;
 * intention;
 * best window;
-* why this fits;
 * question to carry.
+
+`why this fits` is generated after a Choose with me path. It can appear in
+recommendation preview/history surfaces, but it is not an editable Ritual body
+field in Manage Rituals. Existing `presentation.whyThisFits` data should be
+treated as legacy/read-only fallback until a later migration removes or renames
+it.
 
 ## 15. Data Persistence Options
 

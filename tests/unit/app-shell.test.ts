@@ -889,6 +889,9 @@ describe("app shell rendering", () => {
     expect(html).toContain('data-manage-ritual-review-form="true"');
     expect(html).toContain('value="hold_direct_use"');
     expect(html).toContain('value="add_review_note"');
+    expect(html).toContain("Remove from direct use");
+    expect(html).toContain("Make recommendation-ready");
+    expect(html).toContain("Remove from recommendations");
     expect(html).toContain("Records a DB review decision and audit event.");
   });
 
@@ -970,6 +973,9 @@ describe("app shell rendering", () => {
     expect(html).toContain("Give feedback");
     expect(html).toContain("Give me another option");
     expect(html).toContain("I want to check in again");
+    expect(html).toContain("This fits the selected check-in.");
+    expect(html).toContain("Moon &amp; Table chose one eligible Ritual.");
+    expect(html).not.toContain(chooseWithMeFixtureRitual.presentation.whyThisFits);
     expect(html).toContain('class="choose-result__title-row"');
     expect(html).toContain("ritual-favorite-button--icon");
     expect(html).toContain(">♡</button>");
@@ -1151,7 +1157,7 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("timing_window_signal");
   });
 
-  it("renders the shared Ritual preview from presentation fields", () => {
+  it("renders the shared Ritual preview from canonical body fields", () => {
     const html = renderRitualPreview(
       sourceBackedRituals.find(
         (ritual) => ritual.id === "ritual-woodward-bread-table-offering",
@@ -1162,7 +1168,7 @@ describe("app shell rendering", () => {
     expect(html).toContain("Make bread a visible household offering.");
     expect(html).toContain("Place the bread on a plate at the center of the table.");
     expect(html).toContain("Best window");
-    expect(html).toContain("Why this fits");
+    expect(html).not.toContain("Why this fits");
     expect(html).toContain("Question to carry");
     expect(html).toContain("What does this table need to be fed?");
     expect(html).toContain("Recommendation eligible");

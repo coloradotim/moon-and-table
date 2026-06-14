@@ -83,21 +83,22 @@ export type ChooseWithMeDebug = {
   explanationEvidence: string[];
 };
 
+export type GeneratedRecommendationExplanation = {
+  whyThisFits: string;
+  howThisWasChosen: string;
+};
+
 export type ChooseWithMeResult =
-  | {
+  | (GeneratedRecommendationExplanation & {
       status: "selected";
       selectedRitual: Ritual;
-      whyThisFits: string;
-      howThisWasChosen: string;
       debug: ChooseWithMeDebug;
-    }
-  | {
+    })
+  | (GeneratedRecommendationExplanation & {
       status: "no_result";
       selectedRitual?: undefined;
-      whyThisFits: string;
-      howThisWasChosen: string;
       debug: ChooseWithMeDebug;
-    };
+    });
 
 type ScoredRitual = {
   ritual: Ritual;

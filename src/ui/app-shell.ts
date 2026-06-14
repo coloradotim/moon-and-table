@@ -433,7 +433,7 @@ export function renderRitualPreview(
     };
   } = {},
 ): string {
-  const showWhyThisFits = options.showWhyThisFits ?? true;
+  const showWhyThisFits = options.showWhyThisFits ?? false;
   const sourceLabel = getRitualSourceLabels(ritual)[0] ?? "none";
 
   return `
@@ -696,7 +696,7 @@ function renderChooseWithMeResult(
       </section>
 
       <section class="choose-result__body" aria-label="Ritual">
-        ${renderRitualPreview(ritual)}
+        ${renderRitualPreview(ritual, { showWhyThisFits: false })}
       </section>
 
       <section class="brief__depth choose-result__reasoning" aria-label="Why this ritual">

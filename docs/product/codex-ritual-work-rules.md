@@ -26,13 +26,15 @@ If the issue does not state scope clearly, do not infer scope.
 - Do not change a Ritual's purpose through adaptation.
 - Similar mechanics with different purposes are different Rituals.
 - Completion and ritual words belong inside `practice`.
-- Preserve presentation fields:
+- Preserve canonical Ritual body fields:
   - `headline`
   - `practice`
   - `intention`
   - `best window`
-  - `why this fits`
   - `question to carry`
+- Treat `why this fits` as generated after a Choose with me path, not as an
+  editable Ritual body field. Existing `presentation.whyThisFits` values are
+  legacy/fallback compatibility data until a later migration changes them.
 - Separate Ritual creation, search visibility, direct-use/openability, and recommendation eligibility. A self-contained source-backed Ritual can be created, made findable, and made direct-use eligible even when `recommendationEligible` remains false.
 
 ## Source / Research Rules

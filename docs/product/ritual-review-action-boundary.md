@@ -96,6 +96,26 @@ Any caller with a verified Firebase ID token may use the review-action endpoint.
 This keeps the private pilot simple: app access is controlled by Firebase Auth
 and Firestore private-data access, not a second reviewer allowlist.
 
+## Product Labels
+
+The stored action values are implementation/API values and should stay stable.
+Manage Rituals should render clearer product labels and descriptions:
+
+| Stored action | Visible label | Meaning |
+| --- | --- | --- |
+| `hold_direct_use` | Remove from direct use | Keep the record visible in Manage, but remove it from Search/direct selection and recommendations. |
+| `promote_direct_use` | Restore direct use | Restore Search/direct selection without automatically making the Ritual recommendation-ready. |
+| `hold_recommendation` | Remove from recommendations | Keep direct use available, but stop Choose with me from offering it. |
+| `promote_recommendation` | Make recommendation-ready | Allow Choose with me to offer the Ritual once direct use and validation are clear. |
+| `mark_needs_source_recheck` | Needs source recheck | Hold the Ritual until source grounding is reviewed. |
+| `mark_needs_packet_correction` | Needs packet correction | Hold the Ritual until extraction/import correction is reviewed. |
+| `add_review_note` | Add review note | Record a note without changing lifecycle availability. |
+| `archive_ritual` | Archive Ritual | Remove the Ritual from active use paths. |
+
+Disabled reasons should explain the next practical step. In particular, the
+path from direct-use hold back to recommendation-ready is two steps: first
+Restore direct use, then Make recommendation-ready.
+
 ## Troubleshooting
 
 If the Manage Rituals UI reports:

@@ -123,7 +123,7 @@ query explicitly requires a denormalized summary on `rituals/{ritualId}`:
 ritual.presentation.practice
 ritual.presentation.intention
 ritual.presentation.bestWindow
-ritual.presentation.whyThisFits
+ritual.presentation.whyThisFits legacy/fallback only
 ritual.presentation.questionToCarry
 ritual.ritualWords
 ritual.adaptationPolicy
@@ -141,6 +141,12 @@ archivedAtIso
 
 Pointer fields may repeat small summaries, labels, flags, and query keys. They
 must not become the canonical prose store.
+
+`why this fits` for Choose with me is generated after selection from Ritual
+metadata, check-in inputs, timing context, selector scoring, and later household
+memory. Store that generated explanation with the recommendation
+instance/presentation snapshot when needed; do not treat it as canonical
+editable Ritual body for broad query design.
 
 ## 4. Manage Rituals Queries
 
