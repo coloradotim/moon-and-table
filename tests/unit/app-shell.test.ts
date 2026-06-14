@@ -18,9 +18,24 @@ import {
 } from "../../src/ui/app-shell";
 import { resolvePrivateBriefData } from "../../src/lib/private-data";
 import { sourceBackedRituals } from "../../src/data/rituals/source-backed-rituals";
+import { createRitualDbMirrorDryRun } from "../../src/data/rituals/db-mirror";
 import { getTimingWindowCandidates } from "../../src/lib/timing-window-candidates";
 import type { ChooseWithMeResult } from "../../src/data/rituals/choose-with-me-selector";
 import type { RitualFavorite } from "../../src/data/rituals/household-state";
+
+function createDbDocuments(rituals = sourceBackedRituals) {
+  const report = createRitualDbMirrorDryRun(rituals, {
+    generatedAtIso: "2026-06-13T00:00:00.000Z",
+  });
+
+  expect(report.skipped).toEqual([]);
+
+  return {
+    ritualDocuments: report.mirrored.map((record) => record.ritualDocument),
+    versionDocuments: report.mirrored.map((record) => record.versionDocument),
+    validationSnapshots: report.mirrored.map((record) => record.validationSnapshot),
+  };
+}
 
 function getNewMoonWindow() {
   const window = getTimingWindowCandidates({
@@ -846,6 +861,8 @@ describe("app shell rendering", () => {
     expect(html).toContain('data-manage-ritual-sort="recommendation"');
     expect(html).toContain('class="manage-rituals__record-summary"');
     expect(html).toContain("Direct use");
+    expect(html).toContain("Review workflow");
+    expect(html).toContain("read-only");
     expect(html).toContain("Validation findings");
     expect(html).toContain("Source label / origin label");
     expect(html).toContain("Prepare the Candle Table");
@@ -859,6 +876,20 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("Choose with me");
     expect(html).not.toContain("I have something in mind");
     expect(html).not.toContain("data-ritual-select");
+  });
+
+  it("renders DB-backed Manage review actions from expanded rows", () => {
+    const html = renderManageRitualsSection({
+      ritualRepositorySource: "db",
+      ritualDbDocuments: createDbDocuments(),
+    });
+
+    expect(html).toContain("DB-backed");
+    expect(html).toContain("Record review decision");
+    expect(html).toContain('data-manage-ritual-review-form="true"');
+    expect(html).toContain('value="hold_direct_use"');
+    expect(html).toContain('value="add_review_note"');
+    expect(html).toContain("Records a DB review decision and audit event.");
   });
 
   it("filters the Manage rituals view without changing Ritual records", () => {
@@ -890,7 +921,7 @@ describe("app shell rendering", () => {
       "utf8",
     );
     const renderSearchRitualsSource =
-      mainSource.match(/function renderSearchRituals\(\): void \{[\s\S]+?\n\}/)?.[0] ??
+      mainSource.match(/async function renderSearchRituals\(\): Promise<void> \{[\s\S]+?\n\}/)?.[0] ??
       "";
 
     expect(html).toContain("Search rituals");
@@ -900,7 +931,7 @@ describe("app shell rendering", () => {
     expect(html).toContain('data-ritual-select=');
     expect(html).not.toContain('data-testid="recommended-ritual"');
     expect(renderSearchRitualsSource).toContain(
-      "if (activePrivateBriefData) {\n    renderActiveSignedInShell();",
+      "await ensureActiveRitualRepositoryLoaded();\n    renderActiveSignedInShell();",
     );
     expect(renderSearchRitualsSource).not.toContain("activeBrief");
   });

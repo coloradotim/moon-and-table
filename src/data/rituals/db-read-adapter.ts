@@ -39,6 +39,7 @@ export type RitualDbReadRepositoryResult = {
   source: RitualDbReadRepositorySource;
   repository: RitualRepository;
   findings: RitualDbValidationFinding[];
+  dbDocuments?: RitualDbReadDocuments;
   exportReport?: RitualStaticExportReport;
   parityReport?: RitualDbParityReport;
   fallbackReason?: string;
@@ -194,14 +195,16 @@ export function createRitualDbReadRepository(
   });
 
   if (!isRitualDbParitySuccessful(parityReport)) {
-    return createFallbackResult({
-      source: "static_fallback_parity_failed",
-      repository: input.staticFallbackRepository,
-      reason: "DB Ritual read payload did not match the static runtime library.",
+    return {
+      source: "db",
+      repository: createStaticRitualRepository(
+        exportReport.records.map((record) => record.ritual),
+      ),
       findings: flattenParityFindings(parityReport),
+      dbDocuments: publishedReadDocuments,
       exportReport,
       parityReport,
-    });
+    };
   }
 
   return {
@@ -210,6 +213,7 @@ export function createRitualDbReadRepository(
       exportReport.records.map((record) => record.ritual),
     ),
     findings: [],
+    dbDocuments: publishedReadDocuments,
     exportReport,
     parityReport,
   };

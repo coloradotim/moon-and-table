@@ -2,7 +2,9 @@ import { describe, expect, it } from "vitest";
 
 import {
   applyRitualReviewAction,
+  createAdminFirestoreRitualReviewActionStore,
   createRitualValidationSnapshotIdForVersion,
+  type AdminFirestoreReviewActionDb,
   type RitualReviewActionStore,
   type RitualReviewActionBoundaryResult,
 } from "../../src/data/rituals/db-review-action-boundary";
@@ -272,5 +274,57 @@ describe("Ritual review action boundary", () => {
     expect(result.plan.ritualDocumentAfter.latestValidationSnapshotId).toBe(
       deterministicSnapshot.id,
     );
+  });
+
+  it("strips undefined values before handing review writes to Admin Firestore", async () => {
+    const record = createRecord();
+    const store = createStore({
+      ritualDocument: makeReviewed(record.ritualDocument),
+      versionDocument: record.versionDocument,
+      validationSnapshot: record.validationSnapshot,
+    });
+    const result = await applyRitualReviewAction({
+      request: {
+        ritualId: record.ritualDocument.id,
+        versionId: record.versionDocument.versionId,
+        action: "hold_direct_use",
+        reasons: ["Not ready for direct selection."],
+      },
+      caller: { uid: "owner-uid", reviewer: "owner" },
+      store,
+      authorize: () => true,
+      createdAtIso,
+    });
+
+    expect(result.valid).toBe(true);
+
+    if (!result.valid) {
+      throw new Error(result.findings.map((finding) => finding.message).join("\n"));
+    }
+
+    const writtenDocuments: unknown[] = [];
+    const adminStore = createAdminFirestoreRitualReviewActionStore({
+      collection: (collectionName) => ({
+        doc: (id) => ({
+          collectionName,
+          id,
+          get: async () => ({ exists: false, data: () => undefined }),
+        }),
+      }),
+      batch: () => ({
+        set: (_ref, document) => {
+          writtenDocuments.push(document);
+        },
+        create: (_ref, document) => {
+          writtenDocuments.push(document);
+        },
+        commit: async () => undefined,
+      }),
+    } as AdminFirestoreReviewActionDb);
+
+    await adminStore.commitReviewTransactionPlan(result.plan);
+
+    expect(JSON.stringify(writtenDocuments)).not.toContain("undefined");
+    expect(writtenDocuments).toHaveLength(3);
   });
 });

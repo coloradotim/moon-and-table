@@ -2323,6 +2323,29 @@ h2 {
   margin-top: auto;
 }
 
+.manage-rituals__action-status {
+  max-width: 860px;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(159, 174, 166, 0.72);
+  border-radius: 8px;
+  background: rgba(244, 247, 242, 0.82);
+  color: #435349;
+  font-size: var(--text-small);
+  font-weight: 700;
+}
+
+.manage-rituals__action-status--error {
+  border-color: rgba(149, 84, 70, 0.42);
+  background: rgba(251, 241, 236, 0.78);
+  color: #693e34;
+}
+
+.manage-rituals__action-status--success {
+  border-color: rgba(102, 123, 92, 0.48);
+  background: rgba(241, 247, 237, 0.82);
+}
+
 .manage-rituals__table-section {
   display: grid;
   min-width: 0;
@@ -2477,6 +2500,178 @@ h2 {
   grid-template-columns: minmax(260px, 0.9fr) minmax(320px, 1.1fr);
   gap: 18px;
   margin-top: 12px;
+}
+
+.manage-rituals__review-panel {
+  display: grid;
+  gap: 14px;
+  padding: 16px 0 18px;
+  border-bottom: 1px solid rgba(200, 190, 173, 0.58);
+}
+
+.manage-rituals__review-header {
+  display: flex;
+  gap: 14px;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.manage-rituals__review-header h4,
+.manage-rituals__review-header p,
+.manage-rituals__review-current h5,
+.manage-rituals__review-eligibility h5 {
+  margin: 0;
+}
+
+.manage-rituals__review-header p {
+  margin-top: 4px;
+  color: #58675f;
+  font-size: var(--text-small);
+  line-height: 1.45;
+}
+
+.manage-rituals__review-badge {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  border: 1px solid rgba(159, 174, 166, 0.72);
+  border-radius: 999px;
+  background: rgba(244, 247, 242, 0.76);
+  color: #435349;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.manage-rituals__review-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.92fr) minmax(260px, 1fr) minmax(240px, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.manage-rituals__review-current,
+.manage-rituals__review-form,
+.manage-rituals__review-eligibility {
+  min-width: 0;
+}
+
+.manage-rituals__review-current h5,
+.manage-rituals__review-eligibility h5 {
+  color: #26312c;
+  font-size: 0.82rem;
+}
+
+.manage-rituals__review-facts {
+  display: grid;
+  gap: 6px;
+  margin: 10px 0 0;
+}
+
+.manage-rituals__review-facts div {
+  display: grid;
+  gap: 2px;
+}
+
+.manage-rituals__review-form {
+  display: grid;
+  gap: 10px;
+}
+
+.manage-rituals__review-form label {
+  display: grid;
+  gap: 5px;
+  color: #52635a;
+  font-size: var(--text-label);
+  font-weight: 700;
+}
+
+.manage-rituals__review-form select,
+.manage-rituals__review-form textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid rgba(159, 174, 166, 0.72);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.9);
+  color: #26312c;
+  font: inherit;
+}
+
+.manage-rituals__review-form select {
+  min-height: 38px;
+  padding: 6px 28px 6px 9px;
+}
+
+.manage-rituals__review-form textarea {
+  min-height: 94px;
+  padding: 9px;
+  resize: vertical;
+}
+
+.manage-rituals__review-submit {
+  justify-self: start;
+  min-height: 38px;
+  padding: 7px 14px;
+  border: 1px solid rgba(102, 123, 92, 0.42);
+  border-radius: 8px;
+  background: rgba(244, 247, 242, 0.86);
+  color: #26312c;
+  box-shadow: 0 1px 0 rgba(38, 49, 44, 0.08);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.manage-rituals__review-submit:hover {
+  border-color: rgba(102, 123, 92, 0.72);
+  background: rgba(238, 244, 234, 0.94);
+}
+
+.manage-rituals__review-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.manage-rituals__review-actions {
+  display: grid;
+  gap: 8px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.manage-rituals__review-action {
+  display: grid;
+  gap: 2px;
+  padding-left: 10px;
+  border-left: 3px solid rgba(102, 123, 92, 0.56);
+}
+
+.manage-rituals__review-action--blocked {
+  border-left-color: rgba(200, 190, 173, 0.8);
+  opacity: 0.74;
+}
+
+.manage-rituals__review-action--danger {
+  border-left-color: rgba(149, 84, 70, 0.62);
+}
+
+.manage-rituals__review-action strong,
+.manage-rituals__review-action span,
+.manage-rituals__review-facts dt,
+.manage-rituals__review-facts dd {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.manage-rituals__review-action strong,
+.manage-rituals__review-facts dt {
+  color: #26312c;
+  font-weight: 700;
+}
+
+.manage-rituals__review-action span,
+.manage-rituals__review-facts dd {
+  color: #58675f;
 }
 
 .manage-rituals__record-detail h4 {
@@ -3223,6 +3418,28 @@ fieldset {
   .manage-rituals__record-detail {
     min-width: 0;
     padding: 0 14px 16px;
+  }
+
+  .manage-rituals__review-panel {
+    padding: 14px 0 16px;
+  }
+
+  .manage-rituals__review-header {
+    display: grid;
+    gap: 8px;
+  }
+
+  .manage-rituals__review-badge {
+    width: fit-content;
+  }
+
+  .manage-rituals__review-layout {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .manage-rituals__review-submit {
+    width: 100%;
   }
 
   .manage-rituals__detail-grid {

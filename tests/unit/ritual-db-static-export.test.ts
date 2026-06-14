@@ -105,6 +105,35 @@ describe("DB-to-TypeScript Ritual static export", () => {
     );
   });
 
+  it("exports held lifecycle records with DB availability overlaid", () => {
+    const [record] = createMirrorRecords(1);
+    const heldRecord = clone(record);
+
+    heldRecord.ritualDocument.lifecycle = {
+      ...heldRecord.ritualDocument.lifecycle,
+      state: "held",
+      directUseEligible: false,
+      recommendationEligible: false,
+      recommendable: false,
+      missingReadiness: ["direct_use_review", "recommendation_review"],
+      holdReasons: ["direct_use_hold"],
+    };
+
+    const report = createExportReport([heldRecord]);
+
+    expect(isRitualStaticExportSuccessful(report)).toBe(true);
+    expect(report.records[0].lifecycleState).toBe("held");
+    expect(report.records[0].ritual.availability.directUseEligible).toBe(false);
+    expect(report.records[0].ritual.availability.recommendationEligible).toBe(
+      false,
+    );
+    expect(report.records[0].ritual.recommendationMetadata.eligibility)
+      .toEqual(expect.objectContaining({
+        recommendable: false,
+        missing: ["direct_use_review", "recommendation_review"],
+      }));
+  });
+
   it("refuses records without a valid validation snapshot", () => {
     const [record] = createMirrorRecords(1);
     const report = createRitualStaticExport({

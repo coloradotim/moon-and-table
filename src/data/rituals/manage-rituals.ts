@@ -9,6 +9,12 @@ import {
   validateRituals,
   type RitualValidationFinding,
 } from "./validate-rituals";
+import type {
+  RitualDocument,
+  RitualValidationSnapshotDocument,
+  RitualVersionDocument,
+} from "./db-documents";
+import type { RitualReviewAction } from "./db-review-transactions";
 
 export const MANAGE_RITUAL_ORIGIN_FILTERS = ["all", "source", "household"] as const;
 export const MANAGE_RITUAL_AVAILABILITY_FILTERS = [
@@ -56,6 +62,9 @@ const MANAGE_RITUAL_SORT_KEYS: ManageRitualSortKey[] = [
 const ritualStatusSortOrder = new Map<RitualStatus, number>(
   RITUAL_STATUSES.map((status, index) => [status, index]),
 );
+const RECOMMENDATION_PROMOTION_RESOLVABLE_READINESS = new Set([
+  "recommendation_review",
+]);
 
 export type ManageRitualFilters = {
   status: ManageRitualStatusFilter;
@@ -66,6 +75,38 @@ export type ManageRitualFilters = {
   source: string;
   sort: ManageRitualSortKey;
   direction: ManageRitualSortDirection;
+};
+
+export type ManageRitualDbDocuments = {
+  ritualDocuments: readonly RitualDocument[];
+  versionDocuments: readonly RitualVersionDocument[];
+  validationSnapshots: readonly RitualValidationSnapshotDocument[];
+};
+
+export type ManageRitualReviewActionOption = {
+  action: RitualReviewAction;
+  label: string;
+  description: string;
+  enabled: boolean;
+  requiresReason: boolean;
+  disabledReason?: string;
+  tone?: "normal" | "caution" | "danger";
+};
+
+export type ManageRitualReviewState = {
+  dbBacked: boolean;
+  lifecycleState?: string;
+  currentVersionId?: string;
+  publishedVersionId?: string;
+  latestValidationSnapshotId?: string;
+  validationSnapshotValid?: boolean;
+  holdReasons: string[];
+  sourceRunIds: string[];
+  importBatchIds: string[];
+  packetCandidateIds: string[];
+  sourceIds: string[];
+  actions: ManageRitualReviewActionOption[];
+  unavailableReason?: string;
 };
 
 export type ManageRitualRow = {
@@ -89,6 +130,7 @@ export type ManageRitualRow = {
   sourceLabel?: string;
   originLabel?: string;
   sourceValues: string[];
+  reviewState: ManageRitualReviewState;
 };
 
 export type ManageRitualsViewModel = {
@@ -107,6 +149,11 @@ export type ManageRitualsViewModel = {
   filters: ManageRitualFilters;
   sourceOptions: RitualSourceOption[];
   rows: ManageRitualRow[];
+};
+
+export type CreateManageRitualsViewModelOptions = {
+  dbBacked?: boolean;
+  dbDocuments?: ManageRitualDbDocuments;
 };
 
 export const defaultManageRitualFilters: ManageRitualFilters = {
@@ -139,6 +186,240 @@ function getReviewFlags(ritual: Ritual): string[] {
     flags.sourceVerificationRequired ? "sourceVerificationRequired" : undefined,
     flags.productBoundaryReviewRequired ? "productBoundaryReviewRequired" : undefined,
   ].filter((flag): flag is string => Boolean(flag));
+}
+
+function getRitualDbContext(
+  ritual: Ritual,
+  options?: CreateManageRitualsViewModelOptions,
+): {
+  ritualDocument?: RitualDocument;
+  versionDocument?: RitualVersionDocument;
+  validationSnapshot?: RitualValidationSnapshotDocument;
+} {
+  const ritualDocument = options?.dbDocuments?.ritualDocuments.find(
+    (document) => document.id === ritual.id,
+  );
+  const currentVersionId = ritualDocument?.currentVersionId;
+  const publishedVersionId = ritualDocument?.publishedVersionId;
+  const versionDocument = options?.dbDocuments?.versionDocuments.find(
+    (document) =>
+      document.ritualId === ritual.id &&
+      (document.versionId === currentVersionId ||
+        document.versionId === publishedVersionId),
+  );
+  const snapshotId = ritualDocument?.latestValidationSnapshotId;
+  const validationSnapshot = options?.dbDocuments?.validationSnapshots.find(
+    (document) =>
+      document.ritualId === ritual.id &&
+      (document.id === snapshotId ||
+        document.versionId === versionDocument?.versionId),
+  );
+
+  return { ritualDocument, versionDocument, validationSnapshot };
+}
+
+function hasSourceGrounding(ritual: Ritual): boolean {
+  return ritual.origin.type !== "source" || ritual.origin.sourceGrounding.length > 0;
+}
+
+function createBlockedAction(
+  action: RitualReviewAction,
+  label: string,
+  description: string,
+  disabledReason: string,
+  requiresReason: boolean,
+  tone: ManageRitualReviewActionOption["tone"] = "normal",
+): ManageRitualReviewActionOption {
+  return {
+    action,
+    label,
+    description,
+    enabled: false,
+    requiresReason,
+    disabledReason,
+    tone,
+  };
+}
+
+function createActionOption(input: {
+  action: RitualReviewAction;
+  label: string;
+  description: string;
+  enabled: boolean;
+  requiresReason: boolean;
+  disabledReason?: string;
+  tone?: ManageRitualReviewActionOption["tone"];
+}): ManageRitualReviewActionOption {
+  return {
+    action: input.action,
+    label: input.label,
+    description: input.description,
+    enabled: input.enabled,
+    requiresReason: input.requiresReason,
+    disabledReason: input.enabled ? undefined : input.disabledReason,
+    tone: input.tone ?? "normal",
+  };
+}
+
+function createReviewState(input: {
+  ritual: Ritual;
+  directUseEligible: boolean;
+  recommendable: boolean;
+  missingReadiness: string[];
+  reviewFlags: string[];
+  validationFindings: RitualValidationFinding[];
+  options?: CreateManageRitualsViewModelOptions;
+}): ManageRitualReviewState {
+  const dbBacked = input.options?.dbBacked === true;
+  const { ritualDocument, validationSnapshot } = getRitualDbContext(
+    input.ritual,
+    input.options,
+  );
+  const unavailableReason = !dbBacked
+    ? "Review actions are available when the active Ritual repository source is Firestore."
+    : !ritualDocument
+      ? "This Ritual does not have a Firestore review document in the active read payload."
+      : undefined;
+  const baseState = {
+    dbBacked,
+    lifecycleState: ritualDocument?.lifecycle.state,
+    currentVersionId: ritualDocument?.currentVersionId,
+    publishedVersionId: ritualDocument?.publishedVersionId,
+    latestValidationSnapshotId: ritualDocument?.latestValidationSnapshotId,
+    validationSnapshotValid: validationSnapshot?.valid,
+    holdReasons: ritualDocument?.lifecycle.holdReasons ?? [],
+    sourceRunIds: ritualDocument?.origin.sourceRunIds ?? [],
+    importBatchIds: ritualDocument?.origin.importBatchIds ?? [],
+    packetCandidateIds: ritualDocument?.origin.packetCandidateIds ?? [],
+    sourceIds: ritualDocument?.origin.sourceIds ?? [],
+    unavailableReason,
+  };
+
+  if (unavailableReason || !ritualDocument) {
+    const reason = unavailableReason ?? "Review actions are unavailable.";
+
+    return {
+      ...baseState,
+      actions: [
+        createBlockedAction("promote_direct_use", "Promote direct use", "Make this Ritual available from search and direct selection.", reason, false),
+        createBlockedAction("promote_recommendation", "Promote recommendations", "Allow Choose with me to recommend this Ritual.", reason, false),
+        createBlockedAction("hold_recommendation", "Hold recommendations", "Keep direct use available while removing recommendation eligibility.", reason, true, "caution"),
+        createBlockedAction("add_review_note", "Add review note", "Record a review note without changing availability.", reason, true),
+      ],
+    };
+  }
+
+  const validationClean = input.validationFindings.length === 0 &&
+    validationSnapshot?.valid !== false;
+  const promotionsHaveValidation = validationSnapshot?.valid === true;
+  const reviewFlagsClean = input.reviewFlags.length === 0;
+  const sourceGrounded = hasSourceGrounding(input.ritual);
+  const directUsePromotionBlocker = !promotionsHaveValidation
+    ? "Promotion requires a passing validation snapshot."
+    : !validationClean
+      ? "Validation findings must be resolved before promotion."
+      : !reviewFlagsClean
+        ? "Review flags must be resolved before promotion."
+        : !sourceGrounded
+          ? "Source-backed promotions require source grounding."
+          : undefined;
+  const unresolvedRecommendationReadiness = input.missingReadiness.filter(
+    (item) => !RECOMMENDATION_PROMOTION_RESOLVABLE_READINESS.has(item),
+  );
+  const recommendationPromotionBlocker = !input.directUseEligible
+    ? "Recommendation promotion requires direct-use eligibility first."
+    : unresolvedRecommendationReadiness.length > 0
+      ? `Resolve ${unresolvedRecommendationReadiness.join(", ")} before promotion.`
+      : directUsePromotionBlocker;
+  const isArchived = ritualDocument.lifecycle.state === "archived";
+
+  return {
+    ...baseState,
+    actions: [
+      createActionOption({
+        action: "promote_direct_use",
+        label: "Promote direct use",
+        description: "Make this Ritual available from search and direct selection.",
+        enabled: !input.directUseEligible && !directUsePromotionBlocker,
+        disabledReason: input.directUseEligible
+          ? "Already direct-use eligible."
+          : directUsePromotionBlocker,
+        requiresReason: false,
+      }),
+      createActionOption({
+        action: "hold_direct_use",
+        label: "Hold direct use",
+        description: "Keep the Ritual findable but remove direct-use and recommendation eligibility.",
+        enabled: input.directUseEligible && !isArchived,
+        disabledReason: isArchived
+          ? "Archived Rituals are already unavailable."
+          : "Not currently direct-use eligible.",
+        requiresReason: true,
+        tone: "caution",
+      }),
+      createActionOption({
+        action: "promote_recommendation",
+        label: "Promote recommendations",
+        description: "Allow Choose with me to recommend this Ritual.",
+        enabled: !input.recommendable && !recommendationPromotionBlocker,
+        disabledReason: input.recommendable
+          ? "Already recommendation-ready."
+          : recommendationPromotionBlocker,
+        requiresReason: false,
+      }),
+      createActionOption({
+        action: "hold_recommendation",
+        label: "Hold recommendations",
+        description: "Keep direct use available while removing recommendation eligibility.",
+        enabled: input.directUseEligible && !isArchived,
+        disabledReason: isArchived
+          ? "Archived Rituals are already unavailable."
+          : "Direct use must remain available before holding only recommendations.",
+        requiresReason: true,
+        tone: "caution",
+      }),
+      createActionOption({
+        action: "mark_needs_source_recheck",
+        label: "Needs source recheck",
+        description: "Hold this Ritual until source grounding is reviewed again.",
+        enabled: input.ritual.origin.type === "source" && !isArchived,
+        disabledReason: input.ritual.origin.type !== "source"
+          ? "Only source-backed Rituals can be marked for source recheck."
+          : "Archived Rituals are already unavailable.",
+        requiresReason: true,
+        tone: "caution",
+      }),
+      createActionOption({
+        action: "mark_needs_packet_correction",
+        label: "Needs packet correction",
+        description: "Hold this Ritual until its extraction packet is corrected.",
+        enabled: input.ritual.origin.type === "source" && !isArchived,
+        disabledReason: input.ritual.origin.type !== "source"
+          ? "Only source-backed Rituals can be marked for packet correction."
+          : "Archived Rituals are already unavailable.",
+        requiresReason: true,
+        tone: "caution",
+      }),
+      createActionOption({
+        action: "add_review_note",
+        label: "Add review note",
+        description: "Record a review note without changing availability.",
+        enabled: true,
+        requiresReason: true,
+      }),
+      createActionOption({
+        action: "archive_ritual",
+        label: "Archive Ritual",
+        description: "Remove this Ritual from search, direct use, and recommendations.",
+        enabled: !isArchived && promotionsHaveValidation,
+        disabledReason: isArchived
+          ? "Already archived."
+          : "Archiving requires a passing validation snapshot for the target version.",
+        requiresReason: true,
+        tone: "danger",
+      }),
+    ],
+  };
 }
 
 function normalizeFilters(filters?: Partial<ManageRitualFilters>): ManageRitualFilters {
@@ -313,6 +594,7 @@ function sortManageRows(
 export function createManageRitualsViewModel(
   rituals: Ritual[],
   filterOverrides?: Partial<ManageRitualFilters>,
+  options?: CreateManageRitualsViewModelOptions,
 ): ManageRitualsViewModel {
   const filters = normalizeFilters(filterOverrides);
   const sourceOptions = getRitualSourceOptions(rituals);
@@ -328,10 +610,25 @@ export function createManageRitualsViewModel(
   const rows = rituals.map((ritual) => {
     const reviewFlags = getReviewFlags(ritual);
     const validationFindings = findingsByRitualId.get(ritual.id) ?? [];
+    const dbContext = getRitualDbContext(ritual, options);
+    const lifecycle = options?.dbBacked === true
+      ? dbContext.ritualDocument?.lifecycle
+      : undefined;
     const missingReadiness =
-      ritual.recommendationMetadata.eligibility.missing ?? [];
+      lifecycle?.missingReadiness ??
+      ritual.recommendationMetadata.eligibility.missing ??
+      [];
 
     const sourceLabels = getRitualSourceLabels(ritual);
+    const findable = lifecycle?.findable ?? ritual.availability.findable;
+    const directUseEligible =
+      lifecycle?.directUseEligible ?? ritual.availability.directUseEligible;
+    const recommendationEligible =
+      lifecycle?.recommendationEligible ??
+      ritual.availability.recommendationEligible;
+    const recommendable =
+      lifecycle?.recommendable ??
+      ritual.recommendationMetadata.eligibility.recommendable;
 
     return {
       ritual,
@@ -339,10 +636,10 @@ export function createManageRitualsViewModel(
       headline: ritual.presentation.headline,
       status: ritual.status,
       origin: ritual.origin.type,
-      findable: ritual.availability.findable,
-      directUseEligible: ritual.availability.directUseEligible,
-      recommendationEligible: ritual.availability.recommendationEligible,
-      recommendable: ritual.recommendationMetadata.eligibility.recommendable,
+      findable,
+      directUseEligible,
+      recommendationEligible,
+      recommendable,
       primaryPurpose: ritual.recommendationMetadata.purposes.primary,
       primaryCarrier: ritual.recommendationMetadata.carriers.primary,
       audience: ritual.recommendationMetadata.audience.supports,
@@ -357,6 +654,15 @@ export function createManageRitualsViewModel(
       sourceLabel: sourceLabels[0],
       originLabel: ritual.searchMetadata.originLabel,
       sourceValues: sourceLabels.map(getRitualSourceFilterValue),
+      reviewState: createReviewState({
+        ritual,
+        directUseEligible,
+        recommendable,
+        missingReadiness,
+        reviewFlags,
+        validationFindings,
+        options,
+      }),
     };
   });
 
