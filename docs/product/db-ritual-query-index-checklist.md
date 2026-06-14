@@ -1,16 +1,17 @@
 # DB Ritual Query And Index Checklist
 
-Status: Design checklist for issue #449.
+Status: Current query/index architecture checklist.
 
-Scope: Architecture/design checklist only. This document does not implement
-Firestore indexes, security rules, runtime DB reads, writes, source import,
-Manage Rituals actions, selector tuning, UI changes, or Ritual content changes.
+Scope: Architecture/design checklist. This document records the intended query
+families and index boundaries for DB-backed Ritual reads, review actions, and
+future editor/source-import work. It is not itself an implementation patch.
 
 Implementation note: issue #464 adds the first Firestore index declarations in
 `firestore.indexes.json` and emulator-backed smoke tests for the search,
-recommendation-candidate, and household-memory query families. Runtime DB reads,
-production writes, source import, Manage Rituals actions, selector tuning, UI
-changes, and Ritual content changes remain out of scope.
+recommendation-candidate, and household-memory query families. Runtime DB reads
+and Manage Rituals review actions now exist; source import, full editor writes,
+selector tuning, broad UI changes, and Ritual content changes remain separate
+work.
 
 This checklist preserves `docs/product/app-flow-decisions.md`: Choose with me
 uses recommendation-eligible Rituals, while I have something in mind uses
@@ -425,7 +426,7 @@ Do not attempt these client-side:
 
 ## 12. Implementation Readiness Checklist
 
-Before DB-backed Ritual reads or writes are implemented, confirm:
+Before adding new DB-backed Ritual query/write surfaces, confirm:
 
 - pointer/index fields exist for every planned list/search/recommendation query;
 - immutable version fields are not used as broad list/search filters;
@@ -438,4 +439,4 @@ Before DB-backed Ritual reads or writes are implemented, confirm:
   deterministic cells, or server-side bounded post-filtering;
 - export/import/review/audit queries are admin/server only;
 - client surfaces validate loaded records before use and keep static fallback
-  until DB parity and rollback are proven.
+  available until a later migration issue explicitly removes it.

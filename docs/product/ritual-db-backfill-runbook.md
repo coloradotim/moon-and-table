@@ -1,18 +1,21 @@
 # Ritual DB Backfill Runbook
 
-Status: Current safety runbook for production source-backed Ritual backfill.
+Status: Current safety runbook for source-backed Ritual preservation and
+backfill recovery.
 
-Scope: Deployment/backfill safety. This runbook does not enable runtime DB
-reads, import new source candidates, make Manage Rituals actionable, tune the
-selector, remove static Ritual data, or change Ritual content.
+Scope: Deployment/backfill safety and preservation audit. The initial
+production backfill has been completed, but this runbook remains the guardrail
+for dry-run preservation checks, read-only Firestore inspection, rollback
+planning, and any future re-backfill. It does not import new source candidates,
+tune the selector, remove static Ritual data, or change Ritual content.
 
 ## Purpose
 
-The source-controlled Ritual library remains the production runtime gate while
-Firestore becomes the versioned draft, review, provenance, validation, and audit
-store. Before any runtime can rely on Firestore Ritual content, the existing
-static source-backed Rituals must be backfilled with a preservation audit that
-proves no Ritual was lost, changed, or made unreachable.
+The source-controlled Ritual library remains the static fallback/export and
+preservation baseline. Firestore is the hosted versioned Ritual content,
+review, provenance, validation, and audit store. Before any cleanup removes or
+rewrites static fallback assumptions, run the preservation audit to prove no
+source-backed Ritual was lost, changed, or made unreachable.
 
 ## Dry Run
 
@@ -94,8 +97,12 @@ If an existing Firestore document has the same ID but different content, the
 command refuses to write. It does not silently overwrite newer DB versions.
 
 After a write, the command reads Firestore back and writes a post-write
-preservation report. That post-write report must pass before runtime DB reads
-can be considered.
+preservation report. That post-write report must pass before the write is
+treated as safe. Runtime DB reads now tolerate intentional lifecycle/review
+drift from later Manage Rituals actions, so read-check conflicts should be
+interpreted carefully: content-loss/hash/published-version conflicts are
+preservation blockers; intentional review lifecycle changes are expected after
+DB-backed review actions.
 
 ## Rollback
 

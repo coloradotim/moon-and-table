@@ -19,6 +19,13 @@ The future canonical object is `Ritual`: a whole authored practice with intrinsi
 
 The product is best understood as a curated symbolic knowledge system with a calendar interface. The app should produce one grounded, low-overwhelm recommendation at a time, not a content feed or task list.
 
+Current Ritual storage is mid-migration: Firestore is the active hosted Ritual
+content/review store when DB reads are enabled, while
+`src/data/rituals/source-backed-rituals.ts` remains the reviewed static
+fallback/export and preservation baseline. Do not treat static TypeScript as the
+only Ritual home, and do not delete it without a later explicit migration issue
+and passing preservation audit.
+
 ## Absolute privacy boundary
 
 The repository must not contain real names, birth data, relationship details, schedules, natal placements, private source documents, or personal profile notes.
@@ -122,7 +129,9 @@ Archived draft or `ready_for_review` packets may organize source candidates, pro
 
 Follow the controlling Ritual-first docs and the open GitHub issues. Open issues created before the Ritual-first reset may need revision before implementation.
 
-Do not jump ahead to calendar integration, AI generation, full astrology engines, public sharing, a curation workbench, or runtime Ritual integration unless an issue explicitly requests it.
+Do not jump ahead to calendar integration, AI generation, full astrology
+engines, public sharing, a broad curation workbench, source import, or full
+Ritual body editing unless an issue explicitly requests it.
 
 ## Brief format
 
@@ -177,7 +186,8 @@ If no test framework exists yet, do not create a large framework unless the issu
 - Use Firebase Auth and Firestore as the planned first hosted auth/storage path when an issue asks for backend, auth, or persistence.
 - Do not introduce Supabase unless an issue explicitly asks for it.
 - Keep local gitignored profile loading optional for development; do not treat it as the primary hosted storage plan.
-- Avoid database work until the relevant issue asks for persistence.
+- Keep database work scoped to the relevant issue and preserve the static
+  fallback/export path unless a later explicit migration issue changes it.
 - Keep docs and tests up to date when backend, auth, or storage behavior changes.
 - Keep code, docs, and tests aligned with the privacy boundary.
 

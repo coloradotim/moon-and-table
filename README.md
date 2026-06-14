@@ -38,7 +38,14 @@ Real personalization belongs only in Firebase/Firestore for the hosted app, priv
 
 ## Current Runtime
 
-The current app still renders a generated weekly brief with:
+The current app is moving through the Ritual-first transition. It still carries
+legacy weekly-brief code, but the active Ritual library path now reads
+published, validated Ritual records from Firestore when the runtime DB feature
+flag is enabled. The source-controlled Ritual library remains the reviewed
+static fallback/export path and should not be deleted without a later explicit
+migration issue.
+
+The legacy generated weekly brief path still includes:
 
 * one theme for the week
 * one best ritual window

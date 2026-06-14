@@ -1,19 +1,22 @@
 # DB-Backed Ritual Storage
 
-Status: Design proposal for issue #422.
+Status: Historical design plus current DB/static relationship note.
 
-Scope: Documentation only. This document does not implement Firestore reads,
-writes, runtime selection, Manage Rituals actions, imports, migrations, or
-selector behavior.
+Scope: Architecture reference. The original DB document design in this file has
+now been partially implemented by the mirror/export/parity/backfill/runtime-read
+and Manage Rituals review-action issues. Treat older staged-migration language
+as historical where it conflicts with `docs/product/README.md` or current
+GitHub issues.
 
 ## 1. Purpose
 
-Moon & Table's current source-backed Ritual library is static TypeScript data.
-That has been useful because every content change gets typed validation, test
-coverage, git review, and a visible diff. It is not enough for the next review
-workflow, where source pipeline imports, draft revisions, promotion decisions,
-rollback, favorites, feedback, and recommendation instances need stable
-database references and immutable version history.
+Moon & Table's source-backed Ritual library began as static TypeScript data.
+That was useful because every content change got typed validation, test
+coverage, git review, and a visible diff. The current hosted app now has
+Firestore-backed Ritual documents, immutable versions, validation snapshots,
+review decisions, audit events, runtime DB reads behind
+`VITE_MOON_TABLE_USE_FIRESTORE_RITUALS=true`, and static fallback/export
+tooling.
 
 This design introduces a Firestore-compatible content model while preserving the
 current product doctrine:
@@ -27,25 +30,28 @@ current product doctrine:
 - Choose with me uses only recommendation-eligible Rituals.
 - Search and direct selection do not require recommendation eligibility.
 
-## 2. Transition Decision
+## 2. Current Transition Decision
 
-During the transition, source-controlled TypeScript remains the production
-runtime gate for reviewed source-backed Rituals. Firestore becomes the versioned
-draft, review, provenance, validation, and audit store.
+During the transition, Firestore is the active hosted Ritual content and review
+store when DB reads are enabled. Source-controlled TypeScript remains the
+reviewed static fallback/export artifact and preservation baseline.
 
 In other words:
 
-- Firestore stores full immutable Ritual versions and review history.
-- The repo keeps the reviewed production export until DB validation, promotion,
-  and rollback tooling are proven.
-- Runtime may later read published DB versions, but only after a separate issue
-  adds read adapters, validation, fallback, and deployment checks.
+- Firestore stores full immutable Ritual versions, current lifecycle pointers,
+  validation snapshots, review decisions, and audit history.
+- Runtime can read published, validated DB versions when the DB read flag is
+  enabled.
+- Static TypeScript remains available for fallback, preservation audit, and
+  PR-reviewable export/recovery.
+- Firestore lifecycle/review state may intentionally move ahead of the static
+  export; that is no longer a runtime fallback reason by itself.
 
 This avoids two failure modes:
 
 - Firestore becoming an unreviewed CMS that bypasses source review and tests.
-- Static TypeScript becoming the only place where draft and review state can
-  exist.
+- Static TypeScript being treated as the only place where review state can
+  exist after DB-backed review actions have begun.
 
 ## 3. Collection Shape
 
@@ -527,24 +533,23 @@ query shapes, denormalized pointer fields, likely composite indexes, and
 client-side query boundaries that should be reviewed before DB-backed Ritual
 reads or writes are implemented.
 
-Recommended staged migration:
+Current migration stance:
 
-1. Keep `src/data/rituals/source-backed-rituals.ts` as production canonical.
-2. Add a DB mirror/export command that writes Firestore documents from the
-   current static Ritual library and records validation snapshots.
-3. Keep Manage Rituals read-only against static data until DB mirror parity is
-   verified.
-4. Add admin tooling that imports draft versions into Firestore from source
-   pipeline packets.
-5. Add server/admin review decision tooling that can promote direct-use and
-   recommendation eligibility in Firestore without browser clients writing
-   canonical Ritual collections directly.
-6. Add a static export command that generates a PR-ready TypeScript diff from
-   reviewed DB versions.
-7. Only after review, add runtime DB reads behind a feature flag with static
-   TypeScript fallback.
-8. Eventually decide whether Firestore becomes runtime-primary or remains the
-   review/workflow source that exports to the repo.
+1. Keep `src/data/rituals/source-backed-rituals.ts` as the reviewed static
+   fallback/export artifact and preservation baseline.
+2. Keep the DB mirror/backfill command as preservation and recovery tooling for
+   writing Firestore documents from the current static Ritual library and
+   recording validation snapshots.
+3. Treat Manage Rituals lifecycle review actions as DB-backed current state;
+   intentional lifecycle/review drift from the static export is expected.
+4. Keep server/admin review decision tooling as the only path for browser
+   review actions to change canonical Firestore Ritual lifecycle fields.
+5. Keep the static export command available to generate PR-ready TypeScript
+   diffs from Firestore for review or recovery.
+6. Keep runtime DB reads behind explicit configuration until the team decides
+   whether static fallback can ever be removed.
+7. Do not remove static Rituals without a later explicit migration issue and a
+   passing preservation audit.
 
 Rollback:
 
@@ -642,7 +647,7 @@ That preserves the historical recommendation even if the Ritual is revised
 later. A recommendation instance should never depend on the current mutable
 `rituals/{ritualId}` pointer to explain what happened in the past.
 
-While static TypeScript remains the production runtime gate, the static runtime
+While static TypeScript remains the fallback/export path, the static runtime
 library should still expose or derive stable version identity. Favorites may
 reference `ritualId` plus `favoritedVersionId`; recommendation instances,
 feedback, and history should store `ritualId`, `versionId`, presentation
@@ -656,52 +661,44 @@ contentHash = fnv1a128:<32 hex characters>
 ```
 
 The hash is a deterministic content fingerprint over selector/content-relevant
-Ritual fields. It avoids unstable timestamps and keeps repo-backed household
-state able to point at the exact shown content while static TypeScript remains
-the production gate.
+Ritual fields. It avoids unstable timestamps and keeps repo-backed and
+Firestore-backed household state able to point at exact shown content even when
+the current lifecycle pointer changes later.
 
 Search visibility remains separate from feedback. A future
 `never_recommend_this` signal can block Choose with me for a household while the
 Ritual stays findable/direct-use eligible in Search.
 
-## 10. Manage Rituals Dependency Order
+## 10. Current Implementation State
 
-Recommended follow-up order:
+The staged migration described by this design has moved past its initial
+planning phase:
 
-1. Review and accept this design.
-2. Add typed DB document models and pure validators.
-3. Define the DB query and index checklist before DB reads or writes.
-4. Design and test Firestore security rules for canonical content and household
-   state.
-5. Add static-to-DB mirror dry-run tooling for current static Rituals.
-6. Add deterministic static export from promoted DB versions to TypeScript.
-7. Add read-only Manage Rituals DB parity checks.
-8. Add source pipeline import into draft `ritualVersions`.
-9. Add the server/admin review action boundary for direct-use and
-   recommendation promotion.
-10. Make Manage Rituals actionable for draft edit and review decisions through
-   that boundary.
-11. Add runtime DB read adapter only after parity, validation, fallback, and
-   rollback are proven.
+1. Typed DB document models, validators, version identity, and content hashes
+   exist.
+2. Static-to-DB mirror dry-run, deterministic DB-to-TypeScript export, DB
+   parity, and production backfill preservation tooling exist.
+3. Firestore security rules and query/index planning exist as separate
+   artifacts.
+4. The hosted app can read published, validated DB Ritual versions behind
+   `VITE_MOON_TABLE_USE_FIRESTORE_RITUALS=true`.
+5. Manage Rituals can record DB-backed lifecycle review actions through a
+   server/admin boundary.
+6. Firestore lifecycle/review state may intentionally differ from the static
+   export after review actions. Runtime DB reads should report parity
+   diagnostics but should not fall back solely because review state has moved
+   ahead of the repo.
 
-The first runtime DB read adapter stays feature-flagged off by default. This is
-a transition guard, not the target architecture: it lets the app prove that
-Firestore's published, validated Ritual records match the static runtime
-library and that static fallback works when Firestore is unavailable,
-unvalidated, unpublished, or out of parity. A later explicit release decision
-can make Firestore the default runtime source once those checks are trusted in
-production.
-
-Issues #435 and #436 can proceed after this design if they reference
-`ritualId` now and leave room for `versionId` and presentation snapshots.
-Selector tuning should wait until feedback/reporting work has landed and been
-reviewed.
+The current remaining work is not to repeat the migration sequence. It is to
+design and implement the full versioned Ritual editor, improve review-action
+labels, decide when/how DB edits export back to TypeScript, and keep
+preservation audits green before any removal of static fallback data.
 
 ## 11. Risks And Mitigations
 
 | Risk | Mitigation |
 | --- | --- |
-| Firestore bypasses git review. | Keep repo export as production gate until DB tooling proves validation, review decisions, and PR-ready diffs. |
+| Firestore bypasses review. | Keep server-side validation, review decisions, audit events, and export tooling; do not allow browser clients to write canonical Ritual versions directly. |
 | Two content models diverge. | Store the existing `Ritual` object inside `ritualVersions`; do not create a parallel ritual schema. |
 | Mutable content rewrites history. | Recommendation instances and history store `versionId` plus snapshots. |
 | Direct-use and recommendation gates collapse. | Keep separate lifecycle flags and review decisions. |
@@ -712,11 +709,11 @@ reviewed.
 
 ## 12. Open Questions For Review
 
-- When should runtime read from Firestore instead of static TypeScript?
+- When, if ever, should static TypeScript stop shipping as fallback?
 - Should source-backed app content be global for the private app, or nested under
   a household if multi-household support ever appears?
 - Should all promotion decisions generate a PR export, or only changes that
-  affect production runtime?
+  need source-controlled recovery/review?
 - Who can write review decisions: owner only, both household members, or a
   future reviewer role?
 - Should private source-run metadata be mirrored to Firestore at all, or should
