@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
 
 import { createRitualDbMirrorDryRun } from "../../src/data/rituals/db-mirror";
 import type { RitualReviewActionStore } from "../../src/data/rituals/db-review-action-boundary";
@@ -127,5 +128,16 @@ describe("Ritual review action API", () => {
         ],
       }),
     );
+  });
+
+  it("keeps the deployed wrapper open to any verified Firebase user", () => {
+    const apiSource = readFileSync(
+      new URL("../../api/ritual-review-action.ts", import.meta.url),
+      "utf8",
+    );
+
+    expect(apiSource).toContain("authorize: () => true");
+    expect(apiSource).not.toContain("MOON_TABLE_RITUAL_REVIEW_ADMIN");
+    expect(apiSource).toContain("FIREBASE_SERVICE_ACCOUNT_PATH");
   });
 });

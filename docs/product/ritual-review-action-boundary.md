@@ -88,17 +88,13 @@ The wrapper uses Firebase Admin credentials from one of:
 ```text
 FIREBASE_SERVICE_ACCOUNT_JSON
 FIREBASE_SERVICE_ACCOUNT_BASE64
+FIREBASE_SERVICE_ACCOUNT_PATH
 application default credentials
 ```
 
-and authorizes reviewers through server-only allowlists:
-
-```text
-MOON_TABLE_RITUAL_REVIEW_ADMIN_UIDS
-MOON_TABLE_RITUAL_REVIEW_ADMIN_EMAILS
-```
-
-Do not expose these allowlists through `VITE_` client environment variables.
+Any caller with a verified Firebase ID token may use the review-action endpoint.
+This keeps the private pilot simple: app access is controlled by Firebase Auth
+and Firestore private-data access, not a second reviewer allowlist.
 
 ## Troubleshooting
 
@@ -119,9 +115,9 @@ If the UI reports:
 Review action API endpoint was not found.
 ```
 
-the app is likely running under a Vite-only dev server. Vite serves the client
-app, but it does not serve the Vercel `/api/ritual-review-action` function.
-Use a deployment or a full-stack dev server for end-to-end review-action tests.
+the app is likely running under a Vite-only dev server without the local API
+middleware. The project Vite config serves `/api/ritual-review-action` during
+local development; restart the dev server after pulling this configuration.
 
 ## Validation
 

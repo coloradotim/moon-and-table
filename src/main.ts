@@ -1161,6 +1161,11 @@ async function handleManageRitualReviewSubmit(
   const ritualId = form.dataset.ritualId;
   const versionId = form.dataset.versionId;
   const formData = new FormData(form);
+  const actionSelect = form.querySelector<HTMLSelectElement>(
+    "[name='manageRitualReviewAction']",
+  );
+  const selectedActionOption =
+    actionSelect?.selectedOptions.item(0) ?? undefined;
   const actionValue = formData.get("manageRitualReviewAction");
   const reason = String(formData.get("manageRitualReviewReason") ?? "").trim();
 
@@ -1168,6 +1173,19 @@ async function handleManageRitualReviewSubmit(
     activeManageRitualActionStatus = {
       tone: "error",
       message: "That review action could not be read from the form.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  if (
+    selectedActionOption?.dataset.requiresReason === "true" &&
+    reason.length === 0
+  ) {
+    activeManageRitualActionStatus = {
+      ritualId,
+      tone: "error",
+      message: "Add a short reason or note before recording this review action.",
     };
     renderActiveSignedInShell();
     return;

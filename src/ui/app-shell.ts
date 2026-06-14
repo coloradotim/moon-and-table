@@ -1303,7 +1303,7 @@ function renderManageReviewPanel(row: ReturnType<typeof createManageRitualsViewM
             </select>
           </label>
           <label>
-            <span>Reason or note</span>
+            <span>Reason or note <small>required for holds and notes</small></span>
             <textarea
               name="manageRitualReviewReason"
               rows="4"
