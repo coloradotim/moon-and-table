@@ -130,6 +130,50 @@ describe("Ritual review action API", () => {
     );
   });
 
+  it("maps Firestore quota exhaustion to a clear review-action failure", async () => {
+    const response = createResponse();
+    const quotaStore = {
+      ...createStore(),
+      async getRitualDocument() {
+        const error = new Error("8 RESOURCE_EXHAUSTED: Quota exceeded.");
+
+        (error as { code?: number }).code = 8;
+        throw error;
+      },
+    };
+
+    await handleRitualReviewActionApi(
+      {
+        method: "POST",
+        headers: { authorization: "Bearer valid-token" },
+        body: {
+          ritualId: "ritual-1",
+          versionId: "version-1",
+          action: "add_review_note",
+          reasons: ["test"],
+        },
+      },
+      response.response,
+      {
+        store: quotaStore,
+        verifyIdToken: async () => ({ uid: "reviewer-1" }),
+        authorize: () => true,
+      },
+    );
+
+    expect(response.statusCode).toBe(429);
+    expect(response.body).toEqual({
+      valid: false,
+      findings: [
+        {
+          path: "firestore",
+          message: "Firestore quota was exceeded, so the review decision was not recorded. Wait for quota to reset or check the Firebase quota page before trying again.",
+          severity: "error",
+        },
+      ],
+    });
+  });
+
   it("keeps the deployed wrapper open to any verified Firebase user", () => {
     const apiSource = readFileSync(
       new URL("../../api/ritual-review-action.ts", import.meta.url),

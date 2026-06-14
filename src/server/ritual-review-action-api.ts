@@ -77,6 +77,40 @@ function invalid(
   };
 }
 
+function getErrorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : String(error);
+}
+
+function isQuotaExceededError(error: unknown): boolean {
+  const message = getErrorMessage(error).toLowerCase();
+  const code = (error as { code?: unknown } | undefined)?.code;
+
+  return code === 8 ||
+    code === "resource-exhausted" ||
+    code === "RESOURCE_EXHAUSTED" ||
+    message.includes("resource_exhausted") ||
+    message.includes("quota exceeded");
+}
+
+function createUnexpectedApiError(error: unknown): {
+  status: number;
+  body: SubmitRitualReviewActionResult;
+} {
+  if (isQuotaExceededError(error)) {
+    return invalid(
+      "firestore",
+      "Firestore quota was exceeded, so the review decision was not recorded. Wait for quota to reset or check the Firebase quota page before trying again.",
+      429,
+    );
+  }
+
+  return invalid(
+    "reviewAction",
+    "Review decision was not recorded because the review action service failed.",
+    500,
+  );
+}
+
 export async function handleRitualReviewActionApi(
   request: RitualReviewActionApiRequest,
   response: RitualReviewActionApiResponse,
@@ -115,14 +149,21 @@ export async function handleRitualReviewActionApi(
     email: verifiedCaller.email,
     reviewer: "owner",
   };
-  const result = await applyRitualReviewAction({
-    request: request.body as RitualReviewActionRequest,
-    caller,
-    store: dependencies.store,
-    authorize: dependencies.authorize,
-    createdAtIso: dependencies.now?.() ?? new Date().toISOString(),
-  });
-  const body = summarizeReviewActionResult(result);
 
-  send(response, body.valid ? 200 : 400, body);
+  try {
+    const result = await applyRitualReviewAction({
+      request: request.body as RitualReviewActionRequest,
+      caller,
+      store: dependencies.store,
+      authorize: dependencies.authorize,
+      createdAtIso: dependencies.now?.() ?? new Date().toISOString(),
+    });
+    const body = summarizeReviewActionResult(result);
+
+    send(response, body.valid ? 200 : 400, body);
+  } catch (error) {
+    const result = createUnexpectedApiError(error);
+
+    send(response, result.status, result.body);
+  }
 }

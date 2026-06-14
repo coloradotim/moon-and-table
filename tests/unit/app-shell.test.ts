@@ -921,7 +921,7 @@ describe("app shell rendering", () => {
       "utf8",
     );
     const renderSearchRitualsSource =
-      mainSource.match(/function renderSearchRituals\(\): void \{[\s\S]+?\n\}/)?.[0] ??
+      mainSource.match(/async function renderSearchRituals\(\): Promise<void> \{[\s\S]+?\n\}/)?.[0] ??
       "";
 
     expect(html).toContain("Search rituals");
@@ -931,7 +931,7 @@ describe("app shell rendering", () => {
     expect(html).toContain('data-ritual-select=');
     expect(html).not.toContain('data-testid="recommended-ritual"');
     expect(renderSearchRitualsSource).toContain(
-      "if (activePrivateBriefData) {\n    renderActiveSignedInShell();",
+      "await ensureActiveRitualRepositoryLoaded();\n    renderActiveSignedInShell();",
     );
     expect(renderSearchRitualsSource).not.toContain("activeBrief");
   });

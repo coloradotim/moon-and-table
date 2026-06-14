@@ -604,12 +604,25 @@ export function createManageRitualsViewModel(
   const rows = rituals.map((ritual) => {
     const reviewFlags = getReviewFlags(ritual);
     const validationFindings = findingsByRitualId.get(ritual.id) ?? [];
+    const dbContext = getRitualDbContext(ritual, options);
+    const lifecycle = options?.dbBacked === true
+      ? dbContext.ritualDocument?.lifecycle
+      : undefined;
     const missingReadiness =
-      ritual.recommendationMetadata.eligibility.missing ?? [];
+      lifecycle?.missingReadiness ??
+      ritual.recommendationMetadata.eligibility.missing ??
+      [];
 
     const sourceLabels = getRitualSourceLabels(ritual);
-    const directUseEligible = ritual.availability.directUseEligible;
-    const recommendable = ritual.recommendationMetadata.eligibility.recommendable;
+    const findable = lifecycle?.findable ?? ritual.availability.findable;
+    const directUseEligible =
+      lifecycle?.directUseEligible ?? ritual.availability.directUseEligible;
+    const recommendationEligible =
+      lifecycle?.recommendationEligible ??
+      ritual.availability.recommendationEligible;
+    const recommendable =
+      lifecycle?.recommendable ??
+      ritual.recommendationMetadata.eligibility.recommendable;
 
     return {
       ritual,
@@ -617,9 +630,9 @@ export function createManageRitualsViewModel(
       headline: ritual.presentation.headline,
       status: ritual.status,
       origin: ritual.origin.type,
-      findable: ritual.availability.findable,
+      findable,
       directUseEligible,
-      recommendationEligible: ritual.availability.recommendationEligible,
+      recommendationEligible,
       recommendable,
       primaryPurpose: ritual.recommendationMetadata.purposes.primary,
       primaryCarrier: ritual.recommendationMetadata.carriers.primary,

@@ -14,9 +14,15 @@ describe("Ritual review action client", () => {
         auditEventId: "audit_1",
         ritualId: "ritual-1",
         versionId: "version-1",
+        currentVersionId: "version-1",
+        latestReviewDecisionId: "review_1",
         lifecycleState: "reviewed",
+        findable: true,
         directUseEligible: true,
+        recommendationEligible: false,
         recommendable: false,
+        missingReadiness: ["manual_hold"],
+        holdReasons: ["manual hold"],
       }), { status: 200 });
     }) as typeof fetch;
 
@@ -136,6 +142,32 @@ describe("Ritual review action client", () => {
         {
           path: "reviewAction",
           message: "Review action API endpoint was not found. Use a deployment or dev server that serves /api/ritual-review-action.",
+          severity: "error",
+        },
+      ],
+    });
+  });
+
+  it("surfaces network failures without throwing raw fetch errors", async () => {
+    const fetchImpl = (async () => {
+      throw new TypeError("Failed to fetch");
+    }) as typeof fetch;
+
+    await expect(submitRitualReviewAction({
+      idToken: "token-1",
+      fetchImpl,
+      request: {
+        ritualId: "ritual-1",
+        versionId: "version-1",
+        action: "hold_recommendation",
+        reasons: ["manual hold"],
+      },
+    })).resolves.toEqual({
+      valid: false,
+      findings: [
+        {
+          path: "reviewAction",
+          message: "Review action API could not be reached. Restart the dev server and refresh the page, then try again.",
           severity: "error",
         },
       ],

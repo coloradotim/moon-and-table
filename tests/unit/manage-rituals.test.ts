@@ -206,6 +206,44 @@ describe("Manage Rituals view model", () => {
     );
   });
 
+  it("overlays DB lifecycle state onto Manage rows without reloading Ritual content", () => {
+    const rituals = sourceBackedRituals.slice(0, 1);
+    const dbDocuments = createDbDocuments(rituals);
+    const ritualDocument = dbDocuments.ritualDocuments[0];
+    dbDocuments.ritualDocuments = [
+      {
+        ...ritualDocument,
+        lifecycle: {
+          ...ritualDocument.lifecycle,
+          state: "reviewed",
+          directUseEligible: true,
+          recommendationEligible: false,
+          recommendable: false,
+          missingReadiness: ["manual_review_hold"],
+          holdReasons: ["manual hold"],
+        },
+      },
+    ];
+
+    const viewModel = createManageRitualsViewModel(
+      rituals,
+      undefined,
+      {
+        dbBacked: true,
+        dbDocuments,
+      },
+    );
+    const row = viewModel.rows[0];
+
+    expect(row.directUseEligible).toBe(true);
+    expect(row.recommendationEligible).toBe(false);
+    expect(row.recommendable).toBe(false);
+    expect(row.missingReadiness).toEqual(["manual_review_hold"]);
+    expect(row.reviewState.holdReasons).toEqual(["manual hold"]);
+    expect(viewModel.counts.recommendable).toBe(0);
+    expect(viewModel.counts.withMissingReadiness).toBe(1);
+  });
+
   it("blocks review actions when the manager is not DB-backed", () => {
     const viewModel = createManageRitualsViewModel(sourceBackedRituals.slice(0, 1));
     const row = viewModel.rows[0];

@@ -138,8 +138,13 @@ The Manage Rituals review-action UI should:
 - compute available actions from the row state and validation state;
 - submit actions through the server wrapper around this boundary;
 - show clear success/failure messages;
-- reload the DB Ritual repository after a successful action;
+- patch the local lifecycle row from the successful action result instead of
+  reloading the full DB Ritual repository;
 - avoid raw JSON editing.
+
+The signed-in app should also lazy-load the DB Ritual repository only when a
+Ritual surface needs it, such as Search rituals, Choose with me selection, or
+Manage Rituals. Private-data startup should not read the full Ritual library.
 
 The broader Ritual body and metadata editor is tracked separately in #480. It
 should create a new versioned draft/superseding Ritual version rather than

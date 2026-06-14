@@ -2,7 +2,10 @@ import type {
   RitualReviewActionBoundaryResult,
   RitualReviewActionRequest,
 } from "./db-review-action-boundary";
-import type { RitualDbValidationFinding } from "./db-documents";
+import type {
+  RitualDbLifecycleState,
+  RitualDbValidationFinding,
+} from "./db-documents";
 
 export type SubmitRitualReviewActionInput = {
   request: RitualReviewActionRequest;
@@ -18,9 +21,16 @@ export type SubmitRitualReviewActionResult =
     auditEventId: string;
     ritualId: string;
     versionId: string;
-    lifecycleState: string;
+    currentVersionId: string;
+    publishedVersionId?: string;
+    latestReviewDecisionId: string;
+    lifecycleState: RitualDbLifecycleState;
+    findable: boolean;
     directUseEligible: boolean;
+    recommendationEligible: boolean;
     recommendable: boolean;
+    missingReadiness: string[];
+    holdReasons: string[];
   }
   | {
     valid: false;
@@ -56,9 +66,17 @@ function parseClientResult(payload: unknown): SubmitRitualReviewActionResult {
     typeof payload.auditEventId === "string" &&
     typeof payload.ritualId === "string" &&
     typeof payload.versionId === "string" &&
+    typeof payload.currentVersionId === "string" &&
+    (payload.publishedVersionId === undefined ||
+      typeof payload.publishedVersionId === "string") &&
+    typeof payload.latestReviewDecisionId === "string" &&
     typeof payload.lifecycleState === "string" &&
+    typeof payload.findable === "boolean" &&
     typeof payload.directUseEligible === "boolean" &&
-    typeof payload.recommendable === "boolean"
+    typeof payload.recommendationEligible === "boolean" &&
+    typeof payload.recommendable === "boolean" &&
+    Array.isArray(payload.missingReadiness) &&
+    Array.isArray(payload.holdReasons)
   ) {
     return payload as SubmitRitualReviewActionResult;
   }
@@ -122,24 +140,45 @@ export function summarizeReviewActionResult(
     auditEventId: result.plan.auditEventDocument.id,
     ritualId: after.id,
     versionId: result.plan.reviewDecisionDocument.versionId,
+    currentVersionId: after.currentVersionId,
+    publishedVersionId: after.publishedVersionId,
+    latestReviewDecisionId: result.plan.reviewDecisionDocument.id,
     lifecycleState: after.lifecycle.state,
+    findable: after.lifecycle.findable,
     directUseEligible: after.lifecycle.directUseEligible,
+    recommendationEligible: after.lifecycle.recommendationEligible,
     recommendable: after.lifecycle.recommendable,
+    missingReadiness: [...after.lifecycle.missingReadiness],
+    holdReasons: [...after.lifecycle.holdReasons],
   };
 }
 
 export async function submitRitualReviewAction(
   input: SubmitRitualReviewActionInput,
 ): Promise<SubmitRitualReviewActionResult> {
-  const response = await (input.fetchImpl ?? fetch)(input.endpoint ?? "/api/ritual-review-action", {
-    method: "POST",
-    credentials: "same-origin",
-    headers: {
-      Authorization: `Bearer ${input.idToken}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(input.request),
-  });
+  let response: Response;
+
+  try {
+    response = await (input.fetchImpl ?? fetch)(input.endpoint ?? "/api/ritual-review-action", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        Authorization: `Bearer ${input.idToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(input.request),
+    });
+  } catch {
+    return {
+      valid: false,
+      findings: [
+        fallbackFinding(
+          "Review action API could not be reached. Restart the dev server and refresh the page, then try again.",
+        ),
+      ],
+    };
+  }
+
   const responseText = await response.text();
   const payload = parseJsonResponseText(responseText);
   if (payload === undefined) {

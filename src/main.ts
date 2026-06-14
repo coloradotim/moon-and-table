@@ -79,7 +79,10 @@ import {
 } from "./data/rituals/db-read-adapter";
 import { loadRitualDbReadDocumentsFromFirestore } from "./data/rituals/db-read-firestore";
 import { createRitualDbMirrorDryRun } from "./data/rituals/db-mirror";
-import { submitRitualReviewAction } from "./data/rituals/review-action-client";
+import {
+  submitRitualReviewAction,
+  type SubmitRitualReviewActionResult,
+} from "./data/rituals/review-action-client";
 import {
   RITUAL_REVIEW_ACTIONS,
   type RitualReviewAction,
@@ -173,6 +176,8 @@ let activeRitualRepository: RitualRepository = staticRitualRepository;
 let activeRitualRepositorySource: RitualDbReadRepositorySource =
   "static_fallback_disabled";
 let activeRitualDbDocuments: RitualDbReadDocuments | undefined;
+let activeRitualRepositoryLoadPromise: Promise<void> | null = null;
+let activeRitualRepositoryLoaded = false;
 let activeManageRitualActionStatus:
   | {
     ritualId?: string;
@@ -180,6 +185,7 @@ let activeManageRitualActionStatus:
     message: string;
   }
   | undefined;
+let activeManageRitualActionSubmitting = false;
 
 function resetRitualSearchState(): void {
   activeRitualSearchQuery = "";
@@ -226,6 +232,67 @@ async function loadActiveRitualRepository(): Promise<void> {
   window.__moonTableRitualRepositorySource = result.source;
   window.__moonTableRitualRepositoryFallbackReason = result.fallbackReason;
   window.__moonTableRitualRepositoryFindings = result.findings;
+}
+
+function resetActiveRitualRepository(): void {
+  activeRitualRepository = staticRitualRepository;
+  activeRitualRepositorySource = "static_fallback_disabled";
+  activeRitualDbDocuments = undefined;
+  activeRitualRepositoryLoadPromise = null;
+  activeRitualRepositoryLoaded = false;
+  window.__moonTableRitualRepositorySource = activeRitualRepositorySource;
+  window.__moonTableRitualRepositoryFallbackReason = undefined;
+  window.__moonTableRitualRepositoryFindings = undefined;
+}
+
+async function ensureActiveRitualRepositoryLoaded(): Promise<void> {
+  if (activeRitualRepositoryLoaded) {
+    return;
+  }
+
+  if (!activeRitualRepositoryLoadPromise) {
+    activeRitualRepositoryLoadPromise = loadActiveRitualRepository()
+      .then(() => {
+        activeRitualRepositoryLoaded = true;
+      })
+      .finally(() => {
+        activeRitualRepositoryLoadPromise = null;
+      });
+  }
+
+  await activeRitualRepositoryLoadPromise;
+}
+
+function applyReviewActionResultToActiveRitualDocuments(
+  result: SubmitRitualReviewActionResult,
+): void {
+  if (!result.valid || !activeRitualDbDocuments) {
+    return;
+  }
+
+  activeRitualDbDocuments = {
+    ...activeRitualDbDocuments,
+    ritualDocuments: activeRitualDbDocuments.ritualDocuments.map((document) =>
+      document.id === result.ritualId
+        ? {
+          ...document,
+          currentVersionId: result.currentVersionId,
+          publishedVersionId: result.publishedVersionId,
+          latestReviewDecisionId: result.latestReviewDecisionId,
+          lifecycle: {
+            ...document.lifecycle,
+            state: result.lifecycleState,
+            findable: result.findable,
+            directUseEligible: result.directUseEligible,
+            recommendationEligible: result.recommendationEligible,
+            recommendable: result.recommendable,
+            missingReadiness: [...result.missingReadiness],
+            holdReasons: [...result.holdReasons],
+          },
+        }
+        : document
+    ),
+  };
 }
 
 function normalizeRitualSearchTimingFilter(value: unknown): RitualTimingFilter {
@@ -533,7 +600,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
 
         activePrivateBriefData = privateBriefData;
         activeProfileSettingsTabId = null;
-        await loadActiveRitualRepository();
+        resetActiveRitualRepository();
         resetRitualSearchState();
         try {
           await loadPersistedHouseholdRitualState();
@@ -599,6 +666,8 @@ function renderDevVisualQaState(): void {
     versionDocuments: dbMirrorReport.mirrored.map((record) => record.versionDocument),
     validationSnapshots: dbMirrorReport.mirrored.map((record) => record.validationSnapshot),
   };
+  activeRitualRepositoryLoaded = true;
+  activeRitualRepositoryLoadPromise = null;
   activeManageRitualActionStatus = undefined;
   activeCurrentRitualCheckIn = null;
   activeChooseWithMeResult = null;
@@ -694,7 +763,8 @@ function chooseRitualForActiveCheckIn(
   );
 }
 
-function completeCheckIn(checkIn: CurrentRitualCheckIn): void {
+async function completeCheckIn(checkIn: CurrentRitualCheckIn): Promise<void> {
+  await ensureActiveRitualRepositoryLoaded();
   activeCurrentRitualCheckIn = checkIn;
   activeSignedInView = "this_week";
   activeProfileSettingsTabId = null;
@@ -715,7 +785,7 @@ function showCheckInLoadingThenComplete(checkIn: CurrentRitualCheckIn): void {
 
   checkInLoadingTimeout = window.setTimeout(() => {
     checkInLoadingTimeout = null;
-    completeCheckIn(checkIn);
+    void completeCheckIn(checkIn);
   }, 1400);
 }
 
@@ -1141,11 +1211,36 @@ function startCheckInOver(): void {
   renderActiveCheckInShell();
 }
 
-function renderSearchRituals(): void {
+async function showSignedInView(view: SignedInView): Promise<void> {
+  activeSignedInView = view;
+  activeProfileSettingsTabId = null;
+
+  if (!activePrivateBriefData) {
+    return;
+  }
+
+  if (
+    view === "search_rituals" ||
+    view === "manage_rituals" ||
+    (view === "this_week" && activeChooseWithMeResult)
+  ) {
+    await ensureActiveRitualRepositoryLoaded();
+  }
+
+  if (view === "this_week" && !activeChooseWithMeResult) {
+    renderActiveCheckInShell();
+    return;
+  }
+
+  renderActiveSignedInShell();
+}
+
+async function renderSearchRituals(): Promise<void> {
   activeSignedInView = "search_rituals";
   activeProfileSettingsTabId = null;
 
   if (activePrivateBriefData) {
+    await ensureActiveRitualRepositoryLoaded();
     renderActiveSignedInShell();
   }
 }
@@ -1158,6 +1253,15 @@ function isRitualReviewAction(value: unknown): value is RitualReviewAction {
 async function handleManageRitualReviewSubmit(
   form: HTMLFormElement,
 ): Promise<void> {
+  if (activeManageRitualActionSubmitting) {
+    activeManageRitualActionStatus = {
+      tone: "info",
+      message: "A review decision is already being recorded.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
   const ritualId = form.dataset.ritualId;
   const versionId = form.dataset.versionId;
   const formData = new FormData(form);
@@ -1202,6 +1306,7 @@ async function handleManageRitualReviewSubmit(
     return;
   }
 
+  activeManageRitualActionSubmitting = true;
   activeManageRitualActionStatus = {
     ritualId,
     tone: "info",
@@ -1230,7 +1335,7 @@ async function handleManageRitualReviewSubmit(
       return;
     }
 
-    await loadActiveRitualRepository();
+    applyReviewActionResultToActiveRitualDocuments(result);
     activeManageRitualActionStatus = {
       ritualId,
       tone: "success",
@@ -1246,6 +1351,8 @@ async function handleManageRitualReviewSubmit(
         : "Review decision was not recorded.",
     };
     renderActiveSignedInShell();
+  } finally {
+    activeManageRitualActionSubmitting = false;
   }
 }
 
@@ -1382,7 +1489,7 @@ async function handleRitualFavoriteToggle(target: HTMLElement): Promise<void> {
     // Search has no inline status surface yet; keep the local state responsive.
   }
 
-  renderSearchRituals();
+  void renderSearchRituals();
 }
 
 async function recordChooseWithMeFeedback(input: {
@@ -1457,6 +1564,7 @@ async function handleChooseWithMeTryAnother(target: HTMLElement): Promise<void> 
       ...new Set([...activeChooseWithMeExcludedRitualIds, ritualId]),
     ];
 
+    await ensureActiveRitualRepositoryLoaded();
     const nextResult = chooseRitualForActiveCheckIn(checkIn);
 
     if (
@@ -1536,7 +1644,7 @@ async function handleRitualSelected(ritualId: string): Promise<void> {
     // Direct search selection stays local if persistence is temporarily unavailable.
   }
 
-  renderSearchRituals();
+  void renderSearchRituals();
 }
 
 function toggleRitualSearchChip(chip: string): void {
@@ -1544,7 +1652,7 @@ function toggleRitualSearchChip(chip: string): void {
     ? activeRitualSearchChips.filter((activeChip) => activeChip !== chip)
     : [...activeRitualSearchChips, chip];
   activeSelectedRitualId = null;
-  renderSearchRituals();
+  void renderSearchRituals();
 }
 
 render({ status: "loading" });
@@ -1605,7 +1713,7 @@ appRoot.addEventListener("click", (event) => {
 
   if (target.closest("[data-search-rituals-entry='true']")) {
     activeRitualSearchTiming = "all";
-    renderSearchRituals();
+    void renderSearchRituals();
     return;
   }
 
@@ -1613,7 +1721,7 @@ appRoot.addEventListener("click", (event) => {
     activeRitualSearchTiming = "current";
     activeRitualSearchSort = "match";
     activeSelectedRitualId = null;
-    renderSearchRituals();
+    void renderSearchRituals();
     return;
   }
 
@@ -1625,7 +1733,7 @@ appRoot.addEventListener("click", (event) => {
   if (target.closest("[data-ritual-search-clear='true']")) {
     event.preventDefault();
     resetRitualSearchState();
-    renderSearchRituals();
+    void renderSearchRituals();
     return;
   }
 
@@ -1678,16 +1786,7 @@ appRoot.addEventListener("click", (event) => {
       ?.closest("details[data-app-menu='true']")
       ?.removeAttribute("open");
 
-    if (
-      activePrivateBriefData &&
-      menuAction === "this_week" &&
-      !activeChooseWithMeResult
-    ) {
-      renderActiveCheckInShell();
-    } else if (activePrivateBriefData) {
-      renderActiveSignedInShell();
-    }
-
+    void showSignedInView(menuAction);
     return;
   }
 
@@ -1834,7 +1933,7 @@ appRoot.addEventListener("change", (event) => {
         ?.value ?? activeRitualSearchTiming,
     );
     activeSelectedRitualId = null;
-    renderSearchRituals();
+    void renderSearchRituals();
   }
 
   if (
@@ -1843,7 +1942,7 @@ appRoot.addEventListener("change", (event) => {
   ) {
     activeRitualSearchFavoritesOnly = target.checked;
     activeSelectedRitualId = null;
-    renderSearchRituals();
+    void renderSearchRituals();
   }
 
   if (
@@ -1900,7 +1999,7 @@ appRoot.addEventListener("input", (event) => {
 
     activeRitualSearchQuery = target.value;
     activeSelectedRitualId = null;
-    renderSearchRituals();
+    void renderSearchRituals();
 
     const searchInput = document.querySelector<HTMLInputElement>(
       "[name='ritualSearchQuery']",
@@ -1929,6 +2028,7 @@ if (devVisualQaMode) {
     activeChooseWithMeResult = null;
     activeSignedInView = "this_week";
     activeProfileSettingsTabId = null;
+    resetActiveRitualRepository();
     resetRitualSearchState();
     resetRitualInteractionState();
     activeManageRitualFilters = { ...defaultManageRitualFilters };
@@ -1992,7 +2092,7 @@ appRoot.addEventListener("submit", (event) => {
     activeRitualSearchFavoritesOnly =
       formData.get("ritualSearchFavoritesOnly") === "on";
     activeSelectedRitualId = null;
-    renderSearchRituals();
+    void renderSearchRituals();
   }
 
   if (target.matches("[data-manage-rituals-filter-form='true']")) {
