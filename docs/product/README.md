@@ -18,6 +18,7 @@ These docs control the Ritual-first reset. If an older doc conflicts with them, 
 - `docs/product/db-ritual-firestore-rules.md`
 - `docs/product/db-ritual-query-index-checklist.md`
 - `docs/product/ritual-db-backfill-runbook.md`
+- `docs/product/ritual-review-action-boundary.md`
 - `docs/product/manage-rituals-workflow.md`
 - `docs/product/ritual-model-pilot-extraction-review.md`
 - `docs/product/ritual-pattern-purpose-migration-audit.md`
