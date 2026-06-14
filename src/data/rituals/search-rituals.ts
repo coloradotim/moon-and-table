@@ -67,6 +67,7 @@ export type RitualSearchCriteria = {
   includeNonDirectUse?: boolean;
   sort?: RitualSortKey;
   timingWindow?: TimingWindowCandidate;
+  timingWindows?: TimingWindowCandidate[];
   timingFilter?: RitualTimingFilter;
 };
 
@@ -83,6 +84,7 @@ export type RitualTimingSearchTarget = {
   label: string;
   evidence: string[];
   timingWindow?: TimingWindowCandidate;
+  timingWindows?: TimingWindowCandidate[];
 };
 
 export type RitualTimingFilterOption = {
@@ -366,16 +368,39 @@ function getTimingWindowSearchTarget(
   };
 }
 
+function getTimingWindowsSearchTarget(
+  timingWindows: TimingWindowCandidate[],
+): RitualTimingSearchTarget | undefined {
+  const usefulTimingWindows = timingWindows.filter(
+    (timingWindow, index, candidates) =>
+      candidates.findIndex((candidate) => candidate.id === timingWindow.id) ===
+        index,
+  );
+
+  if (usefulTimingWindows.length === 0) {
+    return undefined;
+  }
+
+  return {
+    label: usefulTimingWindows[0].label,
+    evidence: usefulTimingWindows.flatMap(timingWindowEvidence),
+    timingWindow: usefulTimingWindows[0],
+    timingWindows: usefulTimingWindows,
+  };
+}
+
 export function getRitualTimingSearchTarget(
   timingFilter: RitualTimingFilter,
   timingWindow?: TimingWindowCandidate,
+  timingWindows: TimingWindowCandidate[] = timingWindow ? [timingWindow] : [],
 ): RitualTimingSearchTarget | undefined {
   if (timingFilter === "all") {
     return undefined;
   }
 
   if (timingFilter === "current") {
-    return timingWindow ? getTimingWindowSearchTarget(timingWindow) : undefined;
+    return getTimingWindowsSearchTarget(timingWindows) ??
+      (timingWindow ? getTimingWindowSearchTarget(timingWindow) : undefined);
   }
 
   return ritualTimingPresetTargets[timingFilter];
@@ -719,6 +744,7 @@ export function searchRituals(
   const timingTarget = getRitualTimingSearchTarget(
     timingFilter,
     criteria.timingWindow,
+    criteria.timingWindows,
   );
 
   const filtered = rituals.filter((ritual) => {
@@ -792,6 +818,7 @@ export function searchRituals(
 
   return sortRituals(filtered, criteria.sort ?? "match", rituals, {
     timingWindow: criteria.timingWindow,
+    timingWindows: criteria.timingWindows,
     timingFilter,
   });
 }
@@ -839,7 +866,10 @@ export function sortRituals(
   rituals: Ritual[],
   sort: RitualSortKey,
   originalOrder: Ritual[] = rituals,
-  options: Pick<RitualSearchCriteria, "timingWindow" | "timingFilter"> = {},
+  options: Pick<
+    RitualSearchCriteria,
+    "timingWindow" | "timingWindows" | "timingFilter"
+  > = {},
 ): Ritual[] {
   const order = originalIndexMap(originalOrder);
   const sorted = [...rituals];
@@ -861,6 +891,7 @@ export function sortRituals(
     const timingTarget = getRitualTimingSearchTarget(
       options.timingFilter,
       options.timingWindow,
+      options.timingWindows,
     );
 
     return sorted.sort((a, b) => {

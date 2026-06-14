@@ -140,6 +140,7 @@ export type SignedInShellOptions = {
   chooseWithMeRecommendationInstanceId?: string;
   chooseWithMeInteractionStatus?: string;
   currentTimingWindow?: TimingWindowCandidate;
+  currentTimingWindows?: TimingWindowCandidate[];
   manageRitualFilters?: Partial<ManageRitualFilters>;
   ritualRepository?: RitualRepository;
   ritualRepositorySource?: string;
@@ -169,6 +170,7 @@ type SearchRitualsRenderOptions = {
   favoritesOnly?: boolean;
   favorites?: RitualFavorite[];
   currentTimingWindow?: TimingWindowCandidate;
+  currentTimingWindows?: TimingWindowCandidate[];
   ritualRepository?: RitualRepository;
 };
 
@@ -743,6 +745,7 @@ function renderRitualResultCard(
   selectedRitualId: string,
   options: {
     timingWindow?: TimingWindowCandidate;
+    timingWindows?: TimingWindowCandidate[];
     timingFilter?: RitualTimingFilter;
     favorites?: readonly RitualFavorite[];
   } = {},
@@ -771,6 +774,7 @@ function renderRitualResultCard(
           getRitualTimingSearchTarget(
             options.timingFilter,
             options.timingWindow,
+            options.timingWindows,
           ),
         )
       : null;
@@ -912,6 +916,9 @@ export function renderSearchRitualsBody(options: SearchRitualsRenderOptions = {}
   const selectedTiming = options.timing === "current" && !options.currentTimingWindow
     ? "all"
     : options.timing ?? "all";
+  const currentTimingWindows =
+    options.currentTimingWindows ??
+    (options.currentTimingWindow ? [options.currentTimingWindow] : []);
   const favorites = options.favorites ?? [];
   const activeFavoriteIds = getActiveFavoriteIds(favorites);
   const favoritesOnly = options.favoritesOnly ?? false;
@@ -934,6 +941,7 @@ export function renderSearchRitualsBody(options: SearchRitualsRenderOptions = {}
     sort: selectedSort,
     timingFilter: selectedTiming,
     timingWindow: options.currentTimingWindow,
+    timingWindows: currentTimingWindows,
   });
   const results = favoritesOnly
     ? searchedResults.filter((ritual) => activeFavoriteIds.has(ritual.id))
@@ -976,6 +984,7 @@ export function renderSearchRitualsBody(options: SearchRitualsRenderOptions = {}
             {
               timingFilter: selectedTiming,
               timingWindow: options.currentTimingWindow,
+              timingWindows: currentTimingWindows,
               favorites,
             },
           )).join("")
@@ -2376,6 +2385,7 @@ export function renderSignedInShell(
     favoritesOnly: options.ritualSearchFavoritesOnly,
     favorites: options.ritualFavorites,
     currentTimingWindow: options.currentTimingWindow,
+    currentTimingWindows: options.currentTimingWindows,
     ritualRepository: options.ritualRepository,
   });
   const manageRituals = renderManageRitualsSection({

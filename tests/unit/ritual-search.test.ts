@@ -10,7 +10,11 @@ import {
   searchRituals,
 } from "../../src/data/rituals/search-rituals";
 import type { Ritual } from "../../src/data/rituals/types";
-import { getTimingWindowCandidates } from "../../src/lib/timing-window-candidates";
+import {
+  getStrongTimingWindowCandidates,
+  getTimingWindowCandidates,
+  isStrongTimingWindowCandidate,
+} from "../../src/lib/timing-window-candidates";
 
 function getNewMoonWindow() {
   const window = getTimingWindowCandidates({
@@ -25,6 +29,33 @@ function getNewMoonWindow() {
   }
 
   return window;
+}
+
+function getCurrentNewMoonWindows() {
+  const currentDate = new Date("2026-06-14T12:00:00.000-06:00");
+  const threeDaysMs = 3 * 24 * 60 * 60 * 1000;
+  const windows = getTimingWindowCandidates({
+    startDate: currentDate,
+    timezone: "America/Denver",
+    daysAhead: 4,
+    options: { maxCandidates: 8 },
+  });
+
+  return getStrongTimingWindowCandidates(
+    windows.filter((candidate) => {
+      const startsAt = new Date(candidate.startsAtIso);
+      const endsAt = candidate.endsAtIso
+        ? new Date(candidate.endsAtIso)
+        : undefined;
+
+      return (
+        isStrongTimingWindowCandidate(candidate) &&
+        ((startsAt <= currentDate && (!endsAt || endsAt >= currentDate)) ||
+          (startsAt > currentDate &&
+            startsAt.getTime() - currentDate.getTime() <= threeDaysMs))
+      );
+    }),
+  );
 }
 
 function resultIds(query: string, selectedChips: string[] = []): string[] {
@@ -262,6 +293,38 @@ describe("Ritual search", () => {
     expect(
       results.every((ritual) =>
         Boolean(getRitualTimingSearchMatch(ritual, window)),
+      ),
+    ).toBe(true);
+  });
+
+  it("uses all strong current timing signals for this timing window search", () => {
+    const windows = getCurrentNewMoonWindows();
+    const results = searchRituals(sourceBackedRituals, {
+      timingFilter: "current",
+      timingWindow: windows[0],
+      timingWindows: windows,
+    });
+    const ids = results.map((ritual) => ritual.id);
+    const timingTarget = getRitualTimingSearchTarget(
+      "current",
+      windows[0],
+      windows,
+    );
+
+    expect(windows.map((window) => window.label)).toEqual(
+      expect.arrayContaining(["New Moon", "New moon", "Sextile aspect"]),
+    );
+    expect(results).toHaveLength(24);
+    expect(ids).toEqual(
+      expect.arrayContaining([
+        "candidate.moon_book.lunation_map_one_desire",
+        "candidate.dominguez.moon-phase-timing-check",
+        "candidate.saint_thomas.long_distance_calendar_light",
+      ]),
+    );
+    expect(
+      results.every((ritual) =>
+        Boolean(getRitualTimingSearchMatch(ritual, timingTarget)),
       ),
     ).toBe(true);
   });

@@ -4,7 +4,10 @@ import type {
   RitualCarrier,
   RitualPurpose,
 } from "./types";
-import type { TimingWindowCandidate } from "../../lib/timing-window-candidates";
+import {
+  getStrongTimingWindowCandidates,
+  type TimingWindowCandidate,
+} from "../../lib/timing-window-candidates";
 import type { TimingFact } from "../../lib/timing-facts";
 import type { LunarTimingFact } from "../../lib/lunar-timing";
 import type {
@@ -313,36 +316,34 @@ function timingWindowEvidence(candidate: TimingWindowCandidate): string[] {
   ];
 }
 
-function isStrongTimingWindow(
-  candidate: TimingWindowCandidate | undefined,
-): candidate is TimingWindowCandidate {
-  return candidate !== undefined && candidate.strength !== "accent" && candidate.score >= 10;
+function selectTimingWindows(
+  request: ChooseWithMeRequest,
+): TimingWindowCandidate[] {
+  const context = request.timingContext;
+
+  if (request.timeScope !== "best_moment_this_week") {
+    return [];
+  }
+
+  const candidates = context?.selectedTimingWindow
+    ? [
+        context.selectedTimingWindow,
+        ...(context.timingWindowCandidates ?? []).filter(
+          (candidate) => candidate.id !== context.selectedTimingWindow?.id,
+        ),
+      ]
+    : context?.timingWindowCandidates ?? [];
+
+  return getStrongTimingWindowCandidates(
+    candidates,
+    context?.timingWindowCandidateIds,
+  );
 }
 
 function selectTimingWindow(
   request: ChooseWithMeRequest,
 ): TimingWindowCandidate | undefined {
-  const context = request.timingContext;
-
-  if (request.timeScope !== "best_moment_this_week") {
-    return undefined;
-  }
-
-  if (isStrongTimingWindow(context?.selectedTimingWindow)) {
-    return context.selectedTimingWindow;
-  }
-
-  const candidates = context?.timingWindowCandidates ?? [];
-
-  for (const candidateId of context?.timingWindowCandidateIds ?? []) {
-    const match = candidates.find((candidate) => candidate.id === candidateId);
-
-    if (isStrongTimingWindow(match)) {
-      return match;
-    }
-  }
-
-  return candidates.find(isStrongTimingWindow);
+  return selectTimingWindows(request)[0];
 }
 
 function getSuppliedTimingEvidence(request: ChooseWithMeRequest): {
@@ -352,14 +353,13 @@ function getSuppliedTimingEvidence(request: ChooseWithMeRequest): {
   evidenceText: string[];
 } {
   const context = request.timingContext;
-  const selectedWindow = selectTimingWindow(request);
+  const selectedWindows = selectTimingWindows(request);
+  const selectedWindow = selectedWindows[0];
   const factEvidence = uniqueStrings([
     ...(context?.timingFacts ?? []),
     ...(context?.timingFactDetails ?? []).flatMap(lunarTimingFactEvidence),
     ...(context?.computedTimingFacts ?? []).flatMap(timingFactEvidence),
-    ...(request.timeScope === "best_moment_this_week" && selectedWindow
-      ? timingWindowEvidence(selectedWindow)
-      : []),
+    ...selectedWindows.flatMap(timingWindowEvidence),
   ]);
   const windowEvidence = uniqueStrings(
     (context?.timingWindowCandidates ?? []).flatMap((candidate) => [

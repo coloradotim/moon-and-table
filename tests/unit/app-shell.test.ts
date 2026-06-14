@@ -20,7 +20,11 @@ import {
 import { resolvePrivateBriefData } from "../../src/lib/private-data";
 import { sourceBackedRituals } from "../../src/data/rituals/source-backed-rituals";
 import { createRitualDbMirrorDryRun } from "../../src/data/rituals/db-mirror";
-import { getTimingWindowCandidates } from "../../src/lib/timing-window-candidates";
+import {
+  getStrongTimingWindowCandidates,
+  getTimingWindowCandidates,
+  isStrongTimingWindowCandidate,
+} from "../../src/lib/timing-window-candidates";
 import type { ChooseWithMeResult } from "../../src/data/rituals/choose-with-me-selector";
 import type { RitualFavorite } from "../../src/data/rituals/household-state";
 
@@ -36,6 +40,33 @@ function createDbDocuments(rituals = sourceBackedRituals) {
     versionDocuments: report.mirrored.map((record) => record.versionDocument),
     validationSnapshots: report.mirrored.map((record) => record.validationSnapshot),
   };
+}
+
+function getCurrentNewMoonWindows() {
+  const currentDate = new Date("2026-06-14T12:00:00.000-06:00");
+  const threeDaysMs = 3 * 24 * 60 * 60 * 1000;
+  const windows = getTimingWindowCandidates({
+    startDate: currentDate,
+    timezone: "America/Denver",
+    daysAhead: 4,
+    options: { maxCandidates: 8 },
+  });
+
+  return getStrongTimingWindowCandidates(
+    windows.filter((candidate) => {
+      const startsAt = new Date(candidate.startsAtIso);
+      const endsAt = candidate.endsAtIso
+        ? new Date(candidate.endsAtIso)
+        : undefined;
+
+      return (
+        isStrongTimingWindowCandidate(candidate) &&
+        ((startsAt <= currentDate && (!endsAt || endsAt >= currentDate)) ||
+          (startsAt > currentDate &&
+            startsAt.getTime() - currentDate.getTime() <= threeDaysMs))
+      );
+    }),
+  );
 }
 
 function getNewMoonWindow() {
@@ -1186,6 +1217,20 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("timing_window_signal");
     expect(html).not.toContain("timing.lunation");
     expect(html).not.toContain("candidate.saint_thomas.long_distance_calendar_light");
+  });
+
+  it("renders this timing window search with the full current timing shape", () => {
+    const windows = getCurrentNewMoonWindows();
+    const html = renderSearchRitualsSection({
+      timing: "current",
+      currentTimingWindow: windows[0],
+      currentTimingWindows: windows,
+    });
+
+    expect(html).toContain(">This timing window</option>");
+    expect(html).toContain("24 rituals found");
+    expect(html).toContain("Matches: New Moon");
+    expect(html).toContain("candidate.saint_thomas.long_distance_calendar_light");
   });
 
   it("renders named timing filter results without needing a current timing window", () => {

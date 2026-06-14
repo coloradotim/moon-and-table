@@ -581,6 +581,46 @@ describe("chooseWithMeRitual", () => {
     expect(result.debug.timing.matchedRitualTiming).toContain("new moon");
   });
 
+  it("uses all strong selected timing windows for across-the-week recommendations", () => {
+    const venusMars = makeRitual({
+      id: "required-venus-mars-window",
+      recommendationMetadata: {
+        ...makeRitual({}).recommendationMetadata,
+        timing: {
+          relationship: "required",
+          contexts: ["venus trine mars"],
+        },
+      },
+    });
+    const newMoonWindow = makeTimingWindow({
+      id: "timing_window.new_moon.first",
+    });
+    const venusMarsWindow = makeTimingWindow({
+      id: "timing_window.venus_trine_mars.second",
+      label: "Venus trine Mars",
+      timingFacts: [makePlanetaryAspectFact()],
+      signalKeys: ["timing_rule.planetary_aspect.trine"],
+    });
+
+    const result = chooseWithMeRitual([venusMars], {
+      timeScope: "best_moment_this_week",
+      energyCapacity: "enough_to_engage",
+      capacityMode: "steady",
+      audience: "me",
+      purpose: "tending",
+      carrier: "table",
+      timingContext: {
+        computedTimingFacts: [makeMoonPhaseFact("waning")],
+        timingWindowCandidates: [newMoonWindow, venusMarsWindow],
+        timingWindowCandidateIds: [newMoonWindow.id, venusMarsWindow.id],
+      },
+    });
+
+    expect(result.status).toBe("selected");
+    expect(result.debug.timing.selectedWindow).toBe(newMoonWindow.id);
+    expect(result.debug.timing.matchedRitualTiming).toContain("venus trine mars");
+  });
+
   it("does not treat a weak across-week window as satisfying required timing", () => {
     const requiredNewMoon = makeRitual({
       id: "required-new-moon-weak-window",

@@ -67,6 +67,37 @@ const CORE_TRANSIT_BODIES = new Set([
   "saturn",
 ]);
 
+export function isStrongTimingWindowCandidate(
+  candidate: TimingWindowCandidate | undefined,
+): candidate is TimingWindowCandidate {
+  return candidate !== undefined && candidate.strength !== "accent" &&
+    candidate.score >= 10;
+}
+
+export function getStrongTimingWindowCandidates(
+  candidates: TimingWindowCandidate[] = [],
+  selectedCandidateIds: string[] = [],
+): TimingWindowCandidate[] {
+  const selectedCandidates = selectedCandidateIds
+    .map((candidateId) =>
+      candidates.find((candidate) => candidate.id === candidateId),
+    )
+    .filter(isStrongTimingWindowCandidate);
+  const sourceCandidates =
+    selectedCandidates.length > 0
+      ? selectedCandidates
+      : candidates.filter(isStrongTimingWindowCandidate);
+  const uniqueCandidates = new Map<string, TimingWindowCandidate>();
+
+  for (const candidate of sourceCandidates) {
+    if (!uniqueCandidates.has(candidate.id)) {
+      uniqueCandidates.set(candidate.id, candidate);
+    }
+  }
+
+  return [...uniqueCandidates.values()];
+}
+
 function resolveDate(value: Date | string): Date {
   const date = value instanceof Date ? new Date(value) : new Date(value);
 
