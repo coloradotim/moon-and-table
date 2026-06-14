@@ -92,6 +92,47 @@ function isQuotaExceededError(error: unknown): boolean {
     message.includes("quota exceeded");
 }
 
+function getErrorCode(error: unknown): string {
+  const code = (error as { code?: unknown } | undefined)?.code;
+
+  return typeof code === "string" || typeof code === "number" ? String(code) : "";
+}
+
+function isPermissionDeniedError(error: unknown): boolean {
+  const message = getErrorMessage(error).toLowerCase();
+  const code = getErrorCode(error).toLowerCase();
+
+  return code === "7" ||
+    code === "permission-denied" ||
+    code === "permission_denied" ||
+    message.includes("permission_denied") ||
+    message.includes("permission denied") ||
+    message.includes("missing or insufficient permissions");
+}
+
+function isAlreadyExistsError(error: unknown): boolean {
+  const message = getErrorMessage(error).toLowerCase();
+  const code = getErrorCode(error).toLowerCase();
+
+  return code === "6" ||
+    code === "already-exists" ||
+    code === "already_exists" ||
+    message.includes("already_exists") ||
+    message.includes("already exists");
+}
+
+function isInvalidArgumentError(error: unknown): boolean {
+  const message = getErrorMessage(error).toLowerCase();
+  const code = getErrorCode(error).toLowerCase();
+
+  return code === "3" ||
+    code === "invalid-argument" ||
+    code === "invalid_argument" ||
+    message.includes("invalid_argument") ||
+    message.includes("invalid argument") ||
+    message.includes("cannot use undefined");
+}
+
 function createUnexpectedApiError(error: unknown): {
   status: number;
   body: SubmitRitualReviewActionResult;
@@ -101,6 +142,30 @@ function createUnexpectedApiError(error: unknown): {
       "firestore",
       "Firestore quota was exceeded, so the review decision was not recorded. Wait for quota to reset or check the Firebase quota page before trying again.",
       429,
+    );
+  }
+
+  if (isPermissionDeniedError(error)) {
+    return invalid(
+      "firestore",
+      "Firestore denied the review-action write. Check the server credentials for Ritual review actions.",
+      403,
+    );
+  }
+
+  if (isAlreadyExistsError(error)) {
+    return invalid(
+      "reviewAction",
+      "That review decision was already recorded. Refresh Manage Rituals before trying another action.",
+      409,
+    );
+  }
+
+  if (isInvalidArgumentError(error)) {
+    return invalid(
+      "reviewAction",
+      "Review action write payload was rejected by Firestore. Refresh and try again; if it repeats, the write payload needs a code fix.",
+      400,
     );
   }
 
@@ -162,6 +227,7 @@ export async function handleRitualReviewActionApi(
 
     send(response, body.valid ? 200 : 400, body);
   } catch (error) {
+    console.error("[ritual-review-action] failed", error);
     const result = createUnexpectedApiError(error);
 
     send(response, result.status, result.body);

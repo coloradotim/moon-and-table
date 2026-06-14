@@ -48,6 +48,7 @@ export type RitualStaticExportReport = {
 
 const TARGET_FILE = "src/data/rituals/source-backed-rituals.ts" as const;
 const EXPORTABLE_LIFECYCLE_STATES = new Set<RitualDbLifecycleState>([
+  "held",
   "reviewed",
   "recommendable",
 ]);
@@ -161,6 +162,28 @@ function createSkippedRecord(
   };
 }
 
+function applyLifecycleOverlay(
+  ritual: Ritual,
+  ritualDocument: RitualDocument,
+): Ritual {
+  return {
+    ...ritual,
+    availability: {
+      findable: ritualDocument.lifecycle.findable,
+      directUseEligible: ritualDocument.lifecycle.directUseEligible,
+      recommendationEligible: ritualDocument.lifecycle.recommendationEligible,
+    },
+    recommendationMetadata: {
+      ...ritual.recommendationMetadata,
+      eligibility: {
+        ...ritual.recommendationMetadata.eligibility,
+        recommendable: ritualDocument.lifecycle.recommendable,
+        missing: [...ritualDocument.lifecycle.missingReadiness],
+      },
+    },
+  };
+}
+
 function buildStaticRitualsSource(rituals: readonly Ritual[]): string {
   const records = rituals.map((ritual) => toStableJsonValue(cloneJson(ritual)));
 
@@ -215,7 +238,7 @@ export function createRitualStaticExport(
       reasons.push(
         finding(
           "ritualDocument.lifecycle.state",
-          "Static export requires reviewed or recommendable lifecycle state.",
+          "Static export requires held, reviewed, or recommendable lifecycle state.",
         ),
       );
     }
@@ -330,7 +353,7 @@ export function createRitualStaticExport(
       versionId: versionDocument.versionId,
       contentHash: versionDocument.contentHash,
       lifecycleState: ritualDocument.lifecycle.state,
-      ritual: cloneJson(versionDocument.ritual),
+      ritual: applyLifecycleOverlay(cloneJson(versionDocument.ritual), ritualDocument),
     });
   }
 

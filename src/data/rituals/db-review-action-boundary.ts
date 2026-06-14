@@ -306,6 +306,22 @@ function collectionNameForWrite(
   return write.collection;
 }
 
+function stripUndefinedValues(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    return value.map(stripUndefinedValues);
+  }
+
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value)
+        .filter(([, entryValue]) => entryValue !== undefined)
+        .map(([key, entryValue]) => [key, stripUndefinedValues(entryValue)]),
+    );
+  }
+
+  return value;
+}
+
 export function createAdminFirestoreRitualReviewActionStore(
   db: AdminFirestoreReviewActionDb,
 ): RitualReviewActionStore {
@@ -336,11 +352,12 @@ export function createAdminFirestoreRitualReviewActionStore(
 
       for (const write of plan.writes) {
         const ref = db.collection(collectionNameForWrite(write)).doc(write.id);
+        const document = stripUndefinedValues(write.document);
 
         if (write.operation === "create") {
-          batch.create(ref, write.document);
+          batch.create(ref, document);
         } else {
-          batch.set(ref, write.document);
+          batch.set(ref, document);
         }
       }
 

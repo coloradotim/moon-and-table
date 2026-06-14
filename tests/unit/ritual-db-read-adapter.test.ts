@@ -148,7 +148,7 @@ describe("Ritual DB read adapter", () => {
     );
   });
 
-  it("falls back when DB output does not match the static runtime library", () => {
+  it("keeps using DB reads while reporting static parity diagnostics", () => {
     const result = createRitualDbReadRepository({
       ...createDbDocuments(1),
       enabled: true,
@@ -156,10 +156,47 @@ describe("Ritual DB read adapter", () => {
       staticParityRituals: sourceBackedRituals.slice(1, 2),
     });
 
-    expect(result.source).toBe("static_fallback_parity_failed");
+    expect(result.source).toBe("db");
+    expect(result.dbDocuments?.ritualDocuments).toHaveLength(1);
+    expect(result.findings.map((finding) => finding.message)).toContain(
+      "Static Ritual is missing from DB read payload.",
+    );
     expect(result.repository.getAllRitualsForManager()).toEqual(
       sourceBackedRituals.slice(0, 1),
     );
+  });
+
+  it("reads DB lifecycle review decisions that have moved ahead of the repo", () => {
+    const documents = createDbDocuments(1);
+    const held = clone(documents);
+
+    held.ritualDocuments[0].lifecycle = {
+      ...held.ritualDocuments[0].lifecycle,
+      state: "held",
+      directUseEligible: false,
+      recommendationEligible: false,
+      recommendable: false,
+      missingReadiness: ["direct_use_review", "recommendation_review"],
+      holdReasons: ["direct_use_hold"],
+    };
+
+    const result = createRitualDbReadRepository({
+      ...held,
+      enabled: true,
+      staticFallbackRepository: createFallbackRepository(1),
+      staticParityRituals: sourceBackedRituals.slice(0, 1),
+    });
+    const ritual = result.repository.getRitualById(sourceBackedRituals[0].id);
+
+    expect(result.source).toBe("db");
+    expect(result.dbDocuments?.ritualDocuments[0].id).toBe(sourceBackedRituals[0].id);
+    expect(ritual?.availability.directUseEligible).toBe(false);
+    expect(ritual?.availability.recommendationEligible).toBe(false);
+    expect(ritual?.recommendationMetadata.eligibility.recommendable).toBe(false);
+    expect(ritual?.recommendationMetadata.eligibility.missing).toEqual([
+      "direct_use_review",
+      "recommendation_review",
+    ]);
   });
 
   it("reads the rollback target when the published pointer moves to an older valid version", () => {
