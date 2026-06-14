@@ -39,9 +39,12 @@ import {
   MANAGE_RITUAL_READINESS_FILTERS,
   MANAGE_RITUAL_VALIDATION_FILTERS,
   type ManageRitualAvailabilityFilter,
+  type ManageRitualDbDocuments,
   type ManageRitualFilters,
   type ManageRitualOriginFilter,
   type ManageRitualReadinessFilter,
+  type ManageRitualReviewActionOption,
+  type ManageRitualReviewState,
   type ManageRitualSortKey,
   type ManageRitualStatusFilter,
   type ManageRitualValidationFilter,
@@ -139,6 +142,13 @@ export type SignedInShellOptions = {
   currentTimingWindow?: TimingWindowCandidate;
   manageRitualFilters?: Partial<ManageRitualFilters>;
   ritualRepository?: RitualRepository;
+  ritualRepositorySource?: string;
+  ritualDbDocuments?: ManageRitualDbDocuments;
+  manageRitualActionStatus?: {
+    ritualId?: string;
+    tone: "success" | "error" | "info";
+    message: string;
+  };
 };
 
 function escapeHtml(value: string): string {
@@ -1218,6 +1228,104 @@ function renderYesNo(value: boolean): string {
   return value ? "yes" : "no";
 }
 
+function renderManageReviewFacts(reviewState: ManageRitualReviewState): string {
+  return `
+    <dl class="manage-rituals__review-facts">
+      <div><dt>Lifecycle</dt><dd>${escapeHtml(reviewState.lifecycleState ?? "not loaded")}</dd></div>
+      <div><dt>Current version</dt><dd><code>${escapeHtml(reviewState.currentVersionId ?? "not loaded")}</code></dd></div>
+      <div><dt>Published version</dt><dd><code>${escapeHtml(reviewState.publishedVersionId ?? "none")}</code></dd></div>
+      <div><dt>Validation snapshot</dt><dd>${escapeHtml(reviewState.validationSnapshotValid === true ? "passing" : reviewState.validationSnapshotValid === false ? "has findings" : "not loaded")}</dd></div>
+      <div><dt>Hold reasons</dt><dd>${escapeHtml(formatManageList(reviewState.holdReasons))}</dd></div>
+      <div><dt>Source IDs</dt><dd>${escapeHtml(formatManageList(reviewState.sourceIds))}</dd></div>
+      <div><dt>Source runs</dt><dd>${escapeHtml(formatManageList(reviewState.sourceRunIds))}</dd></div>
+      <div><dt>Import batches</dt><dd>${escapeHtml(formatManageList(reviewState.importBatchIds))}</dd></div>
+      <div><dt>Packet candidates</dt><dd>${escapeHtml(formatManageList(reviewState.packetCandidateIds))}</dd></div>
+    </dl>
+  `;
+}
+
+function renderManageActionOption(action: ManageRitualReviewActionOption): string {
+  const disabled = action.enabled ? "" : " disabled";
+  const reason = action.disabledReason ? ` - ${action.disabledReason}` : "";
+
+  return `
+    <option
+      value="${escapeHtml(action.action)}"
+      data-requires-reason="${action.requiresReason ? "true" : "false"}"
+      ${disabled}
+    >${escapeHtml(`${action.label}${reason}`)}</option>
+  `;
+}
+
+function renderManageActionList(actions: ManageRitualReviewActionOption[]): string {
+  return `
+    <ul class="manage-rituals__review-actions">
+      ${actions.map((action) => `
+        <li class="manage-rituals__review-action${action.enabled ? "" : " manage-rituals__review-action--blocked"}${action.tone === "danger" ? " manage-rituals__review-action--danger" : ""}">
+          <strong>${escapeHtml(action.label)}</strong>
+          <span>${escapeHtml(action.enabled ? action.description : action.disabledReason ?? action.description)}</span>
+        </li>
+      `).join("")}
+    </ul>
+  `;
+}
+
+function renderManageReviewPanel(row: ReturnType<typeof createManageRitualsViewModel>["rows"][number]): string {
+  const reviewState = row.reviewState;
+  const enabledActions = reviewState.actions.filter((action) => action.enabled);
+
+  return `
+    <section class="manage-rituals__review-panel" aria-label="${escapeHtml(`Review workflow for ${row.headline}`)}">
+      <div class="manage-rituals__review-header">
+        <div>
+          <h4>Review workflow</h4>
+          <p>${escapeHtml(reviewState.unavailableReason ?? "Records a DB review decision and audit event. Ritual content remains versioned.")}</p>
+        </div>
+        <span class="manage-rituals__review-badge">${escapeHtml(reviewState.dbBacked ? "DB-backed" : "read-only")}</span>
+      </div>
+      <div class="manage-rituals__review-layout">
+        <section class="manage-rituals__review-current" aria-label="Current review state">
+          <h5>Current state</h5>
+          ${renderManageReviewFacts(reviewState)}
+        </section>
+        <form
+          class="manage-rituals__review-form"
+          data-manage-ritual-review-form="true"
+          data-ritual-id="${escapeHtml(row.id)}"
+          data-version-id="${escapeHtml(reviewState.currentVersionId ?? "")}"
+        >
+          <label>
+            <span>Review action</span>
+            <select name="manageRitualReviewAction" ${enabledActions.length === 0 ? "disabled" : ""}>
+              ${enabledActions.length === 0
+                ? '<option value="">No actions available</option>'
+                : reviewState.actions.map(renderManageActionOption).join("")}
+            </select>
+          </label>
+          <label>
+            <span>Reason or note</span>
+            <textarea
+              name="manageRitualReviewReason"
+              rows="4"
+              placeholder="Required for holds, source rechecks, archive actions, and review notes."
+              ${enabledActions.length === 0 ? "disabled" : ""}
+            ></textarea>
+          </label>
+          <button
+            type="submit"
+            class="manage-rituals__review-submit"
+            ${enabledActions.length === 0 ? "disabled" : ""}
+          >Record review decision</button>
+        </form>
+        <section class="manage-rituals__review-eligibility" aria-label="Review action eligibility">
+          <h5>Action eligibility</h5>
+          ${renderManageActionList(reviewState.actions)}
+        </section>
+      </div>
+    </section>
+  `;
+}
+
 function renderManageRitualsFilters(
   filters: ManageRitualFilters,
   sourceOptions: Array<{ value: string; label: string }>,
@@ -1345,11 +1453,18 @@ function renderManageSortHeader(
 export function renderManageRitualsSection(options: {
   filters?: Partial<ManageRitualFilters>;
   ritualRepository?: RitualRepository;
+  ritualRepositorySource?: string;
+  ritualDbDocuments?: ManageRitualDbDocuments;
+  actionStatus?: SignedInShellOptions["manageRitualActionStatus"];
 } = {}): string {
   const ritualRepository = options.ritualRepository ?? staticRitualRepository;
   const viewModel = createManageRitualsViewModel(
     ritualRepository.getAllRitualsForManager(),
     options.filters,
+    {
+      dbBacked: options.ritualRepositorySource === "db",
+      dbDocuments: options.ritualDbDocuments,
+    },
   );
   const counts = viewModel.counts;
   const intentionallyHeldFromRecommendations = Math.max(
@@ -1369,6 +1484,12 @@ export function renderManageRitualsSection(options: {
         <h2>Manage rituals</h2>
         <p>${escapeHtml(statusSummary)}.</p>
       </header>
+
+      ${options.actionStatus ? `
+        <p class="manage-rituals__action-status manage-rituals__action-status--${escapeHtml(options.actionStatus.tone)}" role="status">
+          ${escapeHtml(options.actionStatus.message)}
+        </p>
+      ` : ""}
 
       <details class="manage-rituals__summary">
         <summary>Readiness summary</summary>
@@ -1409,6 +1530,7 @@ export function renderManageRitualsSection(options: {
                 <span class="manage-rituals__record-issues">${escapeHtml(formatManageList(row.issues))}</span>
               </summary>
               <div class="manage-rituals__record-detail">
+                      ${renderManageReviewPanel(row)}
                       <div class="manage-rituals__detail-grid">
                         <section>
                           <h4>Presentation</h4>
@@ -2203,6 +2325,9 @@ export function renderSignedInShell(
   const manageRituals = renderManageRitualsSection({
     filters: options.manageRitualFilters,
     ritualRepository: options.ritualRepository,
+    ritualRepositorySource: options.ritualRepositorySource,
+    ritualDbDocuments: options.ritualDbDocuments,
+    actionStatus: options.manageRitualActionStatus,
   });
   const howItWorks = renderHowItWorksSection();
   const activeContent =

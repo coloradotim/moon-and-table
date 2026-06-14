@@ -74,8 +74,16 @@ import {
 import {
   isRitualDbReadFeatureEnabled,
   loadRitualDbReadRepository,
+  type RitualDbReadDocuments,
+  type RitualDbReadRepositorySource,
 } from "./data/rituals/db-read-adapter";
 import { loadRitualDbReadDocumentsFromFirestore } from "./data/rituals/db-read-firestore";
+import { createRitualDbMirrorDryRun } from "./data/rituals/db-mirror";
+import { submitRitualReviewAction } from "./data/rituals/review-action-client";
+import {
+  RITUAL_REVIEW_ACTIONS,
+  type RitualReviewAction,
+} from "./data/rituals/db-review-transactions";
 import { sourceBackedRituals } from "./data/rituals/source-backed-rituals";
 import {
   ritualTimingPresetOptions,
@@ -162,6 +170,16 @@ let ritualInteractionStore = createRecommendationEventStore();
 let activeChooseWithMeRecommendationInstance: RecommendationInstance | null = null;
 let activeChooseWithMeInteractionStatus: string | undefined;
 let activeRitualRepository: RitualRepository = staticRitualRepository;
+let activeRitualRepositorySource: RitualDbReadRepositorySource =
+  "static_fallback_disabled";
+let activeRitualDbDocuments: RitualDbReadDocuments | undefined;
+let activeManageRitualActionStatus:
+  | {
+    ritualId?: string;
+    tone: "success" | "error" | "info";
+    message: string;
+  }
+  | undefined;
 
 function resetRitualSearchState(): void {
   activeRitualSearchQuery = "";
@@ -187,6 +205,8 @@ function resetRitualInteractionState(): void {
 
 async function loadActiveRitualRepository(): Promise<void> {
   activeRitualRepository = staticRitualRepository;
+  activeRitualRepositorySource = "static_fallback_unavailable";
+  activeRitualDbDocuments = undefined;
 
   if (!firebaseServices) {
     return;
@@ -201,6 +221,8 @@ async function loadActiveRitualRepository(): Promise<void> {
   });
 
   activeRitualRepository = result.repository;
+  activeRitualRepositorySource = result.source;
+  activeRitualDbDocuments = result.dbDocuments;
   window.__moonTableRitualRepositorySource = result.source;
   window.__moonTableRitualRepositoryFallbackReason = result.fallbackReason;
   window.__moonTableRitualRepositoryFindings = result.findings;
@@ -466,6 +488,9 @@ function renderActiveSignedInShell(options: {
     selectedRitualId: activeSelectedRitualId,
     manageRitualFilters: activeManageRitualFilters,
     ritualRepository: activeRitualRepository,
+    ritualRepositorySource: activeRitualRepositorySource,
+    ritualDbDocuments: activeRitualDbDocuments,
+    manageRitualActionStatus: activeManageRitualActionStatus,
   });
 }
 
@@ -566,6 +591,15 @@ function renderDevVisualQaState(): void {
   resetRitualSearchState();
   resetRitualInteractionState();
   activeManageRitualFilters = { ...defaultManageRitualFilters };
+  const dbMirrorReport = createRitualDbMirrorDryRun(sourceBackedRituals);
+  activeRitualRepository = staticRitualRepository;
+  activeRitualRepositorySource = "db";
+  activeRitualDbDocuments = {
+    ritualDocuments: dbMirrorReport.mirrored.map((record) => record.ritualDocument),
+    versionDocuments: dbMirrorReport.mirrored.map((record) => record.versionDocument),
+    validationSnapshots: dbMirrorReport.mirrored.map((record) => record.validationSnapshot),
+  };
+  activeManageRitualActionStatus = undefined;
   activeCurrentRitualCheckIn = null;
   activeChooseWithMeResult = null;
   activeFirstLoginCheckIn = false;
@@ -1112,6 +1146,87 @@ function renderSearchRituals(): void {
   activeProfileSettingsTabId = null;
 
   if (activePrivateBriefData) {
+    renderActiveSignedInShell();
+  }
+}
+
+function isRitualReviewAction(value: unknown): value is RitualReviewAction {
+  return typeof value === "string" &&
+    RITUAL_REVIEW_ACTIONS.includes(value as RitualReviewAction);
+}
+
+async function handleManageRitualReviewSubmit(
+  form: HTMLFormElement,
+): Promise<void> {
+  const ritualId = form.dataset.ritualId;
+  const versionId = form.dataset.versionId;
+  const formData = new FormData(form);
+  const actionValue = formData.get("manageRitualReviewAction");
+  const reason = String(formData.get("manageRitualReviewReason") ?? "").trim();
+
+  if (!ritualId || !versionId || !isRitualReviewAction(actionValue)) {
+    activeManageRitualActionStatus = {
+      tone: "error",
+      message: "That review action could not be read from the form.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  const currentUser = firebaseServices?.auth.currentUser;
+  if (!currentUser) {
+    activeManageRitualActionStatus = {
+      ritualId,
+      tone: "error",
+      message: "Sign in again before recording a Ritual review decision.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  activeManageRitualActionStatus = {
+    ritualId,
+    tone: "info",
+    message: "Recording review decision...",
+  };
+  renderActiveSignedInShell();
+
+  try {
+    const result = await submitRitualReviewAction({
+      idToken: await currentUser.getIdToken(),
+      request: {
+        ritualId,
+        versionId,
+        action: actionValue,
+        reasons: reason ? [reason] : [],
+      },
+    });
+
+    if (!result.valid) {
+      activeManageRitualActionStatus = {
+        ritualId,
+        tone: "error",
+        message: result.findings[0]?.message ?? "Review decision was not recorded.",
+      };
+      renderActiveSignedInShell();
+      return;
+    }
+
+    await loadActiveRitualRepository();
+    activeManageRitualActionStatus = {
+      ritualId,
+      tone: "success",
+      message: `Review decision recorded. Lifecycle is now ${result.lifecycleState}.`,
+    };
+    renderActiveSignedInShell();
+  } catch (error) {
+    activeManageRitualActionStatus = {
+      ritualId,
+      tone: "error",
+      message: error instanceof Error
+        ? error.message
+        : "Review decision was not recorded.",
+    };
     renderActiveSignedInShell();
   }
 }
@@ -1823,6 +1938,12 @@ appRoot.addEventListener("submit", (event) => {
   if (target.matches("[data-profile-tuning-form='true']")) {
     event.preventDefault();
     void handleProfileTuningSubmit(target);
+  }
+
+  if (target.matches("[data-manage-ritual-review-form='true']")) {
+    event.preventDefault();
+    void handleManageRitualReviewSubmit(target);
+    return;
   }
 
   if (target.matches("[data-ritual-search-form='true']")) {

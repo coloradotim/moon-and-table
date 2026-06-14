@@ -1,6 +1,7 @@
 # Ritual Review Action Boundary
 
-Status: Current implementation note for issue #478.
+Status: Current implementation note for issue #478 and the #427 Manage Rituals
+review-action UI.
 
 ## Purpose
 
@@ -12,7 +13,9 @@ review decision and audit documents.
 The server/admin boundary is implemented in:
 
 ```text
+api/ritual-review-action.ts
 src/data/rituals/db-review-action-boundary.ts
+src/server/ritual-review-action-api.ts
 ```
 
 It is intentionally narrow. It accepts only:
@@ -56,6 +59,47 @@ or another protected server endpoint. The wrapper should:
 The wrapper should not accept arbitrary Ritual fields, source text, private
 profile data, or raw Firestore write payloads.
 
+The current Vercel wrapper is:
+
+```text
+/api/ritual-review-action
+```
+
+It expects:
+
+```text
+Authorization: Bearer <Firebase ID token>
+Content-Type: application/json
+```
+
+and a body shaped like:
+
+```json
+{
+  "ritualId": "ritual-id",
+  "versionId": "ritual-version-id",
+  "action": "hold_recommendation",
+  "reasons": ["short reviewer note"]
+}
+```
+
+The wrapper uses Firebase Admin credentials from one of:
+
+```text
+FIREBASE_SERVICE_ACCOUNT_JSON
+FIREBASE_SERVICE_ACCOUNT_BASE64
+application default credentials
+```
+
+and authorizes reviewers through server-only allowlists:
+
+```text
+MOON_TABLE_RITUAL_REVIEW_ADMIN_UIDS
+MOON_TABLE_RITUAL_REVIEW_ADMIN_EMAILS
+```
+
+Do not expose these allowlists through `VITE_` client environment variables.
+
 ## Validation
 
 Promotion, archive, and rollback actions require a passing validation snapshot.
@@ -67,9 +111,9 @@ planner rejects the action.
 Hold and note actions preserve reasons without requiring a passing validation
 snapshot, but still create explicit review decision and audit records.
 
-## Follow-Up For #427
+## Manage Rituals
 
-When #427 resumes, the Manage Rituals UI should:
+The Manage Rituals review-action UI should:
 
 - show current lifecycle and version context;
 - compute available actions from the row state and validation state;
@@ -77,3 +121,7 @@ When #427 resumes, the Manage Rituals UI should:
 - show clear success/failure messages;
 - reload the DB Ritual repository after a successful action;
 - avoid raw JSON editing.
+
+The broader Ritual body and metadata editor is tracked separately in #480. It
+should create a new versioned draft/superseding Ritual version rather than
+mutating a published version in place.

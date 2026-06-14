@@ -4,7 +4,22 @@ import {
   createManageRitualsViewModel,
   defaultManageRitualFilters,
 } from "../../src/data/rituals/manage-rituals";
+import { createRitualDbMirrorDryRun } from "../../src/data/rituals/db-mirror";
 import { sourceBackedRituals } from "../../src/data/rituals/source-backed-rituals";
+
+function createDbDocuments(rituals = sourceBackedRituals.slice(0, 3)) {
+  const report = createRitualDbMirrorDryRun(rituals, {
+    generatedAtIso: "2026-06-13T00:00:00.000Z",
+  });
+
+  expect(report.skipped).toEqual([]);
+
+  return {
+    ritualDocuments: report.mirrored.map((record) => record.ritualDocument),
+    versionDocuments: report.mirrored.map((record) => record.versionDocument),
+    validationSnapshots: report.mirrored.map((record) => record.validationSnapshot),
+  };
+}
 
 describe("Manage Rituals view model", () => {
   it("summarizes imported Ritual records with recommendation review overlays", () => {
@@ -153,5 +168,50 @@ describe("Manage Rituals view model", () => {
         validation: "findings",
       }).filteredTotal,
     ).toBe(1);
+  });
+
+  it("computes DB-backed review action eligibility from row state", () => {
+    const rituals = sourceBackedRituals.slice(0, 2);
+    const viewModel = createManageRitualsViewModel(
+      rituals,
+      undefined,
+      {
+        dbBacked: true,
+        dbDocuments: createDbDocuments(rituals),
+      },
+    );
+    const row = viewModel.rows[0];
+
+    expect(row.reviewState.dbBacked).toBe(true);
+    expect(row.reviewState.currentVersionId).toBeTruthy();
+    expect(row.reviewState.validationSnapshotValid).toBe(true);
+    expect(row.reviewState.actions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          action: "hold_direct_use",
+          enabled: true,
+          requiresReason: true,
+        }),
+        expect.objectContaining({
+          action: "add_review_note",
+          enabled: true,
+          requiresReason: true,
+        }),
+        expect.objectContaining({
+          action: "promote_direct_use",
+          enabled: false,
+          disabledReason: "Already direct-use eligible.",
+        }),
+      ]),
+    );
+  });
+
+  it("blocks review actions when the manager is not DB-backed", () => {
+    const viewModel = createManageRitualsViewModel(sourceBackedRituals.slice(0, 1));
+    const row = viewModel.rows[0];
+
+    expect(row.reviewState.dbBacked).toBe(false);
+    expect(row.reviewState.unavailableReason).toContain("Firestore");
+    expect(row.reviewState.actions.every((action) => !action.enabled)).toBe(true);
   });
 });

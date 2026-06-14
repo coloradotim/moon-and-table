@@ -39,6 +39,7 @@ export type RitualDbReadRepositoryResult = {
   source: RitualDbReadRepositorySource;
   repository: RitualRepository;
   findings: RitualDbValidationFinding[];
+  dbDocuments?: RitualDbReadDocuments;
   exportReport?: RitualStaticExportReport;
   parityReport?: RitualDbParityReport;
   fallbackReason?: string;
@@ -210,6 +211,7 @@ export function createRitualDbReadRepository(
       exportReport.records.map((record) => record.ritual),
     ),
     findings: [],
+    dbDocuments: publishedReadDocuments,
     exportReport,
     parityReport,
   };
