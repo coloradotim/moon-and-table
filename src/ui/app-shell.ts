@@ -151,6 +151,23 @@ export type SignedInShellOptions = {
   };
 };
 
+type SearchRitualsRenderOptions = {
+  query?: string;
+  selectedChips?: string[];
+  selectedRitualId?: string | null;
+  sort?: RitualSearchSort;
+  source?: string;
+  purpose?: string;
+  carrier?: string;
+  capacity?: string;
+  audience?: string;
+  timing?: RitualTimingFilter;
+  favoritesOnly?: boolean;
+  favorites?: RitualFavorite[];
+  currentTimingWindow?: TimingWindowCandidate;
+  ritualRepository?: RitualRepository;
+};
+
 function escapeHtml(value: string): string {
   return value
     .replaceAll("&", "&amp;")
@@ -879,22 +896,7 @@ function renderRitualFavoriteButton(options: {
   `;
 }
 
-export function renderSearchRitualsSection(options: {
-  query?: string;
-  selectedChips?: string[];
-  selectedRitualId?: string | null;
-  sort?: RitualSearchSort;
-  source?: string;
-  purpose?: string;
-  carrier?: string;
-  capacity?: string;
-  audience?: string;
-  timing?: RitualTimingFilter;
-  favoritesOnly?: boolean;
-  favorites?: RitualFavorite[];
-  currentTimingWindow?: TimingWindowCandidate;
-  ritualRepository?: RitualRepository;
-} = {}): string {
+export function renderSearchRitualsBody(options: SearchRitualsRenderOptions = {}): string {
   const query = options.query ?? "";
   const selectedChips = options.selectedChips ?? [];
   const selectedSort = options.sort ?? "match";
@@ -953,6 +955,84 @@ export function renderSearchRitualsSection(options: {
   const selectedRitual =
     results.find((ritual) => ritual.id === options.selectedRitualId) ??
     results[0];
+
+  return `
+    <div class="ritual-search__body">
+      <section class="ritual-search__results" aria-label="Ritual results">
+        <div class="ritual-search__results-header">
+          <div>
+            <h3>Select a ritual</h3>
+            <p>${results.length === 1 ? "1 ritual" : `${results.length} rituals`}${hasSearchCriteria ? " found" : " available"}</p>
+          </div>
+        </div>
+        ${results.length > 0
+          ? results.map((ritual) => renderRitualResultCard(
+            ritual,
+            selectedRitual?.id ?? "",
+            {
+              timingFilter: selectedTiming,
+              timingWindow: options.currentTimingWindow,
+              favorites,
+            },
+          )).join("")
+          : `
+            <div class="ritual-search__empty" role="status">
+              <p>${favoritesOnly
+                ? "No saved favorites matched that exact reach."
+                : "Nothing matched that exact reach."}</p>
+              <p>Try one material, purpose, place, or phrase from the ritual you are reaching for.</p>
+            </div>
+          `}
+      </section>
+
+      <section class="ritual-search__preview" aria-label="Selected ritual">
+        ${selectedRitual
+          ? renderRitualPreview(selectedRitual, {
+              showWhyThisFits: false,
+              favoriteControl: {
+                favorites,
+                sourceSurface: "search",
+              },
+            })
+          : `
+            <div class="ritual-search__preview-empty">
+              <p>Selected ritual</p>
+              <p>Choose a ritual from the left to see its shape here.</p>
+            </div>
+          `}
+      </section>
+    </div>
+  `;
+}
+
+export function renderSearchRitualsSection(options: SearchRitualsRenderOptions = {}): string {
+  const query = options.query ?? "";
+  const selectedSource = options.source ?? "all";
+  const selectedPurpose = options.purpose ?? "all";
+  const selectedCarrier = options.carrier ?? "all";
+  const selectedCapacity = options.capacity ?? "all";
+  const selectedAudience = options.audience ?? "all";
+  const selectedTiming = options.timing === "current" && !options.currentTimingWindow
+    ? "all"
+    : options.timing ?? "all";
+  const favoritesOnly = options.favoritesOnly ?? false;
+  const selectedSort = options.sort ?? "match";
+  const ritualRepository = options.ritualRepository ?? staticRitualRepository;
+  const searchRitualLibrary =
+    ritualRepository.getFindableDirectUseRitualsForSearch();
+  const sourceOptions = getRitualSourceOptions(searchRitualLibrary);
+  const purposeOptions = getRitualPurposeOptions(searchRitualLibrary);
+  const carrierOptions = getRitualCarrierOptions(searchRitualLibrary);
+  const capacityOptions = getRitualCapacityOptions(searchRitualLibrary);
+  const audienceOptions = getRitualAudienceOptions(searchRitualLibrary);
+  const activeRefinementCount = [
+    selectedSource !== "all",
+    selectedPurpose !== "all",
+    selectedCarrier !== "all",
+    selectedCapacity !== "all",
+    selectedAudience !== "all",
+    selectedTiming !== "all",
+  ].filter(Boolean).length;
 
   return `
     <article class="ritual-search" aria-label="Search rituals">
@@ -1107,51 +1187,7 @@ export function renderSearchRitualsSection(options: {
         </div>
       </form>
 
-      <div class="ritual-search__body">
-        <section class="ritual-search__results" aria-label="Ritual results">
-          <div class="ritual-search__results-header">
-            <div>
-              <h3>Select a ritual</h3>
-              <p>${results.length === 1 ? "1 ritual" : `${results.length} rituals`}${hasSearchCriteria ? " found" : " available"}</p>
-            </div>
-          </div>
-          ${results.length > 0
-            ? results.map((ritual) => renderRitualResultCard(
-              ritual,
-              selectedRitual?.id ?? "",
-              {
-                timingFilter: selectedTiming,
-                timingWindow: options.currentTimingWindow,
-                favorites,
-              },
-            )).join("")
-            : `
-              <div class="ritual-search__empty" role="status">
-                <p>${favoritesOnly
-                  ? "No saved favorites matched that exact reach."
-                  : "Nothing matched that exact reach."}</p>
-                <p>Try one material, purpose, place, or phrase from the ritual you are reaching for.</p>
-              </div>
-            `}
-        </section>
-
-        <section class="ritual-search__preview" aria-label="Selected ritual">
-          ${selectedRitual
-            ? renderRitualPreview(selectedRitual, {
-                showWhyThisFits: false,
-                favoriteControl: {
-                  favorites,
-                  sourceSurface: "search",
-                },
-              })
-            : `
-              <div class="ritual-search__preview-empty">
-                <p>Selected ritual</p>
-                <p>Choose a ritual from the left to see its shape here.</p>
-              </div>
-            `}
-        </section>
-      </div>
+      ${renderSearchRitualsBody(options)}
     </article>
   `;
 }
