@@ -35,7 +35,9 @@ import {
   type RitualCheckInStep,
 } from "./lib/current-ritual-check-in";
 import {
+  getStrongTimingWindowCandidates,
   getTimingWindowCandidates,
+  isStrongTimingWindowCandidate,
   type TimingWindowCandidate,
 } from "./lib/timing-window-candidates";
 import { getDefaultTimingTimezone, getTimingFactsForDate } from "./lib/timing-facts";
@@ -432,12 +434,6 @@ function normalizeRitualSearchTimingFilter(value: unknown): RitualTimingFilter {
   return "all";
 }
 
-function isStrongTimingWindow(
-  candidate: TimingWindowCandidate | undefined,
-): candidate is TimingWindowCandidate {
-  return candidate !== undefined && candidate.strength !== "accent" && candidate.score >= 10;
-}
-
 function isNearCurrentTimingWindow(
   candidate: TimingWindowCandidate,
   currentDate: Date,
@@ -457,14 +453,14 @@ function isNearCurrentTimingWindow(
   return startsAt > currentDate && startsAt.getTime() - currentDate.getTime() <= threeDaysMs;
 }
 
-function getCurrentTimingWindowForSearch(): TimingWindowCandidate | undefined {
+function getCurrentTimingWindowsForSearch(): TimingWindowCandidate[] {
   const currentDateValue = activePrivateBriefData?.input.currentDate ?? new Date();
   const currentDate = currentDateValue instanceof Date
     ? currentDateValue
     : new Date(currentDateValue);
 
   if (Number.isNaN(currentDate.getTime())) {
-    return undefined;
+    return [];
   }
 
   const candidates =
@@ -478,11 +474,16 @@ function getCurrentTimingWindowForSearch(): TimingWindowCandidate | undefined {
       options: { maxCandidates: 8 },
     });
 
-  return candidates.find(
-    (candidate) =>
-      isStrongTimingWindow(candidate) &&
+  return getStrongTimingWindowCandidates(
+    candidates.filter((candidate) =>
+      isStrongTimingWindowCandidate(candidate) &&
       isNearCurrentTimingWindow(candidate, currentDate),
+    ),
   );
+}
+
+function getCurrentTimingWindowForSearch(): TimingWindowCandidate | undefined {
+  return getCurrentTimingWindowsForSearch()[0];
 }
 
 function isRitualFavoriteSourceSurface(
@@ -690,6 +691,7 @@ function renderActiveSignedInShell(options: {
       activeChooseWithMeRecommendationInstance?.id,
     chooseWithMeInteractionStatus,
     currentTimingWindow: getCurrentTimingWindowForSearch(),
+    currentTimingWindows: getCurrentTimingWindowsForSearch(),
     selectedRitualId: activeSelectedRitualId,
     manageRitualFilters: activeManageRitualFilters,
     ritualRepository: activeRitualRepository,
@@ -1407,6 +1409,7 @@ function renderRitualSearchBodyOnly(): void {
     favoritesOnly: activeRitualSearchFavoritesOnly,
     favorites: ritualFavoriteStore.listRitualFavorites(),
     currentTimingWindow: getCurrentTimingWindowForSearch(),
+    currentTimingWindows: getCurrentTimingWindowsForSearch(),
     ritualRepository: activeRitualRepository,
   });
   const template = document.createElement("template");
