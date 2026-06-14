@@ -1151,6 +1151,11 @@ describe("app shell rendering", () => {
     expect(mainSource).toContain("renderRitualSearchBodyOnly");
     expect(mainSource).toContain("searchBody.replaceWith");
     expect(mainSource).toContain("markHouseholdMemoryHydrationFailure");
+    expect(mainSource).toContain("clearHouseholdMemoryWriteFailureStatus");
+    expect(mainSource).toContain('activeHouseholdMemoryStatus?.message !== "Saved locally; sync failed."');
+    expect(mainSource).toContain("activeHouseholdMemoryDiagnostics.hydrationFailed");
+    expect(mainSource).toContain("activeHouseholdMemoryDiagnostics.skippedTotal > 0");
+    expect(mainSource).toContain("[data-household-memory-status='true']");
     expect(mainSource).toContain("Household memory is unavailable right now.");
     expect(mainSource).toContain("Some saved Ritual memory could not be loaded.");
     expect(mainSource).toContain("Saved locally; sync failed.");

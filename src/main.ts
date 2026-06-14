@@ -318,6 +318,20 @@ function markHouseholdMemoryWriteFailure(input: {
   console.warn("Moon & Table household memory sync failed.", input);
 }
 
+function clearHouseholdMemoryWriteFailureStatus(): void {
+  if (
+    activeHouseholdMemoryStatus?.message !== "Saved locally; sync failed." ||
+    activeHouseholdMemoryDiagnostics.hydrationFailed ||
+    activeHouseholdMemoryDiagnostics.skippedTotal > 0
+  ) {
+    return;
+  }
+
+  activeHouseholdMemoryStatus = undefined;
+  publishHouseholdMemoryDiagnostics();
+  document.querySelector("[data-household-memory-status='true']")?.remove();
+}
+
 async function loadActiveRitualRepository(): Promise<void> {
   activeRitualRepository = staticRitualRepository;
   activeRitualRepositorySource = "static_fallback_unavailable";
@@ -543,20 +557,24 @@ function createRecommendationInstanceForResult(
   });
 
   const shownEvent = ritualInteractionStore.recordRecommendationShown(instance);
-  void persistRecommendationRecord(instance, shownEvent).catch(() => {
-    const syncFailureMessage = "Saved locally; sync failed.";
-    markHouseholdMemoryWriteFailure({
-      operation: "recommendation_shown",
-      recordType: "recommendationInstance",
-    });
-    activeChooseWithMeInteractionStatus = syncFailureMessage;
-
-    if (activePrivateBriefData) {
-      renderActiveSignedInShell({
-        chooseWithMeInteractionStatus: syncFailureMessage,
+  void persistRecommendationRecord(instance, shownEvent)
+    .then(() => {
+      clearHouseholdMemoryWriteFailureStatus();
+    })
+    .catch(() => {
+      const syncFailureMessage = "Saved locally; sync failed.";
+      markHouseholdMemoryWriteFailure({
+        operation: "recommendation_shown",
+        recordType: "recommendationInstance",
       });
-    }
-  });
+      activeChooseWithMeInteractionStatus = syncFailureMessage;
+
+      if (activePrivateBriefData) {
+        renderActiveSignedInShell({
+          chooseWithMeInteractionStatus: syncFailureMessage,
+        });
+      }
+    });
 
   return instance;
 }
@@ -1653,6 +1671,7 @@ async function handleRitualFavoriteToggle(target: HTMLElement): Promise<void> {
         persistRitualFavorite(favorite),
         persistRitualInteractionEvent(event),
       ]);
+      clearHouseholdMemoryWriteFailureStatus();
       renderChooseWithMeInteractionStatus(
         favorite.active ? "Saved favorite." : "Removed favorite.",
       );
@@ -1671,6 +1690,7 @@ async function handleRitualFavoriteToggle(target: HTMLElement): Promise<void> {
       persistRitualFavorite(favorite),
       persistRitualInteractionEvent(event),
     ]);
+    clearHouseholdMemoryWriteFailureStatus();
   } catch {
     markHouseholdMemoryWriteFailure({
       operation: favorite.active ? "favorite_added" : "favorite_removed",
@@ -1708,6 +1728,7 @@ async function recordChooseWithMeFeedback(input: {
 
   try {
     await persistRitualInteractionEvent(event);
+    clearHouseholdMemoryWriteFailureStatus();
   } catch {
     markHouseholdMemoryWriteFailure({
       operation: "feedback_submitted",
@@ -1757,6 +1778,7 @@ async function handleChooseWithMeTryAnother(target: HTMLElement): Promise<void> 
     let syncFailed = false;
     try {
       await persistRitualInteractionEvent(tryAnotherEvent);
+      clearHouseholdMemoryWriteFailureStatus();
     } catch {
       syncFailed = true;
       markHouseholdMemoryWriteFailure({
@@ -1848,6 +1870,7 @@ async function handleRitualSelected(ritualId: string): Promise<void> {
 
   try {
     await persistRitualInteractionEvent(event);
+    clearHouseholdMemoryWriteFailureStatus();
   } catch {
     markHouseholdMemoryWriteFailure({
       operation: "ritual_selected",
