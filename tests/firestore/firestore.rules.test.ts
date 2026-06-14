@@ -62,6 +62,7 @@ async function seedBaseData(): Promise<void> {
       id: "findable-ritual",
       schemaVersion: "ritual-db-v1",
       publishedVersionId: "findable-ritual__v001",
+      latestValidationSnapshotId: "validation-findable-ritual__v001",
       lifecycle: {
         findable: true,
         directUseEligible: true,
@@ -83,10 +84,18 @@ async function seedBaseData(): Promise<void> {
       },
     });
 
+    await setDoc(doc(db, "ritualValidationSnapshots/validation-findable-ritual__v001"), {
+      id: "validation-findable-ritual__v001",
+      ritualId: "findable-ritual",
+      versionId: "findable-ritual__v001",
+      valid: true,
+    });
+
     await setDoc(doc(db, "rituals/held-ritual"), {
       id: "held-ritual",
       schemaVersion: "ritual-db-v1",
       publishedVersionId: "held-ritual__v001",
+      latestValidationSnapshotId: "validation-held-ritual__v001",
       lifecycle: {
         findable: false,
         directUseEligible: false,
@@ -100,6 +109,20 @@ async function seedBaseData(): Promise<void> {
       ritualId: "held-ritual",
       versionId: "held-ritual__v001",
       schemaVersion: "ritual-db-v1",
+    });
+
+    await setDoc(doc(db, "ritualValidationSnapshots/validation-held-ritual__v001"), {
+      id: "validation-held-ritual__v001",
+      ritualId: "held-ritual",
+      versionId: "held-ritual__v001",
+      valid: true,
+    });
+
+    await setDoc(doc(db, "ritualValidationSnapshots/validation-findable-stale"), {
+      id: "validation-findable-stale",
+      ritualId: "findable-ritual",
+      versionId: "findable-ritual__v001",
+      valid: true,
     });
   });
 }
@@ -128,6 +151,9 @@ describe("Firestore Ritual content rules", () => {
 
     await assertSucceeds(getDoc(doc(db, "rituals/findable-ritual")));
     await assertSucceeds(getDoc(doc(db, "ritualVersions/findable-ritual__v001")));
+    await assertSucceeds(
+      getDoc(doc(db, "ritualValidationSnapshots/validation-findable-ritual__v001")),
+    );
   });
 
   it("allow constrained queries for findable Ritual pointers", async () => {
@@ -149,6 +175,7 @@ describe("Firestore Ritual content rules", () => {
 
     await assertFails(getDocs(collection(db, "rituals")));
     await assertFails(getDocs(collection(db, "ritualVersions")));
+    await assertFails(getDocs(collection(db, "ritualValidationSnapshots")));
   });
 
   it("deny unauthenticated and non-findable Ritual content reads", async () => {
@@ -158,6 +185,12 @@ describe("Firestore Ritual content rules", () => {
     await assertFails(getDoc(doc(unauthenticatedDb, "rituals/findable-ritual")));
     await assertFails(getDoc(doc(memberDb, "rituals/held-ritual")));
     await assertFails(getDoc(doc(memberDb, "ritualVersions/held-ritual__v001")));
+    await assertFails(
+      getDoc(doc(memberDb, "ritualValidationSnapshots/validation-held-ritual__v001")),
+    );
+    await assertFails(
+      getDoc(doc(memberDb, "ritualValidationSnapshots/validation-findable-stale")),
+    );
   });
 
   it("deny client writes to canonical Ritual content", async () => {

@@ -54,6 +54,19 @@ service cloud.firestore {
         && pointer.data.publishedVersionId == versionId;
     }
 
+    function isLatestPublishedFindableValidationSnapshot(snapshotId) {
+      let pointer = get(/databases/$(database)/documents/rituals/$(resource.data.ritualId));
+
+      return signedIn()
+        && resource.data.id == snapshotId
+        && resource.data.valid == true
+        && resource.data.versionId is string
+        && pointer.data.schemaVersion == "ritual-db-v1"
+        && pointer.data.lifecycle.findable == true
+        && pointer.data.publishedVersionId == resource.data.versionId
+        && pointer.data.latestValidationSnapshotId == snapshotId;
+    }
+
     function ownsPrivateDocument(documentId) {
       return ownsUserScopedDocument(documentId)
         || ownsEmailScopedDocument()
@@ -189,7 +202,8 @@ service cloud.firestore {
     }
 
     match /ritualValidationSnapshots/{snapshotId} {
-      allow read, write: if false;
+      allow get: if isLatestPublishedFindableValidationSnapshot(snapshotId);
+      allow list, create, update, delete: if false;
     }
 
     match /ritualAuditEvents/{eventId} {

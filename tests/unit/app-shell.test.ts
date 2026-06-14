@@ -821,10 +821,12 @@ describe("app shell rendering", () => {
 
     expect(html).toContain('aria-label="Manage Rituals"');
     expect(html).toContain('aria-pressed="true">Manage rituals</button>');
-    expect(html).toContain("528 imported Rituals. 63 reviewed. 528 direct-use eligible.");
+    expect(html).toContain(
+      "528 reviewed Rituals. 528 direct-use eligible. 465 recommendation-ready. 63 intentionally held from recommendations.",
+    );
     expect(html).toContain("Readiness summary");
     expect(html).toContain("recommendation-ready");
-    expect(html).toContain("Missing readiness");
+    expect(html).toContain("Held from recommendations");
     expect(html).toContain("Findings");
     expect(html).toContain('data-manage-rituals-filter-form="true"');
     expect(html).toContain('name="manageRitualStatus"');
