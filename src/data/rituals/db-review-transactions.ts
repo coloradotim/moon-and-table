@@ -413,7 +413,7 @@ function validateInputs(input: {
     !input.ritualDocument.lifecycle.directUseEligible
   ) {
     findings.push(
-      finding("ritualDocument.lifecycle.directUseEligible", "Recommendation promotion requires prior direct-use eligibility."),
+      finding("ritualDocument.lifecycle.directUseEligible", "Restore direct use before making this Ritual recommendation-ready."),
     );
   }
 

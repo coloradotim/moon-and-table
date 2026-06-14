@@ -83,9 +83,29 @@ export type RitualPresentation = {
   practice: string;
   intention: string;
   bestWindow: string;
+  /**
+   * Legacy/fallback compatibility field. Choose with me generates user-facing
+   * "why this fits" text per recommendation result after selection.
+   */
   whyThisFits: string;
   questionToCarry: string;
 };
+
+export const RITUAL_CANONICAL_BODY_FIELD_KEYS = [
+  "headline",
+  "practice",
+  "intention",
+  "bestWindow",
+  "questionToCarry",
+] as const;
+
+export type RitualCanonicalBodyFieldKey =
+  (typeof RITUAL_CANONICAL_BODY_FIELD_KEYS)[number];
+
+export type RitualCanonicalBody = Pick<
+  RitualPresentation,
+  RitualCanonicalBodyFieldKey
+>;
 
 export const RITUAL_WORD_MODES = [
   "source_exact_short",

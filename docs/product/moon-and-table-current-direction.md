@@ -22,18 +22,28 @@ Adaptations are not invented by the app. They must be authored, source-supported
 
 Current `RitualPattern` records are not canonical future Rituals. They may inform migration evidence, failure analysis, or temporary adapters, but they must not be automatically migrated into Ritual records.
 
-## Presentation Fields
+## Ritual Body And Recommendation Explanation
 
-The current app presentation structure should be preserved:
+The canonical editable Ritual body fields are:
 
 - `headline`
 - `practice`
 - `intention`
 - `best window`
-- `why this fits`
 - `question to carry`
 
-These are authored presentation fields on a Ritual or an approved Ritual presentation layer. Words and completion belong inside `practice` unless a future typed-data issue explicitly changes that rule.
+These are authored fields on a Ritual or an approved Ritual presentation layer.
+Words and completion belong inside `practice` unless a future typed-data issue
+explicitly changes that rule.
+
+`why this fits` is generated after a Choose with me path. It belongs to the
+recommendation instance, not to the canonical editable Ritual body. It should be
+derived from the selected Ritual metadata, the check-in inputs, timing context,
+selector score/breakdown, and later household memory.
+
+Existing records may still carry `presentation.whyThisFits` as legacy or
+fallback migration data. Treat that field as read-only compatibility data until
+a later migration explicitly removes or renames it.
 
 ## Internal Metadata Rule
 

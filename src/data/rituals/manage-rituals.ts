@@ -301,9 +301,9 @@ function createReviewState(input: {
     return {
       ...baseState,
       actions: [
-        createBlockedAction("promote_direct_use", "Promote direct use", "Make this Ritual available from search and direct selection.", reason, false),
-        createBlockedAction("promote_recommendation", "Promote recommendations", "Allow Choose with me to recommend this Ritual.", reason, false),
-        createBlockedAction("hold_recommendation", "Hold recommendations", "Keep direct use available while removing recommendation eligibility.", reason, true, "caution"),
+        createBlockedAction("promote_direct_use", "Restore direct use", "Make this Ritual available in Search and direct selection. Recommendation review stays separate.", reason, false),
+        createBlockedAction("promote_recommendation", "Make recommendation-ready", "Allow Choose with me to recommend this Ritual after direct use and validation are clear.", reason, false),
+        createBlockedAction("hold_recommendation", "Remove from recommendations", "Keep Search and direct selection available, but stop Choose with me from offering it.", reason, true, "caution"),
         createBlockedAction("add_review_note", "Add review note", "Record a review note without changing availability.", reason, true),
       ],
     };
@@ -315,21 +315,21 @@ function createReviewState(input: {
   const reviewFlagsClean = input.reviewFlags.length === 0;
   const sourceGrounded = hasSourceGrounding(input.ritual);
   const directUsePromotionBlocker = !promotionsHaveValidation
-    ? "Promotion requires a passing validation snapshot."
+    ? "A passing validation snapshot is required before direct use can be restored."
     : !validationClean
-      ? "Validation findings must be resolved before promotion."
+      ? "Resolve validation findings before restoring direct use."
       : !reviewFlagsClean
-        ? "Review flags must be resolved before promotion."
+        ? "Resolve review flags before restoring direct use."
         : !sourceGrounded
-          ? "Source-backed promotions require source grounding."
+          ? "Source-backed Rituals need source grounding before direct use can be restored."
           : undefined;
   const unresolvedRecommendationReadiness = input.missingReadiness.filter(
     (item) => !RECOMMENDATION_PROMOTION_RESOLVABLE_READINESS.has(item),
   );
   const recommendationPromotionBlocker = !input.directUseEligible
-    ? "Recommendation promotion requires direct-use eligibility first."
+    ? "Restore direct use before making this recommendation-ready."
     : unresolvedRecommendationReadiness.length > 0
-      ? `Resolve ${unresolvedRecommendationReadiness.join(", ")} before promotion.`
+      ? `Resolve ${unresolvedRecommendationReadiness.join(", ")} before making this recommendation-ready.`
       : directUsePromotionBlocker;
   const isArchived = ritualDocument.lifecycle.state === "archived";
 
@@ -338,43 +338,43 @@ function createReviewState(input: {
     actions: [
       createActionOption({
         action: "promote_direct_use",
-        label: "Promote direct use",
-        description: "Make this Ritual available from search and direct selection.",
+        label: "Restore direct use",
+        description: "Make this Ritual available in Search and direct selection. Recommendation review stays separate.",
         enabled: !input.directUseEligible && !directUsePromotionBlocker,
         disabledReason: input.directUseEligible
-          ? "Already direct-use eligible."
+          ? "Direct use is already available."
           : directUsePromotionBlocker,
         requiresReason: false,
       }),
       createActionOption({
         action: "hold_direct_use",
-        label: "Hold direct use",
-        description: "Keep the Ritual findable but remove direct-use and recommendation eligibility.",
+        label: "Remove from direct use",
+        description: "Keep the Ritual visible in Manage, but remove it from Search, direct selection, and recommendations.",
         enabled: input.directUseEligible && !isArchived,
         disabledReason: isArchived
           ? "Archived Rituals are already unavailable."
-          : "Not currently direct-use eligible.",
+          : "Direct use is already unavailable.",
         requiresReason: true,
         tone: "caution",
       }),
       createActionOption({
         action: "promote_recommendation",
-        label: "Promote recommendations",
-        description: "Allow Choose with me to recommend this Ritual.",
+        label: "Make recommendation-ready",
+        description: "Allow Choose with me to recommend this Ritual after direct use and validation are clear.",
         enabled: !input.recommendable && !recommendationPromotionBlocker,
         disabledReason: input.recommendable
-          ? "Already recommendation-ready."
+          ? "This Ritual is already recommendation-ready."
           : recommendationPromotionBlocker,
         requiresReason: false,
       }),
       createActionOption({
         action: "hold_recommendation",
-        label: "Hold recommendations",
-        description: "Keep direct use available while removing recommendation eligibility.",
+        label: "Remove from recommendations",
+        description: "Keep Search and direct selection available, but stop Choose with me from offering it.",
         enabled: input.directUseEligible && !isArchived,
         disabledReason: isArchived
           ? "Archived Rituals are already unavailable."
-          : "Direct use must remain available before holding only recommendations.",
+          : "Direct use must be available before only recommendations can be removed.",
         requiresReason: true,
         tone: "caution",
       }),
