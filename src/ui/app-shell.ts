@@ -27,7 +27,10 @@ import {
   type ProfileTuningProfile,
   type ProfileTuningSettings,
 } from "../lib/profile-tuning";
-import { staticRitualRepository } from "../data/rituals/ritual-repository";
+import {
+  staticRitualRepository,
+  type RitualRepository,
+} from "../data/rituals/ritual-repository";
 import {
   createManageRitualsViewModel,
   defaultManageRitualFilters,
@@ -135,6 +138,7 @@ export type SignedInShellOptions = {
   chooseWithMeInteractionStatus?: string;
   currentTimingWindow?: TimingWindowCandidate;
   manageRitualFilters?: Partial<ManageRitualFilters>;
+  ritualRepository?: RitualRepository;
 };
 
 function escapeHtml(value: string): string {
@@ -879,6 +883,7 @@ export function renderSearchRitualsSection(options: {
   favoritesOnly?: boolean;
   favorites?: RitualFavorite[];
   currentTimingWindow?: TimingWindowCandidate;
+  ritualRepository?: RitualRepository;
 } = {}): string {
   const query = options.query ?? "";
   const selectedChips = options.selectedChips ?? [];
@@ -894,8 +899,9 @@ export function renderSearchRitualsSection(options: {
   const favorites = options.favorites ?? [];
   const activeFavoriteIds = getActiveFavoriteIds(favorites);
   const favoritesOnly = options.favoritesOnly ?? false;
+  const ritualRepository = options.ritualRepository ?? staticRitualRepository;
   const searchRitualLibrary =
-    staticRitualRepository.getFindableDirectUseRitualsForSearch();
+    ritualRepository.getFindableDirectUseRitualsForSearch();
   const sourceOptions = getRitualSourceOptions(searchRitualLibrary);
   const purposeOptions = getRitualPurposeOptions(searchRitualLibrary);
   const carrierOptions = getRitualCarrierOptions(searchRitualLibrary);
@@ -1183,10 +1189,10 @@ function getManageReadinessFilterLabel(
 ): string {
   const labels: Record<ManageRitualReadinessFilter, string> = {
     all: "All work states",
-    missing_readiness: "Missing recommendation work",
+    missing_readiness: "Held from recommendations",
     review_flags: "Has review flags",
     validation_findings: "Has validation findings",
-    recommendation_ready: "No recommendation work missing",
+    recommendation_ready: "Recommendation-ready",
   };
 
   return labels[readiness];
@@ -1338,18 +1344,23 @@ function renderManageSortHeader(
 
 export function renderManageRitualsSection(options: {
   filters?: Partial<ManageRitualFilters>;
+  ritualRepository?: RitualRepository;
 } = {}): string {
+  const ritualRepository = options.ritualRepository ?? staticRitualRepository;
   const viewModel = createManageRitualsViewModel(
-    staticRitualRepository.getAllRitualsForManager(),
+    ritualRepository.getAllRitualsForManager(),
     options.filters,
   );
   const counts = viewModel.counts;
+  const intentionallyHeldFromRecommendations = Math.max(
+    0,
+    viewModel.total - counts.recommendable,
+  );
   const statusSummary = [
-    `${viewModel.total} imported Ritual${viewModel.total === 1 ? "" : "s"}`,
-    `${counts.byStatus.reviewed} reviewed`,
+    `${viewModel.total} reviewed Ritual${viewModel.total === 1 ? "" : "s"}`,
     `${counts.directUseEligible} direct-use eligible`,
     `${counts.recommendable} recommendation-ready`,
-    `${counts.withMissingReadiness} missing readiness`,
+    `${intentionallyHeldFromRecommendations} intentionally held from recommendations`,
   ].join(". ");
 
   return `
@@ -1365,7 +1376,7 @@ export function renderManageRitualsSection(options: {
           <div><dt>Statuses</dt><dd>${escapeHtml(`pilot ${counts.byStatus.pilot}, draft ${counts.byStatus.draft}, reviewed ${counts.byStatus.reviewed}, recommendable ${counts.byStatus.recommendable}`)}</dd></div>
           <div><dt>Origins</dt><dd>${escapeHtml(`source ${counts.byOrigin.source}, household ${counts.byOrigin.household}`)}</dd></div>
           <div><dt>Availability</dt><dd>${escapeHtml(`findable ${counts.findable}, direct-use eligible ${counts.directUseEligible}, recommendation eligible ${counts.recommendationEligible}`)}</dd></div>
-          <div><dt>Findings</dt><dd>${escapeHtml(`validation findings ${counts.withValidationFindings}, missing readiness ${counts.withMissingReadiness}`)}</dd></div>
+          <div><dt>Findings</dt><dd>${escapeHtml(`validation findings ${counts.withValidationFindings}, recommendation holds ${counts.withMissingReadiness}`)}</dd></div>
         </dl>
       </details>
 
@@ -1426,7 +1437,7 @@ export function renderManageRitualsSection(options: {
                             <div><dt>Review flags</dt><dd><pre>${escapeHtml(JSON.stringify(row.ritual.reviewFlags ?? null, null, 2))}</pre></dd></div>
                             <div><dt>Adaptation policy</dt><dd><pre>${escapeHtml(JSON.stringify(row.ritual.adaptationPolicy ?? null, null, 2))}</pre></dd></div>
                             <div><dt>Validation findings</dt><dd><pre>${escapeHtml(JSON.stringify(row.validationFindings, null, 2))}</pre></dd></div>
-                            <div><dt>Missing readiness</dt><dd>${escapeHtml(formatManageList(row.missingReadiness))}</dd></div>
+                            <div><dt>Recommendation holds</dt><dd>${escapeHtml(formatManageList(row.missingReadiness))}</dd></div>
                           </dl>
                         </section>
                       </div>
@@ -2187,9 +2198,11 @@ export function renderSignedInShell(
     favoritesOnly: options.ritualSearchFavoritesOnly,
     favorites: options.ritualFavorites,
     currentTimingWindow: options.currentTimingWindow,
+    ritualRepository: options.ritualRepository,
   });
   const manageRituals = renderManageRitualsSection({
     filters: options.manageRitualFilters,
+    ritualRepository: options.ritualRepository,
   });
   const howItWorks = renderHowItWorksSection();
   const activeContent =

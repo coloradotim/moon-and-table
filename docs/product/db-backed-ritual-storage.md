@@ -681,6 +681,14 @@ Recommended follow-up order:
 11. Add runtime DB read adapter only after parity, validation, fallback, and
    rollback are proven.
 
+The first runtime DB read adapter stays feature-flagged off by default. This is
+a transition guard, not the target architecture: it lets the app prove that
+Firestore's published, validated Ritual records match the static runtime
+library and that static fallback works when Firestore is unavailable,
+unvalidated, unpublished, or out of parity. A later explicit release decision
+can make Firestore the default runtime source once those checks are trusted in
+production.
+
 Issues #435 and #436 can proceed after this design if they reference
 `ritualId` now and leave room for `versionId` and presentation snapshots.
 Selector tuning should wait until feedback/reporting work has landed and been

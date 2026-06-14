@@ -67,7 +67,16 @@ import {
   type ManageRitualStatusFilter,
   type ManageRitualValidationFilter,
 } from "./data/rituals/manage-rituals";
-import { staticRitualRepository } from "./data/rituals/ritual-repository";
+import {
+  staticRitualRepository,
+  type RitualRepository,
+} from "./data/rituals/ritual-repository";
+import {
+  isRitualDbReadFeatureEnabled,
+  loadRitualDbReadRepository,
+} from "./data/rituals/db-read-adapter";
+import { loadRitualDbReadDocumentsFromFirestore } from "./data/rituals/db-read-firestore";
+import { sourceBackedRituals } from "./data/rituals/source-backed-rituals";
 import {
   ritualTimingPresetOptions,
   type RitualTimingFilter,
@@ -98,6 +107,18 @@ import {
 } from "./data/rituals/household-state-firestore";
 import type { Ritual } from "./data/rituals/types";
 import "./styles.css";
+
+declare global {
+  interface Window {
+    __moonTableRitualRepositorySource?: string;
+    __moonTableRitualRepositoryFallbackReason?: string;
+    __moonTableRitualRepositoryFindings?: Array<{
+      path: string;
+      message: string;
+      severity: string;
+    }>;
+  }
+}
 
 const app = document.querySelector<HTMLElement>("#app");
 
@@ -140,6 +161,7 @@ let ritualFavoriteStore = createRitualFavoriteStore();
 let ritualInteractionStore = createRecommendationEventStore();
 let activeChooseWithMeRecommendationInstance: RecommendationInstance | null = null;
 let activeChooseWithMeInteractionStatus: string | undefined;
+let activeRitualRepository: RitualRepository = staticRitualRepository;
 
 function resetRitualSearchState(): void {
   activeRitualSearchQuery = "";
@@ -161,6 +183,27 @@ function resetRitualInteractionState(): void {
   activeChooseWithMeExcludedRitualIds = [];
   activeChooseWithMeRecommendationInstance = null;
   activeChooseWithMeInteractionStatus = undefined;
+}
+
+async function loadActiveRitualRepository(): Promise<void> {
+  activeRitualRepository = staticRitualRepository;
+
+  if (!firebaseServices) {
+    return;
+  }
+
+  const result = await loadRitualDbReadRepository({
+    enabled: isRitualDbReadFeatureEnabled(import.meta.env),
+    loadDbDocuments: () =>
+      loadRitualDbReadDocumentsFromFirestore(firebaseServices.db),
+    staticFallbackRepository: staticRitualRepository,
+    staticParityRituals: sourceBackedRituals,
+  });
+
+  activeRitualRepository = result.repository;
+  window.__moonTableRitualRepositorySource = result.source;
+  window.__moonTableRitualRepositoryFallbackReason = result.fallbackReason;
+  window.__moonTableRitualRepositoryFindings = result.findings;
 }
 
 function normalizeRitualSearchTimingFilter(value: unknown): RitualTimingFilter {
@@ -246,7 +289,7 @@ function isRitualFeedbackReason(value: unknown): value is RitualFeedbackReason {
 }
 
 function getRitualOrThrow(ritualId: string): Ritual {
-  const ritual = staticRitualRepository.getRitualById(ritualId);
+  const ritual = activeRitualRepository.getRitualById(ritualId);
 
   if (!ritual) {
     throw new Error(`Unknown Ritual: ${ritualId}`);
@@ -259,7 +302,7 @@ function getTopRecommendationCandidates(
   result: Extract<ChooseWithMeResult, { status: "selected" }>,
 ): RecommendationCandidateInput[] {
   return result.debug.topCandidates.flatMap((candidate) => {
-    const ritual = staticRitualRepository.getRitualById(candidate.ritualId);
+    const ritual = activeRitualRepository.getRitualById(candidate.ritualId);
 
     return ritual
       ? [{
@@ -422,6 +465,7 @@ function renderActiveSignedInShell(options: {
     currentTimingWindow: getCurrentTimingWindowForSearch(),
     selectedRitualId: activeSelectedRitualId,
     manageRitualFilters: activeManageRitualFilters,
+    ritualRepository: activeRitualRepository,
   });
 }
 
@@ -464,6 +508,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
 
         activePrivateBriefData = privateBriefData;
         activeProfileSettingsTabId = null;
+        await loadActiveRitualRepository();
         resetRitualSearchState();
         try {
           await loadPersistedHouseholdRitualState();
@@ -610,7 +655,7 @@ function chooseRitualForActiveCheckIn(
   checkIn: CurrentRitualCheckIn,
 ): ChooseWithMeResult {
   return chooseWithMeRitual(
-    staticRitualRepository.getRecommendationEligibleRitualsForChooseWithMe(),
+    activeRitualRepository.getRecommendationEligibleRitualsForChooseWithMe(),
     createChooseWithMeRequest(checkIn, activeChooseWithMeExcludedRitualIds),
   );
 }
