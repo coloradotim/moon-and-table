@@ -1,8 +1,10 @@
 # Manage Rituals Workflow And Data Lifecycle
 
-Status: Design proposal for issue #266.
+Status: Historical design plus current Manage Rituals implementation note.
 
-Scope: Documentation only. This document does not implement UI, runtime behavior, recommendation selection, source content, Ritual records, imports, editing, promotion, or persistence.
+Scope: Product/workflow reference. The first inspection slice and DB-backed
+lifecycle review actions have landed. The full Ritual body/metadata editor
+remains design-only in `docs/product/manage-ritual-editor-design.md`.
 
 ## 1. Product Verdict
 
@@ -22,7 +24,11 @@ Moon & Table needs two different surfaces:
 
 **Manage Rituals** helps a logged-in user inspect imported app Ritual records and understand their readiness state.
 
-Manage Rituals V1 shows imported app Ritual records in a read-only inspection table. It does not include Ritual candidates or held candidates from packets. Editing, authoring, promotion, candidate pipeline views, version history, and persistence should come later in staged slices.
+Manage Rituals first shipped as an imported-Ritual inspection table. It now also
+allows DB-backed lifecycle review actions for existing Firestore-backed Ritual
+records, such as removing/restoring direct use and recommendation readiness. It
+does not include packet candidates, source import, full content editing, or
+authored version drafts yet.
 
 Manage Rituals should feel like a clear inspection workbench, not a public library browser, productivity dashboard, spell database, or CMS for generating rituals from metadata.
 
@@ -72,9 +78,11 @@ Suggested hamburger menu order:
 
 ## 4. Intended Users
 
-Manage Rituals V1 has no role model.
+Manage Rituals currently has no role model beyond being available to logged-in
+users in this private app.
 
-It is a logged-in, read-only inspection surface for imported Ritual records.
+It is a logged-in inspection and lifecycle-review surface for imported Ritual
+records.
 
 The intended V1 users are people who need to inspect what the app currently knows about its Ritual records:
 
@@ -83,7 +91,8 @@ The intended V1 users are people who need to inspect what the app currently know
 * someone checking source/origin labels and review flags;
 * someone checking the full Ritual object without opening code.
 
-Later versions may add reviewer, editor, or maintainer roles if editing and promotion tools are introduced. V1 does not need roles.
+Later versions may add reviewer, editor, or maintainer roles if broader editing
+and promotion tools require them.
 
 ## 5. Current Data Model Summary
 
@@ -203,9 +212,11 @@ These labels should be derived from data and validation findings. They should no
 
 A Ritual may be findable while still carrying visible review warnings. Findable, direct-use eligible, recommendation eligible, and recommendation-ready are separate states.
 
-## 8. Manage Rituals V1: Read-Only Audit View
+## 8. Manage Rituals Current Surface
 
-Manage Rituals V1 shows imported app Ritual records in a read-only inspection table.
+Manage Rituals shows imported app Ritual records in an inspection table and
+allows DB-backed lifecycle review actions for records that have Firestore review
+documents in the active payload.
 
 Purpose:
 
@@ -214,13 +225,15 @@ Purpose:
 * make blocked records visible without command-line work;
 * keep Search Rituals free from management detail.
 
-Recommended V1 capabilities:
+Current capabilities:
 
 * list all imported Ritual records;
 * filter by status, origin type, availability, readiness item, and validation state;
 * show compact counts above the table;
-* show a read-only table;
-* expand a row to show the full Ritual object / all fields.
+* show a compact table;
+* expand a row to show source, version, validation, readiness, and review
+  workflow details;
+* record lifecycle review actions through the server/admin boundary.
 
 Recommended compact counts:
 
@@ -314,14 +327,13 @@ Examples:
 
 ## 10. Deferred Future Capabilities
 
-Manage Rituals may later grow beyond read-only inspection, but these are not part of V1.
+Manage Rituals should grow beyond lifecycle review into a full editor, but those
+capabilities remain separate design/implementation work.
 
 Deferred capabilities include:
 
 * QA preview modes;
 * draft editing;
-* review actions;
-* promotion workflow;
 * versioning and history;
 * Ritual Candidates / Pipeline section.
 
@@ -522,11 +534,14 @@ Changes happen by PR.
 
 Validation runs in tests and reports.
 
-### V1 read-only manager
+### Implemented inspection manager
 
-Reads the same typed data and readiness report.
+Reads imported Ritual data, validation findings, DB lifecycle pointers when
+available, and readiness state.
 
-Writes nothing.
+The current implementation can write lifecycle review decisions through the
+server-side Manage Rituals review-action boundary. It does not write Ritual
+body/content edits.
 
 ### Future draft handling
 
@@ -534,11 +549,13 @@ Future draft records may live in app storage or source-controlled data, dependin
 
 Source-backed draft imports still require packet/source review.
 
-### Promotion export
+### Promotion and export
 
-Promoted records become source-controlled typed data through a PR.
+Lifecycle promotion happens in Firestore through review decisions. Static
+TypeScript export remains available as a PR-reviewable recovery/export path.
 
-Promotion should generate a reviewable diff.
+Not every lifecycle decision needs an immediate repo diff. Any export back to
+TypeScript should still generate a reviewable diff.
 
 ### Versioned app history
 
@@ -546,34 +563,37 @@ Future history/favorites/feedback can reference Ritual IDs and versions.
 
 Past RitualInstances preserve exact text shown.
 
-Avoid making Firestore the only canonical source for reviewed Ritual records at the beginning. Source-controlled records give better review, history, and CI validation while the model is still settling.
+Do not remove the static fallback/export path until a later migration issue
+explicitly approves that decision and preservation audits remain green.
 
 ## 16. Access And Data Boundaries
 
-Manage Rituals V1 is visible to logged-in users and read-only.
+Manage Rituals is visible to logged-in users.
 
-V1 shows imported app Ritual records only.
+The current surface shows imported app Ritual records only.
 
-V1 does not show:
+The current surface does not show:
 
 * packet candidates;
 * held candidates;
 * source packet workspaces;
 * feedback history;
 * profile data;
-* editing controls.
+* full Ritual body/metadata editing controls.
 
-Because V1 writes nothing and imports nothing, it does not need a separate role model.
+Because this is a private app and review actions are server-mediated, the
+current slice does not need a separate role model. A broader editor may revisit
+that decision.
 
 ## 17. Non-Goals And Deferrals
 
-Do not include in the first implementation:
+Do not add to the current Manage Rituals surface without a separate issue:
 
 * editing;
 * adding Rituals;
 * deleting Rituals;
-* promoting Rituals;
-* Firestore persistence;
+* full Ritual body editing;
+* source/import persistence;
 * source packet import;
 * packet candidate display;
 * held candidate display;
@@ -590,16 +610,17 @@ Do not let Manage Rituals become a way to bypass source review, household approv
 
 ## 18. Recommended Implementation Slices
 
-### First slice: Read-only Manage Rituals audit view
+### Landed slices
 
-* visible to logged-in users from the hamburger menu;
-* consumes imported Ritual data, `validateRituals(...)`, and readiness-report data;
-* shows compact counts above the table;
-* shows a read-only table of imported Ritual records;
-* separates validation findings from missing readiness when space allows;
-* expands rows to show formatted fields plus the full raw Ritual object;
-* links to Search preview only for direct-use eligible Rituals;
-* writes nothing.
+- visible to logged-in users from the hamburger menu;
+- consumes imported Ritual data, DB lifecycle pointers, validation findings,
+  and readiness state;
+- shows compact counts above the table;
+- shows a table of imported Ritual records;
+- separates validation findings from missing readiness when space allows;
+- expands rows to show formatted fields and lifecycle review workflow;
+- records review actions through a server/admin boundary;
+- keeps full Ritual body/content editing out of this slice.
 
 ### Later slices
 
@@ -609,10 +630,13 @@ QA preview modes:
 * capacity/audience/timing preview;
 * unsupported-mode warnings.
 
-Draft editor:
+Full versioned Ritual editor:
 
-* edits draft-only presentation/search fields;
-* no promotion or runtime eligibility changes.
+- design is tracked in `docs/product/manage-ritual-editor-design.md` and issue
+  #480;
+- edits must create draft/superseding immutable versions rather than mutating
+  published versions in place;
+- review actions remain the publish/recommendation gate.
 
 Review actions:
 

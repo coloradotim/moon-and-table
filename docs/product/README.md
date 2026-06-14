@@ -14,6 +14,7 @@ These docs control the Ritual-first reset. If an older doc conflicts with them, 
 
 ## Current Supporting Artifacts
 
+- `docs/product/manage-ritual-editor-design.md`
 - `docs/product/db-backed-ritual-storage.md`
 - `docs/product/db-ritual-firestore-rules.md`
 - `docs/product/db-ritual-query-index-checklist.md`
@@ -26,7 +27,26 @@ These docs control the Ritual-first reset. If an older doc conflicts with them, 
 - `docs/product/source-ingestion-prompt-workflow.md`
 - `docs/product/source-pipeline.md`
 
-These docs can support model review and migration planning. They are not runtime implementation instructions.
+These docs support current Ritual storage, review, editor design, model review,
+and migration planning. Prefer their status notes and the current GitHub issues
+over older migration sequencing sections inside the docs.
+
+## Current Ritual Storage Summary
+
+Firestore is now the active hosted Ritual content and review store for the
+private app when `VITE_MOON_TABLE_USE_FIRESTORE_RITUALS=true`. Runtime reads
+load published, validated Ritual versions from Firestore and fall back to the
+source-controlled static library when DB reads are disabled or unavailable.
+
+The repo still matters:
+
+- `src/data/rituals/source-backed-rituals.ts` is the static fallback/export
+  artifact and preservation baseline.
+- DB mirror, export, parity, and backfill commands remain safety/audit tooling.
+- Static Ritual data must not be deleted without a later explicit product
+  decision and a passing preservation audit.
+- Manage Rituals can record DB-backed lifecycle review actions; full Ritual
+  body editing is still design-only in `manage-ritual-editor-design.md`.
 
 ## Source Indexes / Source Research
 
