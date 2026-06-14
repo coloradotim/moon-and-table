@@ -47,6 +47,9 @@ The repo still matters:
   decision and a passing preservation audit.
 - Manage Rituals can record DB-backed lifecycle review actions; full Ritual
   body editing is still design-only in `manage-ritual-editor-design.md`.
+- `ritualEditDrafts/{draftId}` is the mutable autosave workspace for future
+  editor forms. Draft saves, discards, and submitted markers do not create
+  immutable Ritual versions or mutate published content.
 
 ## Source Indexes / Source Research
 

@@ -60,6 +60,7 @@ Recommended top-level collections:
 ```text
 rituals/{ritualId}
 ritualVersions/{ritualId_versionId}
+ritualEditDrafts/{draftId}
 sourceRuns/{sourceRunId}
 importBatches/{importBatchId}
 reviewDecisions/{decisionId}
@@ -242,6 +243,53 @@ New immutable Ritual versions are not required for lifecycle-only changes:
 
 Old versions remain readable. They may be archived or superseded but not
 deleted as part of normal review workflow.
+
+### `ritualEditDrafts/{draftId}`
+
+The edit-draft document is the mutable editor workspace. It is not an immutable
+version and must not be treated as published content.
+
+```ts
+type RitualEditDraftDocument = {
+  id: string;
+  schemaVersion: "ritual-db-v1";
+  collection: "ritualEditDrafts";
+  ritualId: string;
+  baseVersionId?: string;
+  baseContentHash?: string;
+  draftSource: "existing_version" | "household_blank";
+  status: "active" | "discarded" | "submitted";
+  saveState:
+    | "idle"
+    | "saving"
+    | "saved"
+    | "unsaved_changes"
+    | "save_failed";
+  draftBuffer: RitualEditDraftBuffer;
+  createdBy: "owner" | "person_a" | "person_b" | "household" | "automation" | "codex";
+  createdAtIso: string;
+  updatedBy: "owner" | "person_a" | "person_b" | "household" | "automation" | "codex";
+  updatedAtIso: string;
+  lastAutosavedAtIso?: string;
+  lastManuallySavedAtIso?: string;
+  discardedBy?: "owner" | "person_a" | "person_b" | "household" | "automation" | "codex";
+  discardedAtIso?: string;
+  submittedBy?: "owner" | "person_a" | "person_b" | "household" | "automation" | "codex";
+  submittedAtIso?: string;
+};
+```
+
+Rules:
+
+- Drafts created from existing Ritual versions record `baseVersionId` and
+  `baseContentHash` when available.
+- Blank household-origin drafts do not require source grounding.
+- Autosave and manual save update only `ritualEditDrafts`.
+- Discard and submitted states must not mutate `ritualVersions`, published
+  pointers, lifecycle review state, direct-use eligibility, or recommendation
+  eligibility.
+- Persistent actor fields use repo-safe IDs such as `person_a`, `person_b`, and
+  `household`; private names are rendered only from private runtime context.
 
 ### `sourceRuns/{sourceRunId}`
 
