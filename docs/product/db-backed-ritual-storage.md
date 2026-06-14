@@ -536,8 +536,9 @@ Recommended staged migration:
    verified.
 4. Add admin tooling that imports draft versions into Firestore from source
    pipeline packets.
-5. Add review decision tooling that can promote direct-use and recommendation
-   eligibility in Firestore.
+5. Add server/admin review decision tooling that can promote direct-use and
+   recommendation eligibility in Firestore without browser clients writing
+   canonical Ritual collections directly.
 6. Add a static export command that generates a PR-ready TypeScript diff from
    reviewed DB versions.
 7. Only after review, add runtime DB reads behind a feature flag with static
@@ -676,8 +677,10 @@ Recommended follow-up order:
 6. Add deterministic static export from promoted DB versions to TypeScript.
 7. Add read-only Manage Rituals DB parity checks.
 8. Add source pipeline import into draft `ritualVersions`.
-9. Add review decision tooling for direct-use and recommendation promotion.
-10. Make Manage Rituals actionable for draft edit and review decisions.
+9. Add the server/admin review action boundary for direct-use and
+   recommendation promotion.
+10. Make Manage Rituals actionable for draft edit and review decisions through
+   that boundary.
 11. Add runtime DB read adapter only after parity, validation, fallback, and
    rollback are proven.
 
