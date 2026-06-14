@@ -100,6 +100,29 @@ MOON_TABLE_RITUAL_REVIEW_ADMIN_EMAILS
 
 Do not expose these allowlists through `VITE_` client environment variables.
 
+## Troubleshooting
+
+If the Manage Rituals UI reports:
+
+```text
+Review action API was blocked by Vercel deployment protection.
+```
+
+the browser reached Vercel's preview protection layer instead of the review
+action function. Test from a deployment where the current browser session is
+authorized for the protected preview, use the production deployment if that is
+the intended test surface, or configure a preview bypass for trusted testing.
+
+If the UI reports:
+
+```text
+Review action API endpoint was not found.
+```
+
+the app is likely running under a Vite-only dev server. Vite serves the client
+app, but it does not serve the Vercel `/api/ritual-review-action` function.
+Use a deployment or a full-stack dev server for end-to-end review-action tests.
+
 ## Validation
 
 Promotion, archive, and rollback actions require a passing validation snapshot.

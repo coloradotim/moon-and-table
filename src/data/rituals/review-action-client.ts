@@ -69,6 +69,44 @@ function parseClientResult(payload: unknown): SubmitRitualReviewActionResult {
   };
 }
 
+function parseJsonResponseText(text: string): unknown {
+  if (text.trim().length === 0) {
+    return undefined;
+  }
+
+  try {
+    return JSON.parse(text) as unknown;
+  } catch {
+    return undefined;
+  }
+}
+
+function createNonJsonFinding(input: {
+  response: Response;
+  text: string;
+}): RitualDbValidationFinding {
+  const normalizedText = input.text.toLowerCase();
+
+  if (
+    normalizedText.includes("authentication required") ||
+    normalizedText.includes("vercel authentication")
+  ) {
+    return fallbackFinding(
+      "Review action API was blocked by Vercel deployment protection.",
+    );
+  }
+
+  if (input.response.status === 404) {
+    return fallbackFinding(
+      "Review action API endpoint was not found. Use a deployment or dev server that serves /api/ritual-review-action.",
+    );
+  }
+
+  return fallbackFinding(
+    `Review action API returned a non-JSON response (${input.response.status}).`,
+  );
+}
+
 export function summarizeReviewActionResult(
   result: RitualReviewActionBoundaryResult,
 ): SubmitRitualReviewActionResult {
@@ -95,13 +133,21 @@ export async function submitRitualReviewAction(
 ): Promise<SubmitRitualReviewActionResult> {
   const response = await (input.fetchImpl ?? fetch)(input.endpoint ?? "/api/ritual-review-action", {
     method: "POST",
+    credentials: "same-origin",
     headers: {
       Authorization: `Bearer ${input.idToken}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(input.request),
   });
-  const payload = await response.json().catch(() => undefined);
+  const responseText = await response.text();
+  const payload = parseJsonResponseText(responseText);
+  if (payload === undefined) {
+    return {
+      valid: false,
+      findings: [createNonJsonFinding({ response, text: responseText })],
+    };
+  }
   const parsed = parseClientResult(payload);
 
   if (!response.ok && parsed.valid) {

@@ -43,6 +43,7 @@ describe("Ritual review action client", () => {
         Authorization: "Bearer token-1",
       }),
     );
+    expect(calls[0].init?.credentials).toBe("same-origin");
     expect(calls[0].init?.body).toBe(JSON.stringify({
       ritualId: "ritual-1",
       versionId: "version-1",
@@ -79,6 +80,62 @@ describe("Ritual review action client", () => {
         {
           path: "validationSnapshot",
           message: "A passing validation snapshot is required.",
+          severity: "error",
+        },
+      ],
+    });
+  });
+
+  it("surfaces Vercel deployment protection instead of a vague JSON error", async () => {
+    const fetchImpl = (async () =>
+      new Response("<title>Authentication Required</title>Vercel Authentication", {
+        status: 401,
+        headers: { "Content-Type": "text/html" },
+      })) as typeof fetch;
+
+    await expect(submitRitualReviewAction({
+      idToken: "token-1",
+      fetchImpl,
+      request: {
+        ritualId: "ritual-1",
+        versionId: "version-1",
+        action: "hold_recommendation",
+        reasons: ["manual hold"],
+      },
+    })).resolves.toEqual({
+      valid: false,
+      findings: [
+        {
+          path: "reviewAction",
+          message: "Review action API was blocked by Vercel deployment protection.",
+          severity: "error",
+        },
+      ],
+    });
+  });
+
+  it("surfaces missing API endpoints for Vite-only local dev", async () => {
+    const fetchImpl = (async () =>
+      new Response("<!doctype html><div id=\"app\"></div>", {
+        status: 404,
+        headers: { "Content-Type": "text/html" },
+      })) as typeof fetch;
+
+    await expect(submitRitualReviewAction({
+      idToken: "token-1",
+      fetchImpl,
+      request: {
+        ritualId: "ritual-1",
+        versionId: "version-1",
+        action: "hold_recommendation",
+        reasons: ["manual hold"],
+      },
+    })).resolves.toEqual({
+      valid: false,
+      findings: [
+        {
+          path: "reviewAction",
+          message: "Review action API endpoint was not found. Use a deployment or dev server that serves /api/ritual-review-action.",
           severity: "error",
         },
       ],
