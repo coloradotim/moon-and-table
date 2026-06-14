@@ -27,6 +27,18 @@ export type HouseholdRitualStateSnapshot = {
   favorites: RitualFavorite[];
   recommendationInstances: RecommendationInstance[];
   interactionEvents: RitualInteractionEvent[];
+  diagnostics: HouseholdRitualStateDiagnostics;
+};
+
+export type HouseholdRitualStateSkippedRecordCounts = {
+  favorites: number;
+  recommendationInstances: number;
+  interactionEvents: number;
+};
+
+export type HouseholdRitualStateDiagnostics = {
+  skippedRecords: HouseholdRitualStateSkippedRecordCounts;
+  skippedTotal: number;
 };
 
 type FirestoreDocumentSnapshot = {
@@ -410,6 +422,34 @@ function sanitizeInteractionEvent(
   };
 }
 
+function createEmptySkippedRecordCounts(): HouseholdRitualStateSkippedRecordCounts {
+  return {
+    favorites: 0,
+    recommendationInstances: 0,
+    interactionEvents: 0,
+  };
+}
+
+function collectSanitizedDocuments<T>(
+  snapshots: readonly FirestoreDocumentSnapshot[],
+  sanitize: (snapshot: FirestoreDocumentSnapshot) => T | null,
+): { records: T[]; skipped: number } {
+  const records: T[] = [];
+  let skipped = 0;
+
+  for (const snapshot of snapshots) {
+    const record = sanitize(snapshot);
+
+    if (record) {
+      records.push(record);
+    } else {
+      skipped += 1;
+    }
+  }
+
+  return { records, skipped };
+}
+
 function buildFavoriteDocument(
   householdId: string,
   favorite: RitualFavorite,
@@ -466,22 +506,34 @@ export async function loadHouseholdRitualState(
     getDocs(collection(db, "households", householdId, "ritualInteractionEvents")),
   ]);
 
+  const favorites = collectSanitizedDocuments(
+    favoriteSnapshots.docs,
+    sanitizeFavorite,
+  );
+  const recommendationInstances = collectSanitizedDocuments(
+    recommendationInstanceSnapshots.docs,
+    sanitizeRecommendationInstance,
+  );
+  const interactionEvents = collectSanitizedDocuments(
+    interactionEventSnapshots.docs,
+    sanitizeInteractionEvent,
+  );
+  const skippedRecords = createEmptySkippedRecordCounts();
+  skippedRecords.favorites = favorites.skipped;
+  skippedRecords.recommendationInstances = recommendationInstances.skipped;
+  skippedRecords.interactionEvents = interactionEvents.skipped;
+
   return {
-    favorites: favoriteSnapshots.docs.flatMap((snapshot) => {
-      const favorite = sanitizeFavorite(snapshot);
-
-      return favorite ? [favorite] : [];
-    }),
-    recommendationInstances: recommendationInstanceSnapshots.docs.flatMap((snapshot) => {
-      const instance = sanitizeRecommendationInstance(snapshot);
-
-      return instance ? [instance] : [];
-    }),
-    interactionEvents: interactionEventSnapshots.docs.flatMap((snapshot) => {
-      const event = sanitizeInteractionEvent(snapshot);
-
-      return event ? [event] : [];
-    }),
+    favorites: favorites.records,
+    recommendationInstances: recommendationInstances.records,
+    interactionEvents: interactionEvents.records,
+    diagnostics: {
+      skippedRecords,
+      skippedTotal:
+        skippedRecords.favorites +
+        skippedRecords.recommendationInstances +
+        skippedRecords.interactionEvents,
+    },
   };
 }
 

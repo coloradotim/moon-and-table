@@ -149,6 +149,10 @@ export type SignedInShellOptions = {
     tone: "success" | "error" | "info";
     message: string;
   };
+  householdMemoryStatus?: {
+    tone: "warning";
+    message: string;
+  };
 };
 
 type SearchRitualsRenderOptions = {
@@ -1767,6 +1771,22 @@ function renderAppMenu(activeView: SignedInView): string {
   `;
 }
 
+function renderHouseholdMemoryStatus(
+  status: SignedInShellOptions["householdMemoryStatus"],
+): string {
+  if (!status) {
+    return "";
+  }
+
+  return `
+    <p
+      class="household-memory-status household-memory-status--${escapeHtml(status.tone)}"
+      role="status"
+      data-household-memory-status="true"
+    >${escapeHtml(status.message)}</p>
+  `;
+}
+
 function renderEntryShell({
   ariaLabel,
   title,
@@ -2392,8 +2412,10 @@ export function renderSignedInShell(
           </button>
         </div>
 
-        ${renderAppMenu(activeView)}
+      ${renderAppMenu(activeView)}
       </header>
+
+      ${renderHouseholdMemoryStatus(options.householdMemoryStatus)}
 
       ${activeContent}
     </section>
