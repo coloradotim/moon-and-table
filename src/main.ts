@@ -173,6 +173,7 @@ let activeSelectedRitualId: string | null = null;
 let activeManageRitualFilters: ManageRitualFilters = {
   ...defaultManageRitualFilters,
 };
+let activeManageRitualEditorId: string | null = null;
 let ritualFavoriteStore = createRitualFavoriteStore();
 let ritualInteractionStore = createRecommendationEventStore();
 let activeChooseWithMeRecommendationInstance: RecommendationInstance | null = null;
@@ -697,6 +698,7 @@ function renderActiveSignedInShell(options: {
     ritualRepository: activeRitualRepository,
     ritualRepositorySource: activeRitualRepositorySource,
     ritualDbDocuments: activeRitualDbDocuments,
+    selectedManageRitualEditorId: activeManageRitualEditorId,
     manageRitualActionStatus: activeManageRitualActionStatus,
     householdMemoryStatus: activeHouseholdMemoryStatus,
   });
@@ -731,6 +733,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
           resetRitualSearchState();
           resetRitualInteractionState();
           activeManageRitualFilters = { ...defaultManageRitualFilters };
+          activeManageRitualEditorId = null;
           activeFirstLoginCheckIn = false;
           appRoot.innerHTML = renderAppShell({
             status: "unauthorized",
@@ -756,6 +759,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
           return;
         }
         activeManageRitualFilters = { ...defaultManageRitualFilters };
+        activeManageRitualEditorId = null;
         activeChooseWithMeResult = null;
         activeChooseWithMeRecommendationInstance = null;
         activeChooseWithMeInteractionStatus = undefined;
@@ -775,6 +779,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         resetRitualSearchState();
         resetRitualInteractionState();
         activeManageRitualFilters = { ...defaultManageRitualFilters };
+        activeManageRitualEditorId = null;
         activeCurrentRitualCheckIn = null;
         activeFirstLoginCheckIn = false;
         activeCheckInDraft = createInitialRitualCheckInDraft();
@@ -801,6 +806,7 @@ function renderDevVisualQaState(): void {
   resetRitualSearchState();
   resetRitualInteractionState();
   activeManageRitualFilters = { ...defaultManageRitualFilters };
+  activeManageRitualEditorId = null;
   const dbMirrorReport = createRitualDbMirrorDryRun(sourceBackedRituals);
   activeRitualRepository = staticRitualRepository;
   activeRitualRepositorySource = "db";
@@ -1942,6 +1948,11 @@ appRoot.addEventListener("click", (event) => {
     "[data-manage-ritual-sort]",
   );
   const manageRitualSort = manageRitualSortTarget?.dataset.manageRitualSort;
+  const manageRitualEditorTarget = target.closest<HTMLElement>(
+    "[data-manage-ritual-open-editor]",
+  );
+  const manageRitualEditorId =
+    manageRitualEditorTarget?.dataset.manageRitualOpenEditor;
 
   if (target.closest("[data-private-welcome-action='dismiss']")) {
     void handlePrivateWelcomeDismiss();
@@ -1977,6 +1988,7 @@ appRoot.addEventListener("click", (event) => {
   if (target.closest("[data-manage-rituals-clear='true']")) {
     event.preventDefault();
     activeManageRitualFilters = { ...defaultManageRitualFilters };
+    activeManageRitualEditorId = null;
     renderActiveSignedInShell();
     return;
   }
@@ -2072,6 +2084,18 @@ appRoot.addEventListener("click", (event) => {
       direction,
     };
     renderActiveSignedInShell();
+    return;
+  }
+
+  if (manageRitualEditorId) {
+    event.preventDefault();
+    activeManageRitualEditorId = manageRitualEditorId;
+    renderActiveSignedInShell();
+    requestAnimationFrame(() => {
+      document
+        .querySelector<HTMLElement>("[data-manage-ritual-editor='true']")
+        ?.scrollIntoView({ block: "start" });
+    });
     return;
   }
 

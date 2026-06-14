@@ -960,6 +960,69 @@ describe("app shell rendering", () => {
     expect(html).toContain("Records a DB review decision and audit event.");
   });
 
+  it("opens a read-only full Ritual editor shell from Manage rows", () => {
+    const html = renderManageRitualsSection({
+      ritualRepositorySource: "db",
+      ritualDbDocuments: createDbDocuments(),
+      selectedEditorRitualId: "ritual-buckland-candle-prepare-table",
+    });
+    const editorStart = html.indexOf('data-manage-ritual-editor="true"');
+    const editorEnd = html.indexOf(
+      '<section class="manage-rituals__table-section"',
+      editorStart,
+    );
+    const editorHtml = html.slice(editorStart, editorEnd);
+
+    expect(html).toContain('data-manage-ritual-open-editor="ritual-buckland-candle-prepare-table"');
+    expect(html).toContain('data-manage-ritual-editor="true"');
+    expect(editorHtml).toContain("Read-only Ritual editor");
+    expect(editorHtml).toContain("Prepare the Candle Table");
+    expect(editorHtml).toContain("ritual-buckland-candle-prepare-table");
+    expect(editorHtml).toContain("Origin");
+    expect(editorHtml).toContain("Lifecycle");
+    expect(editorHtml).toContain("Current version");
+    expect(editorHtml).toContain("Published version");
+    expect(editorHtml).toContain("Validation clean");
+    expect(editorHtml).toContain("findable yes · direct use yes · recommendation ready");
+    expect(editorHtml).toContain(">Status<");
+    expect(editorHtml).toContain(">Ritual body<");
+    expect(editorHtml).toContain(">Recommendation fit<");
+    expect(editorHtml).toContain(">Search and library<");
+    expect(editorHtml).toContain(">Source and provenance<");
+    expect(editorHtml).toContain(">Review and validation<");
+    expect(editorHtml).toContain(">Versions and audit<");
+    expect(editorHtml).toContain(">Debug<");
+    expect(editorHtml).toContain("Raymond Buckland, Practical Candleburning Rituals");
+    expect(editorHtml).toContain("Source grounding summaries");
+    expect(editorHtml).toContain("Moon &amp; Table adaptation notes");
+    expect(editorHtml).toContain("<summary>Raw inspection JSON</summary>");
+    expect(editorHtml).not.toContain("<textarea");
+    expect(editorHtml).not.toContain("Save now");
+    expect(editorHtml).not.toContain("Autosave");
+    expect(editorHtml).not.toContain("Submit draft");
+    expect(editorHtml).not.toContain("Record review decision");
+    expect(editorHtml).not.toContain('data-manage-ritual-review-form="true"');
+  });
+
+  it("keeps the read-only editor debug JSON collapsed and secondary", () => {
+    const html = renderManageRitualsSection({
+      selectedEditorRitualId: "ritual-buckland-candle-prepare-table",
+    });
+    const editorStart = html.indexOf('data-manage-ritual-editor="true"');
+    const editorEnd = html.indexOf(
+      '<section class="manage-rituals__table-section"',
+      editorStart,
+    );
+    const editorHtml = html.slice(editorStart, editorEnd);
+    const debugIndex = editorHtml.indexOf('id="manage-editor-debug"');
+    const rawJsonIndex = editorHtml.indexOf("&quot;ritual&quot;:");
+
+    expect(debugIndex).toBeGreaterThan(0);
+    expect(rawJsonIndex).toBeGreaterThan(debugIndex);
+    expect(editorHtml).toContain("<details>");
+    expect(editorHtml).not.toContain("<details open");
+  });
+
   it("filters the Manage rituals view without changing Ritual records", () => {
     const sourceHtml = renderManageRitualsSection({
       filters: { origin: "source" },

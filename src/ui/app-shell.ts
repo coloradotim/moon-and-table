@@ -145,6 +145,7 @@ export type SignedInShellOptions = {
   ritualRepository?: RitualRepository;
   ritualRepositorySource?: string;
   ritualDbDocuments?: ManageRitualDbDocuments;
+  selectedManageRitualEditorId?: string | null;
   manageRitualActionStatus?: {
     ritualId?: string;
     tone: "success" | "error" | "info";
@@ -1277,6 +1278,313 @@ function renderYesNo(value: boolean): string {
   return value ? "yes" : "no";
 }
 
+function renderManageReadOnlyList(values: string[]): string {
+  if (values.length === 0) {
+    return '<p class="manage-rituals__empty-value">none</p>';
+  }
+
+  return `
+    <ul class="manage-rituals__readonly-list">
+      ${values.map((value) => `<li>${escapeHtml(value)}</li>`).join("")}
+    </ul>
+  `;
+}
+
+function renderManageReadOnlyFacts(
+  facts: Array<{ label: string; value: string }>,
+): string {
+  return `
+    <dl class="manage-rituals__editor-facts">
+      ${facts.map((fact) => `
+        <div>
+          <dt>${escapeHtml(fact.label)}</dt>
+          <dd>${escapeHtml(fact.value)}</dd>
+        </div>
+      `).join("")}
+    </dl>
+  `;
+}
+
+function renderManageEditorSection(input: {
+  id: string;
+  title: string;
+  tone?: "clean" | "warning" | "readonly";
+  body: string;
+}): string {
+  const tone = input.tone ?? "readonly";
+
+  return `
+    <section
+      class="manage-rituals__editor-section"
+      id="${escapeHtml(input.id)}"
+      aria-labelledby="${escapeHtml(input.id)}-title"
+    >
+      <div class="manage-rituals__editor-section-heading">
+        <h4 id="${escapeHtml(input.id)}-title">${escapeHtml(input.title)}</h4>
+        <span>${tone === "warning" ? "warning" : tone === "clean" ? "clean" : "read-only"}</span>
+      </div>
+      ${input.body}
+    </section>
+  `;
+}
+
+function renderManageRitualEditorShell(
+  row: ReturnType<typeof createManageRitualsViewModel>["rows"][number],
+): string {
+  const ritual = row.ritual;
+  const reviewState = row.reviewState;
+  const validationSummary = row.validationFindings.length === 0 &&
+    reviewState.validationSnapshotValid !== false
+    ? "Validation clean"
+    : `${row.validationFindings.length} validation finding${row.validationFindings.length === 1 ? "" : "s"}`;
+  const availabilitySummary = [
+    row.findable ? "findable yes" : "findable no",
+    row.directUseEligible ? "direct use yes" : "direct use no",
+    row.recommendable ? "recommendation ready" : "recommendation no",
+  ].join(" · ");
+  const sourceGrounding = ritual.origin.type === "source"
+    ? ritual.origin.sourceGrounding
+    : [];
+  const sourceLocationLabels = sourceGrounding.map(
+    (grounding) => `${grounding.citationLabel}: ${grounding.sourceLocation}`,
+  );
+  const sourceSummaries = sourceGrounding.map(
+    (grounding) => `${grounding.citationLabel}: ${grounding.sourceSummary}`,
+  );
+  const sourceSupports = sourceGrounding.map(
+    (grounding) => `${grounding.citationLabel}: ${grounding.sourceSupports}`,
+  );
+  const adaptationNotes = sourceGrounding.map(
+    (grounding) => `${grounding.citationLabel}: ${grounding.moonAndTableChanges}`,
+  );
+  const ritualWords = ritual.ritualWords?.map((words) =>
+    [
+      words.useContext,
+      words.mode,
+      words.citationLabel,
+      words.sourceLocation,
+      words.note,
+    ].filter(Boolean).join(" · "),
+  ) ?? [];
+  const sectionLinks = [
+    ["manage-editor-status", "Status"],
+    ["manage-editor-body", "Ritual body"],
+    ["manage-editor-fit", "Recommendation fit"],
+    ["manage-editor-search", "Search and library"],
+    ["manage-editor-provenance", "Source and provenance"],
+    ["manage-editor-review", "Review and validation"],
+    ["manage-editor-versions", "Versions and audit"],
+    ["manage-editor-debug", "Debug"],
+  ] as const;
+
+  return `
+    <section
+      class="manage-rituals__editor"
+      aria-label="${escapeHtml(`Read-only Ritual editor for ${row.headline}`)}"
+      data-manage-ritual-editor="true"
+      data-ritual-id="${escapeHtml(row.id)}"
+    >
+      <div class="manage-rituals__editor-topbar">
+        <div>
+          <p class="manage-rituals__editor-kicker">Read-only Ritual editor</p>
+          <h3>${escapeHtml(row.headline)}</h3>
+          <p><code>${escapeHtml(row.id)}</code></p>
+        </div>
+        <dl>
+          <div><dt>Origin</dt><dd>${escapeHtml(row.origin)}</dd></div>
+          <div><dt>Lifecycle</dt><dd>${escapeHtml(reviewState.lifecycleState ?? row.status)}</dd></div>
+          <div><dt>Current version</dt><dd>${escapeHtml(reviewState.currentVersionId ?? "not loaded")}</dd></div>
+          <div><dt>Published version</dt><dd>${escapeHtml(reviewState.publishedVersionId ?? "none")}</dd></div>
+          <div><dt>Validation</dt><dd>${escapeHtml(validationSummary)}</dd></div>
+          <div><dt>Availability</dt><dd>${escapeHtml(availabilitySummary)}</dd></div>
+        </dl>
+      </div>
+
+      <div class="manage-rituals__editor-layout">
+        <nav class="manage-rituals__editor-nav" aria-label="Ritual editor sections">
+          ${sectionLinks.map(([href, label]) => `
+            <a href="#${href}">
+              <span>${escapeHtml(label)}</span>
+              <small>read-only</small>
+            </a>
+          `).join("")}
+        </nav>
+
+        <div class="manage-rituals__editor-main">
+          ${renderManageEditorSection({
+            id: "manage-editor-status",
+            title: "Status",
+            tone: row.validationFindings.length === 0 ? "clean" : "warning",
+            body: renderManageReadOnlyFacts([
+              { label: "Ritual ID", value: row.id },
+              { label: "Origin type", value: row.origin },
+              { label: "Current lifecycle", value: reviewState.lifecycleState ?? row.status },
+              { label: "Current version", value: reviewState.currentVersionId ?? "not loaded" },
+              { label: "Published version", value: reviewState.publishedVersionId ?? "none" },
+              { label: "Findable", value: renderYesNo(row.findable) },
+              { label: "Direct use", value: renderYesNo(row.directUseEligible) },
+              { label: "Recommendation eligible", value: renderYesNo(row.recommendationEligible) },
+              { label: "Recommendation-ready", value: renderYesNo(row.recommendable) },
+              { label: "Missing readiness", value: formatManageList(row.missingReadiness) },
+              { label: "Hold reasons", value: formatManageList(reviewState.holdReasons) },
+              { label: "Latest validation snapshot", value: reviewState.latestValidationSnapshotId ?? "not loaded" },
+            ]),
+          })}
+
+          ${renderManageEditorSection({
+            id: "manage-editor-body",
+            title: "Ritual body",
+            body: renderManageReadOnlyFacts([
+              { label: "Headline", value: ritual.presentation.headline },
+              { label: "Practice", value: ritual.presentation.practice },
+              { label: "Intention", value: ritual.presentation.intention },
+              { label: "Best window", value: ritual.presentation.bestWindow },
+              { label: "Question to carry", value: ritual.presentation.questionToCarry },
+              { label: "Legacy why this fits", value: ritual.presentation.whyThisFits || "none" },
+            ]),
+          })}
+
+          ${renderManageEditorSection({
+            id: "manage-editor-fit",
+            title: "Recommendation fit",
+            body: renderManageReadOnlyFacts([
+              { label: "Primary purpose", value: ritual.recommendationMetadata.purposes.primary },
+              { label: "Secondary purposes", value: formatManageList(ritual.recommendationMetadata.purposes.secondary) },
+              { label: "Refinement", value: ritual.recommendationMetadata.purposes.refinement || "none" },
+              { label: "Primary carrier", value: ritual.recommendationMetadata.carriers.primary },
+              { label: "Secondary carriers", value: formatManageList(ritual.recommendationMetadata.carriers.secondary) },
+              { label: "Capacity", value: formatManageList(ritual.recommendationMetadata.capacity.supports) },
+              { label: "Audience", value: formatManageList(ritual.recommendationMetadata.audience.supports) },
+              { label: "Timing relationship", value: ritual.recommendationMetadata.timing.relationship },
+              { label: "Timing contexts", value: formatManageList(ritual.recommendationMetadata.timing.contexts ?? []) },
+              { label: "Recommendation missing", value: formatManageList(ritual.recommendationMetadata.eligibility.missing ?? []) },
+              { label: "Not for", value: formatManageList(ritual.recommendationMetadata.eligibility.notFor ?? []) },
+            ]),
+          })}
+
+          ${renderManageEditorSection({
+            id: "manage-editor-search",
+            title: "Search and library",
+            body: renderManageReadOnlyFacts([
+              { label: "Source label", value: ritual.searchMetadata.sourceLabel ?? row.sourceLabel ?? "none" },
+              { label: "Origin label", value: ritual.searchMetadata.originLabel ?? "none" },
+              { label: "Tags", value: formatManageList(ritual.searchMetadata.tags) },
+              { label: "Keywords", value: formatManageList(ritual.searchMetadata.keywords) },
+              { label: "Materials", value: formatManageList(ritual.searchMetadata.materials ?? []) },
+              { label: "Places", value: formatManageList(ritual.searchMetadata.places ?? []) },
+            ]),
+          })}
+
+          ${renderManageEditorSection({
+            id: "manage-editor-provenance",
+            title: "Source and provenance",
+            body: `
+              ${renderManageReadOnlyFacts([
+                { label: "Origin type", value: row.origin },
+                { label: "Source IDs", value: formatManageList(reviewState.sourceIds) },
+                { label: "Source runs", value: formatManageList(reviewState.sourceRunIds) },
+                { label: "Import batches", value: formatManageList(reviewState.importBatchIds) },
+                { label: "Packet candidates", value: formatManageList(reviewState.packetCandidateIds) },
+                { label: "Source locations", value: formatManageList(sourceLocationLabels) },
+              ])}
+              <div class="manage-rituals__editor-subsection">
+                <h5>Source grounding summaries</h5>
+                ${renderManageReadOnlyList(sourceSummaries)}
+              </div>
+              <div class="manage-rituals__editor-subsection">
+                <h5>Source support</h5>
+                ${renderManageReadOnlyList(sourceSupports)}
+              </div>
+              <div class="manage-rituals__editor-subsection">
+                <h5>Moon &amp; Table adaptation notes</h5>
+                ${renderManageReadOnlyList(adaptationNotes)}
+              </div>
+              <div class="manage-rituals__editor-subsection">
+                <h5>Ritual words provenance</h5>
+                ${renderManageReadOnlyList(ritualWords)}
+              </div>
+            `,
+          })}
+
+          ${renderManageEditorSection({
+            id: "manage-editor-review",
+            title: "Review and validation",
+            tone: row.validationFindings.length === 0 && row.reviewFlags.length === 0 ? "clean" : "warning",
+            body: `
+              ${renderManageReadOnlyFacts([
+                { label: "Validation status", value: validationSummary },
+                { label: "Review flags", value: formatManageList(row.reviewFlags) },
+                { label: "Recommendation holds", value: formatManageList(row.missingReadiness) },
+                { label: "Hold reasons", value: formatManageList(reviewState.holdReasons) },
+                { label: "Latest validation snapshot", value: reviewState.latestValidationSnapshotId ?? "not loaded" },
+              ])}
+              <div class="manage-rituals__editor-subsection">
+                <h5>Validation findings</h5>
+                ${renderManageReadOnlyList(
+                  row.validationFindings.map(
+                    (finding) => `${finding.path}: ${finding.message}`,
+                  ),
+                )}
+              </div>
+            `,
+          })}
+
+          ${renderManageEditorSection({
+            id: "manage-editor-versions",
+            title: "Versions and audit",
+            body: renderManageReadOnlyFacts([
+              { label: "Current version", value: reviewState.currentVersionId ?? "not loaded" },
+              { label: "Published version", value: reviewState.publishedVersionId ?? "none" },
+              { label: "Latest validation snapshot", value: reviewState.latestValidationSnapshotId ?? "not loaded" },
+              { label: "Validation snapshot state", value: reviewState.validationSnapshotValid === true ? "passing" : reviewState.validationSnapshotValid === false ? "has findings" : "not loaded" },
+              { label: "Latest review decision", value: "not loaded in this shell" },
+            ]),
+          })}
+
+          <section
+            class="manage-rituals__editor-section manage-rituals__editor-section--debug"
+            id="manage-editor-debug"
+            aria-labelledby="manage-editor-debug-title"
+          >
+            <div class="manage-rituals__editor-section-heading">
+              <h4 id="manage-editor-debug-title">Debug</h4>
+              <span>collapsed</span>
+            </div>
+            <details>
+              <summary>Raw inspection JSON</summary>
+              <pre>${escapeHtml(JSON.stringify({
+                ritual,
+                reviewState,
+                validationFindings: row.validationFindings,
+                missingReadiness: row.missingReadiness,
+              }, null, 2))}</pre>
+            </details>
+          </section>
+        </div>
+
+        <aside class="manage-rituals__editor-rail" aria-label="Read-only preview and validation">
+          <section>
+            <h4>Search preview</h4>
+            <p><strong>${escapeHtml(ritual.presentation.headline)}</strong></p>
+            <p>${escapeHtml(ritual.presentation.intention)}</p>
+            <p>${escapeHtml([row.sourceLabel, ritual.recommendationMetadata.purposes.primary, ritual.recommendationMetadata.carriers.primary].filter(Boolean).join(" · "))}</p>
+          </section>
+          <section>
+            <h4>Validation</h4>
+            <p>${escapeHtml(validationSummary)}</p>
+            <p>${escapeHtml(formatManageList(row.missingReadiness))}</p>
+          </section>
+          <section>
+            <h4>Version context</h4>
+            <p><code>${escapeHtml(reviewState.publishedVersionId ?? "no published version loaded")}</code></p>
+            <p><code>${escapeHtml(reviewState.currentVersionId ?? "no current version loaded")}</code></p>
+          </section>
+        </aside>
+      </div>
+    </section>
+  `;
+}
+
 function renderManageReviewFacts(reviewState: ManageRitualReviewState): string {
   return `
     <dl class="manage-rituals__review-facts">
@@ -1504,6 +1812,7 @@ export function renderManageRitualsSection(options: {
   ritualRepository?: RitualRepository;
   ritualRepositorySource?: string;
   ritualDbDocuments?: ManageRitualDbDocuments;
+  selectedEditorRitualId?: string | null;
   actionStatus?: SignedInShellOptions["manageRitualActionStatus"];
 } = {}): string {
   const ritualRepository = options.ritualRepository ?? staticRitualRepository;
@@ -1526,6 +1835,9 @@ export function renderManageRitualsSection(options: {
     `${counts.recommendable} recommendation-ready`,
     `${intentionallyHeldFromRecommendations} intentionally held from recommendations`,
   ].join(". ");
+  const selectedEditorRow = options.selectedEditorRitualId
+    ? viewModel.rows.find((row) => row.id === options.selectedEditorRitualId)
+    : undefined;
 
   return `
     <article class="manage-rituals" aria-label="Manage Rituals">
@@ -1552,6 +1864,8 @@ export function renderManageRitualsSection(options: {
 
       ${renderManageRitualsFilters(viewModel.filters, viewModel.sourceOptions, viewModel.counts.byStatus)}
 
+      ${selectedEditorRow ? renderManageRitualEditorShell(selectedEditorRow) : ""}
+
       <section class="manage-rituals__table-section" aria-label="Imported Ritual records">
         <div class="manage-rituals__table-heading">
           <h3>Imported Ritual records</h3>
@@ -1571,6 +1885,12 @@ export function renderManageRitualsSection(options: {
               <summary class="manage-rituals__record-summary">
                 <span class="manage-rituals__ritual-cell">
                   <span class="manage-rituals__ritual-title">${escapeHtml(row.headline)}</span>
+                  <button
+                    class="manage-rituals__open-editor"
+                    type="button"
+                    data-manage-ritual-open-editor="${escapeHtml(row.id)}"
+                    aria-label="${escapeHtml(`Open read-only editor for ${row.headline}`)}"
+                  >Open editor</button>
                 </span>
                 <span class="manage-rituals__record-status">${escapeHtml(row.status)}</span>
                 <span class="manage-rituals__record-origin">${escapeHtml(row.origin)}</span>
@@ -2375,6 +2695,7 @@ export function renderSignedInShell(
     ritualRepository: options.ritualRepository,
     ritualRepositorySource: options.ritualRepositorySource,
     ritualDbDocuments: options.ritualDbDocuments,
+    selectedEditorRitualId: options.selectedManageRitualEditorId,
     actionStatus: options.manageRitualActionStatus,
   });
   const howItWorks = renderHowItWorksSection();
