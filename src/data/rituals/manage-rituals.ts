@@ -62,6 +62,9 @@ const MANAGE_RITUAL_SORT_KEYS: ManageRitualSortKey[] = [
 const ritualStatusSortOrder = new Map<RitualStatus, number>(
   RITUAL_STATUSES.map((status, index) => [status, index]),
 );
+const RECOMMENDATION_PROMOTION_RESOLVABLE_READINESS = new Set([
+  "recommendation_review",
+]);
 
 export type ManageRitualFilters = {
   status: ManageRitualStatusFilter;
@@ -320,10 +323,13 @@ function createReviewState(input: {
         : !sourceGrounded
           ? "Source-backed promotions require source grounding."
           : undefined;
+  const unresolvedRecommendationReadiness = input.missingReadiness.filter(
+    (item) => !RECOMMENDATION_PROMOTION_RESOLVABLE_READINESS.has(item),
+  );
   const recommendationPromotionBlocker = !input.directUseEligible
     ? "Recommendation promotion requires direct-use eligibility first."
-    : input.missingReadiness.length > 0
-      ? "Recommendation holds must be resolved before promotion."
+    : unresolvedRecommendationReadiness.length > 0
+      ? `Resolve ${unresolvedRecommendationReadiness.join(", ")} before promotion.`
       : directUsePromotionBlocker;
   const isArchived = ritualDocument.lifecycle.state === "archived";
 

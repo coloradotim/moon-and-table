@@ -244,6 +244,43 @@ describe("Manage Rituals view model", () => {
     expect(viewModel.counts.withMissingReadiness).toBe(1);
   });
 
+  it("allows recommendation promotion when only recommendation review remains", () => {
+    const rituals = sourceBackedRituals.slice(0, 1);
+    const dbDocuments = createDbDocuments(rituals);
+    const ritualDocument = dbDocuments.ritualDocuments[0];
+    dbDocuments.ritualDocuments = [
+      {
+        ...ritualDocument,
+        lifecycle: {
+          ...ritualDocument.lifecycle,
+          state: "reviewed",
+          directUseEligible: true,
+          recommendationEligible: false,
+          recommendable: false,
+          missingReadiness: ["recommendation_review"],
+          holdReasons: ["direct_use_hold"],
+        },
+      },
+    ];
+
+    const viewModel = createManageRitualsViewModel(
+      rituals,
+      undefined,
+      {
+        dbBacked: true,
+        dbDocuments,
+      },
+    );
+    const promoteRecommendation = viewModel.rows[0].reviewState.actions.find(
+      (action) => action.action === "promote_recommendation",
+    );
+
+    expect(promoteRecommendation).toEqual(expect.objectContaining({
+      enabled: true,
+      disabledReason: undefined,
+    }));
+  });
+
   it("blocks review actions when the manager is not DB-backed", () => {
     const viewModel = createManageRitualsViewModel(sourceBackedRituals.slice(0, 1));
     const row = viewModel.rows[0];
