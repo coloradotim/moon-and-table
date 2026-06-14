@@ -52,6 +52,7 @@ import {
   renderPrivateDataLoadingShell,
   renderRitualCheckInLoadingShell,
   renderRitualCheckInShell,
+  renderSearchRitualsBody,
   renderSignedInShell,
   type RitualSearchSort,
   type SignedInView,
@@ -1245,6 +1246,38 @@ async function renderSearchRituals(): Promise<void> {
   }
 }
 
+function renderRitualSearchBodyOnly(): void {
+  const searchBody = document.querySelector<HTMLElement>(".ritual-search__body");
+
+  if (!searchBody) {
+    return;
+  }
+
+  const nextBody = renderSearchRitualsBody({
+    query: activeRitualSearchQuery,
+    selectedChips: activeRitualSearchChips,
+    selectedRitualId: activeSelectedRitualId,
+    sort: activeRitualSearchSort,
+    source: activeRitualSearchSource,
+    purpose: activeRitualSearchPurpose,
+    carrier: activeRitualSearchCarrier,
+    capacity: activeRitualSearchCapacity,
+    audience: activeRitualSearchAudience,
+    timing: activeRitualSearchTiming,
+    favoritesOnly: activeRitualSearchFavoritesOnly,
+    favorites: ritualFavoriteStore.listRitualFavorites(),
+    currentTimingWindow: getCurrentTimingWindowForSearch(),
+    ritualRepository: activeRitualRepository,
+  });
+  const template = document.createElement("template");
+  template.innerHTML = nextBody.trim();
+  const nextBodyElement = template.content.firstElementChild;
+
+  if (nextBodyElement instanceof HTMLElement) {
+    searchBody.replaceWith(nextBodyElement);
+  }
+}
+
 function isRitualReviewAction(value: unknown): value is RitualReviewAction {
   return typeof value === "string" &&
     RITUAL_REVIEW_ACTIONS.includes(value as RitualReviewAction);
@@ -2020,19 +2053,9 @@ appRoot.addEventListener("input", (event) => {
     target instanceof HTMLInputElement &&
     target.matches("[name='ritualSearchQuery']")
   ) {
-    const cursorStart = target.selectionStart ?? target.value.length;
-    const cursorEnd = target.selectionEnd ?? cursorStart;
-
     activeRitualSearchQuery = target.value;
     activeSelectedRitualId = null;
-    void renderSearchRituals();
-
-    const searchInput = document.querySelector<HTMLInputElement>(
-      "[name='ritualSearchQuery']",
-    );
-
-    searchInput?.focus();
-    searchInput?.setSelectionRange(cursorStart, cursorEnd);
+    renderRitualSearchBodyOnly();
   }
 });
 

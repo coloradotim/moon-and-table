@@ -11,6 +11,7 @@ import {
   renderManageRitualsSection,
   renderProfileTuningSection,
   renderRitualCheckInShell,
+  renderSearchRitualsBody,
   renderSearchRitualsSection,
   renderSignedInShell,
   renderSignedOutShell,
@@ -784,6 +785,7 @@ describe("app shell rendering", () => {
     expect(html).toContain("Search by material, mood, purpose, place, or phrase.");
     expect(html).toContain('data-ritual-search-form="true"');
     expect(html).toContain('type="search"');
+    expect(html).not.toContain('type="submit">Search</button>');
     expect(html).not.toContain('data-ritual-search-chip="plant"');
     expect(html).not.toContain('data-ritual-search-chip="table"');
     expect(html).toContain('name="ritualSearchSource"');
@@ -1065,6 +1067,17 @@ describe("app shell rendering", () => {
     expect(emptyHtml).toContain("Nothing matched that exact reach.");
   });
 
+  it("can render only the Search results body for live typing", () => {
+    const html = renderSearchRitualsBody({
+      query: "seed",
+    });
+
+    expect(html).toContain('class="ritual-search__body"');
+    expect(html).toContain("Set the Seed on the Dark Table");
+    expect(html).not.toContain("528 rituals available");
+    expect(html).not.toContain('name="ritualSearchQuery"');
+  });
+
   it("renders Search favorites as small heart controls and filters to favorites only", () => {
     const favorite = createFavorite(chooseWithMeFixtureRitual.id);
     const unsavedHtml = renderSearchRitualsSection({
@@ -1118,6 +1131,9 @@ describe("app shell rendering", () => {
     expect(mainSource).toContain("data-ritual-search-favorites-only");
     expect(mainSource).toContain("data-ritual-search-capacity");
     expect(mainSource).toContain("data-ritual-search-audience");
+    expect(mainSource).toContain('appRoot.addEventListener("input"');
+    expect(mainSource).toContain("renderRitualSearchBodyOnly");
+    expect(mainSource).toContain("searchBody.replaceWith");
     expect(mainSource).toContain('surface: "search"');
     expect(mainSource).not.toContain("handleTryAgainClick");
   });
