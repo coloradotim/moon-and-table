@@ -116,6 +116,7 @@ import {
   saveRecommendationInstance,
   saveRitualFavorite,
   saveRitualInteractionEvent,
+  type HouseholdRitualStateSkippedRecordCounts,
 } from "./data/rituals/household-state-firestore";
 import type { Ritual } from "./data/rituals/types";
 import "./styles.css";
@@ -129,6 +130,7 @@ declare global {
       message: string;
       severity: string;
     }>;
+    __moonTableHouseholdMemoryDiagnostics?: HouseholdMemoryDiagnostics;
   }
 }
 
@@ -188,6 +190,55 @@ let activeManageRitualActionStatus:
   | undefined;
 let activeManageRitualActionSubmitting = false;
 
+type HouseholdMemoryWriteRecordType =
+  | "favorite"
+  | "recommendationInstance"
+  | "interactionEvent";
+
+type HouseholdMemoryWriteOperation =
+  | "favorite_added"
+  | "favorite_removed"
+  | "feedback_submitted"
+  | "recommendation_shown"
+  | "ritual_selected"
+  | "try_another_requested";
+
+type HouseholdMemoryDiagnostics = {
+  hydrationFailed: boolean;
+  skippedRecords: HouseholdRitualStateSkippedRecordCounts;
+  skippedTotal: number;
+  writeFailures: Record<HouseholdMemoryWriteRecordType, number>;
+  lastWriteFailure?: {
+    operation: HouseholdMemoryWriteOperation;
+    recordType: HouseholdMemoryWriteRecordType;
+  };
+};
+
+type HouseholdMemoryStatus = {
+  tone: "warning";
+  message: string;
+};
+
+function createEmptyHouseholdMemoryDiagnostics(): HouseholdMemoryDiagnostics {
+  return {
+    hydrationFailed: false,
+    skippedRecords: {
+      favorites: 0,
+      recommendationInstances: 0,
+      interactionEvents: 0,
+    },
+    skippedTotal: 0,
+    writeFailures: {
+      favorite: 0,
+      recommendationInstance: 0,
+      interactionEvent: 0,
+    },
+  };
+}
+
+let activeHouseholdMemoryStatus: HouseholdMemoryStatus | undefined;
+let activeHouseholdMemoryDiagnostics = createEmptyHouseholdMemoryDiagnostics();
+
 function resetRitualSearchState(): void {
   activeRitualSearchQuery = "";
   activeRitualSearchChips = [];
@@ -208,6 +259,77 @@ function resetRitualInteractionState(): void {
   activeChooseWithMeExcludedRitualIds = [];
   activeChooseWithMeRecommendationInstance = null;
   activeChooseWithMeInteractionStatus = undefined;
+}
+
+function publishHouseholdMemoryDiagnostics(): void {
+  window.__moonTableHouseholdMemoryDiagnostics = {
+    ...activeHouseholdMemoryDiagnostics,
+    skippedRecords: { ...activeHouseholdMemoryDiagnostics.skippedRecords },
+    writeFailures: { ...activeHouseholdMemoryDiagnostics.writeFailures },
+    lastWriteFailure: activeHouseholdMemoryDiagnostics.lastWriteFailure
+      ? { ...activeHouseholdMemoryDiagnostics.lastWriteFailure }
+      : undefined,
+  };
+}
+
+function resetHouseholdMemoryDiagnostics(): void {
+  activeHouseholdMemoryDiagnostics = createEmptyHouseholdMemoryDiagnostics();
+  activeHouseholdMemoryStatus = undefined;
+  publishHouseholdMemoryDiagnostics();
+}
+
+function setHouseholdMemoryStatus(message: string): void {
+  activeHouseholdMemoryStatus = {
+    tone: "warning",
+    message,
+  };
+}
+
+function markHouseholdMemoryHydrationFailure(): void {
+  activeHouseholdMemoryDiagnostics.hydrationFailed = true;
+  setHouseholdMemoryStatus("Household memory is unavailable right now.");
+  publishHouseholdMemoryDiagnostics();
+}
+
+function markHouseholdMemorySkippedRecords(
+  skippedRecords: HouseholdRitualStateSkippedRecordCounts,
+): void {
+  activeHouseholdMemoryDiagnostics.skippedRecords = { ...skippedRecords };
+  activeHouseholdMemoryDiagnostics.skippedTotal =
+    skippedRecords.favorites +
+    skippedRecords.recommendationInstances +
+    skippedRecords.interactionEvents;
+
+  if (activeHouseholdMemoryDiagnostics.skippedTotal > 0) {
+    setHouseholdMemoryStatus("Some saved Ritual memory could not be loaded.");
+  }
+
+  publishHouseholdMemoryDiagnostics();
+}
+
+function markHouseholdMemoryWriteFailure(input: {
+  operation: HouseholdMemoryWriteOperation;
+  recordType: HouseholdMemoryWriteRecordType;
+}): void {
+  activeHouseholdMemoryDiagnostics.writeFailures[input.recordType] += 1;
+  activeHouseholdMemoryDiagnostics.lastWriteFailure = { ...input };
+  setHouseholdMemoryStatus("Saved locally; sync failed.");
+  publishHouseholdMemoryDiagnostics();
+  console.warn("Moon & Table household memory sync failed.", input);
+}
+
+function clearHouseholdMemoryWriteFailureStatus(): void {
+  if (
+    activeHouseholdMemoryStatus?.message !== "Saved locally; sync failed." ||
+    activeHouseholdMemoryDiagnostics.hydrationFailed ||
+    activeHouseholdMemoryDiagnostics.skippedTotal > 0
+  ) {
+    return;
+  }
+
+  activeHouseholdMemoryStatus = undefined;
+  publishHouseholdMemoryDiagnostics();
+  document.querySelector("[data-household-memory-status='true']")?.remove();
 }
 
 async function loadActiveRitualRepository(): Promise<void> {
@@ -435,9 +557,24 @@ function createRecommendationInstanceForResult(
   });
 
   const shownEvent = ritualInteractionStore.recordRecommendationShown(instance);
-  void persistRecommendationRecord(instance, shownEvent).catch(() => {
-    activeChooseWithMeInteractionStatus = "Could not save recommendation history.";
-  });
+  void persistRecommendationRecord(instance, shownEvent)
+    .then(() => {
+      clearHouseholdMemoryWriteFailureStatus();
+    })
+    .catch(() => {
+      const syncFailureMessage = "Saved locally; sync failed.";
+      markHouseholdMemoryWriteFailure({
+        operation: "recommendation_shown",
+        recordType: "recommendationInstance",
+      });
+      activeChooseWithMeInteractionStatus = syncFailureMessage;
+
+      if (activePrivateBriefData) {
+        renderActiveSignedInShell({
+          chooseWithMeInteractionStatus: syncFailureMessage,
+        });
+      }
+    });
 
   return instance;
 }
@@ -559,6 +696,7 @@ function renderActiveSignedInShell(options: {
     ritualRepositorySource: activeRitualRepositorySource,
     ritualDbDocuments: activeRitualDbDocuments,
     manageRitualActionStatus: activeManageRitualActionStatus,
+    householdMemoryStatus: activeHouseholdMemoryStatus,
   });
 }
 
@@ -601,6 +739,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
 
         activePrivateBriefData = privateBriefData;
         activeProfileSettingsTabId = null;
+        resetHouseholdMemoryDiagnostics();
         resetActiveRitualRepository();
         resetRitualSearchState();
         try {
@@ -608,6 +747,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         } catch {
           if (requestId === privateDataRequestId) {
             resetRitualInteractionState();
+            markHouseholdMemoryHydrationFailure();
           }
         }
         if (requestId !== privateDataRequestId) {
@@ -1450,6 +1590,7 @@ async function loadPersistedHouseholdRitualState(): Promise<void> {
     householdState.recommendationInstances,
     householdState.interactionEvents,
   );
+  markHouseholdMemorySkippedRecords(householdState.diagnostics.skippedRecords);
 }
 
 async function persistRitualFavorite(favorite: RitualFavorite): Promise<void> {
@@ -1530,11 +1671,16 @@ async function handleRitualFavoriteToggle(target: HTMLElement): Promise<void> {
         persistRitualFavorite(favorite),
         persistRitualInteractionEvent(event),
       ]);
+      clearHouseholdMemoryWriteFailureStatus();
       renderChooseWithMeInteractionStatus(
         favorite.active ? "Saved favorite." : "Removed favorite.",
       );
     } catch {
-      renderChooseWithMeInteractionStatus("Could not save favorite.");
+      markHouseholdMemoryWriteFailure({
+        operation: favorite.active ? "favorite_added" : "favorite_removed",
+        recordType: "favorite",
+      });
+      renderChooseWithMeInteractionStatus("Saved locally; sync failed.");
     }
     return;
   }
@@ -1544,8 +1690,12 @@ async function handleRitualFavoriteToggle(target: HTMLElement): Promise<void> {
       persistRitualFavorite(favorite),
       persistRitualInteractionEvent(event),
     ]);
+    clearHouseholdMemoryWriteFailureStatus();
   } catch {
-    // Search has no inline status surface yet; keep the local state responsive.
+    markHouseholdMemoryWriteFailure({
+      operation: favorite.active ? "favorite_added" : "favorite_removed",
+      recordType: "favorite",
+    });
   }
 
   void renderSearchRituals();
@@ -1576,7 +1726,16 @@ async function recordChooseWithMeFeedback(input: {
     },
   });
 
-  await persistRitualInteractionEvent(event);
+  try {
+    await persistRitualInteractionEvent(event);
+    clearHouseholdMemoryWriteFailureStatus();
+  } catch {
+    markHouseholdMemoryWriteFailure({
+      operation: "feedback_submitted",
+      recordType: "interactionEvent",
+    });
+    throw new Error("Saved locally; sync failed.");
+  }
 }
 
 async function handleChooseWithMeFitFeedback(target: HTMLElement): Promise<void> {
@@ -1616,7 +1775,17 @@ async function handleChooseWithMeTryAnother(target: HTMLElement): Promise<void> 
       recommendationInstanceId,
       ritualId,
     });
-    await persistRitualInteractionEvent(tryAnotherEvent);
+    let syncFailed = false;
+    try {
+      await persistRitualInteractionEvent(tryAnotherEvent);
+      clearHouseholdMemoryWriteFailureStatus();
+    } catch {
+      syncFailed = true;
+      markHouseholdMemoryWriteFailure({
+        operation: "try_another_requested",
+        recordType: "interactionEvent",
+      });
+    }
 
     const previousExcludedRitualIds = activeChooseWithMeExcludedRitualIds;
     activeChooseWithMeExcludedRitualIds = [
@@ -1642,7 +1811,9 @@ async function handleChooseWithMeTryAnother(target: HTMLElement): Promise<void> 
       checkIn,
       nextResult,
     );
-    activeChooseWithMeInteractionStatus = "Here is another strong option.";
+    activeChooseWithMeInteractionStatus = syncFailed
+      ? "Saved locally; sync failed."
+      : "Here is another strong option.";
     renderActiveSignedInShell();
   } catch (error) {
     renderChooseWithMeInteractionStatus(
@@ -1699,8 +1870,12 @@ async function handleRitualSelected(ritualId: string): Promise<void> {
 
   try {
     await persistRitualInteractionEvent(event);
+    clearHouseholdMemoryWriteFailureStatus();
   } catch {
-    // Direct search selection stays local if persistence is temporarily unavailable.
+    markHouseholdMemoryWriteFailure({
+      operation: "ritual_selected",
+      recordType: "interactionEvent",
+    });
   }
 
   void renderSearchRituals();

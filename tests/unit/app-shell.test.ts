@@ -998,6 +998,22 @@ describe("app shell rendering", () => {
     expect(feedbackIndex).toBeGreaterThan(saveFavoriteIndex);
   });
 
+  it("renders household-memory sync status without raw diagnostics", () => {
+    const html = renderSignedInShell(resolvePrivateBriefData({}), {
+      activeView: "search_rituals",
+      householdMemoryStatus: {
+        tone: "warning",
+        message: "Some saved Ritual memory could not be loaded.",
+      },
+    });
+
+    expect(html).toContain('data-household-memory-status="true"');
+    expect(html).toContain("Some saved Ritual memory could not be loaded.");
+    expect(html).not.toContain("rawDebugBlob");
+    expect(html).not.toContain("private@example.com");
+    expect(html).not.toContain("households/");
+  });
+
   it("does not render favorite or feedback controls for a no-result Choose with me state", () => {
     const html = renderSignedInShell(resolvePrivateBriefData({}), {
       chooseWithMeResult: {
@@ -1134,6 +1150,20 @@ describe("app shell rendering", () => {
     expect(mainSource).toContain('appRoot.addEventListener("input"');
     expect(mainSource).toContain("renderRitualSearchBodyOnly");
     expect(mainSource).toContain("searchBody.replaceWith");
+    expect(mainSource).toContain("markHouseholdMemoryHydrationFailure");
+    expect(mainSource).toContain("clearHouseholdMemoryWriteFailureStatus");
+    expect(mainSource).toContain('activeHouseholdMemoryStatus?.message !== "Saved locally; sync failed."');
+    expect(mainSource).toContain("activeHouseholdMemoryDiagnostics.hydrationFailed");
+    expect(mainSource).toContain("activeHouseholdMemoryDiagnostics.skippedTotal > 0");
+    expect(mainSource).toContain("[data-household-memory-status='true']");
+    expect(mainSource).toContain("Household memory is unavailable right now.");
+    expect(mainSource).toContain("Some saved Ritual memory could not be loaded.");
+    expect(mainSource).toContain("Saved locally; sync failed.");
+    expect(mainSource).toContain('operation: favorite.active ? "favorite_added" : "favorite_removed"');
+    expect(mainSource).toContain('operation: "feedback_submitted"');
+    expect(mainSource).toContain('operation: "try_another_requested"');
+    expect(mainSource).toContain('operation: "ritual_selected"');
+    expect(mainSource).toContain('operation: "recommendation_shown"');
     expect(mainSource).toContain('surface: "search"');
     expect(mainSource).not.toContain("handleTryAgainClick");
   });

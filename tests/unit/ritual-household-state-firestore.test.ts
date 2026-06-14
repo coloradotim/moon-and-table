@@ -119,6 +119,12 @@ describe("Firestore household Ritual state adapter", () => {
       .toBe(true);
     expect(createRitualFavoriteStore(state.favorites).isRitualFavorited("inactive-ritual"))
       .toBe(false);
+    expect(state.diagnostics.skippedRecords).toEqual({
+      favorites: 1,
+      recommendationInstances: 0,
+      interactionEvents: 0,
+    });
+    expect(state.diagnostics.skippedTotal).toBe(1);
   });
 
   it("loads recommendation instances and interaction events without turning search selection into feedback", async () => {
@@ -175,6 +181,68 @@ describe("Firestore household Ritual state adapter", () => {
         fit: "fit",
         reasons: ["right_ritual"],
       },
+    });
+    expect(state.diagnostics.skippedTotal).toBe(0);
+  });
+
+  it("counts malformed household-memory records by type without exposing private data", async () => {
+    const instance = createRecommendationInstance();
+    vi.mocked(getDocs)
+      .mockResolvedValueOnce(
+        querySnapshot([
+          [
+            "bad-favorite",
+            {
+              householdId: "household-a",
+              ritualId: "different-id",
+              active: true,
+              createdAt: "2026-01-01T00:00:00.000Z",
+              rawDebugBlob: { private: "do not expose" },
+            },
+          ],
+        ]) as never,
+      )
+      .mockResolvedValueOnce(
+        querySnapshot([
+          [
+            "bad-instance",
+            {
+              householdId: "household-a",
+              ...instance,
+              id: "different-id",
+            },
+          ],
+        ]) as never,
+      )
+      .mockResolvedValueOnce(
+        querySnapshot([
+          [
+            "bad-event",
+            {
+              householdId: "household-a",
+              id: "bad-event",
+              ritualId: baseRitual.id,
+              eventType: "feedback_submitted",
+              surface: "search",
+              email: "private@example.com",
+              createdAt: "2026-01-03T00:00:00.000Z",
+            },
+          ],
+        ]) as never,
+      );
+
+    const state = await loadHouseholdRitualState({ app: "test" } as never, "household-a");
+
+    expect(state.favorites).toEqual([]);
+    expect(state.recommendationInstances).toEqual([]);
+    expect(state.interactionEvents).toEqual([]);
+    expect(state.diagnostics).toEqual({
+      skippedRecords: {
+        favorites: 1,
+        recommendationInstances: 1,
+        interactionEvents: 1,
+      },
+      skippedTotal: 3,
     });
   });
 
