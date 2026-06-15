@@ -483,14 +483,14 @@ h2 {
 
 .todays-shape {
   display: grid;
-  max-width: 455px;
+  max-width: 620px;
   gap: 8px;
   padding: 0;
 }
 
 .todays-shape__body {
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
 .todays-shape p {
@@ -500,15 +500,13 @@ h2 {
 }
 
 .todays-shape__fact {
-  max-width: 420px;
+  max-width: 620px;
   font-size: 0.9rem;
 }
 
 .todays-shape__synthesis {
-  max-width: 430px;
-  margin-top: 18px;
-  padding-left: 12px;
-  border-left: 2px solid rgba(102, 123, 92, 0.3);
+  max-width: 620px;
+  margin-top: 0;
   color: #3f5048;
   font-size: 0.92rem;
   font-weight: 500;

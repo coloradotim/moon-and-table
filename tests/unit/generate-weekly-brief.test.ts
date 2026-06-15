@@ -1793,6 +1793,7 @@ describe("generateWeeklyBrief", () => {
 
   it("keeps either recommendations from conflicting with either profile avoid flags", () => {
     const brief = generateWeeklyBrief({
+      currentDate: "2026-02-10T00:00:00.000Z",
       capacityMode: "low",
       audience: "either",
       profileInputs: [
