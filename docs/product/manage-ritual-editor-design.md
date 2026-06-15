@@ -1,8 +1,12 @@
 # Manage Ritual Editor Design
 
-Status: Product design for issue #480.
+Status: Product design for issue #480, with early implementation slices in
+Manage Rituals.
 
-Scope: Design only. This document does not implement the editor, Firestore writes, review actions, source import, selector changes, or Ritual content changes.
+Scope: Product design. Early slices now implement read-only inspection,
+`ritualEditDrafts` autosave, and editable canonical body fields. This document
+does not itself implement publish/review promotion, source import, selector
+changes, or full metadata editing.
 
 ## 1. Product Goal
 

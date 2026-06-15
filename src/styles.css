@@ -2891,6 +2891,113 @@ h2 {
   margin: 0;
 }
 
+.manage-rituals__editor-form {
+  display: grid;
+  gap: 16px;
+  max-width: 980px;
+}
+
+.manage-rituals__editor-savebar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border: 1px solid rgba(200, 190, 173, 0.64);
+  border-radius: 8px;
+  background: rgba(248, 246, 239, 0.72);
+}
+
+.manage-rituals__editor-savebar p {
+  margin: 0;
+  color: #52635a;
+  font-size: var(--text-small);
+  font-weight: 800;
+}
+
+.manage-rituals__editor-savebar button,
+.manage-rituals__editor-field input,
+.manage-rituals__editor-field textarea {
+  font: inherit;
+}
+
+.manage-rituals__editor-savebar button {
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid rgba(122, 145, 132, 0.78);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.92);
+  color: #26312c;
+  font-weight: 800;
+}
+
+.manage-rituals__editor-savebar button:disabled {
+  border-color: rgba(159, 174, 166, 0.35);
+  color: rgba(82, 99, 90, 0.46);
+}
+
+.manage-rituals__editor-fields {
+  display: grid;
+  gap: 14px;
+}
+
+.manage-rituals__editor-field {
+  display: grid;
+  gap: 6px;
+}
+
+.manage-rituals__editor-field span {
+  color: #435349;
+  font-size: var(--text-label);
+  font-weight: 800;
+}
+
+.manage-rituals__editor-field input,
+.manage-rituals__editor-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(159, 174, 166, 0.72);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.86);
+  color: #26312c;
+  font-size: 1rem;
+  line-height: 1.42;
+}
+
+.manage-rituals__editor-field input {
+  min-height: 48px;
+  padding: 10px 12px;
+}
+
+.manage-rituals__editor-field textarea {
+  min-height: 96px;
+  padding: 11px 12px;
+  resize: vertical;
+}
+
+.manage-rituals__editor-field textarea[name="practice"] {
+  min-height: 220px;
+}
+
+.manage-rituals__editor-field small {
+  color: #66736a;
+  font-size: var(--text-small);
+  line-height: 1.35;
+}
+
+.manage-rituals__editor-readonly-note {
+  max-width: 980px;
+  padding-top: 2px;
+}
+
+.manage-rituals__editor-readonly-note p {
+  margin: 0;
+  color: #52635a;
+  font-size: var(--text-small);
+  line-height: 1.42;
+}
+
 .manage-rituals__editor-subsection {
   display: grid;
   gap: 6px;

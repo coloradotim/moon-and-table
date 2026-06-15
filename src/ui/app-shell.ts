@@ -69,6 +69,7 @@ import type {
   RitualFavoriteSourceSurface,
   RitualFeedbackReason,
 } from "../data/rituals/household-state";
+import type { RitualEditDraftDocument } from "../data/rituals/ritual-edit-drafts";
 import { RITUAL_STATUSES, type Ritual } from "../data/rituals/types";
 import type { TimingWindowCandidate } from "../lib/timing-window-candidates";
 
@@ -86,6 +87,11 @@ const ritualSizeLabels: Record<(typeof ritualSizeChoices)[number], string> = {
   twenty: "About twenty minutes",
   thirty: "About half an hour",
   custom: "Custom",
+};
+
+export type ManageRitualEditorDraftStatus = {
+  tone: "idle" | "saving" | "saved" | "error";
+  message: string;
 };
 const astrologyVisibilityLabels: Record<string, string> = {
   subtle: "Subtle",
@@ -146,6 +152,8 @@ export type SignedInShellOptions = {
   ritualRepositorySource?: string;
   ritualDbDocuments?: ManageRitualDbDocuments;
   selectedManageRitualEditorId?: string | null;
+  selectedManageRitualEditorDraft?: RitualEditDraftDocument;
+  selectedManageRitualEditorDraftStatus?: ManageRitualEditorDraftStatus;
   manageRitualActionStatus?: {
     ritualId?: string;
     tone: "success" | "error" | "info";
@@ -1324,6 +1332,140 @@ function renderManageEditorSection(input: {
   `;
 }
 
+function renderManageBodyField(input: {
+  name: string;
+  label: string;
+  value: string;
+  multiline?: boolean;
+  rows?: number;
+  hint?: string;
+  disabled?: boolean;
+}): string {
+  const hintId = `${input.name}-hint`;
+
+  return `
+    <label class="manage-rituals__editor-field">
+      <span>${escapeHtml(input.label)}</span>
+      ${input.multiline
+        ? `<textarea
+            name="${escapeHtml(input.name)}"
+            rows="${input.rows ?? 3}"
+            data-manage-ritual-draft-field="true"
+            ${input.disabled ? "disabled" : ""}
+            ${input.hint ? `aria-describedby="${escapeHtml(hintId)}"` : ""}
+          >${escapeHtml(input.value)}</textarea>`
+        : `<input
+            name="${escapeHtml(input.name)}"
+            type="text"
+            value="${escapeHtml(input.value)}"
+            data-manage-ritual-draft-field="true"
+            ${input.disabled ? "disabled" : ""}
+            ${input.hint ? `aria-describedby="${escapeHtml(hintId)}"` : ""}
+          />`}
+      ${input.hint ? `<small id="${escapeHtml(hintId)}">${escapeHtml(input.hint)}</small>` : ""}
+    </label>
+  `;
+}
+
+function getManageDraftSaveStateLabel(
+  draft: RitualEditDraftDocument | undefined,
+  draftStatus: ManageRitualEditorDraftStatus | undefined,
+): string {
+  if (draftStatus?.message) {
+    return draftStatus.message;
+  }
+
+  if (!draft) {
+    return "Loading draft...";
+  }
+
+  const labels: Record<RitualEditDraftDocument["saveState"], string> = {
+    idle: "Unsaved changes",
+    saving: "Saving...",
+    saved: "Saved",
+    unsaved_changes: "Unsaved changes",
+    save_failed: "Could not save",
+  };
+
+  return labels[draft.saveState];
+}
+
+function renderManageEditableBody(input: {
+  row: ReturnType<typeof createManageRitualsViewModel>["rows"][number];
+  draft?: RitualEditDraftDocument;
+  draftStatus?: ManageRitualEditorDraftStatus;
+}): string {
+  const presentation =
+    input.draft?.draftBuffer.presentation ?? input.row.ritual.presentation;
+  const draftId = input.draft?.id ?? "";
+  const disabled = !input.draft;
+  const loading = disabled ? " aria-disabled=\"true\"" : "";
+
+  return `
+    <form
+      class="manage-rituals__editor-form"
+      data-manage-ritual-draft-form="true"
+      data-ritual-id="${escapeHtml(input.row.id)}"
+      data-draft-id="${escapeHtml(draftId)}"
+      ${loading}
+    >
+      <div class="manage-rituals__editor-savebar">
+        <p data-manage-ritual-draft-status="true">${escapeHtml(getManageDraftSaveStateLabel(input.draft, input.draftStatus))}</p>
+        <button
+          type="submit"
+          data-manage-ritual-draft-save-now="true"
+          ${input.draft ? "" : "disabled"}
+        >Save now</button>
+      </div>
+      <div class="manage-rituals__editor-fields">
+        ${renderManageBodyField({
+          name: "headline",
+          label: "Headline",
+          value: presentation.headline,
+          disabled,
+        })}
+        ${renderManageBodyField({
+          name: "practice",
+          label: "Practice",
+          value: presentation.practice,
+          multiline: true,
+          rows: 9,
+          hint: "Write the complete Ritual here: beginning, core action, closing, and any spoken or written words.",
+          disabled,
+        })}
+        ${renderManageBodyField({
+          name: "intention",
+          label: "Intention",
+          value: presentation.intention,
+          multiline: true,
+          rows: 3,
+          disabled,
+        })}
+        ${renderManageBodyField({
+          name: "bestWindow",
+          label: "Best window",
+          value: presentation.bestWindow,
+          multiline: true,
+          rows: 3,
+          disabled,
+        })}
+        ${renderManageBodyField({
+          name: "questionToCarry",
+          label: "Question to carry",
+          value: presentation.questionToCarry,
+          multiline: true,
+          rows: 2,
+          disabled,
+        })}
+      </div>
+    </form>
+    <div class="manage-rituals__editor-subsection manage-rituals__editor-readonly-note">
+      <h5>Legacy why this fits</h5>
+      <p>${escapeHtml(input.row.ritual.presentation.whyThisFits || "none")}</p>
+    </div>
+  `;
+}
+
 function shortenManageIdentifier(value: string | undefined, maxLength = 38): string {
   if (!value) {
     return "not loaded";
@@ -1334,6 +1476,10 @@ function shortenManageIdentifier(value: string | undefined, maxLength = 38): str
 
 function renderManageRitualEditorShell(
   row: ReturnType<typeof createManageRitualsViewModel>["rows"][number],
+  options: {
+    draft?: RitualEditDraftDocument;
+    draftStatus?: ManageRitualEditorDraftStatus;
+  } = {},
 ): string {
   const ritual = row.ritual;
   const reviewState = row.reviewState;
@@ -1374,7 +1520,7 @@ function renderManageRitualEditorShell(
   return `
     <section
       class="manage-rituals__editor"
-      aria-label="${escapeHtml(`Read-only Ritual editor for ${row.headline}`)}"
+      aria-label="${escapeHtml(`Ritual editor for ${row.headline}`)}"
       data-manage-ritual-editor="true"
       data-ritual-id="${escapeHtml(row.id)}"
     >
@@ -1385,10 +1531,11 @@ function renderManageRitualEditorShell(
           <p><code title="${escapeHtml(row.id)}">${escapeHtml(shortenManageIdentifier(row.id, 44))}</code></p>
         </div>
         <div class="manage-rituals__editor-badges" aria-label="Selected Ritual status">
-          <span>Read-only</span>
+          <span>${escapeHtml(getManageDraftSaveStateLabel(options.draft, options.draftStatus))}</span>
           <span>${escapeHtml(reviewState.dbBacked ? "DB-backed" : "Static fallback")}</span>
           <span>${escapeHtml(row.origin)}</span>
           <span>${escapeHtml(reviewState.lifecycleState ?? row.status)}</span>
+          ${options.draft ? `<span>${escapeHtml(shortenManageIdentifier(options.draft.id, 28))}</span>` : ""}
           <span>${escapeHtml(validationSummary)}</span>
           <span>${escapeHtml(row.recommendable ? "Recommendation-ready" : row.recommendationEligible ? "Recommendation eligible" : "Held from recommendations")}</span>
         </div>
@@ -1398,14 +1545,11 @@ function renderManageRitualEditorShell(
         ${renderManageEditorSection({
             id: "manage-editor-body",
             title: "Ritual body",
-            body: renderManageReadOnlyFacts([
-              { label: "Headline", value: ritual.presentation.headline },
-              { label: "Practice", value: ritual.presentation.practice },
-              { label: "Intention", value: ritual.presentation.intention },
-              { label: "Best window", value: ritual.presentation.bestWindow },
-              { label: "Question to carry", value: ritual.presentation.questionToCarry },
-              { label: "Legacy why this fits", value: ritual.presentation.whyThisFits || "none" },
-            ]),
+            body: renderManageEditableBody({
+              row,
+              draft: options.draft,
+              draftStatus: options.draftStatus,
+            }),
           })}
 
         ${renderManageEditorSection({
@@ -1778,6 +1922,8 @@ export function renderManageRitualsSection(options: {
   ritualRepositorySource?: string;
   ritualDbDocuments?: ManageRitualDbDocuments;
   selectedEditorRitualId?: string | null;
+  selectedEditorDraft?: RitualEditDraftDocument;
+  selectedEditorDraftStatus?: ManageRitualEditorDraftStatus;
   actionStatus?: SignedInShellOptions["manageRitualActionStatus"];
 } = {}): string {
   const ritualRepository = options.ritualRepository ?? staticRitualRepository;
@@ -1829,7 +1975,12 @@ export function renderManageRitualsSection(options: {
 
       ${renderManageRitualsFilters(viewModel.filters, viewModel.sourceOptions, viewModel.counts.byStatus)}
 
-      ${selectedEditorRow ? renderManageRitualEditorShell(selectedEditorRow) : ""}
+      ${selectedEditorRow
+        ? renderManageRitualEditorShell(selectedEditorRow, {
+          draft: options.selectedEditorDraft,
+          draftStatus: options.selectedEditorDraftStatus,
+        })
+        : ""}
 
       <section class="manage-rituals__table-section" aria-label="Imported Ritual records">
         <div class="manage-rituals__table-heading">
@@ -2655,6 +2806,8 @@ export function renderSignedInShell(
     ritualRepositorySource: options.ritualRepositorySource,
     ritualDbDocuments: options.ritualDbDocuments,
     selectedEditorRitualId: options.selectedManageRitualEditorId,
+    selectedEditorDraft: options.selectedManageRitualEditorDraft,
+    selectedEditorDraftStatus: options.selectedManageRitualEditorDraftStatus,
     actionStatus: options.manageRitualActionStatus,
   });
   const howItWorks = renderHowItWorksSection();

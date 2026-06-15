@@ -46,6 +46,9 @@ In other words:
   PR-reviewable export/recovery.
 - Firestore lifecycle/review state may intentionally move ahead of the static
   export; that is no longer a runtime fallback reason by itself.
+- Manage Rituals edits canonical body fields through mutable
+  `ritualEditDrafts` documents. Those draft saves do not mutate immutable
+  `ritualVersions` or published pointers.
 
 This avoids two failure modes:
 
