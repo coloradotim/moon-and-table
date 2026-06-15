@@ -2101,23 +2101,6 @@ function renderTodaysShapeBrief(brief: TodaysShapeBrief): string {
       </p>
     `)
     .join("");
-  const details = brief.majorEventPresent &&
-    brief.details &&
-    brief.details.some((detail) => detail.title !== "Moon")
-    ? `
-        <details class="todays-shape__details">
-          <summary>More</summary>
-          <div class="todays-shape__detail-list">
-            ${brief.details.filter((detail) => detail.title !== "Moon").map((detail) => `
-              <section class="todays-shape__detail" aria-label="${escapeHtml(detail.title)}">
-                <h3>${escapeHtml(detail.title)}</h3>
-                <p>${escapeHtml(detail.body)}</p>
-              </section>
-            `).join("")}
-          </div>
-        </details>
-      `
-    : "";
 
   return `
     <section
@@ -2128,7 +2111,6 @@ function renderTodaysShapeBrief(brief: TodaysShapeBrief): string {
       <div class="todays-shape__body">
         ${summaryParagraphs}
       </div>
-      ${details}
     </section>
   `;
 }

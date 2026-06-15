@@ -338,6 +338,38 @@ describe("app shell rendering", () => {
     expect(html).not.toContain("This timing overrides");
   });
 
+  it("does not expose private timing details on the home timing card", () => {
+    const html = renderRitualCheckInShell({
+      draft: { step: "entry_path" },
+      displayName: "Morgan Example",
+      todaysShapeBrief: {
+        title: "Today’s shape",
+        summary: "New moon today. Good weather for a small beginning, first light, or one phrase that does not need to become a plan.",
+        chips: [
+          { label: "New moon today", kind: "moon", emphasis: "primary" },
+          { label: "Private timing", kind: "private_contact", emphasis: "supporting" },
+        ],
+        details: [
+          {
+            title: "Moon",
+            body: "New moon today.",
+          },
+          {
+            title: "Private timing",
+            body: "A shared private timing note adds careful words and practical care.",
+          },
+        ],
+        timingAuthority: "may_lead",
+        majorEventPresent: true,
+      },
+    });
+
+    expect(html).toContain("New moon today");
+    expect(html).not.toContain("<summary>More</summary>");
+    expect(html).not.toContain("Private timing");
+    expect(html).not.toContain("A shared private timing note adds careful words and practical care.");
+  });
+
   it("renders first-login check-in copy without a welcome-back greeting", () => {
     const html = renderRitualCheckInShell({
       draft: { step: "entry_path" },

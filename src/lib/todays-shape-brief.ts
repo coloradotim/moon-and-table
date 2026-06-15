@@ -467,10 +467,10 @@ function lunationSummary(
   numerology?: NumerologyDateFact,
 ): string {
   if (fact.lunation === "new_moon") {
-    return `New moon today${numerology ? `, with a ${numerology.number} note in the date` : ""}. Good weather for a small beginning, first light, or one phrase that does not need to become a plan.`;
+    return `New moon today${numerology ? `, with a ${numerology.number} note in the date` : ""}.\n\nGood weather for a small beginning: first light, one clear phrase, or one small place made ready.\n\nLet the beginning stay quiet and chosen, not big enough to become a project.`;
   }
 
-  return `Full moon today${numerology ? `, with a ${numerology.number} note in the date` : ""}. Good weather for witnessing one clear thing, then closing the light.`;
+  return `Full moon today${numerology ? `, with a ${numerology.number} note in the date` : ""}.\n\nGood weather for witnessing one clear thing: name what is visible, close what is complete, and leave the rest unargued.`;
 }
 
 function seasonalSummary(fact: SeasonalMarkerFact): string {
