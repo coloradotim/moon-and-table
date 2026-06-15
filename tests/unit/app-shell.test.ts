@@ -972,27 +972,33 @@ describe("app shell rendering", () => {
       editorStart,
     );
     const editorHtml = html.slice(editorStart, editorEnd);
+    const firstSummaryStart = html.indexOf(
+      '<summary class="manage-rituals__record-summary">',
+    );
+    const firstSummaryEnd = html.indexOf("</summary>", firstSummaryStart);
+    const firstSummaryHtml = html.slice(firstSummaryStart, firstSummaryEnd);
 
     expect(html).toContain('data-manage-ritual-open-editor="ritual-buckland-candle-prepare-table"');
+    expect(html).toContain("View full editor");
+    expect(firstSummaryHtml).not.toContain("data-manage-ritual-open-editor");
+    expect(firstSummaryHtml).not.toContain("View full editor");
     expect(html).toContain('data-manage-ritual-editor="true"');
-    expect(editorHtml).toContain("Read-only Ritual editor");
+    expect(editorHtml).toContain("Selected Ritual");
+    expect(editorHtml).toContain("Read-only");
+    expect(editorHtml).toContain("DB-backed");
     expect(editorHtml).toContain("Prepare the Candle Table");
     expect(editorHtml).toContain("ritual-buckland-candle-prepare-table");
-    expect(editorHtml).toContain("Origin");
-    expect(editorHtml).toContain("Lifecycle");
-    expect(editorHtml).toContain("Current version");
-    expect(editorHtml).toContain("Published version");
     expect(editorHtml).toContain("Validation clean");
-    expect(editorHtml).toContain("findable yes · direct use yes · recommendation ready");
-    expect(editorHtml).toContain(">Status<");
     expect(editorHtml).toContain(">Ritual body<");
     expect(editorHtml).toContain(">Recommendation fit<");
     expect(editorHtml).toContain(">Search and library<");
     expect(editorHtml).toContain(">Source and provenance<");
+    expect(editorHtml).toContain("Advanced details");
+    expect(editorHtml).toContain(">Status<");
     expect(editorHtml).toContain(">Review and validation<");
     expect(editorHtml).toContain(">Versions and audit<");
-    expect(editorHtml).toContain(">Debug<");
-    expect(editorHtml).toContain("Raymond Buckland, Practical Candleburning Rituals");
+    expect(editorHtml).toContain(">Debug JSON<");
+    expect(editorHtml).toContain("Buckland, Practical Candleburning Rituals");
     expect(editorHtml).toContain("Source grounding summaries");
     expect(editorHtml).toContain("Moon &amp; Table adaptation notes");
     expect(editorHtml).toContain("<summary>Raw inspection JSON</summary>");

@@ -2494,23 +2494,29 @@ h2 {
 
 .manage-rituals__open-editor {
   width: fit-content;
-  min-height: 28px;
-  padding: 4px 8px;
-  border: 1px solid rgba(159, 174, 166, 0.72);
-  border-radius: 999px;
-  background: rgba(255, 253, 247, 0.72);
-  color: #435349;
-  font-size: 0.74rem;
+  min-height: 34px;
+  padding: 5px 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #26312c;
+  font-size: 0.82rem;
   font-weight: 700;
   line-height: 1.2;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
   cursor: pointer;
 }
 
 .manage-rituals__open-editor:hover,
 .manage-rituals__open-editor:focus-visible {
-  border-color: rgba(102, 123, 92, 0.72);
-  background: rgba(238, 244, 234, 0.88);
   color: #26312c;
+}
+
+.manage-rituals__open-editor:focus-visible {
+  outline: 2px solid rgba(102, 123, 92, 0.45);
+  outline-offset: 4px;
 }
 
 .manage-rituals__record code {
@@ -2570,6 +2576,15 @@ h2 {
   color: #435349;
   font-size: 0.72rem;
   font-weight: 700;
+}
+
+.manage-rituals__review-tools {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .manage-rituals__review-layout {
@@ -2754,7 +2769,7 @@ h2 {
 
 .manage-rituals__editor {
   display: grid;
-  gap: 16px;
+  gap: 18px;
   margin-top: 8px;
   padding: 18px;
   border: 1px solid rgba(159, 174, 166, 0.72);
@@ -2764,8 +2779,7 @@ h2 {
 
 .manage-rituals__editor-topbar {
   display: grid;
-  grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.2fr);
-  gap: 18px;
+  gap: 12px;
   align-items: start;
   padding-bottom: 14px;
   border-bottom: 1px solid rgba(200, 190, 173, 0.62);
@@ -2790,19 +2804,11 @@ h2 {
   line-height: 1.08;
 }
 
-.manage-rituals__editor-topbar dl {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.manage-rituals__editor-topbar dl div,
 .manage-rituals__editor-facts div {
   display: grid;
   gap: 2px;
 }
 
-.manage-rituals__editor-topbar dt,
 .manage-rituals__editor-facts dt {
   color: #66736a;
   font-size: 0.72rem;
@@ -2810,7 +2816,6 @@ h2 {
   line-height: 1.2;
 }
 
-.manage-rituals__editor-topbar dd,
 .manage-rituals__editor-facts dd {
   margin: 0;
   color: #26312c;
@@ -2819,59 +2824,46 @@ h2 {
   overflow-wrap: anywhere;
 }
 
-.manage-rituals__editor-layout {
-  display: grid;
-  grid-template-columns: minmax(128px, 0.36fr) minmax(360px, 1fr) minmax(180px, 0.42fr);
-  gap: 16px;
-  align-items: start;
+.manage-rituals__editor-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
-.manage-rituals__editor-nav {
-  position: sticky;
-  top: 12px;
-  display: grid;
-  gap: 4px;
-}
-
-.manage-rituals__editor-nav a {
-  display: grid;
-  gap: 1px;
-  padding: 8px 10px;
-  border-left: 3px solid rgba(102, 123, 92, 0.42);
-  color: #26312c;
-  text-decoration: none;
-}
-
-.manage-rituals__editor-nav a:hover {
-  background: rgba(244, 247, 242, 0.72);
-}
-
-.manage-rituals__editor-nav span {
-  font-size: 0.82rem;
+.manage-rituals__editor-badges span {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  padding: 4px 9px;
+  border: 1px solid rgba(159, 174, 166, 0.72);
+  border-radius: 999px;
+  background: rgba(255, 253, 247, 0.76);
+  color: #435349;
+  font-size: 0.74rem;
   font-weight: 800;
-  line-height: 1.2;
-}
-
-.manage-rituals__editor-nav small {
-  color: #66736a;
-  font-size: 0.68rem;
-  font-weight: 700;
+  line-height: 1.15;
 }
 
 .manage-rituals__editor-main {
   display: grid;
   min-width: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 
 .manage-rituals__editor-section,
-.manage-rituals__editor-rail section {
+.manage-rituals__editor-advanced {
   display: grid;
   gap: 10px;
   padding: 13px;
   border: 1px solid rgba(200, 190, 173, 0.62);
   border-radius: 8px;
   background: rgba(255, 253, 247, 0.76);
+}
+
+.manage-rituals__editor-section:first-child,
+.manage-rituals__editor-advanced {
+  grid-column: 1 / -1;
 }
 
 .manage-rituals__editor-section-heading {
@@ -2882,23 +2874,14 @@ h2 {
 }
 
 .manage-rituals__editor-section-heading h4,
-.manage-rituals__editor-section-heading span,
 .manage-rituals__editor-subsection h5,
-.manage-rituals__editor-rail h4,
-.manage-rituals__editor-rail p {
+.manage-rituals__editor-advanced summary {
   margin: 0;
 }
 
-.manage-rituals__editor-section-heading h4,
-.manage-rituals__editor-rail h4 {
+.manage-rituals__editor-section-heading h4 {
   color: #26312c;
   font-size: 0.95rem;
-}
-
-.manage-rituals__editor-section-heading span {
-  color: #66736a;
-  font-size: 0.68rem;
-  font-weight: 800;
 }
 
 .manage-rituals__editor-facts {
@@ -2939,6 +2922,32 @@ h2 {
   gap: 8px;
 }
 
+.manage-rituals__editor-advanced {
+  background: rgba(248, 246, 239, 0.72);
+}
+
+.manage-rituals__editor-advanced > summary {
+  width: fit-content;
+  cursor: pointer;
+  color: #26312c;
+  font-size: 0.95rem;
+  font-weight: 800;
+  list-style: none;
+}
+
+.manage-rituals__editor-advanced > summary::-webkit-details-marker {
+  display: none;
+}
+
+.manage-rituals__editor-advanced > summary::before {
+  content: "▸ ";
+  color: #53645a;
+}
+
+.manage-rituals__editor-advanced[open] > summary::before {
+  content: "▾ ";
+}
+
 .manage-rituals__editor-section--debug summary {
   width: fit-content;
   cursor: pointer;
@@ -2960,18 +2969,6 @@ h2 {
   white-space: pre-wrap;
 }
 
-.manage-rituals__editor-rail {
-  display: grid;
-  gap: 10px;
-}
-
-.manage-rituals__editor-rail p {
-  color: #52635a;
-  font-size: var(--text-small);
-  line-height: 1.42;
-}
-
-.manage-rituals__editor-rail code,
 .manage-rituals__editor-topbar code {
   overflow-wrap: anywhere;
   white-space: normal;
@@ -3706,34 +3703,13 @@ fieldset {
     padding: 14px;
   }
 
-  .manage-rituals__editor-topbar,
-  .manage-rituals__editor-layout,
+  .manage-rituals__editor-main,
   .manage-rituals__editor-facts {
     grid-template-columns: 1fr;
   }
 
-  .manage-rituals__editor-topbar dl {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .manage-rituals__editor-topbar dl div:nth-child(3),
-  .manage-rituals__editor-topbar dl div:nth-child(4),
-  .manage-rituals__editor-topbar dl div:nth-child(6) {
-    grid-column: 1 / -1;
-  }
-
-  .manage-rituals__editor-nav {
-    position: static;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .manage-rituals__editor-nav a {
-    min-height: 48px;
-    padding: 8px;
-  }
-
   .manage-rituals__editor-section,
-  .manage-rituals__editor-rail section {
+  .manage-rituals__editor-advanced {
     padding: 12px;
   }
 

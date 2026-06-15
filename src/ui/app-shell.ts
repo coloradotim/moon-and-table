@@ -1308,11 +1308,8 @@ function renderManageReadOnlyFacts(
 function renderManageEditorSection(input: {
   id: string;
   title: string;
-  tone?: "clean" | "warning" | "readonly";
   body: string;
 }): string {
-  const tone = input.tone ?? "readonly";
-
   return `
     <section
       class="manage-rituals__editor-section"
@@ -1321,11 +1318,18 @@ function renderManageEditorSection(input: {
     >
       <div class="manage-rituals__editor-section-heading">
         <h4 id="${escapeHtml(input.id)}-title">${escapeHtml(input.title)}</h4>
-        <span>${tone === "warning" ? "warning" : tone === "clean" ? "clean" : "read-only"}</span>
       </div>
       ${input.body}
     </section>
   `;
+}
+
+function shortenManageIdentifier(value: string | undefined, maxLength = 38): string {
+  if (!value) {
+    return "not loaded";
+  }
+
+  return value.length > maxLength ? `${value.slice(0, maxLength - 1)}…` : value;
 }
 
 function renderManageRitualEditorShell(
@@ -1366,16 +1370,6 @@ function renderManageRitualEditorShell(
       words.note,
     ].filter(Boolean).join(" · "),
   ) ?? [];
-  const sectionLinks = [
-    ["manage-editor-status", "Status"],
-    ["manage-editor-body", "Ritual body"],
-    ["manage-editor-fit", "Recommendation fit"],
-    ["manage-editor-search", "Search and library"],
-    ["manage-editor-provenance", "Source and provenance"],
-    ["manage-editor-review", "Review and validation"],
-    ["manage-editor-versions", "Versions and audit"],
-    ["manage-editor-debug", "Debug"],
-  ] as const;
 
   return `
     <section
@@ -1384,54 +1378,24 @@ function renderManageRitualEditorShell(
       data-manage-ritual-editor="true"
       data-ritual-id="${escapeHtml(row.id)}"
     >
-      <div class="manage-rituals__editor-topbar">
+      <header class="manage-rituals__editor-topbar">
         <div>
-          <p class="manage-rituals__editor-kicker">Read-only Ritual editor</p>
+          <p class="manage-rituals__editor-kicker">Selected Ritual</p>
           <h3>${escapeHtml(row.headline)}</h3>
-          <p><code>${escapeHtml(row.id)}</code></p>
+          <p><code title="${escapeHtml(row.id)}">${escapeHtml(shortenManageIdentifier(row.id, 44))}</code></p>
         </div>
-        <dl>
-          <div><dt>Origin</dt><dd>${escapeHtml(row.origin)}</dd></div>
-          <div><dt>Lifecycle</dt><dd>${escapeHtml(reviewState.lifecycleState ?? row.status)}</dd></div>
-          <div><dt>Current version</dt><dd>${escapeHtml(reviewState.currentVersionId ?? "not loaded")}</dd></div>
-          <div><dt>Published version</dt><dd>${escapeHtml(reviewState.publishedVersionId ?? "none")}</dd></div>
-          <div><dt>Validation</dt><dd>${escapeHtml(validationSummary)}</dd></div>
-          <div><dt>Availability</dt><dd>${escapeHtml(availabilitySummary)}</dd></div>
-        </dl>
-      </div>
+        <div class="manage-rituals__editor-badges" aria-label="Selected Ritual status">
+          <span>Read-only</span>
+          <span>${escapeHtml(reviewState.dbBacked ? "DB-backed" : "Static fallback")}</span>
+          <span>${escapeHtml(row.origin)}</span>
+          <span>${escapeHtml(reviewState.lifecycleState ?? row.status)}</span>
+          <span>${escapeHtml(validationSummary)}</span>
+          <span>${escapeHtml(row.recommendable ? "Recommendation-ready" : row.recommendationEligible ? "Recommendation eligible" : "Held from recommendations")}</span>
+        </div>
+      </header>
 
-      <div class="manage-rituals__editor-layout">
-        <nav class="manage-rituals__editor-nav" aria-label="Ritual editor sections">
-          ${sectionLinks.map(([href, label]) => `
-            <a href="#${href}">
-              <span>${escapeHtml(label)}</span>
-              <small>read-only</small>
-            </a>
-          `).join("")}
-        </nav>
-
-        <div class="manage-rituals__editor-main">
-          ${renderManageEditorSection({
-            id: "manage-editor-status",
-            title: "Status",
-            tone: row.validationFindings.length === 0 ? "clean" : "warning",
-            body: renderManageReadOnlyFacts([
-              { label: "Ritual ID", value: row.id },
-              { label: "Origin type", value: row.origin },
-              { label: "Current lifecycle", value: reviewState.lifecycleState ?? row.status },
-              { label: "Current version", value: reviewState.currentVersionId ?? "not loaded" },
-              { label: "Published version", value: reviewState.publishedVersionId ?? "none" },
-              { label: "Findable", value: renderYesNo(row.findable) },
-              { label: "Direct use", value: renderYesNo(row.directUseEligible) },
-              { label: "Recommendation eligible", value: renderYesNo(row.recommendationEligible) },
-              { label: "Recommendation-ready", value: renderYesNo(row.recommendable) },
-              { label: "Missing readiness", value: formatManageList(row.missingReadiness) },
-              { label: "Hold reasons", value: formatManageList(reviewState.holdReasons) },
-              { label: "Latest validation snapshot", value: reviewState.latestValidationSnapshotId ?? "not loaded" },
-            ]),
-          })}
-
-          ${renderManageEditorSection({
+      <div class="manage-rituals__editor-main">
+        ${renderManageEditorSection({
             id: "manage-editor-body",
             title: "Ritual body",
             body: renderManageReadOnlyFacts([
@@ -1444,7 +1408,7 @@ function renderManageRitualEditorShell(
             ]),
           })}
 
-          ${renderManageEditorSection({
+        ${renderManageEditorSection({
             id: "manage-editor-fit",
             title: "Recommendation fit",
             body: renderManageReadOnlyFacts([
@@ -1462,7 +1426,7 @@ function renderManageRitualEditorShell(
             ]),
           })}
 
-          ${renderManageEditorSection({
+        ${renderManageEditorSection({
             id: "manage-editor-search",
             title: "Search and library",
             body: renderManageReadOnlyFacts([
@@ -1475,7 +1439,7 @@ function renderManageRitualEditorShell(
             ]),
           })}
 
-          ${renderManageEditorSection({
+        ${renderManageEditorSection({
             id: "manage-editor-provenance",
             title: "Source and provenance",
             body: `
@@ -1506,80 +1470,74 @@ function renderManageRitualEditorShell(
             `,
           })}
 
+        <details class="manage-rituals__editor-advanced" id="manage-editor-advanced">
+          <summary>Advanced details</summary>
           ${renderManageEditorSection({
-            id: "manage-editor-review",
-            title: "Review and validation",
-            tone: row.validationFindings.length === 0 && row.reviewFlags.length === 0 ? "clean" : "warning",
-            body: `
-              ${renderManageReadOnlyFacts([
-                { label: "Validation status", value: validationSummary },
-                { label: "Review flags", value: formatManageList(row.reviewFlags) },
-                { label: "Recommendation holds", value: formatManageList(row.missingReadiness) },
+              id: "manage-editor-status",
+              title: "Status",
+              body: renderManageReadOnlyFacts([
+                { label: "Ritual ID", value: row.id },
+                { label: "Availability", value: availabilitySummary },
+                { label: "Current lifecycle", value: reviewState.lifecycleState ?? row.status },
+                { label: "Findable", value: renderYesNo(row.findable) },
+                { label: "Direct use", value: renderYesNo(row.directUseEligible) },
+                { label: "Recommendation eligible", value: renderYesNo(row.recommendationEligible) },
+                { label: "Recommendation-ready", value: renderYesNo(row.recommendable) },
+                { label: "Missing readiness", value: formatManageList(row.missingReadiness) },
                 { label: "Hold reasons", value: formatManageList(reviewState.holdReasons) },
-                { label: "Latest validation snapshot", value: reviewState.latestValidationSnapshotId ?? "not loaded" },
-              ])}
-              <div class="manage-rituals__editor-subsection">
-                <h5>Validation findings</h5>
-                ${renderManageReadOnlyList(
-                  row.validationFindings.map(
-                    (finding) => `${finding.path}: ${finding.message}`,
-                  ),
-                )}
-              </div>
-            `,
-          })}
-
+              ]),
+            })}
           ${renderManageEditorSection({
-            id: "manage-editor-versions",
-            title: "Versions and audit",
-            body: renderManageReadOnlyFacts([
-              { label: "Current version", value: reviewState.currentVersionId ?? "not loaded" },
-              { label: "Published version", value: reviewState.publishedVersionId ?? "none" },
-              { label: "Latest validation snapshot", value: reviewState.latestValidationSnapshotId ?? "not loaded" },
-              { label: "Validation snapshot state", value: reviewState.validationSnapshotValid === true ? "passing" : reviewState.validationSnapshotValid === false ? "has findings" : "not loaded" },
-              { label: "Latest review decision", value: "not loaded in this shell" },
-            ]),
-          })}
-
+              id: "manage-editor-review",
+              title: "Review and validation",
+              body: `
+                ${renderManageReadOnlyFacts([
+                  { label: "Validation status", value: validationSummary },
+                  { label: "Review flags", value: formatManageList(row.reviewFlags) },
+                  { label: "Recommendation holds", value: formatManageList(row.missingReadiness) },
+                  { label: "Hold reasons", value: formatManageList(reviewState.holdReasons) },
+                  { label: "Validation snapshot", value: shortenManageIdentifier(reviewState.latestValidationSnapshotId) },
+                ])}
+                <div class="manage-rituals__editor-subsection">
+                  <h5>Validation findings</h5>
+                  ${renderManageReadOnlyList(
+                    row.validationFindings.map(
+                      (finding) => `${finding.path}: ${finding.message}`,
+                    ),
+                  )}
+                </div>
+              `,
+            })}
+          ${renderManageEditorSection({
+              id: "manage-editor-versions",
+              title: "Versions and audit",
+              body: renderManageReadOnlyFacts([
+                { label: "Current version", value: shortenManageIdentifier(reviewState.currentVersionId) },
+                { label: "Published version", value: shortenManageIdentifier(reviewState.publishedVersionId ?? "none") },
+                { label: "Validation snapshot", value: shortenManageIdentifier(reviewState.latestValidationSnapshotId) },
+                { label: "Validation snapshot state", value: reviewState.validationSnapshotValid === true ? "passing" : reviewState.validationSnapshotValid === false ? "has findings" : "not loaded" },
+                { label: "Latest review decision", value: "not loaded in this shell" },
+              ]),
+            })}
           <section
-            class="manage-rituals__editor-section manage-rituals__editor-section--debug"
-            id="manage-editor-debug"
-            aria-labelledby="manage-editor-debug-title"
-          >
-            <div class="manage-rituals__editor-section-heading">
-              <h4 id="manage-editor-debug-title">Debug</h4>
-              <span>collapsed</span>
-            </div>
-            <details>
-              <summary>Raw inspection JSON</summary>
-              <pre>${escapeHtml(JSON.stringify({
-                ritual,
-                reviewState,
-                validationFindings: row.validationFindings,
-                missingReadiness: row.missingReadiness,
-              }, null, 2))}</pre>
-            </details>
-          </section>
-        </div>
-
-        <aside class="manage-rituals__editor-rail" aria-label="Read-only preview and validation">
-          <section>
-            <h4>Search preview</h4>
-            <p><strong>${escapeHtml(ritual.presentation.headline)}</strong></p>
-            <p>${escapeHtml(ritual.presentation.intention)}</p>
-            <p>${escapeHtml([row.sourceLabel, ritual.recommendationMetadata.purposes.primary, ritual.recommendationMetadata.carriers.primary].filter(Boolean).join(" · "))}</p>
-          </section>
-          <section>
-            <h4>Validation</h4>
-            <p>${escapeHtml(validationSummary)}</p>
-            <p>${escapeHtml(formatManageList(row.missingReadiness))}</p>
-          </section>
-          <section>
-            <h4>Version context</h4>
-            <p><code>${escapeHtml(reviewState.publishedVersionId ?? "no published version loaded")}</code></p>
-            <p><code>${escapeHtml(reviewState.currentVersionId ?? "no current version loaded")}</code></p>
-          </section>
-        </aside>
+              class="manage-rituals__editor-section manage-rituals__editor-section--debug"
+              id="manage-editor-debug"
+              aria-labelledby="manage-editor-debug-title"
+            >
+              <div class="manage-rituals__editor-section-heading">
+                <h4 id="manage-editor-debug-title">Debug JSON</h4>
+              </div>
+              <details>
+                <summary>Raw inspection JSON</summary>
+                <pre>${escapeHtml(JSON.stringify({
+                  ritual,
+                  reviewState,
+                  validationFindings: row.validationFindings,
+                  missingReadiness: row.missingReadiness,
+                }, null, 2))}</pre>
+              </details>
+            </section>
+        </details>
       </div>
     </section>
   `;
@@ -1638,7 +1596,14 @@ function renderManageReviewPanel(row: ReturnType<typeof createManageRitualsViewM
           <h4>Review workflow</h4>
           <p>${escapeHtml(reviewState.unavailableReason ?? "Records a DB review decision and audit event. Ritual content remains versioned.")}</p>
         </div>
-        <span class="manage-rituals__review-badge">${escapeHtml(reviewState.dbBacked ? "DB-backed" : "read-only")}</span>
+        <div class="manage-rituals__review-tools">
+          <span class="manage-rituals__review-badge">${escapeHtml(reviewState.dbBacked ? "DB-backed" : "read-only")}</span>
+          <button
+            class="manage-rituals__open-editor"
+            type="button"
+            data-manage-ritual-open-editor="${escapeHtml(row.id)}"
+          >View full editor</button>
+        </div>
       </div>
       <div class="manage-rituals__review-layout">
         <section class="manage-rituals__review-current" aria-label="Current review state">
@@ -1885,12 +1850,6 @@ export function renderManageRitualsSection(options: {
               <summary class="manage-rituals__record-summary">
                 <span class="manage-rituals__ritual-cell">
                   <span class="manage-rituals__ritual-title">${escapeHtml(row.headline)}</span>
-                  <button
-                    class="manage-rituals__open-editor"
-                    type="button"
-                    data-manage-ritual-open-editor="${escapeHtml(row.id)}"
-                    aria-label="${escapeHtml(`Open read-only editor for ${row.headline}`)}"
-                  >Open editor</button>
                 </span>
                 <span class="manage-rituals__record-status">${escapeHtml(row.status)}</span>
                 <span class="manage-rituals__record-origin">${escapeHtml(row.origin)}</span>
