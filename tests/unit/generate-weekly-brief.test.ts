@@ -52,6 +52,7 @@ function qualityScenarioInput(id: string) {
   return scenario.input;
 }
 const approvedPatternKeyList = [...approvedPatternKeys];
+const stablePresentationCopyDate = "2026-06-03T12:00:00.000Z";
 
 function getSelectedPattern(brief: ReturnType<typeof generateWeeklyBrief>) {
   return starterRitualPatterns.find(
@@ -281,6 +282,7 @@ describe("generateWeeklyBrief", () => {
 
   it("uses grimoire presentation copy for updated ritual patterns", () => {
     const brief = generateWeeklyBrief({
+      currentDate: stablePresentationCopyDate,
       capacityMode: "low",
       preferredRitualStyles: ["plant_tending", "plant"],
       currentRitualCheckIn: {
@@ -483,6 +485,7 @@ describe("generateWeeklyBrief", () => {
 
   it("does not append practical tone closing to a presented ritual", () => {
     const brief = generateWeeklyBrief({
+      currentDate: stablePresentationCopyDate,
       capacityMode: "low",
       preferredRitualStyles: ["plant_tending", "plant"],
       tonePreferences: ["practical"],
@@ -506,6 +509,7 @@ describe("generateWeeklyBrief", () => {
 
   it("uses authored presentation closing instead of legacy tone preferences", () => {
     const brief = generateWeeklyBrief({
+      currentDate: stablePresentationCopyDate,
       capacityMode: "low",
       preferredRitualStyles: ["plant_tending", "plant"],
       tonePreferences: ["warm", "direct", "symbolic", "romantic"],
