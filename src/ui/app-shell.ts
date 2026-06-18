@@ -1516,6 +1516,203 @@ function isLocalPreviewRitualEditDraft(draft: RitualEditDraftDocument | undefine
   return Boolean(draft?.id.startsWith("local_editor_") || draft?.id.startsWith("dev_visual_qa_"));
 }
 
+type ManageRitualPreviewMode = "published" | "draft";
+
+type ManageRitualEditorPreviewModel = {
+  mode: ManageRitualPreviewMode;
+  modeLabel: string;
+  presentation: Ritual["presentation"];
+  primaryPurpose: string;
+  primaryCarrier: string;
+  materials: string[];
+  places: string[];
+  tags: string[];
+  sourceLabel: string;
+  originLabel: string;
+  findable: boolean;
+  directUseEligible: boolean;
+  recommendationEligible: boolean;
+};
+
+function getManageRitualEditorPreviewModel(input: {
+  row: ReturnType<typeof createManageRitualsViewModel>["rows"][number];
+  draft?: RitualEditDraftDocument;
+  mode: ManageRitualPreviewMode;
+}): ManageRitualEditorPreviewModel {
+  const ritual = input.row.ritual;
+  const draftBuffer = input.mode === "draft" ? input.draft?.draftBuffer : undefined;
+  const draftPresentation = draftBuffer?.presentation;
+  const draftRecommendationMetadata = draftBuffer?.recommendationMetadata;
+  const draftSearchMetadata = draftBuffer?.searchMetadata;
+  const draftAvailability = draftBuffer?.availability;
+
+  return {
+    mode: input.mode,
+    modeLabel: input.mode === "draft" ? "Draft preview" : "Published/current preview",
+    presentation: {
+      ...ritual.presentation,
+      ...(draftPresentation ?? {}),
+    },
+    primaryPurpose:
+      draftRecommendationMetadata?.purposes?.primary ??
+      ritual.recommendationMetadata.purposes.primary,
+    primaryCarrier:
+      draftRecommendationMetadata?.carriers?.primary ??
+      ritual.recommendationMetadata.carriers.primary,
+    materials:
+      draftSearchMetadata?.materials ??
+      ritual.searchMetadata.materials ??
+      [],
+    places:
+      draftSearchMetadata?.places ??
+      ritual.searchMetadata.places ??
+      [],
+    tags:
+      draftSearchMetadata?.tags ??
+      ritual.searchMetadata.tags,
+    sourceLabel:
+      draftSearchMetadata?.sourceLabel ??
+      ritual.searchMetadata.sourceLabel ??
+      input.row.sourceLabel ??
+      "none",
+    originLabel:
+      draftSearchMetadata?.originLabel ??
+      ritual.searchMetadata.originLabel ??
+      input.row.originLabel ??
+      "none",
+    findable: draftAvailability?.findable ?? input.row.findable,
+    directUseEligible:
+      draftAvailability?.directUseEligible ?? input.row.directUseEligible,
+    recommendationEligible:
+      draftAvailability?.recommendationEligible ?? input.row.recommendationEligible,
+  };
+}
+
+function renderManageRitualEditorPreviewCard(
+  preview: ManageRitualEditorPreviewModel,
+): string {
+  const openable = preview.findable && preview.directUseEligible;
+  const notOpenableMessage = preview.mode === "draft"
+    ? "Draft is not currently openable from Search."
+    : "Published/current Ritual is not currently openable from Search.";
+
+  return `
+    <article class="manage-rituals__preview-card">
+      <header class="manage-rituals__preview-card-header">
+        <div>
+          <p>${escapeHtml(preview.modeLabel)}</p>
+          <h5>${escapeHtml(preview.presentation.headline)}</h5>
+        </div>
+        <span>${escapeHtml(openable ? "Openable from Search" : "Not openable from Search")}</span>
+      </header>
+
+      ${openable
+        ? ""
+        : `<p class="manage-rituals__preview-warning">${escapeHtml(notOpenableMessage)}</p>`}
+
+      <div class="manage-rituals__preview-layout">
+        <section aria-label="${escapeHtml(`${preview.modeLabel} Search card`)}">
+          <p class="manage-rituals__preview-eyebrow">Search card</p>
+          <h6>${escapeHtml(preview.presentation.headline)}</h6>
+          <p>${escapeHtml(preview.presentation.intention)}</p>
+          <dl class="manage-rituals__preview-facts">
+            <div><dt>Best window</dt><dd>${escapeHtml(preview.presentation.bestWindow)}</dd></div>
+            <div><dt>Question</dt><dd>${escapeHtml(preview.presentation.questionToCarry)}</dd></div>
+            <div><dt>Purpose</dt><dd>${escapeHtml(preview.primaryPurpose)}</dd></div>
+            <div><dt>Carrier</dt><dd>${escapeHtml(preview.primaryCarrier)}</dd></div>
+            <div><dt>Materials</dt><dd>${escapeHtml(formatManageList(preview.materials))}</dd></div>
+            <div><dt>Places</dt><dd>${escapeHtml(formatManageList(preview.places))}</dd></div>
+            <div><dt>Tags</dt><dd>${escapeHtml(formatManageList(preview.tags))}</dd></div>
+            <div><dt>Source / origin</dt><dd>${escapeHtml([preview.sourceLabel, preview.originLabel].filter((value) => value !== "none").join(" / ") || "none")}</dd></div>
+          </dl>
+        </section>
+
+        <section aria-label="${escapeHtml(`${preview.modeLabel} direct-use opening`)}">
+          <p class="manage-rituals__preview-eyebrow">Direct-use opening</p>
+          <h6>${escapeHtml(preview.presentation.headline)}</h6>
+          <p>${escapeHtml(preview.presentation.practice)}</p>
+          <dl class="manage-rituals__preview-facts">
+            <div><dt>Intention</dt><dd>${escapeHtml(preview.presentation.intention)}</dd></div>
+            <div><dt>Best window</dt><dd>${escapeHtml(preview.presentation.bestWindow)}</dd></div>
+            <div><dt>Question to carry</dt><dd>${escapeHtml(preview.presentation.questionToCarry)}</dd></div>
+            <div><dt>Findable</dt><dd>${renderYesNo(preview.findable)}</dd></div>
+            <div><dt>Direct use</dt><dd>${renderYesNo(preview.directUseEligible)}</dd></div>
+            <div><dt>Recommendation eligible</dt><dd>${renderYesNo(preview.recommendationEligible)}</dd></div>
+          </dl>
+        </section>
+      </div>
+    </article>
+  `;
+}
+
+function renderManageRitualEditorPreview(input: {
+  row: ReturnType<typeof createManageRitualsViewModel>["rows"][number];
+  draft?: RitualEditDraftDocument;
+}): string {
+  const publishedPreview = getManageRitualEditorPreviewModel({
+    row: input.row,
+    draft: input.draft,
+    mode: "published",
+  });
+  const draftPreview = getManageRitualEditorPreviewModel({
+    row: input.row,
+    draft: input.draft,
+    mode: "draft",
+  });
+  const previewGroupName = `manage-preview-${input.row.id.replace(/[^a-zA-Z0-9_-]/g, "_")}`;
+
+  return `
+    <div class="manage-rituals__preview" aria-label="Search and direct-use preview">
+      <div class="manage-rituals__preview-tabs" role="group" aria-label="Preview mode">
+        <input
+          id="${escapeHtml(`${previewGroupName}-published`)}"
+          name="${escapeHtml(previewGroupName)}"
+          type="radio"
+          checked
+        />
+        <label for="${escapeHtml(`${previewGroupName}-published`)}">Published/current</label>
+        <input
+          id="${escapeHtml(`${previewGroupName}-draft`)}"
+          name="${escapeHtml(previewGroupName)}"
+          type="radio"
+          ${input.draft ? "" : "disabled"}
+        />
+        <label for="${escapeHtml(`${previewGroupName}-draft`)}">Draft</label>
+        <div class="manage-rituals__preview-panel manage-rituals__preview-panel--published">
+          ${renderManageRitualEditorPreviewCard(publishedPreview)}
+        </div>
+        <div class="manage-rituals__preview-panel manage-rituals__preview-panel--draft">
+          ${input.draft
+            ? renderManageRitualEditorPreviewCard(draftPreview)
+            : `<p class="manage-rituals__empty-value">Open a draft to preview draft Search and direct-use behavior.</p>`}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderManageActiveDraftSummary(input: {
+  row: ReturnType<typeof createManageRitualsViewModel>["rows"][number];
+  draft?: RitualEditDraftDocument;
+}): string {
+  if (!input.draft || input.draft.ritualId !== input.row.id) {
+    return "";
+  }
+
+  const draftHeadline = input.draft.draftBuffer.presentation.headline.trim();
+  const publishedHeadline = input.row.ritual.presentation.headline;
+
+  return `
+    <section class="manage-rituals__active-draft-note" aria-label="Active draft">
+      <p>Active draft</p>
+      <dl>
+        <div><dt>Draft headline</dt><dd>${escapeHtml(draftHeadline || "Untitled draft")}</dd></div>
+        <div><dt>Published/current headline</dt><dd>${escapeHtml(publishedHeadline)}</dd></div>
+      </dl>
+    </section>
+  `;
+}
+
 function renderManageEditableBody(input: {
   row: ReturnType<typeof createManageRitualsViewModel>["rows"][number];
   draft?: RitualEditDraftDocument;
@@ -1670,18 +1867,26 @@ function renderManageRitualEditorShell(
   ) ?? [];
   const draftValidationSummary = options.draftValidationReport?.summaryLabel ??
     validationSummary;
+  const draftHeadline = options.draft?.draftBuffer.presentation.headline.trim();
+  const displayedEditorHeadline = draftHeadline || row.headline;
+  const hasDifferentDraftHeadline = Boolean(
+    draftHeadline && draftHeadline !== row.headline,
+  );
 
   return `
     <section
       class="manage-rituals__editor"
-      aria-label="${escapeHtml(`Ritual editor for ${row.headline}`)}"
+      aria-label="${escapeHtml(`Ritual editor for ${displayedEditorHeadline}`)}"
       data-manage-ritual-editor="true"
       data-ritual-id="${escapeHtml(row.id)}"
     >
       <header class="manage-rituals__editor-topbar">
         <div>
-          <p class="manage-rituals__editor-kicker">Selected Ritual</p>
-          <h3>${escapeHtml(row.headline)}</h3>
+          <p class="manage-rituals__editor-kicker">${options.draft ? "Active draft" : "Selected Ritual"}</p>
+          <h3>${escapeHtml(displayedEditorHeadline)}</h3>
+          ${hasDifferentDraftHeadline
+            ? `<p class="manage-rituals__editor-published-title">Published/current: ${escapeHtml(row.headline)}</p>`
+            : ""}
           <p><code title="${escapeHtml(row.id)}">${escapeHtml(shortenManageIdentifier(row.id, 44))}</code></p>
         </div>
         <div class="manage-rituals__editor-badges" aria-label="Selected Ritual status">
@@ -1710,6 +1915,15 @@ function renderManageRitualEditorShell(
               draft: options.draft,
               draftStatus: options.draftStatus,
               validationReport: options.draftValidationReport,
+            }),
+          })}
+
+        ${renderManageEditorSection({
+            id: "manage-editor-preview",
+            title: "Search and direct-use preview",
+            body: renderManageRitualEditorPreview({
+              row,
+              draft: options.draft,
             }),
           })}
 
@@ -2198,6 +2412,10 @@ export function renderManageRitualsSection(options: {
               </summary>
               <div class="manage-rituals__record-detail">
                       ${renderManageReviewPanel(row)}
+                      ${renderManageActiveDraftSummary({
+                        row,
+                        draft: options.selectedEditorDraft,
+                      })}
                       <div class="manage-rituals__detail-grid">
                         <section>
                           <h4>Presentation</h4>

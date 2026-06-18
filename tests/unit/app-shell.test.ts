@@ -1007,7 +1007,7 @@ describe("app shell rendering", () => {
     expect(firstSummaryHtml).not.toContain("data-manage-ritual-open-editor");
     expect(firstSummaryHtml).not.toContain("View full editor");
     expect(html).toContain('data-manage-ritual-editor="true"');
-    expect(editorHtml).toContain("Selected Ritual");
+    expect(editorHtml).toContain("Active draft");
     expect(editorHtml).toContain("Saved");
     expect(editorHtml).toContain("draft-body-edit");
     expect(editorHtml).toContain("DB-backed");
@@ -1015,6 +1015,11 @@ describe("app shell rendering", () => {
     expect(editorHtml).toContain("ritual-buckland-candle-prepare-table");
     expect(editorHtml).toContain("Validation clean");
     expect(editorHtml).toContain(">Ritual body<");
+    expect(editorHtml).toContain(">Search and direct-use preview<");
+    expect(editorHtml).toContain("Published/current preview");
+    expect(editorHtml).toContain("Draft preview");
+    expect(editorHtml).toContain("Search card");
+    expect(editorHtml).toContain("Direct-use opening");
     expect(editorHtml).toContain(">Recommendation fit<");
     expect(editorHtml).toContain(">Search and library<");
     expect(editorHtml).toContain(">Source and provenance<");
@@ -1040,6 +1045,125 @@ describe("app shell rendering", () => {
     expect(editorHtml).not.toContain("Submit draft");
     expect(editorHtml).not.toContain("Record review decision");
     expect(editorHtml).not.toContain('data-manage-ritual-review-form="true"');
+  });
+
+  it("shows a saved draft headline in editor preview without replacing the published Manage row title", async () => {
+    const dbDocuments = createDbDocuments();
+    const store = createInMemoryRitualEditDraftStore();
+    const versionDocument = dbDocuments.versionDocuments.find(
+      (document) => document.ritualId === "ritual-buckland-candle-prepare-table",
+    );
+
+    expect(versionDocument).toBeDefined();
+
+    const draft = await createDraftFromRitualVersion({
+      store,
+      versionDocument: versionDocument!,
+      actor: "owner",
+      draftId: "draft-search-preview",
+    });
+    const editedDraft = {
+      ...draft,
+      draftBuffer: {
+        ...draft.draftBuffer,
+        availability: {
+          findable: true,
+          directUseEligible: true,
+          recommendationEligible: false,
+        },
+        presentation: {
+          headline: "Draft Candle Table Title",
+          practice: "Draft practice text for preview.",
+          intention: "Draft intention for preview.",
+          bestWindow: "Draft best window.",
+          questionToCarry: "Draft question?",
+        },
+      },
+    };
+    const html = renderManageRitualsSection({
+      ritualRepositorySource: "db",
+      ritualDbDocuments: dbDocuments,
+      selectedEditorRitualId: "ritual-buckland-candle-prepare-table",
+      selectedEditorDraft: editedDraft,
+      selectedEditorDraftStatus: {
+        tone: "saved",
+        message: "Saved",
+      },
+    });
+    const editorStart = html.indexOf('data-manage-ritual-editor="true"');
+    const editorEnd = html.indexOf(
+      '<section class="manage-rituals__table-section"',
+      editorStart,
+    );
+    const editorHtml = html.slice(editorStart, editorEnd);
+    const publishedRowTitleIndex = html.indexOf(
+      '<span class="manage-rituals__ritual-title">Prepare the Candle Table</span>',
+    );
+    const targetSummaryStart = html.lastIndexOf(
+      '<summary class="manage-rituals__record-summary">',
+      publishedRowTitleIndex,
+    );
+    const targetSummaryEnd = html.indexOf("</summary>", targetSummaryStart);
+    const targetSummaryHtml = html.slice(targetSummaryStart, targetSummaryEnd);
+
+    expect(editorHtml).toContain("<h3>Draft Candle Table Title</h3>");
+    expect(editorHtml).toContain(
+      "Published/current: Prepare the Candle Table",
+    );
+    expect(editorHtml).toContain("Draft practice text for preview.");
+    expect(editorHtml).toContain("Draft best window.");
+    expect(editorHtml).toContain("Draft question?");
+    expect(editorHtml).toContain("Openable from Search");
+    expect(editorHtml).toContain("<dt>Recommendation eligible</dt><dd>no</dd>");
+    expect(html).toContain("Draft headline");
+    expect(html).toContain("Published/current headline");
+    expect(targetSummaryHtml).toContain("Prepare the Candle Table");
+    expect(targetSummaryHtml).not.toContain("Draft Candle Table Title");
+  });
+
+  it("marks draft Search preview as not openable when draft availability is held", async () => {
+    const dbDocuments = createDbDocuments();
+    const store = createInMemoryRitualEditDraftStore();
+    const versionDocument = dbDocuments.versionDocuments.find(
+      (document) => document.ritualId === "ritual-buckland-candle-prepare-table",
+    );
+
+    expect(versionDocument).toBeDefined();
+
+    const draft = await createDraftFromRitualVersion({
+      store,
+      versionDocument: versionDocument!,
+      actor: "owner",
+      draftId: "draft-held-search-preview",
+    });
+    const heldDraft = {
+      ...draft,
+      draftBuffer: {
+        ...draft.draftBuffer,
+        availability: {
+          findable: false,
+          directUseEligible: false,
+          recommendationEligible: false,
+        },
+      },
+    };
+    const html = renderManageRitualsSection({
+      ritualRepositorySource: "db",
+      ritualDbDocuments: dbDocuments,
+      selectedEditorRitualId: "ritual-buckland-candle-prepare-table",
+      selectedEditorDraft: heldDraft,
+    });
+    const editorStart = html.indexOf('data-manage-ritual-editor="true"');
+    const editorEnd = html.indexOf(
+      '<section class="manage-rituals__table-section"',
+      editorStart,
+    );
+    const editorHtml = html.slice(editorStart, editorEnd);
+
+    expect(editorHtml).toContain("Not openable from Search");
+    expect(editorHtml).toContain("Draft is not currently openable from Search.");
+    expect(editorHtml).toContain("<dt>Findable</dt><dd>no</dd>");
+    expect(editorHtml).toContain("<dt>Direct use</dt><dd>no</dd>");
   });
 
   it("renders draft validation summary, section counts, inline messages, and hidden unsafe findings", async () => {
