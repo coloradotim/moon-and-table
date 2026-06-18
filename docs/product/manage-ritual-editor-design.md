@@ -4,10 +4,11 @@ Status: Product design for issue #480, with early implementation slices in
 Manage Rituals.
 
 Scope: Product design. Early slices now implement read-only inspection,
-`ritualEditDrafts` draft persistence, editable canonical body fields, and
-on-demand draft validation display. This document does not itself implement
-publish/review promotion, source import, selector changes, or full metadata
-editing.
+`ritualEditDrafts` draft persistence, editable canonical body fields,
+editable Search/library metadata, editable selection metadata, safe read-only
+source/provenance display, and on-demand draft validation display. This
+document does not itself implement publish/review promotion, source import,
+selector changes, or immutable version creation.
 
 ## 1. Product Goal
 
@@ -44,13 +45,15 @@ In-progress edits live in a mutable edit-draft buffer, recommended as:
 ritualEditDrafts/{draftId}
 ```
 
-A draft is a workspace. It may autosave. It may be discarded. It may be validated. It does not become an immutable Ritual version until explicitly submitted / sealed for review.
+A draft is a workspace. It may be saved. It may be discarded. It may be
+validated. It does not become an immutable Ritual version until explicitly
+submitted / sealed for review.
 
 Do not use mutable `ritualVersions` as the draft workspace. That would weaken the meaning of immutable version history.
 
 ### 2.4 Review remains the promotion gate
 
-Save draft, autosave, validate draft, and submit draft are not publish or promotion actions.
+Save draft, validate draft, and submit draft are not publish or promotion actions.
 
 Review decisions remain the gate for:
 
@@ -343,9 +346,10 @@ In early slices, ritual words/provenance metadata is read-only unless a later is
 
 ### 4.4 Recommendation fit
 
-Selection metadata. This gets its own explicit implementation issue.
+Selection metadata. The first editable implementation uses structured controls
+inside the draft editor and saves only to `ritualEditDrafts`.
 
-Editable later:
+Editable:
 
 ```text
 primary purpose
@@ -385,7 +389,7 @@ Editing these fields must save only to the draft. It must not promote recommenda
 
 ### 4.5 Search and library
 
-Editable earlier than selection metadata:
+Editable:
 
 ```text
 tags
@@ -407,7 +411,8 @@ Search/direct selection remains separate from recommendation eligibility.
 
 ### 4.6 Source and provenance
 
-Read-only in the near term.
+Read-only in the near term. The source/provenance panel is inspection only; it
+must not become source import or source editing.
 
 Show safe provenance:
 
@@ -423,6 +428,9 @@ source grounding summaries
 Moon & Table adaptation notes
 review flags related to source/provenance
 ```
+
+For household-origin Rituals, show that the origin is household, household
+review is required, and source grounding is not required.
 
 Do not display or edit unsafe source/private fields:
 
@@ -525,11 +533,14 @@ Raw JSON is an escape hatch, not the editor.
 Build:
 
 ```text
-ritualEditDrafts model + autosave
+ritualEditDrafts model + explicit Save
 open editor from Manage Rituals
 create draft from existing Ritual/version
 create blank household-origin draft
 edit Ritual body fields
+edit Search/library metadata
+edit selection metadata
+show safe source/provenance
 validate draft
 show field-level findings
 show Search/direct-use preview
@@ -543,6 +554,18 @@ practice
 intention
 bestWindow
 questionToCarry
+tags
+keywords
+materials
+places
+primary purpose
+secondary purposes
+primary carrier
+secondary carriers
+capacity
+audience
+timing relationship
+timing contexts
 ```
 
 Explicitly not editable first:
@@ -556,12 +579,6 @@ source grounding
 publishedVersionId
 currentVersionId
 contentHash
-primary purpose
-primary carrier
-capacity
-audience
-timing relationship
-timing contexts
 ```
 
 ### Later slices
@@ -699,7 +716,7 @@ For findings that do not map to a visible field, show an `Other validation findi
 Open existing Ritual
 → Start edit
 → create ritualEditDrafts/{draftId} from publishedVersionId/currentVersionId
-→ autosave draft changes
+→ save draft changes
 → validate draft
 → submit draft for review
 → seal immutable ritualVersion candidate
@@ -713,7 +730,7 @@ Published version remains untouched until review action changes the pointer.
 ```text
 Create Ritual
 → blank household-origin ritualEditDrafts/{draftId}
-→ autosave draft
+→ save draft
 → validate draft
 → submit for review
 → seal immutable household-origin ritualVersion
@@ -843,7 +860,8 @@ Resolved for now:
 - Drafts use mutable `ritualEditDrafts`, not mutable `ritualVersions`.
 - Both household maintainers can edit.
 - Source/provenance is read-only for now.
-- Selection metadata editing gets a dedicated issue.
+- Selection metadata editing is supported in drafts and still requires validation
+  and review before publish.
 - `whyThisFits` / `howThisWasChosen` are generated per recommendation run.
 - Existing `presentation.whyThisFits` is legacy/fallback compatibility data, not
   an editable Ritual body field.

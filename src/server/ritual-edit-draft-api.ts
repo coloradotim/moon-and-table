@@ -9,6 +9,7 @@ import {
   createBlankHouseholdRitualDraft,
   createDraftFromRitualVersion,
   saveRitualEditDraft,
+  type RitualEditDraftBuffer,
   type RitualEditDraftDocument,
   type RitualEditDraftStore,
 } from "../data/rituals/ritual-edit-drafts";
@@ -97,6 +98,25 @@ function isCanonicalBody(value: unknown): value is RitualCanonicalBody {
     !("whyThisFits" in value);
 }
 
+function isDraftOrigin(value: unknown): value is RitualEditDraftBuffer["origin"] {
+  if (!isObject(value) || typeof value.type !== "string") {
+    return false;
+  }
+
+  if (value.type === "source") {
+    return Array.isArray(value.sourceGrounding);
+  }
+
+  return value.type === "household" && typeof value.householdContext === "string";
+}
+
+function isDraftBuffer(value: unknown): value is RitualEditDraftBuffer {
+  return isObject(value) &&
+    typeof value.id === "string" &&
+    isDraftOrigin(value.origin) &&
+    isCanonicalBody(value.presentation);
+}
+
 function parseRequest(body: unknown): RitualEditDraftClientAction | undefined {
   if (!isObject(body) || typeof body.action !== "string") {
     return undefined;
@@ -124,12 +144,12 @@ function parseRequest(body: unknown): RitualEditDraftClientAction | undefined {
   if (
     (body.action === "autosave" || body.action === "save") &&
     typeof body.draftId === "string" &&
-    isCanonicalBody(body.presentation)
+    isDraftBuffer(body.draftBuffer)
   ) {
     return {
       action: body.action,
       draftId: body.draftId,
-      presentation: body.presentation,
+      draftBuffer: body.draftBuffer,
     };
   }
 
@@ -238,14 +258,10 @@ async function handleRequestAction(input: {
     return invalid("draftId", "Ritual edit draft was not found.", 404);
   }
 
-  const draftBuffer = {
-    ...existing.draftBuffer,
-    presentation: { ...input.request.presentation },
-  };
   const saveInput = {
     store: input.dependencies.draftStore,
     draftId: input.request.draftId,
-    draftBuffer,
+    draftBuffer: input.request.draftBuffer,
     actor: "owner" as const,
     updatedAtIso: input.now,
   };

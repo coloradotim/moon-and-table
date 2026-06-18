@@ -19,6 +19,7 @@ import {
 } from "../../src/ui/app-shell";
 import { resolvePrivateBriefData } from "../../src/lib/private-data";
 import { sourceBackedRituals } from "../../src/data/rituals/source-backed-rituals";
+import { createStaticRitualRepository } from "../../src/data/rituals/ritual-repository";
 import { createRitualDbMirrorDryRun } from "../../src/data/rituals/db-mirror";
 import {
   createDraftFromRitualVersion,
@@ -32,6 +33,7 @@ import {
 } from "../../src/lib/timing-window-candidates";
 import type { ChooseWithMeResult } from "../../src/data/rituals/choose-with-me-selector";
 import type { RitualFavorite } from "../../src/data/rituals/household-state";
+import type { Ritual } from "../../src/data/rituals/types";
 
 function createDbDocuments(rituals = sourceBackedRituals) {
   const report = createRitualDbMirrorDryRun(rituals, {
@@ -1014,7 +1016,8 @@ describe("app shell rendering", () => {
     expect(editorHtml).toContain("Prepare the Candle Table");
     expect(editorHtml).toContain("ritual-buckland-candle-prepare-table");
     expect(editorHtml).toContain("Validation clean");
-    expect(editorHtml).toContain(">Ritual body<");
+    expect(editorHtml).toContain(">Draft fields<");
+    expect(editorHtml).toContain("Ritual body");
     expect(editorHtml).toContain(">Search and direct-use preview<");
     expect(editorHtml).toContain("Published/current preview");
     expect(editorHtml).toContain("Draft preview");
@@ -1029,7 +1032,7 @@ describe("app shell rendering", () => {
     expect(editorHtml).toContain(">Versions and audit<");
     expect(editorHtml).toContain(">Debug JSON<");
     expect(editorHtml).toContain("Buckland, Practical Candleburning Rituals");
-    expect(editorHtml).toContain("Source grounding summaries");
+    expect(editorHtml).toContain("Source support summary");
     expect(editorHtml).toContain("Moon &amp; Table adaptation notes");
     expect(editorHtml).toContain("<summary>Raw inspection JSON</summary>");
     expect(editorHtml).toContain('data-manage-ritual-draft-form="true"');
@@ -1038,6 +1041,17 @@ describe("app shell rendering", () => {
     expect(editorHtml).toContain('name="intention"');
     expect(editorHtml).toContain('name="bestWindow"');
     expect(editorHtml).toContain('name="questionToCarry"');
+    expect(editorHtml).toContain('name="primaryPurpose"');
+    expect(editorHtml).toContain('name="secondaryPurposes"');
+    expect(editorHtml).toContain('name="primaryCarrier"');
+    expect(editorHtml).toContain('name="capacitySupports"');
+    expect(editorHtml).toContain('name="audienceSupports"');
+    expect(editorHtml).toContain('name="timingRelationship"');
+    expect(editorHtml).toContain('name="searchTags"');
+    expect(editorHtml).toContain('name="searchKeywords"');
+    expect(editorHtml).toContain('name="searchMaterials"');
+    expect(editorHtml).toContain('name="searchPlaces"');
+    expect(editorHtml).toContain("Changing primary purpose may change Ritual identity.");
     expect(editorHtml).toContain("<textarea");
     expect(editorHtml).toContain(">Save</button>");
     expect(editorHtml).not.toContain("Autosave");
@@ -1045,6 +1059,38 @@ describe("app shell rendering", () => {
     expect(editorHtml).not.toContain("Submit draft");
     expect(editorHtml).not.toContain("Record review decision");
     expect(editorHtml).not.toContain('data-manage-ritual-review-form="true"');
+  });
+
+  it("renders household provenance as household-origin without requiring source grounding", () => {
+    const householdRitual: Ritual = {
+      ...sourceBackedRituals[0],
+      id: "household.editor.provenance.fixture",
+      origin: {
+        type: "household",
+        householdContext: "Repository-safe household fixture.",
+      },
+      searchMetadata: {
+        ...sourceBackedRituals[0].searchMetadata,
+        sourceLabel: undefined,
+        originLabel: "Household",
+      },
+    };
+    const html = renderManageRitualsSection({
+      ritualRepository: createStaticRitualRepository([householdRitual]),
+      selectedEditorRitualId: householdRitual.id,
+    });
+    const editorStart = html.indexOf('data-manage-ritual-editor="true"');
+    const editorEnd = html.indexOf(
+      '<section class="manage-rituals__table-section"',
+      editorStart,
+    );
+    const editorHtml = html.slice(editorStart, editorEnd);
+
+    expect(editorHtml).toContain("Origin: Household");
+    expect(editorHtml).toContain("Household review required");
+    expect(editorHtml).toContain("No source grounding required");
+    expect(editorHtml).not.toContain("Source grounding required");
+    expect(editorHtml).not.toContain("copied source");
   });
 
   it("shows a saved draft headline in editor preview without replacing the published Manage row title", async () => {
@@ -1077,6 +1123,25 @@ describe("app shell rendering", () => {
           intention: "Draft intention for preview.",
           bestWindow: "Draft best window.",
           questionToCarry: "Draft question?",
+        },
+        recommendationMetadata: {
+          ...draft.draftBuffer.recommendationMetadata,
+          purposes: {
+            primary: "tending" as const,
+            secondary: ["opening" as const],
+            refinement: "draft metadata fit",
+          },
+          carriers: {
+            primary: "words" as const,
+            secondary: ["table" as const],
+          },
+        },
+        searchMetadata: {
+          ...draft.draftBuffer.searchMetadata,
+          tags: ["draft-tag"],
+          keywords: ["draft-keyword"],
+          materials: ["draft bowl"],
+          places: ["draft altar"],
         },
       },
     };
@@ -1113,6 +1178,11 @@ describe("app shell rendering", () => {
     expect(editorHtml).toContain("Draft practice text for preview.");
     expect(editorHtml).toContain("Draft best window.");
     expect(editorHtml).toContain("Draft question?");
+    expect(editorHtml).toContain("<dt>Purpose</dt><dd>tending</dd>");
+    expect(editorHtml).toContain("<dt>Carrier</dt><dd>words</dd>");
+    expect(editorHtml).toContain("<dt>Materials</dt><dd>draft bowl</dd>");
+    expect(editorHtml).toContain("<dt>Places</dt><dd>draft altar</dd>");
+    expect(editorHtml).toContain("<dt>Tags</dt><dd>draft-tag</dd>");
     expect(editorHtml).toContain("Openable from Search");
     expect(editorHtml).toContain("<dt>Recommendation eligible</dt><dd>no</dd>");
     expect(html).toContain("Draft headline");

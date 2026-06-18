@@ -1,8 +1,8 @@
 import type { RitualDbValidationFinding } from "./db-documents";
 import type {
+  RitualEditDraftBuffer,
   RitualEditDraftDocument,
 } from "./ritual-edit-drafts";
-import type { RitualCanonicalBody } from "./types";
 
 export type RitualEditDraftClientAction =
   | {
@@ -17,7 +17,7 @@ export type RitualEditDraftClientAction =
   | {
       action: "autosave" | "save";
       draftId: string;
-      presentation: RitualCanonicalBody;
+      draftBuffer: RitualEditDraftBuffer;
     };
 
 export type SubmitRitualEditDraftResult =

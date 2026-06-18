@@ -119,6 +119,114 @@ describe("Ritual edit draft validation", () => {
     ]);
   });
 
+  it("maps invalid selection metadata to editor fields", async () => {
+    const { draft } = await createCleanDraft();
+    const invalidDraft = {
+      ...draft,
+      draftBuffer: {
+        ...draft.draftBuffer,
+        recommendationMetadata: {
+          ...draft.draftBuffer.recommendationMetadata,
+          purposes: {
+            primary: "unsupported-purpose",
+            secondary: ["tending", "unsupported-purpose"],
+            refinement: "",
+          },
+          carriers: {
+            primary: "unsupported-carrier",
+            secondary: ["words"],
+          },
+          capacity: {
+            supports: ["only_a_little", "too_much"],
+          },
+          audience: {
+            supports: [],
+          },
+          timing: {
+            relationship: "whenever",
+            contexts: ["new_moon", ""],
+          },
+          eligibility: {
+            recommendable: true,
+            missing: [],
+          },
+        },
+      },
+    } as unknown as RitualEditDraftDocument;
+
+    const report = validateRitualEditDraft(invalidDraft);
+
+    expect(report.valid).toBe(false);
+    expect(report.findings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          field: "primaryPurpose",
+          section: "fit",
+        }),
+        expect.objectContaining({
+          field: "primaryCarrier",
+          section: "fit",
+        }),
+        expect.objectContaining({
+          field: "capacitySupports",
+          section: "fit",
+        }),
+        expect.objectContaining({
+          field: "audienceSupports",
+          section: "fit",
+        }),
+        expect.objectContaining({
+          field: "timingRelationship",
+          section: "fit",
+        }),
+        expect.objectContaining({
+          field: "timingContexts",
+          section: "fit",
+        }),
+      ]),
+    );
+  });
+
+  it("maps invalid search metadata to editor fields", async () => {
+    const { draft } = await createCleanDraft();
+    const invalidDraft = {
+      ...draft,
+      draftBuffer: {
+        ...draft.draftBuffer,
+        searchMetadata: {
+          ...draft.draftBuffer.searchMetadata,
+          tags: ["table", "table", ""],
+          keywords: [],
+          materials: ["paper"],
+          places: ["altar"],
+        },
+      },
+    } as unknown as RitualEditDraftDocument;
+
+    const report = validateRitualEditDraft(invalidDraft);
+
+    expect(report.valid).toBe(false);
+    expect(report.findings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          field: "searchTags",
+          section: "search",
+          severity: "warning",
+        }),
+        expect.objectContaining({
+          field: "searchTags",
+          section: "search",
+          severity: "error",
+        }),
+        expect.objectContaining({
+          field: "searchKeywords",
+          section: "search",
+          severity: "error",
+        }),
+      ]),
+    );
+  });
+
   it("leaves unmapped findings in the other section", async () => {
     const { draft } = await createCleanDraft();
     const invalidDraft = {

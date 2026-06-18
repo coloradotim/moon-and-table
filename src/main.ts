@@ -125,11 +125,21 @@ import {
   saveRitualInteractionEvent,
   type HouseholdRitualStateSkippedRecordCounts,
 } from "./data/rituals/household-state-firestore";
-import type { Ritual } from "./data/rituals/types";
+import {
+  RITUAL_AUDIENCES,
+  RITUAL_CAPACITY_MODES,
+  RITUAL_CARRIERS,
+  RITUAL_PURPOSES,
+  RITUAL_TIMING_RELATIONSHIPS,
+  type Ritual,
+  type RitualAudience,
+  type RitualCapacityMode,
+} from "./data/rituals/types";
 import {
   createDraftFromRitualVersion,
   createInMemoryRitualEditDraftStore,
   saveRitualEditDraft,
+  type RitualEditDraftBuffer,
   type RitualEditDraftDocument,
 } from "./data/rituals/ritual-edit-drafts";
 import {
@@ -215,7 +225,7 @@ let activeManageRitualEditorDraftValidationReport:
   | RitualEditDraftValidationReport
   | undefined;
 let activeManageRitualEditorUsesLocalDraft = false;
-let activeManageRitualEditorLastSavedPresentationJson: string | undefined;
+let activeManageRitualEditorLastSavedDraftBufferJson: string | undefined;
 
 type HouseholdMemoryWriteRecordType =
   | "favorite"
@@ -450,7 +460,7 @@ function clearManageRitualEditorDraftState(): void {
   activeManageRitualEditorDraftStatus = undefined;
   activeManageRitualEditorDraftValidationReport = undefined;
   activeManageRitualEditorUsesLocalDraft = false;
-  activeManageRitualEditorLastSavedPresentationJson = undefined;
+  activeManageRitualEditorLastSavedDraftBufferJson = undefined;
 }
 
 function getActiveRitualVersionId(ritualId: string): string | undefined {
@@ -479,10 +489,132 @@ function getDraftBodyFromForm(form: HTMLFormElement): {
   };
 }
 
-function serializeManageRitualDraftPresentation(
-  presentation: ReturnType<typeof getDraftBodyFromForm>,
+function normalizeDraftListText(value: FormDataEntryValue | null): string[] {
+  const rawValue = String(value ?? "");
+
+  return rawValue
+    .split(/\n|,/)
+    .map((item) => item.trim())
+    .filter((item, index, items) => item.length > 0 && items.indexOf(item) === index);
+}
+
+function normalizeDraftString(value: FormDataEntryValue | null): string {
+  return String(value ?? "").trim();
+}
+
+function formDataValues(formData: FormData, name: string): string[] {
+  return formData
+    .getAll(name)
+    .map((value) => String(value))
+    .filter((value, index, values) => value.length > 0 && values.indexOf(value) === index);
+}
+
+function getEnumValue<const T extends readonly string[]>(
+  values: T,
+  value: FormDataEntryValue | null,
+  fallback: T[number],
+): T[number] {
+  const stringValue = String(value ?? "");
+
+  return values.includes(stringValue) ? stringValue as T[number] : fallback;
+}
+
+function getEnumValues<const T extends readonly string[]>(
+  values: T,
+  rawValues: string[],
+): T[number][] {
+  return rawValues.filter((value): value is T[number] => values.includes(value));
+}
+
+function getDraftBufferFromForm(
+  form: HTMLFormElement,
+  currentDraftBuffer: RitualEditDraftBuffer,
+): RitualEditDraftBuffer {
+  const formData = new FormData(form);
+  const currentRecommendation = currentDraftBuffer.recommendationMetadata;
+  const currentSearch = currentDraftBuffer.searchMetadata;
+  const primaryPurpose = getEnumValue(
+    RITUAL_PURPOSES,
+    formData.get("primaryPurpose"),
+    currentRecommendation?.purposes?.primary ?? RITUAL_PURPOSES[0],
+  );
+  const primaryCarrier = getEnumValue(
+    RITUAL_CARRIERS,
+    formData.get("primaryCarrier"),
+    currentRecommendation?.carriers?.primary ?? RITUAL_CARRIERS[0],
+  );
+  const capacitySupports = getEnumValues(
+    RITUAL_CAPACITY_MODES,
+    formDataValues(formData, "capacitySupports"),
+  );
+  const audienceSupports = getEnumValues(
+    RITUAL_AUDIENCES,
+    formDataValues(formData, "audienceSupports"),
+  );
+  const capacityDefaultValue = String(formData.get("capacityDefault") ?? "");
+  const audienceDefaultValue = String(formData.get("audienceDefault") ?? "");
+
+  return {
+    ...currentDraftBuffer,
+    presentation: getDraftBodyFromForm(form),
+    recommendationMetadata: {
+      ...currentRecommendation,
+      purposes: {
+        primary: primaryPurpose,
+        secondary: getEnumValues(
+          RITUAL_PURPOSES,
+          formDataValues(formData, "secondaryPurposes"),
+        ).filter((purpose) => purpose !== primaryPurpose),
+        refinement: normalizeDraftString(formData.get("purposeRefinement")),
+      },
+      carriers: {
+        primary: primaryCarrier,
+        secondary: getEnumValues(
+          RITUAL_CARRIERS,
+          formDataValues(formData, "secondaryCarriers"),
+        ).filter((carrier) => carrier !== primaryCarrier),
+      },
+      capacity: {
+        supports: capacitySupports,
+        ...(RITUAL_CAPACITY_MODES.includes(capacityDefaultValue as RitualCapacityMode)
+          ? { default: capacityDefaultValue as RitualCapacityMode }
+          : {}),
+      },
+      audience: {
+        supports: audienceSupports,
+        ...(RITUAL_AUDIENCES.includes(audienceDefaultValue as RitualAudience)
+          ? { default: audienceDefaultValue as RitualAudience }
+          : {}),
+        bothOfUsStructure: normalizeDraftString(formData.get("bothOfUsStructure")),
+      },
+      timing: {
+        relationship: getEnumValue(
+          RITUAL_TIMING_RELATIONSHIPS,
+          formData.get("timingRelationship"),
+          currentRecommendation?.timing?.relationship ?? RITUAL_TIMING_RELATIONSHIPS[3],
+        ),
+        contexts: normalizeDraftListText(formData.get("timingContexts")),
+      },
+      eligibility: {
+        recommendable: currentRecommendation?.eligibility?.recommendable ?? false,
+        missing: normalizeDraftListText(formData.get("recommendationMissing")),
+        notFor: normalizeDraftListText(formData.get("recommendationNotFor")),
+      },
+    },
+    searchMetadata: {
+      ...currentSearch,
+      tags: normalizeDraftListText(formData.get("searchTags")),
+      keywords: normalizeDraftListText(formData.get("searchKeywords")),
+      materials: normalizeDraftListText(formData.get("searchMaterials")),
+      places: normalizeDraftListText(formData.get("searchPlaces")),
+    },
+  };
+}
+
+function serializeManageRitualDraftBuffer(
+  draftBuffer: RitualEditDraftBuffer,
 ): string {
-  return JSON.stringify(presentation);
+  return JSON.stringify(draftBuffer);
 }
 
 function updateManageRitualDraftStatusText(message: string): void {
@@ -544,9 +676,9 @@ async function createLocalManageRitualEditorDraft(input: {
     createdAtIso: new Date().toISOString(),
   });
   activeManageRitualEditorUsesLocalDraft = true;
-  activeManageRitualEditorLastSavedPresentationJson =
-    serializeManageRitualDraftPresentation(
-      activeManageRitualEditorDraft.draftBuffer.presentation,
+  activeManageRitualEditorLastSavedDraftBufferJson =
+    serializeManageRitualDraftBuffer(
+      activeManageRitualEditorDraft.draftBuffer,
     );
   activeManageRitualEditorDraftStatus = {
     tone: "idle",
@@ -646,9 +778,9 @@ async function loadOrCreateManageRitualEditorDraft(ritualId: string): Promise<vo
 
   activeManageRitualEditorDraft = result.draft;
   activeManageRitualEditorUsesLocalDraft = false;
-  activeManageRitualEditorLastSavedPresentationJson =
-    serializeManageRitualDraftPresentation(
-      activeManageRitualEditorDraft.draftBuffer.presentation,
+  activeManageRitualEditorLastSavedDraftBufferJson =
+    serializeManageRitualDraftBuffer(
+      activeManageRitualEditorDraft.draftBuffer,
     );
   activeManageRitualEditorDraftStatus = {
     tone: "saved",
@@ -663,10 +795,13 @@ async function saveManageRitualEditorDraft(form: HTMLFormElement): Promise<void>
     return;
   }
 
-  const presentation = getDraftBodyFromForm(form);
-  const presentationJson = serializeManageRitualDraftPresentation(presentation);
+  const draftBuffer = getDraftBufferFromForm(
+    form,
+    activeManageRitualEditorDraft.draftBuffer,
+  );
+  const draftBufferJson = serializeManageRitualDraftBuffer(draftBuffer);
 
-  if (presentationJson === activeManageRitualEditorLastSavedPresentationJson) {
+  if (draftBufferJson === activeManageRitualEditorLastSavedDraftBufferJson) {
     activeManageRitualEditorDraftStatus = {
       tone: "saved",
       message: activeManageRitualEditorUsesLocalDraft ? "Saved in local preview" : "Saved",
@@ -682,10 +817,7 @@ async function saveManageRitualEditorDraft(form: HTMLFormElement): Promise<void>
   activeManageRitualEditorDraft = {
     ...activeManageRitualEditorDraft,
     saveState: "saving",
-    draftBuffer: {
-      ...activeManageRitualEditorDraft.draftBuffer,
-      presentation,
-    },
+    draftBuffer,
   };
   renderActiveSignedInShell();
 
@@ -702,9 +834,9 @@ async function saveManageRitualEditorDraft(form: HTMLFormElement): Promise<void>
       tone: "saved",
       message: activeManageRitualEditorUsesLocalDraft ? "Saved in local preview" : "Saved",
     };
-    activeManageRitualEditorLastSavedPresentationJson =
-      serializeManageRitualDraftPresentation(
-        activeManageRitualEditorDraft.draftBuffer.presentation,
+    activeManageRitualEditorLastSavedDraftBufferJson =
+      serializeManageRitualDraftBuffer(
+        activeManageRitualEditorDraft.draftBuffer,
       );
 
     renderActiveSignedInShell();
@@ -726,7 +858,7 @@ async function saveManageRitualEditorDraft(form: HTMLFormElement): Promise<void>
     request: {
       action: "save",
       draftId: activeManageRitualEditorDraft.id,
-      presentation,
+      draftBuffer: activeManageRitualEditorDraft.draftBuffer,
     },
   });
 
@@ -744,9 +876,9 @@ async function saveManageRitualEditorDraft(form: HTMLFormElement): Promise<void>
   }
 
   activeManageRitualEditorDraft = result.draft;
-  activeManageRitualEditorLastSavedPresentationJson =
-    serializeManageRitualDraftPresentation(
-      activeManageRitualEditorDraft.draftBuffer.presentation,
+  activeManageRitualEditorLastSavedDraftBufferJson =
+    serializeManageRitualDraftBuffer(
+      activeManageRitualEditorDraft.draftBuffer,
     );
   activeManageRitualEditorDraftStatus = {
     tone: "saved",
@@ -780,10 +912,13 @@ function markManageRitualEditorDraftUnsaved(form: HTMLFormElement): void {
     return;
   }
 
-  const presentation = getDraftBodyFromForm(form);
-  const presentationJson = serializeManageRitualDraftPresentation(presentation);
+  const draftBuffer = getDraftBufferFromForm(
+    form,
+    activeManageRitualEditorDraft.draftBuffer,
+  );
+  const draftBufferJson = serializeManageRitualDraftBuffer(draftBuffer);
 
-  if (presentationJson === activeManageRitualEditorLastSavedPresentationJson) {
+  if (draftBufferJson === activeManageRitualEditorLastSavedDraftBufferJson) {
     updateManageRitualDraftStatusText(
       activeManageRitualEditorUsesLocalDraft ? "Saved in local preview" : "Saved",
     );
@@ -793,10 +928,7 @@ function markManageRitualEditorDraftUnsaved(form: HTMLFormElement): void {
   activeManageRitualEditorDraft = {
     ...activeManageRitualEditorDraft,
     saveState: "unsaved_changes",
-    draftBuffer: {
-      ...activeManageRitualEditorDraft.draftBuffer,
-      presentation,
-    },
+    draftBuffer,
   };
   activeManageRitualEditorDraftStatus = {
     tone: "idle",
@@ -2674,6 +2806,23 @@ appRoot.addEventListener("input", (event) => {
     activeRitualSearchQuery = target.value;
     activeSelectedRitualId = null;
     renderRitualSearchBodyOnly();
+  }
+});
+
+appRoot.addEventListener("change", (event) => {
+  const target = event.target;
+
+  if (
+    (target instanceof HTMLInputElement || target instanceof HTMLSelectElement) &&
+    target.matches("[data-manage-ritual-draft-field='true']")
+  ) {
+    const form = target.closest<HTMLFormElement>(
+      "[data-manage-ritual-draft-form='true']",
+    );
+
+    if (form) {
+      markManageRitualEditorDraftUnsaved(form);
+    }
   }
 });
 

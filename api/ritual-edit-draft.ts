@@ -100,7 +100,7 @@ type RitualEditDraftClientAction =
   | {
       action: "autosave" | "save";
       draftId: string;
-      presentation: RitualCanonicalBody;
+      draftBuffer: RitualEditDraftBuffer;
     };
 
 type RitualEditDraftApiRequest = {
@@ -180,6 +180,25 @@ function isCanonicalBody(value: unknown): value is RitualCanonicalBody {
     !("whyThisFits" in value);
 }
 
+function isDraftOrigin(value: unknown): value is RitualEditDraftOrigin {
+  if (!isObject(value) || typeof value.type !== "string") {
+    return false;
+  }
+
+  if (value.type === "source") {
+    return Array.isArray(value.sourceGrounding);
+  }
+
+  return value.type === "household" && typeof value.householdContext === "string";
+}
+
+function isDraftBuffer(value: unknown): value is RitualEditDraftBuffer {
+  return isObject(value) &&
+    typeof value.id === "string" &&
+    isDraftOrigin(value.origin) &&
+    isCanonicalBody(value.presentation);
+}
+
 function parseRequest(body: unknown): RitualEditDraftClientAction | undefined {
   if (!isObject(body) || typeof body.action !== "string") {
     return undefined;
@@ -207,12 +226,12 @@ function parseRequest(body: unknown): RitualEditDraftClientAction | undefined {
   if (
     (body.action === "autosave" || body.action === "save") &&
     typeof body.draftId === "string" &&
-    isCanonicalBody(body.presentation)
+    isDraftBuffer(body.draftBuffer)
   ) {
     return {
       action: body.action,
       draftId: body.draftId,
-      presentation: body.presentation,
+      draftBuffer: body.draftBuffer,
     };
   }
 
@@ -624,14 +643,10 @@ async function handleRequestAction(input: {
     return invalid("draftId", "Ritual edit draft was not found.", 404);
   }
 
-  const draftBuffer = {
-    ...existing.draftBuffer,
-    presentation: { ...input.request.presentation },
-  };
   const draft = await saveRitualEditDraft({
     store: input.store,
     draftId: input.request.draftId,
-    draftBuffer,
+    draftBuffer: input.request.draftBuffer,
     actor: "owner",
     updatedAtIso: input.now,
     savedAtField: input.request.action === "autosave"

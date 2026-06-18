@@ -2903,7 +2903,8 @@ h2 {
   grid-column: 1 / -1;
 }
 
-#manage-editor-preview {
+#manage-editor-preview,
+#manage-editor-provenance {
   grid-column: 1 / -1;
 }
 
@@ -2975,6 +2976,7 @@ h2 {
 
 .manage-rituals__editor-savebar button,
 .manage-rituals__editor-field input,
+.manage-rituals__editor-field select,
 .manage-rituals__editor-field textarea {
   font: inherit;
 }
@@ -3032,18 +3034,55 @@ h2 {
   gap: 14px;
 }
 
+.manage-rituals__editor-fields--compact {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.manage-rituals__draft-form-sections {
+  display: grid;
+  gap: 12px;
+}
+
+.manage-rituals__draft-form-card {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid rgba(200, 190, 173, 0.48);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.58);
+}
+
+.manage-rituals__draft-form-card h5 {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0;
+  color: #26312c;
+  font-size: 0.92rem;
+}
+
+.manage-rituals__draft-form-card h5 small {
+  color: #66736a;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
 .manage-rituals__editor-field {
   display: grid;
   gap: 6px;
 }
 
-.manage-rituals__editor-field span {
+.manage-rituals__editor-field span,
+.manage-rituals__editor-fieldset legend {
   color: #435349;
   font-size: var(--text-label);
   font-weight: 800;
 }
 
 .manage-rituals__editor-field input,
+.manage-rituals__editor-field select,
 .manage-rituals__editor-field textarea {
   width: 100%;
   box-sizing: border-box;
@@ -3056,12 +3095,14 @@ h2 {
 }
 
 .manage-rituals__editor-field--invalid input,
+.manage-rituals__editor-field--invalid select,
 .manage-rituals__editor-field--invalid textarea {
   border-color: rgba(149, 91, 74, 0.62);
   background: rgba(250, 239, 234, 0.42);
 }
 
-.manage-rituals__editor-field input {
+.manage-rituals__editor-field input,
+.manage-rituals__editor-field select {
   min-height: 48px;
   padding: 10px 12px;
 }
@@ -3080,6 +3121,77 @@ h2 {
   color: #66736a;
   font-size: var(--text-small);
   line-height: 1.35;
+}
+
+.manage-rituals__editor-fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.manage-rituals__choice-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.manage-rituals__choice-grid label,
+.manage-rituals__list-chips span {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  border: 1px solid rgba(159, 174, 166, 0.6);
+  border-radius: 999px;
+  background: rgba(255, 253, 247, 0.72);
+  color: #435349;
+  font-size: var(--text-small);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.manage-rituals__choice-grid input {
+  width: auto;
+  min-height: 0;
+  margin: 0;
+}
+
+.manage-rituals__list-field {
+  align-content: start;
+}
+
+.manage-rituals__list-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.manage-rituals__metadata-editor {
+  display: grid;
+  gap: 12px;
+}
+
+.manage-rituals__editor-warning-note {
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid rgba(191, 168, 120, 0.46);
+  border-radius: 8px;
+  background: rgba(251, 248, 235, 0.58);
+  color: #5d563f;
+  font-size: var(--text-small);
+  line-height: 1.35;
+}
+
+.manage-rituals__editor-warning-note p,
+.manage-rituals__editor-warning-note ul {
+  margin: 0;
+}
+
+.manage-rituals__editor-warning-note ul {
+  padding-left: 18px;
 }
 
 .manage-rituals__validation-messages {
@@ -3302,6 +3414,28 @@ h2 {
 }
 
 .manage-rituals__editor-subsection h5 {
+  color: #435349;
+  font-size: 0.82rem;
+}
+
+.manage-rituals__provenance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.manage-rituals__provenance-grid section {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 11px;
+  border: 1px solid rgba(200, 190, 173, 0.48);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.62);
+}
+
+.manage-rituals__provenance-grid h5 {
+  margin: 0;
   color: #435349;
   font-size: 0.82rem;
 }
@@ -4109,7 +4243,9 @@ fieldset {
   }
 
   .manage-rituals__editor-main,
-  .manage-rituals__editor-facts {
+  .manage-rituals__editor-facts,
+  .manage-rituals__editor-fields--compact,
+  .manage-rituals__provenance-grid {
     grid-template-columns: 1fr;
   }
 
