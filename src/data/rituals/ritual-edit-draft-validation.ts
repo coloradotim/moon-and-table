@@ -40,7 +40,6 @@ export type RitualEditDraftValidationField =
   | "questionToCarry"
   | "primaryPurpose"
   | "secondaryPurposes"
-  | "purposeRefinement"
   | "primaryCarrier"
   | "secondaryCarriers"
   | "capacitySupports"
@@ -105,7 +104,6 @@ const FIELD_PATH_PREFIXES: Array<{
 }> = [
   { field: "primaryPurpose", prefixes: ["draftBuffer.recommendationMetadata.purposes.primary"] },
   { field: "secondaryPurposes", prefixes: ["draftBuffer.recommendationMetadata.purposes.secondary"] },
-  { field: "purposeRefinement", prefixes: ["draftBuffer.recommendationMetadata.purposes.refinement"] },
   { field: "primaryCarrier", prefixes: ["draftBuffer.recommendationMetadata.carriers.primary"] },
   { field: "secondaryCarriers", prefixes: ["draftBuffer.recommendationMetadata.carriers.secondary"] },
   { field: "capacitySupports", prefixes: ["draftBuffer.recommendationMetadata.capacity.supports"] },
@@ -164,6 +162,15 @@ const ALLOWED_DRAFT_BUFFER_TOP_LEVEL_KEYS = new Set([
   "ritualWords",
   "searchMetadata",
   "status",
+]);
+
+const BROAD_TIMING_CONTEXT_LABELS = new Set([
+  "imperfect timing",
+  "lunar phase",
+  "moon phase",
+  "moon sign",
+  "planetary aspect",
+  "retrograde planet",
 ]);
 
 function isObject(value: unknown): value is Record<string, unknown> {
@@ -462,10 +469,10 @@ function validateDraftSelectionMetadata(
     findings,
   });
 
-  if (!isNonEmptyString(metadata.purposes?.refinement)) {
+  if (metadata.purposes?.secondary?.includes(metadata.purposes.primary)) {
     findings.push(finding({
-      path: "draftBuffer.recommendationMetadata.purposes.refinement",
-      message: "Purpose refinement should describe the fit within the primary purpose.",
+      path: "draftBuffer.recommendationMetadata.purposes.secondary",
+      message: "Secondary purposes should not repeat the primary purpose.",
       severity: "warning",
     }));
   }
@@ -483,6 +490,14 @@ function validateDraftSelectionMetadata(
     path: "draftBuffer.recommendationMetadata.carriers.secondary",
     findings,
   });
+
+  if (metadata.carriers?.secondary?.includes(metadata.carriers.primary)) {
+    findings.push(finding({
+      path: "draftBuffer.recommendationMetadata.carriers.secondary",
+      message: "Secondary carriers should not repeat the primary carrier.",
+      severity: "warning",
+    }));
+  }
 
   validateEnumList({
     value: metadata.capacity?.supports ?? [],
@@ -533,6 +548,22 @@ function validateDraftSelectionMetadata(
     findings,
   });
 
+  if (Array.isArray(metadata.timing?.contexts)) {
+    metadata.timing.contexts.forEach((context, index) => {
+      if (
+        typeof context === "string" &&
+        BROAD_TIMING_CONTEXT_LABELS.has(context.trim().toLowerCase())
+      ) {
+        findings.push(finding({
+          path: `draftBuffer.recommendationMetadata.timing.contexts.${index}`,
+          message:
+            "Use a specific timing signal, not a broad bucket. Examples: new moon, full moon, waxing moon, moon in Cancer, Mercury retrograde.",
+          severity: "warning",
+        }));
+      }
+    });
+  }
+
   validateStringList({
     value: metadata.eligibility?.missing ?? [],
     path: "draftBuffer.recommendationMetadata.eligibility.missing",
@@ -569,7 +600,6 @@ function validateDraftSearchMetadata(
     value: metadata.keywords ?? [],
     path: "draftBuffer.searchMetadata.keywords",
     findings,
-    required: true,
   });
   validateStringList({
     value: metadata.materials ?? [],

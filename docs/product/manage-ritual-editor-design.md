@@ -5,7 +5,7 @@ Manage Rituals.
 
 Scope: Product design. Early slices now implement read-only inspection,
 `ritualEditDrafts` draft persistence, editable canonical body fields,
-editable Search/library metadata, editable selection metadata, safe read-only
+editable Search/library terms, editable selection metadata, safe read-only
 source/provenance display, and on-demand draft validation display. This
 document does not itself implement publish/review promotion, source import,
 selector changes, or immutable version creation.
@@ -359,7 +359,7 @@ secondary carriers
 capacity
 audience
 timing relationship
-timing contexts
+specific timing signals
 recommendation metadata completeness fields
 ```
 
@@ -370,11 +370,14 @@ single-select for primary purpose
 multi-select chips for secondary purposes
 single-select for primary carrier
 multi-select chips for secondary carriers
-capacity selector
+capacity selector: barely any / only a little / enough to participate / room for something deeper
 audience selector
 timing relationship selector: none / helpful / preferred / required
-timing context chips
+specific timing signal chips or list values
 ```
+
+Secondary purpose/carrier chips are additive only. The selected primary value
+must not be selectable as a secondary chip.
 
 Changing these fields changes Search/Choose behavior and may change Ritual identity. The UI must warn clearly:
 
@@ -385,6 +388,12 @@ Changing capacity, audience, or timing changes Choose with me eligibility.
 Validation and review are required before publishing.
 ```
 
+Timing values should describe a concrete signal the selector can actually use.
+Broad bucket labels such as `moon sign`, `planetary aspect`, `retrograde
+planet`, or `imperfect timing` are review hints at best; they are not specific
+enough by themselves. Prefer values such as `new moon`, `full moon`, `waxing
+moon`, `moon in Cancer`, `Mercury retrograde`, or `exact timing not required`.
+
 Editing these fields must save only to the draft. It must not promote recommendation eligibility.
 
 ### 4.5 Search and library
@@ -393,15 +402,15 @@ Editable:
 
 ```text
 tags
-keywords
-materials
-places
 ```
 
 Read-only / derived:
 
 ```text
 search tokens
+keywords
+materials
+places
 sort headline key
 source label, unless separate source-safe correction is allowed later
 findable / direct-use state
@@ -538,7 +547,7 @@ open editor from Manage Rituals
 create draft from existing Ritual/version
 create blank household-origin draft
 edit Ritual body fields
-edit Search/library metadata
+edit Search/library terms
 edit selection metadata
 show safe source/provenance
 validate draft
@@ -555,9 +564,6 @@ intention
 bestWindow
 questionToCarry
 tags
-keywords
-materials
-places
 primary purpose
 secondary purposes
 primary carrier
@@ -565,7 +571,7 @@ secondary carriers
 capacity
 audience
 timing relationship
-timing contexts
+specific timing signals
 ```
 
 Explicitly not editable first:
@@ -585,7 +591,7 @@ contentHash
 
 Add in order:
 
-1. simple Search/library metadata editor;
+1. simple Search/library terms editor;
 2. explicit selection metadata editor;
 3. Choose with me preview;
 4. source/provenance read-only refinements;
@@ -814,7 +820,7 @@ Ritual body
 Search preview
 Validation
 Recommendation fit
-Search/library metadata
+Search/library terms
 Source/provenance
 Versions/audit
 Debug
@@ -842,7 +848,7 @@ Recommended implementation order:
 4. Add editable Ritual body fields.
 5. Add draft validation UX.
 6. Add Search/direct-use preview.
-7. Add simple Search/library metadata editor.
+7. Add simple Search/library terms editor.
 8. Add selection metadata editor.
 9. Add Choose with me preview.
 10. Add source/provenance read-only panel.

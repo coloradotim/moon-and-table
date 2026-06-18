@@ -1048,15 +1048,36 @@ describe("app shell rendering", () => {
     expect(editorHtml).toContain('name="audienceSupports"');
     expect(editorHtml).toContain('name="timingRelationship"');
     expect(editorHtml).toContain('name="searchTags"');
-    expect(editorHtml).toContain('name="searchKeywords"');
-    expect(editorHtml).toContain('name="searchMaterials"');
-    expect(editorHtml).toContain('name="searchPlaces"');
+    expect(editorHtml).not.toContain('name="searchKeywords"');
+    expect(editorHtml).not.toContain('name="searchMaterials"');
+    expect(editorHtml).not.toContain('name="searchPlaces"');
     expect(editorHtml).toContain("Draft-only changes");
     expect(editorHtml).toContain("Purpose");
+    expect(editorHtml).not.toContain('name="purposeRefinement"');
+    expect(editorHtml).not.toContain("Specific work");
+    expect(editorHtml).not.toContain("Focus note");
     expect(editorHtml).toContain("Carrier");
     expect(editorHtml).toContain("Participation");
-    expect(editorHtml).toContain("Recommendation holds and exclusions");
+    expect(editorHtml).toContain("Barely any");
+    expect(editorHtml).toContain("Shared roles");
+    expect(editorHtml).toContain("How two people participate");
+    expect(editorHtml).toContain("Specific timing signals");
+    expect(editorHtml).toContain("Helpful gives a small boost");
+    expect(editorHtml).toContain("Preferred gives a stronger boost");
+    expect(editorHtml).toContain("Required should only be used");
+    expect(editorHtml).toContain("Avoid broad buckets like moon sign");
+    expect(editorHtml).toContain("Search terms");
+    expect(editorHtml).not.toContain("Recommendation holds and exclusions");
     expect(editorHtml).not.toContain("Changing primary purpose may change Ritual identity.");
+    expect(editorHtml).not.toContain("Purpose refinement");
+    expect(editorHtml).not.toContain("Both-of-us structure");
+    expect(editorHtml).not.toContain("Timing contexts");
+    expect(editorHtml).toMatch(
+      /data-manage-secondary-option="secondaryPurposes" hidden[\s\S]*name="secondaryPurposes"[\s\S]*value="tending"[\s\S]*disabled/,
+    );
+    expect(editorHtml).toMatch(
+      /data-manage-secondary-option="secondaryCarriers" hidden[\s\S]*name="secondaryCarriers"[\s\S]*value="table"[\s\S]*disabled/,
+    );
     expect(editorHtml).toContain("<textarea");
     expect(editorHtml).toContain(">Save</button>");
     expect(editorHtml).not.toContain("Autosave");

@@ -565,7 +565,7 @@ function getDraftBufferFromForm(
           RITUAL_PURPOSES,
           formDataValues(formData, "secondaryPurposes"),
         ).filter((purpose) => purpose !== primaryPurpose),
-        refinement: normalizeDraftString(formData.get("purposeRefinement")),
+        refinement: currentRecommendation?.purposes?.refinement ?? "",
       },
       carriers: {
         primary: primaryCarrier,
@@ -597,16 +597,16 @@ function getDraftBufferFromForm(
       },
       eligibility: {
         recommendable: currentRecommendation?.eligibility?.recommendable ?? false,
-        missing: normalizeDraftListText(formData.get("recommendationMissing")),
-        notFor: normalizeDraftListText(formData.get("recommendationNotFor")),
+        missing: currentRecommendation?.eligibility?.missing ?? [],
+        notFor: currentRecommendation?.eligibility?.notFor ?? [],
       },
     },
     searchMetadata: {
       ...currentSearch,
       tags: normalizeDraftListText(formData.get("searchTags")),
-      keywords: normalizeDraftListText(formData.get("searchKeywords")),
-      materials: normalizeDraftListText(formData.get("searchMaterials")),
-      places: normalizeDraftListText(formData.get("searchPlaces")),
+      keywords: currentSearch?.keywords ?? [],
+      materials: currentSearch?.materials ?? [],
+      places: currentSearch?.places ?? [],
     },
   };
 }
@@ -625,6 +625,38 @@ function updateManageRitualDraftStatusText(message: string): void {
   if (statusElement) {
     statusElement.textContent = message;
   }
+}
+
+function syncManageRitualExclusiveSecondaryChoices(form: HTMLFormElement): void {
+  [
+    { primaryName: "primaryPurpose", secondaryName: "secondaryPurposes" },
+    { primaryName: "primaryCarrier", secondaryName: "secondaryCarriers" },
+  ].forEach(({ primaryName, secondaryName }) => {
+    const primary = form.elements.namedItem(primaryName);
+
+    if (!(primary instanceof HTMLSelectElement) || primary.disabled) {
+      return;
+    }
+
+    form
+      .querySelectorAll<HTMLInputElement>(`input[name="${secondaryName}"]`)
+      .forEach((input) => {
+        const shouldHide = input.value === primary.value;
+        const label = input.closest<HTMLElement>(
+          `[data-manage-secondary-option="${secondaryName}"]`,
+        );
+
+        if (shouldHide) {
+          input.checked = false;
+        }
+
+        input.disabled = shouldHide;
+
+        if (label) {
+          label.hidden = shouldHide;
+        }
+      });
+  });
 }
 
 async function getFirebaseIdTokenForRitualEditor(): Promise<string | undefined> {
@@ -2821,6 +2853,12 @@ appRoot.addEventListener("change", (event) => {
     );
 
     if (form) {
+      if (
+        target instanceof HTMLSelectElement &&
+        (target.name === "primaryPurpose" || target.name === "primaryCarrier")
+      ) {
+        syncManageRitualExclusiveSecondaryChoices(form);
+      }
       markManageRitualEditorDraftUnsaved(form);
     }
   }

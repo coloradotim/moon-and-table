@@ -122,6 +122,7 @@ const profileWorksOptions = [
 ];
 
 const ritualCapacityFilterLabels: Record<string, string> = {
+  barely_any: "Barely any",
   only_a_little: "Only a little",
   enough_to_participate: "Enough to participate",
   room_for_something_deeper: "Room for something deeper",
@@ -1498,6 +1499,14 @@ function renderManageBodyField(input: {
 }
 
 function formatEditorOptionLabel(value: string): string {
+  if (ritualCapacityFilterLabels[value]) {
+    return ritualCapacityFilterLabels[value];
+  }
+
+  if (ritualAudienceFilterLabels[value]) {
+    return ritualAudienceFilterLabels[value];
+  }
+
   return value.replace(/_/g, " ");
 }
 
@@ -1535,29 +1544,35 @@ function renderManageCheckboxGroup(input: {
   legend: string;
   values: readonly string[];
   selected: readonly string[];
+  excludeValues?: readonly string[];
   disabled?: boolean;
   findings?: RitualEditDraftValidationFinding[];
 }): string {
   const selected = new Set(input.selected);
+  const excluded = new Set(input.excludeValues ?? []);
   const hasFindings = Boolean(input.findings?.length);
 
   return `
     <fieldset class="manage-rituals__editor-field manage-rituals__editor-fieldset${hasFindings ? " manage-rituals__editor-field--invalid" : ""}">
       <legend>${escapeHtml(input.legend)}</legend>
       <div class="manage-rituals__choice-grid">
-        ${input.values.map((value) => `
-          <label>
+        ${input.values.map((value) => {
+          const isExcluded = excluded.has(value);
+
+          return `
+          <label data-manage-secondary-option="${escapeHtml(input.name)}" ${isExcluded ? "hidden" : ""}>
             <input
               name="${escapeHtml(input.name)}"
               type="checkbox"
               value="${escapeHtml(value)}"
               data-manage-ritual-draft-field="true"
-              ${selected.has(value) ? "checked" : ""}
-              ${input.disabled ? "disabled" : ""}
+              ${selected.has(value) && !isExcluded ? "checked" : ""}
+              ${input.disabled || isExcluded ? "disabled" : ""}
             />
             <span>${escapeHtml(formatEditorOptionLabel(value))}</span>
           </label>
-        `).join("")}
+        `;
+        }).join("")}
       </div>
       ${renderManageDraftFieldFindings(input.findings ?? [])}
     </fieldset>
@@ -1651,22 +1666,13 @@ function renderManageRecommendationMetadataEditor(input: {
                 field: "primaryPurpose",
               }),
             })}
-            ${renderManageBodyField({
-              name: "purposeRefinement",
-              label: "Purpose refinement",
-              value: metadata?.purposes?.refinement ?? "",
-              disabled,
-              findings: getManageDraftValidationFieldFindings({
-                report: input.validationReport,
-                field: "purposeRefinement",
-              }),
-            })}
             <div class="manage-rituals__metadata-layout-full">
               ${renderManageCheckboxGroup({
                 name: "secondaryPurposes",
                 legend: "Also fits",
                 values: RITUAL_PURPOSES,
                 selected: metadata?.purposes?.secondary ?? [],
+                excludeValues: [primaryPurpose],
                 disabled,
                 findings: getManageDraftValidationFieldFindings({
                   report: input.validationReport,
@@ -1698,6 +1704,7 @@ function renderManageRecommendationMetadataEditor(input: {
               legend: "Also works with",
               values: RITUAL_CARRIERS,
               selected: metadata?.carriers?.secondary ?? [],
+              excludeValues: [primaryCarrier],
               disabled,
               findings: getManageDraftValidationFieldFindings({
                 report: input.validationReport,
@@ -1759,8 +1766,9 @@ function renderManageRecommendationMetadataEditor(input: {
             <div class="manage-rituals__metadata-layout-full">
               ${renderManageBodyField({
                 name: "bothOfUsStructure",
-                label: "Both-of-us structure",
+                label: "Shared roles",
                 value: metadata?.audience?.bothOfUsStructure ?? "",
+                hint: "How two people participate, such as together, one witnesses, turn-taking, or one prepares while the other speaks.",
                 disabled,
                 findings: getManageDraftValidationFieldFindings({
                   report: input.validationReport,
@@ -1773,8 +1781,12 @@ function renderManageRecommendationMetadataEditor(input: {
       })}
       ${renderManageMetadataBand({
         title: "Timing",
-        description: "How strongly timing should shape selection.",
+        description: "Which real timing signals can shape selection.",
         body: `
+          <div class="manage-rituals__editor-guidance">
+            <strong>How this is used</strong>
+            <span>Choose with me and the Search timing filter compare these signals against the current timing window and timing facts. Helpful gives a small boost when matched. Preferred gives a stronger boost. Required should only be used when the Ritual should not be recommended unless one listed signal is active.</span>
+          </div>
           <div class="manage-rituals__metadata-layout">
             ${renderManageSelectField({
               name: "timingRelationship",
@@ -1789,9 +1801,9 @@ function renderManageRecommendationMetadataEditor(input: {
             })}
             ${renderManageListField({
               name: "timingContexts",
-              label: "Timing contexts",
+              label: "Specific timing signals",
               values: metadata?.timing?.contexts ?? [],
-              hint: "One context per line. Use current timing-engine labels only.",
+              hint: "One signal per line. Use concrete matchable signals like new moon, full moon, waxing moon, moon in Cancer, Venus square Mars, Mercury retrograde, or exact timing not required. Avoid broad buckets like moon sign or planetary aspect by themselves.",
               rows: 5,
               disabled,
               findings: getManageDraftValidationFieldFindings({
@@ -1802,35 +1814,6 @@ function renderManageRecommendationMetadataEditor(input: {
           </div>
         `,
       })}
-      <details class="manage-rituals__metadata-details">
-        <summary>Recommendation holds and exclusions</summary>
-        <div class="manage-rituals__metadata-layout">
-          ${renderManageListField({
-            name: "recommendationMissing",
-            label: "Recommendation missing",
-            values: metadata?.eligibility?.missing ?? [],
-            hint: "One unresolved readiness note per line.",
-            rows: 3,
-            disabled,
-            findings: getManageDraftValidationFieldFindings({
-              report: input.validationReport,
-              field: "recommendationMissing",
-            }),
-          })}
-          ${renderManageListField({
-            name: "recommendationNotFor",
-            label: "Not for",
-            values: metadata?.eligibility?.notFor ?? [],
-            hint: "One exclusion note per line.",
-            rows: 3,
-            disabled,
-            findings: getManageDraftValidationFieldFindings({
-              report: input.validationReport,
-              field: "recommendationNotFor",
-            }),
-          })}
-        </div>
-      </details>
     </div>
   `;
 }
@@ -1852,71 +1835,21 @@ function renderManageSearchMetadataEditor(input: {
         <span><strong>Origin</strong>${escapeHtml(metadata?.originLabel ?? "none")}</span>
       </div>
       ${renderManageMetadataBand({
-        title: "Discovery words",
-        description: "Terms people might type when looking for this Ritual.",
+        title: "Findability",
+        description: "Words that should help someone find this Ritual.",
         body: `
           <div class="manage-rituals__metadata-layout">
             <div class="manage-rituals__metadata-layout-full">
               ${renderManageListField({
                 name: "searchTags",
-                label: "Tags",
+                label: "Search terms",
                 values: metadata?.tags ?? [],
-                hint: "One tag per line. Blank and duplicate entries are removed on save.",
+                hint: "Shown on search cards and used by typed search.",
                 rows: 4,
                 disabled,
                 findings: getManageDraftValidationFieldFindings({
                   report: input.validationReport,
                   field: "searchTags",
-                }),
-              })}
-            </div>
-            <div class="manage-rituals__metadata-layout-full">
-              ${renderManageListField({
-                name: "searchKeywords",
-                label: "Keywords",
-                values: metadata?.keywords ?? [],
-                hint: "One keyword per line. Keep these user-searchable, not source excerpts.",
-                rows: 5,
-                disabled,
-                findings: getManageDraftValidationFieldFindings({
-                  report: input.validationReport,
-                  field: "searchKeywords",
-                }),
-              })}
-            </div>
-          </div>
-        `,
-      })}
-      ${renderManageMetadataBand({
-        title: "Concrete lookup",
-        description: "Objects and places that should make this findable.",
-        body: `
-          <div class="manage-rituals__metadata-layout">
-            <div class="manage-rituals__metadata-layout-full">
-              ${renderManageListField({
-                name: "searchMaterials",
-                label: "Materials",
-                values: metadata?.materials ?? [],
-                hint: "One material per line.",
-                rows: 3,
-                disabled,
-                findings: getManageDraftValidationFieldFindings({
-                  report: input.validationReport,
-                  field: "searchMaterials",
-                }),
-              })}
-            </div>
-            <div class="manage-rituals__metadata-layout-full">
-              ${renderManageListField({
-                name: "searchPlaces",
-                label: "Places",
-                values: metadata?.places ?? [],
-                hint: "One place per line.",
-                rows: 3,
-                disabled,
-                findings: getManageDraftValidationFieldFindings({
-                  report: input.validationReport,
-                  field: "searchPlaces",
                 }),
               })}
             </div>

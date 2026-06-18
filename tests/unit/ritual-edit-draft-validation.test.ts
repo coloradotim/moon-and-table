@@ -187,6 +187,75 @@ describe("Ritual edit draft validation", () => {
     );
   });
 
+  it("warns when timing contexts use broad bucket labels instead of specific signals", async () => {
+    const { draft } = await createCleanDraft();
+    const warningDraft: RitualEditDraftDocument = {
+      ...draft,
+      draftBuffer: {
+        ...draft.draftBuffer,
+        recommendationMetadata: {
+          ...draft.draftBuffer.recommendationMetadata,
+          timing: {
+            relationship: "helpful",
+            contexts: ["moon sign", "new moon"],
+          },
+        },
+      },
+    };
+
+    const report = validateRitualEditDraft(warningDraft);
+
+    expect(report.valid).toBe(true);
+    expect(report.summaryLabel).toBe("1 warning");
+    expect(report.findings).toEqual([
+      expect.objectContaining({
+        path: "draftBuffer.recommendationMetadata.timing.contexts.0",
+        field: "timingContexts",
+        section: "fit",
+        severity: "warning",
+        message: expect.stringContaining("specific timing signal"),
+      }),
+    ]);
+  });
+
+  it("warns when secondary purpose or carrier repeats the primary value", async () => {
+    const { draft } = await createCleanDraft();
+    const warningDraft: RitualEditDraftDocument = {
+      ...draft,
+      draftBuffer: {
+        ...draft.draftBuffer,
+        recommendationMetadata: {
+          ...draft.draftBuffer.recommendationMetadata,
+          purposes: {
+            primary: "tending",
+            secondary: ["tending", "marking"],
+            refinement: "",
+          },
+          carriers: {
+            primary: "table",
+            secondary: ["table", "words"],
+          },
+        },
+      },
+    };
+
+    const report = validateRitualEditDraft(warningDraft);
+
+    expect(report.valid).toBe(true);
+    expect(report.findings).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        field: "secondaryPurposes",
+        severity: "warning",
+        message: expect.stringContaining("repeat the primary purpose"),
+      }),
+      expect.objectContaining({
+        field: "secondaryCarriers",
+        severity: "warning",
+        message: expect.stringContaining("repeat the primary carrier"),
+      }),
+    ]));
+  });
+
   it("maps invalid search metadata to editor fields", async () => {
     const { draft } = await createCleanDraft();
     const invalidDraft = {
@@ -215,11 +284,6 @@ describe("Ritual edit draft validation", () => {
         }),
         expect.objectContaining({
           field: "searchTags",
-          section: "search",
-          severity: "error",
-        }),
-        expect.objectContaining({
-          field: "searchKeywords",
           section: "search",
           severity: "error",
         }),
