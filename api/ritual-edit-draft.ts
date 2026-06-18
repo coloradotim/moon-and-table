@@ -83,8 +83,8 @@ export default async function handler(
       { createAdminFirestoreRitualEditDraftStore },
       { handleRitualEditDraftApi },
     ] = await Promise.all([
-      import("../src/data/rituals/ritual-edit-drafts.js"),
-      import("../src/server/ritual-edit-draft-api.js"),
+      import("../src/data/rituals/ritual-edit-drafts"),
+      import("../src/server/ritual-edit-draft-api"),
     ]);
 
     await handleRitualEditDraftApi(request, response, {
