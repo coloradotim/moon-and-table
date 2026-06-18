@@ -1051,7 +1051,12 @@ describe("app shell rendering", () => {
     expect(editorHtml).toContain('name="searchKeywords"');
     expect(editorHtml).toContain('name="searchMaterials"');
     expect(editorHtml).toContain('name="searchPlaces"');
-    expect(editorHtml).toContain("Changing primary purpose may change Ritual identity.");
+    expect(editorHtml).toContain("Draft-only changes");
+    expect(editorHtml).toContain("Purpose");
+    expect(editorHtml).toContain("Carrier");
+    expect(editorHtml).toContain("Participation");
+    expect(editorHtml).toContain("Recommendation holds and exclusions");
+    expect(editorHtml).not.toContain("Changing primary purpose may change Ritual identity.");
     expect(editorHtml).toContain("<textarea");
     expect(editorHtml).toContain(">Save</button>");
     expect(editorHtml).not.toContain("Autosave");

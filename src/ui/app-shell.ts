@@ -1569,6 +1569,7 @@ function renderManageListField(input: {
   label: string;
   values: readonly string[];
   hint?: string;
+  rows?: number;
   disabled?: boolean;
   findings?: RitualEditDraftValidationFinding[];
 }): string {
@@ -1578,14 +1579,9 @@ function renderManageListField(input: {
   return `
     <label class="manage-rituals__editor-field manage-rituals__list-field${hasFindings ? " manage-rituals__editor-field--invalid" : ""}">
       <span>${escapeHtml(input.label)}</span>
-      ${input.values.length > 0
-        ? `<div class="manage-rituals__list-chips" aria-label="${escapeHtml(`${input.label} current values`)}">
-            ${input.values.map((value) => `<span>${escapeHtml(value)}</span>`).join("")}
-          </div>`
-        : ""}
       <textarea
         name="${escapeHtml(input.name)}"
-        rows="4"
+        rows="${input.rows ?? 4}"
         data-manage-ritual-draft-field="true"
         ${input.disabled ? "disabled" : ""}
         ${input.hint ? `aria-describedby="${escapeHtml(fieldId)}"` : ""}
@@ -1596,16 +1592,29 @@ function renderManageListField(input: {
   `;
 }
 
-function renderManageSelectionWarningList(): string {
+function renderManageMetadataNote(): string {
   return `
-    <div class="manage-rituals__editor-warning-note">
-      <p>Selection metadata changes how this Ritual is found and recommended. Validation and review are required before a draft can publish.</p>
-      <ul>
-        <li>Changing primary purpose may change Ritual identity.</li>
-        <li>Changing primary carrier changes selection behavior.</li>
-        <li>Changing capacity, audience, or timing changes Choose with me eligibility.</li>
-      </ul>
+    <div class="manage-rituals__editor-guidance">
+      <strong>Draft-only changes</strong>
+      <span>These settings affect search and Choose with me after validation and review. Published Ritual content is unchanged.</span>
     </div>
+  `;
+}
+
+function renderManageMetadataBand(input: {
+  title: string;
+  body: string;
+  description?: string;
+  compact?: boolean;
+}): string {
+  return `
+    <section class="manage-rituals__metadata-band${input.compact ? " manage-rituals__metadata-band--compact" : ""}">
+      <div class="manage-rituals__metadata-band-header">
+        <h6>${escapeHtml(input.title)}</h6>
+        ${input.description ? `<p>${escapeHtml(input.description)}</p>` : ""}
+      </div>
+      ${input.body}
+    </section>
   `;
 }
 
@@ -1625,161 +1634,203 @@ function renderManageRecommendationMetadataEditor(input: {
 
   return `
     <div class="manage-rituals__metadata-editor">
-      ${renderManageSelectionWarningList()}
-      <div class="manage-rituals__editor-fields manage-rituals__editor-fields--compact">
-        ${renderManageSelectField({
-          name: "primaryPurpose",
-          label: "Primary purpose",
-          value: primaryPurpose,
-          options: RITUAL_PURPOSES,
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "primaryPurpose",
-          }),
-        })}
-        ${renderManageCheckboxGroup({
-          name: "secondaryPurposes",
-          legend: "Secondary purposes",
-          values: RITUAL_PURPOSES,
-          selected: metadata?.purposes?.secondary ?? [],
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "secondaryPurposes",
-          }),
-        })}
-        ${renderManageBodyField({
-          name: "purposeRefinement",
-          label: "Purpose refinement",
-          value: metadata?.purposes?.refinement ?? "",
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "purposeRefinement",
-          }),
-        })}
-        ${renderManageSelectField({
-          name: "primaryCarrier",
-          label: "Primary carrier",
-          value: primaryCarrier,
-          options: RITUAL_CARRIERS,
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "primaryCarrier",
-          }),
-        })}
-        ${renderManageCheckboxGroup({
-          name: "secondaryCarriers",
-          legend: "Secondary carriers",
-          values: RITUAL_CARRIERS,
-          selected: metadata?.carriers?.secondary ?? [],
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "secondaryCarriers",
-          }),
-        })}
-        ${renderManageCheckboxGroup({
-          name: "capacitySupports",
-          legend: "Capacity support",
-          values: RITUAL_CAPACITY_MODES,
-          selected: capacitySupports,
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "capacitySupports",
-          }),
-        })}
-        ${renderManageSelectField({
-          name: "capacityDefault",
-          label: "Default capacity",
-          value: metadata?.capacity?.default ?? capacitySupports[0] ?? RITUAL_CAPACITY_MODES[0],
-          options: RITUAL_CAPACITY_MODES,
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "capacityDefault",
-          }),
-        })}
-        ${renderManageCheckboxGroup({
-          name: "audienceSupports",
-          legend: "Audience support",
-          values: RITUAL_AUDIENCES,
-          selected: audienceSupports,
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "audienceSupports",
-          }),
-        })}
-        ${renderManageSelectField({
-          name: "audienceDefault",
-          label: "Default audience",
-          value: metadata?.audience?.default ?? audienceSupports[0] ?? RITUAL_AUDIENCES[0],
-          options: RITUAL_AUDIENCES,
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "audienceDefault",
-          }),
-        })}
-        ${renderManageBodyField({
-          name: "bothOfUsStructure",
-          label: "Both-of-us structure",
-          value: metadata?.audience?.bothOfUsStructure ?? "",
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "bothOfUsStructure",
-          }),
-        })}
-        ${renderManageSelectField({
-          name: "timingRelationship",
-          label: "Timing relationship",
-          value: metadata?.timing?.relationship ?? RITUAL_TIMING_RELATIONSHIPS[3],
-          options: RITUAL_TIMING_RELATIONSHIPS,
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "timingRelationship",
-          }),
-        })}
-        ${renderManageListField({
-          name: "timingContexts",
-          label: "Timing contexts",
-          values: metadata?.timing?.contexts ?? [],
-          hint: "One context per line. Use current timing-engine labels only.",
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "timingContexts",
-          }),
-        })}
-        ${renderManageListField({
-          name: "recommendationMissing",
-          label: "Recommendation missing",
-          values: metadata?.eligibility?.missing ?? [],
-          hint: "One unresolved readiness note per line.",
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "recommendationMissing",
-          }),
-        })}
-        ${renderManageListField({
-          name: "recommendationNotFor",
-          label: "Not for",
-          values: metadata?.eligibility?.notFor ?? [],
-          hint: "One exclusion note per line.",
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "recommendationNotFor",
-          }),
-        })}
-      </div>
+      ${renderManageMetadataNote()}
+      ${renderManageMetadataBand({
+        title: "Purpose",
+        description: "What work this Ritual is allowed to hold.",
+        body: `
+          <div class="manage-rituals__metadata-layout">
+            ${renderManageSelectField({
+              name: "primaryPurpose",
+              label: "Primary purpose",
+              value: primaryPurpose,
+              options: RITUAL_PURPOSES,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "primaryPurpose",
+              }),
+            })}
+            ${renderManageBodyField({
+              name: "purposeRefinement",
+              label: "Purpose refinement",
+              value: metadata?.purposes?.refinement ?? "",
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "purposeRefinement",
+              }),
+            })}
+            <div class="manage-rituals__metadata-layout-full">
+              ${renderManageCheckboxGroup({
+                name: "secondaryPurposes",
+                legend: "Also fits",
+                values: RITUAL_PURPOSES,
+                selected: metadata?.purposes?.secondary ?? [],
+                disabled,
+                findings: getManageDraftValidationFieldFindings({
+                  report: input.validationReport,
+                  field: "secondaryPurposes",
+                }),
+              })}
+            </div>
+          </div>
+        `,
+      })}
+      ${renderManageMetadataBand({
+        title: "Carrier",
+        description: "Where the practice naturally lives.",
+        body: `
+          <div class="manage-rituals__metadata-layout">
+            ${renderManageSelectField({
+              name: "primaryCarrier",
+              label: "Primary carrier",
+              value: primaryCarrier,
+              options: RITUAL_CARRIERS,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "primaryCarrier",
+              }),
+            })}
+            ${renderManageCheckboxGroup({
+              name: "secondaryCarriers",
+              legend: "Also works with",
+              values: RITUAL_CARRIERS,
+              selected: metadata?.carriers?.secondary ?? [],
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "secondaryCarriers",
+              }),
+            })}
+          </div>
+        `,
+      })}
+      ${renderManageMetadataBand({
+        title: "Participation",
+        description: "How much attention this can ask for, and who it can serve.",
+        body: `
+          <div class="manage-rituals__metadata-layout">
+            ${renderManageCheckboxGroup({
+              name: "capacitySupports",
+              legend: "Capacity support",
+              values: RITUAL_CAPACITY_MODES,
+              selected: capacitySupports,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "capacitySupports",
+              }),
+            })}
+            ${renderManageSelectField({
+              name: "capacityDefault",
+              label: "Default capacity",
+              value: metadata?.capacity?.default ?? capacitySupports[0] ?? RITUAL_CAPACITY_MODES[0],
+              options: RITUAL_CAPACITY_MODES,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "capacityDefault",
+              }),
+            })}
+            ${renderManageCheckboxGroup({
+              name: "audienceSupports",
+              legend: "Audience support",
+              values: RITUAL_AUDIENCES,
+              selected: audienceSupports,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "audienceSupports",
+              }),
+            })}
+            ${renderManageSelectField({
+              name: "audienceDefault",
+              label: "Default audience",
+              value: metadata?.audience?.default ?? audienceSupports[0] ?? RITUAL_AUDIENCES[0],
+              options: RITUAL_AUDIENCES,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "audienceDefault",
+              }),
+            })}
+            <div class="manage-rituals__metadata-layout-full">
+              ${renderManageBodyField({
+                name: "bothOfUsStructure",
+                label: "Both-of-us structure",
+                value: metadata?.audience?.bothOfUsStructure ?? "",
+                disabled,
+                findings: getManageDraftValidationFieldFindings({
+                  report: input.validationReport,
+                  field: "bothOfUsStructure",
+                }),
+              })}
+            </div>
+          </div>
+        `,
+      })}
+      ${renderManageMetadataBand({
+        title: "Timing",
+        description: "How strongly timing should shape selection.",
+        body: `
+          <div class="manage-rituals__metadata-layout">
+            ${renderManageSelectField({
+              name: "timingRelationship",
+              label: "Timing relationship",
+              value: metadata?.timing?.relationship ?? RITUAL_TIMING_RELATIONSHIPS[3],
+              options: RITUAL_TIMING_RELATIONSHIPS,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "timingRelationship",
+              }),
+            })}
+            ${renderManageListField({
+              name: "timingContexts",
+              label: "Timing contexts",
+              values: metadata?.timing?.contexts ?? [],
+              hint: "One context per line. Use current timing-engine labels only.",
+              rows: 5,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "timingContexts",
+              }),
+            })}
+          </div>
+        `,
+      })}
+      <details class="manage-rituals__metadata-details">
+        <summary>Recommendation holds and exclusions</summary>
+        <div class="manage-rituals__metadata-layout">
+          ${renderManageListField({
+            name: "recommendationMissing",
+            label: "Recommendation missing",
+            values: metadata?.eligibility?.missing ?? [],
+            hint: "One unresolved readiness note per line.",
+            rows: 3,
+            disabled,
+            findings: getManageDraftValidationFieldFindings({
+              report: input.validationReport,
+              field: "recommendationMissing",
+            }),
+          })}
+          ${renderManageListField({
+            name: "recommendationNotFor",
+            label: "Not for",
+            values: metadata?.eligibility?.notFor ?? [],
+            hint: "One exclusion note per line.",
+            rows: 3,
+            disabled,
+            findings: getManageDraftValidationFieldFindings({
+              report: input.validationReport,
+              field: "recommendationNotFor",
+            }),
+          })}
+        </div>
+      </details>
     </div>
   `;
 }
@@ -1796,56 +1847,82 @@ function renderManageSearchMetadataEditor(input: {
 
   return `
     <div class="manage-rituals__metadata-editor">
-      ${renderManageReadOnlyFacts([
-        { label: "Source label", value: metadata?.sourceLabel ?? input.row.sourceLabel ?? "none" },
-        { label: "Origin label", value: metadata?.originLabel ?? "none" },
-      ])}
-      <div class="manage-rituals__editor-fields manage-rituals__editor-fields--compact">
-        ${renderManageListField({
-          name: "searchTags",
-          label: "Tags",
-          values: metadata?.tags ?? [],
-          hint: "One tag per line. Blank and duplicate entries are removed on save.",
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "searchTags",
-          }),
-        })}
-        ${renderManageListField({
-          name: "searchKeywords",
-          label: "Keywords",
-          values: metadata?.keywords ?? [],
-          hint: "One keyword per line. Keep these user-searchable, not source excerpts.",
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "searchKeywords",
-          }),
-        })}
-        ${renderManageListField({
-          name: "searchMaterials",
-          label: "Materials",
-          values: metadata?.materials ?? [],
-          hint: "One material per line.",
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "searchMaterials",
-          }),
-        })}
-        ${renderManageListField({
-          name: "searchPlaces",
-          label: "Places",
-          values: metadata?.places ?? [],
-          hint: "One place per line.",
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "searchPlaces",
-          }),
-        })}
+      <div class="manage-rituals__search-origin-strip">
+        <span><strong>Source</strong>${escapeHtml(metadata?.sourceLabel ?? input.row.sourceLabel ?? "none")}</span>
+        <span><strong>Origin</strong>${escapeHtml(metadata?.originLabel ?? "none")}</span>
       </div>
+      ${renderManageMetadataBand({
+        title: "Discovery words",
+        description: "Terms people might type when looking for this Ritual.",
+        body: `
+          <div class="manage-rituals__metadata-layout">
+            <div class="manage-rituals__metadata-layout-full">
+              ${renderManageListField({
+                name: "searchTags",
+                label: "Tags",
+                values: metadata?.tags ?? [],
+                hint: "One tag per line. Blank and duplicate entries are removed on save.",
+                rows: 4,
+                disabled,
+                findings: getManageDraftValidationFieldFindings({
+                  report: input.validationReport,
+                  field: "searchTags",
+                }),
+              })}
+            </div>
+            <div class="manage-rituals__metadata-layout-full">
+              ${renderManageListField({
+                name: "searchKeywords",
+                label: "Keywords",
+                values: metadata?.keywords ?? [],
+                hint: "One keyword per line. Keep these user-searchable, not source excerpts.",
+                rows: 5,
+                disabled,
+                findings: getManageDraftValidationFieldFindings({
+                  report: input.validationReport,
+                  field: "searchKeywords",
+                }),
+              })}
+            </div>
+          </div>
+        `,
+      })}
+      ${renderManageMetadataBand({
+        title: "Concrete lookup",
+        description: "Objects and places that should make this findable.",
+        body: `
+          <div class="manage-rituals__metadata-layout">
+            <div class="manage-rituals__metadata-layout-full">
+              ${renderManageListField({
+                name: "searchMaterials",
+                label: "Materials",
+                values: metadata?.materials ?? [],
+                hint: "One material per line.",
+                rows: 3,
+                disabled,
+                findings: getManageDraftValidationFieldFindings({
+                  report: input.validationReport,
+                  field: "searchMaterials",
+                }),
+              })}
+            </div>
+            <div class="manage-rituals__metadata-layout-full">
+              ${renderManageListField({
+                name: "searchPlaces",
+                label: "Places",
+                values: metadata?.places ?? [],
+                hint: "One place per line.",
+                rows: 3,
+                disabled,
+                findings: getManageDraftValidationFieldFindings({
+                  report: input.validationReport,
+                  field: "searchPlaces",
+                }),
+              })}
+            </div>
+          </div>
+        `,
+      })}
     </div>
   `;
 }
