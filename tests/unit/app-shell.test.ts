@@ -24,6 +24,7 @@ import {
   createDraftFromRitualVersion,
   createInMemoryRitualEditDraftStore,
 } from "../../src/data/rituals/ritual-edit-drafts";
+import { validateRitualEditDraft } from "../../src/data/rituals/ritual-edit-draft-validation";
 import {
   getStrongTimingWindowCandidates,
   getTimingWindowCandidates,
@@ -1039,6 +1040,58 @@ describe("app shell rendering", () => {
     expect(editorHtml).not.toContain("Submit draft");
     expect(editorHtml).not.toContain("Record review decision");
     expect(editorHtml).not.toContain('data-manage-ritual-review-form="true"');
+  });
+
+  it("renders draft validation summary, section counts, inline messages, and hidden unsafe findings", async () => {
+    const dbDocuments = createDbDocuments();
+    const store = createInMemoryRitualEditDraftStore();
+    const versionDocument = dbDocuments.versionDocuments.find(
+      (document) => document.ritualId === "ritual-buckland-candle-prepare-table",
+    );
+
+    expect(versionDocument).toBeDefined();
+
+    const draft = await createDraftFromRitualVersion({
+      store,
+      versionDocument: versionDocument!,
+      actor: "owner",
+      draftId: "draft-body-validation",
+    });
+    const invalidDraft = {
+      ...draft,
+      draftBuffer: {
+        ...draft.draftBuffer,
+        privateSourceText: "private copied source passage",
+        presentation: {
+          ...draft.draftBuffer.presentation,
+          practice: "",
+        },
+      },
+    };
+    const validationReport = validateRitualEditDraft(invalidDraft);
+    const html = renderManageRitualsSection({
+      ritualRepositorySource: "db",
+      ritualDbDocuments: dbDocuments,
+      selectedEditorRitualId: "ritual-buckland-candle-prepare-table",
+      selectedEditorDraft: invalidDraft,
+      selectedEditorDraftValidationReport: validationReport,
+    });
+    const editorStart = html.indexOf('data-manage-ritual-editor="true"');
+    const editorEnd = html.indexOf(
+      '<section class="manage-rituals__table-section"',
+      editorStart,
+    );
+    const editorHtml = html.slice(editorStart, editorEnd);
+
+    expect(editorHtml).toContain("2 blocking issues");
+    expect(editorHtml).toContain("Ritual body");
+    expect(editorHtml).toContain("1 blocker");
+    expect(editorHtml).toContain("Required Ritual body field is missing.");
+    expect(editorHtml).toContain("Other validation findings");
+    expect(editorHtml).toContain("draftBuffer.privateSourceText");
+    expect(editorHtml).toContain("Contents hidden by privacy guard.");
+    expect(editorHtml).toContain("Validate draft");
+    expect(editorHtml).not.toContain("private copied source passage");
   });
 
   it("keeps the read-only editor debug JSON collapsed and secondary", () => {

@@ -4,9 +4,10 @@ Status: Product design for issue #480, with early implementation slices in
 Manage Rituals.
 
 Scope: Product design. Early slices now implement read-only inspection,
-`ritualEditDrafts` draft persistence, and editable canonical body fields. This document
-does not itself implement publish/review promotion, source import, selector
-changes, or full metadata editing.
+`ritualEditDrafts` draft persistence, editable canonical body fields, and
+on-demand draft validation display. This document does not itself implement
+publish/review promotion, source import, selector changes, or full metadata
+editing.
 
 ## 1. Product Goal
 
@@ -160,6 +161,11 @@ Could not save
 
 Autosave may be reconsidered later if quota, batching, and diagnostics are in
 place.
+
+Validation follows the same quota-conscious posture in the first editor slice:
+`Validate draft` runs against the draft already loaded in the client and updates
+the editor display only. It does not write a validation snapshot, save the draft,
+publish, promote, or mutate any immutable Ritual version.
 
 ## 3. Editor Screen Structure
 

@@ -2886,6 +2886,13 @@ h2 {
   font-size: 0.95rem;
 }
 
+.manage-rituals__validation-count {
+  color: #66736a;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
 .manage-rituals__editor-facts {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2903,10 +2910,10 @@ h2 {
 .manage-rituals__editor-savebar {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 14px;
+  gap: 8px 12px;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 12px;
+  padding: 9px 10px;
   border: 1px solid rgba(200, 190, 173, 0.64);
   border-radius: 8px;
   background: rgba(248, 246, 239, 0.72);
@@ -2919,6 +2926,14 @@ h2 {
   font-weight: 800;
 }
 
+.manage-rituals__editor-savebar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
 .manage-rituals__editor-savebar button,
 .manage-rituals__editor-field input,
 .manage-rituals__editor-field textarea {
@@ -2926,18 +2941,51 @@ h2 {
 }
 
 .manage-rituals__editor-savebar button {
-  min-height: 40px;
-  padding: 8px 14px;
+  min-height: 34px;
+  padding: 6px 11px;
   border: 1px solid rgba(122, 145, 132, 0.78);
   border-radius: 8px;
   background: rgba(255, 253, 247, 0.92);
   color: #26312c;
+  font-size: 0.9rem;
   font-weight: 800;
+  line-height: 1.1;
 }
 
 .manage-rituals__editor-savebar button:disabled {
   border-color: rgba(159, 174, 166, 0.35);
   color: rgba(82, 99, 90, 0.46);
+}
+
+.manage-rituals__draft-validation {
+  display: grid;
+  gap: 3px;
+  padding: 10px 12px;
+  border: 1px solid rgba(159, 174, 166, 0.54);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.72);
+}
+
+.manage-rituals__draft-validation--findings {
+  border-color: rgba(149, 91, 74, 0.42);
+  background: rgba(250, 239, 234, 0.56);
+}
+
+.manage-rituals__draft-validation p,
+.manage-rituals__draft-validation small {
+  margin: 0;
+}
+
+.manage-rituals__draft-validation p {
+  color: #26312c;
+  font-size: var(--text-small);
+  font-weight: 800;
+}
+
+.manage-rituals__draft-validation small {
+  color: #66736a;
+  font-size: var(--text-small);
+  line-height: 1.35;
 }
 
 .manage-rituals__editor-fields {
@@ -2968,6 +3016,12 @@ h2 {
   line-height: 1.42;
 }
 
+.manage-rituals__editor-field--invalid input,
+.manage-rituals__editor-field--invalid textarea {
+  border-color: rgba(149, 91, 74, 0.62);
+  background: rgba(250, 239, 234, 0.42);
+}
+
 .manage-rituals__editor-field input {
   min-height: 48px;
   padding: 10px 12px;
@@ -2987,6 +3041,37 @@ h2 {
   color: #66736a;
   font-size: var(--text-small);
   line-height: 1.35;
+}
+
+.manage-rituals__validation-messages {
+  display: grid;
+  gap: 5px;
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.manage-rituals__validation-message {
+  display: grid;
+  gap: 2px;
+  color: #6f3f34;
+  font-size: var(--text-small);
+  line-height: 1.35;
+}
+
+.manage-rituals__validation-message--warning {
+  color: #6f5d34;
+}
+
+.manage-rituals__validation-message strong,
+.manage-rituals__validation-message span,
+.manage-rituals__validation-message em {
+  display: block;
+}
+
+.manage-rituals__validation-message em {
+  color: #66736a;
+  font-style: normal;
 }
 
 .manage-rituals__editor-readonly-note {

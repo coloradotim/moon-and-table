@@ -132,6 +132,10 @@ import {
   saveRitualEditDraft,
   type RitualEditDraftDocument,
 } from "./data/rituals/ritual-edit-drafts";
+import {
+  validateRitualEditDraft,
+  type RitualEditDraftValidationReport,
+} from "./data/rituals/ritual-edit-draft-validation";
 import "./styles.css";
 
 declare global {
@@ -206,6 +210,9 @@ let activeManageRitualActionSubmitting = false;
 let activeManageRitualEditorDraft: RitualEditDraftDocument | undefined;
 let activeManageRitualEditorDraftStatus:
   | ManageRitualEditorDraftStatus
+  | undefined;
+let activeManageRitualEditorDraftValidationReport:
+  | RitualEditDraftValidationReport
   | undefined;
 let activeManageRitualEditorUsesLocalDraft = false;
 let activeManageRitualEditorLastSavedPresentationJson: string | undefined;
@@ -441,6 +448,7 @@ function applyReviewActionResultToActiveRitualDocuments(
 function clearManageRitualEditorDraftState(): void {
   activeManageRitualEditorDraft = undefined;
   activeManageRitualEditorDraftStatus = undefined;
+  activeManageRitualEditorDraftValidationReport = undefined;
   activeManageRitualEditorUsesLocalDraft = false;
   activeManageRitualEditorLastSavedPresentationJson = undefined;
 }
@@ -544,6 +552,7 @@ async function createLocalManageRitualEditorDraft(input: {
     tone: "idle",
     message: input.statusMessage,
   };
+  activeManageRitualEditorDraftValidationReport = undefined;
   renderActiveSignedInShell();
   return true;
 }
@@ -645,6 +654,7 @@ async function loadOrCreateManageRitualEditorDraft(ritualId: string): Promise<vo
     tone: "saved",
     message: "Saved",
   };
+  activeManageRitualEditorDraftValidationReport = undefined;
   renderActiveSignedInShell();
 }
 
@@ -745,6 +755,26 @@ async function saveManageRitualEditorDraft(form: HTMLFormElement): Promise<void>
   renderActiveSignedInShell();
 }
 
+function validateActiveManageRitualEditorDraft(): void {
+  if (!activeManageRitualEditorDraft) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Open a draft before validating.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  activeManageRitualEditorDraftValidationReport = validateRitualEditDraft(
+    activeManageRitualEditorDraft,
+  );
+  activeManageRitualEditorDraftStatus = {
+    tone: activeManageRitualEditorDraftValidationReport.valid ? "saved" : "error",
+    message: activeManageRitualEditorDraftValidationReport.summaryLabel,
+  };
+  renderActiveSignedInShell();
+}
+
 function markManageRitualEditorDraftUnsaved(form: HTMLFormElement): void {
   if (!activeManageRitualEditorDraft) {
     return;
@@ -772,6 +802,7 @@ function markManageRitualEditorDraftUnsaved(form: HTMLFormElement): void {
     tone: "idle",
     message: "Unsaved changes",
   };
+  activeManageRitualEditorDraftValidationReport = undefined;
   updateManageRitualDraftStatusText("Unsaved changes");
 }
 
@@ -1055,6 +1086,8 @@ function renderActiveSignedInShell(options: {
     selectedManageRitualEditorId: activeManageRitualEditorId,
     selectedManageRitualEditorDraft: activeManageRitualEditorDraft,
     selectedManageRitualEditorDraftStatus: activeManageRitualEditorDraftStatus,
+    selectedManageRitualEditorDraftValidationReport:
+      activeManageRitualEditorDraftValidationReport,
     manageRitualActionStatus: activeManageRitualActionStatus,
     householdMemoryStatus: activeHouseholdMemoryStatus,
   });
@@ -2459,6 +2492,12 @@ appRoot.addEventListener("click", (event) => {
         ?.scrollIntoView({ block: "start" });
     });
     void loadOrCreateManageRitualEditorDraft(manageRitualEditorId);
+    return;
+  }
+
+  if (target.closest("[data-manage-ritual-validate-draft='true']")) {
+    event.preventDefault();
+    validateActiveManageRitualEditorDraft();
     return;
   }
 
