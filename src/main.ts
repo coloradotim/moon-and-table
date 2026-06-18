@@ -127,7 +127,6 @@ import {
 } from "./data/rituals/household-state-firestore";
 import type { Ritual } from "./data/rituals/types";
 import {
-  autosaveRitualEditDraft,
   createDraftFromRitualVersion,
   createInMemoryRitualEditDraftStore,
   saveRitualEditDraft,
@@ -209,7 +208,7 @@ let activeManageRitualEditorDraftStatus:
   | ManageRitualEditorDraftStatus
   | undefined;
 let activeManageRitualEditorUsesLocalDraft = false;
-let activeManageRitualEditorAutosaveTimer: number | null = null;
+let activeManageRitualEditorLastSavedPresentationJson: string | undefined;
 
 type HouseholdMemoryWriteRecordType =
   | "favorite"
@@ -440,14 +439,10 @@ function applyReviewActionResultToActiveRitualDocuments(
 }
 
 function clearManageRitualEditorDraftState(): void {
-  if (activeManageRitualEditorAutosaveTimer) {
-    window.clearTimeout(activeManageRitualEditorAutosaveTimer);
-    activeManageRitualEditorAutosaveTimer = null;
-  }
-
   activeManageRitualEditorDraft = undefined;
   activeManageRitualEditorDraftStatus = undefined;
   activeManageRitualEditorUsesLocalDraft = false;
+  activeManageRitualEditorLastSavedPresentationJson = undefined;
 }
 
 function getActiveRitualVersionId(ritualId: string): string | undefined {
@@ -474,6 +469,12 @@ function getDraftBodyFromForm(form: HTMLFormElement): {
     bestWindow: String(formData.get("bestWindow") ?? ""),
     questionToCarry: String(formData.get("questionToCarry") ?? ""),
   };
+}
+
+function serializeManageRitualDraftPresentation(
+  presentation: ReturnType<typeof getDraftBodyFromForm>,
+): string {
+  return JSON.stringify(presentation);
 }
 
 function updateManageRitualDraftStatusText(message: string): void {
@@ -535,6 +536,10 @@ async function createLocalManageRitualEditorDraft(input: {
     createdAtIso: new Date().toISOString(),
   });
   activeManageRitualEditorUsesLocalDraft = true;
+  activeManageRitualEditorLastSavedPresentationJson =
+    serializeManageRitualDraftPresentation(
+      activeManageRitualEditorDraft.draftBuffer.presentation,
+    );
   activeManageRitualEditorDraftStatus = {
     tone: "idle",
     message: input.statusMessage,
@@ -560,7 +565,7 @@ async function loadOrCreateManageRitualEditorDraft(ritualId: string): Promise<vo
     const loaded = await createLocalManageRitualEditorDraft({
       ritualId,
       versionId,
-      statusMessage: "Saved locally",
+      statusMessage: "Local preview draft",
     });
 
     if (!loaded) {
@@ -608,7 +613,7 @@ async function loadOrCreateManageRitualEditorDraft(ritualId: string): Promise<vo
       const loaded = await createLocalManageRitualEditorDraft({
         ritualId,
         versionId,
-        statusMessage: "Local draft only; API unavailable",
+        statusMessage: "Local preview draft",
       });
 
       if (loaded) {
@@ -632,6 +637,10 @@ async function loadOrCreateManageRitualEditorDraft(ritualId: string): Promise<vo
 
   activeManageRitualEditorDraft = result.draft;
   activeManageRitualEditorUsesLocalDraft = false;
+  activeManageRitualEditorLastSavedPresentationJson =
+    serializeManageRitualDraftPresentation(
+      activeManageRitualEditorDraft.draftBuffer.presentation,
+    );
   activeManageRitualEditorDraftStatus = {
     tone: "saved",
     message: "Saved",
@@ -639,15 +648,23 @@ async function loadOrCreateManageRitualEditorDraft(ritualId: string): Promise<vo
   renderActiveSignedInShell();
 }
 
-async function saveManageRitualEditorDraft(
-  form: HTMLFormElement,
-  mode: "autosave" | "save",
-): Promise<void> {
+async function saveManageRitualEditorDraft(form: HTMLFormElement): Promise<void> {
   if (!activeManageRitualEditorDraft) {
     return;
   }
 
   const presentation = getDraftBodyFromForm(form);
+  const presentationJson = serializeManageRitualDraftPresentation(presentation);
+
+  if (presentationJson === activeManageRitualEditorLastSavedPresentationJson) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "saved",
+      message: activeManageRitualEditorUsesLocalDraft ? "Saved in local preview" : "Saved",
+    };
+    updateManageRitualDraftStatusText(activeManageRitualEditorDraftStatus.message);
+    return;
+  }
+
   activeManageRitualEditorDraftStatus = {
     tone: "saving",
     message: "Saving...",
@@ -660,23 +677,11 @@ async function saveManageRitualEditorDraft(
       presentation,
     },
   };
-  if (mode === "save") {
-    renderActiveSignedInShell();
-  } else {
-    updateManageRitualDraftStatusText("Saving...");
-  }
+  renderActiveSignedInShell();
 
   if (devVisualQaMode || activeManageRitualEditorUsesLocalDraft) {
     const store = createInMemoryRitualEditDraftStore([activeManageRitualEditorDraft]);
-    activeManageRitualEditorDraft = mode === "autosave"
-      ? await autosaveRitualEditDraft({
-        store,
-        draftId: activeManageRitualEditorDraft.id,
-        draftBuffer: activeManageRitualEditorDraft.draftBuffer,
-        actor: "owner",
-        updatedAtIso: new Date().toISOString(),
-      })
-      : await saveRitualEditDraft({
+    activeManageRitualEditorDraft = await saveRitualEditDraft({
         store,
         draftId: activeManageRitualEditorDraft.id,
         draftBuffer: activeManageRitualEditorDraft.draftBuffer,
@@ -685,16 +690,14 @@ async function saveManageRitualEditorDraft(
       });
     activeManageRitualEditorDraftStatus = {
       tone: "saved",
-      message: activeManageRitualEditorUsesLocalDraft ? "Saved locally" : "Saved",
+      message: activeManageRitualEditorUsesLocalDraft ? "Saved in local preview" : "Saved",
     };
-
-    if (mode === "save") {
-      renderActiveSignedInShell();
-    } else {
-      updateManageRitualDraftStatusText(
-        activeManageRitualEditorUsesLocalDraft ? "Saved locally" : "Saved",
+    activeManageRitualEditorLastSavedPresentationJson =
+      serializeManageRitualDraftPresentation(
+        activeManageRitualEditorDraft.draftBuffer.presentation,
       );
-    }
+
+    renderActiveSignedInShell();
     return;
   }
 
@@ -711,7 +714,7 @@ async function saveManageRitualEditorDraft(
   const result = await submitRitualEditDraft({
     idToken,
     request: {
-      action: mode,
+      action: "save",
       draftId: activeManageRitualEditorDraft.id,
       presentation,
     },
@@ -726,32 +729,37 @@ async function saveManageRitualEditorDraft(
       ...activeManageRitualEditorDraft,
       saveState: "save_failed",
     };
-    if (mode === "save") {
-      renderActiveSignedInShell();
-    } else {
-      updateManageRitualDraftStatusText("Could not save");
-    }
+    renderActiveSignedInShell();
     return;
   }
 
   activeManageRitualEditorDraft = result.draft;
+  activeManageRitualEditorLastSavedPresentationJson =
+    serializeManageRitualDraftPresentation(
+      activeManageRitualEditorDraft.draftBuffer.presentation,
+    );
   activeManageRitualEditorDraftStatus = {
     tone: "saved",
     message: "Saved",
   };
-  if (mode === "save") {
-    renderActiveSignedInShell();
-  } else {
-    updateManageRitualDraftStatusText("Saved");
-  }
+  renderActiveSignedInShell();
 }
 
-function scheduleManageRitualEditorAutosave(form: HTMLFormElement): void {
+function markManageRitualEditorDraftUnsaved(form: HTMLFormElement): void {
   if (!activeManageRitualEditorDraft) {
     return;
   }
 
   const presentation = getDraftBodyFromForm(form);
+  const presentationJson = serializeManageRitualDraftPresentation(presentation);
+
+  if (presentationJson === activeManageRitualEditorLastSavedPresentationJson) {
+    updateManageRitualDraftStatusText(
+      activeManageRitualEditorUsesLocalDraft ? "Saved in local preview" : "Saved",
+    );
+    return;
+  }
+
   activeManageRitualEditorDraft = {
     ...activeManageRitualEditorDraft,
     saveState: "unsaved_changes",
@@ -765,21 +773,6 @@ function scheduleManageRitualEditorAutosave(form: HTMLFormElement): void {
     message: "Unsaved changes",
   };
   updateManageRitualDraftStatusText("Unsaved changes");
-
-  if (activeManageRitualEditorAutosaveTimer) {
-    window.clearTimeout(activeManageRitualEditorAutosaveTimer);
-  }
-
-  activeManageRitualEditorAutosaveTimer = window.setTimeout(() => {
-    activeManageRitualEditorAutosaveTimer = null;
-    const currentForm = document.querySelector<HTMLFormElement>(
-      "[data-manage-ritual-draft-form='true']",
-    );
-
-    if (currentForm) {
-      void saveManageRitualEditorDraft(currentForm, "autosave");
-    }
-  }, 650);
 }
 
 function normalizeRitualSearchTimingFilter(value: unknown): RitualTimingFilter {
@@ -2630,7 +2623,7 @@ appRoot.addEventListener("input", (event) => {
     );
 
     if (form) {
-      scheduleManageRitualEditorAutosave(form);
+      markManageRitualEditorDraftUnsaved(form);
     }
     return;
   }
@@ -2703,11 +2696,7 @@ appRoot.addEventListener("submit", (event) => {
 
   if (target.matches("[data-manage-ritual-draft-form='true']")) {
     event.preventDefault();
-    if (activeManageRitualEditorAutosaveTimer) {
-      window.clearTimeout(activeManageRitualEditorAutosaveTimer);
-      activeManageRitualEditorAutosaveTimer = null;
-    }
-    void saveManageRitualEditorDraft(target, "save");
+    void saveManageRitualEditorDraft(target);
     return;
   }
 

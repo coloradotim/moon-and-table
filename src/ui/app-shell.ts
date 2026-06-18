@@ -1390,6 +1390,10 @@ function getManageDraftSaveStateLabel(
   return labels[draft.saveState];
 }
 
+function isLocalPreviewRitualEditDraft(draft: RitualEditDraftDocument | undefined): boolean {
+  return Boolean(draft?.id.startsWith("local_editor_") || draft?.id.startsWith("dev_visual_qa_"));
+}
+
 function renderManageEditableBody(input: {
   row: ReturnType<typeof createManageRitualsViewModel>["rows"][number];
   draft?: RitualEditDraftDocument;
@@ -1415,7 +1419,7 @@ function renderManageEditableBody(input: {
           type="submit"
           data-manage-ritual-draft-save-now="true"
           ${input.draft ? "" : "disabled"}
-        >Save now</button>
+        >Save</button>
       </div>
       <div class="manage-rituals__editor-fields">
         ${renderManageBodyField({
@@ -1459,10 +1463,6 @@ function renderManageEditableBody(input: {
         })}
       </div>
     </form>
-    <div class="manage-rituals__editor-subsection manage-rituals__editor-readonly-note">
-      <h5>Legacy why this fits</h5>
-      <p>${escapeHtml(input.row.ritual.presentation.whyThisFits || "none")}</p>
-    </div>
   `;
 }
 
@@ -1535,7 +1535,9 @@ function renderManageRitualEditorShell(
           <span>${escapeHtml(reviewState.dbBacked ? "DB-backed" : "Static fallback")}</span>
           <span>${escapeHtml(row.origin)}</span>
           <span>${escapeHtml(reviewState.lifecycleState ?? row.status)}</span>
-          ${options.draft ? `<span>${escapeHtml(shortenManageIdentifier(options.draft.id, 28))}</span>` : ""}
+          ${options.draft && !isLocalPreviewRitualEditDraft(options.draft)
+            ? `<span>${escapeHtml(shortenManageIdentifier(options.draft.id, 28))}</span>`
+            : ""}
           <span>${escapeHtml(validationSummary)}</span>
           <span>${escapeHtml(row.recommendable ? "Recommendation-ready" : row.recommendationEligible ? "Recommendation eligible" : "Held from recommendations")}</span>
         </div>

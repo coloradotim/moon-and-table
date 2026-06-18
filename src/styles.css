@@ -2854,6 +2854,8 @@ h2 {
 .manage-rituals__editor-section,
 .manage-rituals__editor-advanced {
   display: grid;
+  align-content: start;
+  align-items: start;
   gap: 10px;
   padding: 13px;
   border: 1px solid rgba(200, 190, 173, 0.62);
@@ -2887,7 +2889,8 @@ h2 {
 .manage-rituals__editor-facts {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 9px 14px;
+  align-items: start;
+  gap: 12px 18px;
   margin: 0;
 }
 

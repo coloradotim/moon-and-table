@@ -1033,7 +1033,7 @@ describe("app shell rendering", () => {
     expect(editorHtml).toContain('name="bestWindow"');
     expect(editorHtml).toContain('name="questionToCarry"');
     expect(editorHtml).toContain("<textarea");
-    expect(editorHtml).toContain("Save now");
+    expect(editorHtml).toContain(">Save</button>");
     expect(editorHtml).not.toContain("Autosave");
     expect(editorHtml).not.toContain('name="whyThisFits"');
     expect(editorHtml).not.toContain("Submit draft");

@@ -287,7 +287,8 @@ Rules:
 - Drafts created from existing Ritual versions record `baseVersionId` and
   `baseContentHash` when available.
 - Blank household-origin drafts do not require source grounding.
-- Autosave and manual save update only `ritualEditDrafts`.
+- Explicit editor saves update only `ritualEditDrafts`; UI autosave is deferred
+  until quota-safe behavior is designed.
 - Discard and submitted states must not mutate `ritualVersions`, published
   pointers, lifecycle review state, direct-use eligibility, or recommendation
   eligibility.
