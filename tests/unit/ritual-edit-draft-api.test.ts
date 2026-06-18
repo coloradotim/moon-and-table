@@ -92,7 +92,7 @@ describe("Ritual edit draft API", () => {
     expect(JSON.stringify(record.versionDocument)).toBe(beforeVersion);
   });
 
-  it("autosaves only canonical body fields into the draft buffer", async () => {
+  it("saves edited draft body, search metadata, and selection metadata without mutating published state", async () => {
     const { record, store } = createFixtureStore();
     const dependencies = createDependencies({
       store,
@@ -122,20 +122,44 @@ describe("Ritual edit draft API", () => {
     const lifecycleBeforeSave = JSON.stringify(record.ritualDocument.lifecycle);
     const response = createResponse();
 
+    const nextDraftBuffer = {
+      ...draftBeforeSave.draftBuffer,
+      presentation: {
+        headline: "Edited headline",
+        practice: "Edited practice with words inline.",
+        intention: "Edited intention",
+        bestWindow: "Edited window",
+        questionToCarry: "Edited question?",
+      },
+      searchMetadata: {
+        ...draftBeforeSave.draftBuffer.searchMetadata,
+        tags: ["edited", "table"],
+        keywords: ["opening", "table"],
+        materials: ["cloth"],
+        places: ["altar"],
+      },
+      recommendationMetadata: {
+        ...draftBeforeSave.draftBuffer.recommendationMetadata,
+        purposes: {
+          primary: "opening" as const,
+          secondary: ["tending" as const],
+          refinement: "edited fit",
+        },
+        carriers: {
+          primary: "table" as const,
+          secondary: ["words" as const],
+        },
+      },
+    };
+
     await handleRitualEditDraftApi(
       {
         method: "POST",
         headers: { authorization: "Bearer valid-token" },
         body: {
-          action: "autosave",
+          action: "save",
           draftId: created.draft.id,
-          presentation: {
-            headline: "Edited headline",
-            practice: "Edited practice with words inline.",
-            intention: "Edited intention",
-            bestWindow: "Edited window",
-            questionToCarry: "Edited question?",
-          },
+          draftBuffer: nextDraftBuffer,
         },
       },
       response.response,
@@ -156,6 +180,22 @@ describe("Ritual edit draft API", () => {
               bestWindow: "Edited window",
               questionToCarry: "Edited question?",
             },
+            searchMetadata: expect.objectContaining({
+              tags: ["edited", "table"],
+              keywords: ["opening", "table"],
+              materials: ["cloth"],
+              places: ["altar"],
+            }),
+            recommendationMetadata: expect.objectContaining({
+              purposes: expect.objectContaining({
+                primary: "opening",
+                secondary: ["tending"],
+              }),
+              carriers: expect.objectContaining({
+                primary: "table",
+                secondary: ["words"],
+              }),
+            }),
           }),
         }),
       }),
@@ -163,9 +203,6 @@ describe("Ritual edit draft API", () => {
     const draftAfterSave = store.getAllDrafts()[0];
     expect(draftAfterSave.draftBuffer.availability).toEqual(
       draftBeforeSave.draftBuffer.availability,
-    );
-    expect(draftAfterSave.draftBuffer.recommendationMetadata).toEqual(
-      draftBeforeSave.draftBuffer.recommendationMetadata,
     );
     expect(JSON.stringify(record.ritualDocument.lifecycle)).toBe(lifecycleBeforeSave);
   });
@@ -196,6 +233,7 @@ describe("Ritual edit draft API", () => {
       valid: true;
       draft: { id: string };
     };
+    const draftBeforeSave = store.getAllDrafts()[0];
     const response = createResponse();
 
     await handleRitualEditDraftApi(
@@ -205,13 +243,16 @@ describe("Ritual edit draft API", () => {
         body: {
           action: "save",
           draftId: created.draft.id,
-          presentation: {
-            headline: "Edited headline",
-            practice: "Edited practice",
-            intention: "Edited intention",
-            bestWindow: "Edited window",
-            whyThisFits: "Do not save me",
-            questionToCarry: "Edited question?",
+          draftBuffer: {
+            ...draftBeforeSave.draftBuffer,
+            presentation: {
+              headline: "Edited headline",
+              practice: "Edited practice",
+              intention: "Edited intention",
+              bestWindow: "Edited window",
+              whyThisFits: "Do not save me",
+              questionToCarry: "Edited question?",
+            },
           },
         },
       },

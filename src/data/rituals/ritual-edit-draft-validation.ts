@@ -7,7 +7,12 @@ import type {
   RitualEditDraftBuffer,
 } from "./ritual-edit-drafts";
 import {
+  RITUAL_AUDIENCES,
+  RITUAL_CAPACITY_MODES,
+  RITUAL_CARRIERS,
+  RITUAL_PURPOSES,
   RITUAL_STATUSES,
+  RITUAL_TIMING_RELATIONSHIPS,
   type Ritual,
 } from "./types";
 import { validateRitual } from "./validate-rituals";
@@ -32,7 +37,24 @@ export type RitualEditDraftValidationField =
   | "practice"
   | "intention"
   | "bestWindow"
-  | "questionToCarry";
+  | "questionToCarry"
+  | "primaryPurpose"
+  | "secondaryPurposes"
+  | "primaryCarrier"
+  | "secondaryCarriers"
+  | "capacitySupports"
+  | "capacityDefault"
+  | "audienceSupports"
+  | "audienceDefault"
+  | "bothOfUsStructure"
+  | "timingRelationship"
+  | "timingContexts"
+  | "recommendationMissing"
+  | "recommendationNotFor"
+  | "searchTags"
+  | "searchKeywords"
+  | "searchMaterials"
+  | "searchPlaces";
 
 export type RitualEditDraftValidationFinding = RitualDbValidationFinding & {
   section: RitualEditDraftValidationSection;
@@ -62,13 +84,42 @@ const REQUIRED_BODY_FIELDS = [
   "questionToCarry",
 ] as const satisfies readonly RitualEditDraftValidationField[];
 
-const BODY_FIELD_PATHS: Record<RitualEditDraftValidationField, string> = {
+const BODY_FIELD_PATHS: Record<
+  Extract<
+    RitualEditDraftValidationField,
+    "headline" | "practice" | "intention" | "bestWindow" | "questionToCarry"
+  >,
+  string
+> = {
   headline: "draftBuffer.presentation.headline",
   practice: "draftBuffer.presentation.practice",
   intention: "draftBuffer.presentation.intention",
   bestWindow: "draftBuffer.presentation.bestWindow",
   questionToCarry: "draftBuffer.presentation.questionToCarry",
 };
+
+const FIELD_PATH_PREFIXES: Array<{
+  field: RitualEditDraftValidationField;
+  prefixes: string[];
+}> = [
+  { field: "primaryPurpose", prefixes: ["draftBuffer.recommendationMetadata.purposes.primary"] },
+  { field: "secondaryPurposes", prefixes: ["draftBuffer.recommendationMetadata.purposes.secondary"] },
+  { field: "primaryCarrier", prefixes: ["draftBuffer.recommendationMetadata.carriers.primary"] },
+  { field: "secondaryCarriers", prefixes: ["draftBuffer.recommendationMetadata.carriers.secondary"] },
+  { field: "capacitySupports", prefixes: ["draftBuffer.recommendationMetadata.capacity.supports"] },
+  { field: "capacityDefault", prefixes: ["draftBuffer.recommendationMetadata.capacity.default"] },
+  { field: "audienceSupports", prefixes: ["draftBuffer.recommendationMetadata.audience.supports"] },
+  { field: "audienceDefault", prefixes: ["draftBuffer.recommendationMetadata.audience.default"] },
+  { field: "bothOfUsStructure", prefixes: ["draftBuffer.recommendationMetadata.audience.bothOfUsStructure"] },
+  { field: "timingRelationship", prefixes: ["draftBuffer.recommendationMetadata.timing.relationship"] },
+  { field: "timingContexts", prefixes: ["draftBuffer.recommendationMetadata.timing.contexts"] },
+  { field: "recommendationMissing", prefixes: ["draftBuffer.recommendationMetadata.eligibility.missing"] },
+  { field: "recommendationNotFor", prefixes: ["draftBuffer.recommendationMetadata.eligibility.notFor"] },
+  { field: "searchTags", prefixes: ["draftBuffer.searchMetadata.tags"] },
+  { field: "searchKeywords", prefixes: ["draftBuffer.searchMetadata.keywords"] },
+  { field: "searchMaterials", prefixes: ["draftBuffer.searchMetadata.materials"] },
+  { field: "searchPlaces", prefixes: ["draftBuffer.searchMetadata.places"] },
+];
 
 const PRIVATE_OR_SOURCE_RESIDUE_KEYS = new Set([
   "birthData",
@@ -113,12 +164,28 @@ const ALLOWED_DRAFT_BUFFER_TOP_LEVEL_KEYS = new Set([
   "status",
 ]);
 
+const BROAD_TIMING_CONTEXT_LABELS = new Set([
+  "imperfect timing",
+  "lunar phase",
+  "moon phase",
+  "moon sign",
+  "planetary aspect",
+  "retrograde planet",
+]);
+
 function isObject(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
 
 function isNonEmptyString(value: unknown): value is string {
   return typeof value === "string" && value.trim().length > 0;
+}
+
+function includesValue<const T extends readonly string[]>(
+  values: T,
+  value: unknown,
+): value is T[number] {
+  return typeof value === "string" && values.includes(value);
 }
 
 function cloneJson<T>(value: T): T {
@@ -132,16 +199,31 @@ function normalizeRuntimePath(path: string): string {
 function mapPathToField(path: string): RitualEditDraftValidationField | undefined {
   const normalized = normalizeRuntimePath(path);
 
-  return REQUIRED_BODY_FIELDS.find((field) =>
+  const bodyField = REQUIRED_BODY_FIELDS.find((field) =>
     normalized === BODY_FIELD_PATHS[field] ||
     normalized === `draftBuffer.presentation.${field}`,
   );
+
+  if (bodyField) {
+    return bodyField;
+  }
+
+  return FIELD_PATH_PREFIXES.find((mapping) =>
+    mapping.prefixes.some((prefix) =>
+      normalized === prefix || normalized.startsWith(`${prefix}.`)
+    )
+  )?.field;
 }
 
 function mapPathToSection(path: string): RitualEditDraftValidationSection {
   const normalized = normalizeRuntimePath(path);
 
-  if (mapPathToField(normalized)) {
+  if (
+    REQUIRED_BODY_FIELDS.some((field) =>
+      normalized === BODY_FIELD_PATHS[field] ||
+      normalized === `draftBuffer.presentation.${field}`
+    )
+  ) {
     return "body";
   }
 
@@ -286,6 +368,251 @@ function createReport(
   };
 }
 
+function validateStringList(input: {
+  value: unknown;
+  path: string;
+  findings: RitualEditDraftValidationFinding[];
+  required?: boolean;
+}): void {
+  if (!Array.isArray(input.value)) {
+    input.findings.push(finding({
+      path: input.path,
+      message: "List field must be an array.",
+    }));
+    return;
+  }
+
+  const seen = new Set<string>();
+  input.value.forEach((item, index) => {
+    if (!isNonEmptyString(item)) {
+      input.findings.push(finding({
+        path: `${input.path}.${index}`,
+        message: "List values must be non-empty strings.",
+      }));
+      return;
+    }
+
+    const normalized = item.trim();
+    if (seen.has(normalized)) {
+      input.findings.push(finding({
+        path: `${input.path}.${index}`,
+        message: "Duplicate list value will be collapsed on save.",
+        severity: "warning",
+      }));
+    }
+    seen.add(normalized);
+  });
+
+  if (input.required && input.value.length === 0) {
+    input.findings.push(finding({
+      path: input.path,
+      message: "At least one value is required.",
+    }));
+  }
+}
+
+function validateEnumList<const T extends readonly string[]>(input: {
+  value: unknown;
+  allowed: T;
+  path: string;
+  findings: RitualEditDraftValidationFinding[];
+  required?: boolean;
+}): void {
+  validateStringList(input);
+
+  if (!Array.isArray(input.value)) {
+    return;
+  }
+
+  input.value.forEach((item, index) => {
+    if (!includesValue(input.allowed, item)) {
+      input.findings.push(finding({
+        path: `${input.path}.${index}`,
+        message: "Value is not supported by the current Ritual metadata model.",
+      }));
+    }
+  });
+
+  if (input.required && input.value.length === 0) {
+    input.findings.push(finding({
+      path: input.path,
+      message: "At least one supported value is required.",
+    }));
+  }
+}
+
+function validateDraftSelectionMetadata(
+  draftBuffer: RitualEditDraftBuffer,
+  findings: RitualEditDraftValidationFinding[],
+): void {
+  const metadata = draftBuffer.recommendationMetadata;
+
+  if (!metadata) {
+    findings.push(finding({
+      path: "draftBuffer.recommendationMetadata",
+      message: "Recommendation metadata is required before this draft can publish.",
+    }));
+    return;
+  }
+
+  if (!includesValue(RITUAL_PURPOSES, metadata.purposes?.primary)) {
+    findings.push(finding({
+      path: "draftBuffer.recommendationMetadata.purposes.primary",
+      message: "Primary purpose must use a supported Ritual purpose.",
+    }));
+  }
+
+  validateEnumList({
+    value: metadata.purposes?.secondary ?? [],
+    allowed: RITUAL_PURPOSES,
+    path: "draftBuffer.recommendationMetadata.purposes.secondary",
+    findings,
+  });
+
+  if (metadata.purposes?.secondary?.includes(metadata.purposes.primary)) {
+    findings.push(finding({
+      path: "draftBuffer.recommendationMetadata.purposes.secondary",
+      message: "Secondary purposes should not repeat the primary purpose.",
+      severity: "warning",
+    }));
+  }
+
+  if (!includesValue(RITUAL_CARRIERS, metadata.carriers?.primary)) {
+    findings.push(finding({
+      path: "draftBuffer.recommendationMetadata.carriers.primary",
+      message: "Primary carrier must use a supported Ritual carrier.",
+    }));
+  }
+
+  validateEnumList({
+    value: metadata.carriers?.secondary ?? [],
+    allowed: RITUAL_CARRIERS,
+    path: "draftBuffer.recommendationMetadata.carriers.secondary",
+    findings,
+  });
+
+  if (metadata.carriers?.secondary?.includes(metadata.carriers.primary)) {
+    findings.push(finding({
+      path: "draftBuffer.recommendationMetadata.carriers.secondary",
+      message: "Secondary carriers should not repeat the primary carrier.",
+      severity: "warning",
+    }));
+  }
+
+  validateEnumList({
+    value: metadata.capacity?.supports ?? [],
+    allowed: RITUAL_CAPACITY_MODES,
+    path: "draftBuffer.recommendationMetadata.capacity.supports",
+    findings,
+    required: true,
+  });
+
+  if (
+    metadata.capacity?.default &&
+    !includesValue(RITUAL_CAPACITY_MODES, metadata.capacity.default)
+  ) {
+    findings.push(finding({
+      path: "draftBuffer.recommendationMetadata.capacity.default",
+      message: "Default capacity must use a supported value.",
+    }));
+  }
+
+  validateEnumList({
+    value: metadata.audience?.supports ?? [],
+    allowed: RITUAL_AUDIENCES,
+    path: "draftBuffer.recommendationMetadata.audience.supports",
+    findings,
+    required: true,
+  });
+
+  if (
+    metadata.audience?.default &&
+    !includesValue(RITUAL_AUDIENCES, metadata.audience.default)
+  ) {
+    findings.push(finding({
+      path: "draftBuffer.recommendationMetadata.audience.default",
+      message: "Default audience must use a supported value.",
+    }));
+  }
+
+  if (!includesValue(RITUAL_TIMING_RELATIONSHIPS, metadata.timing?.relationship)) {
+    findings.push(finding({
+      path: "draftBuffer.recommendationMetadata.timing.relationship",
+      message: "Timing relationship must use a supported value.",
+    }));
+  }
+
+  validateStringList({
+    value: metadata.timing?.contexts ?? [],
+    path: "draftBuffer.recommendationMetadata.timing.contexts",
+    findings,
+  });
+
+  if (Array.isArray(metadata.timing?.contexts)) {
+    metadata.timing.contexts.forEach((context, index) => {
+      if (
+        typeof context === "string" &&
+        BROAD_TIMING_CONTEXT_LABELS.has(context.trim().toLowerCase())
+      ) {
+        findings.push(finding({
+          path: `draftBuffer.recommendationMetadata.timing.contexts.${index}`,
+          message:
+            "Use a specific timing signal, not a broad bucket. Examples: new moon, full moon, waxing moon, moon in Cancer, Mercury retrograde.",
+          severity: "warning",
+        }));
+      }
+    });
+  }
+
+  validateStringList({
+    value: metadata.eligibility?.missing ?? [],
+    path: "draftBuffer.recommendationMetadata.eligibility.missing",
+    findings,
+  });
+  validateStringList({
+    value: metadata.eligibility?.notFor ?? [],
+    path: "draftBuffer.recommendationMetadata.eligibility.notFor",
+    findings,
+  });
+}
+
+function validateDraftSearchMetadata(
+  draftBuffer: RitualEditDraftBuffer,
+  findings: RitualEditDraftValidationFinding[],
+): void {
+  const metadata = draftBuffer.searchMetadata;
+
+  if (!metadata) {
+    findings.push(finding({
+      path: "draftBuffer.searchMetadata",
+      message: "Search metadata is required before this draft can publish.",
+    }));
+    return;
+  }
+
+  validateStringList({
+    value: metadata.tags ?? [],
+    path: "draftBuffer.searchMetadata.tags",
+    findings,
+    required: true,
+  });
+  validateStringList({
+    value: metadata.keywords ?? [],
+    path: "draftBuffer.searchMetadata.keywords",
+    findings,
+  });
+  validateStringList({
+    value: metadata.materials ?? [],
+    path: "draftBuffer.searchMetadata.materials",
+    findings,
+  });
+  validateStringList({
+    value: metadata.places ?? [],
+    path: "draftBuffer.searchMetadata.places",
+    findings,
+  });
+}
+
 export function validateRitualEditDraft(
   draft: RitualEditDraftDocument,
 ): RitualEditDraftValidationReport {
@@ -323,6 +650,9 @@ export function validateRitualEditDraft(
       }));
     }
   }
+
+  validateDraftSelectionMetadata(draft.draftBuffer, findings);
+  validateDraftSearchMetadata(draft.draftBuffer, findings);
 
   const runtimeValidation = validateRitual(
     createRuntimeRitualFromDraftBuffer(draft.draftBuffer),

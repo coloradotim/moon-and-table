@@ -151,16 +151,17 @@ const capacityLabels: Record<RitualCheckInEnergyCapacity, string> = {
 };
 
 const allowedCapacityByMode: Record<CapacityMode, RitualCapacityMode[]> = {
-  pause: ["only_a_little"],
-  low: ["only_a_little"],
-  steady: ["only_a_little", "enough_to_participate"],
-  high: ["only_a_little", "enough_to_participate", "room_for_something_deeper"],
+  pause: ["barely_any", "only_a_little"],
+  low: ["barely_any", "only_a_little"],
+  steady: ["barely_any", "only_a_little", "enough_to_participate"],
+  high: ["barely_any", "only_a_little", "enough_to_participate", "room_for_something_deeper"],
 };
 
 const capacityRank: Record<RitualCapacityMode, number> = {
-  only_a_little: 1,
-  enough_to_participate: 2,
-  room_for_something_deeper: 3,
+  barely_any: 1,
+  only_a_little: 2,
+  enough_to_participate: 3,
+  room_for_something_deeper: 4,
 };
 
 function emptyBreakdown(): ChooseWithMeScoreBreakdown {
@@ -549,7 +550,8 @@ function scoreRitual(
     evidence.push(`secondary carrier matched ${request.carrier}`);
   } else if (
     !request.carrier &&
-    metadata.capacity.supports.includes("only_a_little")
+    (metadata.capacity.supports.includes("barely_any") ||
+      metadata.capacity.supports.includes("only_a_little"))
   ) {
     breakdown.carrier += 5;
     evidence.push("carrier inferred from a low-capacity ritual");

@@ -103,8 +103,12 @@ export type ManageRitualReviewState = {
   holdReasons: string[];
   sourceRunIds: string[];
   importBatchIds: string[];
+  packetPaths: string[];
   packetCandidateIds: string[];
   sourceIds: string[];
+  sourceLocationLabels: string[];
+  sourceGroundingSummaries: string[];
+  moonAndTableAdaptationNotes: string[];
   actions: ManageRitualReviewActionOption[];
   unavailableReason?: string;
 };
@@ -271,7 +275,7 @@ function createReviewState(input: {
   options?: CreateManageRitualsViewModelOptions;
 }): ManageRitualReviewState {
   const dbBacked = input.options?.dbBacked === true;
-  const { ritualDocument, validationSnapshot } = getRitualDbContext(
+  const { ritualDocument, versionDocument, validationSnapshot } = getRitualDbContext(
     input.ritual,
     input.options,
   );
@@ -290,8 +294,17 @@ function createReviewState(input: {
     holdReasons: ritualDocument?.lifecycle.holdReasons ?? [],
     sourceRunIds: ritualDocument?.origin.sourceRunIds ?? [],
     importBatchIds: ritualDocument?.origin.importBatchIds ?? [],
+    packetPaths: versionDocument?.provenance.packetPath
+      ? [versionDocument.provenance.packetPath]
+      : [],
     packetCandidateIds: ritualDocument?.origin.packetCandidateIds ?? [],
     sourceIds: ritualDocument?.origin.sourceIds ?? [],
+    sourceLocationLabels: versionDocument?.provenance.sourceLocationLabels ?? [],
+    sourceGroundingSummaries: versionDocument?.provenance.sourceGrounding.map(
+      (grounding) => `${grounding.citationLabel}: ${grounding.sourceSummary}`,
+    ) ?? [],
+    moonAndTableAdaptationNotes:
+      versionDocument?.provenance.moonAndTableAdaptationNotes ?? [],
     unavailableReason,
   };
 

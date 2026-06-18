@@ -35,6 +35,7 @@ export const RITUAL_CARRIERS = [
 export type RitualCarrier = (typeof RITUAL_CARRIERS)[number];
 
 export const RITUAL_CAPACITY_MODES = [
+  "barely_any",
   "only_a_little",
   "enough_to_participate",
   "room_for_something_deeper",

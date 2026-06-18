@@ -76,7 +76,15 @@ import type {
   RitualEditDraftValidationReport,
   RitualEditDraftValidationSection,
 } from "../data/rituals/ritual-edit-draft-validation";
-import { RITUAL_STATUSES, type Ritual } from "../data/rituals/types";
+import {
+  RITUAL_AUDIENCES,
+  RITUAL_CAPACITY_MODES,
+  RITUAL_CARRIERS,
+  RITUAL_PURPOSES,
+  RITUAL_STATUSES,
+  RITUAL_TIMING_RELATIONSHIPS,
+  type Ritual,
+} from "../data/rituals/types";
 import type { TimingWindowCandidate } from "../lib/timing-window-candidates";
 
 const capacityModes: CapacityMode[] = ["pause", "low", "steady", "high"];
@@ -114,6 +122,7 @@ const profileWorksOptions = [
 ];
 
 const ritualCapacityFilterLabels: Record<string, string> = {
+  barely_any: "Barely any",
   only_a_little: "Only a little",
   enough_to_participate: "Enough to participate",
   room_for_something_deeper: "Room for something deeper",
@@ -1489,6 +1498,452 @@ function renderManageBodyField(input: {
   `;
 }
 
+function formatEditorOptionLabel(value: string): string {
+  if (ritualCapacityFilterLabels[value]) {
+    return ritualCapacityFilterLabels[value];
+  }
+
+  if (ritualAudienceFilterLabels[value]) {
+    return ritualAudienceFilterLabels[value];
+  }
+
+  return value.replace(/_/g, " ");
+}
+
+function renderManageSelectField(input: {
+  name: string;
+  label: string;
+  value: string;
+  options: readonly string[];
+  disabled?: boolean;
+  findings?: RitualEditDraftValidationFinding[];
+}): string {
+  const hasFindings = Boolean(input.findings?.length);
+
+  return `
+    <label class="manage-rituals__editor-field${hasFindings ? " manage-rituals__editor-field--invalid" : ""}">
+      <span>${escapeHtml(input.label)}</span>
+      <select
+        name="${escapeHtml(input.name)}"
+        data-manage-ritual-draft-field="true"
+        ${input.disabled ? "disabled" : ""}
+      >
+        ${input.options.map((option) => `
+          <option value="${escapeHtml(option)}" ${option === input.value ? "selected" : ""}>
+            ${escapeHtml(formatEditorOptionLabel(option))}
+          </option>
+        `).join("")}
+      </select>
+      ${renderManageDraftFieldFindings(input.findings ?? [])}
+    </label>
+  `;
+}
+
+function renderManageCheckboxGroup(input: {
+  name: string;
+  legend: string;
+  values: readonly string[];
+  selected: readonly string[];
+  excludeValues?: readonly string[];
+  disabled?: boolean;
+  findings?: RitualEditDraftValidationFinding[];
+}): string {
+  const selected = new Set(input.selected);
+  const excluded = new Set(input.excludeValues ?? []);
+  const hasFindings = Boolean(input.findings?.length);
+
+  return `
+    <fieldset class="manage-rituals__editor-field manage-rituals__editor-fieldset${hasFindings ? " manage-rituals__editor-field--invalid" : ""}">
+      <legend>${escapeHtml(input.legend)}</legend>
+      <div class="manage-rituals__choice-grid">
+        ${input.values.map((value) => {
+          const isExcluded = excluded.has(value);
+
+          return `
+          <label data-manage-secondary-option="${escapeHtml(input.name)}" ${isExcluded ? "hidden" : ""}>
+            <input
+              name="${escapeHtml(input.name)}"
+              type="checkbox"
+              value="${escapeHtml(value)}"
+              data-manage-ritual-draft-field="true"
+              ${selected.has(value) && !isExcluded ? "checked" : ""}
+              ${input.disabled || isExcluded ? "disabled" : ""}
+            />
+            <span>${escapeHtml(formatEditorOptionLabel(value))}</span>
+          </label>
+        `;
+        }).join("")}
+      </div>
+      ${renderManageDraftFieldFindings(input.findings ?? [])}
+    </fieldset>
+  `;
+}
+
+function renderManageListField(input: {
+  name: string;
+  label: string;
+  values: readonly string[];
+  hint?: string;
+  rows?: number;
+  disabled?: boolean;
+  findings?: RitualEditDraftValidationFinding[];
+}): string {
+  const hasFindings = Boolean(input.findings?.length);
+  const fieldId = `${input.name}-hint`;
+
+  return `
+    <label class="manage-rituals__editor-field manage-rituals__list-field${hasFindings ? " manage-rituals__editor-field--invalid" : ""}">
+      <span>${escapeHtml(input.label)}</span>
+      <textarea
+        name="${escapeHtml(input.name)}"
+        rows="${input.rows ?? 4}"
+        data-manage-ritual-draft-field="true"
+        ${input.disabled ? "disabled" : ""}
+        ${input.hint ? `aria-describedby="${escapeHtml(fieldId)}"` : ""}
+      >${escapeHtml(input.values.join("\n"))}</textarea>
+      ${input.hint ? `<small id="${escapeHtml(fieldId)}">${escapeHtml(input.hint)}</small>` : ""}
+      ${renderManageDraftFieldFindings(input.findings ?? [])}
+    </label>
+  `;
+}
+
+function renderManageMetadataNote(): string {
+  return `
+    <div class="manage-rituals__editor-guidance">
+      <strong>Draft-only changes</strong>
+      <span>These settings affect search and Choose with me after validation and review. Published Ritual content is unchanged.</span>
+    </div>
+  `;
+}
+
+function renderManageMetadataBand(input: {
+  title: string;
+  body: string;
+  description?: string;
+  compact?: boolean;
+}): string {
+  return `
+    <section class="manage-rituals__metadata-band${input.compact ? " manage-rituals__metadata-band--compact" : ""}">
+      <div class="manage-rituals__metadata-band-header">
+        <h6>${escapeHtml(input.title)}</h6>
+        ${input.description ? `<p>${escapeHtml(input.description)}</p>` : ""}
+      </div>
+      ${input.body}
+    </section>
+  `;
+}
+
+function renderManageRecommendationMetadataEditor(input: {
+  row: ReturnType<typeof createManageRitualsViewModel>["rows"][number];
+  draft?: RitualEditDraftDocument;
+  validationReport?: RitualEditDraftValidationReport;
+}): string {
+  const disabled = !input.draft;
+  const metadata =
+    input.draft?.draftBuffer.recommendationMetadata ??
+    input.row.ritual.recommendationMetadata;
+  const primaryPurpose = metadata?.purposes?.primary ?? RITUAL_PURPOSES[0];
+  const primaryCarrier = metadata?.carriers?.primary ?? RITUAL_CARRIERS[0];
+  const capacitySupports = metadata?.capacity?.supports ?? [];
+  const audienceSupports = metadata?.audience?.supports ?? [];
+
+  return `
+    <div class="manage-rituals__metadata-editor">
+      ${renderManageMetadataNote()}
+      ${renderManageMetadataBand({
+        title: "Purpose",
+        description: "What work this Ritual is allowed to hold.",
+        body: `
+          <div class="manage-rituals__metadata-layout">
+            ${renderManageSelectField({
+              name: "primaryPurpose",
+              label: "Primary purpose",
+              value: primaryPurpose,
+              options: RITUAL_PURPOSES,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "primaryPurpose",
+              }),
+            })}
+            <div class="manage-rituals__metadata-layout-full">
+              ${renderManageCheckboxGroup({
+                name: "secondaryPurposes",
+                legend: "Also fits",
+                values: RITUAL_PURPOSES,
+                selected: metadata?.purposes?.secondary ?? [],
+                excludeValues: [primaryPurpose],
+                disabled,
+                findings: getManageDraftValidationFieldFindings({
+                  report: input.validationReport,
+                  field: "secondaryPurposes",
+                }),
+              })}
+            </div>
+          </div>
+        `,
+      })}
+      ${renderManageMetadataBand({
+        title: "Carrier",
+        description: "Where the practice naturally lives.",
+        body: `
+          <div class="manage-rituals__metadata-layout">
+            ${renderManageSelectField({
+              name: "primaryCarrier",
+              label: "Primary carrier",
+              value: primaryCarrier,
+              options: RITUAL_CARRIERS,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "primaryCarrier",
+              }),
+            })}
+            ${renderManageCheckboxGroup({
+              name: "secondaryCarriers",
+              legend: "Also works with",
+              values: RITUAL_CARRIERS,
+              selected: metadata?.carriers?.secondary ?? [],
+              excludeValues: [primaryCarrier],
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "secondaryCarriers",
+              }),
+            })}
+          </div>
+        `,
+      })}
+      ${renderManageMetadataBand({
+        title: "Participation",
+        description: "How much attention this can ask for, and who it can serve.",
+        body: `
+          <div class="manage-rituals__metadata-layout">
+            ${renderManageCheckboxGroup({
+              name: "capacitySupports",
+              legend: "Capacity support",
+              values: RITUAL_CAPACITY_MODES,
+              selected: capacitySupports,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "capacitySupports",
+              }),
+            })}
+            ${renderManageSelectField({
+              name: "capacityDefault",
+              label: "Default capacity",
+              value: metadata?.capacity?.default ?? capacitySupports[0] ?? RITUAL_CAPACITY_MODES[0],
+              options: RITUAL_CAPACITY_MODES,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "capacityDefault",
+              }),
+            })}
+            ${renderManageCheckboxGroup({
+              name: "audienceSupports",
+              legend: "Audience support",
+              values: RITUAL_AUDIENCES,
+              selected: audienceSupports,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "audienceSupports",
+              }),
+            })}
+            ${renderManageSelectField({
+              name: "audienceDefault",
+              label: "Default audience",
+              value: metadata?.audience?.default ?? audienceSupports[0] ?? RITUAL_AUDIENCES[0],
+              options: RITUAL_AUDIENCES,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "audienceDefault",
+              }),
+            })}
+            <div class="manage-rituals__metadata-layout-full">
+              ${renderManageBodyField({
+                name: "bothOfUsStructure",
+                label: "Shared roles",
+                value: metadata?.audience?.bothOfUsStructure ?? "",
+                hint: "How two people participate, such as together, one witnesses, turn-taking, or one prepares while the other speaks.",
+                disabled,
+                findings: getManageDraftValidationFieldFindings({
+                  report: input.validationReport,
+                  field: "bothOfUsStructure",
+                }),
+              })}
+            </div>
+          </div>
+        `,
+      })}
+      ${renderManageMetadataBand({
+        title: "Timing",
+        description: "Which real timing signals can shape selection.",
+        body: `
+          <div class="manage-rituals__editor-guidance">
+            <strong>How this is used</strong>
+            <span>Choose with me and the Search timing filter compare these signals against the current timing window and timing facts. Helpful gives a small boost when matched. Preferred gives a stronger boost. Required should only be used when the Ritual should not be recommended unless one listed signal is active.</span>
+          </div>
+          <div class="manage-rituals__metadata-layout">
+            ${renderManageSelectField({
+              name: "timingRelationship",
+              label: "Timing relationship",
+              value: metadata?.timing?.relationship ?? RITUAL_TIMING_RELATIONSHIPS[3],
+              options: RITUAL_TIMING_RELATIONSHIPS,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "timingRelationship",
+              }),
+            })}
+            ${renderManageListField({
+              name: "timingContexts",
+              label: "Specific timing signals",
+              values: metadata?.timing?.contexts ?? [],
+              hint: "One signal per line. Use concrete matchable signals like new moon, full moon, waxing moon, moon in Cancer, Venus square Mars, Mercury retrograde, or exact timing not required. Avoid broad buckets like moon sign or planetary aspect by themselves.",
+              rows: 5,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "timingContexts",
+              }),
+            })}
+          </div>
+        `,
+      })}
+    </div>
+  `;
+}
+
+function renderManageSearchMetadataEditor(input: {
+  row: ReturnType<typeof createManageRitualsViewModel>["rows"][number];
+  draft?: RitualEditDraftDocument;
+  validationReport?: RitualEditDraftValidationReport;
+}): string {
+  const disabled = !input.draft;
+  const metadata =
+    input.draft?.draftBuffer.searchMetadata ??
+    input.row.ritual.searchMetadata;
+
+  return `
+    <div class="manage-rituals__metadata-editor">
+      <div class="manage-rituals__search-origin-strip">
+        <span><strong>Source</strong>${escapeHtml(metadata?.sourceLabel ?? input.row.sourceLabel ?? "none")}</span>
+        <span><strong>Origin</strong>${escapeHtml(metadata?.originLabel ?? "none")}</span>
+      </div>
+      ${renderManageMetadataBand({
+        title: "Findability",
+        description: "Words that should help someone find this Ritual.",
+        body: `
+          <div class="manage-rituals__metadata-layout">
+            <div class="manage-rituals__metadata-layout-full">
+              ${renderManageListField({
+                name: "searchTags",
+                label: "Search terms",
+                values: metadata?.tags ?? [],
+                hint: "Shown on search cards and used by typed search.",
+                rows: 4,
+                disabled,
+                findings: getManageDraftValidationFieldFindings({
+                  report: input.validationReport,
+                  field: "searchTags",
+                }),
+              })}
+            </div>
+          </div>
+        `,
+      })}
+    </div>
+  `;
+}
+
+function renderManageSourceProvenancePanel(
+  row: ReturnType<typeof createManageRitualsViewModel>["rows"][number],
+): string {
+  const ritual = row.ritual;
+  const reviewState = row.reviewState;
+
+  if (ritual.origin.type === "household") {
+    return `
+      <div class="manage-rituals__provenance-grid">
+        <section>
+          <h5>Origin</h5>
+          <p class="manage-rituals__empty-value">Origin: Household</p>
+          ${renderManageReadOnlyFacts([
+            { label: "Origin", value: "Household" },
+            { label: "Review", value: "Household review required" },
+            { label: "Source grounding", value: "No source grounding required" },
+          ])}
+        </section>
+        <section>
+          <h5>Review flags</h5>
+          ${renderManageReadOnlyList(row.reviewFlags)}
+        </section>
+      </div>
+    `;
+  }
+
+  const sourceGrounding = ritual.origin.sourceGrounding;
+  const sourceSupport = sourceGrounding.map(
+    (grounding) => `${grounding.citationLabel}: ${grounding.sourceSupports}`,
+  );
+  const sourceLocations = reviewState.sourceLocationLabels.length > 0
+    ? reviewState.sourceLocationLabels
+    : sourceGrounding.map(
+        (grounding) => `${grounding.citationLabel}: ${grounding.sourceLocation}`,
+      );
+  const sourceSummaries = reviewState.sourceGroundingSummaries.length > 0
+    ? reviewState.sourceGroundingSummaries
+    : sourceGrounding.map(
+        (grounding) => `${grounding.citationLabel}: ${grounding.sourceSummary}`,
+      );
+  const adaptationNotes = reviewState.moonAndTableAdaptationNotes.length > 0
+    ? reviewState.moonAndTableAdaptationNotes
+    : sourceGrounding.map(
+        (grounding) => `${grounding.citationLabel}: ${grounding.moonAndTableChanges}`,
+      );
+
+  return `
+    <div class="manage-rituals__provenance-grid">
+      <section>
+        <h5>Origin</h5>
+        ${renderManageReadOnlyFacts([
+          { label: "Origin type", value: "source" },
+          { label: "Source IDs", value: formatManageList(reviewState.sourceIds) },
+          { label: "Source label", value: ritual.searchMetadata.sourceLabel ?? row.sourceLabel ?? "none" },
+          { label: "Origin label", value: ritual.searchMetadata.originLabel ?? "none" },
+        ])}
+      </section>
+      <section>
+        <h5>Source packet/import trail</h5>
+        ${renderManageReadOnlyFacts([
+          { label: "Source runs", value: formatManageList(reviewState.sourceRunIds) },
+          { label: "Import batches", value: formatManageList(reviewState.importBatchIds) },
+          { label: "Packet candidates", value: formatManageList(reviewState.packetCandidateIds) },
+          { label: "Packet paths", value: formatManageList(reviewState.packetPaths) },
+          { label: "Source locations", value: formatManageList(sourceLocations) },
+        ])}
+      </section>
+      <section>
+        <h5>Source support summary</h5>
+        ${renderManageReadOnlyList(sourceSummaries)}
+        ${renderManageReadOnlyList(sourceSupport)}
+      </section>
+      <section>
+        <h5>Moon &amp; Table adaptation notes</h5>
+        ${renderManageReadOnlyList(adaptationNotes)}
+      </section>
+      <section>
+        <h5>Review flags</h5>
+        ${renderManageReadOnlyList(row.reviewFlags)}
+      </section>
+    </div>
+  `;
+}
+
 function getManageDraftSaveStateLabel(
   draft: RitualEditDraftDocument | undefined,
   draftStatus: ManageRitualEditorDraftStatus | undefined,
@@ -1749,66 +2204,120 @@ function renderManageEditableBody(input: {
         </div>
       </div>
       ${renderManageDraftValidationSummary(input.validationReport)}
-      <div class="manage-rituals__editor-fields">
-        ${renderManageBodyField({
-          name: "headline",
-          label: "Headline",
-          value: presentation.headline,
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "headline",
-          }),
-        })}
-        ${renderManageBodyField({
-          name: "practice",
-          label: "Practice",
-          value: presentation.practice,
-          multiline: true,
-          rows: 9,
-          hint: "Write the complete Ritual here: beginning, core action, closing, and any spoken or written words.",
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "practice",
-          }),
-        })}
-        ${renderManageBodyField({
-          name: "intention",
-          label: "Intention",
-          value: presentation.intention,
-          multiline: true,
-          rows: 3,
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "intention",
-          }),
-        })}
-        ${renderManageBodyField({
-          name: "bestWindow",
-          label: "Best window",
-          value: presentation.bestWindow,
-          multiline: true,
-          rows: 3,
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "bestWindow",
-          }),
-        })}
-        ${renderManageBodyField({
-          name: "questionToCarry",
-          label: "Question to carry",
-          value: presentation.questionToCarry,
-          multiline: true,
-          rows: 2,
-          disabled,
-          findings: getManageDraftValidationFieldFindings({
-            report: input.validationReport,
-            field: "questionToCarry",
-          }),
-        })}
+      <div class="manage-rituals__draft-form-sections">
+        <section class="manage-rituals__draft-form-card">
+          <h5>
+            <span>Ritual body</span>
+            ${getManageDraftValidationSectionLabel({
+              report: input.validationReport,
+              section: "body",
+            })
+              ? `<small>${escapeHtml(getManageDraftValidationSectionLabel({
+                  report: input.validationReport,
+                  section: "body",
+                }) ?? "")}</small>`
+              : ""}
+          </h5>
+          <div class="manage-rituals__editor-fields">
+            ${renderManageBodyField({
+              name: "headline",
+              label: "Headline",
+              value: presentation.headline,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "headline",
+              }),
+            })}
+            ${renderManageBodyField({
+              name: "practice",
+              label: "Practice",
+              value: presentation.practice,
+              multiline: true,
+              rows: 9,
+              hint: "Write the complete Ritual here: beginning, core action, closing, and any spoken or written words.",
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "practice",
+              }),
+            })}
+            ${renderManageBodyField({
+              name: "intention",
+              label: "Intention",
+              value: presentation.intention,
+              multiline: true,
+              rows: 3,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "intention",
+              }),
+            })}
+            ${renderManageBodyField({
+              name: "bestWindow",
+              label: "Best window",
+              value: presentation.bestWindow,
+              multiline: true,
+              rows: 3,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "bestWindow",
+              }),
+            })}
+            ${renderManageBodyField({
+              name: "questionToCarry",
+              label: "Question to carry",
+              value: presentation.questionToCarry,
+              multiline: true,
+              rows: 2,
+              disabled,
+              findings: getManageDraftValidationFieldFindings({
+                report: input.validationReport,
+                field: "questionToCarry",
+              }),
+            })}
+          </div>
+        </section>
+        <section class="manage-rituals__draft-form-card">
+          <h5>
+            <span>Recommendation fit</span>
+            ${getManageDraftValidationSectionLabel({
+              report: input.validationReport,
+              section: "fit",
+            })
+              ? `<small>${escapeHtml(getManageDraftValidationSectionLabel({
+                  report: input.validationReport,
+                  section: "fit",
+                }) ?? "")}</small>`
+              : ""}
+          </h5>
+          ${renderManageRecommendationMetadataEditor({
+            row: input.row,
+            draft: input.draft,
+            validationReport: input.validationReport,
+          })}
+        </section>
+        <section class="manage-rituals__draft-form-card">
+          <h5>
+            <span>Search and library</span>
+            ${getManageDraftValidationSectionLabel({
+              report: input.validationReport,
+              section: "search",
+            })
+              ? `<small>${escapeHtml(getManageDraftValidationSectionLabel({
+                  report: input.validationReport,
+                  section: "search",
+                }) ?? "")}</small>`
+              : ""}
+          </h5>
+          ${renderManageSearchMetadataEditor({
+            row: input.row,
+            draft: input.draft,
+            validationReport: input.validationReport,
+          })}
+        </section>
       </div>
     </form>
   `;
@@ -1841,30 +2350,6 @@ function renderManageRitualEditorShell(
     row.directUseEligible ? "direct use yes" : "direct use no",
     row.recommendable ? "recommendation ready" : "recommendation no",
   ].join(" · ");
-  const sourceGrounding = ritual.origin.type === "source"
-    ? ritual.origin.sourceGrounding
-    : [];
-  const sourceLocationLabels = sourceGrounding.map(
-    (grounding) => `${grounding.citationLabel}: ${grounding.sourceLocation}`,
-  );
-  const sourceSummaries = sourceGrounding.map(
-    (grounding) => `${grounding.citationLabel}: ${grounding.sourceSummary}`,
-  );
-  const sourceSupports = sourceGrounding.map(
-    (grounding) => `${grounding.citationLabel}: ${grounding.sourceSupports}`,
-  );
-  const adaptationNotes = sourceGrounding.map(
-    (grounding) => `${grounding.citationLabel}: ${grounding.moonAndTableChanges}`,
-  );
-  const ritualWords = ritual.ritualWords?.map((words) =>
-    [
-      words.useContext,
-      words.mode,
-      words.citationLabel,
-      words.sourceLocation,
-      words.note,
-    ].filter(Boolean).join(" · "),
-  ) ?? [];
   const draftValidationSummary = options.draftValidationReport?.summaryLabel ??
     validationSummary;
   const draftHeadline = options.draft?.draftBuffer.presentation.headline.trim();
@@ -1905,11 +2390,7 @@ function renderManageRitualEditorShell(
       <div class="manage-rituals__editor-main">
         ${renderManageEditorSection({
             id: "manage-editor-body",
-            title: "Ritual body",
-            validationSummary: getManageDraftValidationSectionLabel({
-              report: options.draftValidationReport,
-              section: "body",
-            }),
+            title: "Draft fields",
             body: renderManageEditableBody({
               row,
               draft: options.draft,
@@ -1928,77 +2409,13 @@ function renderManageRitualEditorShell(
           })}
 
         ${renderManageEditorSection({
-            id: "manage-editor-fit",
-            title: "Recommendation fit",
-            validationSummary: getManageDraftValidationSectionLabel({
-              report: options.draftValidationReport,
-              section: "fit",
-            }),
-            body: renderManageReadOnlyFacts([
-              { label: "Primary purpose", value: ritual.recommendationMetadata.purposes.primary },
-              { label: "Secondary purposes", value: formatManageList(ritual.recommendationMetadata.purposes.secondary) },
-              { label: "Refinement", value: ritual.recommendationMetadata.purposes.refinement || "none" },
-              { label: "Primary carrier", value: ritual.recommendationMetadata.carriers.primary },
-              { label: "Secondary carriers", value: formatManageList(ritual.recommendationMetadata.carriers.secondary) },
-              { label: "Capacity", value: formatManageList(ritual.recommendationMetadata.capacity.supports) },
-              { label: "Audience", value: formatManageList(ritual.recommendationMetadata.audience.supports) },
-              { label: "Timing relationship", value: ritual.recommendationMetadata.timing.relationship },
-              { label: "Timing contexts", value: formatManageList(ritual.recommendationMetadata.timing.contexts ?? []) },
-              { label: "Recommendation missing", value: formatManageList(ritual.recommendationMetadata.eligibility.missing ?? []) },
-              { label: "Not for", value: formatManageList(ritual.recommendationMetadata.eligibility.notFor ?? []) },
-            ]),
-          })}
-
-        ${renderManageEditorSection({
-            id: "manage-editor-search",
-            title: "Search and library",
-            validationSummary: getManageDraftValidationSectionLabel({
-              report: options.draftValidationReport,
-              section: "search",
-            }),
-            body: renderManageReadOnlyFacts([
-              { label: "Source label", value: ritual.searchMetadata.sourceLabel ?? row.sourceLabel ?? "none" },
-              { label: "Origin label", value: ritual.searchMetadata.originLabel ?? "none" },
-              { label: "Tags", value: formatManageList(ritual.searchMetadata.tags) },
-              { label: "Keywords", value: formatManageList(ritual.searchMetadata.keywords) },
-              { label: "Materials", value: formatManageList(ritual.searchMetadata.materials ?? []) },
-              { label: "Places", value: formatManageList(ritual.searchMetadata.places ?? []) },
-            ]),
-          })}
-
-        ${renderManageEditorSection({
             id: "manage-editor-provenance",
             title: "Source and provenance",
             validationSummary: getManageDraftValidationSectionLabel({
               report: options.draftValidationReport,
               section: "provenance",
             }),
-            body: `
-              ${renderManageReadOnlyFacts([
-                { label: "Origin type", value: row.origin },
-                { label: "Source IDs", value: formatManageList(reviewState.sourceIds) },
-                { label: "Source runs", value: formatManageList(reviewState.sourceRunIds) },
-                { label: "Import batches", value: formatManageList(reviewState.importBatchIds) },
-                { label: "Packet candidates", value: formatManageList(reviewState.packetCandidateIds) },
-                { label: "Source locations", value: formatManageList(sourceLocationLabels) },
-              ])}
-              <div class="manage-rituals__editor-subsection">
-                <h5>Source grounding summaries</h5>
-                ${renderManageReadOnlyList(sourceSummaries)}
-              </div>
-              <div class="manage-rituals__editor-subsection">
-                <h5>Source support</h5>
-                ${renderManageReadOnlyList(sourceSupports)}
-              </div>
-              <div class="manage-rituals__editor-subsection">
-                <h5>Moon &amp; Table adaptation notes</h5>
-                ${renderManageReadOnlyList(adaptationNotes)}
-              </div>
-              <div class="manage-rituals__editor-subsection">
-                <h5>Ritual words provenance</h5>
-                ${renderManageReadOnlyList(ritualWords)}
-              </div>
-            `,
+            body: renderManageSourceProvenancePanel(row),
           })}
 
         <details class="manage-rituals__editor-advanced" id="manage-editor-advanced">

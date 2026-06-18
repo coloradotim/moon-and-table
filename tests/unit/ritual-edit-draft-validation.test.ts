@@ -119,6 +119,178 @@ describe("Ritual edit draft validation", () => {
     ]);
   });
 
+  it("maps invalid selection metadata to editor fields", async () => {
+    const { draft } = await createCleanDraft();
+    const invalidDraft = {
+      ...draft,
+      draftBuffer: {
+        ...draft.draftBuffer,
+        recommendationMetadata: {
+          ...draft.draftBuffer.recommendationMetadata,
+          purposes: {
+            primary: "unsupported-purpose",
+            secondary: ["tending", "unsupported-purpose"],
+            refinement: "",
+          },
+          carriers: {
+            primary: "unsupported-carrier",
+            secondary: ["words"],
+          },
+          capacity: {
+            supports: ["only_a_little", "too_much"],
+          },
+          audience: {
+            supports: [],
+          },
+          timing: {
+            relationship: "whenever",
+            contexts: ["new_moon", ""],
+          },
+          eligibility: {
+            recommendable: true,
+            missing: [],
+          },
+        },
+      },
+    } as unknown as RitualEditDraftDocument;
+
+    const report = validateRitualEditDraft(invalidDraft);
+
+    expect(report.valid).toBe(false);
+    expect(report.findings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          field: "primaryPurpose",
+          section: "fit",
+        }),
+        expect.objectContaining({
+          field: "primaryCarrier",
+          section: "fit",
+        }),
+        expect.objectContaining({
+          field: "capacitySupports",
+          section: "fit",
+        }),
+        expect.objectContaining({
+          field: "audienceSupports",
+          section: "fit",
+        }),
+        expect.objectContaining({
+          field: "timingRelationship",
+          section: "fit",
+        }),
+        expect.objectContaining({
+          field: "timingContexts",
+          section: "fit",
+        }),
+      ]),
+    );
+  });
+
+  it("warns when timing contexts use broad bucket labels instead of specific signals", async () => {
+    const { draft } = await createCleanDraft();
+    const warningDraft: RitualEditDraftDocument = {
+      ...draft,
+      draftBuffer: {
+        ...draft.draftBuffer,
+        recommendationMetadata: {
+          ...draft.draftBuffer.recommendationMetadata,
+          timing: {
+            relationship: "helpful",
+            contexts: ["moon sign", "new moon"],
+          },
+        },
+      },
+    };
+
+    const report = validateRitualEditDraft(warningDraft);
+
+    expect(report.valid).toBe(true);
+    expect(report.summaryLabel).toBe("1 warning");
+    expect(report.findings).toEqual([
+      expect.objectContaining({
+        path: "draftBuffer.recommendationMetadata.timing.contexts.0",
+        field: "timingContexts",
+        section: "fit",
+        severity: "warning",
+        message: expect.stringContaining("specific timing signal"),
+      }),
+    ]);
+  });
+
+  it("warns when secondary purpose or carrier repeats the primary value", async () => {
+    const { draft } = await createCleanDraft();
+    const warningDraft: RitualEditDraftDocument = {
+      ...draft,
+      draftBuffer: {
+        ...draft.draftBuffer,
+        recommendationMetadata: {
+          ...draft.draftBuffer.recommendationMetadata,
+          purposes: {
+            primary: "tending",
+            secondary: ["tending", "marking"],
+            refinement: "",
+          },
+          carriers: {
+            primary: "table",
+            secondary: ["table", "words"],
+          },
+        },
+      },
+    };
+
+    const report = validateRitualEditDraft(warningDraft);
+
+    expect(report.valid).toBe(true);
+    expect(report.findings).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        field: "secondaryPurposes",
+        severity: "warning",
+        message: expect.stringContaining("repeat the primary purpose"),
+      }),
+      expect.objectContaining({
+        field: "secondaryCarriers",
+        severity: "warning",
+        message: expect.stringContaining("repeat the primary carrier"),
+      }),
+    ]));
+  });
+
+  it("maps invalid search metadata to editor fields", async () => {
+    const { draft } = await createCleanDraft();
+    const invalidDraft = {
+      ...draft,
+      draftBuffer: {
+        ...draft.draftBuffer,
+        searchMetadata: {
+          ...draft.draftBuffer.searchMetadata,
+          tags: ["table", "table", ""],
+          keywords: [],
+          materials: ["paper"],
+          places: ["altar"],
+        },
+      },
+    } as unknown as RitualEditDraftDocument;
+
+    const report = validateRitualEditDraft(invalidDraft);
+
+    expect(report.valid).toBe(false);
+    expect(report.findings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          field: "searchTags",
+          section: "search",
+          severity: "warning",
+        }),
+        expect.objectContaining({
+          field: "searchTags",
+          section: "search",
+          severity: "error",
+        }),
+      ]),
+    );
+  });
+
   it("leaves unmapped findings in the other section", async () => {
     const { draft } = await createCleanDraft();
     const invalidDraft = {
