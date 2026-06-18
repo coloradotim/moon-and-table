@@ -1538,16 +1538,18 @@ function renderManageEditableBody(input: {
     >
       <div class="manage-rituals__editor-savebar">
         <p data-manage-ritual-draft-status="true">${escapeHtml(getManageDraftSaveStateLabel(input.draft, input.draftStatus))}</p>
-        <button
-          type="submit"
-          data-manage-ritual-draft-save-now="true"
-          ${input.draft ? "" : "disabled"}
-        >Save</button>
-        <button
-          type="button"
-          data-manage-ritual-validate-draft="true"
-          ${input.draft ? "" : "disabled"}
-        >Validate draft</button>
+        <div class="manage-rituals__editor-savebar-actions">
+          <button
+            type="submit"
+            data-manage-ritual-draft-save-now="true"
+            ${input.draft ? "" : "disabled"}
+          >Save</button>
+          <button
+            type="button"
+            data-manage-ritual-validate-draft="true"
+            ${input.draft ? "" : "disabled"}
+          >Validate draft</button>
+        </div>
       </div>
       ${renderManageDraftValidationSummary(input.validationReport)}
       <div class="manage-rituals__editor-fields">

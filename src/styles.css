@@ -2910,10 +2910,10 @@ h2 {
 .manage-rituals__editor-savebar {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 14px;
+  gap: 8px 12px;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 12px;
+  padding: 9px 10px;
   border: 1px solid rgba(200, 190, 173, 0.64);
   border-radius: 8px;
   background: rgba(248, 246, 239, 0.72);
@@ -2926,6 +2926,14 @@ h2 {
   font-weight: 800;
 }
 
+.manage-rituals__editor-savebar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
 .manage-rituals__editor-savebar button,
 .manage-rituals__editor-field input,
 .manage-rituals__editor-field textarea {
@@ -2933,13 +2941,15 @@ h2 {
 }
 
 .manage-rituals__editor-savebar button {
-  min-height: 40px;
-  padding: 8px 14px;
+  min-height: 34px;
+  padding: 6px 11px;
   border: 1px solid rgba(122, 145, 132, 0.78);
   border-radius: 8px;
   background: rgba(255, 253, 247, 0.92);
   color: #26312c;
+  font-size: 0.9rem;
   font-weight: 800;
+  line-height: 1.1;
 }
 
 .manage-rituals__editor-savebar button:disabled {
