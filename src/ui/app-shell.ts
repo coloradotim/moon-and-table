@@ -64,6 +64,12 @@ import {
   type RitualSortKey,
 } from "../data/rituals/search-rituals";
 import type { ChooseWithMeResult } from "../data/rituals/choose-with-me-selector";
+import {
+  createRitualDraftChooseWithMePreview,
+  RITUAL_DRAFT_CHOOSE_PREVIEW_TIMING_SAMPLES,
+  type RitualDraftChoosePreviewSampleInput,
+  type RitualDraftChoosePreviewTimingSample,
+} from "../data/rituals/draft-choose-with-me-preview";
 import type {
   RitualFavorite,
   RitualFavoriteSourceSurface,
@@ -170,6 +176,7 @@ export type SignedInShellOptions = {
   selectedManageRitualEditorDraft?: RitualEditDraftDocument;
   selectedManageRitualEditorDraftStatus?: ManageRitualEditorDraftStatus;
   selectedManageRitualEditorDraftValidationReport?: RitualEditDraftValidationReport;
+  selectedManageRitualChoosePreviewSample?: Partial<RitualDraftChoosePreviewSampleInput>;
   manageRitualActionStatus?: {
     ritualId?: string;
     tone: "success" | "error" | "info";
@@ -2146,6 +2153,177 @@ function renderManageRitualEditorPreview(input: {
   `;
 }
 
+const choosePreviewTimingSampleLabels: Record<
+  RitualDraftChoosePreviewTimingSample,
+  string
+> = {
+  none: "No timing",
+  current: "Current timing",
+  new_moon: "New moon",
+  full_moon: "Full moon",
+  mercury_retrograde: "Mercury retrograde",
+};
+
+function renderManageChoosePreviewSelect(input: {
+  name: string;
+  label: string;
+  value: string;
+  options: Array<{ value: string; label: string }>;
+  disabled?: boolean;
+}): string {
+  return `
+    <label class="manage-rituals__editor-field">
+      <span>${escapeHtml(input.label)}</span>
+      <select
+        name="${escapeHtml(input.name)}"
+        data-manage-ritual-choose-preview-field="true"
+        ${input.disabled ? "disabled" : ""}
+      >
+        ${input.options.map((option) => `
+          <option value="${escapeHtml(option.value)}" ${option.value === input.value ? "selected" : ""}>
+            ${escapeHtml(option.label)}
+          </option>
+        `).join("")}
+      </select>
+    </label>
+  `;
+}
+
+function renderManageChoosePreviewTextBlock(input: {
+  title: string;
+  body?: string;
+}): string {
+  if (!input.body) {
+    return "";
+  }
+
+  return `
+    <section class="manage-rituals__choose-preview-copy">
+      <h5>${escapeHtml(input.title)}</h5>
+      <p>${escapeHtml(input.body)}</p>
+    </section>
+  `;
+}
+
+function renderManageRitualChooseWithMePreview(input: {
+  row: ReturnType<typeof createManageRitualsViewModel>["rows"][number];
+  draft?: RitualEditDraftDocument;
+  sampleInput?: Partial<RitualDraftChoosePreviewSampleInput>;
+  currentTimingWindow?: TimingWindowCandidate;
+  currentTimingWindows?: TimingWindowCandidate[];
+}): string {
+  const preview = createRitualDraftChooseWithMePreview({
+    baseRitual: input.row.ritual,
+    draft: input.draft,
+    sampleInput: input.sampleInput,
+    currentTimingWindow: input.currentTimingWindow,
+    currentTimingWindows: input.currentTimingWindows,
+  });
+  const disabled = !input.draft;
+  const energyOptions = energyCapacityOptions.map((option) => ({
+    value: option.key,
+    label: option.label,
+  }));
+  const audienceSelectOptions = audienceOptions.map((option) => ({
+    value: option.key,
+    label: option.label,
+  }));
+  const purposeSelectOptions = purposeOptions.map((option) => ({
+    value: option.key,
+    label: option.label,
+  }));
+  const carrierSelectOptions = carrierOptions.map((option) => ({
+    value: option.key,
+    label: option.label,
+  }));
+  const timingSelectOptions = RITUAL_DRAFT_CHOOSE_PREVIEW_TIMING_SAMPLES.map(
+    (sample) => ({
+      value: sample,
+      label: choosePreviewTimingSampleLabels[sample],
+    }),
+  );
+
+  return `
+    <div class="manage-rituals__choose-preview" aria-label="Choose with me preview">
+      <form class="manage-rituals__choose-preview-controls" data-manage-ritual-choose-preview-form="true">
+        ${renderManageChoosePreviewSelect({
+          name: "previewEnergyCapacity",
+          label: "Capacity",
+          value: preview.sampleInput.energyCapacity,
+          options: energyOptions,
+          disabled,
+        })}
+        ${renderManageChoosePreviewSelect({
+          name: "previewAudience",
+          label: "Audience",
+          value: preview.sampleInput.audience,
+          options: audienceSelectOptions,
+          disabled,
+        })}
+        ${renderManageChoosePreviewSelect({
+          name: "previewPurpose",
+          label: "Purpose",
+          value: preview.sampleInput.purpose,
+          options: purposeSelectOptions,
+          disabled,
+        })}
+        ${renderManageChoosePreviewSelect({
+          name: "previewCarrier",
+          label: "Carrier",
+          value: preview.sampleInput.carrier,
+          options: carrierSelectOptions,
+          disabled,
+        })}
+        ${renderManageChoosePreviewSelect({
+          name: "previewTiming",
+          label: "Timing sample",
+          value: preview.sampleInput.timing,
+          options: timingSelectOptions,
+          disabled,
+        })}
+      </form>
+
+      <div class="manage-rituals__choose-preview-result manage-rituals__choose-preview-result--${escapeHtml(preview.status)}">
+        <div class="manage-rituals__choose-preview-status">
+          <strong>${escapeHtml(preview.statusLabel)}</strong>
+          ${preview.selectedHeadline
+            ? `<span>${escapeHtml(preview.selectedHeadline)}</span>`
+            : ""}
+        </div>
+
+        ${preview.blockers.length > 0
+          ? `<section class="manage-rituals__choose-preview-blockers" aria-label="Blocking gates">
+              <h5>Blocking gates</h5>
+              <ul>
+                ${preview.blockers.map((blocker) => `<li>${escapeHtml(blocker)}</li>`).join("")}
+              </ul>
+            </section>`
+          : ""}
+
+        <div class="manage-rituals__choose-preview-grid">
+          ${renderManageChoosePreviewTextBlock({
+            title: "Why this fits",
+            body: preview.whyThisFits,
+          })}
+          ${renderManageChoosePreviewTextBlock({
+            title: "How this was chosen",
+            body: preview.howThisWasChosen,
+          })}
+          <section class="manage-rituals__choose-preview-fit" aria-label="Fit details">
+            <h5>Fit details</h5>
+            <dl>
+              <div><dt>Timing</dt><dd>${escapeHtml(preview.timingImpact)}</dd></div>
+              <div><dt>Capacity</dt><dd>${escapeHtml(preview.capacityFit)}</dd></div>
+              <div><dt>Audience</dt><dd>${escapeHtml(preview.audienceFit)}</dd></div>
+              <div><dt>Purpose / carrier</dt><dd>${escapeHtml(preview.purposeCarrierFit)}</dd></div>
+            </dl>
+          </section>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 function renderManageActiveDraftSummary(input: {
   row: ReturnType<typeof createManageRitualsViewModel>["rows"][number];
   draft?: RitualEditDraftDocument;
@@ -2337,6 +2515,9 @@ function renderManageRitualEditorShell(
     draft?: RitualEditDraftDocument;
     draftStatus?: ManageRitualEditorDraftStatus;
     draftValidationReport?: RitualEditDraftValidationReport;
+    choosePreviewSample?: Partial<RitualDraftChoosePreviewSampleInput>;
+    currentTimingWindow?: TimingWindowCandidate;
+    currentTimingWindows?: TimingWindowCandidate[];
   } = {},
 ): string {
   const ritual = row.ritual;
@@ -2405,6 +2586,18 @@ function renderManageRitualEditorShell(
             body: renderManageRitualEditorPreview({
               row,
               draft: options.draft,
+            }),
+          })}
+
+        ${renderManageEditorSection({
+            id: "manage-editor-choose-preview",
+            title: "Choose with me preview",
+            body: renderManageRitualChooseWithMePreview({
+              row,
+              draft: options.draft,
+              sampleInput: options.choosePreviewSample,
+              currentTimingWindow: options.currentTimingWindow,
+              currentTimingWindows: options.currentTimingWindows,
             }),
           })}
 
@@ -2742,6 +2935,9 @@ export function renderManageRitualsSection(options: {
   selectedEditorDraft?: RitualEditDraftDocument;
   selectedEditorDraftStatus?: ManageRitualEditorDraftStatus;
   selectedEditorDraftValidationReport?: RitualEditDraftValidationReport;
+  selectedChoosePreviewSample?: Partial<RitualDraftChoosePreviewSampleInput>;
+  currentTimingWindow?: TimingWindowCandidate;
+  currentTimingWindows?: TimingWindowCandidate[];
   actionStatus?: SignedInShellOptions["manageRitualActionStatus"];
 } = {}): string {
   const ritualRepository = options.ritualRepository ?? staticRitualRepository;
@@ -2798,6 +2994,9 @@ export function renderManageRitualsSection(options: {
           draft: options.selectedEditorDraft,
           draftStatus: options.selectedEditorDraftStatus,
           draftValidationReport: options.selectedEditorDraftValidationReport,
+          choosePreviewSample: options.selectedChoosePreviewSample,
+          currentTimingWindow: options.currentTimingWindow,
+          currentTimingWindows: options.currentTimingWindows,
         })
         : ""}
 
@@ -3633,6 +3832,9 @@ export function renderSignedInShell(
     selectedEditorDraftStatus: options.selectedManageRitualEditorDraftStatus,
     selectedEditorDraftValidationReport:
       options.selectedManageRitualEditorDraftValidationReport,
+    selectedChoosePreviewSample: options.selectedManageRitualChoosePreviewSample,
+    currentTimingWindow: options.currentTimingWindow,
+    currentTimingWindows: options.currentTimingWindows,
     actionStatus: options.manageRitualActionStatus,
   });
   const howItWorks = renderHowItWorksSection();
