@@ -70,6 +70,12 @@ import type {
   RitualFeedbackReason,
 } from "../data/rituals/household-state";
 import type { RitualEditDraftDocument } from "../data/rituals/ritual-edit-drafts";
+import type {
+  RitualEditDraftValidationField,
+  RitualEditDraftValidationFinding,
+  RitualEditDraftValidationReport,
+  RitualEditDraftValidationSection,
+} from "../data/rituals/ritual-edit-draft-validation";
 import { RITUAL_STATUSES, type Ritual } from "../data/rituals/types";
 import type { TimingWindowCandidate } from "../lib/timing-window-candidates";
 
@@ -154,6 +160,7 @@ export type SignedInShellOptions = {
   selectedManageRitualEditorId?: string | null;
   selectedManageRitualEditorDraft?: RitualEditDraftDocument;
   selectedManageRitualEditorDraftStatus?: ManageRitualEditorDraftStatus;
+  selectedManageRitualEditorDraftValidationReport?: RitualEditDraftValidationReport;
   manageRitualActionStatus?: {
     ritualId?: string;
     tone: "success" | "error" | "info";
@@ -1317,6 +1324,7 @@ function renderManageEditorSection(input: {
   id: string;
   title: string;
   body: string;
+  validationSummary?: string;
 }): string {
   return `
     <section
@@ -1326,9 +1334,120 @@ function renderManageEditorSection(input: {
     >
       <div class="manage-rituals__editor-section-heading">
         <h4 id="${escapeHtml(input.id)}-title">${escapeHtml(input.title)}</h4>
+        ${input.validationSummary
+          ? `<span class="manage-rituals__validation-count">${escapeHtml(input.validationSummary)}</span>`
+          : ""}
       </div>
       ${input.body}
     </section>
+  `;
+}
+
+function getManageDraftValidationSectionLabel(input: {
+  report?: RitualEditDraftValidationReport;
+  section: RitualEditDraftValidationSection;
+}): string | undefined {
+  const summary = input.report?.sectionSummaries.find((item) =>
+    item.section === input.section
+  );
+
+  if (!summary || (summary.errors === 0 && summary.warnings === 0)) {
+    return input.report ? "clean" : undefined;
+  }
+
+  return [
+    summary.errors > 0
+      ? `${summary.errors} blocker${summary.errors === 1 ? "" : "s"}`
+      : "",
+    summary.warnings > 0
+      ? `${summary.warnings} warning${summary.warnings === 1 ? "" : "s"}`
+      : "",
+  ].filter(Boolean).join(" · ");
+}
+
+function getManageDraftValidationFieldFindings(input: {
+  report?: RitualEditDraftValidationReport;
+  field: RitualEditDraftValidationField;
+}): RitualEditDraftValidationFinding[] {
+  return input.report?.findings.filter((finding) => finding.field === input.field) ?? [];
+}
+
+function renderManageDraftFieldFindings(
+  findings: RitualEditDraftValidationFinding[],
+): string {
+  if (findings.length === 0) {
+    return "";
+  }
+
+  return `
+    <ul class="manage-rituals__validation-messages">
+      ${findings.map((finding) => `
+        <li class="manage-rituals__validation-message manage-rituals__validation-message--${escapeHtml(finding.severity)}">
+          ${escapeHtml(finding.message)}
+        </li>
+      `).join("")}
+    </ul>
+  `;
+}
+
+function renderManageDraftValidationSummary(
+  report: RitualEditDraftValidationReport | undefined,
+): string {
+  if (!report) {
+    return `
+      <div class="manage-rituals__draft-validation manage-rituals__draft-validation--idle">
+        <p>Draft validation has not run yet.</p>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="manage-rituals__draft-validation manage-rituals__draft-validation--${report.valid ? "clean" : "findings"}">
+      <p>${escapeHtml(report.summaryLabel)}</p>
+      <small>${escapeHtml(
+        report.valid
+          ? "No draft blockers or warnings found."
+          : "Review the highlighted fields and section notes before publishing later.",
+      )}</small>
+    </div>
+  `;
+}
+
+function renderManageDraftOtherValidationFindings(
+  report: RitualEditDraftValidationReport | undefined,
+): string {
+  if (!report) {
+    return "";
+  }
+
+  const otherFindings = report.findings.filter((finding) =>
+    finding.section === "other" || finding.unsafeContentHidden
+  );
+
+  if (otherFindings.length === 0) {
+    return `
+      <div class="manage-rituals__editor-subsection">
+        <h5>Other validation findings</h5>
+        <p class="manage-rituals__empty-value">none</p>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="manage-rituals__editor-subsection">
+      <h5>Other validation findings</h5>
+      <ul class="manage-rituals__validation-messages">
+        ${otherFindings.map((finding) => `
+          <li class="manage-rituals__validation-message manage-rituals__validation-message--${escapeHtml(finding.severity)}">
+            <strong>${escapeHtml(finding.path)}</strong>
+            <span>${escapeHtml(finding.message)}</span>
+            ${finding.unsafeContentHidden
+              ? "<em>Contents hidden by privacy guard.</em>"
+              : ""}
+          </li>
+        `).join("")}
+      </ul>
+    </div>
   `;
 }
 
@@ -1340,11 +1459,13 @@ function renderManageBodyField(input: {
   rows?: number;
   hint?: string;
   disabled?: boolean;
+  findings?: RitualEditDraftValidationFinding[];
 }): string {
   const hintId = `${input.name}-hint`;
+  const hasFindings = Boolean(input.findings?.length);
 
   return `
-    <label class="manage-rituals__editor-field">
+    <label class="manage-rituals__editor-field${hasFindings ? " manage-rituals__editor-field--invalid" : ""}">
       <span>${escapeHtml(input.label)}</span>
       ${input.multiline
         ? `<textarea
@@ -1363,6 +1484,7 @@ function renderManageBodyField(input: {
             ${input.hint ? `aria-describedby="${escapeHtml(hintId)}"` : ""}
           />`}
       ${input.hint ? `<small id="${escapeHtml(hintId)}">${escapeHtml(input.hint)}</small>` : ""}
+      ${renderManageDraftFieldFindings(input.findings ?? [])}
     </label>
   `;
 }
@@ -1398,6 +1520,7 @@ function renderManageEditableBody(input: {
   row: ReturnType<typeof createManageRitualsViewModel>["rows"][number];
   draft?: RitualEditDraftDocument;
   draftStatus?: ManageRitualEditorDraftStatus;
+  validationReport?: RitualEditDraftValidationReport;
 }): string {
   const presentation =
     input.draft?.draftBuffer.presentation ?? input.row.ritual.presentation;
@@ -1420,13 +1543,23 @@ function renderManageEditableBody(input: {
           data-manage-ritual-draft-save-now="true"
           ${input.draft ? "" : "disabled"}
         >Save</button>
+        <button
+          type="button"
+          data-manage-ritual-validate-draft="true"
+          ${input.draft ? "" : "disabled"}
+        >Validate draft</button>
       </div>
+      ${renderManageDraftValidationSummary(input.validationReport)}
       <div class="manage-rituals__editor-fields">
         ${renderManageBodyField({
           name: "headline",
           label: "Headline",
           value: presentation.headline,
           disabled,
+          findings: getManageDraftValidationFieldFindings({
+            report: input.validationReport,
+            field: "headline",
+          }),
         })}
         ${renderManageBodyField({
           name: "practice",
@@ -1436,6 +1569,10 @@ function renderManageEditableBody(input: {
           rows: 9,
           hint: "Write the complete Ritual here: beginning, core action, closing, and any spoken or written words.",
           disabled,
+          findings: getManageDraftValidationFieldFindings({
+            report: input.validationReport,
+            field: "practice",
+          }),
         })}
         ${renderManageBodyField({
           name: "intention",
@@ -1444,6 +1581,10 @@ function renderManageEditableBody(input: {
           multiline: true,
           rows: 3,
           disabled,
+          findings: getManageDraftValidationFieldFindings({
+            report: input.validationReport,
+            field: "intention",
+          }),
         })}
         ${renderManageBodyField({
           name: "bestWindow",
@@ -1452,6 +1593,10 @@ function renderManageEditableBody(input: {
           multiline: true,
           rows: 3,
           disabled,
+          findings: getManageDraftValidationFieldFindings({
+            report: input.validationReport,
+            field: "bestWindow",
+          }),
         })}
         ${renderManageBodyField({
           name: "questionToCarry",
@@ -1460,6 +1605,10 @@ function renderManageEditableBody(input: {
           multiline: true,
           rows: 2,
           disabled,
+          findings: getManageDraftValidationFieldFindings({
+            report: input.validationReport,
+            field: "questionToCarry",
+          }),
         })}
       </div>
     </form>
@@ -1479,6 +1628,7 @@ function renderManageRitualEditorShell(
   options: {
     draft?: RitualEditDraftDocument;
     draftStatus?: ManageRitualEditorDraftStatus;
+    draftValidationReport?: RitualEditDraftValidationReport;
   } = {},
 ): string {
   const ritual = row.ritual;
@@ -1516,6 +1666,8 @@ function renderManageRitualEditorShell(
       words.note,
     ].filter(Boolean).join(" · "),
   ) ?? [];
+  const draftValidationSummary = options.draftValidationReport?.summaryLabel ??
+    validationSummary;
 
   return `
     <section
@@ -1538,7 +1690,7 @@ function renderManageRitualEditorShell(
           ${options.draft && !isLocalPreviewRitualEditDraft(options.draft)
             ? `<span>${escapeHtml(shortenManageIdentifier(options.draft.id, 28))}</span>`
             : ""}
-          <span>${escapeHtml(validationSummary)}</span>
+          <span>${escapeHtml(draftValidationSummary)}</span>
           <span>${escapeHtml(row.recommendable ? "Recommendation-ready" : row.recommendationEligible ? "Recommendation eligible" : "Held from recommendations")}</span>
         </div>
       </header>
@@ -1547,16 +1699,25 @@ function renderManageRitualEditorShell(
         ${renderManageEditorSection({
             id: "manage-editor-body",
             title: "Ritual body",
+            validationSummary: getManageDraftValidationSectionLabel({
+              report: options.draftValidationReport,
+              section: "body",
+            }),
             body: renderManageEditableBody({
               row,
               draft: options.draft,
               draftStatus: options.draftStatus,
+              validationReport: options.draftValidationReport,
             }),
           })}
 
         ${renderManageEditorSection({
             id: "manage-editor-fit",
             title: "Recommendation fit",
+            validationSummary: getManageDraftValidationSectionLabel({
+              report: options.draftValidationReport,
+              section: "fit",
+            }),
             body: renderManageReadOnlyFacts([
               { label: "Primary purpose", value: ritual.recommendationMetadata.purposes.primary },
               { label: "Secondary purposes", value: formatManageList(ritual.recommendationMetadata.purposes.secondary) },
@@ -1575,6 +1736,10 @@ function renderManageRitualEditorShell(
         ${renderManageEditorSection({
             id: "manage-editor-search",
             title: "Search and library",
+            validationSummary: getManageDraftValidationSectionLabel({
+              report: options.draftValidationReport,
+              section: "search",
+            }),
             body: renderManageReadOnlyFacts([
               { label: "Source label", value: ritual.searchMetadata.sourceLabel ?? row.sourceLabel ?? "none" },
               { label: "Origin label", value: ritual.searchMetadata.originLabel ?? "none" },
@@ -1588,6 +1753,10 @@ function renderManageRitualEditorShell(
         ${renderManageEditorSection({
             id: "manage-editor-provenance",
             title: "Source and provenance",
+            validationSummary: getManageDraftValidationSectionLabel({
+              report: options.draftValidationReport,
+              section: "provenance",
+            }),
             body: `
               ${renderManageReadOnlyFacts([
                 { label: "Origin type", value: row.origin },
@@ -1621,6 +1790,10 @@ function renderManageRitualEditorShell(
           ${renderManageEditorSection({
               id: "manage-editor-status",
               title: "Status",
+              validationSummary: getManageDraftValidationSectionLabel({
+                report: options.draftValidationReport,
+                section: "status",
+              }),
               body: renderManageReadOnlyFacts([
                 { label: "Ritual ID", value: row.id },
                 { label: "Availability", value: availabilitySummary },
@@ -1636,6 +1809,10 @@ function renderManageRitualEditorShell(
           ${renderManageEditorSection({
               id: "manage-editor-review",
               title: "Review and validation",
+              validationSummary: getManageDraftValidationSectionLabel({
+                report: options.draftValidationReport,
+                section: "review",
+              }),
               body: `
                 ${renderManageReadOnlyFacts([
                   { label: "Validation status", value: validationSummary },
@@ -1652,11 +1829,16 @@ function renderManageRitualEditorShell(
                     ),
                   )}
                 </div>
+                ${renderManageDraftOtherValidationFindings(options.draftValidationReport)}
               `,
             })}
           ${renderManageEditorSection({
               id: "manage-editor-versions",
               title: "Versions and audit",
+              validationSummary: getManageDraftValidationSectionLabel({
+                report: options.draftValidationReport,
+                section: "versions",
+              }),
               body: renderManageReadOnlyFacts([
                 { label: "Current version", value: shortenManageIdentifier(reviewState.currentVersionId) },
                 { label: "Published version", value: shortenManageIdentifier(reviewState.publishedVersionId ?? "none") },
@@ -1926,6 +2108,7 @@ export function renderManageRitualsSection(options: {
   selectedEditorRitualId?: string | null;
   selectedEditorDraft?: RitualEditDraftDocument;
   selectedEditorDraftStatus?: ManageRitualEditorDraftStatus;
+  selectedEditorDraftValidationReport?: RitualEditDraftValidationReport;
   actionStatus?: SignedInShellOptions["manageRitualActionStatus"];
 } = {}): string {
   const ritualRepository = options.ritualRepository ?? staticRitualRepository;
@@ -1981,6 +2164,7 @@ export function renderManageRitualsSection(options: {
         ? renderManageRitualEditorShell(selectedEditorRow, {
           draft: options.selectedEditorDraft,
           draftStatus: options.selectedEditorDraftStatus,
+          draftValidationReport: options.selectedEditorDraftValidationReport,
         })
         : ""}
 
@@ -2810,6 +2994,8 @@ export function renderSignedInShell(
     selectedEditorRitualId: options.selectedManageRitualEditorId,
     selectedEditorDraft: options.selectedManageRitualEditorDraft,
     selectedEditorDraftStatus: options.selectedManageRitualEditorDraftStatus,
+    selectedEditorDraftValidationReport:
+      options.selectedManageRitualEditorDraftValidationReport,
     actionStatus: options.manageRitualActionStatus,
   });
   const howItWorks = renderHowItWorksSection();

@@ -3,14 +3,10 @@ import { getAuth } from "firebase-admin/auth";
 import { getFirestore } from "firebase-admin/firestore";
 import { readFileSync } from "node:fs";
 
-import {
-  createAdminFirestoreRitualEditDraftStore,
-  type AdminFirestoreRitualEditDraftDb,
-} from "../src/data/rituals/ritual-edit-drafts";
-import {
-  handleRitualEditDraftApi,
-  type RitualEditDraftApiRequest,
-  type RitualEditDraftApiResponse,
+import type { AdminFirestoreRitualEditDraftDb } from "../src/data/rituals/ritual-edit-drafts";
+import type {
+  RitualEditDraftApiRequest,
+  RitualEditDraftApiResponse,
 } from "../src/server/ritual-edit-draft-api";
 import type { RitualVersionDocument } from "../src/data/rituals/db-documents";
 
@@ -80,23 +76,45 @@ export default async function handler(
   request: VercelRequest,
   response: VercelResponse,
 ): Promise<void> {
-  initializeFirebaseAdmin();
-  const db = getFirestore();
+  try {
+    initializeFirebaseAdmin();
+    const db = getFirestore();
+    const [
+      { createAdminFirestoreRitualEditDraftStore },
+      { handleRitualEditDraftApi },
+    ] = await Promise.all([
+      import("../src/data/rituals/ritual-edit-drafts.js"),
+      import("../src/server/ritual-edit-draft-api.js"),
+    ]);
 
-  await handleRitualEditDraftApi(request, response, {
-    verifyIdToken: async (idToken) => {
-      const decoded = await getAuth().verifyIdToken(idToken);
+    await handleRitualEditDraftApi(request, response, {
+      verifyIdToken: async (idToken) => {
+        const decoded = await getAuth().verifyIdToken(idToken);
 
-      return {
-        uid: decoded.uid,
-        email: typeof decoded.email === "string" ? decoded.email : undefined,
-      };
-    },
-    draftStore: createAdminFirestoreRitualEditDraftStore(
-      db as unknown as AdminFirestoreRitualEditDraftDb,
-    ),
-    getRitualVersionDocument: (versionId) =>
-      getRitualVersionDocumentByVersionId(db, versionId),
-    authorize: () => true,
-  });
+        return {
+          uid: decoded.uid,
+          email: typeof decoded.email === "string" ? decoded.email : undefined,
+        };
+      },
+      draftStore: createAdminFirestoreRitualEditDraftStore(
+        db as unknown as AdminFirestoreRitualEditDraftDb,
+      ),
+      getRitualVersionDocument: (versionId) =>
+        getRitualVersionDocumentByVersionId(db, versionId),
+      authorize: () => true,
+    });
+  } catch (error) {
+    console.error("[ritual-edit-draft-route] failed", error);
+    response.setHeader?.("Cache-Control", "no-store");
+    response.status(500).json({
+      valid: false,
+      findings: [
+        {
+          path: "ritualEditDraft",
+          message: "Ritual edit draft API failed before the draft service could start.",
+          severity: "error",
+        },
+      ],
+    });
+  }
 }
