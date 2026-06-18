@@ -265,6 +265,11 @@ Version context
 
 On smaller screens, this becomes accordion sections or tabs below the main editor.
 
+Early Search/direct-use preview implementation is intentionally quota-conscious:
+it uses the single opened edit draft rather than scanning all drafts to render
+the Manage table. The Manage table row title remains the published/current
+Ritual title unless a later issue deliberately designs a draft-aware table.
+
 ## 4. Field Groupings
 
 ### 4.1 Status
@@ -610,6 +615,12 @@ findable/direct-use status
 ```
 
 Do not require recommendation eligibility for Search preview.
+
+The editor should make draft-vs-published state explicit. If an opened draft has
+a different headline, show the draft headline in the editor context while also
+showing the published/current headline as the live baseline. `Save` still writes
+only the draft buffer; it does not publish, promote, or update the live Search
+record.
 
 ### 6.2 Choose with me preview
 
