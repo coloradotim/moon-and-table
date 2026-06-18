@@ -95,6 +95,10 @@ import {
   RITUAL_REVIEW_ACTIONS,
   type RitualReviewAction,
 } from "./data/rituals/db-review-transactions";
+import {
+  RITUAL_DRAFT_CHOOSE_PREVIEW_TIMING_SAMPLES,
+  type RitualDraftChoosePreviewSampleInput,
+} from "./data/rituals/draft-choose-with-me-preview";
 import { sourceBackedRituals } from "./data/rituals/source-backed-rituals";
 import {
   ritualTimingPresetOptions,
@@ -226,6 +230,9 @@ let activeManageRitualEditorDraftValidationReport:
   | undefined;
 let activeManageRitualEditorUsesLocalDraft = false;
 let activeManageRitualEditorLastSavedDraftBufferJson: string | undefined;
+let activeManageRitualChoosePreviewSample:
+  | Partial<RitualDraftChoosePreviewSampleInput>
+  | undefined;
 
 type HouseholdMemoryWriteRecordType =
   | "favorite"
@@ -461,6 +468,33 @@ function clearManageRitualEditorDraftState(): void {
   activeManageRitualEditorDraftValidationReport = undefined;
   activeManageRitualEditorUsesLocalDraft = false;
   activeManageRitualEditorLastSavedDraftBufferJson = undefined;
+  activeManageRitualChoosePreviewSample = undefined;
+}
+
+function isRitualDraftChoosePreviewTimingSample(
+  value: string,
+): value is RitualDraftChoosePreviewSampleInput["timing"] {
+  return RITUAL_DRAFT_CHOOSE_PREVIEW_TIMING_SAMPLES.includes(
+    value as RitualDraftChoosePreviewSampleInput["timing"],
+  );
+}
+
+function updateManageRitualChoosePreviewSample(form: HTMLFormElement): void {
+  const formData = new FormData(form);
+  const energyCapacity = String(formData.get("previewEnergyCapacity") ?? "");
+  const audience = String(formData.get("previewAudience") ?? "");
+  const purpose = String(formData.get("previewPurpose") ?? "");
+  const carrier = String(formData.get("previewCarrier") ?? "");
+  const timing = String(formData.get("previewTiming") ?? "");
+
+  activeManageRitualChoosePreviewSample = {
+    ...(isEnergyCapacity(energyCapacity) ? { energyCapacity } : {}),
+    ...(isCheckInAudience(audience) ? { audience } : {}),
+    ...(isRitualPurpose(purpose) ? { purpose } : {}),
+    ...(isRitualCarrier(carrier) ? { carrier } : {}),
+    ...(isRitualDraftChoosePreviewTimingSample(timing) ? { timing } : {}),
+  };
+  renderActiveSignedInShell();
 }
 
 function getActiveRitualVersionId(ritualId: string): string | undefined {
@@ -1252,6 +1286,8 @@ function renderActiveSignedInShell(options: {
     selectedManageRitualEditorDraftStatus: activeManageRitualEditorDraftStatus,
     selectedManageRitualEditorDraftValidationReport:
       activeManageRitualEditorDraftValidationReport,
+    selectedManageRitualChoosePreviewSample:
+      activeManageRitualChoosePreviewSample,
     manageRitualActionStatus: activeManageRitualActionStatus,
     householdMemoryStatus: activeHouseholdMemoryStatus,
   });
@@ -2843,6 +2879,20 @@ appRoot.addEventListener("input", (event) => {
 
 appRoot.addEventListener("change", (event) => {
   const target = event.target;
+
+  if (
+    (target instanceof HTMLInputElement || target instanceof HTMLSelectElement) &&
+    target.matches("[data-manage-ritual-choose-preview-field='true']")
+  ) {
+    const form = target.closest<HTMLFormElement>(
+      "[data-manage-ritual-choose-preview-form='true']",
+    );
+
+    if (form) {
+      updateManageRitualChoosePreviewSample(form);
+    }
+    return;
+  }
 
   if (
     (target instanceof HTMLInputElement || target instanceof HTMLSelectElement) &&
