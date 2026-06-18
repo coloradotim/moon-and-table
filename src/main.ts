@@ -89,6 +89,7 @@ import {
 } from "./data/rituals/review-action-client";
 import {
   submitRitualEditDraft,
+  type SubmitRitualEditDraftResult,
 } from "./data/rituals/ritual-edit-draft-client";
 import {
   RITUAL_REVIEW_ACTIONS,
@@ -207,6 +208,7 @@ let activeManageRitualEditorDraft: RitualEditDraftDocument | undefined;
 let activeManageRitualEditorDraftStatus:
   | ManageRitualEditorDraftStatus
   | undefined;
+let activeManageRitualEditorUsesLocalDraft = false;
 let activeManageRitualEditorAutosaveTimer: number | null = null;
 
 type HouseholdMemoryWriteRecordType =
@@ -445,6 +447,7 @@ function clearManageRitualEditorDraftState(): void {
 
   activeManageRitualEditorDraft = undefined;
   activeManageRitualEditorDraftStatus = undefined;
+  activeManageRitualEditorUsesLocalDraft = false;
 }
 
 function getActiveRitualVersionId(ritualId: string): string | undefined {
@@ -489,50 +492,92 @@ async function getFirebaseIdTokenForRitualEditor(): Promise<string | undefined> 
   return currentUser ? currentUser.getIdToken() : undefined;
 }
 
+function getRitualEditDraftFailureMessage(result: SubmitRitualEditDraftResult): string {
+  if (result.valid) {
+    return "Saved";
+  }
+
+  return result.findings[0]?.message ?? "Could not open edit draft.";
+}
+
+function isLocalRitualEditDraftFallbackAllowed(
+  result: SubmitRitualEditDraftResult,
+): boolean {
+  if (!import.meta.env.DEV || result.valid) {
+    return false;
+  }
+
+  return result.findings.some((finding) =>
+    finding.message.includes("endpoint was not found") ||
+    finding.message.includes("could not be reached") ||
+    finding.message.includes("non-JSON response"),
+  );
+}
+
+async function createLocalManageRitualEditorDraft(input: {
+  ritualId: string;
+  versionId: string;
+  statusMessage: string;
+}): Promise<boolean> {
+  const versionDocument = activeRitualDbDocuments?.versionDocuments.find(
+    (document) => document.versionId === input.versionId,
+  );
+
+  if (!versionDocument) {
+    return false;
+  }
+
+  activeManageRitualEditorDraft = await createDraftFromRitualVersion({
+    store: createInMemoryRitualEditDraftStore(),
+    versionDocument,
+    actor: "owner",
+    draftId: `local_editor_${input.ritualId}`,
+    createdAtIso: new Date().toISOString(),
+  });
+  activeManageRitualEditorUsesLocalDraft = true;
+  activeManageRitualEditorDraftStatus = {
+    tone: "idle",
+    message: input.statusMessage,
+  };
+  renderActiveSignedInShell();
+  return true;
+}
+
 async function loadOrCreateManageRitualEditorDraft(ritualId: string): Promise<void> {
   const versionId = getActiveRitualVersionId(ritualId);
 
   if (!versionId) {
+    activeManageRitualEditorUsesLocalDraft = false;
     activeManageRitualEditorDraftStatus = {
       tone: "error",
-      message: "Could not save",
+      message: "Could not open edit draft.",
     };
     renderActiveSignedInShell();
     return;
   }
 
   if (devVisualQaMode) {
-    const versionDocument = activeRitualDbDocuments?.versionDocuments.find(
-      (document) => document.versionId === versionId,
-    );
+    const loaded = await createLocalManageRitualEditorDraft({
+      ritualId,
+      versionId,
+      statusMessage: "Saved locally",
+    });
 
-    if (!versionDocument) {
+    if (!loaded) {
+      activeManageRitualEditorUsesLocalDraft = false;
       activeManageRitualEditorDraftStatus = {
         tone: "error",
-        message: "Could not save",
+        message: "Could not open edit draft.",
       };
       renderActiveSignedInShell();
-      return;
     }
-
-    activeManageRitualEditorDraft = await createDraftFromRitualVersion({
-      store: createInMemoryRitualEditDraftStore(),
-      versionDocument,
-      actor: "owner",
-      draftId: `dev_visual_qa_${ritualId}`,
-      createdAtIso: new Date().toISOString(),
-    });
-    activeManageRitualEditorDraftStatus = {
-      tone: "saved",
-      message: "Saved",
-    };
-    renderActiveSignedInShell();
     return;
   }
 
   const idToken = await getFirebaseIdTokenForRitualEditor();
 
   if (!idToken) {
+    activeManageRitualEditorUsesLocalDraft = false;
     activeManageRitualEditorDraftStatus = {
       tone: "error",
       message: "Sign in again before editing this Ritual.",
@@ -545,6 +590,7 @@ async function loadOrCreateManageRitualEditorDraft(ritualId: string): Promise<vo
     tone: "saving",
     message: "Loading draft...",
   };
+  activeManageRitualEditorUsesLocalDraft = false;
   renderActiveSignedInShell();
 
   const result = await submitRitualEditDraft({
@@ -558,10 +604,23 @@ async function loadOrCreateManageRitualEditorDraft(ritualId: string): Promise<vo
 
   if (!result.valid) {
     console.warn("Moon & Table Ritual edit draft load failed.", result.findings);
+    if (isLocalRitualEditDraftFallbackAllowed(result)) {
+      const loaded = await createLocalManageRitualEditorDraft({
+        ritualId,
+        versionId,
+        statusMessage: "Local draft only; API unavailable",
+      });
+
+      if (loaded) {
+        return;
+      }
+    }
+
     activeManageRitualEditorDraft = undefined;
+    activeManageRitualEditorUsesLocalDraft = false;
     activeManageRitualEditorDraftStatus = {
       tone: "error",
-      message: "Could not save",
+      message: getRitualEditDraftFailureMessage(result),
     };
     renderActiveSignedInShell();
     return;
@@ -572,6 +631,7 @@ async function loadOrCreateManageRitualEditorDraft(ritualId: string): Promise<vo
   }
 
   activeManageRitualEditorDraft = result.draft;
+  activeManageRitualEditorUsesLocalDraft = false;
   activeManageRitualEditorDraftStatus = {
     tone: "saved",
     message: "Saved",
@@ -606,7 +666,7 @@ async function saveManageRitualEditorDraft(
     updateManageRitualDraftStatusText("Saving...");
   }
 
-  if (devVisualQaMode) {
+  if (devVisualQaMode || activeManageRitualEditorUsesLocalDraft) {
     const store = createInMemoryRitualEditDraftStore([activeManageRitualEditorDraft]);
     activeManageRitualEditorDraft = mode === "autosave"
       ? await autosaveRitualEditDraft({
@@ -625,13 +685,15 @@ async function saveManageRitualEditorDraft(
       });
     activeManageRitualEditorDraftStatus = {
       tone: "saved",
-      message: "Saved",
+      message: activeManageRitualEditorUsesLocalDraft ? "Saved locally" : "Saved",
     };
 
     if (mode === "save") {
       renderActiveSignedInShell();
     } else {
-      updateManageRitualDraftStatusText("Saved");
+      updateManageRitualDraftStatusText(
+        activeManageRitualEditorUsesLocalDraft ? "Saved locally" : "Saved",
+      );
     }
     return;
   }

@@ -17,6 +17,28 @@ import type { RitualVersionDocument } from "../src/data/rituals/db-documents";
 type VercelRequest = RitualEditDraftApiRequest;
 type VercelResponse = RitualEditDraftApiResponse;
 
+async function getRitualVersionDocumentByVersionId(
+  db: ReturnType<typeof getFirestore>,
+  versionId: string,
+): Promise<RitualVersionDocument | undefined> {
+  const collection = db.collection("ritualVersions");
+  const directSnapshot = await collection.doc(versionId).get();
+
+  if (directSnapshot.exists) {
+    return directSnapshot.data() as RitualVersionDocument;
+  }
+
+  const querySnapshot = await collection
+    .where("versionId", "==", versionId)
+    .limit(1)
+    .get();
+  const matchingSnapshot = querySnapshot.docs[0];
+
+  return matchingSnapshot
+    ? matchingSnapshot.data() as RitualVersionDocument
+    : undefined;
+}
+
 function getServiceAccount(): object | undefined {
   const json = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
   const base64 = process.env.FIREBASE_SERVICE_ACCOUNT_BASE64;
@@ -73,13 +95,8 @@ export default async function handler(
     draftStore: createAdminFirestoreRitualEditDraftStore(
       db as unknown as AdminFirestoreRitualEditDraftDb,
     ),
-    getRitualVersionDocument: async (versionId) => {
-      const snapshot = await db.collection("ritualVersions").doc(versionId).get();
-
-      return snapshot.exists
-        ? snapshot.data() as RitualVersionDocument
-        : undefined;
-    },
+    getRitualVersionDocument: (versionId) =>
+      getRitualVersionDocumentByVersionId(db, versionId),
     authorize: () => true,
   });
 }
