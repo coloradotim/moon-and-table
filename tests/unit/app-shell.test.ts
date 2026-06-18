@@ -21,6 +21,10 @@ import { resolvePrivateBriefData } from "../../src/lib/private-data";
 import { sourceBackedRituals } from "../../src/data/rituals/source-backed-rituals";
 import { createRitualDbMirrorDryRun } from "../../src/data/rituals/db-mirror";
 import {
+  createDraftFromRitualVersion,
+  createInMemoryRitualEditDraftStore,
+} from "../../src/data/rituals/ritual-edit-drafts";
+import {
   getStrongTimingWindowCandidates,
   getTimingWindowCandidates,
   isStrongTimingWindowCandidate,
@@ -960,11 +964,30 @@ describe("app shell rendering", () => {
     expect(html).toContain("Records a DB review decision and audit event.");
   });
 
-  it("opens a read-only full Ritual editor shell from Manage rows", () => {
+  it("opens a full Ritual editor shell with editable canonical body fields", async () => {
+    const dbDocuments = createDbDocuments();
+    const store = createInMemoryRitualEditDraftStore();
+    const versionDocument = dbDocuments.versionDocuments.find(
+      (document) => document.ritualId === "ritual-buckland-candle-prepare-table",
+    );
+
+    expect(versionDocument).toBeDefined();
+
+    const draft = await createDraftFromRitualVersion({
+      store,
+      versionDocument: versionDocument!,
+      actor: "owner",
+      draftId: "draft-body-edit",
+    });
     const html = renderManageRitualsSection({
       ritualRepositorySource: "db",
-      ritualDbDocuments: createDbDocuments(),
+      ritualDbDocuments: dbDocuments,
       selectedEditorRitualId: "ritual-buckland-candle-prepare-table",
+      selectedEditorDraft: draft,
+      selectedEditorDraftStatus: {
+        tone: "saved",
+        message: "Saved",
+      },
     });
     const editorStart = html.indexOf('data-manage-ritual-editor="true"');
     const editorEnd = html.indexOf(
@@ -984,7 +1007,8 @@ describe("app shell rendering", () => {
     expect(firstSummaryHtml).not.toContain("View full editor");
     expect(html).toContain('data-manage-ritual-editor="true"');
     expect(editorHtml).toContain("Selected Ritual");
-    expect(editorHtml).toContain("Read-only");
+    expect(editorHtml).toContain("Saved");
+    expect(editorHtml).toContain("draft-body-edit");
     expect(editorHtml).toContain("DB-backed");
     expect(editorHtml).toContain("Prepare the Candle Table");
     expect(editorHtml).toContain("ritual-buckland-candle-prepare-table");
@@ -1002,9 +1026,16 @@ describe("app shell rendering", () => {
     expect(editorHtml).toContain("Source grounding summaries");
     expect(editorHtml).toContain("Moon &amp; Table adaptation notes");
     expect(editorHtml).toContain("<summary>Raw inspection JSON</summary>");
-    expect(editorHtml).not.toContain("<textarea");
-    expect(editorHtml).not.toContain("Save now");
+    expect(editorHtml).toContain('data-manage-ritual-draft-form="true"');
+    expect(editorHtml).toContain('name="headline"');
+    expect(editorHtml).toContain('name="practice"');
+    expect(editorHtml).toContain('name="intention"');
+    expect(editorHtml).toContain('name="bestWindow"');
+    expect(editorHtml).toContain('name="questionToCarry"');
+    expect(editorHtml).toContain("<textarea");
+    expect(editorHtml).toContain(">Save</button>");
     expect(editorHtml).not.toContain("Autosave");
+    expect(editorHtml).not.toContain('name="whyThisFits"');
     expect(editorHtml).not.toContain("Submit draft");
     expect(editorHtml).not.toContain("Record review decision");
     expect(editorHtml).not.toContain('data-manage-ritual-review-form="true"');

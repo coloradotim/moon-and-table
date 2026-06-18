@@ -57,6 +57,7 @@ import {
   renderSearchRitualsBody,
   renderSignedInShell,
   type RitualSearchSort,
+  type ManageRitualEditorDraftStatus,
   type SignedInView,
 } from "./ui/app-shell";
 import {
@@ -86,6 +87,10 @@ import {
   submitRitualReviewAction,
   type SubmitRitualReviewActionResult,
 } from "./data/rituals/review-action-client";
+import {
+  submitRitualEditDraft,
+  type SubmitRitualEditDraftResult,
+} from "./data/rituals/ritual-edit-draft-client";
 import {
   RITUAL_REVIEW_ACTIONS,
   type RitualReviewAction,
@@ -121,6 +126,12 @@ import {
   type HouseholdRitualStateSkippedRecordCounts,
 } from "./data/rituals/household-state-firestore";
 import type { Ritual } from "./data/rituals/types";
+import {
+  createDraftFromRitualVersion,
+  createInMemoryRitualEditDraftStore,
+  saveRitualEditDraft,
+  type RitualEditDraftDocument,
+} from "./data/rituals/ritual-edit-drafts";
 import "./styles.css";
 
 declare global {
@@ -192,6 +203,12 @@ let activeManageRitualActionStatus:
   }
   | undefined;
 let activeManageRitualActionSubmitting = false;
+let activeManageRitualEditorDraft: RitualEditDraftDocument | undefined;
+let activeManageRitualEditorDraftStatus:
+  | ManageRitualEditorDraftStatus
+  | undefined;
+let activeManageRitualEditorUsesLocalDraft = false;
+let activeManageRitualEditorLastSavedPresentationJson: string | undefined;
 
 type HouseholdMemoryWriteRecordType =
   | "favorite"
@@ -419,6 +436,343 @@ function applyReviewActionResultToActiveRitualDocuments(
         : document
     ),
   };
+}
+
+function clearManageRitualEditorDraftState(): void {
+  activeManageRitualEditorDraft = undefined;
+  activeManageRitualEditorDraftStatus = undefined;
+  activeManageRitualEditorUsesLocalDraft = false;
+  activeManageRitualEditorLastSavedPresentationJson = undefined;
+}
+
+function getActiveRitualVersionId(ritualId: string): string | undefined {
+  const ritualDocument = activeRitualDbDocuments?.ritualDocuments.find(
+    (document) => document.id === ritualId,
+  );
+
+  return ritualDocument?.publishedVersionId ?? ritualDocument?.currentVersionId;
+}
+
+function getDraftBodyFromForm(form: HTMLFormElement): {
+  headline: string;
+  practice: string;
+  intention: string;
+  bestWindow: string;
+  questionToCarry: string;
+} {
+  const formData = new FormData(form);
+
+  return {
+    headline: String(formData.get("headline") ?? ""),
+    practice: String(formData.get("practice") ?? ""),
+    intention: String(formData.get("intention") ?? ""),
+    bestWindow: String(formData.get("bestWindow") ?? ""),
+    questionToCarry: String(formData.get("questionToCarry") ?? ""),
+  };
+}
+
+function serializeManageRitualDraftPresentation(
+  presentation: ReturnType<typeof getDraftBodyFromForm>,
+): string {
+  return JSON.stringify(presentation);
+}
+
+function updateManageRitualDraftStatusText(message: string): void {
+  const statusElement = document.querySelector<HTMLElement>(
+    "[data-manage-ritual-draft-status='true']",
+  );
+
+  if (statusElement) {
+    statusElement.textContent = message;
+  }
+}
+
+async function getFirebaseIdTokenForRitualEditor(): Promise<string | undefined> {
+  const currentUser = firebaseServices?.auth.currentUser;
+
+  return currentUser ? currentUser.getIdToken() : undefined;
+}
+
+function getRitualEditDraftFailureMessage(result: SubmitRitualEditDraftResult): string {
+  if (result.valid) {
+    return "Saved";
+  }
+
+  return result.findings[0]?.message ?? "Could not open edit draft.";
+}
+
+function isLocalRitualEditDraftFallbackAllowed(
+  result: SubmitRitualEditDraftResult,
+): boolean {
+  if (!import.meta.env.DEV || result.valid) {
+    return false;
+  }
+
+  return result.findings.some((finding) =>
+    finding.message.includes("endpoint was not found") ||
+    finding.message.includes("could not be reached") ||
+    finding.message.includes("non-JSON response"),
+  );
+}
+
+async function createLocalManageRitualEditorDraft(input: {
+  ritualId: string;
+  versionId: string;
+  statusMessage: string;
+}): Promise<boolean> {
+  const versionDocument = activeRitualDbDocuments?.versionDocuments.find(
+    (document) => document.versionId === input.versionId,
+  );
+
+  if (!versionDocument) {
+    return false;
+  }
+
+  activeManageRitualEditorDraft = await createDraftFromRitualVersion({
+    store: createInMemoryRitualEditDraftStore(),
+    versionDocument,
+    actor: "owner",
+    draftId: `local_editor_${input.ritualId}`,
+    createdAtIso: new Date().toISOString(),
+  });
+  activeManageRitualEditorUsesLocalDraft = true;
+  activeManageRitualEditorLastSavedPresentationJson =
+    serializeManageRitualDraftPresentation(
+      activeManageRitualEditorDraft.draftBuffer.presentation,
+    );
+  activeManageRitualEditorDraftStatus = {
+    tone: "idle",
+    message: input.statusMessage,
+  };
+  renderActiveSignedInShell();
+  return true;
+}
+
+async function loadOrCreateManageRitualEditorDraft(ritualId: string): Promise<void> {
+  const versionId = getActiveRitualVersionId(ritualId);
+
+  if (!versionId) {
+    activeManageRitualEditorUsesLocalDraft = false;
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Could not open edit draft.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  if (devVisualQaMode) {
+    const loaded = await createLocalManageRitualEditorDraft({
+      ritualId,
+      versionId,
+      statusMessage: "Local preview draft",
+    });
+
+    if (!loaded) {
+      activeManageRitualEditorUsesLocalDraft = false;
+      activeManageRitualEditorDraftStatus = {
+        tone: "error",
+        message: "Could not open edit draft.",
+      };
+      renderActiveSignedInShell();
+    }
+    return;
+  }
+
+  const idToken = await getFirebaseIdTokenForRitualEditor();
+
+  if (!idToken) {
+    activeManageRitualEditorUsesLocalDraft = false;
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Sign in again before editing this Ritual.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  activeManageRitualEditorDraftStatus = {
+    tone: "saving",
+    message: "Loading draft...",
+  };
+  activeManageRitualEditorUsesLocalDraft = false;
+  renderActiveSignedInShell();
+
+  const result = await submitRitualEditDraft({
+    idToken,
+    request: {
+      action: "load_or_create",
+      ritualId,
+      versionId,
+    },
+  });
+
+  if (!result.valid) {
+    console.warn("Moon & Table Ritual edit draft load failed.", result.findings);
+    if (isLocalRitualEditDraftFallbackAllowed(result)) {
+      const loaded = await createLocalManageRitualEditorDraft({
+        ritualId,
+        versionId,
+        statusMessage: "Local preview draft",
+      });
+
+      if (loaded) {
+        return;
+      }
+    }
+
+    activeManageRitualEditorDraft = undefined;
+    activeManageRitualEditorUsesLocalDraft = false;
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: getRitualEditDraftFailureMessage(result),
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  if (activeManageRitualEditorId !== ritualId) {
+    return;
+  }
+
+  activeManageRitualEditorDraft = result.draft;
+  activeManageRitualEditorUsesLocalDraft = false;
+  activeManageRitualEditorLastSavedPresentationJson =
+    serializeManageRitualDraftPresentation(
+      activeManageRitualEditorDraft.draftBuffer.presentation,
+    );
+  activeManageRitualEditorDraftStatus = {
+    tone: "saved",
+    message: "Saved",
+  };
+  renderActiveSignedInShell();
+}
+
+async function saveManageRitualEditorDraft(form: HTMLFormElement): Promise<void> {
+  if (!activeManageRitualEditorDraft) {
+    return;
+  }
+
+  const presentation = getDraftBodyFromForm(form);
+  const presentationJson = serializeManageRitualDraftPresentation(presentation);
+
+  if (presentationJson === activeManageRitualEditorLastSavedPresentationJson) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "saved",
+      message: activeManageRitualEditorUsesLocalDraft ? "Saved in local preview" : "Saved",
+    };
+    updateManageRitualDraftStatusText(activeManageRitualEditorDraftStatus.message);
+    return;
+  }
+
+  activeManageRitualEditorDraftStatus = {
+    tone: "saving",
+    message: "Saving...",
+  };
+  activeManageRitualEditorDraft = {
+    ...activeManageRitualEditorDraft,
+    saveState: "saving",
+    draftBuffer: {
+      ...activeManageRitualEditorDraft.draftBuffer,
+      presentation,
+    },
+  };
+  renderActiveSignedInShell();
+
+  if (devVisualQaMode || activeManageRitualEditorUsesLocalDraft) {
+    const store = createInMemoryRitualEditDraftStore([activeManageRitualEditorDraft]);
+    activeManageRitualEditorDraft = await saveRitualEditDraft({
+        store,
+        draftId: activeManageRitualEditorDraft.id,
+        draftBuffer: activeManageRitualEditorDraft.draftBuffer,
+        actor: "owner",
+        updatedAtIso: new Date().toISOString(),
+      });
+    activeManageRitualEditorDraftStatus = {
+      tone: "saved",
+      message: activeManageRitualEditorUsesLocalDraft ? "Saved in local preview" : "Saved",
+    };
+    activeManageRitualEditorLastSavedPresentationJson =
+      serializeManageRitualDraftPresentation(
+        activeManageRitualEditorDraft.draftBuffer.presentation,
+      );
+
+    renderActiveSignedInShell();
+    return;
+  }
+
+  const idToken = await getFirebaseIdTokenForRitualEditor();
+  if (!idToken) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Could not save",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  const result = await submitRitualEditDraft({
+    idToken,
+    request: {
+      action: "save",
+      draftId: activeManageRitualEditorDraft.id,
+      presentation,
+    },
+  });
+
+  if (!result.valid) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Could not save",
+    };
+    activeManageRitualEditorDraft = {
+      ...activeManageRitualEditorDraft,
+      saveState: "save_failed",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  activeManageRitualEditorDraft = result.draft;
+  activeManageRitualEditorLastSavedPresentationJson =
+    serializeManageRitualDraftPresentation(
+      activeManageRitualEditorDraft.draftBuffer.presentation,
+    );
+  activeManageRitualEditorDraftStatus = {
+    tone: "saved",
+    message: "Saved",
+  };
+  renderActiveSignedInShell();
+}
+
+function markManageRitualEditorDraftUnsaved(form: HTMLFormElement): void {
+  if (!activeManageRitualEditorDraft) {
+    return;
+  }
+
+  const presentation = getDraftBodyFromForm(form);
+  const presentationJson = serializeManageRitualDraftPresentation(presentation);
+
+  if (presentationJson === activeManageRitualEditorLastSavedPresentationJson) {
+    updateManageRitualDraftStatusText(
+      activeManageRitualEditorUsesLocalDraft ? "Saved in local preview" : "Saved",
+    );
+    return;
+  }
+
+  activeManageRitualEditorDraft = {
+    ...activeManageRitualEditorDraft,
+    saveState: "unsaved_changes",
+    draftBuffer: {
+      ...activeManageRitualEditorDraft.draftBuffer,
+      presentation,
+    },
+  };
+  activeManageRitualEditorDraftStatus = {
+    tone: "idle",
+    message: "Unsaved changes",
+  };
+  updateManageRitualDraftStatusText("Unsaved changes");
 }
 
 function normalizeRitualSearchTimingFilter(value: unknown): RitualTimingFilter {
@@ -699,6 +1053,8 @@ function renderActiveSignedInShell(options: {
     ritualRepositorySource: activeRitualRepositorySource,
     ritualDbDocuments: activeRitualDbDocuments,
     selectedManageRitualEditorId: activeManageRitualEditorId,
+    selectedManageRitualEditorDraft: activeManageRitualEditorDraft,
+    selectedManageRitualEditorDraftStatus: activeManageRitualEditorDraftStatus,
     manageRitualActionStatus: activeManageRitualActionStatus,
     householdMemoryStatus: activeHouseholdMemoryStatus,
   });
@@ -734,6 +1090,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
           resetRitualInteractionState();
           activeManageRitualFilters = { ...defaultManageRitualFilters };
           activeManageRitualEditorId = null;
+          clearManageRitualEditorDraftState();
           activeFirstLoginCheckIn = false;
           appRoot.innerHTML = renderAppShell({
             status: "unauthorized",
@@ -760,6 +1117,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         }
         activeManageRitualFilters = { ...defaultManageRitualFilters };
         activeManageRitualEditorId = null;
+        clearManageRitualEditorDraftState();
         activeChooseWithMeResult = null;
         activeChooseWithMeRecommendationInstance = null;
         activeChooseWithMeInteractionStatus = undefined;
@@ -780,6 +1138,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         resetRitualInteractionState();
         activeManageRitualFilters = { ...defaultManageRitualFilters };
         activeManageRitualEditorId = null;
+        clearManageRitualEditorDraftState();
         activeCurrentRitualCheckIn = null;
         activeFirstLoginCheckIn = false;
         activeCheckInDraft = createInitialRitualCheckInDraft();
@@ -807,6 +1166,7 @@ function renderDevVisualQaState(): void {
   resetRitualInteractionState();
   activeManageRitualFilters = { ...defaultManageRitualFilters };
   activeManageRitualEditorId = null;
+  clearManageRitualEditorDraftState();
   const dbMirrorReport = createRitualDbMirrorDryRun(sourceBackedRituals);
   activeRitualRepository = staticRitualRepository;
   activeRitualRepositorySource = "db";
@@ -1989,6 +2349,7 @@ appRoot.addEventListener("click", (event) => {
     event.preventDefault();
     activeManageRitualFilters = { ...defaultManageRitualFilters };
     activeManageRitualEditorId = null;
+    clearManageRitualEditorDraftState();
     renderActiveSignedInShell();
     return;
   }
@@ -2090,12 +2451,14 @@ appRoot.addEventListener("click", (event) => {
   if (manageRitualEditorId) {
     event.preventDefault();
     activeManageRitualEditorId = manageRitualEditorId;
+    clearManageRitualEditorDraftState();
     renderActiveSignedInShell();
     requestAnimationFrame(() => {
       document
         .querySelector<HTMLElement>("[data-manage-ritual-editor='true']")
         ?.scrollIntoView({ block: "start" });
     });
+    void loadOrCreateManageRitualEditorDraft(manageRitualEditorId);
     return;
   }
 
@@ -2252,6 +2615,20 @@ appRoot.addEventListener("input", (event) => {
   const target = event.target;
 
   if (
+    (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement) &&
+    target.matches("[data-manage-ritual-draft-field='true']")
+  ) {
+    const form = target.closest<HTMLFormElement>(
+      "[data-manage-ritual-draft-form='true']",
+    );
+
+    if (form) {
+      markManageRitualEditorDraftUnsaved(form);
+    }
+    return;
+  }
+
+  if (
     target instanceof HTMLInputElement &&
     target.matches("[name='ritualSearchQuery']")
   ) {
@@ -2283,6 +2660,8 @@ if (devVisualQaMode) {
     resetRitualSearchState();
     resetRitualInteractionState();
     activeManageRitualFilters = { ...defaultManageRitualFilters };
+    activeManageRitualEditorId = null;
+    clearManageRitualEditorDraftState();
     activeCurrentRitualCheckIn = null;
     activeCheckInDraft = createInitialRitualCheckInDraft();
     clearCheckInLoadingTimeout();
@@ -2312,6 +2691,12 @@ appRoot.addEventListener("submit", (event) => {
   if (target.matches("[data-manage-ritual-review-form='true']")) {
     event.preventDefault();
     void handleManageRitualReviewSubmit(target);
+    return;
+  }
+
+  if (target.matches("[data-manage-ritual-draft-form='true']")) {
+    event.preventDefault();
+    void saveManageRitualEditorDraft(target);
     return;
   }
 

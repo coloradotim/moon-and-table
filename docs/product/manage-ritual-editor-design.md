@@ -1,8 +1,12 @@
 # Manage Ritual Editor Design
 
-Status: Product design for issue #480.
+Status: Product design for issue #480, with early implementation slices in
+Manage Rituals.
 
-Scope: Design only. This document does not implement the editor, Firestore writes, review actions, source import, selector changes, or Ritual content changes.
+Scope: Product design. Early slices now implement read-only inspection,
+`ritualEditDrafts` draft persistence, and editable canonical body fields. This document
+does not itself implement publish/review promotion, source import, selector
+changes, or full metadata editing.
 
 ## 1. Product Goal
 
@@ -11,7 +15,7 @@ The Manage Rituals surface should grow from an inspection and review console int
 The editor should let household maintainers:
 
 - inspect the current published Ritual version;
-- create and autosave an editable draft;
+- create and save an editable draft;
 - create a new household-origin Ritual from scratch;
 - validate draft content and metadata;
 - preview how a draft would appear in Search / direct selection;
@@ -128,18 +132,21 @@ Do not treat household-origin Rituals as less legitimate than source-backed Ritu
 
 The first household Ritual creation flow should be a blank structured draft. Do not add template pickers in the first implementation. Templates can come later if needed, but the first editor should reinforce authored Ritual identity, not generic ritual assembly.
 
-### 2.10 Autosave from the start
+### 2.10 Explicit save first
 
-Because edits live in a mutable draft buffer, autosave should exist from the first editable implementation.
+Because this is a private app on a constrained Firestore plan, the first
+editable implementation should avoid chatty writes. The editor marks local
+draft changes immediately and writes to Firestore only when a maintainer clicks
+`Save`.
 
-Autosave rules:
+Save rules:
 
 ```text
-Autosave updates only ritualEditDrafts.
-Autosave never creates an immutable ritualVersion.
-Autosave never publishes.
-Autosave never promotes direct-use or recommendation eligibility.
-Autosave never changes the published pointer.
+Save updates only ritualEditDrafts.
+Save never creates an immutable ritualVersion.
+Save never publishes.
+Save never promotes direct-use or recommendation eligibility.
+Save never changes the published pointer.
 ```
 
 The UI should show:
@@ -151,7 +158,8 @@ Unsaved changes
 Could not save
 ```
 
-Also provide a manual `Save now` action for confidence.
+Autosave may be reconsidered later if quota, batching, and diagnostics are in
+place.
 
 ## 3. Editor Screen Structure
 
@@ -200,7 +208,7 @@ save state
 Primary actions:
 
 ```text
-Save now
+Save
 Validate draft
 Submit draft for review
 Discard draft
@@ -362,7 +370,7 @@ Changing capacity, audience, or timing changes Choose with me eligibility.
 Validation and review are required before publishing.
 ```
 
-Editing these fields must autosave only to the draft. It must not promote recommendation eligibility.
+Editing these fields must save only to the draft. It must not promote recommendation eligibility.
 
 ### 4.5 Search and library
 
@@ -781,12 +789,12 @@ Debug
 Use accordions and a sticky bottom bar:
 
 ```text
-Save now
+Save
 Validate
 More
 ```
 
-Autosave state should be visible near the header and bottom action bar.
+Save state should be visible near the header and bottom action bar.
 
 The `practice` field should offer comfortable multiline editing and may later get a focus mode.
 
@@ -795,7 +803,7 @@ The `practice` field should offer comfortable multiline editing and may later ge
 Recommended implementation order:
 
 1. Clarify generated recommendation explanation fields.
-2. Add Ritual edit draft model with autosave.
+2. Add Ritual edit draft model with draft persistence.
 3. Add read-only editor shell.
 4. Add editable Ritual body fields.
 5. Add draft validation UX.
@@ -824,7 +832,8 @@ Resolved for now:
   an editable Ritual body field.
 - Household-origin Rituals can become recommendation eligible.
 - New Rituals start from a blank draft, not templates.
-- Autosave is part of the first editable implementation.
+- Explicit Save is part of the first editable implementation; autosave is deferred
+  until quota-safe behavior is designed.
 
 Still worth revisiting later:
 

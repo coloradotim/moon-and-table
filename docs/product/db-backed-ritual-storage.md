@@ -46,6 +46,9 @@ In other words:
   PR-reviewable export/recovery.
 - Firestore lifecycle/review state may intentionally move ahead of the static
   export; that is no longer a runtime fallback reason by itself.
+- Manage Rituals edits canonical body fields through mutable
+  `ritualEditDrafts` documents. Those draft saves do not mutate immutable
+  `ritualVersions` or published pointers.
 
 This avoids two failure modes:
 
@@ -284,7 +287,8 @@ Rules:
 - Drafts created from existing Ritual versions record `baseVersionId` and
   `baseContentHash` when available.
 - Blank household-origin drafts do not require source grounding.
-- Autosave and manual save update only `ritualEditDrafts`.
+- Explicit editor saves update only `ritualEditDrafts`; UI autosave is deferred
+  until quota-safe behavior is designed.
 - Discard and submitted states must not mutate `ritualVersions`, published
   pointers, lifecycle review state, direct-use eligibility, or recommendation
   eligibility.
