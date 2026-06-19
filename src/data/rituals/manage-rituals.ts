@@ -314,9 +314,9 @@ function createReviewState(input: {
     return {
       ...baseState,
       actions: [
-        createBlockedAction("promote_direct_use", "Restore direct use", "Make this Ritual available in Search and direct selection. Recommendation review stays separate.", reason, false),
-        createBlockedAction("promote_recommendation", "Make recommendation-ready", "Allow Choose with me to recommend this Ritual after direct use and validation are clear.", reason, false),
-        createBlockedAction("hold_recommendation", "Remove from recommendations", "Keep Search and direct selection available, but stop Choose with me from offering it.", reason, true, "caution"),
+        createBlockedAction("promote_direct_use", "Show in library", "Make this Ritual available in Search and direct selection. Recommendation review stays separate.", reason, false),
+        createBlockedAction("promote_recommendation", "Allow in Choose with me", "Allow Choose with me to recommend this Ritual after direct use and validation are clear.", reason, false),
+        createBlockedAction("hold_recommendation", "Hold from Choose with me", "Keep Search and direct selection available, but stop Choose with me from offering it.", reason, true, "caution"),
         createBlockedAction("add_review_note", "Add review note", "Record a review note without changing availability.", reason, true),
       ],
     };
@@ -340,9 +340,9 @@ function createReviewState(input: {
     (item) => !RECOMMENDATION_PROMOTION_RESOLVABLE_READINESS.has(item),
   );
   const recommendationPromotionBlocker = !input.directUseEligible
-    ? "Restore direct use before making this recommendation-ready."
+    ? "Show this Ritual in the library before allowing Choose with me."
     : unresolvedRecommendationReadiness.length > 0
-      ? `Resolve ${unresolvedRecommendationReadiness.join(", ")} before making this recommendation-ready.`
+      ? `Resolve ${unresolvedRecommendationReadiness.join(", ")} before allowing Choose with me.`
       : directUsePromotionBlocker;
   const isArchived = ritualDocument.lifecycle.state === "archived";
 
@@ -351,38 +351,38 @@ function createReviewState(input: {
     actions: [
       createActionOption({
         action: "promote_direct_use",
-        label: "Restore direct use",
+        label: "Show in library",
         description: "Make this Ritual available in Search and direct selection. Recommendation review stays separate.",
         enabled: !input.directUseEligible && !directUsePromotionBlocker,
         disabledReason: input.directUseEligible
-          ? "Direct use is already available."
+          ? "This Ritual is already shown in the library."
           : directUsePromotionBlocker,
         requiresReason: false,
       }),
       createActionOption({
         action: "hold_direct_use",
-        label: "Remove from direct use",
+        label: "Hide from library",
         description: "Keep the Ritual visible in Manage, but remove it from Search, direct selection, and recommendations.",
         enabled: input.directUseEligible && !isArchived,
         disabledReason: isArchived
           ? "Archived Rituals are already unavailable."
-          : "Direct use is already unavailable.",
+          : "This Ritual is already hidden from the library.",
         requiresReason: true,
         tone: "caution",
       }),
       createActionOption({
         action: "promote_recommendation",
-        label: "Make recommendation-ready",
+        label: "Allow in Choose with me",
         description: "Allow Choose with me to recommend this Ritual after direct use and validation are clear.",
         enabled: !input.recommendable && !recommendationPromotionBlocker,
         disabledReason: input.recommendable
-          ? "This Ritual is already recommendation-ready."
+          ? "Choose with me can already offer this Ritual."
           : recommendationPromotionBlocker,
         requiresReason: false,
       }),
       createActionOption({
         action: "hold_recommendation",
-        label: "Remove from recommendations",
+        label: "Hold from Choose with me",
         description: "Keep Search and direct selection available, but stop Choose with me from offering it.",
         enabled: input.directUseEligible && !isArchived,
         disabledReason: isArchived

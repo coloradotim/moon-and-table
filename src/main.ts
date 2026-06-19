@@ -203,6 +203,7 @@ let activeManageRitualFilters: ManageRitualFilters = {
   ...defaultManageRitualFilters,
 };
 let activeManageRitualEditorId: string | null = null;
+let activeManageRitualExpandedId: string | null = null;
 let ritualFavoriteStore = createRitualFavoriteStore();
 let ritualInteractionStore = createRecommendationEventStore();
 let activeChooseWithMeRecommendationInstance: RecommendationInstance | null = null;
@@ -1421,6 +1422,7 @@ function renderActiveSignedInShell(options: {
       activeManageRitualEditorDraftValidationReport,
     selectedManageRitualChoosePreviewSample:
       activeManageRitualChoosePreviewSample,
+    expandedManageRitualId: activeManageRitualExpandedId,
     manageRitualActionStatus: activeManageRitualActionStatus,
     householdMemoryStatus: activeHouseholdMemoryStatus,
   });
@@ -1456,6 +1458,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
           resetRitualInteractionState();
           activeManageRitualFilters = { ...defaultManageRitualFilters };
           activeManageRitualEditorId = null;
+          activeManageRitualExpandedId = null;
           clearManageRitualEditorDraftState();
           activeFirstLoginCheckIn = false;
           appRoot.innerHTML = renderAppShell({
@@ -1483,6 +1486,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         }
         activeManageRitualFilters = { ...defaultManageRitualFilters };
         activeManageRitualEditorId = null;
+        activeManageRitualExpandedId = null;
         clearManageRitualEditorDraftState();
         activeChooseWithMeResult = null;
         activeChooseWithMeRecommendationInstance = null;
@@ -1504,6 +1508,7 @@ function renderSignedInState(state: Extract<AppAuthState, { status: "signed_in" 
         resetRitualInteractionState();
         activeManageRitualFilters = { ...defaultManageRitualFilters };
         activeManageRitualEditorId = null;
+        activeManageRitualExpandedId = null;
         clearManageRitualEditorDraftState();
         activeCurrentRitualCheckIn = null;
         activeFirstLoginCheckIn = false;
@@ -1532,6 +1537,7 @@ function renderDevVisualQaState(): void {
   resetRitualInteractionState();
   activeManageRitualFilters = { ...defaultManageRitualFilters };
   activeManageRitualEditorId = null;
+  activeManageRitualExpandedId = null;
   clearManageRitualEditorDraftState();
   const dbMirrorReport = createRitualDbMirrorDryRun(sourceBackedRituals);
   activeRitualRepository = staticRitualRepository;
@@ -2186,6 +2192,7 @@ function getManageRitualReviewSuccessMessage(
 
 async function handleManageRitualReviewSubmit(
   form: HTMLFormElement,
+  submitter?: HTMLElement | null,
 ): Promise<void> {
   if (activeManageRitualActionSubmitting) {
     activeManageRitualActionStatus = {
@@ -2199,31 +2206,26 @@ async function handleManageRitualReviewSubmit(
   const ritualId = form.dataset.ritualId;
   const versionId = form.dataset.versionId;
   const formData = new FormData(form);
-  const actionSelect = form.querySelector<HTMLSelectElement>(
-    "[name='manageRitualReviewAction']",
-  );
-  const selectedActionOption =
-    actionSelect?.selectedOptions.item(0) ?? undefined;
-  const actionValue = formData.get("manageRitualReviewAction");
-  const reason = String(formData.get("manageRitualReviewReason") ?? "").trim();
+  const actionButton = submitter instanceof HTMLButtonElement &&
+      submitter.name === "manageRitualReviewAction"
+    ? submitter
+    : undefined;
+  const actionValue = actionButton?.value ??
+    formData.get("manageRitualReviewAction");
+  const actionLabel = actionButton?.dataset.manageRitualActionLabel?.trim();
+  const reasons = actionButton?.dataset.manageRitualActionRequiresReason ===
+      "true" && actionLabel
+    ? [`Availability action: ${actionLabel}.`]
+    : [];
+
+  if (ritualId) {
+    activeManageRitualExpandedId = ritualId;
+  }
 
   if (!ritualId || !versionId || !isRitualReviewAction(actionValue)) {
     activeManageRitualActionStatus = {
       tone: "error",
       message: "That review action could not be read from the form.",
-    };
-    renderActiveSignedInShell();
-    return;
-  }
-
-  if (
-    selectedActionOption?.dataset.requiresReason === "true" &&
-    reason.length === 0
-  ) {
-    activeManageRitualActionStatus = {
-      ritualId,
-      tone: "error",
-      message: "Add a short reason or note before recording this review action.",
     };
     renderActiveSignedInShell();
     return;
@@ -2255,7 +2257,7 @@ async function handleManageRitualReviewSubmit(
         ritualId,
         versionId,
         action: actionValue,
-        reasons: reason ? [reason] : [],
+        reasons,
       },
     });
 
@@ -2995,6 +2997,27 @@ appRoot.addEventListener("change", (event) => {
   }
 });
 
+appRoot.addEventListener(
+  "toggle",
+  (event) => {
+    const target = event.target;
+
+    if (
+      target instanceof HTMLDetailsElement &&
+      target.matches("[data-manage-ritual-record]")
+    ) {
+      const ritualId = target.dataset.manageRitualRecord;
+
+      if (target.open) {
+        activeManageRitualExpandedId = ritualId ?? null;
+      } else if (activeManageRitualExpandedId === ritualId) {
+        activeManageRitualExpandedId = null;
+      }
+    }
+  },
+  true,
+);
+
 appRoot.addEventListener("input", (event) => {
   const target = event.target;
 
@@ -3111,7 +3134,10 @@ appRoot.addEventListener("submit", (event) => {
 
   if (target.matches("[data-manage-ritual-review-form='true']")) {
     event.preventDefault();
-    void handleManageRitualReviewSubmit(target);
+    const submitter = event instanceof SubmitEvent
+      ? event.submitter
+      : undefined;
+    void handleManageRitualReviewSubmit(target, submitter);
     return;
   }
 

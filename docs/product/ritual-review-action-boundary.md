@@ -99,22 +99,25 @@ and Firestore private-data access, not a second reviewer allowlist.
 ## Product Labels
 
 The stored action values are implementation/API values and should stay stable.
-Manage Rituals should render clearer product labels and descriptions:
+Manage Rituals should render clearer product labels and descriptions. The
+stored values are API/debug language, not primary user-facing controls.
 
 | Stored action | Visible label | Meaning |
 | --- | --- | --- |
-| `hold_direct_use` | Remove from direct use | Keep the record visible in Manage, but remove it from Search/direct selection and recommendations. |
-| `promote_direct_use` | Restore direct use | Restore Search/direct selection without automatically making the Ritual recommendation-ready. |
-| `hold_recommendation` | Remove from recommendations | Keep direct use available, but stop Choose with me from offering it. |
-| `promote_recommendation` | Make recommendation-ready | Allow Choose with me to offer the Ritual once direct use and validation are clear. |
-| `mark_needs_source_recheck` | Needs source recheck | Hold the Ritual until source grounding is reviewed. |
-| `mark_needs_packet_correction` | Needs packet correction | Hold the Ritual until extraction/import correction is reviewed. |
-| `add_review_note` | Add review note | Record a note without changing lifecycle availability. |
+| `hold_direct_use` | Hide from library | Keep the record visible in Manage, but remove it from Search/direct selection and recommendations. |
+| `promote_direct_use` | Show in library | Restore Search/direct selection without automatically allowing Choose with me. |
+| `hold_recommendation` | Hold from Choose with me | Keep direct use available, but stop Choose with me from offering it. |
+| `promote_recommendation` | Allow in Choose with me | Allow Choose with me to offer the Ritual once direct use and validation are clear. |
+| `mark_needs_source_recheck` | Internal source hold | Hold the Ritual until source grounding is reviewed. This is not a primary control in the simplified Availability panel. |
+| `mark_needs_packet_correction` | Internal packet hold | Hold the Ritual until extraction/import correction is reviewed. This is not a primary control in the simplified Availability panel. |
+| `add_review_note` | Internal review note | Record a note without changing lifecycle availability. This is not a primary control in the simplified Availability panel. |
 | `archive_ritual` | Archive Ritual | Remove the Ritual from active use paths. |
 
 Disabled reasons should explain the next practical step. In particular, the
-path from direct-use hold back to recommendation-ready is two steps: first
-Restore direct use, then Make recommendation-ready.
+path from library hold back to Choose with me is two steps: first Show in
+library, then Allow in Choose with me. The simplified Availability panel should
+not ask the user to choose reasons or write notes for normal actions; the client
+may send a short generated audit reason derived from the selected action.
 
 ## Troubleshooting
 
@@ -160,7 +163,9 @@ The Manage Rituals review-action UI should:
 - show clear success/failure messages;
 - patch the local lifecycle row from the successful action result instead of
   reloading the full DB Ritual repository;
-- avoid raw JSON editing.
+- avoid raw JSON editing;
+- render common availability actions as product buttons, not a raw review-action
+  dropdown.
 
 The signed-in app should also lazy-load the DB Ritual repository only when a
 Ritual surface needs it, such as Search rituals, Choose with me selection, or
