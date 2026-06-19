@@ -21135,7 +21135,7 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "imperfect timing",
+          "exact timing not required",
           "missed phase",
           "phase mismatch"
         ]
@@ -27139,7 +27139,7 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "preferred",
         "contexts": [
-          "moon phase",
+          "new moon",
           "waxing moon",
           "waning moon",
           "full moon",
@@ -27277,8 +27277,18 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "moon sign",
-          "sign qualities"
+          "moon in Aries",
+          "moon in Taurus",
+          "moon in Gemini",
+          "moon in Cancer",
+          "moon in Leo",
+          "moon in Virgo",
+          "moon in Libra",
+          "moon in Scorpio",
+          "moon in Sagittarius",
+          "moon in Capricorn",
+          "moon in Aquarius",
+          "moon in Pisces"
         ]
       },
       "eligibility": {
@@ -27542,8 +27552,7 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "required",
         "contexts": [
-          "planetary aspect",
-          "applying aspect",
+          "applying planetary aspect",
           "before culmination"
         ]
       },
@@ -27676,8 +27685,11 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "retrograde planet",
-          "imperfect timing adaptation"
+          "Mercury retrograde",
+          "Venus retrograde",
+          "Mars retrograde",
+          "Jupiter retrograde",
+          "Saturn retrograde"
         ]
       },
       "eligibility": {
@@ -27810,10 +27822,12 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "fixed timing",
-          "imperfect timing",
-          "Moon sign",
-          "aspect condition"
+          "exact timing not required",
+          "new moon",
+          "full moon",
+          "moon in Cancer",
+          "Mercury retrograde",
+          "Venus trine Mars"
         ]
       },
       "eligibility": {
@@ -30188,7 +30202,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "new moon",
           "full moon",
           "waxing moon",
-          "astrological timing"
+          "Friday"
         ]
       },
       "eligibility": {
@@ -30206,7 +30220,7 @@ const importedSourceBackedRituals: Ritual[] = [
         "new moon",
         "full moon",
         "waxing moon",
-        "astrological timing",
+        "Friday",
         "adult",
         "explicit_variant",
         "self_lust",
@@ -30226,7 +30240,7 @@ const importedSourceBackedRituals: Ritual[] = [
         "new moon",
         "full moon",
         "waxing moon",
-        "astrological timing",
+        "Friday",
         "adult",
         "explicit_variant",
         "self_lust",
@@ -36226,10 +36240,7 @@ const importedSourceBackedRituals: Ritual[] = [
         "default": "me"
       },
       "timing": {
-        "relationship": "helpful",
-        "contexts": [
-          "astrological timing"
-        ]
+        "relationship": "none"
       },
       "eligibility": {
         "recommendable": true
@@ -36243,8 +36254,7 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "both_of_us",
-        "helpful",
-        "astrological timing",
+        "none",
         "adult",
         "explicit_context",
         "partnered",
@@ -36260,8 +36270,7 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "both_of_us",
-        "helpful",
-        "astrological timing",
+        "none",
         "adult",
         "explicit_context",
         "partnered",
@@ -37169,7 +37178,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "Wednesday",
+          "Mercury hour"
         ]
       },
       "eligibility": {
@@ -37185,12 +37195,12 @@ const importedSourceBackedRituals: Ritual[] = [
         "me",
         "both_of_us",
         "helpful",
-        "astrological timing",
+        "Wednesday",
+        "Mercury hour",
         "adult",
         "explicit_context",
         "partnered",
         "Mercury",
-        "Wednesday",
         "planetary_hour",
         "sigil",
         "body_paint"
@@ -37203,12 +37213,12 @@ const importedSourceBackedRituals: Ritual[] = [
         "me",
         "both_of_us",
         "helpful",
-        "astrological timing",
+        "Wednesday",
+        "Mercury hour",
         "adult",
         "explicit_context",
         "partnered",
         "Mercury",
-        "Wednesday",
         "planetary_hour",
         "sigil",
         "body_paint"
@@ -49815,7 +49825,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 2, Sol rite, pp. 113-126",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Sunday, solar hour, Sun-sign emphasis, or strong solar timing.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -49825,8 +49835,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Consecrate the Solar Candle",
       "practice": "Set the planetary altar with the Sol candle, elemental supports, and a solar image or visualization. Open and purify the temple. Invoke the solar power through light, direction, and the hexagram pattern. Charge and light the candle, meditate on the Sun as life, visibility, joy, and renewal, and close by releasing and grounding the temple.",
       "intention": "I make a candle for the life-giving light of Sol.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Sunday, solar hour, Sun-sign emphasis, or strong solar timing.",
+      "whyThisFits": "Sunday, solar hour, Sun-sign emphasis, or strong solar timing.",
       "questionToCarry": "Where does my life need clearer light?"
     },
     "recommendationMetadata": {
@@ -49857,7 +49867,10 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "Sunday",
+          "solar hour",
+          "sun in Leo",
+          "June solstice"
         ]
       },
       "eligibility": {
@@ -49873,7 +49886,10 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "Sunday",
+        "solar hour",
+        "sun in Leo",
+        "June solstice",
         "sun",
         "sol",
         "candle",
@@ -49890,7 +49906,10 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "Sunday",
+        "solar hour",
+        "sun in Leo",
+        "June solstice",
         "sun",
         "sol",
         "candle",
@@ -49925,7 +49944,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 2, Luna rite, pp. 127-139",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Monday, lunar hour, strong Moon phase/sign, or lunar timing.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -49935,8 +49954,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Consecrate the Lunar Candle",
       "practice": "Prepare the planetary altar with the Luna candle, elemental supports, and a lunar image or visualization. Open and purify the room. Invoke Luna through the planetary pattern, charge and light the candle, and meditate on inner knowing, night vision, purification, and the reflective light. Close by releasing, purifying, and recording what surfaced.",
       "intention": "I make a candle for the quiet light of Luna.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Monday, lunar hour, strong Moon phase/sign, or lunar timing.",
+      "whyThisFits": "Monday, lunar hour, strong Moon phase/sign, or lunar timing.",
       "questionToCarry": "What did the inner tide show me?"
     },
     "recommendationMetadata": {
@@ -49967,7 +49986,11 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "Monday",
+          "lunar hour",
+          "new moon",
+          "full moon",
+          "moon in Cancer"
         ]
       },
       "eligibility": {
@@ -49983,7 +50006,11 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "Monday",
+        "lunar hour",
+        "new moon",
+        "full moon",
+        "moon in Cancer",
         "moon",
         "luna",
         "candle",
@@ -50000,7 +50027,11 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "Monday",
+        "lunar hour",
+        "new moon",
+        "full moon",
+        "moon in Cancer",
         "moon",
         "luna",
         "candle",
@@ -50035,7 +50066,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 2, Mars rite, pp. 140-152",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Tuesday, Mars hour, Aries/Scorpio emphasis, or strong Mars timing.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -50045,8 +50076,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Consecrate the Mars Candle",
       "practice": "Set the planetary altar with the Mars candle, elemental supports, and a Mars image or visualization. Open and purify the room. Invoke Mars through the planetary pattern, charge and light the candle, and meditate on heat, action, courage, and the destruction of false structures. Close by releasing the force and grounding the body.",
       "intention": "I make a candle for clean force and necessary courage.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Tuesday, Mars hour, Aries/Scorpio emphasis, or strong Mars timing.",
+      "whyThisFits": "Tuesday, Mars hour, Aries/Scorpio emphasis, or strong Mars timing.",
       "questionToCarry": "What force needs aim before it acts?"
     },
     "recommendationMetadata": {
@@ -50077,7 +50108,12 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "Tuesday",
+          "Mars hour",
+          "Mars in Aries",
+          "Mars in Scorpio",
+          "moon in Aries",
+          "moon in Scorpio"
         ]
       },
       "eligibility": {
@@ -50093,7 +50129,12 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "Tuesday",
+        "Mars hour",
+        "Mars in Aries",
+        "Mars in Scorpio",
+        "moon in Aries",
+        "moon in Scorpio",
         "mars",
         "candle",
         "planetary",
@@ -50111,7 +50152,12 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "Tuesday",
+        "Mars hour",
+        "Mars in Aries",
+        "Mars in Scorpio",
+        "moon in Aries",
+        "moon in Scorpio",
         "mars",
         "candle",
         "planetary",
@@ -50147,7 +50193,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 2, Mercury rite, pp. 153-165",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Wednesday, Mercury hour, Gemini/Virgo emphasis, or strong Mercury timing.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -50157,8 +50203,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Consecrate the Mercury Candle",
       "practice": "Prepare the planetary altar with the Mercury candle, elemental supports, and a Mercury image or visualization. Open and purify the temple. Invoke Mercury through the planetary pattern, charge and light the candle, and meditate on movement, language, cleverness, and exchange. Close by releasing and writing one message or insight to carry.",
       "intention": "I make a candle for words, wit, and right movement.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Wednesday, Mercury hour, Gemini/Virgo emphasis, or strong Mercury timing.",
+      "whyThisFits": "Wednesday, Mercury hour, Gemini/Virgo emphasis, or strong Mercury timing.",
       "questionToCarry": "What wants to move through language?"
     },
     "recommendationMetadata": {
@@ -50189,7 +50235,12 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "Wednesday",
+          "Mercury hour",
+          "Mercury in Gemini",
+          "Mercury in Virgo",
+          "moon in Gemini",
+          "moon in Virgo"
         ]
       },
       "eligibility": {
@@ -50205,7 +50256,12 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "Wednesday",
+        "Mercury hour",
+        "Mercury in Gemini",
+        "Mercury in Virgo",
+        "moon in Gemini",
+        "moon in Virgo",
         "mercury",
         "candle",
         "planetary",
@@ -50222,7 +50278,12 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "Wednesday",
+        "Mercury hour",
+        "Mercury in Gemini",
+        "Mercury in Virgo",
+        "moon in Gemini",
+        "moon in Virgo",
         "mercury",
         "candle",
         "planetary",
@@ -50257,7 +50318,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 2, Jupiter rite, pp. 166-178",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Thursday, Jupiter hour, Sagittarius/Pisces emphasis, or strong Jupiter timing.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -50267,8 +50328,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Consecrate the Jupiter Candle",
       "practice": "Set the planetary altar with the Jupiter candle, elemental supports, and a Jupiter image or visualization. Open and purify the room. Invoke Jupiter through the planetary pattern, charge and light the candle, and meditate on wise increase, law, protection, prosperity, and mercy. Close by releasing and naming one generous order you can support.",
       "intention": "I make a candle for wise increase and generous law.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Thursday, Jupiter hour, Sagittarius/Pisces emphasis, or strong Jupiter timing.",
+      "whyThisFits": "Thursday, Jupiter hour, Sagittarius/Pisces emphasis, or strong Jupiter timing.",
       "questionToCarry": "What should grow because it is well ordered?"
     },
     "recommendationMetadata": {
@@ -50298,7 +50359,12 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "Thursday",
+          "Jupiter hour",
+          "Jupiter in Sagittarius",
+          "Jupiter in Pisces",
+          "moon in Sagittarius",
+          "moon in Pisces"
         ]
       },
       "eligibility": {
@@ -50313,7 +50379,12 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "Thursday",
+        "Jupiter hour",
+        "Jupiter in Sagittarius",
+        "Jupiter in Pisces",
+        "moon in Sagittarius",
+        "moon in Pisces",
         "jupiter",
         "candle",
         "planetary",
@@ -50330,7 +50401,12 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "Thursday",
+        "Jupiter hour",
+        "Jupiter in Sagittarius",
+        "Jupiter in Pisces",
+        "moon in Sagittarius",
+        "moon in Pisces",
         "jupiter",
         "candle",
         "planetary",
@@ -50366,7 +50442,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 2, Venus rite, pp. 179-191",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Friday, Venus hour, Taurus/Libra emphasis, or strong Venus timing.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -50376,8 +50452,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Consecrate the Venus Candle",
       "practice": "Prepare the planetary altar with the Venus candle, elemental supports, and a Venus image or visualization. Open and purify the temple. Invoke Venus through the planetary pattern, charge and light the candle, and meditate on beauty, growth, desire, harmony, and the green life of the world. Close by releasing and naming how beauty should be tended.",
       "intention": "I make a candle for beauty, love, and living growth.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Friday, Venus hour, Taurus/Libra emphasis, or strong Venus timing.",
+      "whyThisFits": "Friday, Venus hour, Taurus/Libra emphasis, or strong Venus timing.",
       "questionToCarry": "What form of beauty wants tending rather than taking?"
     },
     "recommendationMetadata": {
@@ -50408,7 +50484,12 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "Friday",
+          "Venus hour",
+          "Venus in Taurus",
+          "Venus in Libra",
+          "moon in Taurus",
+          "moon in Libra"
         ]
       },
       "eligibility": {
@@ -50424,7 +50505,12 @@ const importedSourceBackedRituals: Ritual[] = [
         "me",
         "both_of_us",
         "helpful",
-        "astrological timing",
+        "Friday",
+        "Venus hour",
+        "Venus in Taurus",
+        "Venus in Libra",
+        "moon in Taurus",
+        "moon in Libra",
         "venus",
         "candle",
         "planetary",
@@ -50442,7 +50528,12 @@ const importedSourceBackedRituals: Ritual[] = [
         "me",
         "both_of_us",
         "helpful",
-        "astrological timing",
+        "Friday",
+        "Venus hour",
+        "Venus in Taurus",
+        "Venus in Libra",
+        "moon in Taurus",
+        "moon in Libra",
         "venus",
         "candle",
         "planetary",
@@ -50478,7 +50569,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 2, Saturn rite, pp. 192-204",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Saturday, Saturn hour, Capricorn/Aquarius emphasis, or strong Saturn timing.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -50488,8 +50579,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Consecrate the Saturn Candle",
       "practice": "Set the planetary altar with the Saturn candle, elemental supports, and a Saturn image or visualization. Open and purify the room. Invoke Saturn through the planetary pattern, charge and light the candle, and meditate on limits, time, solitude, discipline, and the wisdom of structure. Close by releasing and grounding carefully.",
       "intention": "I make a candle for time, boundary, and endurance.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Saturday, Saturn hour, Capricorn/Aquarius emphasis, or strong Saturn timing.",
+      "whyThisFits": "Saturday, Saturn hour, Capricorn/Aquarius emphasis, or strong Saturn timing.",
       "questionToCarry": "What limit is trying to become wisdom?"
     },
     "recommendationMetadata": {
@@ -50519,7 +50610,12 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "Saturday",
+          "Saturn hour",
+          "Saturn in Capricorn",
+          "Saturn in Aquarius",
+          "moon in Capricorn",
+          "moon in Aquarius"
         ]
       },
       "eligibility": {
@@ -50534,7 +50630,12 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "Saturday",
+        "Saturn hour",
+        "Saturn in Capricorn",
+        "Saturn in Aquarius",
+        "moon in Capricorn",
+        "moon in Aquarius",
         "saturn",
         "candle",
         "planetary",
@@ -50551,7 +50652,12 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "Saturday",
+        "Saturn hour",
+        "Saturn in Capricorn",
+        "Saturn in Aquarius",
+        "moon in Capricorn",
+        "moon in Aquarius",
         "saturn",
         "candle",
         "planetary",
@@ -50587,7 +50693,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 2 culmination, pp. 205-229",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Sunday, solar timing, or planetary integration timing.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -50597,8 +50703,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Build the Planetary Universe",
       "practice": "Arrange the consecrated planetary candles and elemental emblems on the altar. Open, purify, invoke the elements, and lift the temple into the planetary pattern. Light and move through the planetary candles in the source sequence, meditating on descent, ascent, and the ordered powers of the heavens. Close by returning the temple to ordinary space and releasing the forces.",
       "intention": "I let the planetary lights take their ordered places.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Sunday, solar timing, or planetary integration timing.",
+      "whyThisFits": "Sunday, solar timing, or planetary integration timing.",
       "questionToCarry": "What part of my life needs a larger order around it?"
     },
     "recommendationMetadata": {
@@ -50628,7 +50734,10 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "Sunday",
+          "solar hour",
+          "sun in Leo",
+          "June solstice"
         ]
       },
       "eligibility": {
@@ -50643,7 +50752,10 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "Sunday",
+        "solar hour",
+        "sun in Leo",
+        "June solstice",
         "planetary",
         "culmination",
         "seven_planets",
@@ -50658,7 +50770,10 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "Sunday",
+        "solar hour",
+        "sun in Leo",
+        "June solstice",
         "planetary",
         "culmination",
         "seven_planets",
@@ -50692,7 +50807,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 3, Aries rite, pp. 237-244",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Aries, Mars, or fire timing supports the work.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -50702,8 +50817,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Invoke Aries for the First Flame",
       "practice": "Set the zodiacal temple with the Fire candle, Mars candle, water and incense, and an Aries image or visualization. Open and purify the room. Invoke the fire triplicity, then the ruler and powers of Aries through candle, sign, and meditation. Close by releasing and grounding the force of beginning.",
       "intention": "I invite the first flame to act with courage.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Aries, Mars, or fire timing supports the work.",
+      "whyThisFits": "Aries, Mars, or fire timing supports the work.",
       "questionToCarry": "What beginning needs clean force?"
     },
     "recommendationMetadata": {
@@ -50733,7 +50848,9 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "sun in Aries",
+          "moon in Aries",
+          "Mars in Aries"
         ]
       },
       "eligibility": {
@@ -50748,7 +50865,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "sun in Aries",
+        "moon in Aries",
+        "Mars in Aries",
         "aries",
         "zodiac",
         "fire",
@@ -50765,7 +50884,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "sun in Aries",
+        "moon in Aries",
+        "Mars in Aries",
         "aries",
         "zodiac",
         "fire",
@@ -50801,7 +50922,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 3, Taurus rite, pp. 245-252",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Taurus, Venus, or earth timing supports the work.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -50811,8 +50932,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Invoke Taurus for Steady Form",
       "practice": "Set the zodiacal temple with earth salt, Venus candle, water and incense, and a Taurus image or visualization. Open and purify the room. Invoke the earth triplicity, then call the powers of Taurus through the ruler, sign, and meditation. Close by releasing and grounding the work in the body.",
       "intention": "I invite steady form, devotion, and living substance.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Taurus, Venus, or earth timing supports the work.",
+      "whyThisFits": "Taurus, Venus, or earth timing supports the work.",
       "questionToCarry": "What needs patience enough to become real?"
     },
     "recommendationMetadata": {
@@ -50842,7 +50963,9 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "sun in Taurus",
+          "moon in Taurus",
+          "Venus in Taurus"
         ]
       },
       "eligibility": {
@@ -50857,7 +50980,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "sun in Taurus",
+        "moon in Taurus",
+        "Venus in Taurus",
         "taurus",
         "zodiac",
         "earth",
@@ -50874,7 +50999,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "sun in Taurus",
+        "moon in Taurus",
+        "Venus in Taurus",
         "taurus",
         "zodiac",
         "earth",
@@ -50910,7 +51037,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 3, Gemini rite, pp. 253-260",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Gemini, Mercury, or air timing supports the work.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -50920,8 +51047,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Invoke Gemini for the Moving Word",
       "practice": "Set the zodiacal temple with air incense, Mercury candle, water and incense, and a Gemini image or visualization. Open and purify the room. Invoke the air triplicity, then call Gemini through ruler, sign, and meditation. Close by releasing and writing the message or choice that emerged.",
       "intention": "I invite the word that moves between.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Gemini, Mercury, or air timing supports the work.",
+      "whyThisFits": "Gemini, Mercury, or air timing supports the work.",
       "questionToCarry": "What wants to be said, chosen, or exchanged?"
     },
     "recommendationMetadata": {
@@ -50951,7 +51078,9 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "sun in Gemini",
+          "moon in Gemini",
+          "Mercury in Gemini"
         ]
       },
       "eligibility": {
@@ -50966,7 +51095,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "sun in Gemini",
+        "moon in Gemini",
+        "Mercury in Gemini",
         "gemini",
         "zodiac",
         "air",
@@ -50982,7 +51113,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "sun in Gemini",
+        "moon in Gemini",
+        "Mercury in Gemini",
         "gemini",
         "zodiac",
         "air",
@@ -51017,7 +51150,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 3, Cancer rite, pp. 261-268",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Cancer, Luna, or water timing supports the work.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -51027,8 +51160,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Invoke Cancer for the Sheltering Tide",
       "practice": "Set the zodiacal temple with consecrated water, Luna candle, water and incense, and a Cancer image or visualization. Open and purify the room. Invoke the water triplicity, then call Cancer through ruler, sign, and meditation. Close by releasing and naming what the shelter protects.",
       "intention": "I invite the tide that shelters what is tender.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Cancer, Luna, or water timing supports the work.",
+      "whyThisFits": "Cancer, Luna, or water timing supports the work.",
       "questionToCarry": "What needs a shell before it can move?"
     },
     "recommendationMetadata": {
@@ -51061,7 +51194,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "sun in Cancer",
+          "moon in Cancer"
         ]
       },
       "eligibility": {
@@ -51079,7 +51213,8 @@ const importedSourceBackedRituals: Ritual[] = [
         "me",
         "both_of_us",
         "helpful",
-        "astrological timing",
+        "sun in Cancer",
+        "moon in Cancer",
         "cancer",
         "zodiac",
         "water",
@@ -51099,7 +51234,8 @@ const importedSourceBackedRituals: Ritual[] = [
         "me",
         "both_of_us",
         "helpful",
-        "astrological timing",
+        "sun in Cancer",
+        "moon in Cancer",
         "cancer",
         "zodiac",
         "water",
@@ -51135,7 +51271,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 3, Leo rite, pp. 269-277",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Leo, Sol, or fire timing supports the work.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -51145,8 +51281,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Invoke Leo for the Heart Flame",
       "practice": "Set the zodiacal temple with the Fire candle, Sol candle, water and incense, and a Leo image or visualization. Open and purify the room. Invoke the fire triplicity, then call Leo through ruler, sign, and meditation. Close by releasing and grounding the heart’s heat.",
       "intention": "I invite the flame that warms without consuming.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Leo, Sol, or fire timing supports the work.",
+      "whyThisFits": "Leo, Sol, or fire timing supports the work.",
       "questionToCarry": "Where should courage become generosity?"
     },
     "recommendationMetadata": {
@@ -51177,7 +51313,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "sun in Leo",
+          "moon in Leo"
         ]
       },
       "eligibility": {
@@ -51193,7 +51330,8 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "sun in Leo",
+        "moon in Leo",
         "leo",
         "zodiac",
         "fire",
@@ -51211,7 +51349,8 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "sun in Leo",
+        "moon in Leo",
         "leo",
         "zodiac",
         "fire",
@@ -51247,7 +51386,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 3, Virgo rite, pp. 278-285",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Virgo, Mercury, or earth timing supports the work.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -51257,8 +51396,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Invoke Virgo for the Careful Hand",
       "practice": "Set the zodiacal temple with earth salt, Mercury candle, water and incense, and a Virgo image or visualization. Open and purify the room. Invoke the earth triplicity, then call Virgo through ruler, sign, and meditation. Close by releasing and naming the repair or service that belongs next.",
       "intention": "I invite the careful hand and the discerning eye.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Virgo, Mercury, or earth timing supports the work.",
+      "whyThisFits": "Virgo, Mercury, or earth timing supports the work.",
       "questionToCarry": "What small order would help the whole thing heal?"
     },
     "recommendationMetadata": {
@@ -51288,7 +51427,9 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "sun in Virgo",
+          "moon in Virgo",
+          "Mercury in Virgo"
         ]
       },
       "eligibility": {
@@ -51303,7 +51444,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "sun in Virgo",
+        "moon in Virgo",
+        "Mercury in Virgo",
         "virgo",
         "zodiac",
         "earth",
@@ -51320,7 +51463,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "sun in Virgo",
+        "moon in Virgo",
+        "Mercury in Virgo",
         "virgo",
         "zodiac",
         "earth",
@@ -51356,7 +51501,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 3, Libra rite, pp. 286-293",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Libra, Venus, or air timing supports the work.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -51366,8 +51511,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Invoke Libra for the Balanced Scale",
       "practice": "Set the zodiacal temple with air incense, Venus candle, water and incense, and a Libra image or visualization. Open and purify the room. Invoke the air triplicity, then call Libra through ruler, sign, and meditation. Close by releasing and naming what balance asks from each side.",
       "intention": "I invite beauty, balance, and fair relation.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Libra, Venus, or air timing supports the work.",
+      "whyThisFits": "Libra, Venus, or air timing supports the work.",
       "questionToCarry": "What needs to be weighed before it can be joined?"
     },
     "recommendationMetadata": {
@@ -51398,7 +51543,9 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "sun in Libra",
+          "moon in Libra",
+          "Venus in Libra"
         ]
       },
       "eligibility": {
@@ -51414,7 +51561,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "me",
         "both_of_us",
         "helpful",
-        "astrological timing",
+        "sun in Libra",
+        "moon in Libra",
+        "Venus in Libra",
         "libra",
         "zodiac",
         "air",
@@ -51432,7 +51581,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "me",
         "both_of_us",
         "helpful",
-        "astrological timing",
+        "sun in Libra",
+        "moon in Libra",
+        "Venus in Libra",
         "libra",
         "zodiac",
         "air",
@@ -51468,7 +51619,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 3, Scorpio rite, pp. 294-301",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Scorpio, Mars, or water timing supports the work.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -51478,8 +51629,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Invoke Scorpio for the Deep Change",
       "practice": "Set the zodiacal temple with consecrated water, the appropriate ruler candle, water and incense, and a Scorpio image or visualization. Open and purify the room. Invoke the water triplicity, then call Scorpio through ruler, sign, and meditation. Close by releasing and grounding the intensity carefully.",
       "intention": "I invite the depth that changes what cannot stay unchanged.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Scorpio, Mars, or water timing supports the work.",
+      "whyThisFits": "Scorpio, Mars, or water timing supports the work.",
       "questionToCarry": "What is asking to be transformed rather than managed?"
     },
     "recommendationMetadata": {
@@ -51510,7 +51661,9 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "sun in Scorpio",
+          "moon in Scorpio",
+          "Mars in Scorpio"
         ]
       },
       "eligibility": {
@@ -51526,7 +51679,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "sun in Scorpio",
+        "moon in Scorpio",
+        "Mars in Scorpio",
         "scorpio",
         "zodiac",
         "water",
@@ -51544,7 +51699,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "sun in Scorpio",
+        "moon in Scorpio",
+        "Mars in Scorpio",
         "scorpio",
         "zodiac",
         "water",
@@ -51580,7 +51737,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 3, Sagittarius rite, pp. 302-309",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Sagittarius, Jupiter, or fire timing supports the work.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -51590,8 +51747,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Invoke Sagittarius for the Far Aim",
       "practice": "Set the zodiacal temple with the Fire candle, Jupiter candle, water and incense, and a Sagittarius image or visualization. Open and purify the room. Invoke the fire triplicity, then call Sagittarius through ruler, sign, and meditation. Close by releasing and naming the aim worth following.",
       "intention": "I invite the flame that seeks the wider horizon.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Sagittarius, Jupiter, or fire timing supports the work.",
+      "whyThisFits": "Sagittarius, Jupiter, or fire timing supports the work.",
       "questionToCarry": "What aim is large enough to guide me?"
     },
     "recommendationMetadata": {
@@ -51621,7 +51778,9 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "sun in Sagittarius",
+          "moon in Sagittarius",
+          "Jupiter in Sagittarius"
         ]
       },
       "eligibility": {
@@ -51636,7 +51795,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "sun in Sagittarius",
+        "moon in Sagittarius",
+        "Jupiter in Sagittarius",
         "sagittarius",
         "zodiac",
         "fire",
@@ -51653,7 +51814,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "sun in Sagittarius",
+        "moon in Sagittarius",
+        "Jupiter in Sagittarius",
         "sagittarius",
         "zodiac",
         "fire",
@@ -51689,7 +51852,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 3, Capricorn rite, pp. 310-317",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Capricorn, Saturn, or earth timing supports the work.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -51699,8 +51862,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Invoke Capricorn for the Long Climb",
       "practice": "Set the zodiacal temple with earth salt, Saturn candle, water and incense, and a Capricorn image or visualization. Open and purify the room. Invoke the earth triplicity, then call Capricorn through ruler, sign, and meditation. Close by releasing and naming the next step of the climb.",
       "intention": "I invite discipline that can carry the long work.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Capricorn, Saturn, or earth timing supports the work.",
+      "whyThisFits": "Capricorn, Saturn, or earth timing supports the work.",
       "questionToCarry": "What structure would make endurance possible?"
     },
     "recommendationMetadata": {
@@ -51730,7 +51893,9 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "sun in Capricorn",
+          "moon in Capricorn",
+          "Saturn in Capricorn"
         ]
       },
       "eligibility": {
@@ -51745,7 +51910,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "sun in Capricorn",
+        "moon in Capricorn",
+        "Saturn in Capricorn",
         "capricorn",
         "zodiac",
         "earth",
@@ -51762,7 +51929,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "sun in Capricorn",
+        "moon in Capricorn",
+        "Saturn in Capricorn",
         "capricorn",
         "zodiac",
         "earth",
@@ -51798,7 +51967,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 3, Aquarius rite, pp. 318-325",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Aquarius, Saturn, or air timing supports the work.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -51808,8 +51977,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Invoke Aquarius for the Star Pattern",
       "practice": "Set the zodiacal temple with air incense, Saturn candle, water and incense, and an Aquarius image or visualization. Open and purify the room. Invoke the air triplicity, then call Aquarius through ruler, sign, and meditation. Close by releasing and naming the pattern you are willing to serve.",
       "intention": "I invite the pattern that opens beyond the present room.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Aquarius, Saturn, or air timing supports the work.",
+      "whyThisFits": "Aquarius, Saturn, or air timing supports the work.",
       "questionToCarry": "What future shape is asking for loyalty now?"
     },
     "recommendationMetadata": {
@@ -51840,7 +52009,9 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "sun in Aquarius",
+          "moon in Aquarius",
+          "Saturn in Aquarius"
         ]
       },
       "eligibility": {
@@ -51856,7 +52027,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "me",
         "both_of_us",
         "helpful",
-        "astrological timing",
+        "sun in Aquarius",
+        "moon in Aquarius",
+        "Saturn in Aquarius",
         "aquarius",
         "zodiac",
         "air",
@@ -51874,7 +52047,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "me",
         "both_of_us",
         "helpful",
-        "astrological timing",
+        "sun in Aquarius",
+        "moon in Aquarius",
+        "Saturn in Aquarius",
         "aquarius",
         "zodiac",
         "air",
@@ -51910,7 +52085,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 3, Pisces rite, pp. 326-333",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Pisces, Jupiter, or water timing supports the work.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -51920,8 +52095,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Invoke Pisces for the Dreaming Sea",
       "practice": "Set the zodiacal temple with consecrated water, the appropriate ruler candle, water and incense, and a Pisces image or visualization. Open and purify the room. Invoke the water triplicity, then call Pisces through ruler, sign, and meditation. Close by releasing, grounding, and writing what the dream brought back.",
       "intention": "I invite the sea that teaches through dream and mercy.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Pisces, Jupiter, or water timing supports the work.",
+      "whyThisFits": "Pisces, Jupiter, or water timing supports the work.",
       "questionToCarry": "What did the dream ask me to trust?"
     },
     "recommendationMetadata": {
@@ -51952,7 +52127,9 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "sun in Pisces",
+          "moon in Pisces",
+          "Jupiter in Pisces"
         ]
       },
       "eligibility": {
@@ -51968,7 +52145,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "sun in Pisces",
+        "moon in Pisces",
+        "Jupiter in Pisces",
         "pisces",
         "zodiac",
         "water",
@@ -51986,7 +52165,9 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "sun in Pisces",
+        "moon in Pisces",
+        "Jupiter in Pisces",
         "pisces",
         "zodiac",
         "water",
@@ -52022,7 +52203,7 @@ const importedSourceBackedRituals: Ritual[] = [
           "citationLabel": "Dykes/Gibson, Astrological Magic",
           "sourceLocation": "Part 3 culmination, pp. 334-354",
           "sourceSummary": "Dykes/Gibson, Astrological Magic",
-          "sourceSupports": "When astrological timing supports the work.",
+          "sourceSupports": "Seasonal thresholds, strong elemental patterns, or multiple sign themes.",
           "moonAndTableChanges": "Mechanically imported from packet-approved candidate text without runtime reauthoring.",
           "doNotImport": []
         }
@@ -52032,8 +52213,8 @@ const importedSourceBackedRituals: Ritual[] = [
       "headline": "Call the Zodiac by Triplicity",
       "practice": "Set the zodiacal temple with the elemental emblems and a white altar cloth. Open and purify the room. Invoke each elemental triplicity in turn, tracing the appropriate pentagrams and triangles and placing each family of signs into the ritual field. Let the zodiac become a balanced circle rather than a set of separate signs. Close by releasing and grounding.",
       "intention": "I let the signs gather by element and become a whole pattern.",
-      "bestWindow": "When astrological timing supports the work.",
-      "whyThisFits": "When astrological timing supports the work.",
+      "bestWindow": "Seasonal thresholds, strong elemental patterns, or multiple sign themes.",
+      "whyThisFits": "Seasonal thresholds, strong elemental patterns, or multiple sign themes.",
       "questionToCarry": "Which element needs to join the circle more fully?"
     },
     "recommendationMetadata": {
@@ -52061,7 +52242,10 @@ const importedSourceBackedRituals: Ritual[] = [
       "timing": {
         "relationship": "helpful",
         "contexts": [
-          "astrological timing"
+          "spring equinox",
+          "June solstice",
+          "September equinox",
+          "December solstice"
         ]
       },
       "eligibility": {
@@ -52075,7 +52259,10 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "spring equinox",
+        "June solstice",
+        "September equinox",
+        "December solstice",
         "zodiac",
         "triplicity",
         "elements",
@@ -52090,7 +52277,10 @@ const importedSourceBackedRituals: Ritual[] = [
         "room_for_something_deeper",
         "me",
         "helpful",
-        "astrological timing",
+        "spring equinox",
+        "June solstice",
+        "September equinox",
+        "December solstice",
         "zodiac",
         "triplicity",
         "elements",

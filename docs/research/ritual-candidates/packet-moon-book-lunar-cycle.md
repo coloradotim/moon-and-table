@@ -2480,7 +2480,7 @@ recommendationMetadata:
     bothOfUsStructure: "Use one shared adjustment sentence."
   timing:
     relationship: helpful
-    contexts: [imperfect timing, missed phase, phase mismatch]
+    contexts: [exact timing not required, missed phase, phase mismatch]
   eligibility:
     recommendable: false
     missing: [direct_use_review, recommendation_review]

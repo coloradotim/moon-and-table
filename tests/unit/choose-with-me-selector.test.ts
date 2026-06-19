@@ -896,9 +896,7 @@ describe("chooseWithMeRitual", () => {
     expect(result.selectedRitual?.id).toBe(
       "candidate.dominguez.moon-phase-timing-check",
     );
-    expect(result.debug.timing.matchedRitualTiming).toEqual(
-      expect.arrayContaining(["moon phase", "full moon"]),
-    );
+    expect(result.debug.timing.matchedRitualTiming).toEqual(["full moon"]);
   });
 
   it("holds the Buckland full-moon lead-time ritual out of automatic recommendation", () => {

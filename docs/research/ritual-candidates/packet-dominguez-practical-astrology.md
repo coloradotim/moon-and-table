@@ -1124,7 +1124,7 @@ recommendationMetadata:
     default: me
   timing:
     relationship: preferred
-    contexts: ["moon phase", "waxing moon", "waning moon", "full moon", "dark moon", "quarter moon"]
+    contexts: ["new moon", "waxing moon", "waning moon", "full moon", "dark moon", "quarter moon"]
   eligibility:
     recommendable: false
     missing:
@@ -1297,7 +1297,19 @@ recommendationMetadata:
     default: me
   timing:
     relationship: helpful
-    contexts: ["moon sign", "sign qualities"]
+    contexts:
+      - "moon in Aries"
+      - "moon in Taurus"
+      - "moon in Gemini"
+      - "moon in Cancer"
+      - "moon in Leo"
+      - "moon in Virgo"
+      - "moon in Libra"
+      - "moon in Scorpio"
+      - "moon in Sagittarius"
+      - "moon in Capricorn"
+      - "moon in Aquarius"
+      - "moon in Pisces"
   eligibility:
     recommendable: false
     missing:
@@ -1643,7 +1655,7 @@ recommendationMetadata:
     default: me
   timing:
     relationship: required
-    contexts: ["planetary aspect", "applying aspect", "before culmination"]
+    contexts: ["applying planetary aspect", "before culmination"]
   eligibility:
     recommendable: false
     missing:
@@ -1816,7 +1828,12 @@ recommendationMetadata:
     default: me
   timing:
     relationship: helpful
-    contexts: ["retrograde planet", "imperfect timing adaptation"]
+    contexts:
+      - "Mercury retrograde"
+      - "Venus retrograde"
+      - "Mars retrograde"
+      - "Jupiter retrograde"
+      - "Saturn retrograde"
   eligibility:
     recommendable: false
     missing:
@@ -1989,7 +2006,13 @@ recommendationMetadata:
     default: me
   timing:
     relationship: helpful
-    contexts: ["fixed timing", "imperfect timing", "Moon sign", "aspect condition"]
+    contexts:
+      - "exact timing not required"
+      - "new moon"
+      - "full moon"
+      - "moon in Cancer"
+      - "Mercury retrograde"
+      - "Venus trine Mars"
   eligibility:
     recommendable: false
     missing:
