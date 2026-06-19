@@ -273,6 +273,118 @@ describe("Ritual edit draft API", () => {
     expect(JSON.stringify(record.ritualDocument.lifecycle)).toBe(lifecycleBeforeSave);
   });
 
+  it("saves through one draft read instead of reading before the save helper", async () => {
+    const { record, store } = createFixtureStore();
+    let getDraftCalls = 0;
+    const countedStore: RitualEditDraftStore = {
+      getDraft: async (draftId) => {
+        getDraftCalls += 1;
+        return store.getDraft(draftId);
+      },
+      setDraft: (draft) => store.setDraft(draft),
+      listDraftsForRitual: (ritualId) => store.listDraftsForRitual(ritualId),
+    };
+    const dependencies = createDependencies({
+      store: countedStore,
+      versionDocument: record.versionDocument,
+    });
+    const createResponseBody = createResponse();
+
+    await handleRitualEditDraftApi(
+      {
+        method: "POST",
+        headers: { authorization: "Bearer valid-token" },
+        body: {
+          action: "load_or_create",
+          ritualId: record.ritualDocument.id,
+          versionId: record.versionDocument.versionId,
+        },
+      },
+      createResponseBody.response,
+      dependencies,
+    );
+
+    const created = createResponseBody.body as {
+      valid: true;
+      draft: { id: string; draftBuffer: typeof record.versionDocument.ritual };
+    };
+    const draftBeforeSave = store.getAllDrafts()[0];
+    const response = createResponse();
+    getDraftCalls = 0;
+
+    await handleRitualEditDraftApi(
+      {
+        method: "POST",
+        headers: { authorization: "Bearer valid-token" },
+        body: {
+          action: "save",
+          draftId: created.draft.id,
+          draftBuffer: draftBeforeSave.draftBuffer,
+        },
+      },
+      response.response,
+      dependencies,
+    );
+
+    expect(response.statusCode).toBe(200);
+    expect(getDraftCalls).toBe(1);
+  });
+
+  it("returns a quota-specific save failure when Firestore refuses the draft read", async () => {
+    const { record } = createFixtureStore();
+    const quotaError = Object.assign(
+      new Error("8 RESOURCE_EXHAUSTED: Quota exceeded."),
+      { code: 8 },
+    );
+    const store: RitualEditDraftStore = {
+      getDraft: async () => {
+        throw quotaError;
+      },
+      setDraft: async () => undefined,
+      listDraftsForRitual: async () => [],
+    };
+    const response = createResponse();
+
+    await handleRitualEditDraftApi(
+      {
+        method: "POST",
+        headers: { authorization: "Bearer valid-token" },
+        body: {
+          action: "save",
+          draftId: "draft-quota",
+          draftBuffer: {
+            id: record.ritualDocument.id,
+            origin: {
+              type: "source",
+              sourceGrounding: [],
+            },
+            presentation: {
+              headline: "Quota draft",
+              practice: "Practice",
+              intention: "Intention",
+              bestWindow: "Window",
+              questionToCarry: "Question?",
+            },
+          },
+        },
+      },
+      response.response,
+      createDependencies({ store, versionDocument: record.versionDocument }),
+    );
+
+    expect(response.statusCode).toBe(429);
+    expect(response.body).toEqual({
+      valid: false,
+      findings: [
+        {
+          path: "firestore",
+          message: "Firestore quota was exceeded, so the Ritual edit draft was not saved.",
+          severity: "error",
+        },
+      ],
+    });
+  });
+
   it("applies a saved draft through the protected API action", async () => {
     const { record, store, drafts, rituals, versions, snapshots, decisions, audits } =
       createApplyFixtureStore();
