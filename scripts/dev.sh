@@ -120,12 +120,26 @@ start_server() {
   fi
 
   echo "Starting dev server at $DEV_URL..."
-  nohup bash -c '
-    cd "$1"
-    exec npm run dev -- --host "$2" --port "$3"
-  ' _ "$ROOT_DIR" "$DEV_HOST" "$DEV_PORT" >"$LOG_FILE" 2>&1 < /dev/null &
-  echo "$!" >"$PID_FILE"
-  disown
+  : >"$LOG_FILE"
+  python3 - "$ROOT_DIR" "$DEV_HOST" "$DEV_PORT" "$LOG_FILE" "$PID_FILE" <<'PY'
+import subprocess
+import sys
+
+root_dir, dev_host, dev_port, log_file, pid_file = sys.argv[1:]
+
+with open(log_file, "ab", buffering=0) as log:
+    process = subprocess.Popen(
+        ["npm", "run", "dev", "--", "--host", dev_host, "--port", dev_port],
+        cwd=root_dir,
+        stdin=subprocess.DEVNULL,
+        stdout=log,
+        stderr=subprocess.STDOUT,
+        start_new_session=True,
+    )
+
+with open(pid_file, "w", encoding="utf-8") as handle:
+    handle.write(str(process.pid))
+PY
 
   wait_for_port "$DEV_PORT"
   status
