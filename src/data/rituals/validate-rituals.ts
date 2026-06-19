@@ -6,7 +6,7 @@ import {
   RITUAL_STATUSES,
   RITUAL_TIMING_RELATIONSHIPS,
   type Ritual,
-} from "./types";
+} from "./types.js";
 
 export type RitualValidationFinding = {
   ritualId: string;

@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const firebaseAppMocks = vi.hoisted(() => ({
@@ -56,6 +58,35 @@ function createResponse() {
 describe("Ritual edit draft Vercel route", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+
+  it("uses deployable ESM specifiers in the serverless runtime import chain", () => {
+    const runtimeFiles = [
+      "api/ritual-edit-draft.ts",
+      "src/data/rituals/ritual-edit-draft-apply.ts",
+      "src/data/rituals/db-documents.ts",
+      "src/data/rituals/ritual-edit-drafts.ts",
+      "src/data/rituals/ritual-edit-draft-validation.ts",
+      "src/data/rituals/validate-rituals.ts",
+      "src/data/rituals/version-identity.ts",
+    ];
+    const extensionlessImports: string[] = [];
+
+    for (const file of runtimeFiles) {
+      const source = readFileSync(join(process.cwd(), file), "utf8");
+      const importPattern =
+        /import\s+(?!type\b)[\s\S]*?\sfrom\s+["'](\.{1,2}\/[^"']+)["']/g;
+
+      for (const match of source.matchAll(importPattern)) {
+        const importPath = match[1];
+
+        if (!/\.[cm]?js$/.test(importPath)) {
+          extensionlessImports.push(`${file}: ${importPath}`);
+        }
+      }
+    }
+
+    expect(extensionlessImports).toEqual([]);
   });
 
   it("rejects non-POST requests before starting Firebase", async () => {

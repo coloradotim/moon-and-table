@@ -3,12 +3,12 @@ import { getAuth } from "firebase-admin/auth";
 import { getFirestore } from "firebase-admin/firestore";
 import { readFileSync } from "node:fs";
 
-import type { RitualVersionDocument } from "../src/data/rituals/db-documents";
+import type { RitualVersionDocument } from "../src/data/rituals/db-documents.js";
 import {
   applyRitualEditDraft,
   createAdminFirestoreRitualEditDraftApplyStore,
   type ApplyRitualEditDraftStore,
-} from "../src/data/rituals/ritual-edit-draft-apply";
+} from "../src/data/rituals/ritual-edit-draft-apply.js";
 import type {
   Ritual,
   RitualAdaptationPolicy,
@@ -20,7 +20,7 @@ import type {
   RitualSourceGrounding,
   RitualStatus,
   RitualWords,
-} from "../src/data/rituals/types";
+} from "../src/data/rituals/types.js";
 
 type RitualDbValidationFinding = {
   path: string;

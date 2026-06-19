@@ -1,11 +1,11 @@
 import type {
   RitualDbValidationFinding,
   RitualDbValidationResult,
-} from "./db-documents";
+} from "./db-documents.js";
 import type {
   RitualEditDraftDocument,
   RitualEditDraftBuffer,
-} from "./ritual-edit-drafts";
+} from "./ritual-edit-drafts.js";
 import {
   RITUAL_AUDIENCES,
   RITUAL_CAPACITY_MODES,
@@ -14,8 +14,8 @@ import {
   RITUAL_STATUSES,
   RITUAL_TIMING_RELATIONSHIPS,
   type Ritual,
-} from "./types";
-import { validateRitual } from "./validate-rituals";
+} from "./types.js";
+import { validateRitual } from "./validate-rituals.js";
 
 export const RITUAL_EDIT_DRAFT_VALIDATION_SECTIONS = [
   "status",

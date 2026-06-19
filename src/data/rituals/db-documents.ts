@@ -5,9 +5,9 @@ import type {
   RitualSearchMetadata,
   RitualSourceGrounding,
   RitualStatus,
-} from "./types";
-import { validateRitual } from "./validate-rituals";
-import { getRitualVersionIdentity } from "./version-identity";
+} from "./types.js";
+import { validateRitual } from "./validate-rituals.js";
+import { getRitualVersionIdentity } from "./version-identity.js";
 
 export const RITUAL_DB_SCHEMA_VERSION = "ritual-db-v1" as const;
 export const RITUAL_RUNTIME_SCHEMA_VERSION = "src/data/rituals/types.ts" as const;
