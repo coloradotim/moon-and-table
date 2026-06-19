@@ -22,6 +22,7 @@ import { sourceBackedRituals } from "../../src/data/rituals/source-backed-ritual
 import { createStaticRitualRepository } from "../../src/data/rituals/ritual-repository";
 import { createRitualDbMirrorDryRun } from "../../src/data/rituals/db-mirror";
 import {
+  createBlankHouseholdRitualDraft,
   createDraftFromRitualVersion,
   createInMemoryRitualEditDraftStore,
 } from "../../src/data/rituals/ritual-edit-drafts";
@@ -1142,6 +1143,43 @@ describe("app shell rendering", () => {
     expect(editorHtml).not.toContain("Submit draft");
     expect(editorHtml).not.toContain("Record review decision");
     expect(editorHtml).not.toContain('data-manage-ritual-review-form="true"');
+  });
+
+  it("opens a blank household Ritual draft with an Add to library action", async () => {
+    const store = createInMemoryRitualEditDraftStore();
+    const draft = await createBlankHouseholdRitualDraft({
+      store,
+      ritualId: "household-new-ritual",
+      actor: "owner",
+      createdAtIso: "2026-06-14T12:00:00.000Z",
+    });
+    const html = renderManageRitualsSection({
+      ritualRepositorySource: "db",
+      ritualDbDocuments: createDbDocuments(),
+      selectedEditorRitualId: "household-new-ritual",
+      selectedEditorDraft: draft,
+      selectedEditorDraftStatus: {
+        tone: "idle",
+        message: "Draft created",
+      },
+    });
+    const editorStart = html.indexOf('data-manage-ritual-editor="true"');
+    const editorEnd = html.indexOf(
+      '<section class="manage-rituals__table-section"',
+      editorStart,
+    );
+    const editorHtml = html.slice(editorStart, editorEnd);
+
+    expect(html).toContain('data-manage-ritual-create="true"');
+    expect(html).toContain("Create Ritual");
+    expect(editorHtml).toContain("Active draft");
+    expect(editorHtml).toContain("Untitled Ritual");
+    expect(editorHtml).toContain("household-new-ritual");
+    expect(editorHtml).toContain("Household");
+    expect(editorHtml).toContain("Draft created");
+    expect(editorHtml).toContain("Add to library");
+    expect(editorHtml).toContain('data-manage-ritual-publish-action="add_to_library"');
+    expect(editorHtml).not.toContain("Publish draft");
   });
 
   it("renders household provenance as household-origin without requiring source grounding", () => {

@@ -140,6 +140,7 @@ import {
   type RitualCapacityMode,
 } from "./data/rituals/types";
 import {
+  createBlankHouseholdRitualDraft,
   createDraftFromRitualVersion,
   createInMemoryRitualEditDraftStore,
   saveRitualEditDraft,
@@ -739,6 +740,18 @@ function isLocalRitualEditDraftFallbackAllowed(
   );
 }
 
+function createHouseholdRitualDraftId(): string {
+  const timestamp = new Date().toISOString()
+    .replace(/[^a-zA-Z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase();
+  const randomSuffix = crypto.randomUUID
+    ? crypto.randomUUID().slice(0, 8)
+    : Math.random().toString(36).slice(2, 10);
+
+  return `household-${timestamp}-${randomSuffix}`;
+}
+
 async function createLocalManageRitualEditorDraft(input: {
   ritualId: string;
   versionId: string;
@@ -768,6 +781,86 @@ async function createLocalManageRitualEditorDraft(input: {
   renderActiveSignedInShell();
   setManageRitualEditorSavedBaselineFromForm();
   return true;
+}
+
+async function createBlankManageRitualEditorDraft(): Promise<void> {
+  const ritualId = createHouseholdRitualDraftId();
+
+  activeManageRitualEditorId = ritualId;
+  clearManageRitualEditorDraftState();
+  activeManageRitualEditorDraftStatus = {
+    tone: "saving",
+    message: "Creating draft...",
+  };
+  renderActiveSignedInShell();
+
+  if (devVisualQaMode) {
+    activeManageRitualEditorDraft = await createBlankHouseholdRitualDraft({
+      store: createInMemoryRitualEditDraftStore(),
+      ritualId,
+      actor: "owner",
+      createdAtIso: new Date().toISOString(),
+    });
+    activeManageRitualEditorUsesLocalDraft = true;
+    activeManageRitualEditorDraftStatus = {
+      tone: "idle",
+      message: "Local preview draft",
+    };
+    activeManageRitualEditorDraftValidationReport = undefined;
+    renderActiveSignedInShell();
+    setManageRitualEditorSavedBaselineFromForm();
+    requestAnimationFrame(() => {
+      document
+        .querySelector<HTMLElement>("[data-manage-ritual-editor='true']")
+        ?.scrollIntoView({ block: "start" });
+    });
+    return;
+  }
+
+  const idToken = await getFirebaseIdTokenForRitualEditor();
+
+  if (!idToken) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Sign in again before creating a Ritual.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  const result = await submitRitualEditDraft({
+    idToken,
+    request: {
+      action: "create_blank",
+      ritualId,
+    },
+  });
+
+  if (!result.valid) {
+    activeManageRitualEditorDraft = undefined;
+    activeManageRitualEditorUsesLocalDraft = false;
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: getRitualEditDraftFailureMessage(result),
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  activeManageRitualEditorDraft = result.draft;
+  activeManageRitualEditorUsesLocalDraft = false;
+  activeManageRitualEditorDraftStatus = {
+    tone: "saved",
+    message: "Draft created",
+  };
+  activeManageRitualEditorDraftValidationReport = undefined;
+  renderActiveSignedInShell();
+  setManageRitualEditorSavedBaselineFromForm();
+  requestAnimationFrame(() => {
+    document
+      .querySelector<HTMLElement>("[data-manage-ritual-editor='true']")
+      ?.scrollIntoView({ block: "start" });
+  });
 }
 
 async function loadOrCreateManageRitualEditorDraft(ritualId: string): Promise<void> {
@@ -1102,6 +1195,122 @@ async function applyActiveManageRitualEditorDraft(
     message: result.recommendationHeld
       ? "Draft published. Choose with me is held because recommendation metadata changed."
       : "Draft published.",
+  };
+  await reloadActiveRitualRepositoryForEditor();
+  renderActiveSignedInShell();
+}
+
+async function addActiveManageRitualEditorDraftToLibrary(
+  form: HTMLFormElement,
+): Promise<void> {
+  if (!activeManageRitualEditorDraft) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Open a draft before adding it to the library.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  if (activeManageRitualEditorDraft.draftSource !== "household_blank") {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Use Publish draft for existing Rituals.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  const draftBuffer = getDraftBufferFromForm(
+    form,
+    activeManageRitualEditorDraft.draftBuffer,
+  );
+  const draftBufferJson = serializeManageRitualDraftBuffer(draftBuffer);
+
+  if (draftBufferJson !== activeManageRitualEditorLastSavedDraftBufferJson) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Save draft changes before adding it to the library.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  if (!activeManageRitualEditorDraftValidationReport) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Check draft before adding it to the library.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  if (!activeManageRitualEditorDraftValidationReport.valid) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Cannot add to library yet.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  const confirmed = window.confirm(
+    "Add this draft Ritual to the library?\n\nThis creates the first live version, makes it available for Search and direct use, and keeps Choose with me held until you allow it.",
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  if (devVisualQaMode || activeManageRitualEditorUsesLocalDraft) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Adding to the library requires the DB draft service.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  const idToken = await getFirebaseIdTokenForRitualEditor();
+  if (!idToken) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Could not add to library.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  activeManageRitualEditorDraftStatus = {
+    tone: "saving",
+    message: "Adding to library...",
+  };
+  renderActiveSignedInShell();
+
+  const result = await submitRitualEditDraft({
+    idToken,
+    request: {
+      action: "add_to_library",
+      draftId: activeManageRitualEditorDraft.id,
+    },
+  });
+
+  if (!result.valid) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: getRitualEditDraftFailureMessage(result),
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  activeManageRitualEditorDraft = result.draft;
+  activeManageRitualEditorLastSavedDraftBufferJson =
+    serializeManageRitualDraftBuffer(result.draft.draftBuffer);
+  activeManageRitualEditorDraftValidationReport = undefined;
+  activeManageRitualEditorDraftStatus = {
+    tone: "saved",
+    message: "Ritual added to library. Choose with me is held for review.",
   };
   await reloadActiveRitualRepositoryForEditor();
   renderActiveSignedInShell();
@@ -2722,6 +2931,12 @@ appRoot.addEventListener("click", (event) => {
     return;
   }
 
+  if (target.closest("[data-manage-ritual-create='true']")) {
+    event.preventDefault();
+    void createBlankManageRitualEditorDraft();
+    return;
+  }
+
   if (target.closest("[data-check-in-start-over='true']")) {
     startCheckInOver();
     return;
@@ -2838,12 +3053,19 @@ appRoot.addEventListener("click", (event) => {
 
   if (target.closest("[data-manage-ritual-apply-draft='true']")) {
     event.preventDefault();
+    const actionTarget = target.closest<HTMLElement>(
+      "[data-manage-ritual-apply-draft='true']",
+    );
     const form = target.closest<HTMLFormElement>(
       "[data-manage-ritual-draft-form='true']",
     );
 
     if (form) {
-      void applyActiveManageRitualEditorDraft(form);
+      if (actionTarget?.dataset.manageRitualPublishAction === "add_to_library") {
+        void addActiveManageRitualEditorDraftToLibrary(form);
+      } else {
+        void applyActiveManageRitualEditorDraft(form);
+      }
     }
     return;
   }

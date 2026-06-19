@@ -52,7 +52,7 @@ export type ApplyRitualEditDraftWrite =
   | {
       collection: "rituals";
       id: string;
-      operation: "set";
+      operation: "create" | "set";
       document: RitualDocument;
     }
   | {
@@ -100,6 +100,17 @@ export type ApplyRitualEditDraftPlan = {
   writes: ApplyRitualEditDraftWrite[];
 };
 
+export type AddHouseholdRitualDraftToLibraryPlan = {
+  draftBefore: RitualEditDraftDocument;
+  draftAfter: RitualEditDraftDocument;
+  ritualDocumentAfter: RitualDocument;
+  versionDocument: RitualVersionDocument;
+  validationSnapshotDocument: RitualValidationSnapshotDocument;
+  reviewDecisionDocument: ReviewDecisionDocument;
+  auditEventDocument: RitualAuditEventDocument;
+  writes: ApplyRitualEditDraftWrite[];
+};
+
 export type ApplyRitualEditDraftStore = RitualEditDraftStore & {
   getRitualDocument(
     ritualId: string,
@@ -107,7 +118,9 @@ export type ApplyRitualEditDraftStore = RitualEditDraftStore & {
   getRitualVersionDocument(
     versionId: string,
   ): Promise<RitualVersionDocument | undefined>;
-  commitApplyRitualEditDraftPlan(plan: ApplyRitualEditDraftPlan): Promise<void>;
+  commitApplyRitualEditDraftPlan(
+    plan: ApplyRitualEditDraftPlan | AddHouseholdRitualDraftToLibraryPlan,
+  ): Promise<void>;
 };
 
 export type ApplyRitualEditDraftInput = {
@@ -121,6 +134,24 @@ export type ApplyRitualEditDraftResult =
   | {
       valid: true;
       plan: ApplyRitualEditDraftPlan;
+      findings: [];
+    }
+  | {
+      valid: false;
+      findings: RitualDbValidationFinding[];
+    };
+
+export type AddHouseholdRitualDraftToLibraryInput = {
+  store: ApplyRitualEditDraftStore;
+  draftId: string;
+  actor?: RitualEditDraftActor;
+  addedAtIso?: string;
+};
+
+export type AddHouseholdRitualDraftToLibraryResult =
+  | {
+      valid: true;
+      plan: AddHouseholdRitualDraftToLibraryPlan;
       findings: [];
     }
   | {
@@ -223,6 +254,20 @@ function createDecisionId(input: {
   ].join("_");
 }
 
+function createAddHouseholdDecisionId(input: {
+  ritualId: string;
+  versionId: string;
+  addedAtIso: string;
+}): string {
+  return [
+    "review",
+    "add_household_ritual",
+    normalizeIdPart(input.ritualId),
+    normalizeIdPart(input.versionId),
+    normalizeIdPart(input.addedAtIso),
+  ].join("_");
+}
+
 function createAuditEventId(input: {
   ritualId: string;
   versionId: string;
@@ -237,6 +282,20 @@ function createAuditEventId(input: {
   ].join("_");
 }
 
+function createAddHouseholdAuditEventId(input: {
+  ritualId: string;
+  versionId: string;
+  addedAtIso: string;
+}): string {
+  return [
+    "audit",
+    "household_ritual_added",
+    normalizeIdPart(input.ritualId),
+    normalizeIdPart(input.versionId),
+    normalizeIdPart(input.addedAtIso),
+  ].join("_");
+}
+
 function createValidationSnapshotId(input: {
   ritualId: string;
   versionId: string;
@@ -247,6 +306,20 @@ function createValidationSnapshotId(input: {
     normalizeIdPart(input.ritualId),
     normalizeIdPart(input.versionId),
     normalizeIdPart(input.appliedAtIso),
+  ].join("_");
+}
+
+function createAddHouseholdValidationSnapshotId(input: {
+  ritualId: string;
+  versionId: string;
+  addedAtIso: string;
+}): string {
+  return [
+    "validation",
+    "household",
+    normalizeIdPart(input.ritualId),
+    normalizeIdPart(input.versionId),
+    normalizeIdPart(input.addedAtIso),
   ].join("_");
 }
 
@@ -338,6 +411,27 @@ function applyLifecycleToRecommendationMetadata(input: {
   };
 }
 
+function lifecycleForAddedHouseholdRitual(
+  draft: RitualEditDraftDocument,
+): RitualDocument["lifecycle"] {
+  const draftMissing =
+    draft.draftBuffer.recommendationMetadata?.eligibility?.missing ?? [];
+
+  return {
+    state: "reviewed",
+    imported: false,
+    findable: true,
+    directUseEligible: true,
+    recommendationEligible: false,
+    recommendable: false,
+    missingReadiness: uniqueStrings([
+      ...draftMissing,
+      "recommendation_review",
+    ]),
+    holdReasons: [],
+  };
+}
+
 function createAppliedRitual(input: {
   baseRitual: Ritual;
   draft: RitualEditDraftDocument;
@@ -380,6 +474,48 @@ function createAppliedRitual(input: {
   };
 }
 
+function createAddedHouseholdRitual(input: {
+  draft: RitualEditDraftDocument;
+  lifecycle: RitualDocument["lifecycle"];
+}): Ritual {
+  const recommendationMetadata =
+    input.draft.draftBuffer.recommendationMetadata as RitualRecommendationMetadata;
+  const searchMetadata =
+    input.draft.draftBuffer.searchMetadata as RitualSearchMetadata;
+
+  return {
+    id: input.draft.ritualId,
+    status: "reviewed",
+    origin: cloneJson(input.draft.draftBuffer.origin),
+    presentation: {
+      ...cloneJson(input.draft.draftBuffer.presentation),
+      whyThisFits: "Generated after Choose with me.",
+    },
+    recommendationMetadata: applyLifecycleToRecommendationMetadata({
+      metadata: recommendationMetadata,
+      lifecycle: input.lifecycle,
+    }),
+    searchMetadata: {
+      ...cloneJson(searchMetadata),
+      originLabel: searchMetadata.originLabel ?? "Household",
+    },
+    availability: {
+      findable: input.lifecycle.findable,
+      directUseEligible: input.lifecycle.directUseEligible,
+      recommendationEligible: input.lifecycle.recommendationEligible,
+    },
+    ritualWords: input.draft.draftBuffer.ritualWords
+      ? cloneJson(input.draft.draftBuffer.ritualWords)
+      : undefined,
+    reviewFlags: input.draft.draftBuffer.reviewFlags
+      ? cloneJson(input.draft.draftBuffer.reviewFlags)
+      : undefined,
+    adaptationPolicy: input.draft.draftBuffer.adaptationPolicy
+      ? cloneJson(input.draft.draftBuffer.adaptationPolicy)
+      : undefined,
+  };
+}
+
 function createAppliedDraft(input: {
   draft: RitualEditDraftDocument;
   actor: RitualEditDraftActor;
@@ -395,6 +531,17 @@ function createAppliedDraft(input: {
     appliedBy: input.actor,
     appliedAtIso: input.appliedAtIso,
     appliedVersionId: input.appliedVersionId,
+  };
+}
+
+function createDraftLifecycleSnapshot(): RitualLifecycleSnapshot {
+  return {
+    lifecycleState: "draft",
+    findable: false,
+    directUseEligible: false,
+    recommendationEligible: false,
+    recommendable: false,
+    missingReadiness: ["not_added_to_library"],
   };
 }
 
@@ -445,8 +592,52 @@ function createRitualDocumentAfter(input: {
   };
 }
 
+function createAddedHouseholdRitualDocument(input: {
+  ritual: Ritual;
+  versionDocument: RitualVersionDocument;
+  validationSnapshotId: string;
+  reviewDecisionId: string;
+  lifecycle: RitualDocument["lifecycle"];
+  addedAtIso: string;
+}): RitualDocument {
+  const document = createRitualDocumentFromRitual(input.ritual, {
+    createdAtIso: input.addedAtIso,
+    updatedAtIso: input.addedAtIso,
+    currentVersionId: input.versionDocument.versionId,
+    publishedVersionId: input.versionDocument.versionId,
+    latestValidationSnapshotId: input.validationSnapshotId,
+    latestReviewDecisionId: input.reviewDecisionId,
+    holdReasons: input.lifecycle.holdReasons,
+  });
+
+  return {
+    ...document,
+    lifecycle: cloneJson(input.lifecycle),
+    versionHistory: {
+      versionIds: [input.versionDocument.versionId],
+      archivedVersionIds: [],
+      supersededVersionIds: [],
+    },
+  };
+}
+
 function collectPlanValidationFindings(
   plan: Omit<ApplyRitualEditDraftPlan, "writes">,
+): RitualDbValidationFinding[] {
+  return [
+    ...validateRitualDocument(plan.ritualDocumentAfter).findings,
+    ...validateRitualVersionDocument(plan.versionDocument).findings,
+    ...validateRitualValidationSnapshotDocument(
+      plan.validationSnapshotDocument,
+      plan.versionDocument,
+    ).findings,
+    ...validateReviewDecisionDocument(plan.reviewDecisionDocument).findings,
+    ...validateRitualAuditEventDocument(plan.auditEventDocument).findings,
+  ];
+}
+
+function collectAddHouseholdPlanValidationFindings(
+  plan: Omit<AddHouseholdRitualDraftToLibraryPlan, "writes">,
 ): RitualDbValidationFinding[] {
   return [
     ...validateRitualDocument(plan.ritualDocumentAfter).findings,
@@ -492,6 +683,49 @@ function createPlanWrites(
       collection: "rituals",
       id: plan.ritualDocumentAfter.id,
       operation: "set",
+      document: plan.ritualDocumentAfter,
+    },
+    {
+      collection: "ritualEditDrafts",
+      id: plan.draftAfter.id,
+      operation: "set",
+      document: plan.draftAfter,
+    },
+  ];
+}
+
+function createAddHouseholdPlanWrites(
+  plan: Omit<AddHouseholdRitualDraftToLibraryPlan, "writes">,
+): ApplyRitualEditDraftWrite[] {
+  return [
+    {
+      collection: "ritualVersions",
+      id: plan.versionDocument.id,
+      operation: "create",
+      document: plan.versionDocument,
+    },
+    {
+      collection: "ritualValidationSnapshots",
+      id: plan.validationSnapshotDocument.id,
+      operation: "create",
+      document: plan.validationSnapshotDocument,
+    },
+    {
+      collection: "reviewDecisions",
+      id: plan.reviewDecisionDocument.id,
+      operation: "create",
+      document: plan.reviewDecisionDocument,
+    },
+    {
+      collection: "ritualAuditEvents",
+      id: plan.auditEventDocument.id,
+      operation: "create",
+      document: plan.auditEventDocument,
+    },
+    {
+      collection: "rituals",
+      id: plan.ritualDocumentAfter.id,
+      operation: "create",
       document: plan.ritualDocumentAfter,
     },
     {
@@ -707,6 +941,187 @@ export async function applyRitualEditDraft(
   input: ApplyRitualEditDraftInput,
 ): Promise<ApplyRitualEditDraftResult> {
   const result = await createApplyRitualEditDraftPlan(input);
+
+  if (!result.valid) {
+    return result;
+  }
+
+  await input.store.commitApplyRitualEditDraftPlan(result.plan);
+
+  return result;
+}
+
+export async function createAddHouseholdRitualDraftToLibraryPlan(input: {
+  store: ApplyRitualEditDraftStore;
+  draftId: string;
+  actor?: RitualEditDraftActor;
+  addedAtIso?: string;
+}): Promise<AddHouseholdRitualDraftToLibraryResult> {
+  const actor = input.actor ?? "owner";
+  const addedAtIso = input.addedAtIso ?? new Date().toISOString();
+  const draft = await input.store.getDraft(input.draftId);
+
+  if (!draft) {
+    return {
+      valid: false,
+      findings: [finding("draftId", "Ritual edit draft was not found.")],
+    };
+  }
+
+  if (draft.status !== "active") {
+    return {
+      valid: false,
+      findings: [finding("draft.status", "Only active drafts can be added.")],
+    };
+  }
+
+  if (draft.draftSource !== "household_blank") {
+    return {
+      valid: false,
+      findings: [
+        finding(
+          "draft.draftSource",
+          "Add to library is only available for new household Ritual drafts.",
+        ),
+      ],
+    };
+  }
+
+  if (draft.saveState !== "saved") {
+    return {
+      valid: false,
+      findings: [
+        finding("draft.saveState", "Save this draft before adding it to the library."),
+      ],
+    };
+  }
+
+  if (draft.draftBuffer.origin.type !== "household") {
+    return {
+      valid: false,
+      findings: [
+        finding("draftBuffer.origin.type", "New Rituals must use household origin."),
+      ],
+    };
+  }
+
+  const existingRitual = await input.store.getRitualDocument(draft.ritualId);
+  if (existingRitual) {
+    return {
+      valid: false,
+      findings: [
+        finding("ritualId", "A live Ritual already exists for this draft."),
+      ],
+    };
+  }
+
+  const draftValidation = validateRitualEditDraft(draft);
+  if (!draftValidation.valid) {
+    return {
+      valid: false,
+      findings: draftValidation.findings.filter(
+        (item) => item.severity === "error",
+      ),
+    };
+  }
+
+  const lifecycleAfter = lifecycleForAddedHouseholdRitual(draft);
+  const ritual = createAddedHouseholdRitual({
+    draft,
+    lifecycle: lifecycleAfter,
+  });
+  const versionDocument = createRitualVersionDocumentFromRitual(ritual, {
+    createdAtIso: addedAtIso,
+    createdBy: toDbActor(actor),
+  });
+  const validationSnapshotId = createAddHouseholdValidationSnapshotId({
+    ritualId: draft.ritualId,
+    versionId: versionDocument.versionId,
+    addedAtIso,
+  });
+  const reviewDecisionId = createAddHouseholdDecisionId({
+    ritualId: draft.ritualId,
+    versionId: versionDocument.versionId,
+    addedAtIso,
+  });
+  const ritualDocumentAfter = createAddedHouseholdRitualDocument({
+    ritual,
+    versionDocument,
+    validationSnapshotId,
+    reviewDecisionId,
+    lifecycle: lifecycleAfter,
+    addedAtIso,
+  });
+  const validationSnapshotDocument = createRitualValidationSnapshotDocument({
+    id: validationSnapshotId,
+    ritualDocument: ritualDocumentAfter,
+    versionDocument,
+    validatorVersion: RITUAL_DRAFT_APPLY_VALIDATOR_VERSION,
+    generatedAtIso: addedAtIso,
+  });
+  const reviewDecisionDocument: ReviewDecisionDocument = {
+    id: reviewDecisionId,
+    ritualId: draft.ritualId,
+    versionId: versionDocument.versionId,
+    decisionType: "add_household_ritual",
+    decision: "approved",
+    reasons: [
+      "Added household Ritual to the library.",
+      "Choose with me held for recommendation review.",
+    ],
+    reviewer: toDbActor(actor),
+    before: createDraftLifecycleSnapshot(),
+    after: toLifecycleSnapshot(ritualDocumentAfter),
+    createdAtIso: addedAtIso,
+  };
+  const auditEventDocument: RitualAuditEventDocument = {
+    id: createAddHouseholdAuditEventId({
+      ritualId: draft.ritualId,
+      versionId: versionDocument.versionId,
+      addedAtIso,
+    }),
+    ritualId: draft.ritualId,
+    versionId: versionDocument.versionId,
+    eventType: "household_ritual_added",
+    actor: toAuditActor(actor),
+    summary: "Added household Ritual draft to the library.",
+    relatedReviewDecisionId: reviewDecisionId,
+    relatedValidationSnapshotId: validationSnapshotId,
+    createdAtIso: addedAtIso,
+  };
+  const draftAfter = createAppliedDraft({
+    draft,
+    actor,
+    appliedAtIso: addedAtIso,
+    appliedVersionId: versionDocument.versionId,
+  });
+  const partialPlan = {
+    draftBefore: cloneJson(draft),
+    draftAfter,
+    ritualDocumentAfter,
+    versionDocument,
+    validationSnapshotDocument,
+    reviewDecisionDocument,
+    auditEventDocument,
+  };
+  const findings = collectAddHouseholdPlanValidationFindings(partialPlan);
+
+  if (findings.some((item) => item.severity === "error")) {
+    return { valid: false, findings };
+  }
+
+  const plan: AddHouseholdRitualDraftToLibraryPlan = {
+    ...partialPlan,
+    writes: createAddHouseholdPlanWrites(partialPlan),
+  };
+
+  return { valid: true, plan, findings: [] };
+}
+
+export async function addHouseholdRitualDraftToLibrary(
+  input: AddHouseholdRitualDraftToLibraryInput,
+): Promise<AddHouseholdRitualDraftToLibraryResult> {
+  const result = await createAddHouseholdRitualDraftToLibraryPlan(input);
 
   if (!result.valid) {
     return result;
