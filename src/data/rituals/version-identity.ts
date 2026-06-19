@@ -2,7 +2,7 @@ import type {
   Ritual,
   RitualPresentation,
   RitualRecommendationMetadata,
-} from "./types";
+} from "./types.js";
 
 export type RitualVersionIdentity = {
   ritualId: string;

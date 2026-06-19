@@ -15,20 +15,20 @@ import {
   type RitualLifecycleSnapshot,
   type RitualValidationSnapshotDocument,
   type RitualVersionDocument,
-} from "./db-documents";
+} from "./db-documents.js";
 import {
   type RitualEditDraftActor,
   type RitualEditDraftDocument,
   type RitualEditDraftStore,
-} from "./ritual-edit-drafts";
-import { validateRitualEditDraft } from "./ritual-edit-draft-validation";
+} from "./ritual-edit-drafts.js";
+import { validateRitualEditDraft } from "./ritual-edit-draft-validation.js";
 import type {
   Ritual,
   RitualAvailability,
   RitualRecommendationMetadata,
   RitualSearchMetadata,
   RitualStatus,
-} from "./types";
+} from "./types.js";
 
 export const RITUAL_DRAFT_APPLY_VALIDATOR_VERSION =
   "ritual-edit-draft-apply-v1";

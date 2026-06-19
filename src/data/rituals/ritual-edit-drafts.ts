@@ -4,7 +4,7 @@ import {
   RITUAL_DB_SCHEMA_VERSION,
   type RitualDbActor,
   type RitualVersionDocument,
-} from "./db-documents";
+} from "./db-documents.js";
 import type {
   Ritual,
   RitualAdaptationPolicy,
@@ -16,7 +16,7 @@ import type {
   RitualSourceGrounding,
   RitualStatus,
   RitualWords,
-} from "./types";
+} from "./types.js";
 
 export const RITUAL_EDIT_DRAFT_STATUSES = [
   "active",
