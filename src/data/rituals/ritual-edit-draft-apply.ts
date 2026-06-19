@@ -143,9 +143,18 @@ type AdminDocumentReferenceLike = {
   set: (...args: any[]) => Promise<unknown>;
 };
 
+type AdminQueryLike = {
+  get: () => Promise<AdminQuerySnapshotLike>;
+  limit: (count: number) => AdminQueryLike;
+};
+
 type AdminCollectionReferenceLike = {
   doc: (id: string) => AdminDocumentReferenceLike;
-  get: () => Promise<AdminQuerySnapshotLike>;
+  where: (
+    fieldPath: string,
+    opStr: "==",
+    value: unknown,
+  ) => AdminQueryLike;
 };
 
 type AdminWriteBatchLike = {
@@ -727,12 +736,11 @@ export function createAdminFirestoreRitualEditDraftApplyStore(
       await draftCollection.doc(draft.id).set(cloneJson(draft));
     },
     async listDraftsForRitual(ritualId) {
-      const snapshot = await draftCollection.get();
+      const snapshot = await draftCollection.where("ritualId", "==", ritualId).get();
 
       return snapshot.docs
         .filter((document) => document.exists)
         .map((document) => document.data() as RitualEditDraftDocument)
-        .filter((draft) => draft.ritualId === ritualId)
         .sort((a, b) => b.updatedAtIso.localeCompare(a.updatedAtIso))
         .map(cloneJson);
     },
@@ -750,11 +758,11 @@ export function createAdminFirestoreRitualEditDraftApplyStore(
         return cloneJson(directSnapshot.data() as RitualVersionDocument);
       }
 
-      const querySnapshot = await versionCollection.get();
-      const matchingSnapshot = querySnapshot.docs.find((document) =>
-        document.exists &&
-        (document.data() as RitualVersionDocument).versionId === versionId
-      );
+      const querySnapshot = await versionCollection
+        .where("versionId", "==", versionId)
+        .limit(1)
+        .get();
+      const matchingSnapshot = querySnapshot.docs[0];
 
       return matchingSnapshot
         ? cloneJson(matchingSnapshot.data() as RitualVersionDocument)

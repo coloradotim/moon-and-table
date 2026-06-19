@@ -193,6 +193,10 @@ function createUnexpectedApiError(error: unknown): {
   status: number;
   body: SubmitRitualEditDraftResult;
 } {
+  if (getErrorMessage(error).includes("Ritual edit draft was not found")) {
+    return invalid("draftId", "Ritual edit draft was not found.", 404);
+  }
+
   if (isQuotaExceededError(error)) {
     return invalid(
       "firestore",
@@ -292,11 +296,6 @@ async function handleRequestAction(input: {
         },
       }
       : { status: 400, body: { valid: false, findings: result.findings } };
-  }
-
-  const existing = await input.dependencies.draftStore.getDraft(input.request.draftId);
-  if (!existing) {
-    return invalid("draftId", "Ritual edit draft was not found.", 404);
   }
 
   const saveInput = {

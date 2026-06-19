@@ -116,9 +116,17 @@ type AdminDocumentReferenceLike = {
   set: (document: unknown) => Promise<unknown>;
 };
 
+type AdminQueryLike = {
+  get: () => Promise<AdminQuerySnapshotLike>;
+};
+
 type AdminCollectionReferenceLike = {
   doc: (id: string) => AdminDocumentReferenceLike;
-  get: () => Promise<AdminQuerySnapshotLike>;
+  where: (
+    fieldPath: string,
+    opStr: "==",
+    value: unknown,
+  ) => AdminQueryLike;
 };
 
 export type AdminFirestoreRitualEditDraftDb = {
@@ -506,12 +514,11 @@ export function createAdminFirestoreRitualEditDraftStore(
       await collection.doc(draft.id).set(cloneJson(draft));
     },
     async listDraftsForRitual(ritualId) {
-      const snapshot = await collection.get();
+      const snapshot = await collection.where("ritualId", "==", ritualId).get();
 
       return snapshot.docs
         .filter((document) => document.exists)
         .map((document) => document.data() as RitualEditDraftDocument)
-        .filter((draft) => draft.ritualId === ritualId)
         .sort((a, b) => b.updatedAtIso.localeCompare(a.updatedAtIso))
         .map(cloneJson);
     },

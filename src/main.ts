@@ -651,6 +651,23 @@ function serializeManageRitualDraftBuffer(
   return JSON.stringify(draftBuffer);
 }
 
+function setManageRitualEditorSavedBaselineFromForm(): void {
+  if (!activeManageRitualEditorDraft) {
+    activeManageRitualEditorLastSavedDraftBufferJson = undefined;
+    return;
+  }
+
+  const form = document.querySelector<HTMLFormElement>(
+    "[data-manage-ritual-draft-form='true']",
+  );
+  const normalizedDraftBuffer = form
+    ? getDraftBufferFromForm(form, activeManageRitualEditorDraft.draftBuffer)
+    : activeManageRitualEditorDraft.draftBuffer;
+
+  activeManageRitualEditorLastSavedDraftBufferJson =
+    serializeManageRitualDraftBuffer(normalizedDraftBuffer);
+}
+
 function updateManageRitualDraftStatusText(message: string): void {
   const statusElement = document.querySelector<HTMLElement>(
     "[data-manage-ritual-draft-status='true']",
@@ -742,16 +759,13 @@ async function createLocalManageRitualEditorDraft(input: {
     createdAtIso: new Date().toISOString(),
   });
   activeManageRitualEditorUsesLocalDraft = true;
-  activeManageRitualEditorLastSavedDraftBufferJson =
-    serializeManageRitualDraftBuffer(
-      activeManageRitualEditorDraft.draftBuffer,
-    );
   activeManageRitualEditorDraftStatus = {
     tone: "idle",
     message: input.statusMessage,
   };
   activeManageRitualEditorDraftValidationReport = undefined;
   renderActiveSignedInShell();
+  setManageRitualEditorSavedBaselineFromForm();
   return true;
 }
 
@@ -844,16 +858,13 @@ async function loadOrCreateManageRitualEditorDraft(ritualId: string): Promise<vo
 
   activeManageRitualEditorDraft = result.draft;
   activeManageRitualEditorUsesLocalDraft = false;
-  activeManageRitualEditorLastSavedDraftBufferJson =
-    serializeManageRitualDraftBuffer(
-      activeManageRitualEditorDraft.draftBuffer,
-    );
   activeManageRitualEditorDraftStatus = {
     tone: "saved",
     message: "Saved",
   };
   activeManageRitualEditorDraftValidationReport = undefined;
   renderActiveSignedInShell();
+  setManageRitualEditorSavedBaselineFromForm();
 }
 
 async function saveManageRitualEditorDraft(form: HTMLFormElement): Promise<void> {
@@ -913,7 +924,7 @@ async function saveManageRitualEditorDraft(form: HTMLFormElement): Promise<void>
   if (!idToken) {
     activeManageRitualEditorDraftStatus = {
       tone: "error",
-      message: "Could not save",
+      message: "Sign in again before saving.",
     };
     renderActiveSignedInShell();
     return;
@@ -931,7 +942,7 @@ async function saveManageRitualEditorDraft(form: HTMLFormElement): Promise<void>
   if (!result.valid) {
     activeManageRitualEditorDraftStatus = {
       tone: "error",
-      message: "Could not save",
+      message: getRitualEditDraftFailureMessage(result),
     };
     activeManageRitualEditorDraft = {
       ...activeManageRitualEditorDraft,
@@ -942,15 +953,12 @@ async function saveManageRitualEditorDraft(form: HTMLFormElement): Promise<void>
   }
 
   activeManageRitualEditorDraft = result.draft;
-  activeManageRitualEditorLastSavedDraftBufferJson =
-    serializeManageRitualDraftBuffer(
-      activeManageRitualEditorDraft.draftBuffer,
-    );
   activeManageRitualEditorDraftStatus = {
     tone: "saved",
     message: "Saved",
   };
   renderActiveSignedInShell();
+  setManageRitualEditorSavedBaselineFromForm();
 }
 
 function validateActiveManageRitualEditorDraft(): void {
@@ -1010,7 +1018,7 @@ async function applyActiveManageRitualEditorDraft(
   if (draftBufferJson !== activeManageRitualEditorLastSavedDraftBufferJson) {
     activeManageRitualEditorDraftStatus = {
       tone: "error",
-      message: "Save before applying.",
+      message: "Save draft changes before publishing.",
     };
     renderActiveSignedInShell();
     return;

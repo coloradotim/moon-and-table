@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { createRitualVersionDocumentFromRitual } from "../../src/data/rituals/db-documents";
 import {
@@ -31,6 +31,46 @@ function clone<T>(value: T): T {
 }
 
 describe("Ritual edit drafts", () => {
+  it("queries Firestore edit drafts by ritual id instead of reading the full collection", async () => {
+    const versionDocument = createRitualVersionDocumentFromRitual(baseRitual, {
+      createdAtIso,
+    });
+    const draft = await createDraftFromRitualVersion({
+      store: createInMemoryRitualEditDraftStore(),
+      versionDocument,
+      draftId: "draft-scoped-query",
+      actor: "person_a",
+      createdAtIso,
+    });
+    const queryGet = vi.fn(async () => ({
+      docs: [
+        {
+          exists: true,
+          data: () => draft,
+        },
+      ],
+    }));
+    const where = vi.fn(() => ({ get: queryGet }));
+    const collection = {
+      doc: vi.fn(() => ({
+        get: vi.fn(),
+        set: vi.fn(),
+      })),
+      where,
+    };
+    const db = {
+      collection: vi.fn(() => collection),
+    };
+    const store = createAdminFirestoreRitualEditDraftStore(db);
+
+    await expect(store.listDraftsForRitual(baseRitual.id)).resolves.toEqual([
+      draft,
+    ]);
+    expect(where).toHaveBeenCalledWith("ritualId", "==", baseRitual.id);
+    expect(queryGet).toHaveBeenCalledTimes(1);
+    expect(collection).not.toHaveProperty("get");
+  });
+
   it("creates an active edit draft from an existing immutable Ritual version", async () => {
     const store = createInMemoryRitualEditDraftStore();
     const versionDocument = createRitualVersionDocumentFromRitual(baseRitual, {
@@ -346,12 +386,23 @@ describe("Ritual edit drafts", () => {
               },
             };
           },
-          async get() {
+          where(fieldPath, opStr, value) {
+            expect(fieldPath).toBe("ritualId");
+            expect(opStr).toBe("==");
+
             return {
-              docs: [...documents.values()].map((document) => ({
-                exists: true,
-                data: () => document,
-              })),
+              async get() {
+                return {
+                  docs: [...documents.values()]
+                    .filter((document) =>
+                      (document as { ritualId?: unknown }).ritualId === value
+                    )
+                    .map((document) => ({
+                      exists: true,
+                      data: () => document,
+                    })),
+                };
+              },
             };
           },
         };

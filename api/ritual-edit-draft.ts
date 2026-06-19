@@ -349,12 +349,11 @@ function createAdminFirestoreRitualEditDraftStore(db: FirestoreDb): RitualEditDr
       await collection.doc(draft.id).set(cloneJson(draft));
     },
     async listDraftsForRitual(ritualId) {
-      const snapshot = await collection.get();
+      const snapshot = await collection.where("ritualId", "==", ritualId).get();
 
       return snapshot.docs
         .filter((document) => document.exists)
         .map((document) => document.data() as RitualEditDraftDocument)
-        .filter((draft) => draft.ritualId === ritualId)
         .sort((a, b) => b.updatedAtIso.localeCompare(a.updatedAtIso))
         .map(cloneJson);
     },
@@ -585,6 +584,10 @@ function createUnexpectedApiError(error: unknown): {
   status: number;
   body: SubmitRitualEditDraftResult;
 } {
+  if (getErrorMessage(error).includes("Ritual edit draft was not found")) {
+    return invalid("draftId", "Ritual edit draft was not found.", 404);
+  }
+
   if (isQuotaExceededError(error)) {
     return invalid(
       "firestore",
@@ -679,11 +682,6 @@ async function handleRequestAction(input: {
         },
       }
       : { status: 400, body: { valid: false, findings: result.findings } };
-  }
-
-  const existing = await input.store.getDraft(input.request.draftId);
-  if (!existing) {
-    return invalid("draftId", "Ritual edit draft was not found.", 404);
   }
 
   const draft = await saveRitualEditDraft({
