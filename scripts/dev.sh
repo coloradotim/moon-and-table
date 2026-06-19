@@ -5,7 +5,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 STATE_DIR="$ROOT_DIR/.dev"
 PID_FILE="$STATE_DIR/server.pid"
 LOG_FILE="$STATE_DIR/server.log"
-DEV_HOST="${DEV_HOST:-127.0.0.1}"
+DEV_HOST="${DEV_HOST:-localhost}"
 DEV_PORT="${DEV_PORT:-5173}"
 DEV_URL="http://$DEV_HOST:$DEV_PORT"
 
@@ -22,7 +22,7 @@ Commands:
   open      Open the local app URL in the default browser.
 
 Environment:
-  DEV_HOST   Host for vite dev. Default: 127.0.0.1
+  DEV_HOST   Host for vite dev. Default: localhost
   DEV_PORT   Port for vite dev. Default: 5173
 
 USAGE

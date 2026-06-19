@@ -58,6 +58,29 @@ test("dev visual QA mode opens a new household Ritual draft from Manage", async 
   await expect(page.getByRole("button", { name: "Add to library" })).toBeVisible();
 });
 
+test("local dev server serves the Ritual edit draft API", async ({ request }) => {
+  const response = await request.post("/api/ritual-edit-draft", {
+    data: {
+      action: "create_blank",
+      ritualId: "playwright-local-api-check",
+    },
+  });
+
+  expect(response.status()).toBe(401);
+  expect(response.headers()["content-type"]).toContain("application/json");
+  expect(response.headers()["cache-control"]).toContain("no-store");
+  await expect(await response.json()).toEqual({
+    valid: false,
+    findings: [
+      {
+        path: "authorization",
+        message: "A Firebase ID token is required.",
+        severity: "error",
+      },
+    ],
+  });
+});
+
 test("dev visual QA mode recommends a Ritual through Choose with me", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/?dev_visual_qa=signed_in");
