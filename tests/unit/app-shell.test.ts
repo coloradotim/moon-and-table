@@ -1711,7 +1711,7 @@ describe("app shell rendering", () => {
     expect(html).toContain('name="ritualSearchTiming"');
     expect(html).toContain('data-ritual-search-timing="true"');
     expect(html).toContain(">This timing window</option>");
-    expect(html).toContain("17 rituals found");
+    expect(html).toContain("22 rituals found");
     expect(html).toContain("Matches: New Moon");
     expect(html).toContain("Timing required");
     expect(html).toContain("Timing preferred");
@@ -1731,7 +1731,7 @@ describe("app shell rendering", () => {
     });
 
     expect(html).toContain(">This timing window</option>");
-    expect(html).toContain("24 rituals found");
+    expect(html).toContain("26 rituals found");
     expect(html).toContain("Matches: New Moon");
     expect(html).toContain("candidate.saint_thomas.long_distance_calendar_light");
   });
@@ -1744,7 +1744,7 @@ describe("app shell rendering", () => {
     expect(html).toContain('name="ritualSearchTiming"');
     expect(html).toContain('<option value="full_moon" selected>Full Moon</option>');
     expect(html).not.toContain("This timing window");
-    expect(html).toContain("16 rituals found");
+    expect(html).toContain("20 rituals found");
     expect(html).toContain("Matches: Full Moon");
     expect(html).toContain("Timing required");
     expect(html).not.toContain("Best around:");

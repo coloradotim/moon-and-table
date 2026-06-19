@@ -268,7 +268,7 @@ describe("Ritual search", () => {
     });
     const ids = results.map((ritual) => ritual.id);
 
-    expect(results).toHaveLength(17);
+    expect(results).toHaveLength(22);
     expect(ids).toEqual(
       expect.arrayContaining([
         "candidate.moon_book.lunation_map_one_desire",
@@ -276,6 +276,7 @@ describe("Ritual search", () => {
         "candidate.moon_book.dark_moon_void_table",
         "candidate.moon_book.cycle_close_and_begin_again",
         "candidate.saint_thomas.bedroom_leaf_blessing",
+        "dykes-gibson-luna-candle-consecration",
       ]),
     );
     expect(ids).not.toEqual(
@@ -314,12 +315,13 @@ describe("Ritual search", () => {
     expect(windows.map((window) => window.label)).toEqual(
       expect.arrayContaining(["New Moon", "New moon", "Sextile aspect"]),
     );
-    expect(results).toHaveLength(24);
+    expect(results).toHaveLength(26);
     expect(ids).toEqual(
       expect.arrayContaining([
         "candidate.moon_book.lunation_map_one_desire",
         "candidate.dominguez.moon-phase-timing-check",
         "candidate.saint_thomas.long_distance_calendar_light",
+        "dykes-gibson-luna-candle-consecration",
       ]),
     );
     expect(
@@ -359,10 +361,10 @@ describe("Ritual search", () => {
       "End of year",
       "Beginning of year",
     ]);
-    expect(newMoonResults).toHaveLength(17);
-    expect(fullMoonResults).toHaveLength(16);
-    expect(waxingResults).toHaveLength(5);
-    expect(waningResults).toHaveLength(12);
+    expect(newMoonResults).toHaveLength(22);
+    expect(fullMoonResults).toHaveLength(20);
+    expect(waxingResults).toHaveLength(7);
+    expect(waningResults).toHaveLength(14);
     expect(monthResults.map((ritual) => ritual.id)).toEqual([
       "candidate.dominguez.astrology-journal-timing-record",
       "candidate.dominguez.conditions-as-outline",
@@ -381,12 +383,13 @@ describe("Ritual search", () => {
       timingFilter: "spring_equinox",
     });
 
-    expect(springResults).toHaveLength(10);
+    expect(springResults).toHaveLength(11);
     expect(springResults.map((ritual) => ritual.id)).toEqual(
       expect.arrayContaining([
         "candidate.moon_book.seed_pot_intention",
         "whitehurst-narcissus-morning-vase",
         "ritual-woodward-repeated-recipe-memory",
+        "dykes-gibson-zodiac-triplicities",
       ]),
     );
     expect(
