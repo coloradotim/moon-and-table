@@ -788,6 +788,10 @@ async function createBlankManageRitualEditorDraft(): Promise<void> {
 
   activeManageRitualEditorId = ritualId;
   clearManageRitualEditorDraftState();
+  activeManageRitualActionStatus = {
+    tone: "info",
+    message: "Creating Ritual draft...",
+  };
   activeManageRitualEditorDraftStatus = {
     tone: "saving",
     message: "Creating draft...",
@@ -802,6 +806,7 @@ async function createBlankManageRitualEditorDraft(): Promise<void> {
       createdAtIso: new Date().toISOString(),
     });
     activeManageRitualEditorUsesLocalDraft = true;
+    activeManageRitualActionStatus = undefined;
     activeManageRitualEditorDraftStatus = {
       tone: "idle",
       message: "Local preview draft",
@@ -820,6 +825,12 @@ async function createBlankManageRitualEditorDraft(): Promise<void> {
   const idToken = await getFirebaseIdTokenForRitualEditor();
 
   if (!idToken) {
+    activeManageRitualEditorId = null;
+    clearManageRitualEditorDraftState();
+    activeManageRitualActionStatus = {
+      tone: "error",
+      message: "Sign in again before creating a Ritual.",
+    };
     activeManageRitualEditorDraftStatus = {
       tone: "error",
       message: "Sign in again before creating a Ritual.",
@@ -837,8 +848,13 @@ async function createBlankManageRitualEditorDraft(): Promise<void> {
   });
 
   if (!result.valid) {
+    activeManageRitualEditorId = null;
     activeManageRitualEditorDraft = undefined;
     activeManageRitualEditorUsesLocalDraft = false;
+    activeManageRitualActionStatus = {
+      tone: "error",
+      message: getRitualEditDraftFailureMessage(result),
+    };
     activeManageRitualEditorDraftStatus = {
       tone: "error",
       message: getRitualEditDraftFailureMessage(result),
@@ -849,6 +865,7 @@ async function createBlankManageRitualEditorDraft(): Promise<void> {
 
   activeManageRitualEditorDraft = result.draft;
   activeManageRitualEditorUsesLocalDraft = false;
+  activeManageRitualActionStatus = undefined;
   activeManageRitualEditorDraftStatus = {
     tone: "saved",
     message: "Draft created",

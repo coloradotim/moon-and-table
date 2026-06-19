@@ -43,6 +43,21 @@ test("dev visual QA mode renders signed-in Manage rituals on mobile", async ({ p
   expect(hasHorizontalOverflow).toBe(false);
 });
 
+test("dev visual QA mode opens a new household Ritual draft from Manage", async ({ page }) => {
+  await page.goto("/?dev_visual_qa=signed_in&view=manage_rituals");
+
+  await page.getByRole("button", { name: "Create Ritual" }).click();
+
+  await expect(page.locator("[data-manage-ritual-editor='true']")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Untitled Ritual" })).toBeVisible();
+  await expect(
+    page
+      .locator("[data-manage-ritual-editor='true']")
+      .locator("[data-manage-ritual-draft-status='true']"),
+  ).toHaveText("Local preview draft");
+  await expect(page.getByRole("button", { name: "Add to library" })).toBeVisible();
+});
+
 test("dev visual QA mode recommends a Ritual through Choose with me", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/?dev_visual_qa=signed_in");
