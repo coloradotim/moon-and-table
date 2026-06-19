@@ -473,6 +473,130 @@ describe("Ritual edit draft API", () => {
     expect(audits.size).toBe(1);
   });
 
+  it("adds a saved household blank draft to the library through the API", async () => {
+    const { record, store, drafts, rituals, versions, snapshots, decisions, audits } =
+      createApplyFixtureStore();
+    const dependencies = createDependencies({
+      store,
+      applyStore: store,
+      versionDocument: record.versionDocument,
+    });
+    const createResponseBody = createResponse();
+
+    await handleRitualEditDraftApi(
+      {
+        method: "POST",
+        headers: { authorization: "Bearer valid-token" },
+        body: {
+          action: "create_blank",
+          ritualId: "household-api-ritual",
+        },
+      },
+      createResponseBody.response,
+      dependencies,
+    );
+
+    expect(createResponseBody.statusCode).toBe(200);
+    const draft = drafts.getAllDrafts()[0];
+    const saveResponse = createResponse();
+
+    await handleRitualEditDraftApi(
+      {
+        method: "POST",
+        headers: { authorization: "Bearer valid-token" },
+        body: {
+          action: "save",
+          draftId: draft.id,
+          draftBuffer: {
+            ...draft.draftBuffer,
+            status: "reviewed",
+            origin: {
+              type: "household",
+              householdContext: "A repo-safe household ritual created in the editor.",
+            },
+            presentation: {
+              headline: "API household Ritual",
+              practice: "Put one useful thing on the table.",
+              intention: "Give the beginning a visible place.",
+              bestWindow: "When the table is quiet.",
+              questionToCarry: "What is ready to be placed?",
+            },
+            recommendationMetadata: {
+              ...record.versionDocument.ritual.recommendationMetadata,
+              eligibility: {
+                recommendable: false,
+                missing: [],
+                notFor: [],
+              },
+            },
+            searchMetadata: {
+              tags: ["household", "table"],
+              keywords: ["household", "table"],
+              originLabel: "Household",
+            },
+            availability: {
+              findable: false,
+              directUseEligible: false,
+              recommendationEligible: false,
+            },
+          },
+        },
+      },
+      saveResponse.response,
+      dependencies,
+    );
+
+    expect(saveResponse.statusCode).toBe(200);
+
+    const addResponse = createResponse();
+    await handleRitualEditDraftApi(
+      {
+        method: "POST",
+        headers: { authorization: "Bearer valid-token" },
+        body: {
+          action: "add_to_library",
+          draftId: draft.id,
+        },
+      },
+      addResponse.response,
+      dependencies,
+    );
+
+    expect(addResponse.statusCode).toBe(200);
+    expect(addResponse.body).toEqual(
+      expect.objectContaining({
+        valid: true,
+        addedToLibrary: true,
+        recommendationHeld: true,
+        appliedVersionId: expect.any(String),
+        draft: expect.objectContaining({
+          status: "applied",
+          appliedVersionId: expect.any(String),
+        }),
+      }),
+    );
+    const body = addResponse.body as {
+      valid: true;
+      appliedVersionId: string;
+    };
+    expect(rituals.get("household-api-ritual")).toMatchObject({
+      currentVersionId: body.appliedVersionId,
+      lifecycle: expect.objectContaining({
+        findable: true,
+        directUseEligible: true,
+        recommendationEligible: false,
+        recommendable: false,
+        missingReadiness: ["recommendation_review"],
+      }),
+    });
+    expect(versions.get(body.appliedVersionId)?.ritual.presentation.headline).toBe(
+      "API household Ritual",
+    );
+    expect(snapshots.size).toBe(1);
+    expect(decisions.size).toBe(1);
+    expect(audits.size).toBe(1);
+  });
+
   it("rejects attempts to save whyThisFits as a canonical draft body field", async () => {
     const { record, store } = createFixtureStore();
     const dependencies = createDependencies({

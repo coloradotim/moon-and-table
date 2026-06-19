@@ -298,6 +298,11 @@ Rules:
 - Applied existing-version drafts record `appliedVersionId`, `appliedAtIso`,
   and `appliedBy` after the protected server transaction creates the immutable
   version and updates the live Ritual pointer.
+- Applied household-blank drafts record the same applied fields after the
+  protected `Add to library` transaction creates the first immutable version,
+  creates the `rituals/{ritualId}` pointer/index, writes validation/review/audit
+  records, makes the Ritual findable and direct-use eligible, and keeps Choose
+  with me held with `recommendation_review`.
 - Persistent actor fields use repo-safe IDs such as `person_a`, `person_b`, and
   `household`; private names are rendered only from private runtime context.
 
@@ -387,6 +392,7 @@ type ReviewDecisionDocument = {
     | "mark_needs_source_recheck"
     | "mark_needs_packet_correction"
     | "add_review_note"
+    | "add_household_ritual"
     | "apply_draft_changes"
     | "toggle_review_flag"
     | "archive_ritual"
@@ -474,6 +480,8 @@ type RitualAuditEventDocument = {
     | "validation_snapshot_created"
     | "static_export_generated"
     | "published_pointer_changed"
+    | "household_ritual_added"
+    | "ritual_draft_applied"
     | "runtime_read_fallback_used"
     | "rollback_performed";
   actor: "owner" | "automation" | "codex";
@@ -502,11 +510,16 @@ Promotion gates:
 ```text
 Ritual exists/imported
   -> validation snapshot created
-  -> reviewed or held for content/source/household reasons
-  -> direct-use promotion decision
+  -> reviewed or held for content/source reasons
+  -> direct-use promotion decision, for source/imported Rituals
   -> recommendation promotion decision
   -> optional static export / runtime publish
 ```
+
+For a new household-origin Ritual, `Add to library` is the explicit household
+approval step that creates the first immutable version and makes the Ritual
+findable/direct-use eligible. It does not make the Ritual recommendation-ready;
+that still requires a separate recommendation availability action.
 
 Direct-use promotion requires:
 

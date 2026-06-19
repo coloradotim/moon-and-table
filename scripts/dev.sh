@@ -5,7 +5,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 STATE_DIR="$ROOT_DIR/.dev"
 PID_FILE="$STATE_DIR/server.pid"
 LOG_FILE="$STATE_DIR/server.log"
-DEV_HOST="${DEV_HOST:-127.0.0.1}"
+DEV_HOST="${DEV_HOST:-localhost}"
 DEV_PORT="${DEV_PORT:-5173}"
 DEV_URL="http://$DEV_HOST:$DEV_PORT"
 
@@ -22,7 +22,7 @@ Commands:
   open      Open the local app URL in the default browser.
 
 Environment:
-  DEV_HOST   Host for vite dev. Default: 127.0.0.1
+  DEV_HOST   Host for vite dev. Default: localhost
   DEV_PORT   Port for vite dev. Default: 5173
 
 USAGE
@@ -120,12 +120,26 @@ start_server() {
   fi
 
   echo "Starting dev server at $DEV_URL..."
-  nohup bash -c '
-    cd "$1"
-    exec npm run dev -- --host "$2" --port "$3"
-  ' _ "$ROOT_DIR" "$DEV_HOST" "$DEV_PORT" >"$LOG_FILE" 2>&1 < /dev/null &
-  echo "$!" >"$PID_FILE"
-  disown
+  : >"$LOG_FILE"
+  python3 - "$ROOT_DIR" "$DEV_HOST" "$DEV_PORT" "$LOG_FILE" "$PID_FILE" <<'PY'
+import subprocess
+import sys
+
+root_dir, dev_host, dev_port, log_file, pid_file = sys.argv[1:]
+
+with open(log_file, "ab", buffering=0) as log:
+    process = subprocess.Popen(
+        ["npm", "run", "dev", "--", "--host", dev_host, "--port", dev_port],
+        cwd=root_dir,
+        stdin=subprocess.DEVNULL,
+        stdout=log,
+        stderr=subprocess.STDOUT,
+        start_new_session=True,
+    )
+
+with open(pid_file, "w", encoding="utf-8") as handle:
+    handle.write(str(process.pid))
+PY
 
   wait_for_port "$DEV_PORT"
   status

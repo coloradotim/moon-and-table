@@ -173,6 +173,11 @@ const BROAD_TIMING_CONTEXT_LABELS = new Set([
   "retrograde planet",
 ]);
 
+const DRAFT_ONLY_RUNTIME_FINDING_PATHS = new Set([
+  "availability.recommendationEligible",
+  "recommendationMetadata.eligibility.recommendable",
+]);
+
 function isObject(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
@@ -594,7 +599,6 @@ function validateDraftSearchMetadata(
     value: metadata.tags ?? [],
     path: "draftBuffer.searchMetadata.tags",
     findings,
-    required: true,
   });
   validateStringList({
     value: metadata.keywords ?? [],
@@ -659,6 +663,10 @@ export function validateRitualEditDraft(
   );
   for (const runtimeFinding of runtimeValidation.findings) {
     if (runtimeFinding.path === "presentation.whyThisFits") {
+      continue;
+    }
+
+    if (DRAFT_ONLY_RUNTIME_FINDING_PATHS.has(runtimeFinding.path)) {
       continue;
     }
 

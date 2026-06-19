@@ -5,6 +5,7 @@ import { readFileSync } from "node:fs";
 
 import type { RitualVersionDocument } from "../src/data/rituals/db-documents.js";
 import {
+  addHouseholdRitualDraftToLibrary,
   applyRitualEditDraft,
   createAdminFirestoreRitualEditDraftApplyStore,
   type ApplyRitualEditDraftStore,
@@ -91,6 +92,7 @@ type SubmitRitualEditDraftResult =
       draft: RitualEditDraftDocument;
       appliedVersionId?: string;
       recommendationHeld?: boolean;
+      addedToLibrary?: boolean;
     }
   | {
       valid: false;
@@ -114,6 +116,10 @@ type RitualEditDraftClientAction =
     }
   | {
       action: "apply_changes";
+      draftId: string;
+    }
+  | {
+      action: "add_to_library";
       draftId: string;
     };
 
@@ -249,9 +255,12 @@ function parseRequest(body: unknown): RitualEditDraftClientAction | undefined {
     };
   }
 
-  if (body.action === "apply_changes" && typeof body.draftId === "string") {
+  if (
+    (body.action === "apply_changes" || body.action === "add_to_library") &&
+    typeof body.draftId === "string"
+  ) {
     return {
-      action: "apply_changes",
+      action: body.action,
       draftId: body.draftId,
     };
   }
@@ -679,6 +688,28 @@ async function handleRequestAction(input: {
           draft: result.plan.draftAfter,
           appliedVersionId: result.plan.versionDocument.versionId,
           recommendationHeld: result.plan.recommendationHeld,
+        },
+      }
+      : { status: 400, body: { valid: false, findings: result.findings } };
+  }
+
+  if (input.request.action === "add_to_library") {
+    const result = await addHouseholdRitualDraftToLibrary({
+      store: input.applyStore,
+      draftId: input.request.draftId,
+      actor: "owner",
+      addedAtIso: input.now,
+    });
+
+    return result.valid
+      ? {
+        status: 200,
+        body: {
+          valid: true,
+          draft: result.plan.draftAfter,
+          appliedVersionId: result.plan.versionDocument.versionId,
+          recommendationHeld: true,
+          addedToLibrary: true,
         },
       }
       : { status: 400, body: { valid: false, findings: result.findings } };

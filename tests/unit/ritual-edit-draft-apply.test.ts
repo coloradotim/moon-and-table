@@ -9,10 +9,13 @@ import type {
   RitualVersionDocument,
 } from "../../src/data/rituals/db-documents";
 import {
+  addHouseholdRitualDraftToLibrary,
+  createAddHouseholdRitualDraftToLibraryPlan,
   applyRitualEditDraft,
   type ApplyRitualEditDraftStore,
 } from "../../src/data/rituals/ritual-edit-draft-apply";
 import {
+  createBlankHouseholdRitualDraft,
   createDraftFromRitualVersion,
   createInMemoryRitualEditDraftStore,
   saveRitualEditDraft,
@@ -104,6 +107,61 @@ async function createSavedDraft(input: {
     draftBuffer: mutated.draftBuffer,
     actor: "person_a",
     updatedAtIso: savedAtIso,
+  });
+}
+
+async function createSavedHouseholdDraft(input: {
+  store: ApplyRitualEditDraftStore;
+  base: RitualVersionDocument;
+}): Promise<RitualEditDraftDocument> {
+  const ritualId = "household-table-beginning";
+  const draft = await createBlankHouseholdRitualDraft({
+    store: input.store,
+    ritualId,
+    actor: "person_b",
+    createdAtIso,
+  });
+  const sourceRitual = input.base.ritual;
+
+  return saveRitualEditDraft({
+    store: input.store,
+    draftId: draft.id,
+    actor: "person_b",
+    updatedAtIso: savedAtIso,
+    draftBuffer: {
+      ...draft.draftBuffer,
+      id: ritualId,
+      status: "reviewed",
+      origin: {
+        type: "household",
+        householdContext: "A repo-safe household ritual created in the editor.",
+      },
+      presentation: {
+        headline: "Set the Small Table",
+        practice: "Clear a small table and place one useful object on it.",
+        intention: "Give the beginning one quiet place to land.",
+        bestWindow: "When the house has a quiet minute.",
+        questionToCarry: "What small beginning is ready for a place?",
+      },
+      recommendationMetadata: {
+        ...clone(sourceRitual.recommendationMetadata),
+        eligibility: {
+          recommendable: false,
+          missing: [],
+          notFor: [],
+        },
+      },
+      searchMetadata: {
+        tags: ["table", "beginning"],
+        keywords: ["table", "beginning"],
+        originLabel: "Household",
+      },
+      availability: {
+        findable: false,
+        directUseEligible: false,
+        recommendationEligible: false,
+      },
+    },
   });
 }
 
@@ -296,6 +354,102 @@ describe("Ritual edit draft apply", () => {
         path: "baseVersionId",
         message:
           "This draft is based on an older live version. Reload or compare before applying.",
+      }),
+    ]);
+  });
+
+  it("adds a saved household blank draft as the first live library version", async () => {
+    const { record, store, rituals, versions, snapshots, decisions, audits, drafts } =
+      createFixture();
+    const draft = await createSavedHouseholdDraft({
+      store,
+      base: record.versionDocument,
+    });
+
+    const result = await addHouseholdRitualDraftToLibrary({
+      store,
+      draftId: draft.id,
+      actor: "person_b",
+      addedAtIso: appliedAtIso,
+    });
+
+    expect(result.valid).toBe(true);
+    if (!result.valid) {
+      return;
+    }
+    expect(result.plan.versionDocument.ritualId).toBe(draft.ritualId);
+    expect(result.plan.versionDocument.ritual.origin.type).toBe("household");
+    expect(result.plan.versionDocument.ritual.presentation.headline).toBe(
+      "Set the Small Table",
+    );
+    expect(rituals.get(draft.ritualId)).toMatchObject({
+      currentVersionId: result.plan.versionDocument.versionId,
+      publishedVersionId: result.plan.versionDocument.versionId,
+      lifecycle: expect.objectContaining({
+        state: "reviewed",
+        findable: true,
+        directUseEligible: true,
+        recommendationEligible: false,
+        recommendable: false,
+        missingReadiness: ["recommendation_review"],
+      }),
+    });
+    expect(versions.get(result.plan.versionDocument.versionId)).toEqual(
+      result.plan.versionDocument,
+    );
+    expect(snapshots.has(result.plan.validationSnapshotDocument.id)).toBe(true);
+    expect(decisions.get(result.plan.reviewDecisionDocument.id)).toMatchObject({
+      decisionType: "add_household_ritual",
+      decision: "approved",
+      before: expect.objectContaining({
+        lifecycleState: "draft",
+        findable: false,
+      }),
+      after: expect.objectContaining({
+        lifecycleState: "reviewed",
+        findable: true,
+      }),
+    });
+    expect(audits.get(result.plan.auditEventDocument.id)?.eventType).toBe(
+      "household_ritual_added",
+    );
+    expect(drafts.getAllDrafts()[0]).toMatchObject({
+      status: "applied",
+      appliedBy: "person_b",
+      appliedVersionId: result.plan.versionDocument.versionId,
+    });
+  });
+
+  it("refuses to add a household draft when a live Ritual id already exists", async () => {
+    const { record, store } = createFixture();
+    const draft = await createSavedHouseholdDraft({
+      store,
+      base: record.versionDocument,
+    });
+    await store.setDraft({
+      ...draft,
+      ritualId: record.ritualDocument.id,
+      draftBuffer: {
+        ...draft.draftBuffer,
+        id: record.ritualDocument.id,
+      },
+    });
+
+    const result = await createAddHouseholdRitualDraftToLibraryPlan({
+      store,
+      draftId: draft.id,
+      actor: "person_b",
+      addedAtIso: appliedAtIso,
+    });
+
+    expect(result.valid).toBe(false);
+    if (result.valid) {
+      return;
+    }
+    expect(result.findings).toEqual([
+      expect.objectContaining({
+        path: "ritualId",
+        message: "A live Ritual already exists for this draft.",
       }),
     ]);
   });

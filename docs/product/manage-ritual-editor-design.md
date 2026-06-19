@@ -8,8 +8,7 @@ Scope: Product design. Early slices now implement read-only inspection,
 editable Search/library terms, editable selection metadata, safe read-only
 source/provenance display, on-demand draft validation display, and the existing
 Ritual live-update flow. This document does not itself implement source
-import, selector scoring changes, rollback UI, or new household Ritual
-publication.
+import, selector scoring changes, or rollback UI.
 
 ## 1. Product Goal
 
@@ -24,6 +23,7 @@ The editor should let household maintainers:
 - preview how a draft would appear in Search / direct selection;
 - later preview whether and how a draft could be recommended by Choose with me;
 - apply an existing-Ritual draft as the new live version;
+- add a new household-origin draft to the live library;
 - understand prior versions and rollback context without using raw JSON as the main interface.
 
 The editor must not become a generic CMS, a source-ingestion UI, or a raw JSON admin panel.
@@ -49,6 +49,8 @@ ritualEditDrafts/{draftId}
 A draft is a workspace. It may be saved. It may be discarded. It may be
 validated. Existing-Ritual drafts become immutable Ritual versions only when a
 household maintainer explicitly chooses `Publish draft`.
+Blank household-origin drafts become their first immutable Ritual version only
+when a household maintainer explicitly chooses `Add to library`.
 
 Do not use mutable `ritualVersions` as the draft workspace. That would weaken the meaning of immutable version history.
 
@@ -132,11 +134,15 @@ A household-origin Ritual created from scratch should be able to move through th
 
 ```text
 draft
-→ reviewed / direct-use eligible
+→ reviewed / library and direct-use eligible
 → recommendable
 ```
 
-Household Rituals do not require source grounding. They do require household context/review, complete metadata, validation, and explicit promotion before they are findable, direct-use eligible, or recommendation eligible.
+Household Rituals do not require source grounding. They do require household
+context, complete metadata, validation, and an explicit `Add to library` action
+before they are findable or direct-use eligible. `Add to library` should hold
+Choose with me by default with `recommendation_review`; recommendation
+eligibility is a separate availability action after the Ritual is live.
 
 Do not treat household-origin Rituals as less legitimate than source-backed Rituals. If Tim and Jessica approve one as a real Ritual and its metadata is good, it can be recommendation eligible.
 
@@ -228,6 +234,7 @@ Primary actions:
 Save draft
 Check draft
 Publish draft
+Add to library, for new household drafts
 Discard draft
 Return to table
 ```
@@ -750,10 +757,12 @@ Create Ritual
 → validate draft
 → Add to library
 → create immutable household-origin ritualVersion
-→ review/availability action may make findable/direct-use/recommendation eligible
+→ create rituals/{ritualId} pointer/index as reviewed, findable, and direct-use eligible
+→ hold Choose with me with recommendation_review
+→ later availability action may allow recommendation
 ```
 
-No source grounding required. Household review/context required.
+No source grounding required. Household context required.
 
 ### 8.3 Apply existing draft
 

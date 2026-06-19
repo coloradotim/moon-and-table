@@ -1,6 +1,7 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { defineConfig, loadEnv, type Plugin } from "vite";
 
+import editDraftHandler from "./api/ritual-edit-draft";
 import reviewActionHandler from "./api/ritual-review-action";
 
 function loadServerEnv(mode: string): void {
@@ -58,9 +59,9 @@ function createJsonResponse(response: ServerResponse) {
   };
 }
 
-function localReviewActionApiPlugin(): Plugin {
+function localApiPlugin(): Plugin {
   return {
-    name: "moon-table-local-review-action-api",
+    name: "moon-table-local-api",
     configureServer(server) {
       server.middlewares.use("/api/ritual-review-action", async (request, response) => {
         try {
@@ -89,6 +90,34 @@ function localReviewActionApiPlugin(): Plugin {
           }));
         }
       });
+
+      server.middlewares.use("/api/ritual-edit-draft", async (request, response) => {
+        try {
+          await editDraftHandler(
+            {
+              method: request.method,
+              headers: normalizeHeaders(request.headers),
+              body: await readJsonBody(request),
+            },
+            createJsonResponse(response),
+          );
+        } catch (error) {
+          response.statusCode = 500;
+          response.setHeader("Content-Type", "application/json");
+          response.end(JSON.stringify({
+            valid: false,
+            findings: [
+              {
+                path: "ritualEditDraft",
+                message: error instanceof Error
+                  ? error.message
+                  : "Ritual edit draft API failed.",
+                severity: "error",
+              },
+            ],
+          }));
+        }
+      });
     },
   };
 }
@@ -97,6 +126,6 @@ export default defineConfig(({ mode }) => {
   loadServerEnv(mode);
 
   return {
-    plugins: [localReviewActionApiPlugin()],
+    plugins: [localApiPlugin()],
   };
 });

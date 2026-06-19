@@ -5,6 +5,7 @@ import type {
   SubmitRitualEditDraftResult,
 } from "../data/rituals/ritual-edit-draft-client";
 import {
+  addHouseholdRitualDraftToLibrary,
   applyRitualEditDraft,
   type ApplyRitualEditDraftStore,
 } from "../data/rituals/ritual-edit-draft-apply";
@@ -158,9 +159,12 @@ function parseRequest(body: unknown): RitualEditDraftClientAction | undefined {
     };
   }
 
-  if (body.action === "apply_changes" && typeof body.draftId === "string") {
+  if (
+    (body.action === "apply_changes" || body.action === "add_to_library") &&
+    typeof body.draftId === "string"
+  ) {
     return {
-      action: "apply_changes",
+      action: body.action,
       draftId: body.draftId,
     };
   }
@@ -293,6 +297,36 @@ async function handleRequestAction(input: {
           draft: result.plan.draftAfter,
           appliedVersionId: result.plan.versionDocument.versionId,
           recommendationHeld: result.plan.recommendationHeld,
+        },
+      }
+      : { status: 400, body: { valid: false, findings: result.findings } };
+  }
+
+  if (input.request.action === "add_to_library") {
+    if (!input.dependencies.applyStore) {
+      return invalid(
+        "ritualEditDraft",
+        "Adding a Ritual to the library requires the Ritual edit draft apply service.",
+        500,
+      );
+    }
+
+    const result = await addHouseholdRitualDraftToLibrary({
+      store: input.dependencies.applyStore,
+      draftId: input.request.draftId,
+      actor: "owner",
+      addedAtIso: input.now,
+    });
+
+    return result.valid
+      ? {
+        status: 200,
+        body: {
+          valid: true,
+          draft: result.plan.draftAfter,
+          appliedVersionId: result.plan.versionDocument.versionId,
+          recommendationHeld: true,
+          addedToLibrary: true,
         },
       }
       : { status: 400, body: { valid: false, findings: result.findings } };

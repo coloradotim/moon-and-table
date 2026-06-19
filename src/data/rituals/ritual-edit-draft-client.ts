@@ -22,6 +22,10 @@ export type RitualEditDraftClientAction =
   | {
       action: "apply_changes";
       draftId: string;
+    }
+  | {
+      action: "add_to_library";
+      draftId: string;
     };
 
 export type SubmitRitualEditDraftResult =
@@ -30,6 +34,7 @@ export type SubmitRitualEditDraftResult =
       draft: RitualEditDraftDocument;
       appliedVersionId?: string;
       recommendationHeld?: boolean;
+      addedToLibrary?: boolean;
     }
   | {
       valid: false;
@@ -87,6 +92,9 @@ function parseClientResult(payload: unknown): SubmitRitualEditDraftResult {
         : undefined,
       recommendationHeld: typeof payload.recommendationHeld === "boolean"
         ? payload.recommendationHeld
+        : undefined,
+      addedToLibrary: typeof payload.addedToLibrary === "boolean"
+        ? payload.addedToLibrary
         : undefined,
     };
   }
