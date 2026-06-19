@@ -199,9 +199,9 @@ describe("Manage Rituals view model", () => {
         }),
         expect.objectContaining({
           action: "promote_direct_use",
-          label: "Restore direct use",
+          label: "Show in library",
           enabled: false,
-          disabledReason: "Direct use is already available.",
+          disabledReason: "This Ritual is already shown in the library.",
         }),
       ]),
     );
@@ -278,7 +278,7 @@ describe("Manage Rituals view model", () => {
 
     expect(promoteRecommendation).toEqual(expect.objectContaining({
       enabled: true,
-      label: "Make recommendation-ready",
+      label: "Allow in Choose with me",
       disabledReason: undefined,
     }));
   });
@@ -316,8 +316,8 @@ describe("Manage Rituals view model", () => {
 
     expect(promoteRecommendation).toEqual(expect.objectContaining({
       enabled: false,
-      label: "Make recommendation-ready",
-      disabledReason: "Restore direct use before making this recommendation-ready.",
+      label: "Allow in Choose with me",
+      disabledReason: "Show this Ritual in the library before allowing Choose with me.",
     }));
   });
 

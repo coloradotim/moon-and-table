@@ -268,7 +268,6 @@ describe("app shell rendering", () => {
 
     expect(html).not.toContain("Welcome back, Morgan.");
     expect(html).not.toContain("Today’s shape");
-    expect(html).not.toContain("Choose with me");
     expect(html).not.toContain("I have something in mind");
     expect(html).toContain("Are you wanting something for today, or looking across the week?");
     expect(html).toContain("For today");
@@ -933,7 +932,7 @@ describe("app shell rendering", () => {
     expect(html).toContain('data-manage-ritual-sort="recommendation"');
     expect(html).toContain('class="manage-rituals__record-summary"');
     expect(html).toContain("Direct use");
-    expect(html).toContain("Review workflow");
+    expect(html).toContain("Availability");
     expect(html).toContain("read-only");
     expect(html).toContain("Validation findings");
     expect(html).toContain("Source label / origin label");
@@ -945,7 +944,7 @@ describe("app shell rendering", () => {
     expect(html).toContain("Raw full object");
     expect(html).toContain("&quot;id&quot;: &quot;ritual-buckland-candle-prepare-table&quot;");
     expect(html).not.toContain("Search by material, mood, purpose, place, or phrase.");
-    expect(html).not.toContain("Choose with me");
+    expect(html).not.toContain("<h3>Choose with me</h3>");
     expect(html).not.toContain("I have something in mind");
     expect(html).not.toContain("data-ritual-select");
   });
@@ -957,14 +956,52 @@ describe("app shell rendering", () => {
     });
 
     expect(html).toContain("DB-backed");
-    expect(html).toContain("Record review decision");
     expect(html).toContain('data-manage-ritual-review-form="true"');
-    expect(html).toContain('value="hold_direct_use"');
-    expect(html).toContain('value="add_review_note"');
-    expect(html).toContain("Remove from direct use");
-    expect(html).toContain("Make recommendation-ready");
-    expect(html).toContain("Remove from recommendations");
-    expect(html).toContain("Records a DB review decision and audit event.");
+    expect(html).toContain("Show in library");
+    expect(html).toContain("Hide from library");
+    expect(html).toContain("Allow in Choose with me");
+    expect(html).toContain("Hold from Choose with me");
+    expect(html).toContain("Control where this Ritual can appear.");
+    expect(html).toContain("Library");
+    expect(html).toContain("Direct use");
+    expect(html).toContain("Choose with me");
+    expect(html).toContain("Review context");
+    expect(html).toContain("Unavailable actions");
+    expect(html).not.toContain("metadata changed");
+    expect(html).not.toContain("needs source check");
+    expect(html).not.toContain("Optional note");
+    expect(html).not.toContain(">Reason<");
+    expect(html).not.toContain(">Record review decision<");
+    expect(html).not.toContain(">Review action<");
+  });
+
+  it("keeps the acted-on Manage Ritual row expanded with row-level action feedback", () => {
+    const html = renderManageRitualsSection({
+      ritualRepositorySource: "db",
+      ritualDbDocuments: createDbDocuments(),
+      expandedRitualId: "ritual-buckland-candle-prepare-table",
+      actionStatus: {
+        ritualId: "ritual-buckland-candle-prepare-table",
+        tone: "info",
+        message: "Recording review decision...",
+      },
+    });
+    const rowStart = html.indexOf(
+      'data-manage-ritual-record="ritual-buckland-candle-prepare-table"',
+    );
+    const rowEnd = html.indexOf("</details>", rowStart);
+    const rowHtml = html.slice(rowStart, rowEnd);
+    const topStatusStart = html.indexOf('<header class="manage-rituals__header">');
+    const topStatusEnd = html.indexOf(
+      '<details class="manage-rituals__summary">',
+      topStatusStart,
+    );
+    const topStatusHtml = html.slice(topStatusStart, topStatusEnd);
+
+    expect(rowHtml).toContain(" open");
+    expect(rowHtml).toContain("Recording review decision...");
+    expect(rowHtml).toContain("manage-rituals__action-status--info");
+    expect(topStatusHtml).not.toContain("Recording review decision...");
   });
 
   it("opens a full Ritual editor shell with editable canonical body fields", async () => {

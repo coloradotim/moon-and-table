@@ -2594,6 +2594,57 @@ h2 {
   align-items: start;
 }
 
+.manage-rituals__availability-shell {
+  display: grid;
+  gap: 16px;
+  align-items: start;
+}
+
+.manage-rituals__availability-summary {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.manage-rituals__availability-status {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(200, 190, 173, 0.72);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.64);
+}
+
+.manage-rituals__availability-status--ready {
+  border-color: rgba(102, 123, 92, 0.42);
+}
+
+.manage-rituals__availability-status--held {
+  border-color: rgba(149, 84, 70, 0.34);
+}
+
+.manage-rituals__availability-status dt,
+.manage-rituals__availability-status dd {
+  margin: 0;
+}
+
+.manage-rituals__availability-status dt {
+  color: #52635a;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.manage-rituals__availability-status dd {
+  color: #26312c;
+  font-size: 0.9rem;
+  font-weight: 750;
+  line-height: 1.25;
+}
+
 .manage-rituals__review-current,
 .manage-rituals__review-form,
 .manage-rituals__review-eligibility {
@@ -2604,6 +2655,14 @@ h2 {
 .manage-rituals__review-eligibility h5 {
   color: #26312c;
   font-size: 0.82rem;
+}
+
+.manage-rituals__review-current summary {
+  width: fit-content;
+  color: #52635a;
+  font-size: 0.82rem;
+  font-weight: 750;
+  cursor: pointer;
 }
 
 .manage-rituals__review-facts {
@@ -2618,38 +2677,114 @@ h2 {
 }
 
 .manage-rituals__review-form {
-  display: grid;
-  gap: 10px;
-}
-
-.manage-rituals__review-form label {
-  display: grid;
-  gap: 5px;
-  color: #52635a;
-  font-size: var(--text-label);
-  font-weight: 700;
-}
-
-.manage-rituals__review-form select,
-.manage-rituals__review-form textarea {
-  width: 100%;
   min-width: 0;
-  border: 1px solid rgba(159, 174, 166, 0.72);
-  border-radius: 8px;
-  background: rgba(255, 253, 247, 0.9);
-  color: #26312c;
-  font: inherit;
 }
 
-.manage-rituals__review-form select {
+.manage-rituals__availability-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.manage-rituals__availability-action {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
   min-height: 38px;
-  padding: 6px 28px 6px 9px;
+  padding: 7px 12px;
+  border: 1px solid rgba(102, 123, 92, 0.42);
+  border-radius: 8px;
+  background: rgba(244, 247, 242, 0.86);
+  color: #26312c;
+  box-shadow: 0 1px 0 rgba(38, 49, 44, 0.08);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
 }
 
-.manage-rituals__review-form textarea {
-  min-height: 94px;
-  padding: 9px;
-  resize: vertical;
+.manage-rituals__availability-action strong,
+.manage-rituals__availability-action span {
+  display: block;
+}
+
+.manage-rituals__availability-action strong {
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.manage-rituals__availability-action span {
+  color: #58675f;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.manage-rituals__availability-action:hover,
+.manage-rituals__availability-action:focus-visible {
+  border-color: rgba(102, 123, 92, 0.72);
+  background: rgba(238, 244, 234, 0.94);
+}
+
+.manage-rituals__availability-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.manage-rituals__availability-action--caution {
+  border-color: rgba(149, 84, 70, 0.36);
+}
+
+.manage-rituals__availability-action--danger {
+  border-color: rgba(149, 84, 70, 0.56);
+}
+
+.manage-rituals__availability-empty {
+  margin: 0;
+  color: #68786f;
+  font-size: 0.84rem;
+  line-height: 1.4;
+}
+
+.manage-rituals__availability-unavailable {
+  margin-top: 10px;
+}
+
+.manage-rituals__availability-unavailable summary {
+  width: fit-content;
+  color: #68786f;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.manage-rituals__availability-unavailable ul {
+  display: grid;
+  gap: 7px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.manage-rituals__availability-unavailable li {
+  display: grid;
+  gap: 2px;
+  padding-left: 9px;
+  border-left: 2px solid rgba(200, 190, 173, 0.78);
+}
+
+.manage-rituals__availability-unavailable strong,
+.manage-rituals__availability-unavailable span {
+  font-size: 0.74rem;
+  line-height: 1.3;
+}
+
+.manage-rituals__availability-unavailable strong {
+  color: #52635a;
+}
+
+.manage-rituals__availability-unavailable span {
+  color: #68786f;
 }
 
 .manage-rituals__review-submit {
@@ -4464,6 +4599,11 @@ fieldset {
   .manage-rituals__review-layout {
     grid-template-columns: 1fr;
     gap: 14px;
+  }
+
+  .manage-rituals__availability-shell,
+  .manage-rituals__availability-summary {
+    grid-template-columns: 1fr;
   }
 
   .manage-rituals__review-submit {

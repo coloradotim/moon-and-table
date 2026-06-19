@@ -91,6 +91,7 @@ import {
   RITUAL_TIMING_RELATIONSHIPS,
   type Ritual,
 } from "../data/rituals/types";
+import type { RitualReviewAction } from "../data/rituals/db-review-transactions";
 import type { TimingWindowCandidate } from "../lib/timing-window-candidates";
 
 const capacityModes: CapacityMode[] = ["pause", "low", "steady", "high"];
@@ -177,6 +178,7 @@ export type SignedInShellOptions = {
   selectedManageRitualEditorDraftStatus?: ManageRitualEditorDraftStatus;
   selectedManageRitualEditorDraftValidationReport?: RitualEditDraftValidationReport;
   selectedManageRitualChoosePreviewSample?: Partial<RitualDraftChoosePreviewSampleInput>;
+  expandedManageRitualId?: string | null;
   manageRitualActionStatus?: {
     ritualId?: string;
     tone: "success" | "error" | "info";
@@ -2735,42 +2737,118 @@ function renderManageReviewFacts(reviewState: ManageRitualReviewState): string {
   `;
 }
 
-function renderManageActionOption(action: ManageRitualReviewActionOption): string {
-  const disabled = action.enabled ? "" : " disabled";
-  const reason = action.disabledReason ? ` - ${action.disabledReason}` : "";
+const manageAvailabilityPrimaryActions = new Set<RitualReviewAction>([
+  "promote_direct_use",
+  "hold_direct_use",
+  "promote_recommendation",
+  "hold_recommendation",
+  "archive_ritual",
+]);
+
+function renderManageAvailabilityStatus(input: {
+  label: string;
+  value: string;
+  tone?: "ready" | "held" | "neutral";
+}): string {
+  return `
+    <div class="manage-rituals__availability-status manage-rituals__availability-status--${input.tone ?? "neutral"}">
+      <dt>${escapeHtml(input.label)}</dt>
+      <dd>${escapeHtml(input.value)}</dd>
+    </div>
+  `;
+}
+
+function renderManageAvailabilitySummary(
+  row: ReturnType<typeof createManageRitualsViewModel>["rows"][number],
+): string {
+  const isArchived = row.reviewState.lifecycleState === "archived";
 
   return `
-    <option
+    <dl class="manage-rituals__availability-summary">
+      ${renderManageAvailabilityStatus({
+        label: "Library",
+        value: row.findable && row.directUseEligible ? "Shown" : "Hidden",
+        tone: row.findable && row.directUseEligible ? "ready" : "held",
+      })}
+      ${renderManageAvailabilityStatus({
+        label: "Choose with me",
+        value: row.recommendable ? "Allowed" : "Held",
+        tone: row.recommendable ? "ready" : "held",
+      })}
+      ${renderManageAvailabilityStatus({
+        label: "Status",
+        value: isArchived ? "Archived" : "Active",
+        tone: isArchived ? "held" : "neutral",
+      })}
+    </dl>
+  `;
+}
+
+function renderManageAvailabilityActionButton(
+  action: ManageRitualReviewActionOption,
+): string {
+  return `
+    <button
+      type="submit"
+      name="manageRitualReviewAction"
       value="${escapeHtml(action.action)}"
-      data-requires-reason="${action.requiresReason ? "true" : "false"}"
-      ${disabled}
-    >${escapeHtml(`${action.label}${reason}`)}</option>
+      class="manage-rituals__availability-action manage-rituals__availability-action--${escapeHtml(action.tone ?? "normal")}"
+      data-manage-ritual-action-requires-reason="${action.requiresReason ? "true" : "false"}"
+      data-manage-ritual-action-label="${escapeHtml(action.label)}"
+    >
+      <strong>${escapeHtml(action.label)}</strong>
+    </button>
   `;
 }
 
-function renderManageActionList(actions: ManageRitualReviewActionOption[]): string {
+function renderManageAvailabilityActionButtons(
+  actions: ManageRitualReviewActionOption[],
+): string {
+  const enabledActions = actions.filter((action) => action.enabled);
+  const unavailableActions = actions.filter((action) => !action.enabled);
+
   return `
-    <ul class="manage-rituals__review-actions">
-      ${actions.map((action) => `
-        <li class="manage-rituals__review-action${action.enabled ? "" : " manage-rituals__review-action--blocked"}${action.tone === "danger" ? " manage-rituals__review-action--danger" : ""}">
-          <strong>${escapeHtml(action.label)}</strong>
-          <span>${escapeHtml(action.enabled ? action.description : action.disabledReason ?? action.description)}</span>
-        </li>
-      `).join("")}
-    </ul>
+    ${enabledActions.length > 0
+      ? `
+        <div class="manage-rituals__availability-actions">
+          ${enabledActions.map(renderManageAvailabilityActionButton).join("")}
+        </div>
+      `
+      : '<p class="manage-rituals__availability-empty">No availability actions are available right now.</p>'}
+    ${unavailableActions.length > 0
+      ? `
+        <details class="manage-rituals__availability-unavailable">
+          <summary>Unavailable actions</summary>
+          <ul>
+            ${unavailableActions.map((action) => `
+              <li>
+                <strong>${escapeHtml(action.label)}</strong>
+                <span>${escapeHtml(action.disabledReason ?? action.description)}</span>
+              </li>
+            `).join("")}
+          </ul>
+        </details>
+      `
+      : ""}
   `;
 }
 
-function renderManageReviewPanel(row: ReturnType<typeof createManageRitualsViewModel>["rows"][number]): string {
+function renderManageReviewPanel(
+  row: ReturnType<typeof createManageRitualsViewModel>["rows"][number],
+  actionStatus?: SignedInShellOptions["manageRitualActionStatus"],
+): string {
   const reviewState = row.reviewState;
-  const enabledActions = reviewState.actions.filter((action) => action.enabled);
+  const productActions = reviewState.actions.filter((action) =>
+    manageAvailabilityPrimaryActions.has(action.action)
+  );
+  const enabledActions = productActions.filter((action) => action.enabled);
 
   return `
-    <section class="manage-rituals__review-panel" aria-label="${escapeHtml(`Review workflow for ${row.headline}`)}">
+    <section class="manage-rituals__review-panel" aria-label="${escapeHtml(`Availability for ${row.headline}`)}">
       <div class="manage-rituals__review-header">
         <div>
-          <h4>Review workflow</h4>
-          <p>${escapeHtml(reviewState.unavailableReason ?? "Records a DB review decision and audit event. Ritual content remains versioned.")}</p>
+          <h4>Availability</h4>
+          <p>${escapeHtml(reviewState.unavailableReason ?? "Control where this Ritual can appear.")}</p>
         </div>
         <div class="manage-rituals__review-tools">
           <span class="manage-rituals__review-badge">${escapeHtml(reviewState.dbBacked ? "DB-backed" : "read-only")}</span>
@@ -2781,44 +2859,25 @@ function renderManageReviewPanel(row: ReturnType<typeof createManageRitualsViewM
           >View full editor</button>
         </div>
       </div>
-      <div class="manage-rituals__review-layout">
-        <section class="manage-rituals__review-current" aria-label="Current review state">
-          <h5>Current state</h5>
-          ${renderManageReviewFacts(reviewState)}
-        </section>
+      <div class="manage-rituals__availability-shell">
+        ${actionStatus ? `
+          <p class="manage-rituals__action-status manage-rituals__action-status--${escapeHtml(actionStatus.tone)}" role="status">
+            ${escapeHtml(actionStatus.message)}
+          </p>
+        ` : ""}
+        ${renderManageAvailabilitySummary(row)}
         <form
           class="manage-rituals__review-form"
           data-manage-ritual-review-form="true"
           data-ritual-id="${escapeHtml(row.id)}"
           data-version-id="${escapeHtml(reviewState.currentVersionId ?? "")}"
         >
-          <label>
-            <span>Review action</span>
-            <select name="manageRitualReviewAction" ${enabledActions.length === 0 ? "disabled" : ""}>
-              ${enabledActions.length === 0
-                ? '<option value="">No actions available</option>'
-                : reviewState.actions.map(renderManageActionOption).join("")}
-            </select>
-          </label>
-          <label>
-            <span>Reason or note <small>required for holds and notes</small></span>
-            <textarea
-              name="manageRitualReviewReason"
-              rows="4"
-              placeholder="Required for holds, source rechecks, archive actions, and review notes."
-              ${enabledActions.length === 0 ? "disabled" : ""}
-            ></textarea>
-          </label>
-          <button
-            type="submit"
-            class="manage-rituals__review-submit"
-            ${enabledActions.length === 0 ? "disabled" : ""}
-          >Record review decision</button>
+          ${renderManageAvailabilityActionButtons(productActions)}
         </form>
-        <section class="manage-rituals__review-eligibility" aria-label="Review action eligibility">
-          <h5>Action eligibility</h5>
-          ${renderManageActionList(reviewState.actions)}
-        </section>
+        <details class="manage-rituals__review-current" aria-label="Review context">
+          <summary>Review context</summary>
+          ${renderManageReviewFacts(reviewState)}
+        </details>
       </div>
     </section>
   `;
@@ -2960,6 +3019,7 @@ export function renderManageRitualsSection(options: {
   selectedChoosePreviewSample?: Partial<RitualDraftChoosePreviewSampleInput>;
   currentTimingWindow?: TimingWindowCandidate;
   currentTimingWindows?: TimingWindowCandidate[];
+  expandedRitualId?: string | null;
   actionStatus?: SignedInShellOptions["manageRitualActionStatus"];
 } = {}): string {
   const ritualRepository = options.ritualRepository ?? staticRitualRepository;
@@ -2993,7 +3053,7 @@ export function renderManageRitualsSection(options: {
         <p>${escapeHtml(statusSummary)}.</p>
       </header>
 
-      ${options.actionStatus ? `
+      ${options.actionStatus && !options.actionStatus.ritualId ? `
         <p class="manage-rituals__action-status manage-rituals__action-status--${escapeHtml(options.actionStatus.tone)}" role="status">
           ${escapeHtml(options.actionStatus.message)}
         </p>
@@ -3036,8 +3096,14 @@ export function renderManageRitualsSection(options: {
             ${renderManageSortHeader("recommendation", "Recommendation", viewModel.filters)}
             ${renderManageSortHeader("issues", "Findings", viewModel.filters)}
           </div>
-          ${viewModel.rows.map((row) => `
-            <details class="manage-rituals__record">
+          ${viewModel.rows.map((row) => {
+            const rowActionStatus = options.actionStatus?.ritualId === row.id
+              ? options.actionStatus
+              : undefined;
+            const rowIsExpanded = options.expandedRitualId === row.id;
+
+            return `
+            <details class="manage-rituals__record" data-manage-ritual-record="${escapeHtml(row.id)}"${rowIsExpanded ? " open" : ""}>
               <summary class="manage-rituals__record-summary">
                 <span class="manage-rituals__ritual-cell">
                   <span class="manage-rituals__ritual-title">${escapeHtml(row.headline)}</span>
@@ -3049,7 +3115,7 @@ export function renderManageRitualsSection(options: {
                 <span class="manage-rituals__record-issues">${escapeHtml(formatManageList(row.issues))}</span>
               </summary>
               <div class="manage-rituals__record-detail">
-                      ${renderManageReviewPanel(row)}
+                      ${renderManageReviewPanel(row, rowActionStatus)}
                       ${renderManageActiveDraftSummary({
                         row,
                         draft: options.selectedEditorDraft,
@@ -3092,7 +3158,8 @@ export function renderManageRitualsSection(options: {
                       </section>
               </div>
             </details>
-          `).join("")}
+          `;
+          }).join("")}
         </div>
       </section>
     </article>
@@ -3857,6 +3924,7 @@ export function renderSignedInShell(
     selectedChoosePreviewSample: options.selectedManageRitualChoosePreviewSample,
     currentTimingWindow: options.currentTimingWindow,
     currentTimingWindows: options.currentTimingWindows,
+    expandedRitualId: options.expandedManageRitualId,
     actionStatus: options.manageRitualActionStatus,
   });
   const howItWorks = renderHowItWorksSection();
