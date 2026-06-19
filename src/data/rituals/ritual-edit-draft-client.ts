@@ -18,12 +18,18 @@ export type RitualEditDraftClientAction =
       action: "autosave" | "save";
       draftId: string;
       draftBuffer: RitualEditDraftBuffer;
+    }
+  | {
+      action: "apply_changes";
+      draftId: string;
     };
 
 export type SubmitRitualEditDraftResult =
   | {
       valid: true;
       draft: RitualEditDraftDocument;
+      appliedVersionId?: string;
+      recommendationHeld?: boolean;
     }
   | {
       valid: false;
@@ -76,6 +82,12 @@ function parseClientResult(payload: unknown): SubmitRitualEditDraftResult {
     return {
       valid: true,
       draft: payload.draft as RitualEditDraftDocument,
+      appliedVersionId: typeof payload.appliedVersionId === "string"
+        ? payload.appliedVersionId
+        : undefined,
+      recommendationHeld: typeof payload.recommendationHeld === "boolean"
+        ? payload.recommendationHeld
+        : undefined,
     };
   }
 

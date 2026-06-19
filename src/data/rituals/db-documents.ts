@@ -154,6 +154,7 @@ export const REVIEW_DECISION_TYPES = [
   "mark_needs_source_recheck",
   "mark_needs_packet_correction",
   "add_review_note",
+  "apply_draft_changes",
   "toggle_review_flag",
   "archive_ritual",
   "archive_version",
@@ -228,6 +229,7 @@ export const RITUAL_AUDIT_EVENT_TYPES = [
   "static_export_generated",
   "published_pointer_changed",
   "review_decision_recorded",
+  "ritual_draft_applied",
   "runtime_read_fallback_used",
   "rollback_performed",
 ] as const;

@@ -4,6 +4,11 @@ import { getFirestore } from "firebase-admin/firestore";
 import { readFileSync } from "node:fs";
 
 import type { RitualVersionDocument } from "../src/data/rituals/db-documents";
+import {
+  applyRitualEditDraft,
+  createAdminFirestoreRitualEditDraftApplyStore,
+  type ApplyRitualEditDraftStore,
+} from "../src/data/rituals/ritual-edit-draft-apply";
 import type {
   Ritual,
   RitualAdaptationPolicy,
@@ -62,7 +67,7 @@ type RitualEditDraftDocument = {
   baseVersionId?: string;
   baseContentHash?: string;
   draftSource: "existing_version" | "household_blank";
-  status: "active" | "discarded" | "submitted";
+  status: "active" | "discarded" | "submitted" | "applied";
   saveState: "idle" | "saving" | "saved" | "unsaved_changes" | "save_failed";
   draftBuffer: RitualEditDraftBuffer;
   createdBy: RitualEditDraftActor;
@@ -75,12 +80,17 @@ type RitualEditDraftDocument = {
   discardedAtIso?: string;
   submittedBy?: RitualEditDraftActor;
   submittedAtIso?: string;
+  appliedBy?: RitualEditDraftActor;
+  appliedAtIso?: string;
+  appliedVersionId?: string;
 };
 
 type SubmitRitualEditDraftResult =
   | {
       valid: true;
       draft: RitualEditDraftDocument;
+      appliedVersionId?: string;
+      recommendationHeld?: boolean;
     }
   | {
       valid: false;
@@ -101,6 +111,10 @@ type RitualEditDraftClientAction =
       action: "autosave" | "save";
       draftId: string;
       draftBuffer: RitualEditDraftBuffer;
+    }
+  | {
+      action: "apply_changes";
+      draftId: string;
     };
 
 type RitualEditDraftApiRequest = {
@@ -232,6 +246,13 @@ function parseRequest(body: unknown): RitualEditDraftClientAction | undefined {
       action: body.action,
       draftId: body.draftId,
       draftBuffer: body.draftBuffer,
+    };
+  }
+
+  if (body.action === "apply_changes" && typeof body.draftId === "string") {
+    return {
+      action: "apply_changes",
+      draftId: body.draftId,
     };
   }
 
@@ -610,6 +631,7 @@ async function loadOrCreateDraft(input: {
 async function handleRequestAction(input: {
   request: RitualEditDraftClientAction;
   store: RitualEditDraftStore;
+  applyStore: ApplyRitualEditDraftStore;
   now: string;
   getRitualVersionDocument: (versionId: string) => Promise<RitualVersionDocument | undefined>;
 }): Promise<{ status: number; body: SubmitRitualEditDraftResult }> {
@@ -636,6 +658,27 @@ async function handleRequestAction(input: {
     });
 
     return { status: 200, body: { valid: true, draft } };
+  }
+
+  if (input.request.action === "apply_changes") {
+    const result = await applyRitualEditDraft({
+      store: input.applyStore,
+      draftId: input.request.draftId,
+      actor: "owner",
+      appliedAtIso: input.now,
+    });
+
+    return result.valid
+      ? {
+        status: 200,
+        body: {
+          valid: true,
+          draft: result.plan.draftAfter,
+          appliedVersionId: result.plan.versionDocument.versionId,
+          recommendationHeld: result.plan.recommendationHeld,
+        },
+      }
+      : { status: 400, body: { valid: false, findings: result.findings } };
   }
 
   const existing = await input.store.getDraft(input.request.draftId);
@@ -715,6 +758,7 @@ export default async function handler(
     const result = await handleRequestAction({
       request: parsedRequest,
       store: createAdminFirestoreRitualEditDraftStore(db),
+      applyStore: createAdminFirestoreRitualEditDraftApplyStore(db),
       getRitualVersionDocument: (versionId) =>
         getRitualVersionDocumentByVersionId(db, versionId),
       now: new Date().toISOString(),

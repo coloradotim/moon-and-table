@@ -261,7 +261,7 @@ type RitualEditDraftDocument = {
   baseVersionId?: string;
   baseContentHash?: string;
   draftSource: "existing_version" | "household_blank";
-  status: "active" | "discarded" | "submitted";
+  status: "active" | "discarded" | "submitted" | "applied";
   saveState:
     | "idle"
     | "saving"
@@ -279,6 +279,9 @@ type RitualEditDraftDocument = {
   discardedAtIso?: string;
   submittedBy?: "owner" | "person_a" | "person_b" | "household" | "automation" | "codex";
   submittedAtIso?: string;
+  appliedBy?: "owner" | "person_a" | "person_b" | "household" | "automation" | "codex";
+  appliedAtIso?: string;
+  appliedVersionId?: string;
 };
 ```
 
@@ -292,6 +295,9 @@ Rules:
 - Discard and submitted states must not mutate `ritualVersions`, published
   pointers, lifecycle review state, direct-use eligibility, or recommendation
   eligibility.
+- Applied existing-version drafts record `appliedVersionId`, `appliedAtIso`,
+  and `appliedBy` after the protected server transaction creates the immutable
+  version and updates the live Ritual pointer.
 - Persistent actor fields use repo-safe IDs such as `person_a`, `person_b`, and
   `household`; private names are rendered only from private runtime context.
 
@@ -381,6 +387,7 @@ type ReviewDecisionDocument = {
     | "mark_needs_source_recheck"
     | "mark_needs_packet_correction"
     | "add_review_note"
+    | "apply_draft_changes"
     | "toggle_review_flag"
     | "archive_ritual"
     | "archive_version"

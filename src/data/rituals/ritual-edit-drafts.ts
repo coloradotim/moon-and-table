@@ -22,6 +22,7 @@ export const RITUAL_EDIT_DRAFT_STATUSES = [
   "active",
   "discarded",
   "submitted",
+  "applied",
 ] as const;
 
 export type RitualEditDraftStatus =
@@ -90,6 +91,9 @@ export type RitualEditDraftDocument = {
   discardedAtIso?: string;
   submittedBy?: RitualEditDraftActor;
   submittedAtIso?: string;
+  appliedBy?: RitualEditDraftActor;
+  appliedAtIso?: string;
+  appliedVersionId?: string;
 };
 
 export type RitualEditDraftStore = {
@@ -150,6 +154,10 @@ export type DraftStatusChangeInput = {
   draftId: string;
   actor: RitualEditDraftActor;
   updatedAtIso?: string;
+};
+
+export type ApplyRitualEditDraftStatusInput = DraftStatusChangeInput & {
+  appliedVersionId: string;
 };
 
 function cloneJson<T>(value: T): T {
@@ -416,6 +424,39 @@ export function markRitualEditDraftSubmitted(
   input: DraftStatusChangeInput,
 ): Promise<RitualEditDraftDocument> {
   return updateDraftStatus(input, "submitted");
+}
+
+export async function markRitualEditDraftApplied(
+  input: ApplyRitualEditDraftStatusInput,
+): Promise<RitualEditDraftDocument> {
+  assertRitualEditDraftActor(input.actor);
+  const existing = await input.store.getDraft(input.draftId);
+
+  if (!existing) {
+    throw new Error("Ritual edit draft was not found.");
+  }
+
+  assertActiveDraft(existing);
+
+  if (input.appliedVersionId.trim().length === 0) {
+    throw new Error("Applied version id is required.");
+  }
+
+  const updatedAtIso = normalizeTimestamp(input.updatedAtIso);
+  const updated: RitualEditDraftDocument = {
+    ...cloneJson(existing),
+    status: "applied",
+    saveState: "saved",
+    updatedBy: input.actor,
+    updatedAtIso,
+    appliedBy: input.actor,
+    appliedAtIso: updatedAtIso,
+    appliedVersionId: input.appliedVersionId,
+  };
+
+  await input.store.setDraft(updated);
+
+  return cloneJson(updated);
 }
 
 export function createInMemoryRitualEditDraftStore(

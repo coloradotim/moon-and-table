@@ -1,6 +1,14 @@
 import { describe, expect, it } from "vitest";
 
 import { createRitualDbMirrorDryRun } from "../../src/data/rituals/db-mirror";
+import type {
+  ReviewDecisionDocument,
+  RitualAuditEventDocument,
+  RitualDocument,
+  RitualValidationSnapshotDocument,
+  RitualVersionDocument,
+} from "../../src/data/rituals/db-documents";
+import type { ApplyRitualEditDraftStore } from "../../src/data/rituals/ritual-edit-draft-apply";
 import {
   createInMemoryRitualEditDraftStore,
   type RitualEditDraftStore,
@@ -41,12 +49,70 @@ function createFixtureStore() {
   return { record, store };
 }
 
+function createApplyFixtureStore() {
+  const report = createRitualDbMirrorDryRun(sourceBackedRituals.slice(0, 1), {
+    generatedAtIso: "2026-06-13T00:00:00.000Z",
+  });
+  const record = report.mirrored[0];
+  const drafts = createInMemoryRitualEditDraftStore();
+  const rituals = new Map<string, RitualDocument>([
+    [record.ritualDocument.id, JSON.parse(JSON.stringify(record.ritualDocument))],
+  ]);
+  const versions = new Map<string, RitualVersionDocument>([
+    [record.versionDocument.versionId, JSON.parse(JSON.stringify(record.versionDocument))],
+  ]);
+  const snapshots = new Map<string, RitualValidationSnapshotDocument>();
+  const decisions = new Map<string, ReviewDecisionDocument>();
+  const audits = new Map<string, RitualAuditEventDocument>();
+  const store: ApplyRitualEditDraftStore = {
+    ...drafts,
+    async getRitualDocument(ritualId) {
+      const document = rituals.get(ritualId);
+
+      return document ? JSON.parse(JSON.stringify(document)) : undefined;
+    },
+    async getRitualVersionDocument(versionId) {
+      const document = versions.get(versionId);
+
+      return document ? JSON.parse(JSON.stringify(document)) : undefined;
+    },
+    async commitApplyRitualEditDraftPlan(plan) {
+      for (const write of plan.writes) {
+        switch (write.collection) {
+          case "rituals":
+            rituals.set(write.id, JSON.parse(JSON.stringify(write.document)));
+            break;
+          case "ritualVersions":
+            versions.set(write.id, JSON.parse(JSON.stringify(write.document)));
+            break;
+          case "ritualValidationSnapshots":
+            snapshots.set(write.id, JSON.parse(JSON.stringify(write.document)));
+            break;
+          case "reviewDecisions":
+            decisions.set(write.id, JSON.parse(JSON.stringify(write.document)));
+            break;
+          case "ritualAuditEvents":
+            audits.set(write.id, JSON.parse(JSON.stringify(write.document)));
+            break;
+          case "ritualEditDrafts":
+            await drafts.setDraft(write.document);
+            break;
+        }
+      }
+    },
+  };
+
+  return { record, store, drafts, rituals, versions, snapshots, decisions, audits };
+}
+
 function createDependencies(input: {
   store: RitualEditDraftStore;
   versionDocument: ReturnType<typeof createFixtureStore>["record"]["versionDocument"];
+  applyStore?: ApplyRitualEditDraftStore;
 }) {
   return {
     draftStore: input.store,
+    applyStore: input.applyStore,
     verifyIdToken: async () => ({ uid: "editor-1" }),
     authorize: () => true,
     getRitualVersionDocument: async (versionId: string) =>
@@ -205,6 +271,94 @@ describe("Ritual edit draft API", () => {
       draftBeforeSave.draftBuffer.availability,
     );
     expect(JSON.stringify(record.ritualDocument.lifecycle)).toBe(lifecycleBeforeSave);
+  });
+
+  it("applies a saved draft through the protected API action", async () => {
+    const { record, store, drafts, rituals, versions, snapshots, decisions, audits } =
+      createApplyFixtureStore();
+    const dependencies = createDependencies({
+      store,
+      applyStore: store,
+      versionDocument: record.versionDocument,
+    });
+    const createResponseBody = createResponse();
+
+    await handleRitualEditDraftApi(
+      {
+        method: "POST",
+        headers: { authorization: "Bearer valid-token" },
+        body: {
+          action: "load_or_create",
+          ritualId: record.ritualDocument.id,
+          versionId: record.versionDocument.versionId,
+        },
+      },
+      createResponseBody.response,
+      dependencies,
+    );
+
+    const draft = drafts.getAllDrafts()[0];
+    const saveResponse = createResponse();
+
+    await handleRitualEditDraftApi(
+      {
+        method: "POST",
+        headers: { authorization: "Bearer valid-token" },
+        body: {
+          action: "save",
+          draftId: draft.id,
+          draftBuffer: {
+            ...draft.draftBuffer,
+            presentation: {
+              ...draft.draftBuffer.presentation,
+              headline: "API applied headline",
+            },
+          },
+        },
+      },
+      saveResponse.response,
+      dependencies,
+    );
+
+    const applyResponse = createResponse();
+    await handleRitualEditDraftApi(
+      {
+        method: "POST",
+        headers: { authorization: "Bearer valid-token" },
+        body: {
+          action: "apply_changes",
+          draftId: draft.id,
+        },
+      },
+      applyResponse.response,
+      dependencies,
+    );
+
+    expect(applyResponse.statusCode).toBe(200);
+    expect(applyResponse.body).toEqual(
+      expect.objectContaining({
+        valid: true,
+        draft: expect.objectContaining({
+          status: "applied",
+          appliedVersionId: expect.any(String),
+        }),
+        appliedVersionId: expect.any(String),
+        recommendationHeld: false,
+      }),
+    );
+    const body = applyResponse.body as {
+      valid: true;
+      appliedVersionId: string;
+    };
+    expect(rituals.get(record.ritualDocument.id)?.currentVersionId).toBe(
+      body.appliedVersionId,
+    );
+    expect(versions.get(body.appliedVersionId)?.ritual.presentation.headline).toBe(
+      "API applied headline",
+    );
+    expect(snapshots.size).toBe(1);
+    expect(decisions.size).toBe(1);
+    expect(audits.size).toBe(1);
   });
 
   it("rejects attempts to save whyThisFits as a canonical draft body field", async () => {

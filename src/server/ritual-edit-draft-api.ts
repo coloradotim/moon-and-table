@@ -5,6 +5,10 @@ import type {
   SubmitRitualEditDraftResult,
 } from "../data/rituals/ritual-edit-draft-client";
 import {
+  applyRitualEditDraft,
+  type ApplyRitualEditDraftStore,
+} from "../data/rituals/ritual-edit-draft-apply";
+import {
   autosaveRitualEditDraft,
   createBlankHouseholdRitualDraft,
   createDraftFromRitualVersion,
@@ -35,6 +39,7 @@ export type VerifiedRitualEditDraftCaller = {
 export type RitualEditDraftApiDependencies = {
   verifyIdToken: (idToken: string) => Promise<VerifiedRitualEditDraftCaller>;
   draftStore: RitualEditDraftStore;
+  applyStore?: ApplyRitualEditDraftStore;
   getRitualVersionDocument: (
     versionId: string,
   ) => Promise<RitualVersionDocument | undefined>;
@@ -153,6 +158,13 @@ function parseRequest(body: unknown): RitualEditDraftClientAction | undefined {
     };
   }
 
+  if (body.action === "apply_changes" && typeof body.draftId === "string") {
+    return {
+      action: "apply_changes",
+      draftId: body.draftId,
+    };
+  }
+
   return undefined;
 }
 
@@ -251,6 +263,35 @@ async function handleRequestAction(input: {
     });
 
     return { status: 200, body: { valid: true, draft } };
+  }
+
+  if (input.request.action === "apply_changes") {
+    if (!input.dependencies.applyStore) {
+      return invalid(
+        "ritualEditDraft",
+        "Publishing a draft requires the Ritual edit draft apply service.",
+        500,
+      );
+    }
+
+    const result = await applyRitualEditDraft({
+      store: input.dependencies.applyStore,
+      draftId: input.request.draftId,
+      actor: "owner",
+      appliedAtIso: input.now,
+    });
+
+    return result.valid
+      ? {
+        status: 200,
+        body: {
+          valid: true,
+          draft: result.plan.draftAfter,
+          appliedVersionId: result.plan.versionDocument.versionId,
+          recommendationHeld: result.plan.recommendationHeld,
+        },
+      }
+      : { status: 400, body: { valid: false, findings: result.findings } };
   }
 
   const existing = await input.dependencies.draftStore.getDraft(input.request.draftId);
