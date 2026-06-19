@@ -1963,6 +1963,18 @@ function getManageDraftSaveStateLabel(
     return "Loading draft...";
   }
 
+  if (draft.status === "applied") {
+    return "Applied";
+  }
+
+  if (draft.status === "discarded") {
+    return "Discarded";
+  }
+
+  if (draft.status === "submitted") {
+    return "Submitted";
+  }
+
   const labels: Record<RitualEditDraftDocument["saveState"], string> = {
     idle: "Unsaved changes",
     saving: "Saving...",
@@ -2355,7 +2367,12 @@ function renderManageEditableBody(input: {
   const presentation =
     input.draft?.draftBuffer.presentation ?? input.row.ritual.presentation;
   const draftId = input.draft?.id ?? "";
-  const disabled = !input.draft;
+  const disabled = !input.draft || input.draft.status !== "active";
+  const canApplyChanges =
+    Boolean(input.draft) &&
+    input.draft?.status === "active" &&
+    input.draft?.draftSource === "existing_version" &&
+    !isLocalPreviewRitualEditDraft(input.draft);
   const loading = disabled ? " aria-disabled=\"true\"" : "";
 
   return `
@@ -2372,13 +2389,18 @@ function renderManageEditableBody(input: {
           <button
             type="submit"
             data-manage-ritual-draft-save-now="true"
-            ${input.draft ? "" : "disabled"}
-          >Save</button>
+            ${disabled ? "disabled" : ""}
+          >Save draft</button>
           <button
             type="button"
             data-manage-ritual-validate-draft="true"
-            ${input.draft ? "" : "disabled"}
-          >Validate draft</button>
+            ${disabled ? "disabled" : ""}
+          >Check draft</button>
+          <button
+            type="button"
+            data-manage-ritual-apply-draft="true"
+            ${canApplyChanges ? "" : "disabled"}
+          >Publish draft</button>
         </div>
       </div>
       ${renderManageDraftValidationSummary(input.validationReport)}

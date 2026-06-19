@@ -1050,6 +1050,12 @@ describe("app shell rendering", () => {
     expect(editorHtml).toContain("Moon &amp; Table adaptation notes");
     expect(editorHtml).toContain("<summary>Raw inspection JSON</summary>");
     expect(editorHtml).toContain('data-manage-ritual-draft-form="true"');
+    expect(editorHtml).toContain('data-manage-ritual-draft-save-now="true"');
+    expect(editorHtml).toContain('data-manage-ritual-validate-draft="true"');
+    expect(editorHtml).toContain('data-manage-ritual-apply-draft="true"');
+    expect(editorHtml).toContain("Save draft");
+    expect(editorHtml).toContain("Check draft");
+    expect(editorHtml).toContain("Publish draft");
     expect(editorHtml).toContain('name="headline"');
     expect(editorHtml).toContain('name="practice"');
     expect(editorHtml).toContain('name="intention"');
@@ -1093,7 +1099,7 @@ describe("app shell rendering", () => {
       /data-manage-secondary-option="secondaryCarriers" hidden[\s\S]*name="secondaryCarriers"[\s\S]*value="table"[\s\S]*disabled/,
     );
     expect(editorHtml).toContain("<textarea");
-    expect(editorHtml).toContain(">Save</button>");
+    expect(editorHtml).toContain(">Save draft</button>");
     expect(editorHtml).not.toContain("Autosave");
     expect(editorHtml).not.toContain('name="whyThisFits"');
     expect(editorHtml).not.toContain("Submit draft");
@@ -1324,7 +1330,8 @@ describe("app shell rendering", () => {
     expect(editorHtml).toContain("Other validation findings");
     expect(editorHtml).toContain("draftBuffer.privateSourceText");
     expect(editorHtml).toContain("Contents hidden by privacy guard.");
-    expect(editorHtml).toContain("Validate draft");
+    expect(editorHtml).toContain("Check draft");
+    expect(editorHtml).toContain("Publish draft");
     expect(editorHtml).not.toContain("private copied source passage");
   });
 

@@ -10,6 +10,7 @@ import {
   discardRitualEditDraft,
   listRitualEditDraftsForRitual,
   loadRitualEditDraft,
+  markRitualEditDraftApplied,
   markRitualEditDraftSubmitted,
   RITUAL_EDIT_DRAFT_ACTORS,
   RITUAL_EDIT_DRAFT_SAVE_STATES,
@@ -22,6 +23,7 @@ const autosavedAtIso = "2026-06-14T12:03:00.000Z";
 const manuallySavedAtIso = "2026-06-14T12:04:00.000Z";
 const submittedAtIso = "2026-06-14T12:05:00.000Z";
 const discardedAtIso = "2026-06-14T12:06:00.000Z";
+const appliedAtIso = "2026-06-14T12:07:00.000Z";
 const baseRitual = sourceBackedRituals[0];
 
 function clone<T>(value: T): T {
@@ -225,6 +227,35 @@ describe("Ritual edit drafts", () => {
     expect(submitted.submittedBy).toBe("person_b");
     expect(submitted.submittedAtIso).toBe(submittedAtIso);
     expect(store.getAllDrafts()).toHaveLength(1);
+    expect(versionDocument).toEqual(originalVersionDocument);
+  });
+
+  it("marks drafts applied with the immutable version id without mutating old versions", async () => {
+    const store = createInMemoryRitualEditDraftStore();
+    const versionDocument = createRitualVersionDocumentFromRitual(baseRitual, {
+      createdAtIso,
+    });
+    const originalVersionDocument = clone(versionDocument);
+    const draft = await createDraftFromRitualVersion({
+      store,
+      versionDocument,
+      draftId: "draft-applied",
+      actor: "person_a",
+      createdAtIso,
+    });
+
+    const applied = await markRitualEditDraftApplied({
+      store,
+      draftId: draft.id,
+      actor: "person_a",
+      updatedAtIso: appliedAtIso,
+      appliedVersionId: "ritual.version.next",
+    });
+
+    expect(applied.status).toBe("applied");
+    expect(applied.appliedBy).toBe("person_a");
+    expect(applied.appliedAtIso).toBe(appliedAtIso);
+    expect(applied.appliedVersionId).toBe("ritual.version.next");
     expect(versionDocument).toEqual(originalVersionDocument);
   });
 

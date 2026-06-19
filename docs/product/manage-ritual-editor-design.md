@@ -6,9 +6,10 @@ Manage Rituals.
 Scope: Product design. Early slices now implement read-only inspection,
 `ritualEditDrafts` draft persistence, editable canonical body fields,
 editable Search/library terms, editable selection metadata, safe read-only
-source/provenance display, and on-demand draft validation display. This
-document does not itself implement publish/review promotion, source import,
-selector changes, or immutable version creation.
+source/provenance display, on-demand draft validation display, and the existing
+Ritual live-update flow. This document does not itself implement source
+import, selector scoring changes, rollback UI, or new household Ritual
+publication.
 
 ## 1. Product Goal
 
@@ -22,7 +23,7 @@ The editor should let household maintainers:
 - validate draft content and metadata;
 - preview how a draft would appear in Search / direct selection;
 - later preview whether and how a draft could be recommended by Choose with me;
-- submit a draft into the existing review / publish path;
+- apply an existing-Ritual draft as the new live version;
 - understand prior versions and rollback context without using raw JSON as the main interface.
 
 The editor must not become a generic CMS, a source-ingestion UI, or a raw JSON admin panel.
@@ -46,14 +47,21 @@ ritualEditDrafts/{draftId}
 ```
 
 A draft is a workspace. It may be saved. It may be discarded. It may be
-validated. It does not become an immutable Ritual version until explicitly
-submitted / sealed for review.
+validated. Existing-Ritual drafts become immutable Ritual versions only when a
+household maintainer explicitly chooses `Publish draft`.
 
 Do not use mutable `ritualVersions` as the draft workspace. That would weaken the meaning of immutable version history.
 
-### 2.4 Review remains the promotion gate
+### 2.4 Apply is not recommendation promotion
 
-Save draft, validate draft, and submit draft are not publish or promotion actions.
+Save draft and check draft are not publish or promotion actions. `Publish
+draft` creates a new immutable version from a saved, clean existing-Ritual draft
+and updates the live Ritual pointer. In this private app, publish means
+publishing to the live household Ritual library, not public sharing.
+
+If selector-relevant recommendation metadata changed, updating the live ritual should
+preserve Search/direct-use when valid but hold Choose with me until a later
+explicit availability action allows it again.
 
 Review decisions remain the gate for:
 
@@ -166,7 +174,7 @@ Autosave may be reconsidered later if quota, batching, and diagnostics are in
 place.
 
 Validation follows the same quota-conscious posture in the first editor slice:
-`Validate draft` runs against the draft already loaded in the client and updates
+`Check draft` runs against the draft already loaded in the client and updates
 the editor display only. It does not write a validation snapshot, save the draft,
 publish, promote, or mutate any immutable Ritual version.
 
@@ -217,9 +225,9 @@ save state
 Primary actions:
 
 ```text
-Save
-Validate draft
-Submit draft for review
+Save draft
+Check draft
+Publish draft
 Discard draft
 Return to table
 ```
@@ -475,7 +483,7 @@ available review actions, later
 In early slices, provide:
 
 ```text
-Validate draft
+Check draft
 Show field-level findings
 Show section-level findings
 ```
@@ -595,7 +603,7 @@ Add in order:
 2. explicit selection metadata editor;
 3. Choose with me preview;
 4. source/provenance read-only refinements;
-5. submit/seal immutable version flow;
+5. live Ritual update immutable version flow;
 6. version compare and rollback context;
 7. review/publish integration.
 
@@ -724,12 +732,14 @@ Open existing Ritual
 → create ritualEditDrafts/{draftId} from publishedVersionId/currentVersionId
 → save draft changes
 → validate draft
-→ submit draft for review
-→ seal immutable ritualVersion candidate
-→ review decision publishes/holds/promotes
+→ Publish draft
+→ create immutable ritualVersion
+→ create validation snapshot and audit/history records
+→ update live Ritual pointer and search index
+→ mark draft applied
 ```
 
-Published version remains untouched until review action changes the pointer.
+Previous version remains untouched and available for history/rollback.
 
 ### 8.2 Create household Ritual
 
@@ -738,26 +748,27 @@ Create Ritual
 → blank household-origin ritualEditDrafts/{draftId}
 → save draft
 → validate draft
-→ submit for review
-→ seal immutable household-origin ritualVersion
-→ review action may make findable/direct-use/recommendation eligible
+→ Add to library
+→ create immutable household-origin ritualVersion
+→ review/availability action may make findable/direct-use/recommendation eligible
 ```
 
 No source grounding required. Household review/context required.
 
-### 8.3 Submit / seal draft
+### 8.3 Apply existing draft
 
-Submitting a draft should create or prepare:
+Applying an existing-Ritual draft should create:
 
 ```text
-immutable ritualVersion candidate
+immutable ritualVersion
 contentHash
 validation snapshot
 audit event
 supersedesVersionId, when editing existing Ritual
 ```
 
-Submit does not equal publish.
+Publish draft updates the live pointer for an existing Ritual. It does not
+automatically promote Choose with me if selector-relevant metadata changed.
 
 ### 8.4 Publish / promote
 
@@ -852,7 +863,7 @@ Recommended implementation order:
 8. Add selection metadata editor.
 9. Add Choose with me preview.
 10. Add source/provenance read-only panel.
-11. Add draft submit / seal immutable version flow.
+11. Add live Ritual update immutable version flow.
 12. Add create household Ritual flow.
 13. Add version compare and rollback context.
 14. Add mobile editor polish.

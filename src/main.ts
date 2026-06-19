@@ -973,6 +973,131 @@ function validateActiveManageRitualEditorDraft(): void {
   renderActiveSignedInShell();
 }
 
+async function reloadActiveRitualRepositoryForEditor(): Promise<void> {
+  activeRitualRepositoryLoaded = false;
+  activeRitualRepositoryLoadPromise = null;
+  await loadActiveRitualRepository();
+  activeRitualRepositoryLoaded = true;
+}
+
+async function applyActiveManageRitualEditorDraft(
+  form: HTMLFormElement,
+): Promise<void> {
+  if (!activeManageRitualEditorDraft) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Open a draft before applying.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  if (activeManageRitualEditorDraft.draftSource !== "existing_version") {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Use Add to library for new Rituals.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  const draftBuffer = getDraftBufferFromForm(
+    form,
+    activeManageRitualEditorDraft.draftBuffer,
+  );
+  const draftBufferJson = serializeManageRitualDraftBuffer(draftBuffer);
+
+  if (draftBufferJson !== activeManageRitualEditorLastSavedDraftBufferJson) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Save before applying.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  if (!activeManageRitualEditorDraftValidationReport) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Validate before applying.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  if (!activeManageRitualEditorDraftValidationReport.valid) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Cannot apply yet.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  const confirmed = window.confirm(
+    "Publish this draft to the live ritual?\n\nThis creates a new version, keeps the previous version for history, and updates what the app uses. Choose with me eligibility may be held if recommendation metadata changed.",
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  if (devVisualQaMode || activeManageRitualEditorUsesLocalDraft) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Publishing a draft requires the DB draft service.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  const idToken = await getFirebaseIdTokenForRitualEditor();
+  if (!idToken) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: "Could not apply changes.",
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  activeManageRitualEditorDraftStatus = {
+    tone: "saving",
+    message: "Publishing draft...",
+  };
+  renderActiveSignedInShell();
+
+  const result = await submitRitualEditDraft({
+    idToken,
+    request: {
+      action: "apply_changes",
+      draftId: activeManageRitualEditorDraft.id,
+    },
+  });
+
+  if (!result.valid) {
+    activeManageRitualEditorDraftStatus = {
+      tone: "error",
+      message: getRitualEditDraftFailureMessage(result),
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
+  activeManageRitualEditorDraft = result.draft;
+  activeManageRitualEditorLastSavedDraftBufferJson =
+    serializeManageRitualDraftBuffer(result.draft.draftBuffer);
+  activeManageRitualEditorDraftValidationReport = undefined;
+  activeManageRitualEditorDraftStatus = {
+    tone: "saved",
+    message: result.recommendationHeld
+      ? "Draft published. Choose with me is held because recommendation metadata changed."
+      : "Draft published.",
+  };
+  await reloadActiveRitualRepositoryForEditor();
+  renderActiveSignedInShell();
+}
+
 function markManageRitualEditorDraftUnsaved(form: HTMLFormElement): void {
   if (!activeManageRitualEditorDraft) {
     return;
@@ -2698,6 +2823,18 @@ appRoot.addEventListener("click", (event) => {
   if (target.closest("[data-manage-ritual-validate-draft='true']")) {
     event.preventDefault();
     validateActiveManageRitualEditorDraft();
+    return;
+  }
+
+  if (target.closest("[data-manage-ritual-apply-draft='true']")) {
+    event.preventDefault();
+    const form = target.closest<HTMLFormElement>(
+      "[data-manage-ritual-draft-form='true']",
+    );
+
+    if (form) {
+      void applyActiveManageRitualEditorDraft(form);
+    }
     return;
   }
 
