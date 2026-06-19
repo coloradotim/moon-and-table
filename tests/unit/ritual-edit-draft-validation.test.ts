@@ -51,6 +51,59 @@ describe("Ritual edit draft validation", () => {
       .toMatchObject({ errors: 0, warnings: 0 });
   });
 
+  it("does not require search terms for a complete draft", async () => {
+    const { draft } = await createCleanDraft();
+    const draftWithoutSearchTerms: RitualEditDraftDocument = {
+      ...draft,
+      draftBuffer: {
+        ...draft.draftBuffer,
+        searchMetadata: {
+          ...draft.draftBuffer.searchMetadata,
+          tags: [],
+        },
+      },
+    };
+
+    const report = validateRitualEditDraft(draftWithoutSearchTerms);
+
+    expect(report.valid).toBe(true);
+    expect(report.findings).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          field: "searchTags",
+          severity: "error",
+        }),
+      ]),
+    );
+  });
+
+  it("does not block active drafts on published Ritual lifecycle promotion rules", async () => {
+    const { draft } = await createCleanDraft();
+    const activeDraft: RitualEditDraftDocument = {
+      ...draft,
+      draftBuffer: {
+        ...draft.draftBuffer,
+        status: "draft",
+      },
+    };
+
+    const report = validateRitualEditDraft(activeDraft);
+
+    expect(report.valid).toBe(true);
+    expect(report.findings).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: "draftBuffer.availability.recommendationEligible",
+          severity: "error",
+        }),
+        expect.objectContaining({
+          path: "draftBuffer.recommendationMetadata.eligibility.recommendable",
+          severity: "error",
+        }),
+      ]),
+    );
+  });
+
   it("reports blocking body errors with field and section mapping", async () => {
     const { draft } = await createCleanDraft();
     const invalidDraft: RitualEditDraftDocument = {

@@ -1047,6 +1047,8 @@ describe("app shell rendering", () => {
     expect(firstSummaryHtml).not.toContain("data-manage-ritual-open-editor");
     expect(firstSummaryHtml).not.toContain("View full editor");
     expect(html).toContain('data-manage-ritual-editor="true"');
+    expect(editorHtml).toContain('data-manage-ritual-close-editor="true"');
+    expect(editorHtml).toContain("Close editor");
     expect(editorHtml).toContain("Active draft");
     expect(editorHtml).toContain("Saved");
     expect(editorHtml).toContain("draft-body-edit");

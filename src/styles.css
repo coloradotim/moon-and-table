@@ -2974,6 +2974,13 @@ h2 {
   border-bottom: 1px solid rgba(200, 190, 173, 0.62);
 }
 
+.manage-rituals__editor-title-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
 .manage-rituals__editor-kicker {
   margin: 0 0 4px;
   color: #66736a;
@@ -3039,6 +3046,25 @@ h2 {
   font-size: 0.74rem;
   font-weight: 800;
   line-height: 1.15;
+}
+
+.manage-rituals__editor-close {
+  flex: 0 0 auto;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  border-radius: 0;
+  background: transparent;
+  color: #26312c;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.manage-rituals__editor-close:hover,
+.manage-rituals__editor-close:focus-visible {
+  color: #435349;
 }
 
 .manage-rituals__editor-main {
@@ -4644,6 +4670,15 @@ fieldset {
 
   .manage-rituals__editor {
     padding: 14px;
+  }
+
+  .manage-rituals__editor-title-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .manage-rituals__editor-close {
+    align-self: flex-start;
   }
 
   .manage-rituals__editor-main,

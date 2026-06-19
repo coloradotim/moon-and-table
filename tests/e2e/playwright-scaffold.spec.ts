@@ -56,6 +56,11 @@ test("dev visual QA mode opens a new household Ritual draft from Manage", async 
       .locator("[data-manage-ritual-draft-status='true']"),
   ).toHaveText("Local preview draft");
   await expect(page.getByRole("button", { name: "Add to library" })).toBeVisible();
+
+  await page.getByRole("button", { name: "Close editor" }).click();
+
+  await expect(page.locator("[data-manage-ritual-editor='true']")).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "Manage rituals" })).toBeVisible();
 });
 
 test("local dev server serves the Ritual edit draft API", async ({ request }) => {

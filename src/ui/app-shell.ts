@@ -2587,13 +2587,20 @@ function renderManageRitualEditorShell(
       data-ritual-id="${escapeHtml(row.id)}"
     >
       <header class="manage-rituals__editor-topbar">
-        <div>
-          <p class="manage-rituals__editor-kicker">${options.draft ? "Active draft" : "Selected Ritual"}</p>
-          <h3>${escapeHtml(displayedEditorHeadline)}</h3>
-          ${hasDifferentDraftHeadline
-            ? `<p class="manage-rituals__editor-published-title">Published/current: ${escapeHtml(row.headline)}</p>`
-            : ""}
-          <p><code title="${escapeHtml(row.id)}">${escapeHtml(shortenManageIdentifier(row.id, 44))}</code></p>
+        <div class="manage-rituals__editor-title-row">
+          <div>
+            <p class="manage-rituals__editor-kicker">${options.draft ? "Active draft" : "Selected Ritual"}</p>
+            <h3>${escapeHtml(displayedEditorHeadline)}</h3>
+            ${hasDifferentDraftHeadline
+              ? `<p class="manage-rituals__editor-published-title">Published/current: ${escapeHtml(row.headline)}</p>`
+              : ""}
+            <p><code title="${escapeHtml(row.id)}">${escapeHtml(shortenManageIdentifier(row.id, 44))}</code></p>
+          </div>
+          <button
+            type="button"
+            class="manage-rituals__editor-close"
+            data-manage-ritual-close-editor="true"
+          >Close editor</button>
         </div>
         <div class="manage-rituals__editor-badges" aria-label="Selected Ritual status">
           <span>${escapeHtml(getManageDraftSaveStateLabel(options.draft, options.draftStatus))}</span>

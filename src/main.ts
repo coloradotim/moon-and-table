@@ -2954,6 +2954,15 @@ appRoot.addEventListener("click", (event) => {
     return;
   }
 
+  if (target.closest("[data-manage-ritual-close-editor='true']")) {
+    event.preventDefault();
+    activeManageRitualEditorId = null;
+    clearManageRitualEditorDraftState();
+    activeManageRitualActionStatus = undefined;
+    renderActiveSignedInShell();
+    return;
+  }
+
   if (target.closest("[data-check-in-start-over='true']")) {
     startCheckInOver();
     return;
