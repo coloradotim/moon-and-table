@@ -544,7 +544,7 @@ describe("Manage Rituals view model", () => {
     );
   });
 
-  it("overlays DB lifecycle state onto Manage rows without reloading Ritual content", () => {
+  it("shows explicit recommendation holds as held by choice", () => {
     const rituals = sourceBackedRituals.slice(0, 1);
     const dbDocuments = createDbDocuments(rituals);
     const ritualDocument = dbDocuments.ritualDocuments[0];
@@ -590,7 +590,7 @@ describe("Manage Rituals view model", () => {
     expect(viewModel.counts.withMissingReadiness).toBe(1);
   });
 
-  it("allows recommendation promotion when only recommendation review remains", () => {
+  it("shows recommendation review without an explicit hold as needing setup", () => {
     const rituals = sourceBackedRituals.slice(0, 1);
     const dbDocuments = createDbDocuments(rituals);
     const ritualDocument = dbDocuments.ritualDocuments[0];
@@ -604,7 +604,7 @@ describe("Manage Rituals view model", () => {
           recommendationEligible: false,
           recommendable: false,
           missingReadiness: ["recommendation_review"],
-          holdReasons: ["direct_use_hold"],
+          holdReasons: [],
         },
       },
     ];
@@ -640,6 +640,48 @@ describe("Manage Rituals view model", () => {
       enabled: true,
       label: "Allow in Choose with me",
       disabledReason: undefined,
+    }));
+  });
+
+  it("blocks recommendation promotion when library state is mismatched", () => {
+    const rituals = sourceBackedRituals.slice(0, 1);
+    const dbDocuments = createDbDocuments(rituals);
+    const ritualDocument = dbDocuments.ritualDocuments[0];
+    dbDocuments.ritualDocuments = [
+      {
+        ...ritualDocument,
+        lifecycle: {
+          ...ritualDocument.lifecycle,
+          state: "reviewed",
+          findable: false,
+          directUseEligible: true,
+          recommendationEligible: false,
+          recommendable: false,
+          missingReadiness: ["recommendation_review"],
+          holdReasons: [],
+        },
+      },
+    ];
+
+    const viewModel = createManageRitualsViewModel(
+      rituals,
+      undefined,
+      {
+        dbBacked: true,
+        dbDocuments,
+      },
+    );
+    const row = viewModel.rows[0];
+    const promoteRecommendation = row.reviewState.actions.find(
+      (action) => action.action === "promote_recommendation",
+    );
+
+    expect(row.libraryState).toBe("state_mismatch");
+    expect(row.chooseWithMeState).toBe("not_available");
+    expect(promoteRecommendation).toEqual(expect.objectContaining({
+      enabled: false,
+      label: "Allow in Choose with me",
+      disabledReason: "Show this Ritual in the library before allowing Choose with me.",
     }));
   });
 

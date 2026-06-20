@@ -601,10 +601,13 @@ function createReviewState(input: {
     (item) => !RECOMMENDATION_PROMOTION_RESOLVABLE_READINESS.has(item),
   );
   const recommendationSetupBlocker = chooseWithMeSetupBlocker(input.ritual);
-  const inLibrary = rowIsInLibrary({
+  const libraryState = getLibraryState({
+    rowKind: "published",
     findable: input.findable,
     directUseEligible: input.directUseEligible,
+    lifecycleState: ritualDocument.lifecycle.state,
   });
+  const inLibrary = libraryState === "in_library";
   const recommendationPromotionBlocker = !inLibrary
     ? "Show this Ritual in the library before allowing Choose with me."
     : recommendationSetupBlocker
