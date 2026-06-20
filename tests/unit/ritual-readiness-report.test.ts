@@ -5,7 +5,10 @@ import {
   createRitualReadinessReport,
   formatRitualReadinessReport,
 } from "../../src/data/rituals/readiness-report";
-import type { Ritual } from "../../src/data/rituals/types";
+import type {
+  Ritual,
+  RitualRecommendationMetadata,
+} from "../../src/data/rituals/types";
 
 describe("Ritual readiness report", () => {
   it("summarizes the current source-backed import records", () => {
@@ -82,10 +85,10 @@ describe("Ritual readiness report", () => {
     const invalid = {
       ...sourceBackedRituals[0],
       recommendationMetadata: {
-        ...sourceBackedRituals[0].recommendationMetadata,
+        ...sourceBackedRituals[0] .recommendationMetadata!,
         purposes: {
-          ...sourceBackedRituals[0].recommendationMetadata.purposes,
-          primary: "generic" as Ritual["recommendationMetadata"]["purposes"]["primary"],
+          ...sourceBackedRituals[0].recommendationMetadata!.purposes,
+          primary: "generic" as RitualRecommendationMetadata["purposes"]["primary"],
         },
       },
     } satisfies Ritual;
@@ -103,6 +106,8 @@ describe("Ritual readiness report", () => {
     );
     expect(formatted).toContain("Validation findings:");
     expect(formatted).toContain("recommendationMetadata.purposes.primary");
-    expect(formatted).toContain("Primary purpose is invalid.");
+    expect(formatted).toContain(
+      "Recommendation-eligible records require a valid primary purpose.",
+    );
   });
 });

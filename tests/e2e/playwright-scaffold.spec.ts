@@ -63,6 +63,58 @@ test("dev visual QA mode opens a new household Ritual draft from Manage", async 
   await expect(page.getByRole("heading", { name: "Manage rituals" })).toBeVisible();
 });
 
+test("dev visual QA mode filters Manage rituals to drafts", async ({ page }) => {
+  await page.goto("/?dev_visual_qa=signed_in&view=manage_rituals");
+
+  await expect(page.getByText("528 Rituals shown")).toBeVisible();
+
+  const drafts = page.getByRole("button", { name: "Drafts" });
+  await drafts.click();
+
+  await expect(page.getByText("528 Rituals shown")).toHaveCount(0);
+  await expect(page.getByText(/Rituals shown/)).toBeVisible();
+  await expect(drafts).toHaveAttribute("aria-pressed", "true");
+
+  await drafts.click();
+
+  await expect(page.getByText("528 Rituals shown")).toBeVisible();
+  await expect(drafts).toHaveAttribute("aria-pressed", "false");
+});
+
+test("dev visual QA mode replaces Manage view chips predictably", async ({ page }) => {
+  await page.goto("/?dev_visual_qa=signed_in&view=manage_rituals");
+
+  const inLibrary = page.getByRole("button", { name: "In library" });
+  const chooseWithMe = page.getByRole("button", { name: "Allowed in Choose with me" });
+  const needsAttention = page.getByRole("button", { name: "Needs attention" });
+  const archived = page.getByRole("button", { name: "Archived" });
+
+  await inLibrary.click();
+  await expect(inLibrary).toHaveAttribute("aria-pressed", "true");
+
+  await chooseWithMe.click();
+  await expect(inLibrary).toHaveAttribute("aria-pressed", "false");
+  await expect(chooseWithMe).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByText("528 Rituals shown")).toHaveCount(0);
+
+  await needsAttention.click();
+  await expect(chooseWithMe).toHaveAttribute("aria-pressed", "false");
+  await expect(needsAttention).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByText("528 Rituals shown")).toHaveCount(0);
+  await expect(page.getByText(/Rituals shown/)).toBeVisible();
+
+  await archived.click();
+  await expect(needsAttention).toHaveAttribute("aria-pressed", "false");
+  await expect(archived).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByText("0 Rituals shown")).toBeVisible();
+
+  await needsAttention.click();
+  await expect(archived).toHaveAttribute("aria-pressed", "false");
+  await expect(needsAttention).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByText("0 Rituals shown")).toHaveCount(0);
+  await expect(page.getByText(/Rituals shown/)).toBeVisible();
+});
+
 test("local dev server serves the Ritual edit draft API", async ({ request }) => {
   const response = await request.post("/api/ritual-edit-draft", {
     data: {

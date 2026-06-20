@@ -166,6 +166,8 @@ function applyLifecycleOverlay(
   ritual: Ritual,
   ritualDocument: RitualDocument,
 ): Ritual {
+  const recommendationMetadata = ritual.recommendationMetadata;
+
   return {
     ...ritual,
     availability: {
@@ -173,14 +175,16 @@ function applyLifecycleOverlay(
       directUseEligible: ritualDocument.lifecycle.directUseEligible,
       recommendationEligible: ritualDocument.lifecycle.recommendationEligible,
     },
-    recommendationMetadata: {
-      ...ritual.recommendationMetadata,
-      eligibility: {
-        ...ritual.recommendationMetadata.eligibility,
-        recommendable: ritualDocument.lifecycle.recommendable,
-        missing: [...ritualDocument.lifecycle.missingReadiness],
-      },
-    },
+    recommendationMetadata: recommendationMetadata
+      ? {
+        ...recommendationMetadata,
+        eligibility: {
+          ...recommendationMetadata.eligibility,
+          recommendable: ritualDocument.lifecycle.recommendable,
+          missing: [...ritualDocument.lifecycle.missingReadiness],
+        },
+      }
+      : undefined,
   };
 }
 

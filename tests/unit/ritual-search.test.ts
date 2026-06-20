@@ -96,7 +96,7 @@ describe("Ritual search", () => {
         recommendationEligible: false,
       },
       recommendationMetadata: {
-        ...sourceBackedRituals[0].recommendationMetadata,
+        ...sourceBackedRituals[0] .recommendationMetadata!,
         eligibility: {
           recommendable: false,
           missing: ["recommendation_review"],
@@ -253,7 +253,7 @@ describe("Ritual search", () => {
     ).toBe("The Green Witch's Garden");
     expect(
       searchRituals(sourceBackedRituals, { sort: "capacity" })[0]
-        .recommendationMetadata.capacity.default,
+        .recommendationMetadata?.capacity.default,
     ).toBe("enough_to_participate");
     expect(
       searchRituals(sourceBackedRituals, { sort: "recently_added" })[0].id,
@@ -288,7 +288,7 @@ describe("Ritual search", () => {
     );
     expect(
       results.every(
-        (ritual) => ritual.recommendationMetadata.timing.relationship !== "none",
+        (ritual) => ritual.recommendationMetadata!.timing.relationship !== "none",
       ),
     ).toBe(true);
     expect(
@@ -405,7 +405,7 @@ describe("Ritual search", () => {
       timingFilter: "current",
       timingWindow: window,
       sort: "match",
-    }).map((ritual) => ritual.recommendationMetadata.timing.relationship);
+    }).map((ritual) => ritual.recommendationMetadata!.timing.relationship);
     const ranks = relationships.map((relationship) => {
       if (relationship === "required") return 3;
       if (relationship === "preferred") return 2;

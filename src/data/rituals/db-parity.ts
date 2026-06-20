@@ -378,7 +378,7 @@ export function createRitualDbParityReport(
     }
 
     const staticMissingReadiness =
-      staticRitual.recommendationMetadata.eligibility.missing ?? [];
+      staticRitual.recommendationMetadata?.eligibility.missing ?? [];
     if (!valuesEqual(staticMissingReadiness, ritualDocument.lifecycle.missingReadiness)) {
       addMismatch(fieldMismatches, {
         ritualId: staticRitual.id,

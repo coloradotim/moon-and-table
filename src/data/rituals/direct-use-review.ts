@@ -1747,6 +1747,8 @@ const DIRECT_USE_REVIEW_DECISIONS: Record<string, DirectUseReviewDecision> = {
 };
 
 function markReviewedForDirectUse(ritual: Ritual): Ritual {
+  const recommendationMetadata = ritual.recommendationMetadata;
+
   return {
     ...ritual,
     status: "reviewed",
@@ -1756,13 +1758,15 @@ function markReviewedForDirectUse(ritual: Ritual): Ritual {
       directUseEligible: true,
       recommendationEligible: false,
     },
-    recommendationMetadata: {
-      ...ritual.recommendationMetadata,
-      eligibility: {
-        recommendable: false,
-        missing: ["recommendation_review"],
-      },
-    },
+    recommendationMetadata: recommendationMetadata
+      ? {
+        ...recommendationMetadata,
+        eligibility: {
+          recommendable: false,
+          missing: ["recommendation_review"],
+        },
+      }
+      : undefined,
     reviewFlags: undefined,
   };
 }

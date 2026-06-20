@@ -2333,12 +2333,19 @@ h2 {
 
 .manage-rituals__filters {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
-  max-width: 860px;
+  grid-template-columns: minmax(220px, 1fr) auto;
+  gap: 10px;
+}
+
+.manage-rituals__filter-facets {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 8px;
 }
 
-.manage-rituals__filters label {
+.manage-rituals__filters label,
+.manage-rituals__filter-group {
   display: grid;
   gap: 5px;
   color: #52635a;
@@ -2346,7 +2353,12 @@ h2 {
   font-weight: 700;
 }
 
-.manage-rituals__filters select {
+.manage-rituals__filter-search {
+  min-width: 0;
+}
+
+.manage-rituals__filters select,
+.manage-rituals__filters input[type="search"] {
   min-height: 34px;
   padding: 5px 28px 5px 9px;
   border: 1px solid rgba(159, 174, 166, 0.72);
@@ -2356,8 +2368,81 @@ h2 {
   font: inherit;
 }
 
+.manage-rituals__filters input[type="search"] {
+  width: 100%;
+  padding-right: 9px;
+}
+
+.manage-rituals__filter-group {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.manage-rituals__filter-group legend {
+  padding: 0;
+  color: #52635a;
+}
+
+.manage-rituals__filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+}
+
+.manage-rituals__filter-chip {
+  position: relative;
+  display: inline-flex;
+  min-height: 34px;
+  width: fit-content;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid rgba(159, 174, 166, 0.72);
+  border-radius: 999px;
+  background: rgba(255, 253, 247, 0.82);
+  color: #26312c;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.manage-rituals__filter-chip--selected {
+  border-color: rgba(92, 119, 86, 0.72);
+  background: rgba(235, 244, 229, 0.92);
+}
+
+.manage-rituals__filter-chip:focus-visible {
+  outline: 2px solid rgba(92, 119, 86, 0.65);
+  outline-offset: 2px;
+}
+
+.manage-rituals__search-button,
 .manage-rituals__clear {
   margin-top: auto;
+}
+
+.manage-rituals__search-button {
+  min-height: 34px;
+  padding: 5px 13px;
+  border: 1px solid rgba(159, 174, 166, 0.72);
+  border-radius: 8px;
+  background: rgba(255, 253, 247, 0.82);
+  color: #26312c;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.manage-rituals__search-button:hover,
+.manage-rituals__search-button:focus-visible {
+  border-color: rgba(92, 119, 86, 0.72);
+  background: rgba(235, 244, 229, 0.92);
+}
+
+.manage-rituals__clear {
+  width: fit-content;
 }
 
 .manage-rituals__action-status {

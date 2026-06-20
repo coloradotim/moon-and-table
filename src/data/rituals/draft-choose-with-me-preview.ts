@@ -12,6 +12,7 @@ import type {
   RitualPurpose,
   RitualRecommendationMetadata,
   RitualSearchMetadata,
+  RitualWithRecommendationMetadata,
 } from "./types";
 import type { CapacityMode } from "../../lib/generate-weekly-brief";
 import type {
@@ -168,7 +169,7 @@ function createPreviewRitual(
   baseRitual: Ritual,
   draft: RitualEditDraftDocument,
   recommendationMetadata: RitualRecommendationMetadata,
-): Ritual {
+): RitualWithRecommendationMetadata {
   const draftBuffer = draft.draftBuffer;
 
   return {
@@ -296,11 +297,11 @@ function getDefaultSampleInput(
 ): RitualDraftChoosePreviewSampleInput {
   return {
     energyCapacity: "enough_to_engage",
-    audience: ritual.recommendationMetadata.audience.default ??
-      ritual.recommendationMetadata.audience.supports[0] ??
+    audience: ritual.recommendationMetadata?.audience.default ??
+      ritual.recommendationMetadata?.audience.supports[0] ??
       "me",
-    purpose: ritual.recommendationMetadata.purposes.primary,
-    carrier: ritual.recommendationMetadata.carriers.primary,
+    purpose: ritual.recommendationMetadata?.purposes.primary ?? "tending",
+    carrier: ritual.recommendationMetadata?.carriers.primary ?? "table",
     timing: "current",
   };
 }
@@ -331,7 +332,9 @@ function blockerModel(
   };
 }
 
-function getPreflightBlockers(ritual: Ritual): string[] {
+function getPreflightBlockers(
+  ritual: RitualWithRecommendationMetadata,
+): string[] {
   const metadata = ritual.recommendationMetadata;
   const blockers: string[] = [];
 
@@ -394,7 +397,7 @@ function getSelectorBlockers(result: ChooseWithMeResult): string[] {
 }
 
 function describeTimingImpact(
-  ritual: Ritual,
+  ritual: RitualWithRecommendationMetadata,
   result: ChooseWithMeResult,
   sampleInput: RitualDraftChoosePreviewSampleInput,
 ): string {
@@ -416,7 +419,7 @@ function describeTimingImpact(
 }
 
 function describeCapacityFit(
-  ritual: Ritual,
+  ritual: RitualWithRecommendationMetadata,
   sampleInput: RitualDraftChoosePreviewSampleInput,
 ): string {
   const supportedCapacity = supportedCapacityByEnergy[sampleInput.energyCapacity];
@@ -427,7 +430,7 @@ function describeCapacityFit(
 }
 
 function describeAudienceFit(
-  ritual: Ritual,
+  ritual: RitualWithRecommendationMetadata,
   sampleInput: RitualDraftChoosePreviewSampleInput,
 ): string {
   return ritual.recommendationMetadata.audience.supports.includes(sampleInput.audience)
@@ -436,7 +439,7 @@ function describeAudienceFit(
 }
 
 function describePurposeCarrierFit(
-  ritual: Ritual,
+  ritual: RitualWithRecommendationMetadata,
   sampleInput: RitualDraftChoosePreviewSampleInput,
 ): string {
   const purposeFit = ritual.recommendationMetadata.purposes.primary === sampleInput.purpose

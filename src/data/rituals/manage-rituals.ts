@@ -6,6 +6,7 @@ import {
   RITUAL_STATUSES,
   RITUAL_TIMING_RELATIONSHIPS,
   type Ritual,
+  type RitualRecommendationMetadata,
   type RitualStatus,
 } from "./types";
 import {
@@ -18,6 +19,7 @@ import {
   validateRituals,
   type RitualValidationFinding,
 } from "./validate-rituals";
+import { validateRitualEditDraft } from "./ritual-edit-draft-validation";
 import type {
   RitualDocument,
   RitualValidationSnapshotDocument,
@@ -27,23 +29,40 @@ import type { RitualReviewAction } from "./db-review-transactions";
 import type { RitualEditDraftDocument } from "./ritual-edit-drafts";
 
 export const MANAGE_RITUAL_ORIGIN_FILTERS = ["all", "source", "household"] as const;
+export const MANAGE_RITUAL_VIEW_FILTERS = [
+  "all",
+  "active_draft",
+  "in_library",
+  "choose_with_me",
+  "needs_attention",
+  "archived",
+] as const;
 export const MANAGE_RITUAL_AVAILABILITY_FILTERS = [
   "all",
-  "findable",
-  "direct_use",
-  "recommendation_eligible",
-  "recommendable",
+  "in_library",
+  "hidden_from_library",
+  "allowed_choose_with_me",
+  "held_choose_with_me",
 ] as const;
 export const MANAGE_RITUAL_READINESS_FILTERS = [
   "all",
   "missing_readiness",
   "review_flags",
   "validation_findings",
-  "recommendation_ready",
 ] as const;
 export const MANAGE_RITUAL_VALIDATION_FILTERS = ["all", "valid", "findings"] as const;
+export const MANAGE_RITUAL_SHORTCUT_FILTERS = [
+  "all",
+  "validation_issues",
+  "timing_repair",
+  "source_review",
+  "recommendation_setup",
+  "held_choose_with_me",
+  "state_mismatch",
+] as const;
 
-export type ManageRitualStatusFilter = "all" | "active_draft" | RitualStatus;
+export type ManageRitualViewFilter = (typeof MANAGE_RITUAL_VIEW_FILTERS)[number];
+export type ManageRitualStatusFilter = ManageRitualViewFilter | RitualStatus;
 export type ManageRitualOriginFilter = (typeof MANAGE_RITUAL_ORIGIN_FILTERS)[number];
 export type ManageRitualAvailabilityFilter =
   (typeof MANAGE_RITUAL_AVAILABILITY_FILTERS)[number];
@@ -51,6 +70,10 @@ export type ManageRitualReadinessFilter =
   (typeof MANAGE_RITUAL_READINESS_FILTERS)[number];
 export type ManageRitualValidationFilter =
   (typeof MANAGE_RITUAL_VALIDATION_FILTERS)[number];
+export type ManageRitualShortcutFilter =
+  (typeof MANAGE_RITUAL_SHORTCUT_FILTERS)[number];
+export type ManageRitualPurposeFilter = "all" | (typeof RITUAL_PURPOSES)[number];
+export type ManageRitualCarrierFilter = "all" | (typeof RITUAL_CARRIERS)[number];
 export type ManageRitualSortKey =
   | "headline"
   | "status"
@@ -77,11 +100,15 @@ const RECOMMENDATION_PROMOTION_RESOLVABLE_READINESS = new Set([
 ]);
 
 export type ManageRitualFilters = {
+  query: string;
   status: ManageRitualStatusFilter;
   origin: ManageRitualOriginFilter;
   availability: ManageRitualAvailabilityFilter;
   readiness: ManageRitualReadinessFilter;
   validation: ManageRitualValidationFilter;
+  shortcut: ManageRitualShortcutFilter;
+  purpose: ManageRitualPurposeFilter;
+  carrier: ManageRitualCarrierFilter;
   source: string;
   sort: ManageRitualSortKey;
   direction: ManageRitualSortDirection;
@@ -135,14 +162,18 @@ export type ManageRitualRow = {
   directUseEligible: boolean;
   recommendationEligible: boolean;
   recommendable: boolean;
-  primaryPurpose: string;
-  primaryCarrier: string;
+  primaryPurpose?: string;
+  primaryCarrier?: string;
   audience: string[];
   capacity: string[];
   reviewFlags: string[];
   validationFindings: RitualValidationFinding[];
   missingReadiness: string[];
   issues: string[];
+  libraryState: "draft" | "in_library" | "hidden" | "archived" | "state_mismatch";
+  chooseWithMeState: "allowed" | "held_by_choice" | "needs_setup" | "not_available";
+  attentionLabels: string[];
+  searchText: string;
   sourceLabel?: string;
   originLabel?: string;
   sourceValues: string[];
@@ -158,8 +189,11 @@ export type ManageRitualsViewModel = {
     byOrigin: Record<"source" | "household", number>;
     findable: number;
     directUseEligible: number;
+    inLibrary: number;
     recommendationEligible: number;
     recommendable: number;
+    allowedChooseWithMe: number;
+    needsAttention: number;
     withValidationFindings: number;
     withMissingReadiness: number;
   };
@@ -175,11 +209,15 @@ export type CreateManageRitualsViewModelOptions = {
 };
 
 export const defaultManageRitualFilters: ManageRitualFilters = {
+  query: "",
   status: "all",
   origin: "all",
   availability: "all",
   readiness: "all",
   validation: "all",
+  shortcut: "all",
+  purpose: "all",
+  carrier: "all",
   source: "all",
   sort: "headline",
   direction: "asc",
@@ -191,9 +229,7 @@ function emptyStatusCounts(): Record<RitualStatus, number> {
   ) as Record<RitualStatus, number>;
 }
 
-function getReviewFlags(ritual: Ritual): string[] {
-  const flags = ritual.reviewFlags;
-
+function getReviewFlagLabels(flags: Ritual["reviewFlags"]): string[] {
   if (!flags) {
     return [];
   }
@@ -204,6 +240,179 @@ function getReviewFlags(ritual: Ritual): string[] {
     flags.sourceVerificationRequired ? "sourceVerificationRequired" : undefined,
     flags.productBoundaryReviewRequired ? "productBoundaryReviewRequired" : undefined,
   ].filter((flag): flag is string => Boolean(flag));
+}
+
+function getReviewFlags(ritual: Ritual): string[] {
+  return getReviewFlagLabels(ritual.reviewFlags);
+}
+
+function normalizeSearchToken(value: string): string {
+  return value.trim().toLowerCase();
+}
+
+function rowIsInLibrary(row: Pick<ManageRitualRow, "findable" | "directUseEligible">): boolean {
+  return row.findable && row.directUseEligible;
+}
+
+function rowHasLibraryStateMismatch(
+  row: Pick<ManageRitualRow, "findable" | "directUseEligible">,
+): boolean {
+  return row.findable !== row.directUseEligible;
+}
+
+function hasExplicitChooseWithMeHold(input: {
+  holdReasons: readonly string[];
+}): boolean {
+  return input.holdReasons.includes("recommendation_hold");
+}
+
+function getLibraryState(input: {
+  rowKind: ManageRitualRow["rowKind"];
+  findable: boolean;
+  directUseEligible: boolean;
+  lifecycleState?: string;
+}): ManageRitualRow["libraryState"] {
+  if (input.rowKind === "edit_draft") {
+    return "draft";
+  }
+
+  if (input.lifecycleState === "archived") {
+    return "archived";
+  }
+
+  if (input.findable !== input.directUseEligible) {
+    return "state_mismatch";
+  }
+
+  return input.findable && input.directUseEligible ? "in_library" : "hidden";
+}
+
+function getChooseWithMeState(input: {
+  rowKind: ManageRitualRow["rowKind"];
+  libraryState: ManageRitualRow["libraryState"];
+  recommendationEligible: boolean;
+  recommendable: boolean;
+  missingReadiness: readonly string[];
+  holdReasons: readonly string[];
+}): ManageRitualRow["chooseWithMeState"] {
+  if (input.rowKind === "edit_draft") {
+    return "needs_setup";
+  }
+
+  if (input.libraryState === "archived") {
+    return "not_available";
+  }
+
+  if (
+    input.libraryState === "in_library" &&
+    input.recommendationEligible &&
+    input.recommendable
+  ) {
+    return "allowed";
+  }
+
+  if (
+    input.libraryState === "in_library" &&
+    hasExplicitChooseWithMeHold({
+      holdReasons: input.holdReasons,
+    })
+  ) {
+    return "held_by_choice";
+  }
+
+  if (input.libraryState === "in_library") {
+    return "needs_setup";
+  }
+
+  return "not_available";
+}
+
+function getAttentionLabels(input: {
+  rowKind: ManageRitualRow["rowKind"];
+  libraryState: ManageRitualRow["libraryState"];
+  chooseWithMeState: ManageRitualRow["chooseWithMeState"];
+  validationFindings: readonly RitualValidationFinding[];
+  missingReadiness: readonly string[];
+  reviewFlags: readonly string[];
+}): string[] {
+  const labels: string[] = [];
+
+  if (input.rowKind === "edit_draft") {
+    labels.push("Draft");
+  }
+
+  if (input.libraryState === "state_mismatch") {
+    labels.push("Library state mismatch");
+  }
+
+  if (input.validationFindings.length > 0) {
+    labels.push("Validation issues");
+  }
+
+  if (
+    input.validationFindings.some((finding) =>
+      /timing/i.test(`${finding.path} ${finding.message}`)
+    ) ||
+    input.missingReadiness.some((item) => /timing/i.test(item))
+  ) {
+    labels.push("Timing needs repair");
+  }
+
+  if (
+    input.reviewFlags.some((flag) => /source/i.test(flag)) ||
+    input.missingReadiness.some((item) => /source|packet/i.test(item))
+  ) {
+    labels.push("Needs source review");
+  }
+
+  if (input.chooseWithMeState === "needs_setup") {
+    labels.push("Needs recommendation setup");
+  }
+
+  return [...new Set(labels)];
+}
+
+function createManageSearchText(input: {
+  row: Omit<ManageRitualRow, "searchText">;
+  holdReasons: readonly string[];
+}): string {
+  const ritual = input.row.ritual;
+  const versionIds = [
+    input.row.reviewState.currentVersionId,
+    input.row.reviewState.publishedVersionId,
+  ].filter((value): value is string => Boolean(value));
+  const values = [
+    input.row.id,
+    input.row.id.split(/[_-]/).slice(-2).join(" "),
+    ...versionIds,
+    ...versionIds.map((value) => value.slice(-12)),
+    input.row.headline,
+    input.row.activeDraft?.draftBuffer.presentation.headline,
+    input.row.sourceLabel,
+    input.row.originLabel,
+    input.row.origin,
+    input.row.primaryPurpose,
+    input.row.primaryCarrier,
+    input.row.libraryState,
+    input.row.chooseWithMeState.replaceAll("_", " "),
+    ...input.row.attentionLabels,
+    ...ritual.searchMetadata.tags,
+    ...ritual.searchMetadata.keywords,
+    ...(ritual.searchMetadata.materials ?? []),
+    ...(ritual.searchMetadata.places ?? []),
+    ...input.row.missingReadiness,
+    ...input.row.reviewFlags,
+    ...input.row.validationFindings.flatMap((finding) => [
+      finding.path,
+      finding.message,
+    ]),
+    ...input.holdReasons,
+  ];
+
+  return values
+    .filter((value): value is string => typeof value === "string" && value.length > 0)
+    .join(" ")
+    .toLowerCase();
 }
 
 function getRitualDbContext(
@@ -238,6 +447,43 @@ function getRitualDbContext(
 
 function hasSourceGrounding(ritual: Ritual): boolean {
   return ritual.origin.type !== "source" || ritual.origin.sourceGrounding.length > 0;
+}
+
+function chooseWithMeSetupBlocker(ritual: Ritual): string | undefined {
+  const metadata = ritual.recommendationMetadata;
+
+  if (!metadata) {
+    return "Add recommendation metadata before allowing Choose with me.";
+  }
+
+  if (!RITUAL_PURPOSES.includes(metadata.purposes?.primary)) {
+    return "Choose with me needs a primary purpose.";
+  }
+
+  if (!RITUAL_CARRIERS.includes(metadata.carriers?.primary)) {
+    return "Choose with me needs a primary carrier.";
+  }
+
+  if ((metadata.capacity?.supports.length ?? 0) === 0) {
+    return "Choose with me needs at least one capacity support.";
+  }
+
+  if ((metadata.audience?.supports.length ?? 0) === 0) {
+    return "Choose with me needs at least one audience support.";
+  }
+
+  if (
+    metadata.timing?.relationship === "required" &&
+    (metadata.timing.contexts ?? []).filter((context) =>
+      context.trim().length > 0 &&
+      !["imperfect timing", "lunar phase", "moon phase", "moon sign", "planetary aspect", "retrograde planet"]
+        .includes(context.trim().toLowerCase())
+    ).length === 0
+  ) {
+    return "Required timing needs a concrete supported timing signal.";
+  }
+
+  return undefined;
 }
 
 function createBlockedAction(
@@ -281,6 +527,7 @@ function createActionOption(input: {
 
 function createReviewState(input: {
   ritual: Ritual;
+  findable: boolean;
   directUseEligible: boolean;
   recommendable: boolean;
   missingReadiness: string[];
@@ -353,8 +600,18 @@ function createReviewState(input: {
   const unresolvedRecommendationReadiness = input.missingReadiness.filter(
     (item) => !RECOMMENDATION_PROMOTION_RESOLVABLE_READINESS.has(item),
   );
-  const recommendationPromotionBlocker = !input.directUseEligible
+  const recommendationSetupBlocker = chooseWithMeSetupBlocker(input.ritual);
+  const libraryState = getLibraryState({
+    rowKind: "published",
+    findable: input.findable,
+    directUseEligible: input.directUseEligible,
+    lifecycleState: ritualDocument.lifecycle.state,
+  });
+  const inLibrary = libraryState === "in_library";
+  const recommendationPromotionBlocker = !inLibrary
     ? "Show this Ritual in the library before allowing Choose with me."
+    : recommendationSetupBlocker
+      ? recommendationSetupBlocker
     : unresolvedRecommendationReadiness.length > 0
       ? `Resolve ${unresolvedRecommendationReadiness.join(", ")} before allowing Choose with me.`
       : directUsePromotionBlocker;
@@ -367,8 +624,8 @@ function createReviewState(input: {
         action: "promote_direct_use",
         label: "Show in library",
         description: "Make this Ritual available in Search and direct selection. Recommendation review stays separate.",
-        enabled: !input.directUseEligible && !directUsePromotionBlocker,
-        disabledReason: input.directUseEligible
+        enabled: !inLibrary && !directUsePromotionBlocker,
+        disabledReason: inLibrary
           ? "This Ritual is already shown in the library."
           : directUsePromotionBlocker,
         requiresReason: false,
@@ -377,7 +634,7 @@ function createReviewState(input: {
         action: "hold_direct_use",
         label: "Hide from library",
         description: "Keep the Ritual visible in Manage, but remove it from Search, direct selection, and recommendations.",
-        enabled: input.directUseEligible && !isArchived,
+        enabled: inLibrary && !isArchived,
         disabledReason: isArchived
           ? "Archived Rituals are already unavailable."
           : "This Ritual is already hidden from the library.",
@@ -398,7 +655,7 @@ function createReviewState(input: {
         action: "hold_recommendation",
         label: "Hold from Choose with me",
         description: "Keep Search and direct selection available, but stop Choose with me from offering it.",
-        enabled: input.directUseEligible && !isArchived,
+        enabled: inLibrary && !isArchived,
         disabledReason: isArchived
           ? "Archived Rituals are already unavailable."
           : "Direct use must be available before only recommendations can be removed.",
@@ -451,31 +708,64 @@ function createReviewState(input: {
 
 function normalizeFilters(filters?: Partial<ManageRitualFilters>): ManageRitualFilters {
   const rawStatus = filters?.status ?? defaultManageRitualFilters.status;
-  const status = rawStatus === "draft" ? "active_draft" : rawStatus;
+  const status = rawStatus === "draft" || rawStatus === "pilot"
+    ? "active_draft"
+    : rawStatus === "reviewed"
+      ? "in_library"
+      : rawStatus === "recommendable"
+        ? "choose_with_me"
+        : rawStatus;
   const origin = filters?.origin ?? defaultManageRitualFilters.origin;
-  const availability =
-    filters?.availability ?? defaultManageRitualFilters.availability;
-  const readiness = filters?.readiness ?? defaultManageRitualFilters.readiness;
-  const validation =
-    filters?.validation ?? defaultManageRitualFilters.validation;
+  const rawAvailability = String(
+    filters?.availability ?? defaultManageRitualFilters.availability,
+  );
+  const availability = rawAvailability === "findable" ||
+      rawAvailability === "direct_use"
+    ? "in_library"
+    : rawAvailability === "recommendation_eligible" ||
+        rawAvailability === "recommendable"
+      ? "allowed_choose_with_me"
+      : rawAvailability;
+  const rawReadiness = String(
+    filters?.readiness ?? defaultManageRitualFilters.readiness,
+  );
+  const readiness = rawReadiness === "recommendation_ready" ? "all" : rawReadiness;
+  const validation = filters?.validation ?? defaultManageRitualFilters.validation;
+  const shortcut = filters?.shortcut ?? defaultManageRitualFilters.shortcut;
+  const purpose = filters?.purpose ?? defaultManageRitualFilters.purpose;
+  const carrier = filters?.carrier ?? defaultManageRitualFilters.carrier;
   const source = filters?.source ?? defaultManageRitualFilters.source;
   const sort = filters?.sort ?? defaultManageRitualFilters.sort;
   const direction = filters?.direction ?? defaultManageRitualFilters.direction;
 
   return {
-    status: status === "all" || status === "active_draft" ||
-        RITUAL_STATUSES.includes(status)
+    query: filters?.query?.trim() ?? "",
+    status: MANAGE_RITUAL_VIEW_FILTERS.includes(status as ManageRitualViewFilter) ||
+        RITUAL_STATUSES.includes(status as RitualStatus)
       ? status
       : "all",
     origin: MANAGE_RITUAL_ORIGIN_FILTERS.includes(origin) ? origin : "all",
-    availability: MANAGE_RITUAL_AVAILABILITY_FILTERS.includes(availability)
-      ? availability
+    availability: MANAGE_RITUAL_AVAILABILITY_FILTERS.includes(
+        availability as ManageRitualAvailabilityFilter,
+      )
+      ? availability as ManageRitualAvailabilityFilter
       : "all",
-    readiness: MANAGE_RITUAL_READINESS_FILTERS.includes(readiness)
-      ? readiness
+    readiness: MANAGE_RITUAL_READINESS_FILTERS.includes(
+        readiness as ManageRitualReadinessFilter,
+      )
+      ? readiness as ManageRitualReadinessFilter
       : "all",
     validation: MANAGE_RITUAL_VALIDATION_FILTERS.includes(validation)
       ? validation
+      : "all",
+    shortcut: MANAGE_RITUAL_SHORTCUT_FILTERS.includes(shortcut)
+      ? shortcut
+      : "all",
+    purpose: purpose === "all" || RITUAL_PURPOSES.includes(purpose)
+      ? purpose
+      : "all",
+    carrier: carrier === "all" || RITUAL_CARRIERS.includes(carrier)
+      ? carrier
       : "all",
     source,
     sort: MANAGE_RITUAL_SORT_KEYS.includes(sort) ? sort : "headline",
@@ -484,13 +774,41 @@ function normalizeFilters(filters?: Partial<ManageRitualFilters>): ManageRitualF
 }
 
 function rowMatchesFilters(row: ManageRitualRow, filters: ManageRitualFilters): boolean {
-  if (filters.status === "active_draft" && row.rowKind !== "edit_draft" && !row.activeDraft) {
+  const isLiveRow = row.rowKind === "published";
+  const inLibrary = isLiveRow && rowIsInLibrary(row);
+  const stateMismatch = rowHasLibraryStateMismatch(row);
+  const allowedChooseWithMe = isLiveRow && row.chooseWithMeState === "allowed";
+  const needsAttention = row.attentionLabels.length > 0;
+  const queryTokens = normalizeSearchToken(filters.query)
+    .split(/\s+/)
+    .filter(Boolean);
+
+  if (
+    filters.status === "active_draft" &&
+    row.rowKind !== "edit_draft" &&
+    !row.activeDraft
+  ) {
+    return false;
+  }
+
+  if (filters.status === "in_library" && !inLibrary) {
+    return false;
+  }
+
+  if (filters.status === "choose_with_me" && !allowedChooseWithMe) {
+    return false;
+  }
+
+  if (filters.status === "needs_attention" && !needsAttention) {
+    return false;
+  }
+
+  if (filters.status === "archived" && row.libraryState !== "archived") {
     return false;
   }
 
   if (
-    filters.status !== "all" &&
-    filters.status !== "active_draft" &&
+    !MANAGE_RITUAL_VIEW_FILTERS.includes(filters.status as ManageRitualViewFilter) &&
     row.status !== filters.status
   ) {
     return false;
@@ -507,22 +825,30 @@ function rowMatchesFilters(row: ManageRitualRow, filters: ManageRitualFilters): 
     return false;
   }
 
-  if (filters.availability === "findable" && !row.findable) {
+  if (filters.purpose !== "all" && row.primaryPurpose !== filters.purpose) {
     return false;
   }
 
-  if (filters.availability === "direct_use" && !row.directUseEligible) {
+  if (filters.carrier !== "all" && row.primaryCarrier !== filters.carrier) {
+    return false;
+  }
+
+  if (filters.availability === "in_library" && !inLibrary) {
+    return false;
+  }
+
+  if (filters.availability === "hidden_from_library" && inLibrary) {
+    return false;
+  }
+
+  if (filters.availability === "allowed_choose_with_me" && !allowedChooseWithMe) {
     return false;
   }
 
   if (
-    filters.availability === "recommendation_eligible" &&
-    !row.recommendationEligible
+    filters.availability === "held_choose_with_me" &&
+    row.chooseWithMeState !== "held_by_choice"
   ) {
-    return false;
-  }
-
-  if (filters.availability === "recommendable" && !row.recommendable) {
     return false;
   }
 
@@ -544,15 +870,57 @@ function rowMatchesFilters(row: ManageRitualRow, filters: ManageRitualFilters): 
     return false;
   }
 
-  if (filters.readiness === "recommendation_ready" && !row.recommendable) {
-    return false;
-  }
-
   if (filters.validation === "valid" && row.validationFindings.length > 0) {
     return false;
   }
 
   if (filters.validation === "findings" && row.validationFindings.length === 0) {
+    return false;
+  }
+
+  if (
+    filters.shortcut === "validation_issues" &&
+    row.validationFindings.length === 0
+  ) {
+    return false;
+  }
+
+  if (
+    filters.shortcut === "timing_repair" &&
+    !row.attentionLabels.includes("Timing needs repair")
+  ) {
+    return false;
+  }
+
+  if (
+    filters.shortcut === "source_review" &&
+    !row.attentionLabels.includes("Needs source review")
+  ) {
+    return false;
+  }
+
+  if (
+    filters.shortcut === "recommendation_setup" &&
+    row.chooseWithMeState !== "needs_setup"
+  ) {
+    return false;
+  }
+
+  if (
+    filters.shortcut === "held_choose_with_me" &&
+    row.chooseWithMeState !== "held_by_choice"
+  ) {
+    return false;
+  }
+
+  if (filters.shortcut === "state_mismatch" && !stateMismatch) {
+    return false;
+  }
+
+  if (
+    queryTokens.length > 0 &&
+    !queryTokens.every((token) => row.searchText.includes(token))
+  ) {
     return false;
   }
 
@@ -639,6 +1007,15 @@ function firstAllowedValue<const T extends readonly string[]>(
     : allowed[0];
 }
 
+function allowedValue<const T extends readonly string[]>(
+  allowed: T,
+  value: unknown,
+): T[number] | undefined {
+  return typeof value === "string" && allowed.includes(value)
+    ? value
+    : undefined;
+}
+
 function allowedList<const T extends readonly string[]>(
   allowed: T,
   values: unknown,
@@ -681,11 +1058,11 @@ function createDraftManageRitualRow(input: {
 }): ManageRitualRow {
   const draft = input.draft;
   const draftBuffer = draft.draftBuffer;
-  const primaryPurpose = firstAllowedValue(
+  const primaryPurpose = allowedValue(
     RITUAL_PURPOSES,
     draftBuffer.recommendationMetadata?.purposes?.primary,
   );
-  const primaryCarrier = firstAllowedValue(
+  const primaryCarrier = allowedValue(
     RITUAL_CARRIERS,
     draftBuffer.recommendationMetadata?.carriers?.primary,
   );
@@ -697,7 +1074,7 @@ function createDraftManageRitualRow(input: {
     RITUAL_AUDIENCES,
     draftBuffer.recommendationMetadata?.audience?.supports,
   );
-  const timingRelationship = firstAllowedValue(
+  const timingRelationship = allowedValue(
     RITUAL_TIMING_RELATIONSHIPS,
     draftBuffer.recommendationMetadata?.timing?.relationship,
   );
@@ -711,6 +1088,75 @@ function createDraftManageRitualRow(input: {
     draftBuffer.recommendationMetadata?.eligibility?.recommendable ?? false;
   const status = firstAllowedValue(RITUAL_STATUSES, draftBuffer.status);
   const origin = draftBuffer.origin.type;
+  const libraryState = getLibraryState({
+    rowKind: "edit_draft",
+    findable,
+    directUseEligible,
+  });
+  const chooseWithMeState = getChooseWithMeState({
+    rowKind: "edit_draft",
+    libraryState,
+    recommendationEligible,
+    recommendable,
+    missingReadiness,
+    holdReasons: [],
+  });
+  const validationFindings = validateRitualEditDraft(draft).findings.map(
+    (finding): RitualValidationFinding => ({
+      ritualId: draft.ritualId,
+      path: finding.path,
+      message: finding.message,
+    }),
+  );
+  const reviewFlags = getReviewFlagLabels(draftBuffer.reviewFlags);
+  const attentionLabels = getAttentionLabels({
+    rowKind: "edit_draft",
+    libraryState,
+    chooseWithMeState,
+    validationFindings,
+    missingReadiness,
+    reviewFlags,
+  });
+  const recommendationMetadata: RitualRecommendationMetadata | undefined =
+    primaryPurpose && primaryCarrier && timingRelationship
+      ? {
+        purposes: {
+          primary: primaryPurpose,
+          secondary: allowedList(
+            RITUAL_PURPOSES,
+            draftBuffer.recommendationMetadata?.purposes?.secondary,
+          ).filter((purpose) => purpose !== primaryPurpose),
+          refinement:
+            draftBuffer.recommendationMetadata?.purposes?.refinement ?? "",
+        },
+        carriers: {
+          primary: primaryCarrier,
+          secondary: allowedList(
+            RITUAL_CARRIERS,
+            draftBuffer.recommendationMetadata?.carriers?.secondary,
+          ).filter((carrier) => carrier !== primaryCarrier),
+        },
+        capacity: {
+          supports: capacity,
+          default: capacity[0],
+        },
+        audience: {
+          supports: audience,
+          default: audience[0],
+          bothOfUsStructure:
+            draftBuffer.recommendationMetadata?.audience?.bothOfUsStructure,
+        },
+        timing: {
+          relationship: timingRelationship,
+          contexts: draftBuffer.recommendationMetadata?.timing?.contexts ?? [],
+        },
+        eligibility: {
+          recommendable,
+          missing: missingReadiness,
+          notFor: draftBuffer.recommendationMetadata?.eligibility?.notFor ?? [],
+        },
+      }
+      : undefined;
   const ritual: Ritual = {
     id: draft.ritualId,
     status,
@@ -719,42 +1165,7 @@ function createDraftManageRitualRow(input: {
       ...draftBuffer.presentation,
       whyThisFits: "Generated after Choose with me.",
     },
-    recommendationMetadata: {
-      purposes: {
-        primary: primaryPurpose,
-        secondary: allowedList(
-          RITUAL_PURPOSES,
-          draftBuffer.recommendationMetadata?.purposes?.secondary,
-        ).filter((purpose) => purpose !== primaryPurpose),
-        refinement: "",
-      },
-      carriers: {
-        primary: primaryCarrier,
-        secondary: allowedList(
-          RITUAL_CARRIERS,
-          draftBuffer.recommendationMetadata?.carriers?.secondary,
-        ).filter((carrier) => carrier !== primaryCarrier),
-      },
-      capacity: {
-        supports: capacity,
-        default: capacity[0],
-      },
-      audience: {
-        supports: audience,
-        default: audience[0],
-        bothOfUsStructure:
-          draftBuffer.recommendationMetadata?.audience?.bothOfUsStructure,
-      },
-      timing: {
-        relationship: timingRelationship,
-        contexts: draftBuffer.recommendationMetadata?.timing?.contexts ?? [],
-      },
-      eligibility: {
-        recommendable,
-        missing: missingReadiness,
-        notFor: draftBuffer.recommendationMetadata?.eligibility?.notFor ?? [],
-      },
-    },
+    recommendationMetadata,
     searchMetadata: {
       tags: draftBuffer.searchMetadata?.tags ?? [],
       keywords: draftBuffer.searchMetadata?.keywords ?? [],
@@ -773,8 +1184,10 @@ function createDraftManageRitualRow(input: {
     adaptationPolicy: draftBuffer.adaptationPolicy,
   };
   const headline = draftBuffer.presentation.headline.trim() || "Untitled Ritual";
+  const reviewState = createDraftReviewState({ dbBacked: input.dbBacked, draft });
+  const sourceLabels = getRitualSourceLabels(ritual);
 
-  return {
+  const row: ManageRitualRow = {
     rowKind: "edit_draft",
     ritual,
     activeDraft: draft,
@@ -790,15 +1203,26 @@ function createDraftManageRitualRow(input: {
     primaryCarrier,
     audience,
     capacity,
-    reviewFlags: [],
-    validationFindings: [],
+    reviewFlags,
+    validationFindings,
     missingReadiness,
-    issues: missingReadiness,
+    issues: [...new Set([
+      ...missingReadiness,
+      ...validationFindings.map((finding) => finding.path),
+      ...attentionLabels,
+    ])],
+    libraryState,
+    chooseWithMeState,
+    attentionLabels,
+    searchText: "",
     sourceLabel: ritual.searchMetadata.sourceLabel,
     originLabel: ritual.searchMetadata.originLabel,
-    sourceValues: [],
-    reviewState: createDraftReviewState({ dbBacked: input.dbBacked, draft }),
+    sourceValues: sourceLabels.map(getRitualSourceFilterValue),
+    reviewState,
   };
+  row.searchText = createManageSearchText({ row, holdReasons: [] });
+
+  return row;
 }
 
 export function createManageRitualsViewModel(
@@ -807,7 +1231,6 @@ export function createManageRitualsViewModel(
   options?: CreateManageRitualsViewModelOptions,
 ): ManageRitualsViewModel {
   const filters = normalizeFilters(filterOverrides);
-  const sourceOptions = getRitualSourceOptions(rituals);
   const validation = validateRituals(rituals);
   const findingsByRitualId = new Map<string, RitualValidationFinding[]>();
   const activeDrafts =
@@ -832,7 +1255,7 @@ export function createManageRitualsViewModel(
       : undefined;
     const missingReadiness =
       lifecycle?.missingReadiness ??
-      ritual.recommendationMetadata.eligibility.missing ??
+      ritual.recommendationMetadata?.eligibility.missing ??
       [];
 
     const sourceLabels = getRitualSourceLabels(ritual);
@@ -844,9 +1267,42 @@ export function createManageRitualsViewModel(
       ritual.availability.recommendationEligible;
     const recommendable =
       lifecycle?.recommendable ??
-      ritual.recommendationMetadata.eligibility.recommendable;
+      ritual.recommendationMetadata?.eligibility.recommendable ??
+      false;
 
-    return {
+    const reviewState = createReviewState({
+      ritual,
+      findable,
+      directUseEligible,
+      recommendable,
+      missingReadiness,
+      reviewFlags,
+      validationFindings,
+      options,
+    });
+    const libraryState = getLibraryState({
+      rowKind: "published",
+      findable,
+      directUseEligible,
+      lifecycleState: reviewState.lifecycleState,
+    });
+    const chooseWithMeState = getChooseWithMeState({
+      rowKind: "published",
+      libraryState,
+      recommendationEligible,
+      recommendable,
+      missingReadiness,
+      holdReasons: reviewState.holdReasons,
+    });
+    const attentionLabels = getAttentionLabels({
+      rowKind: "published",
+      libraryState,
+      chooseWithMeState,
+      validationFindings,
+      missingReadiness,
+      reviewFlags,
+    });
+    const row: ManageRitualRow = {
       ritual,
       id: ritual.id,
       headline: ritual.presentation.headline,
@@ -856,32 +1312,35 @@ export function createManageRitualsViewModel(
       directUseEligible,
       recommendationEligible,
       recommendable,
-      primaryPurpose: ritual.recommendationMetadata.purposes.primary,
-      primaryCarrier: ritual.recommendationMetadata.carriers.primary,
-      audience: ritual.recommendationMetadata.audience.supports,
-      capacity: ritual.recommendationMetadata.capacity.supports,
+      primaryPurpose: ritual.recommendationMetadata?.purposes.primary,
+      primaryCarrier: ritual.recommendationMetadata?.carriers.primary,
+      audience: ritual.recommendationMetadata?.audience.supports ?? [],
+      capacity: ritual.recommendationMetadata?.capacity.supports ?? [],
       reviewFlags,
       validationFindings,
       missingReadiness,
       issues: [...new Set([
         ...missingReadiness,
         ...validationFindings.map((finding) => finding.path),
+        ...attentionLabels,
       ])],
+      libraryState,
+      chooseWithMeState,
+      attentionLabels,
+      searchText: "",
       sourceLabel: sourceLabels[0],
       originLabel: ritual.searchMetadata.originLabel,
       sourceValues: sourceLabels.map(getRitualSourceFilterValue),
-      reviewState: createReviewState({
-        ritual,
-        directUseEligible,
-        recommendable,
-        missingReadiness,
-        reviewFlags,
-        validationFindings,
-        options,
-      }),
+      reviewState,
       rowKind: "published" as const,
       activeDraft: activeDraftByRitualId.get(ritual.id),
     };
+    row.searchText = createManageSearchText({
+      row,
+      holdReasons: reviewState.holdReasons,
+    });
+
+    return row;
   });
   const standaloneDraftRows = activeDrafts
     .filter((draft) => !ritualIds.has(draft.ritualId))
@@ -892,6 +1351,8 @@ export function createManageRitualsViewModel(
       })
     );
   const allRows = [...rows, ...standaloneDraftRows];
+  const liveRows = allRows.filter((row) => row.rowKind === "published");
+  const sourceOptions = getRitualSourceOptions(allRows.map((row) => row.ritual));
 
   const byStatus = emptyStatusCounts();
   const byOrigin = { source: 0, household: 0 };
@@ -913,11 +1374,17 @@ export function createManageRitualsViewModel(
     counts: {
       byStatus,
       byOrigin,
-      findable: allRows.filter((row) => row.findable).length,
-      directUseEligible: allRows.filter((row) => row.directUseEligible).length,
-      recommendationEligible: allRows.filter((row) => row.recommendationEligible)
+      findable: liveRows.filter((row) => row.findable).length,
+      directUseEligible: liveRows.filter((row) => row.directUseEligible).length,
+      inLibrary: liveRows.filter((row) => row.libraryState === "in_library").length,
+      recommendationEligible: liveRows.filter((row) => row.recommendationEligible)
         .length,
-      recommendable: allRows.filter((row) => row.recommendable).length,
+      recommendable: liveRows.filter((row) => row.recommendable).length,
+      allowedChooseWithMe: liveRows.filter((row) =>
+        row.chooseWithMeState === "allowed"
+      ).length,
+      needsAttention: allRows.filter((row) => row.attentionLabels.length > 0)
+        .length,
       withValidationFindings: allRows.filter(
         (row) => row.validationFindings.length > 0,
       ).length,

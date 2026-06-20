@@ -247,7 +247,7 @@ describe("Ritual edit draft apply", () => {
         draftBuffer: {
           ...input.draftBuffer,
           recommendationMetadata: {
-            ...input.draftBuffer.recommendationMetadata,
+            ...input.draftBuffer .recommendationMetadata!,
             timing: {
               ...input.draftBuffer.recommendationMetadata?.timing,
               relationship: "preferred",

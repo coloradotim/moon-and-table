@@ -356,9 +356,13 @@ function stableJson(value: unknown): string {
 }
 
 function hasSelectorRelevantMetadataChanged(
-  before: RitualRecommendationMetadata,
-  after: RitualRecommendationMetadata,
+  before: RitualRecommendationMetadata | undefined,
+  after: RitualRecommendationMetadata | undefined,
 ): boolean {
+  if (!before || !after) {
+    return before !== after;
+  }
+
   return SELECTOR_RELEVANT_RECOMMENDATION_PATHS.some((path) =>
     stableJson(getPathValue(before, path)) !==
       stableJson(getPathValue(after, path))
@@ -398,9 +402,13 @@ function ritualStatusForLifecycle(
 }
 
 function applyLifecycleToRecommendationMetadata(input: {
-  metadata: RitualRecommendationMetadata;
+  metadata: RitualRecommendationMetadata | undefined;
   lifecycle: RitualDocument["lifecycle"];
-}): RitualRecommendationMetadata {
+}): RitualRecommendationMetadata | undefined {
+  if (!input.metadata) {
+    return undefined;
+  }
+
   return {
     ...cloneJson(input.metadata),
     eligibility: {
@@ -438,7 +446,9 @@ function createAppliedRitual(input: {
   lifecycle: RitualDocument["lifecycle"];
 }): Ritual {
   const recommendationMetadata =
-    input.draft.draftBuffer.recommendationMetadata as RitualRecommendationMetadata;
+    input.draft.draftBuffer.recommendationMetadata as
+      | RitualRecommendationMetadata
+      | undefined;
   const searchMetadata =
     input.draft.draftBuffer.searchMetadata as RitualSearchMetadata;
   const availability: RitualAvailability = {
@@ -479,7 +489,9 @@ function createAddedHouseholdRitual(input: {
   lifecycle: RitualDocument["lifecycle"];
 }): Ritual {
   const recommendationMetadata =
-    input.draft.draftBuffer.recommendationMetadata as RitualRecommendationMetadata;
+    input.draft.draftBuffer.recommendationMetadata as
+      | RitualRecommendationMetadata
+      | undefined;
   const searchMetadata =
     input.draft.draftBuffer.searchMetadata as RitualSearchMetadata;
 
@@ -829,7 +841,7 @@ export async function createApplyRitualEditDraftPlan(input: {
   }
 
   const draftRecommendationMetadata =
-    draft.draftBuffer.recommendationMetadata as RitualRecommendationMetadata;
+    draft.draftBuffer.recommendationMetadata as RitualRecommendationMetadata | undefined;
   const recommendationHeld = hasSelectorRelevantMetadataChanged(
     baseVersion.ritual.recommendationMetadata,
     draftRecommendationMetadata,

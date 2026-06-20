@@ -4,8 +4,22 @@ import type {
   RitualCarrier,
   RitualCapacityMode,
   RitualPurpose,
+  RitualRecommendationMetadata,
   RitualTimingRelationship,
+  RitualWithRecommendationMetadata,
 } from "./types";
+
+function requireRecommendationMetadata(
+  ritual: Ritual,
+): RitualWithRecommendationMetadata {
+  if (!ritual.recommendationMetadata) {
+    throw new Error(
+      `Ritual ${ritual.id} is missing recommendation metadata for eligibility review.`,
+    );
+  }
+
+  return ritual as RitualWithRecommendationMetadata;
+}
 
 type RecommendationMetadataUpdate = {
   purposes?: {
@@ -320,7 +334,9 @@ const RECOMMENDATION_METADATA_UPDATES: Record<
   },
 };
 
-function getReviewedTimingMetadata(ritual: Ritual): Ritual["recommendationMetadata"]["timing"] {
+function getReviewedTimingMetadata(
+  ritual: RitualWithRecommendationMetadata,
+): RitualRecommendationMetadata["timing"] {
   const baseTiming = ritual.recommendationMetadata.timing;
   const contexts =
     baseTiming.contexts && baseTiming.contexts.length > 0
@@ -342,37 +358,38 @@ function getReviewedTimingMetadata(ritual: Ritual): Ritual["recommendationMetada
 function applyMetadataUpdate(
   ritual: Ritual,
   update: RecommendationMetadataUpdate | undefined,
-): Ritual {
-  const reviewedTiming = getReviewedTimingMetadata(ritual);
+): RitualWithRecommendationMetadata {
+  const ritualWithMetadata = requireRecommendationMetadata(ritual);
+  const reviewedTiming = getReviewedTimingMetadata(ritualWithMetadata);
 
   if (!update) {
     return {
-      ...ritual,
+      ...ritualWithMetadata,
       recommendationMetadata: {
-        ...ritual.recommendationMetadata,
+        ...ritualWithMetadata.recommendationMetadata,
         timing: reviewedTiming,
       },
     };
   }
 
   return {
-    ...ritual,
+    ...ritualWithMetadata,
     recommendationMetadata: {
-      ...ritual.recommendationMetadata,
+      ...ritualWithMetadata.recommendationMetadata,
       purposes: {
-        ...ritual.recommendationMetadata.purposes,
+        ...ritualWithMetadata.recommendationMetadata.purposes,
         ...update.purposes,
       },
       carriers: {
-        ...ritual.recommendationMetadata.carriers,
+        ...ritualWithMetadata.recommendationMetadata.carriers,
         ...update.carriers,
       },
       capacity: {
-        ...ritual.recommendationMetadata.capacity,
+        ...ritualWithMetadata.recommendationMetadata.capacity,
         ...update.capacity,
       },
       audience: {
-        ...ritual.recommendationMetadata.audience,
+        ...ritualWithMetadata.recommendationMetadata.audience,
         ...update.audience,
       },
       timing: {
@@ -383,7 +400,7 @@ function applyMetadataUpdate(
   };
 }
 
-function markRecommendationEligible(ritual: Ritual): Ritual {
+function markRecommendationEligible(ritual: RitualWithRecommendationMetadata): Ritual {
   return {
     ...ritual,
     status: "recommendable",
@@ -403,7 +420,10 @@ function markRecommendationEligible(ritual: Ritual): Ritual {
   };
 }
 
-function keepDirectUseOnly(ritual: Ritual, missing: string[]): Ritual {
+function keepDirectUseOnly(
+  ritual: RitualWithRecommendationMetadata,
+  missing: string[],
+): Ritual {
   return {
     ...ritual,
     status: "reviewed",

@@ -12,7 +12,7 @@ import { sourceBackedRituals } from "../../src/data/rituals/source-backed-ritual
 const createdAtIso = "2026-06-14T12:00:00.000Z";
 const baseRitual = sourceBackedRituals.find((ritual) =>
   ritual.status === "recommendable" &&
-  (ritual.recommendationMetadata.eligibility.missing ?? []).length === 0
+  (ritual.recommendationMetadata!.eligibility.missing ?? []).length === 0
 ) ?? sourceBackedRituals[0];
 
 function clone<T>(value: T): T {
@@ -149,7 +149,7 @@ describe("Ritual edit draft validation", () => {
       draftBuffer: {
         ...draft.draftBuffer,
         recommendationMetadata: {
-          ...draft.draftBuffer.recommendationMetadata,
+          ...draft.draftBuffer .recommendationMetadata!,
           eligibility: {
             ...draft.draftBuffer.recommendationMetadata?.eligibility,
             recommendable: true,
@@ -172,6 +172,65 @@ describe("Ritual edit draft validation", () => {
     ]);
   });
 
+  it("allows a library-stage draft without recommendation metadata", async () => {
+    const { draft } = await createCleanDraft();
+    const libraryDraft: RitualEditDraftDocument = {
+      ...draft,
+      draftBuffer: {
+        ...draft.draftBuffer,
+        recommendationMetadata: undefined,
+        availability: {
+          findable: true,
+          directUseEligible: true,
+          recommendationEligible: false,
+        },
+      },
+    };
+
+    const report = validateRitualEditDraft(libraryDraft);
+
+    expect(report.valid).toBe(true);
+    expect(report.findings).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: "draftBuffer.recommendationMetadata",
+          severity: "error",
+        }),
+      ]),
+    );
+  });
+
+  it("requires recommendation metadata for Choose with me validation", async () => {
+    const { draft } = await createCleanDraft();
+    const chooseDraft: RitualEditDraftDocument = {
+      ...draft,
+      draftBuffer: {
+        ...draft.draftBuffer,
+        recommendationMetadata: undefined,
+        availability: {
+          findable: true,
+          directUseEligible: true,
+          recommendationEligible: true,
+        },
+      },
+    };
+
+    const report = validateRitualEditDraft(chooseDraft, {
+      stage: "choose_with_me",
+    });
+
+    expect(report.valid).toBe(false);
+    expect(report.findings).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          path: "draftBuffer.recommendationMetadata",
+          message: "Choose with me requires recommendation metadata.",
+          severity: "error",
+        }),
+      ]),
+    );
+  });
+
   it("maps invalid selection metadata to editor fields", async () => {
     const { draft } = await createCleanDraft();
     const invalidDraft = {
@@ -179,7 +238,7 @@ describe("Ritual edit draft validation", () => {
       draftBuffer: {
         ...draft.draftBuffer,
         recommendationMetadata: {
-          ...draft.draftBuffer.recommendationMetadata,
+          ...draft.draftBuffer .recommendationMetadata!,
           purposes: {
             primary: "unsupported-purpose",
             secondary: ["tending", "unsupported-purpose"],
@@ -247,7 +306,7 @@ describe("Ritual edit draft validation", () => {
       draftBuffer: {
         ...draft.draftBuffer,
         recommendationMetadata: {
-          ...draft.draftBuffer.recommendationMetadata,
+          ...draft.draftBuffer .recommendationMetadata!,
           timing: {
             relationship: "helpful",
             contexts: ["moon sign", "new moon"],
@@ -271,6 +330,40 @@ describe("Ritual edit draft validation", () => {
     ]);
   });
 
+  it("blocks required timing when only broad timing labels are present", async () => {
+    const { draft } = await createCleanDraft();
+    const invalidDraft: RitualEditDraftDocument = {
+      ...draft,
+      draftBuffer: {
+        ...draft.draftBuffer,
+        recommendationMetadata: {
+          ...draft.draftBuffer .recommendationMetadata!,
+          timing: {
+            relationship: "required",
+            contexts: ["moon sign"],
+          },
+        },
+      },
+    };
+
+    const report = validateRitualEditDraft(invalidDraft);
+
+    expect(report.valid).toBe(false);
+    expect(report.findings).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        path: "draftBuffer.recommendationMetadata.timing.contexts.0",
+        field: "timingContexts",
+        severity: "error",
+      }),
+      expect.objectContaining({
+        path: "draftBuffer.recommendationMetadata.timing.contexts",
+        field: "timingContexts",
+        severity: "error",
+        message: expect.stringContaining("concrete supported timing signal"),
+      }),
+    ]));
+  });
+
   it("warns when secondary purpose or carrier repeats the primary value", async () => {
     const { draft } = await createCleanDraft();
     const warningDraft: RitualEditDraftDocument = {
@@ -278,7 +371,7 @@ describe("Ritual edit draft validation", () => {
       draftBuffer: {
         ...draft.draftBuffer,
         recommendationMetadata: {
-          ...draft.draftBuffer.recommendationMetadata,
+          ...draft.draftBuffer .recommendationMetadata!,
           purposes: {
             primary: "tending",
             secondary: ["tending", "marking"],

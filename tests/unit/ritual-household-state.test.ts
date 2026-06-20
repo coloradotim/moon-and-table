@@ -59,8 +59,8 @@ describe("Ritual favorites household state", () => {
       ritualSnapshot: {
         headline: baseRitual.presentation.headline,
         sourceLabel: baseRitual.searchMetadata.sourceLabel,
-        primaryPurpose: baseRitual.recommendationMetadata.purposes.primary,
-        primaryCarrier: baseRitual.recommendationMetadata.carriers.primary,
+        primaryPurpose: baseRitual.recommendationMetadata!.purposes.primary,
+        primaryCarrier: baseRitual.recommendationMetadata!.carriers.primary,
       },
       note: "return to this",
     });
@@ -246,12 +246,12 @@ describe("Choose with me recommendation instances and events", () => {
       ritualSnapshot: {
         headline: baseRitual.presentation.headline,
         sourceLabel: baseRitual.searchMetadata.sourceLabel,
-        primaryPurpose: baseRitual.recommendationMetadata.purposes.primary,
-        primaryCarrier: baseRitual.recommendationMetadata.carriers.primary,
+        primaryPurpose: baseRitual.recommendationMetadata!.purposes.primary,
+        primaryCarrier: baseRitual.recommendationMetadata!.carriers.primary,
         status: baseRitual.status,
         recommendationEligible: baseRitual.availability.recommendationEligible,
         presentationSnapshot: baseRitual.presentation,
-        recommendationMetadataSnapshot: baseRitual.recommendationMetadata,
+        recommendationMetadataSnapshot: baseRitual .recommendationMetadata!,
       },
     });
     expect(instance.selectorSnapshot.topCandidates).toHaveLength(3);

@@ -42,7 +42,7 @@ describe("static Ritual repository", () => {
         recommendationEligible: false,
       },
       recommendationMetadata: {
-        ...sourceBackedRituals[0].recommendationMetadata,
+        ...sourceBackedRituals[0] .recommendationMetadata!,
         eligibility: {
           recommendable: false,
           missing: ["recommendation_review"],
@@ -87,7 +87,7 @@ describe("static Ritual repository", () => {
         recommendationEligible: true,
       },
       recommendationMetadata: {
-        ...sourceBackedRituals[0].recommendationMetadata,
+        ...sourceBackedRituals[0] .recommendationMetadata!,
         eligibility: { recommendable: true },
       },
     });
@@ -100,7 +100,7 @@ describe("static Ritual repository", () => {
         recommendationEligible: false,
       },
       recommendationMetadata: {
-        ...sourceBackedRituals[0].recommendationMetadata,
+        ...sourceBackedRituals[0] .recommendationMetadata!,
         eligibility: {
           recommendable: false,
           missing: ["recommendation_review"],
@@ -116,7 +116,7 @@ describe("static Ritual repository", () => {
         recommendationEligible: true,
       },
       recommendationMetadata: {
-        ...sourceBackedRituals[0].recommendationMetadata,
+        ...sourceBackedRituals[0] .recommendationMetadata!,
         eligibility: {
           recommendable: false,
           missing: ["recommendation_review"],
@@ -132,7 +132,7 @@ describe("static Ritual repository", () => {
         recommendationEligible: true,
       },
       recommendationMetadata: {
-        ...sourceBackedRituals[0].recommendationMetadata,
+        ...sourceBackedRituals[0] .recommendationMetadata!,
         eligibility: { recommendable: true },
       },
     });

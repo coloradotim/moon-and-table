@@ -127,7 +127,7 @@ describe("DB-to-TypeScript Ritual static export", () => {
     expect(report.records[0].ritual.availability.recommendationEligible).toBe(
       false,
     );
-    expect(report.records[0].ritual.recommendationMetadata.eligibility)
+    expect(report.records[0].ritual.recommendationMetadata!.eligibility)
       .toEqual(expect.objectContaining({
         recommendable: false,
         missing: ["direct_use_review", "recommendation_review"],

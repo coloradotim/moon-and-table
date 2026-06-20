@@ -1,10 +1,10 @@
 # Manage Rituals Workflow And Data Lifecycle
 
-Status: Historical design plus current Manage Rituals implementation note.
+Status: Current Manage Rituals product/workflow reference.
 
-Scope: Product/workflow reference. The first inspection slice and DB-backed
-lifecycle review actions have landed. The full Ritual body/metadata editor
-remains design-only in `docs/product/manage-ritual-editor-design.md`.
+Scope: Product/workflow reference. Manage Rituals now covers inspection,
+DB-backed availability actions, draft editing, draft validation, and publishing
+drafts into the live household library.
 
 ## 1. Product Verdict
 
@@ -12,7 +12,15 @@ Manage Rituals should exist, but it should not be another user-facing way to cho
 
 Product terms:
 
-**Ritual**: an imported app ritual record using the canonical Ritual data model. A Ritual may be `pilot`, `draft`, `reviewed`, or `recommendable`. It may or may not be findable, direct-use eligible, recommendation eligible, or recommendation-ready.
+**Ritual**: a live app ritual record using the canonical Ritual data model.
+Normal Manage language should describe whether it is in the library, allowed in
+Choose with me, archived, or needs attention. Raw fields such as `findable`,
+`directUseEligible`, `recommendationEligible`, `recommendable`,
+`missingReadiness`, and `lifecycle.state` remain internal diagnostics.
+
+**Draft**: a mutable editor workspace for a new household Ritual, an edit to an
+existing Ritual, or a future source/import candidate. A draft is not live until
+it is added to the library or applied as a new immutable version.
 
 **Ritual candidate**: a source-backed or household-authored candidate still living in an extraction/review packet. It is not yet an app Ritual.
 
@@ -25,10 +33,8 @@ Moon & Table needs two different surfaces:
 **Manage Rituals** helps a logged-in user inspect imported app Ritual records and understand their readiness state.
 
 Manage Rituals first shipped as an imported-Ritual inspection table. It now also
-allows DB-backed lifecycle review actions for existing Firestore-backed Ritual
-records, such as removing/restoring direct use and recommendation readiness. It
-does not include packet candidates, source import, full content editing, or
-authored version drafts yet.
+allows DB-backed availability actions and editor drafts. It still does not do
+source import or selector-scoring redesign.
 
 Manage Rituals should feel like a clear inspection workbench, not a public library browser, productivity dashboard, spell database, or CMS for generating rituals from metadata.
 
@@ -37,18 +43,18 @@ Manage Rituals should feel like a clear inspection workbench, not a public libra
 Search Rituals is part of the user’s ritual-finding path. It should stay warm, direct, and practice-facing:
 
 * search by material, mood, purpose, place, or phrase;
-* see findable and direct-use-eligible Rituals;
+* see Rituals that are in the library;
 * select one Ritual and read the user-facing ritual card;
 * keep readiness/source details secondary.
 
 Manage Rituals is part of the content inspection path. It should answer different questions:
 
 * Which Rituals exist?
-* What status are they in?
-* Which are findable, direct-use eligible, recommendation eligible, or recommendation-ready?
-* Which records are blocked from recommendation?
-* Which records have validation findings?
-* Which imported records have review flags or missing readiness items?
+* Which Rituals are drafts, in the library, allowed in Choose with me, archived,
+  or needing attention?
+* Which Rituals are usable directly but not ready for guided recommendation?
+* Which records have validation findings, review flags, timing repair needs, or
+  source review needs?
 * Which source and origin labels are attached to imported records?
 * What does the complete underlying Ritual object look like?
 
@@ -84,10 +90,12 @@ users in this private app.
 It is a logged-in inspection and lifecycle-review surface for imported Ritual
 records.
 
-The intended V1 users are people who need to inspect what the app currently knows about its Ritual records:
+The intended users are household maintainers who need to inspect and maintain
+what the app currently knows about its Ritual records:
 
-* someone checking whether a Ritual is findable or recommendation eligible;
-* someone checking why a Ritual is still blocked;
+* someone checking whether a Ritual is in the library;
+* someone checking whether Choose with me is allowed to offer it;
+* someone checking why a Ritual needs attention;
 * someone checking source/origin labels and review flags;
 * someone checking the full Ritual object without opening code.
 
@@ -98,7 +106,9 @@ and promotion tools require them.
 
 The current Ritual type is the canonical imported app record model.
 
-Some Ritual records are inert because they are not recommendation eligible yet, but they are still app Rituals once imported into typed data.
+Some Ritual records are usable library Rituals before they are allowed in Choose
+with me. Recommendation availability is an extra gate, not the price of
+admission for the library.
 
 Important fields:
 
@@ -109,7 +119,8 @@ Important fields:
   and legacy/read-only whyThisFits compatibility data when present
 * `recommendationMetadata`: purpose, carrier, capacity, audience, timing, and eligibility
 * `searchMetadata`: tags, keywords, materials, places, and labels
-* `availability`: findable, directUseEligible, and recommendationEligible
+* `availability`: internal `findable`, `directUseEligible`, and
+  `recommendationEligible` fields
 * `ritualWords`
 * `reviewFlags`
 * `adaptationPolicy`
@@ -120,98 +131,84 @@ Current pilot data contains three source-origin pilot Rituals:
 * `ritual.set_grain_at_the_table`
 * `ritual.kindle_the_first_household_light`
 
-They are findable and direct-use eligible, but not recommendation eligible.
+They are in the library, but not allowed in Choose with me.
 
-## 6. Ritual Lifecycle Model
+## 6. User-Facing Manage Model
 
-The existing statuses are useful but should be interpreted carefully.
+Manage should use these product-facing states:
 
-### `pilot`
+**Draft**: editable, not live yet. A draft may be incomplete and still saved.
 
-Imported app Ritual record still under pilot review.
+**In library**: visible in Search, usable directly, and available through “I
+have something in mind.” Internally this maps to `findable=true` and
+`directUseEligible=true`.
 
-A pilot Ritual:
+**Allowed in Choose with me**: eligible for guided recommendation. Internally
+this maps to `recommendationEligible=true` and `recommendable=true`.
 
-* may be findable;
-* may be direct-use eligible;
-* must not be recommendation eligible;
-* should usually carry missing readiness items such as `pilot_review`.
+**Archived**: hidden from normal Search/direct use and not offered by Choose
+with me, but preserved for history and audit.
 
-### `draft`
+**Needs attention**: a derived cross-cutting state, not a lifecycle state. It
+includes validation findings, source review needs, timing repair needs,
+recommendation setup needs, and mismatched internal availability fields.
 
-Actively authored or revised app Ritual record.
+If internal `findable` and `directUseEligible` disagree, Manage should show a
+`Library state mismatch` attention condition instead of asking the user to
+manage those fields separately.
 
-A draft Ritual:
+Choose with me states should be displayed as:
 
-* may exist in typed data;
-* should not be recommendation eligible;
-* should be inspectable in Manage Rituals.
+* `Allowed`
+* `Held by choice`
+* `Needs setup`
+* `Not available`
 
-### `reviewed`
+`Held by choice` requires an explicit hold signal such as a recommendation hold
+reason or review decision. Do not infer it merely because a Ritual is not
+recommendable.
 
-A Ritual that has passed source or household review.
-
-A reviewed Ritual:
-
-* has coherent presentation fields and metadata;
-* may still not be recommendation eligible;
-* may still carry review flags or missing readiness items.
-
-### `recommendable`
-
-A Ritual that is reviewed, QA accepted, validation clean, and explicitly eligible for recommendations.
-
-Recommended lifecycle capabilities should be tracked separately from status:
-
-* findable;
-* direct-use eligible;
-* recommendation eligible;
-* source complete;
-* household approved;
-* validation clean;
-* QA preview accepted;
-* authoring complete;
-* retired or archived.
-
-Do not overload status to answer every readiness question.
-
-Ritual candidates and held candidates have their own earlier lifecycle in packets. They are not part of the V1 Manage Rituals table until imported as Ritual records.
-
-## 7. Readiness And Validation Model
+## 7. Search, Filters, Readiness, And Validation
 
 The current `validateRituals(...)` function should remain the core validation source.
 
 Manage Rituals should consume validation results rather than inventing a second validation system.
 
-Readiness should combine:
+Manage search should be broad and forgiving. It should match headline, Ritual
+IDs or short version fragments, source/origin labels, tags, keywords, materials,
+places, purpose, carrier, hold reasons, review flags, validation finding text,
+active draft headline, and derived Choose with me states.
 
-* status;
-* availability;
-* recommendation eligibility;
-* validation findings;
-* missing readiness items;
-* review flags;
-* source grounding completeness;
-* household context completeness;
-* adaptation policy completeness;
-* QA preview results.
+Manage should avoid overlapping top-level dropdowns for every internal state.
+Use:
 
-The existing `npm run rituals:readiness` report is the command-line foundation. Manage Rituals V1 can be a visual counterpart to that report.
+* a search box;
+* view chips: `Drafts`, `In library`, `Allowed in Choose with me`,
+  `Needs attention`, `Archived`; when no view chip is selected, show all rows;
+* stable facets: `Origin`, `Source`, `Purpose`, `Carrier`;
+* attention chips: `Validation issues`, `Timing needs repair`, `Needs source
+  review`, `Needs recommendation setup`, `Held from Choose with me`, `State
+  mismatch`;
+* derived table states: `Library`, `Choose with me`, `Attention`, `Draft`.
 
-Recommended readiness labels:
+Do not expose `Findable`, `Direct use`, `Recommendation eligible`,
+`Recommendation ready`, `Missing readiness`, `Review flags`, or `Findings` as
+separate normal top-level filter concepts. They may remain visible in advanced
+details or debug output.
 
-* Ready for search
-* Ready for direct use
-* Needs review
-* Needs source verification
-* Needs household approval
-* Needs QA preview
-* Blocked from recommendation
-* Recommendation ready
+A Ritual may be in the library while still carrying visible review warnings.
+Choose with me remains a separate stricter gate.
 
-These labels should be derived from data and validation findings. They should not be manually decorative badges.
+Draft rows can be searched and filtered by draft state, attention labels,
+source, purpose, carrier, and preview metadata, but they are not live `In
+library` or `Allowed in Choose with me` rows until `Add to library` or `Apply
+changes` succeeds. A draft may preview that it would be library-ready or needs
+Choose with me setup, but live availability filters should only count published
+Ritual rows.
 
-A Ritual may be findable while still carrying visible review warnings. Findable, direct-use eligible, recommendation eligible, and recommendation-ready are separate states.
+`recommendation_review` means Choose with me setup or review is still needed.
+It is not an intentional hold. `Held from Choose with me` requires an explicit
+manual hold signal such as `recommendation_hold`.
 
 ## 8. Manage Rituals Current Surface
 

@@ -28,8 +28,8 @@ export type RitualFavoriteSourceSurface =
 export type RitualFavoriteSnapshot = {
   headline: string;
   sourceLabel?: string;
-  primaryPurpose: string;
-  primaryCarrier: string;
+  primaryPurpose?: string;
+  primaryCarrier?: string;
 };
 
 export type RitualFavorite = {
@@ -114,8 +114,8 @@ export type RecommendationCandidateSnapshot = {
 export type RecommendationRitualSnapshot = {
   headline: string;
   sourceLabel?: string;
-  primaryPurpose: string;
-  primaryCarrier: string;
+  primaryPurpose?: string;
+  primaryCarrier?: string;
   status: string;
   recommendationEligible: boolean;
   presentationSnapshot?: RitualPresentationSnapshot;
@@ -261,8 +261,8 @@ function getFavoriteSnapshot(ritual: Ritual): RitualFavoriteSnapshot {
   return {
     headline: ritual.presentation.headline,
     sourceLabel: ritual.searchMetadata.sourceLabel,
-    primaryPurpose: ritual.recommendationMetadata.purposes.primary,
-    primaryCarrier: ritual.recommendationMetadata.carriers.primary,
+    primaryPurpose: ritual.recommendationMetadata?.purposes.primary,
+    primaryCarrier: ritual.recommendationMetadata?.carriers.primary,
   };
 }
 
@@ -413,8 +413,8 @@ function clonePresentationSnapshot(
 }
 
 function cloneRecommendationMetadataSnapshot(
-  snapshot: RitualRecommendationMetadataSnapshot,
-): RitualRecommendationMetadataSnapshot {
+  snapshot: NonNullable<RitualRecommendationMetadataSnapshot>,
+): NonNullable<RitualRecommendationMetadataSnapshot> {
   return {
     purposes: {
       primary: snapshot.purposes.primary,
@@ -515,8 +515,8 @@ function createRecommendationRitualSnapshot(
   return {
     headline: ritual.presentation.headline,
     sourceLabel: ritual.searchMetadata.sourceLabel,
-    primaryPurpose: ritual.recommendationMetadata.purposes.primary,
-    primaryCarrier: ritual.recommendationMetadata.carriers.primary,
+    primaryPurpose: ritual.recommendationMetadata?.purposes.primary,
+    primaryCarrier: ritual.recommendationMetadata?.carriers.primary,
     status: ritual.status,
     recommendationEligible: ritual.availability.recommendationEligible,
     presentationSnapshot: getRitualPresentationSnapshot(ritual),

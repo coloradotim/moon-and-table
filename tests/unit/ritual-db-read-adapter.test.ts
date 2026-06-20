@@ -192,8 +192,8 @@ describe("Ritual DB read adapter", () => {
     expect(result.dbDocuments?.ritualDocuments[0].id).toBe(sourceBackedRituals[0].id);
     expect(ritual?.availability.directUseEligible).toBe(false);
     expect(ritual?.availability.recommendationEligible).toBe(false);
-    expect(ritual?.recommendationMetadata.eligibility.recommendable).toBe(false);
-    expect(ritual?.recommendationMetadata.eligibility.missing).toEqual([
+    expect(ritual?.recommendationMetadata?.eligibility.recommendable).toBe(false);
+    expect(ritual?.recommendationMetadata?.eligibility.missing).toEqual([
       "direct_use_review",
       "recommendation_review",
     ]);

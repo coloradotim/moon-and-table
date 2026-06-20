@@ -71,34 +71,77 @@ export function validateRitual(ritual: Ritual): RitualValidationResult {
     }
   }
 
+  const recommendationRequested = Boolean(
+    ritual.availability?.recommendationEligible ||
+      ritual.recommendationMetadata?.eligibility?.recommendable,
+  );
   const primaryPurpose = ritual.recommendationMetadata?.purposes?.primary;
-  if (!includesValue(RITUAL_PURPOSES, primaryPurpose)) {
+  if (
+    (recommendationRequested || primaryPurpose !== undefined) &&
+    !includesValue(RITUAL_PURPOSES, primaryPurpose)
+  ) {
     addFinding(
       findings,
       ritualId,
       "recommendationMetadata.purposes.primary",
-      "Primary purpose is invalid.",
+      recommendationRequested
+        ? "Recommendation-eligible records require a valid primary purpose."
+        : "Primary purpose is invalid.",
     );
   }
 
   const primaryCarrier = ritual.recommendationMetadata?.carriers?.primary;
-  if (!includesValue(RITUAL_CARRIERS, primaryCarrier)) {
+  if (
+    (recommendationRequested || primaryCarrier !== undefined) &&
+    !includesValue(RITUAL_CARRIERS, primaryCarrier)
+  ) {
     addFinding(
       findings,
       ritualId,
       "recommendationMetadata.carriers.primary",
-      "Primary carrier is invalid.",
+      recommendationRequested
+        ? "Recommendation-eligible records require a valid primary carrier."
+        : "Primary carrier is invalid.",
     );
   }
 
   const timingRelationship = ritual.recommendationMetadata?.timing?.relationship;
-  if (!includesValue(RITUAL_TIMING_RELATIONSHIPS, timingRelationship)) {
+  if (
+    (recommendationRequested || timingRelationship !== undefined) &&
+    !includesValue(RITUAL_TIMING_RELATIONSHIPS, timingRelationship)
+  ) {
     addFinding(
       findings,
       ritualId,
       "recommendationMetadata.timing.relationship",
       "Timing relationship is invalid.",
     );
+  }
+
+  if (timingRelationship === "required") {
+    const broadTimingContextLabels = new Set([
+      "imperfect timing",
+      "lunar phase",
+      "moon phase",
+      "moon sign",
+      "planetary aspect",
+      "retrograde planet",
+    ]);
+    const concreteContexts = (
+      ritual.recommendationMetadata?.timing?.contexts ?? []
+    ).filter((context) =>
+      isNonEmptyString(context) &&
+      !broadTimingContextLabels.has(context.trim().toLowerCase())
+    );
+
+    if (concreteContexts.length === 0) {
+      addFinding(
+        findings,
+        ritualId,
+        "recommendationMetadata.timing.contexts",
+        "Required timing needs at least one concrete supported timing signal.",
+      );
+    }
   }
 
   for (const [index, capacity] of (
@@ -175,10 +218,7 @@ export function validateRitual(ritual: Ritual): RitualValidationResult {
     );
   }
 
-  if (
-    ritual.availability?.recommendationEligible ||
-    ritual.recommendationMetadata?.eligibility?.recommendable
-  ) {
+  if (recommendationRequested) {
     if (!ritual.recommendationMetadata) {
       addFinding(
         findings,

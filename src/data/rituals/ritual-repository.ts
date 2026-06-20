@@ -1,5 +1,5 @@
 import { sourceBackedRituals } from "./source-backed-rituals";
-import type { Ritual } from "./types";
+import { hasRitualRecommendationMetadata, type Ritual } from "./types";
 
 export type RitualRepository = {
   getAllRitualsForManager(): Ritual[];
@@ -17,6 +17,7 @@ export function isRecommendationEligibleRitualForChooseWithMe(
 ): boolean {
   return (
     ritual.status !== "draft" &&
+    hasRitualRecommendationMetadata(ritual) &&
     ritual.availability.recommendationEligible &&
     ritual.recommendationMetadata.eligibility.recommendable
   );

@@ -1243,11 +1243,22 @@ function writeReport(
 
   const ritualWords = imported.filter((ritual) => ritual.ritualWords?.length);
   const reviewFlags = imported.filter((ritual) => ritual.reviewFlags);
+  const importedWithRecommendationMetadata = imported.filter((ritual) => {
+    if (!ritual.recommendationMetadata) {
+      throw new Error(`Imported Ritual ${ritual.id} is missing recommendation metadata.`);
+    }
+
+    return true;
+  });
   const purposeCounts = countBy(
-    imported.map((ritual) => ritual.recommendationMetadata.purposes.primary),
+    importedWithRecommendationMetadata.map((ritual) =>
+      ritual.recommendationMetadata!.purposes.primary
+    ),
   );
   const carrierCounts = countBy(
-    imported.map((ritual) => ritual.recommendationMetadata.carriers.primary),
+    importedWithRecommendationMetadata.map((ritual) =>
+      ritual.recommendationMetadata!.carriers.primary
+    ),
   );
 
   const anandSaintThomasRecords = imported.filter((ritual) =>
