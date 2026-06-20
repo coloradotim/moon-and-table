@@ -174,6 +174,11 @@ export type SignedInShellOptions = {
   ritualRepository?: RitualRepository;
   ritualRepositorySource?: string;
   ritualDbDocuments?: ManageRitualDbDocuments;
+  manageRitualActiveDrafts?: RitualEditDraftDocument[];
+  manageRitualDraftListStatus?: {
+    tone: "info" | "error";
+    message: string;
+  };
   selectedManageRitualEditorId?: string | null;
   selectedManageRitualEditorDraft?: RitualEditDraftDocument;
   selectedManageRitualEditorDraftStatus?: ManageRitualEditorDraftStatus;
@@ -1253,6 +1258,10 @@ function getManageStatusFilterLabel(status: ManageRitualStatusFilter): string {
     return "All states";
   }
 
+  if (status === "active_draft") {
+    return "Draft";
+  }
+
   if (status === "reviewed") {
     return "Reviewed for direct use";
   }
@@ -1302,6 +1311,21 @@ function getManageValidationFilterLabel(
   };
 
   return labels[validation];
+}
+
+function getManageDraftSourceLabel(
+  draft: RitualEditDraftDocument | undefined,
+): string {
+  if (!draft) {
+    return "No draft";
+  }
+
+  const labels: Record<RitualEditDraftDocument["draftSource"], string> = {
+    existing_version: "Editing existing Ritual",
+    household_blank: "New household draft",
+  };
+
+  return labels[draft.draftSource] ?? "Draft";
 }
 
 function formatManageList(values: string[]): string {
@@ -2349,13 +2373,16 @@ function renderManageActiveDraftSummary(input: {
 
   const draftHeadline = input.draft.draftBuffer.presentation.headline.trim();
   const publishedHeadline = input.row.ritual.presentation.headline;
+  const draftSourceLabel = getManageDraftSourceLabel(input.draft);
 
   return `
-    <section class="manage-rituals__active-draft-note" aria-label="Active draft">
-      <p>Active draft</p>
+    <section class="manage-rituals__active-draft-note" aria-label="Draft">
+      <p>${escapeHtml(input.row.rowKind === "edit_draft" ? draftSourceLabel : "Draft")}</p>
       <dl>
         <div><dt>Draft headline</dt><dd>${escapeHtml(draftHeadline || "Untitled draft")}</dd></div>
-        <div><dt>Published/current headline</dt><dd>${escapeHtml(publishedHeadline)}</dd></div>
+        ${input.row.rowKind === "edit_draft"
+          ? `<div><dt>Last updated</dt><dd>${escapeHtml(input.draft.updatedAtIso)}</dd></div>`
+          : `<div><dt>Published/current headline</dt><dd>${escapeHtml(publishedHeadline)}</dd></div>`}
       </dl>
     </section>
   `;
@@ -2589,7 +2616,7 @@ function renderManageRitualEditorShell(
       <header class="manage-rituals__editor-topbar">
         <div class="manage-rituals__editor-title-row">
           <div>
-            <p class="manage-rituals__editor-kicker">${options.draft ? "Active draft" : "Selected Ritual"}</p>
+            <p class="manage-rituals__editor-kicker">${options.draft ? "Draft" : "Selected Ritual"}</p>
             <h3>${escapeHtml(displayedEditorHeadline)}</h3>
             ${hasDifferentDraftHeadline
               ? `<p class="manage-rituals__editor-published-title">Published/current: ${escapeHtml(row.headline)}</p>`
@@ -2860,6 +2887,32 @@ function renderManageReviewPanel(
   row: ReturnType<typeof createManageRitualsViewModel>["rows"][number],
   actionStatus?: SignedInShellOptions["manageRitualActionStatus"],
 ): string {
+  if (row.rowKind === "edit_draft") {
+    return `
+      <section class="manage-rituals__review-panel" aria-label="${escapeHtml(`Draft workflow for ${row.headline}`)}">
+        <div class="manage-rituals__review-header">
+          <div>
+            <h4>Draft workflow</h4>
+            <p>This draft is not in the live library yet. Open the editor to save, check, and add or publish it.</p>
+          </div>
+          <div class="manage-rituals__review-tools">
+            <span class="manage-rituals__review-badge">${escapeHtml(getManageDraftSourceLabel(row.activeDraft))}</span>
+            <button
+              class="manage-rituals__open-editor"
+              type="button"
+              data-manage-ritual-open-editor="${escapeHtml(row.id)}"
+            >Open editor</button>
+          </div>
+        </div>
+        ${actionStatus ? `
+          <p class="manage-rituals__action-status manage-rituals__action-status--${escapeHtml(actionStatus.tone)}" role="status">
+            ${escapeHtml(actionStatus.message)}
+          </p>
+        ` : ""}
+      </section>
+    `;
+  }
+
   const reviewState = row.reviewState;
   const productActions = reviewState.actions.filter((action) =>
     manageAvailabilityPrimaryActions.has(action.action)
@@ -2912,7 +2965,8 @@ function renderManageRitualsFilters(
   statusCounts: Record<string, number>,
 ): string {
   const visibleStatuses = RITUAL_STATUSES.filter(
-    (status) => statusCounts[status] > 0 || filters.status === status,
+    (status) =>
+      status !== "draft" && (statusCounts[status] > 0 || filters.status === status),
   );
   const visibleReadinessFilters = MANAGE_RITUAL_READINESS_FILTERS.filter(
     (readiness) =>
@@ -2926,6 +2980,11 @@ function renderManageRitualsFilters(
         <span>State</span>
         <select name="manageRitualStatus" data-manage-rituals-filter="true">
           ${renderManageRitualFilterOption("all", getManageStatusFilterLabel("all"), filters.status)}
+          ${renderManageRitualFilterOption(
+            "active_draft",
+            getManageStatusFilterLabel("active_draft"),
+            filters.status,
+          )}
           ${visibleStatuses.map((status) =>
             renderManageRitualFilterOption(status, getManageStatusFilterLabel(status), filters.status),
           ).join("")}
@@ -3030,166 +3089,13 @@ function renderManageSortHeader(
   `;
 }
 
-function firstAllowedValue<const T extends readonly string[]>(
-  allowed: T,
-  value: unknown,
-): T[number] {
-  return typeof value === "string" && allowed.includes(value)
-    ? value
-    : allowed[0];
-}
-
-function allowedList<const T extends readonly string[]>(
-  allowed: T,
-  values: unknown,
-): T[number][] {
-  return Array.isArray(values)
-    ? values.filter((value): value is T[number] =>
-      typeof value === "string" && allowed.includes(value)
-    )
-    : [];
-}
-
-function createDraftEditorRow(
-  draft: RitualEditDraftDocument,
-  dbBacked: boolean,
-): ManageRitualRow {
-  const draftBuffer = draft.draftBuffer;
-  const primaryPurpose = firstAllowedValue(
-    RITUAL_PURPOSES,
-    draftBuffer.recommendationMetadata?.purposes?.primary,
-  );
-  const primaryCarrier = firstAllowedValue(
-    RITUAL_CARRIERS,
-    draftBuffer.recommendationMetadata?.carriers?.primary,
-  );
-  const capacity = allowedList(
-    RITUAL_CAPACITY_MODES,
-    draftBuffer.recommendationMetadata?.capacity?.supports,
-  );
-  const audience = allowedList(
-    RITUAL_AUDIENCES,
-    draftBuffer.recommendationMetadata?.audience?.supports,
-  );
-  const timingRelationship = firstAllowedValue(
-    RITUAL_TIMING_RELATIONSHIPS,
-    draftBuffer.recommendationMetadata?.timing?.relationship,
-  );
-  const missingReadiness =
-    draftBuffer.recommendationMetadata?.eligibility?.missing ?? [];
-  const findable = draftBuffer.availability?.findable ?? false;
-  const directUseEligible = draftBuffer.availability?.directUseEligible ?? false;
-  const recommendationEligible =
-    draftBuffer.availability?.recommendationEligible ?? false;
-  const recommendable =
-    draftBuffer.recommendationMetadata?.eligibility?.recommendable ?? false;
-  const status = firstAllowedValue(RITUAL_STATUSES, draftBuffer.status);
-  const ritual: Ritual = {
-    id: draft.ritualId,
-    status,
-    origin: draftBuffer.origin,
-    presentation: {
-      ...draftBuffer.presentation,
-      whyThisFits: "Generated after Choose with me.",
-    },
-    recommendationMetadata: {
-      purposes: {
-        primary: primaryPurpose,
-        secondary: allowedList(
-          RITUAL_PURPOSES,
-          draftBuffer.recommendationMetadata?.purposes?.secondary,
-        ).filter((purpose) => purpose !== primaryPurpose),
-        refinement: "",
-      },
-      carriers: {
-        primary: primaryCarrier,
-        secondary: allowedList(
-          RITUAL_CARRIERS,
-          draftBuffer.recommendationMetadata?.carriers?.secondary,
-        ).filter((carrier) => carrier !== primaryCarrier),
-      },
-      capacity: {
-        supports: capacity,
-        default: capacity[0],
-      },
-      audience: {
-        supports: audience,
-        default: audience[0],
-        bothOfUsStructure:
-          draftBuffer.recommendationMetadata?.audience?.bothOfUsStructure,
-      },
-      timing: {
-        relationship: timingRelationship,
-        contexts: draftBuffer.recommendationMetadata?.timing?.contexts ?? [],
-      },
-      eligibility: {
-        recommendable,
-        missing: missingReadiness,
-        notFor: draftBuffer.recommendationMetadata?.eligibility?.notFor ?? [],
-      },
-    },
-    searchMetadata: {
-      tags: draftBuffer.searchMetadata?.tags ?? [],
-      keywords: draftBuffer.searchMetadata?.keywords ?? [],
-      materials: draftBuffer.searchMetadata?.materials ?? [],
-      places: draftBuffer.searchMetadata?.places ?? [],
-      sourceLabel: draftBuffer.searchMetadata?.sourceLabel,
-      originLabel: draftBuffer.searchMetadata?.originLabel ?? "Household",
-    },
-    availability: {
-      findable,
-      directUseEligible,
-      recommendationEligible,
-    },
-    ritualWords: draftBuffer.ritualWords,
-    reviewFlags: draftBuffer.reviewFlags,
-    adaptationPolicy: draftBuffer.adaptationPolicy,
-  };
-  const headline = draftBuffer.presentation.headline.trim() || "Untitled Ritual";
-
-  return {
-    ritual,
-    id: draft.ritualId,
-    headline,
-    status,
-    origin: draftBuffer.origin.type,
-    findable,
-    directUseEligible,
-    recommendationEligible,
-    recommendable,
-    primaryPurpose,
-    primaryCarrier,
-    audience,
-    capacity,
-    reviewFlags: [],
-    validationFindings: [],
-    missingReadiness,
-    issues: missingReadiness,
-    originLabel: ritual.searchMetadata.originLabel,
-    sourceValues: [],
-    reviewState: {
-      dbBacked,
-      lifecycleState: "draft",
-      holdReasons: [],
-      sourceRunIds: [],
-      importBatchIds: [],
-      packetPaths: [],
-      packetCandidateIds: [],
-      sourceIds: [],
-      sourceLocationLabels: [],
-      sourceGroundingSummaries: [],
-      moonAndTableAdaptationNotes: [],
-      actions: [],
-      unavailableReason: "Add this draft to the library before review actions are available.",
-    },
-  };
-}
-
 export function renderManageRitualsSection(options: {
   filters?: Partial<ManageRitualFilters>;
   ritualRepository?: RitualRepository;
   ritualRepositorySource?: string;
   ritualDbDocuments?: ManageRitualDbDocuments;
+  activeDrafts?: readonly RitualEditDraftDocument[];
+  draftListStatus?: SignedInShellOptions["manageRitualDraftListStatus"];
   selectedEditorRitualId?: string | null;
   selectedEditorDraft?: RitualEditDraftDocument;
   selectedEditorDraftStatus?: ManageRitualEditorDraftStatus;
@@ -3201,12 +3107,24 @@ export function renderManageRitualsSection(options: {
   actionStatus?: SignedInShellOptions["manageRitualActionStatus"];
 } = {}): string {
   const ritualRepository = options.ritualRepository ?? staticRitualRepository;
+  const activeDraftsById = new Map<string, RitualEditDraftDocument>();
+
+  for (const draft of options.activeDrafts ?? []) {
+    activeDraftsById.set(draft.id, draft);
+  }
+
+  if (options.selectedEditorDraft) {
+    activeDraftsById.set(options.selectedEditorDraft.id, options.selectedEditorDraft);
+  }
+
+  const activeDrafts = [...activeDraftsById.values()];
   const viewModel = createManageRitualsViewModel(
     ritualRepository.getAllRitualsForManager(),
     options.filters,
     {
       dbBacked: options.ritualRepositorySource === "db",
       dbDocuments: options.ritualDbDocuments,
+      activeDrafts,
     },
   );
   const counts = viewModel.counts;
@@ -3216,18 +3134,18 @@ export function renderManageRitualsSection(options: {
   );
   const statusSummary = [
     `${viewModel.total} reviewed Ritual${viewModel.total === 1 ? "" : "s"}`,
+    ...(viewModel.activeDraftTotal > 0
+      ? [`${viewModel.activeDraftTotal} draft${viewModel.activeDraftTotal === 1 ? "" : "s"}`]
+      : []),
     `${counts.directUseEligible} direct-use eligible`,
     `${counts.recommendable} recommendation-ready`,
     `${intentionallyHeldFromRecommendations} intentionally held from recommendations`,
   ].join(". ");
   const selectedEditorRow = options.selectedEditorRitualId
     ? viewModel.rows.find((row) => row.id === options.selectedEditorRitualId) ??
-      (options.selectedEditorDraft
-        ? createDraftEditorRow(
-          options.selectedEditorDraft,
-          options.ritualRepositorySource === "db",
-        )
-        : undefined)
+      viewModel.rows.find((row) =>
+        row.activeDraft?.ritualId === options.selectedEditorRitualId
+      )
     : undefined;
 
   return `
@@ -3249,6 +3167,11 @@ export function renderManageRitualsSection(options: {
           ${escapeHtml(options.actionStatus.message)}
         </p>
       ` : ""}
+      ${options.draftListStatus ? `
+        <p class="manage-rituals__action-status manage-rituals__action-status--${escapeHtml(options.draftListStatus.tone === "error" ? "error" : "info")}" role="status">
+          ${escapeHtml(options.draftListStatus.message)}
+        </p>
+      ` : ""}
 
       <details class="manage-rituals__summary">
         <summary>Readiness summary</summary>
@@ -3260,7 +3183,11 @@ export function renderManageRitualsSection(options: {
         </dl>
       </details>
 
-      ${renderManageRitualsFilters(viewModel.filters, viewModel.sourceOptions, viewModel.counts.byStatus)}
+      ${renderManageRitualsFilters(
+        viewModel.filters,
+        viewModel.sourceOptions,
+        viewModel.counts.byStatus,
+      )}
 
       ${selectedEditorRow
         ? renderManageRitualEditorShell(selectedEditorRow, {
@@ -3273,12 +3200,12 @@ export function renderManageRitualsSection(options: {
         })
         : ""}
 
-      <section class="manage-rituals__table-section" aria-label="Imported Ritual records">
+      <section class="manage-rituals__table-section" aria-label="Ritual records">
         <div class="manage-rituals__table-heading">
-          <h3>Imported Ritual records</h3>
+          <h3>${viewModel.activeDraftTotal > 0 ? "Ritual records and drafts" : "Imported Ritual records"}</h3>
           <p>${viewModel.filteredTotal === 1 ? "1 Ritual shown" : `${viewModel.filteredTotal} Rituals shown`}</p>
         </div>
-        <div class="manage-rituals__records" role="table" aria-label="Imported Ritual records table">
+        <div class="manage-rituals__records" role="table" aria-label="Ritual records table">
           <div class="manage-rituals__record-head" role="row">
             ${renderManageSortHeader("headline", "Ritual", viewModel.filters)}
             ${renderManageSortHeader("status", "Status", viewModel.filters)}
@@ -3298,6 +3225,11 @@ export function renderManageRitualsSection(options: {
               <summary class="manage-rituals__record-summary">
                 <span class="manage-rituals__ritual-cell">
                   <span class="manage-rituals__ritual-title">${escapeHtml(row.headline)}</span>
+                  ${row.rowKind === "edit_draft"
+                    ? `<span class="manage-rituals__row-badge">Draft</span>`
+                    : row.activeDraft
+                      ? `<span class="manage-rituals__row-badge">Draft</span>`
+                      : ""}
                 </span>
                 <span class="manage-rituals__record-status">${escapeHtml(row.status)}</span>
                 <span class="manage-rituals__record-origin">${escapeHtml(row.origin)}</span>
@@ -3309,7 +3241,7 @@ export function renderManageRitualsSection(options: {
                       ${renderManageReviewPanel(row, rowActionStatus)}
                       ${renderManageActiveDraftSummary({
                         row,
-                        draft: options.selectedEditorDraft,
+                        draft: row.activeDraft ?? options.selectedEditorDraft,
                       })}
                       <div class="manage-rituals__detail-grid">
                         <section>
@@ -4107,6 +4039,8 @@ export function renderSignedInShell(
     ritualRepository: options.ritualRepository,
     ritualRepositorySource: options.ritualRepositorySource,
     ritualDbDocuments: options.ritualDbDocuments,
+    activeDrafts: options.manageRitualActiveDrafts,
+    draftListStatus: options.manageRitualDraftListStatus,
     selectedEditorRitualId: options.selectedManageRitualEditorId,
     selectedEditorDraft: options.selectedManageRitualEditorDraft,
     selectedEditorDraftStatus: options.selectedManageRitualEditorDraftStatus,

@@ -6,6 +6,10 @@ import type {
 
 export type RitualEditDraftClientAction =
   | {
+      action: "list_active";
+      limit?: number;
+    }
+  | {
       action: "load_or_create";
       ritualId: string;
       versionId: string;
@@ -31,7 +35,8 @@ export type RitualEditDraftClientAction =
 export type SubmitRitualEditDraftResult =
   | {
       valid: true;
-      draft: RitualEditDraftDocument;
+      draft?: RitualEditDraftDocument;
+      drafts?: RitualEditDraftDocument[];
       appliedVersionId?: string;
       recommendationHeld?: boolean;
       addedToLibrary?: boolean;
@@ -83,10 +88,18 @@ function parseClientResult(payload: unknown): SubmitRitualEditDraftResult {
     };
   }
 
-  if (payload.valid === true && isObject(payload.draft)) {
+  if (
+    payload.valid === true &&
+    (isObject(payload.draft) || Array.isArray(payload.drafts))
+  ) {
     return {
       valid: true,
-      draft: payload.draft as RitualEditDraftDocument,
+      draft: isObject(payload.draft)
+        ? payload.draft as RitualEditDraftDocument
+        : undefined,
+      drafts: Array.isArray(payload.drafts)
+        ? payload.drafts as RitualEditDraftDocument[]
+        : undefined,
       appliedVersionId: typeof payload.appliedVersionId === "string"
         ? payload.appliedVersionId
         : undefined,

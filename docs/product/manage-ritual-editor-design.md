@@ -283,10 +283,13 @@ Version context
 
 On smaller screens, this becomes accordion sections or tabs below the main editor.
 
-Early Search/direct-use preview implementation is intentionally quota-conscious:
-it uses the single opened edit draft rather than scanning all drafts to render
-the Manage table. The Manage table row title remains the published/current
-Ritual title unless a later issue deliberately designs a draft-aware table.
+The Manage table is intentionally draft-aware, but quota-conscious. On Manage
+entry it may load a bounded page of active `ritualEditDrafts` and cache them in
+the current browser session. The State filter exposes one user-facing `Draft`
+state for drafts from new household Rituals, imports, or edits to existing
+Rituals; it should not split those into separate visible draft categories.
+Opening a row that already has a loaded draft should reuse that draft instead
+of issuing another per-row draft read.
 
 ## 4. Field Groupings
 

@@ -1,4 +1,13 @@
-import { RITUAL_STATUSES, type Ritual, type RitualStatus } from "./types";
+import {
+  RITUAL_AUDIENCES,
+  RITUAL_CAPACITY_MODES,
+  RITUAL_CARRIERS,
+  RITUAL_PURPOSES,
+  RITUAL_STATUSES,
+  RITUAL_TIMING_RELATIONSHIPS,
+  type Ritual,
+  type RitualStatus,
+} from "./types";
 import {
   getRitualSourceFilterValue,
   getRitualSourceLabels,
@@ -15,6 +24,7 @@ import type {
   RitualVersionDocument,
 } from "./db-documents";
 import type { RitualReviewAction } from "./db-review-transactions";
+import type { RitualEditDraftDocument } from "./ritual-edit-drafts";
 
 export const MANAGE_RITUAL_ORIGIN_FILTERS = ["all", "source", "household"] as const;
 export const MANAGE_RITUAL_AVAILABILITY_FILTERS = [
@@ -33,7 +43,7 @@ export const MANAGE_RITUAL_READINESS_FILTERS = [
 ] as const;
 export const MANAGE_RITUAL_VALIDATION_FILTERS = ["all", "valid", "findings"] as const;
 
-export type ManageRitualStatusFilter = "all" | RitualStatus;
+export type ManageRitualStatusFilter = "all" | "active_draft" | RitualStatus;
 export type ManageRitualOriginFilter = (typeof MANAGE_RITUAL_ORIGIN_FILTERS)[number];
 export type ManageRitualAvailabilityFilter =
   (typeof MANAGE_RITUAL_AVAILABILITY_FILTERS)[number];
@@ -114,7 +124,9 @@ export type ManageRitualReviewState = {
 };
 
 export type ManageRitualRow = {
+  rowKind: "published" | "edit_draft";
   ritual: Ritual;
+  activeDraft?: RitualEditDraftDocument;
   id: string;
   headline: string;
   status: RitualStatus;
@@ -139,6 +151,7 @@ export type ManageRitualRow = {
 
 export type ManageRitualsViewModel = {
   total: number;
+  activeDraftTotal: number;
   filteredTotal: number;
   counts: {
     byStatus: Record<RitualStatus, number>;
@@ -158,6 +171,7 @@ export type ManageRitualsViewModel = {
 export type CreateManageRitualsViewModelOptions = {
   dbBacked?: boolean;
   dbDocuments?: ManageRitualDbDocuments;
+  activeDrafts?: readonly RitualEditDraftDocument[];
 };
 
 export const defaultManageRitualFilters: ManageRitualFilters = {
@@ -436,7 +450,8 @@ function createReviewState(input: {
 }
 
 function normalizeFilters(filters?: Partial<ManageRitualFilters>): ManageRitualFilters {
-  const status = filters?.status ?? defaultManageRitualFilters.status;
+  const rawStatus = filters?.status ?? defaultManageRitualFilters.status;
+  const status = rawStatus === "draft" ? "active_draft" : rawStatus;
   const origin = filters?.origin ?? defaultManageRitualFilters.origin;
   const availability =
     filters?.availability ?? defaultManageRitualFilters.availability;
@@ -448,7 +463,10 @@ function normalizeFilters(filters?: Partial<ManageRitualFilters>): ManageRitualF
   const direction = filters?.direction ?? defaultManageRitualFilters.direction;
 
   return {
-    status: status === "all" || RITUAL_STATUSES.includes(status) ? status : "all",
+    status: status === "all" || status === "active_draft" ||
+        RITUAL_STATUSES.includes(status)
+      ? status
+      : "all",
     origin: MANAGE_RITUAL_ORIGIN_FILTERS.includes(origin) ? origin : "all",
     availability: MANAGE_RITUAL_AVAILABILITY_FILTERS.includes(availability)
       ? availability
@@ -466,7 +484,15 @@ function normalizeFilters(filters?: Partial<ManageRitualFilters>): ManageRitualF
 }
 
 function rowMatchesFilters(row: ManageRitualRow, filters: ManageRitualFilters): boolean {
-  if (filters.status !== "all" && row.status !== filters.status) {
+  if (filters.status === "active_draft" && row.rowKind !== "edit_draft" && !row.activeDraft) {
+    return false;
+  }
+
+  if (
+    filters.status !== "all" &&
+    filters.status !== "active_draft" &&
+    row.status !== filters.status
+  ) {
     return false;
   }
 
@@ -604,6 +630,177 @@ function sortManageRows(
   return filters.direction === "desc" ? sorted.reverse() : sorted;
 }
 
+function firstAllowedValue<const T extends readonly string[]>(
+  allowed: T,
+  value: unknown,
+): T[number] {
+  return typeof value === "string" && allowed.includes(value)
+    ? value
+    : allowed[0];
+}
+
+function allowedList<const T extends readonly string[]>(
+  allowed: T,
+  values: unknown,
+): T[number][] {
+  return Array.isArray(values)
+    ? values.filter((value): value is T[number] =>
+      typeof value === "string" && allowed.includes(value)
+    )
+    : [];
+}
+
+function createDraftReviewState(input: {
+  dbBacked: boolean;
+  draft: RitualEditDraftDocument;
+}): ManageRitualReviewState {
+  return {
+    dbBacked: input.dbBacked,
+    lifecycleState: "draft",
+    currentVersionId: input.draft.baseVersionId,
+    publishedVersionId: undefined,
+    latestValidationSnapshotId: undefined,
+    validationSnapshotValid: undefined,
+    holdReasons: [],
+    sourceRunIds: [],
+    importBatchIds: [],
+    packetPaths: [],
+    packetCandidateIds: [],
+    sourceIds: [],
+    sourceLocationLabels: [],
+    sourceGroundingSummaries: [],
+    moonAndTableAdaptationNotes: [],
+    unavailableReason: "Add this draft to the library before availability actions are available.",
+    actions: [],
+  };
+}
+
+function createDraftManageRitualRow(input: {
+  draft: RitualEditDraftDocument;
+  dbBacked: boolean;
+}): ManageRitualRow {
+  const draft = input.draft;
+  const draftBuffer = draft.draftBuffer;
+  const primaryPurpose = firstAllowedValue(
+    RITUAL_PURPOSES,
+    draftBuffer.recommendationMetadata?.purposes?.primary,
+  );
+  const primaryCarrier = firstAllowedValue(
+    RITUAL_CARRIERS,
+    draftBuffer.recommendationMetadata?.carriers?.primary,
+  );
+  const capacity = allowedList(
+    RITUAL_CAPACITY_MODES,
+    draftBuffer.recommendationMetadata?.capacity?.supports,
+  );
+  const audience = allowedList(
+    RITUAL_AUDIENCES,
+    draftBuffer.recommendationMetadata?.audience?.supports,
+  );
+  const timingRelationship = firstAllowedValue(
+    RITUAL_TIMING_RELATIONSHIPS,
+    draftBuffer.recommendationMetadata?.timing?.relationship,
+  );
+  const missingReadiness =
+    draftBuffer.recommendationMetadata?.eligibility?.missing ?? [];
+  const findable = draftBuffer.availability?.findable ?? false;
+  const directUseEligible = draftBuffer.availability?.directUseEligible ?? false;
+  const recommendationEligible =
+    draftBuffer.availability?.recommendationEligible ?? false;
+  const recommendable =
+    draftBuffer.recommendationMetadata?.eligibility?.recommendable ?? false;
+  const status = firstAllowedValue(RITUAL_STATUSES, draftBuffer.status);
+  const origin = draftBuffer.origin.type;
+  const ritual: Ritual = {
+    id: draft.ritualId,
+    status,
+    origin: draftBuffer.origin,
+    presentation: {
+      ...draftBuffer.presentation,
+      whyThisFits: "Generated after Choose with me.",
+    },
+    recommendationMetadata: {
+      purposes: {
+        primary: primaryPurpose,
+        secondary: allowedList(
+          RITUAL_PURPOSES,
+          draftBuffer.recommendationMetadata?.purposes?.secondary,
+        ).filter((purpose) => purpose !== primaryPurpose),
+        refinement: "",
+      },
+      carriers: {
+        primary: primaryCarrier,
+        secondary: allowedList(
+          RITUAL_CARRIERS,
+          draftBuffer.recommendationMetadata?.carriers?.secondary,
+        ).filter((carrier) => carrier !== primaryCarrier),
+      },
+      capacity: {
+        supports: capacity,
+        default: capacity[0],
+      },
+      audience: {
+        supports: audience,
+        default: audience[0],
+        bothOfUsStructure:
+          draftBuffer.recommendationMetadata?.audience?.bothOfUsStructure,
+      },
+      timing: {
+        relationship: timingRelationship,
+        contexts: draftBuffer.recommendationMetadata?.timing?.contexts ?? [],
+      },
+      eligibility: {
+        recommendable,
+        missing: missingReadiness,
+        notFor: draftBuffer.recommendationMetadata?.eligibility?.notFor ?? [],
+      },
+    },
+    searchMetadata: {
+      tags: draftBuffer.searchMetadata?.tags ?? [],
+      keywords: draftBuffer.searchMetadata?.keywords ?? [],
+      materials: draftBuffer.searchMetadata?.materials ?? [],
+      places: draftBuffer.searchMetadata?.places ?? [],
+      sourceLabel: draftBuffer.searchMetadata?.sourceLabel,
+      originLabel: draftBuffer.searchMetadata?.originLabel ?? "Household draft",
+    },
+    availability: {
+      findable,
+      directUseEligible,
+      recommendationEligible,
+    },
+    ritualWords: draftBuffer.ritualWords,
+    reviewFlags: draftBuffer.reviewFlags,
+    adaptationPolicy: draftBuffer.adaptationPolicy,
+  };
+  const headline = draftBuffer.presentation.headline.trim() || "Untitled Ritual";
+
+  return {
+    rowKind: "edit_draft",
+    ritual,
+    activeDraft: draft,
+    id: draft.ritualId,
+    headline,
+    status,
+    origin,
+    findable,
+    directUseEligible,
+    recommendationEligible,
+    recommendable,
+    primaryPurpose,
+    primaryCarrier,
+    audience,
+    capacity,
+    reviewFlags: [],
+    validationFindings: [],
+    missingReadiness,
+    issues: missingReadiness,
+    sourceLabel: ritual.searchMetadata.sourceLabel,
+    originLabel: ritual.searchMetadata.originLabel,
+    sourceValues: [],
+    reviewState: createDraftReviewState({ dbBacked: input.dbBacked, draft }),
+  };
+}
+
 export function createManageRitualsViewModel(
   rituals: Ritual[],
   filterOverrides?: Partial<ManageRitualFilters>,
@@ -613,6 +810,12 @@ export function createManageRitualsViewModel(
   const sourceOptions = getRitualSourceOptions(rituals);
   const validation = validateRituals(rituals);
   const findingsByRitualId = new Map<string, RitualValidationFinding[]>();
+  const activeDrafts =
+    options?.activeDrafts?.filter((draft) => draft.status === "active") ?? [];
+  const activeDraftByRitualId = new Map(
+    activeDrafts.map((draft) => [draft.ritualId, draft]),
+  );
+  const ritualIds = new Set(rituals.map((ritual) => ritual.id));
 
   for (const finding of validation.findings) {
     const currentFindings = findingsByRitualId.get(finding.ritualId) ?? [];
@@ -676,37 +879,49 @@ export function createManageRitualsViewModel(
         validationFindings,
         options,
       }),
+      rowKind: "published" as const,
+      activeDraft: activeDraftByRitualId.get(ritual.id),
     };
   });
+  const standaloneDraftRows = activeDrafts
+    .filter((draft) => !ritualIds.has(draft.ritualId))
+    .map((draft) =>
+      createDraftManageRitualRow({
+        draft,
+        dbBacked: options?.dbBacked === true,
+      })
+    );
+  const allRows = [...rows, ...standaloneDraftRows];
 
   const byStatus = emptyStatusCounts();
   const byOrigin = { source: 0, household: 0 };
 
-  for (const row of rows) {
+  for (const row of allRows) {
     byStatus[row.status] += 1;
     byOrigin[row.origin] += 1;
   }
 
   const filteredRows = sortManageRows(
-    rows.filter((row) => rowMatchesFilters(row, filters)),
+    allRows.filter((row) => rowMatchesFilters(row, filters)),
     filters,
   );
 
   return {
     total: rows.length,
+    activeDraftTotal: activeDrafts.length,
     filteredTotal: filteredRows.length,
     counts: {
       byStatus,
       byOrigin,
-      findable: rows.filter((row) => row.findable).length,
-      directUseEligible: rows.filter((row) => row.directUseEligible).length,
-      recommendationEligible: rows.filter((row) => row.recommendationEligible)
+      findable: allRows.filter((row) => row.findable).length,
+      directUseEligible: allRows.filter((row) => row.directUseEligible).length,
+      recommendationEligible: allRows.filter((row) => row.recommendationEligible)
         .length,
-      recommendable: rows.filter((row) => row.recommendable).length,
-      withValidationFindings: rows.filter(
+      recommendable: allRows.filter((row) => row.recommendable).length,
+      withValidationFindings: allRows.filter(
         (row) => row.validationFindings.length > 0,
       ).length,
-      withMissingReadiness: rows.filter(
+      withMissingReadiness: allRows.filter(
         (row) => row.missingReadiness.length > 0,
       ).length,
     },

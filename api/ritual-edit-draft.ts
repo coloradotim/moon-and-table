@@ -89,7 +89,8 @@ type RitualEditDraftDocument = {
 type SubmitRitualEditDraftResult =
   | {
       valid: true;
-      draft: RitualEditDraftDocument;
+      draft?: RitualEditDraftDocument;
+      drafts?: RitualEditDraftDocument[];
       appliedVersionId?: string;
       recommendationHeld?: boolean;
       addedToLibrary?: boolean;
@@ -100,6 +101,10 @@ type SubmitRitualEditDraftResult =
     };
 
 type RitualEditDraftClientAction =
+  | {
+      action: "list_active";
+      limit?: number;
+    }
   | {
       action: "load_or_create";
       ritualId: string;
@@ -141,6 +146,7 @@ type RitualEditDraftStore = {
   getDraft(draftId: string): Promise<RitualEditDraftDocument | undefined>;
   setDraft(draft: RitualEditDraftDocument): Promise<void>;
   listDraftsForRitual(ritualId: string): Promise<RitualEditDraftDocument[]>;
+  listActiveDrafts(limit: number): Promise<RitualEditDraftDocument[]>;
 };
 
 const RITUAL_DB_SCHEMA_VERSION = "ritual-db-v1" as const;
@@ -222,6 +228,17 @@ function isDraftBuffer(value: unknown): value is RitualEditDraftBuffer {
 function parseRequest(body: unknown): RitualEditDraftClientAction | undefined {
   if (!isObject(body) || typeof body.action !== "string") {
     return undefined;
+  }
+
+  if (body.action === "list_active") {
+    const limit = typeof body.limit === "number" && Number.isFinite(body.limit)
+      ? Math.max(1, Math.min(Math.floor(body.limit), 25))
+      : undefined;
+
+    return {
+      action: "list_active",
+      ...(limit ? { limit } : {}),
+    };
   }
 
   if (
@@ -364,6 +381,19 @@ function createAdminFirestoreRitualEditDraftStore(db: FirestoreDb): RitualEditDr
         .filter((document) => document.exists)
         .map((document) => document.data() as RitualEditDraftDocument)
         .sort((a, b) => b.updatedAtIso.localeCompare(a.updatedAtIso))
+        .map(cloneJson);
+    },
+    async listActiveDrafts(limit) {
+      const snapshot = await collection
+        .where("status", "==", "active")
+        .limit(limit)
+        .get();
+
+      return snapshot.docs
+        .filter((document) => document.exists)
+        .map((document) => document.data() as RitualEditDraftDocument)
+        .sort((a, b) => b.updatedAtIso.localeCompare(a.updatedAtIso))
+        .slice(0, limit)
         .map(cloneJson);
     },
   };
@@ -647,6 +677,12 @@ async function handleRequestAction(input: {
   now: string;
   getRitualVersionDocument: (versionId: string) => Promise<RitualVersionDocument | undefined>;
 }): Promise<{ status: number; body: SubmitRitualEditDraftResult }> {
+  if (input.request.action === "list_active") {
+    const drafts = await input.store.listActiveDrafts(input.request.limit ?? 25);
+
+    return { status: 200, body: { valid: true, drafts } };
+  }
+
   if (input.request.action === "load_or_create") {
     const draft = await loadOrCreateDraft({
       store: input.store,

@@ -283,6 +283,7 @@ describe("Ritual edit draft API", () => {
       },
       setDraft: (draft) => store.setDraft(draft),
       listDraftsForRitual: (ritualId) => store.listDraftsForRitual(ritualId),
+      listActiveDrafts: (limit) => store.listActiveDrafts(limit),
     };
     const dependencies = createDependencies({
       store: countedStore,
@@ -342,6 +343,7 @@ describe("Ritual edit draft API", () => {
       },
       setDraft: async () => undefined,
       listDraftsForRitual: async () => [],
+      listActiveDrafts: async () => [],
     };
     const response = createResponse();
 
