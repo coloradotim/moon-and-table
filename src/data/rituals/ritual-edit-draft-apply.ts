@@ -1159,6 +1159,19 @@ export function createAdminFirestoreRitualEditDraftApplyStore(
         .sort((a, b) => b.updatedAtIso.localeCompare(a.updatedAtIso))
         .map(cloneJson);
     },
+    async listActiveDrafts(limit) {
+      const snapshot = await draftCollection
+        .where("status", "==", "active")
+        .limit(limit)
+        .get();
+
+      return snapshot.docs
+        .filter((document) => document.exists)
+        .map((document) => document.data() as RitualEditDraftDocument)
+        .sort((a, b) => b.updatedAtIso.localeCompare(a.updatedAtIso))
+        .slice(0, limit)
+        .map(cloneJson);
+    },
     async getRitualDocument(ritualId) {
       const snapshot = await ritualCollection.doc(ritualId).get();
 

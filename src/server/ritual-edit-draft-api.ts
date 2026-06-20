@@ -128,6 +128,17 @@ function parseRequest(body: unknown): RitualEditDraftClientAction | undefined {
     return undefined;
   }
 
+  if (body.action === "list_active") {
+    const limit = typeof body.limit === "number" && Number.isFinite(body.limit)
+      ? Math.max(1, Math.min(Math.floor(body.limit), 25))
+      : undefined;
+
+    return {
+      action: "list_active",
+      ...(limit ? { limit } : {}),
+    };
+  }
+
   if (
     body.action === "load_or_create" &&
     typeof body.ritualId === "string" &&
@@ -250,6 +261,14 @@ async function handleRequestAction(input: {
   dependencies: RitualEditDraftApiDependencies;
   now: string;
 }): Promise<{ status: number; body: SubmitRitualEditDraftResult }> {
+  if (input.request.action === "list_active") {
+    const drafts = await input.dependencies.draftStore.listActiveDrafts(
+      input.request.limit ?? 25,
+    );
+
+    return { status: 200, body: { valid: true, drafts } };
+  }
+
   if (input.request.action === "load_or_create") {
     const draft = await loadOrCreateDraft({
       request: input.request,

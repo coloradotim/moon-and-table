@@ -2519,6 +2519,16 @@ h2 {
   margin-bottom: 4px;
 }
 
+.manage-rituals__row-badge {
+  display: inline-block;
+  width: fit-content;
+  padding: 1px 0;
+  color: #5d6f63;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
 .manage-rituals__open-editor {
   width: fit-content;
   min-height: 34px;

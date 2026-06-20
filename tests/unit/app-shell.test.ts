@@ -918,6 +918,7 @@ describe("app shell rendering", () => {
     expect(html).toContain('data-manage-rituals-filter-form="true"');
     expect(html).toContain('name="manageRitualStatus"');
     expect(html).toContain("All states");
+    expect(html).toContain(">Draft<");
     expect(html).not.toContain(">Pilot import<");
     expect(html).not.toContain(">Draft import<");
     expect(html).toContain('name="manageRitualOrigin"');
@@ -1049,7 +1050,7 @@ describe("app shell rendering", () => {
     expect(html).toContain('data-manage-ritual-editor="true"');
     expect(editorHtml).toContain('data-manage-ritual-close-editor="true"');
     expect(editorHtml).toContain("Close editor");
-    expect(editorHtml).toContain("Active draft");
+    expect(editorHtml).toContain("Draft");
     expect(editorHtml).toContain("Saved");
     expect(editorHtml).toContain("draft-body-edit");
     expect(editorHtml).toContain("DB-backed");
@@ -1174,7 +1175,7 @@ describe("app shell rendering", () => {
 
     expect(html).toContain('data-manage-ritual-create="true"');
     expect(html).toContain("Create Ritual");
-    expect(editorHtml).toContain("Active draft");
+    expect(editorHtml).toContain("Draft");
     expect(editorHtml).toContain("Untitled Ritual");
     expect(editorHtml).toContain("household-new-ritual");
     expect(editorHtml).toContain("Household");

@@ -100,6 +100,7 @@ export type RitualEditDraftStore = {
   getDraft(draftId: string): Promise<RitualEditDraftDocument | undefined>;
   setDraft(draft: RitualEditDraftDocument): Promise<void>;
   listDraftsForRitual(ritualId: string): Promise<RitualEditDraftDocument[]>;
+  listActiveDrafts(limit: number): Promise<RitualEditDraftDocument[]>;
 };
 
 type AdminDocumentSnapshotLike = {
@@ -117,6 +118,7 @@ type AdminDocumentReferenceLike = {
 };
 
 type AdminQueryLike = {
+  limit?: (limit: number) => AdminQueryLike;
   get: () => Promise<AdminQuerySnapshotLike>;
 };
 
@@ -491,6 +493,13 @@ export function createInMemoryRitualEditDraftStore(
         .sort((a, b) => b.updatedAtIso.localeCompare(a.updatedAtIso))
         .map(cloneJson);
     },
+    async listActiveDrafts(limit) {
+      return [...drafts.values()]
+        .filter((draft) => draft.status === "active")
+        .sort((a, b) => b.updatedAtIso.localeCompare(a.updatedAtIso))
+        .slice(0, limit)
+        .map(cloneJson);
+    },
     getAllDrafts() {
       return [...drafts.values()].map(cloneJson);
     },
@@ -520,6 +529,17 @@ export function createAdminFirestoreRitualEditDraftStore(
         .filter((document) => document.exists)
         .map((document) => document.data() as RitualEditDraftDocument)
         .sort((a, b) => b.updatedAtIso.localeCompare(a.updatedAtIso))
+        .map(cloneJson);
+    },
+    async listActiveDrafts(limit) {
+      const query = collection.where("status", "==", "active");
+      const snapshot = await (query.limit ? query.limit(limit) : query).get();
+
+      return snapshot.docs
+        .filter((document) => document.exists)
+        .map((document) => document.data() as RitualEditDraftDocument)
+        .sort((a, b) => b.updatedAtIso.localeCompare(a.updatedAtIso))
+        .slice(0, limit)
         .map(cloneJson);
     },
   };

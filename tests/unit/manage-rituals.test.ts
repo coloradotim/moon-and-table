@@ -4,7 +4,11 @@ import {
   createManageRitualsViewModel,
   defaultManageRitualFilters,
 } from "../../src/data/rituals/manage-rituals";
-import { createRitualDbMirrorDryRun } from "../../src/data/rituals/db-mirror";
+import {
+  createRitualDbMirrorDryRun,
+} from "../../src/data/rituals/db-mirror";
+import { RITUAL_DB_SCHEMA_VERSION } from "../../src/data/rituals/db-documents";
+import type { RitualEditDraftDocument } from "../../src/data/rituals/ritual-edit-drafts";
 import { sourceBackedRituals } from "../../src/data/rituals/source-backed-rituals";
 
 function createDbDocuments(rituals = sourceBackedRituals.slice(0, 3)) {
@@ -18,6 +22,77 @@ function createDbDocuments(rituals = sourceBackedRituals.slice(0, 3)) {
     ritualDocuments: report.mirrored.map((record) => record.ritualDocument),
     versionDocuments: report.mirrored.map((record) => record.versionDocument),
     validationSnapshots: report.mirrored.map((record) => record.validationSnapshot),
+  };
+}
+
+function createActiveDraft(
+  overrides: Partial<RitualEditDraftDocument> = {},
+): RitualEditDraftDocument {
+  const ritual = sourceBackedRituals[0];
+
+  return {
+    id: overrides.id ?? "draft-existing",
+    schemaVersion: RITUAL_DB_SCHEMA_VERSION,
+    collection: "ritualEditDrafts",
+    ritualId: overrides.ritualId ?? ritual.id,
+    baseVersionId: overrides.baseVersionId,
+    baseContentHash: overrides.baseContentHash,
+    draftSource: overrides.draftSource ?? "existing_version",
+    status: overrides.status ?? "active",
+    saveState: overrides.saveState ?? "saved",
+    draftBuffer: overrides.draftBuffer ?? {
+      id: overrides.ritualId ?? ritual.id,
+      status: "draft",
+      origin: {
+        type: "household",
+        householdContext: "Draft created in Manage.",
+      },
+      presentation: {
+        headline: "Draft Ritual",
+        practice: "Try one small draft action.",
+        intention: "Keep the draft findable.",
+        bestWindow: "When it is ready.",
+        questionToCarry: "What is still missing?",
+      },
+      recommendationMetadata: {
+        purposes: {
+          primary: "tending",
+          secondary: [],
+          refinement: "tending",
+        },
+        carriers: {
+          primary: "table",
+          secondary: [],
+        },
+        capacity: {
+          supports: ["only_a_little"],
+          default: "only_a_little",
+        },
+        audience: {
+          supports: ["me"],
+          default: "me",
+        },
+        timing: {
+          relationship: "helpful",
+          contexts: [],
+        },
+      },
+      searchMetadata: {
+        tags: ["draft"],
+        keywords: ["draft"],
+        materials: [],
+        places: [],
+      },
+      availability: {
+        directUseEligible: false,
+        recommendationEligible: false,
+      },
+    },
+    createdBy: overrides.createdBy ?? "person_a",
+    createdAtIso: overrides.createdAtIso ?? "2026-06-20T10:00:00.000Z",
+    updatedBy: overrides.updatedBy ?? "person_a",
+    updatedAtIso: overrides.updatedAtIso ?? "2026-06-20T10:05:00.000Z",
+    ...overrides,
   };
 }
 
@@ -124,6 +199,54 @@ describe("Manage Rituals view model", () => {
       createManageRitualsViewModel(sourceBackedRituals, { validation: "findings" })
         .filteredTotal,
     ).toBe(0);
+  });
+
+  it("treats draft imports and active edit drafts as one Draft state", () => {
+    const existingDraft = createActiveDraft();
+    const householdDraft = createActiveDraft({
+      id: "draft-household",
+      ritualId: "household.test_draft",
+      draftSource: "household_blank",
+      draftBuffer: {
+        ...createActiveDraft().draftBuffer,
+        id: "household.test_draft",
+        origin: {
+          type: "household",
+          householdContext: "Draft created from scratch.",
+        },
+        presentation: {
+          ...createActiveDraft().draftBuffer.presentation,
+          headline: "New Household Draft",
+        },
+      },
+    });
+
+    const viewModel = createManageRitualsViewModel(
+      sourceBackedRituals.slice(0, 1),
+      { status: "draft" },
+      {
+        activeDrafts: [existingDraft, householdDraft],
+      },
+    );
+
+    expect(viewModel.filters.status).toBe("active_draft");
+    expect(viewModel.filteredTotal).toBe(2);
+    expect(viewModel.rows.map((row) => row.id)).toEqual(expect.arrayContaining([
+      sourceBackedRituals[0].id,
+      "household.test_draft",
+    ]));
+    expect(
+      viewModel.rows.find((row) => row.id === sourceBackedRituals[0].id)?.activeDraft?.id,
+    ).toBe("draft-existing");
+    expect(
+      viewModel.rows.find((row) => row.id === "household.test_draft"),
+    ).toEqual(
+      expect.objectContaining({
+        rowKind: "edit_draft",
+        status: "draft",
+        headline: "New Household Draft",
+      }),
+    );
   });
 
   it("sorts table rows by selected columns and direction", () => {
