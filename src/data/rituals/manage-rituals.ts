@@ -6,6 +6,7 @@ import {
   RITUAL_STATUSES,
   RITUAL_TIMING_RELATIONSHIPS,
   type Ritual,
+  type RitualRecommendationMetadata,
   type RitualStatus,
 } from "./types";
 import {
@@ -52,7 +53,6 @@ export const MANAGE_RITUAL_READINESS_FILTERS = [
 export const MANAGE_RITUAL_VALIDATION_FILTERS = ["all", "valid", "findings"] as const;
 export const MANAGE_RITUAL_SHORTCUT_FILTERS = [
   "all",
-  "active_draft",
   "validation_issues",
   "timing_repair",
   "source_review",
@@ -162,8 +162,8 @@ export type ManageRitualRow = {
   directUseEligible: boolean;
   recommendationEligible: boolean;
   recommendable: boolean;
-  primaryPurpose: string;
-  primaryCarrier: string;
+  primaryPurpose?: string;
+  primaryCarrier?: string;
   audience: string[];
   capacity: string[];
   reviewFlags: string[];
@@ -262,10 +262,8 @@ function rowHasLibraryStateMismatch(
 
 function hasExplicitChooseWithMeHold(input: {
   holdReasons: readonly string[];
-  missingReadiness: readonly string[];
 }): boolean {
-  return input.holdReasons.includes("recommendation_hold") ||
-    input.missingReadiness.includes("recommendation_review");
+  return input.holdReasons.includes("recommendation_hold");
 }
 
 function getLibraryState(input: {
@@ -298,19 +296,6 @@ function getChooseWithMeState(input: {
   holdReasons: readonly string[];
 }): ManageRitualRow["chooseWithMeState"] {
   if (input.rowKind === "edit_draft") {
-    if (input.recommendationEligible && input.recommendable) {
-      return "allowed";
-    }
-
-    if (
-      hasExplicitChooseWithMeHold({
-        holdReasons: input.holdReasons,
-        missingReadiness: input.missingReadiness,
-      })
-    ) {
-      return "held_by_choice";
-    }
-
     return "needs_setup";
   }
 
@@ -318,7 +303,11 @@ function getChooseWithMeState(input: {
     return "not_available";
   }
 
-  if (input.recommendationEligible && input.recommendable) {
+  if (
+    input.libraryState === "in_library" &&
+    input.recommendationEligible &&
+    input.recommendable
+  ) {
     return "allowed";
   }
 
@@ -326,7 +315,6 @@ function getChooseWithMeState(input: {
     input.libraryState === "in_library" &&
     hasExplicitChooseWithMeHold({
       holdReasons: input.holdReasons,
-      missingReadiness: input.missingReadiness,
     })
   ) {
     return "held_by_choice";
@@ -539,6 +527,7 @@ function createActionOption(input: {
 
 function createReviewState(input: {
   ritual: Ritual;
+  findable: boolean;
   directUseEligible: boolean;
   recommendable: boolean;
   missingReadiness: string[];
@@ -612,7 +601,11 @@ function createReviewState(input: {
     (item) => !RECOMMENDATION_PROMOTION_RESOLVABLE_READINESS.has(item),
   );
   const recommendationSetupBlocker = chooseWithMeSetupBlocker(input.ritual);
-  const recommendationPromotionBlocker = !input.directUseEligible
+  const inLibrary = rowIsInLibrary({
+    findable: input.findable,
+    directUseEligible: input.directUseEligible,
+  });
+  const recommendationPromotionBlocker = !inLibrary
     ? "Show this Ritual in the library before allowing Choose with me."
     : recommendationSetupBlocker
       ? recommendationSetupBlocker
@@ -628,8 +621,8 @@ function createReviewState(input: {
         action: "promote_direct_use",
         label: "Show in library",
         description: "Make this Ritual available in Search and direct selection. Recommendation review stays separate.",
-        enabled: !input.directUseEligible && !directUsePromotionBlocker,
-        disabledReason: input.directUseEligible
+        enabled: !inLibrary && !directUsePromotionBlocker,
+        disabledReason: inLibrary
           ? "This Ritual is already shown in the library."
           : directUsePromotionBlocker,
         requiresReason: false,
@@ -638,7 +631,7 @@ function createReviewState(input: {
         action: "hold_direct_use",
         label: "Hide from library",
         description: "Keep the Ritual visible in Manage, but remove it from Search, direct selection, and recommendations.",
-        enabled: input.directUseEligible && !isArchived,
+        enabled: inLibrary && !isArchived,
         disabledReason: isArchived
           ? "Archived Rituals are already unavailable."
           : "This Ritual is already hidden from the library.",
@@ -659,7 +652,7 @@ function createReviewState(input: {
         action: "hold_recommendation",
         label: "Hold from Choose with me",
         description: "Keep Search and direct selection available, but stop Choose with me from offering it.",
-        enabled: input.directUseEligible && !isArchived,
+        enabled: inLibrary && !isArchived,
         disabledReason: isArchived
           ? "Archived Rituals are already unavailable."
           : "Direct use must be available before only recommendations can be removed.",
@@ -778,9 +771,10 @@ function normalizeFilters(filters?: Partial<ManageRitualFilters>): ManageRitualF
 }
 
 function rowMatchesFilters(row: ManageRitualRow, filters: ManageRitualFilters): boolean {
-  const inLibrary = rowIsInLibrary(row);
+  const isLiveRow = row.rowKind === "published";
+  const inLibrary = isLiveRow && rowIsInLibrary(row);
   const stateMismatch = rowHasLibraryStateMismatch(row);
-  const allowedChooseWithMe = row.chooseWithMeState === "allowed";
+  const allowedChooseWithMe = isLiveRow && row.chooseWithMeState === "allowed";
   const needsAttention = row.attentionLabels.length > 0;
   const queryTokens = normalizeSearchToken(filters.query)
     .split(/\s+/)
@@ -878,14 +872,6 @@ function rowMatchesFilters(row: ManageRitualRow, filters: ManageRitualFilters): 
   }
 
   if (filters.validation === "findings" && row.validationFindings.length === 0) {
-    return false;
-  }
-
-  if (
-    filters.shortcut === "active_draft" &&
-    row.rowKind !== "edit_draft" &&
-    !row.activeDraft
-  ) {
     return false;
   }
 
@@ -1018,6 +1004,15 @@ function firstAllowedValue<const T extends readonly string[]>(
     : allowed[0];
 }
 
+function allowedValue<const T extends readonly string[]>(
+  allowed: T,
+  value: unknown,
+): T[number] | undefined {
+  return typeof value === "string" && allowed.includes(value)
+    ? value
+    : undefined;
+}
+
 function allowedList<const T extends readonly string[]>(
   allowed: T,
   values: unknown,
@@ -1060,11 +1055,11 @@ function createDraftManageRitualRow(input: {
 }): ManageRitualRow {
   const draft = input.draft;
   const draftBuffer = draft.draftBuffer;
-  const primaryPurpose = firstAllowedValue(
+  const primaryPurpose = allowedValue(
     RITUAL_PURPOSES,
     draftBuffer.recommendationMetadata?.purposes?.primary,
   );
-  const primaryCarrier = firstAllowedValue(
+  const primaryCarrier = allowedValue(
     RITUAL_CARRIERS,
     draftBuffer.recommendationMetadata?.carriers?.primary,
   );
@@ -1076,7 +1071,7 @@ function createDraftManageRitualRow(input: {
     RITUAL_AUDIENCES,
     draftBuffer.recommendationMetadata?.audience?.supports,
   );
-  const timingRelationship = firstAllowedValue(
+  const timingRelationship = allowedValue(
     RITUAL_TIMING_RELATIONSHIPS,
     draftBuffer.recommendationMetadata?.timing?.relationship,
   );
@@ -1119,6 +1114,46 @@ function createDraftManageRitualRow(input: {
     missingReadiness,
     reviewFlags,
   });
+  const recommendationMetadata: RitualRecommendationMetadata | undefined =
+    primaryPurpose && primaryCarrier && timingRelationship
+      ? {
+        purposes: {
+          primary: primaryPurpose,
+          secondary: allowedList(
+            RITUAL_PURPOSES,
+            draftBuffer.recommendationMetadata?.purposes?.secondary,
+          ).filter((purpose) => purpose !== primaryPurpose),
+          refinement:
+            draftBuffer.recommendationMetadata?.purposes?.refinement ?? "",
+        },
+        carriers: {
+          primary: primaryCarrier,
+          secondary: allowedList(
+            RITUAL_CARRIERS,
+            draftBuffer.recommendationMetadata?.carriers?.secondary,
+          ).filter((carrier) => carrier !== primaryCarrier),
+        },
+        capacity: {
+          supports: capacity,
+          default: capacity[0],
+        },
+        audience: {
+          supports: audience,
+          default: audience[0],
+          bothOfUsStructure:
+            draftBuffer.recommendationMetadata?.audience?.bothOfUsStructure,
+        },
+        timing: {
+          relationship: timingRelationship,
+          contexts: draftBuffer.recommendationMetadata?.timing?.contexts ?? [],
+        },
+        eligibility: {
+          recommendable,
+          missing: missingReadiness,
+          notFor: draftBuffer.recommendationMetadata?.eligibility?.notFor ?? [],
+        },
+      }
+      : undefined;
   const ritual: Ritual = {
     id: draft.ritualId,
     status,
@@ -1127,42 +1162,7 @@ function createDraftManageRitualRow(input: {
       ...draftBuffer.presentation,
       whyThisFits: "Generated after Choose with me.",
     },
-    recommendationMetadata: {
-      purposes: {
-        primary: primaryPurpose,
-        secondary: allowedList(
-          RITUAL_PURPOSES,
-          draftBuffer.recommendationMetadata?.purposes?.secondary,
-        ).filter((purpose) => purpose !== primaryPurpose),
-        refinement: "",
-      },
-      carriers: {
-        primary: primaryCarrier,
-        secondary: allowedList(
-          RITUAL_CARRIERS,
-          draftBuffer.recommendationMetadata?.carriers?.secondary,
-        ).filter((carrier) => carrier !== primaryCarrier),
-      },
-      capacity: {
-        supports: capacity,
-        default: capacity[0],
-      },
-      audience: {
-        supports: audience,
-        default: audience[0],
-        bothOfUsStructure:
-          draftBuffer.recommendationMetadata?.audience?.bothOfUsStructure,
-      },
-      timing: {
-        relationship: timingRelationship,
-        contexts: draftBuffer.recommendationMetadata?.timing?.contexts ?? [],
-      },
-      eligibility: {
-        recommendable,
-        missing: missingReadiness,
-        notFor: draftBuffer.recommendationMetadata?.eligibility?.notFor ?? [],
-      },
-    },
+    recommendationMetadata,
     searchMetadata: {
       tags: draftBuffer.searchMetadata?.tags ?? [],
       keywords: draftBuffer.searchMetadata?.keywords ?? [],
@@ -1252,7 +1252,7 @@ export function createManageRitualsViewModel(
       : undefined;
     const missingReadiness =
       lifecycle?.missingReadiness ??
-      ritual.recommendationMetadata.eligibility.missing ??
+      ritual.recommendationMetadata?.eligibility.missing ??
       [];
 
     const sourceLabels = getRitualSourceLabels(ritual);
@@ -1264,10 +1264,12 @@ export function createManageRitualsViewModel(
       ritual.availability.recommendationEligible;
     const recommendable =
       lifecycle?.recommendable ??
-      ritual.recommendationMetadata.eligibility.recommendable;
+      ritual.recommendationMetadata?.eligibility.recommendable ??
+      false;
 
     const reviewState = createReviewState({
       ritual,
+      findable,
       directUseEligible,
       recommendable,
       missingReadiness,
@@ -1307,10 +1309,10 @@ export function createManageRitualsViewModel(
       directUseEligible,
       recommendationEligible,
       recommendable,
-      primaryPurpose: ritual.recommendationMetadata.purposes.primary,
-      primaryCarrier: ritual.recommendationMetadata.carriers.primary,
-      audience: ritual.recommendationMetadata.audience.supports,
-      capacity: ritual.recommendationMetadata.capacity.supports,
+      primaryPurpose: ritual.recommendationMetadata?.purposes.primary,
+      primaryCarrier: ritual.recommendationMetadata?.carriers.primary,
+      audience: ritual.recommendationMetadata?.audience.supports ?? [],
+      capacity: ritual.recommendationMetadata?.capacity.supports ?? [],
       reviewFlags,
       validationFindings,
       missingReadiness,
@@ -1346,6 +1348,7 @@ export function createManageRitualsViewModel(
       })
     );
   const allRows = [...rows, ...standaloneDraftRows];
+  const liveRows = allRows.filter((row) => row.rowKind === "published");
   const sourceOptions = getRitualSourceOptions(allRows.map((row) => row.ritual));
 
   const byStatus = emptyStatusCounts();
@@ -1368,13 +1371,13 @@ export function createManageRitualsViewModel(
     counts: {
       byStatus,
       byOrigin,
-      findable: allRows.filter((row) => row.findable).length,
-      directUseEligible: allRows.filter((row) => row.directUseEligible).length,
-      inLibrary: allRows.filter((row) => row.libraryState === "in_library").length,
-      recommendationEligible: allRows.filter((row) => row.recommendationEligible)
+      findable: liveRows.filter((row) => row.findable).length,
+      directUseEligible: liveRows.filter((row) => row.directUseEligible).length,
+      inLibrary: liveRows.filter((row) => row.libraryState === "in_library").length,
+      recommendationEligible: liveRows.filter((row) => row.recommendationEligible)
         .length,
-      recommendable: allRows.filter((row) => row.recommendable).length,
-      allowedChooseWithMe: allRows.filter((row) =>
+      recommendable: liveRows.filter((row) => row.recommendable).length,
+      allowedChooseWithMe: liveRows.filter((row) =>
         row.chooseWithMeState === "allowed"
       ).length,
       needsAttention: allRows.filter((row) => row.attentionLabels.length > 0)

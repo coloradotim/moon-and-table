@@ -96,7 +96,7 @@ describe("Ritual draft Choose with me preview", () => {
     const timingRitual: Ritual = {
       ...cloneRitual(baseRitual),
       recommendationMetadata: {
-        ...cloneRitual(baseRitual).recommendationMetadata,
+        ...cloneRitual(baseRitual) .recommendationMetadata!,
         timing: {
           relationship: "required",
           contexts: ["new moon"],
@@ -139,7 +139,7 @@ describe("Ritual draft Choose with me preview", () => {
     const timingRitual: Ritual = {
       ...cloneRitual(baseRitual),
       recommendationMetadata: {
-        ...cloneRitual(baseRitual).recommendationMetadata,
+        ...cloneRitual(baseRitual) .recommendationMetadata!,
         timing: {
           relationship: "required",
           contexts: ["new moon"],

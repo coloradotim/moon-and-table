@@ -56,8 +56,9 @@ export function createRitualReadinessReport(
     findable: ritual.availability.findable,
     directUseEligible: ritual.availability.directUseEligible,
     recommendationEligible: ritual.availability.recommendationEligible,
-    recommendable: ritual.recommendationMetadata.eligibility.recommendable,
-    missing: ritual.recommendationMetadata.eligibility.missing ?? [],
+    recommendable: ritual.recommendationMetadata?.eligibility.recommendable ??
+      false,
+    missing: ritual.recommendationMetadata?.eligibility.missing ?? [],
   }));
 
   return {

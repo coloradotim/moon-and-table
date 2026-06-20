@@ -1252,7 +1252,7 @@ describe("app shell rendering", () => {
           questionToCarry: "Draft question?",
         },
         recommendationMetadata: {
-          ...draft.draftBuffer.recommendationMetadata,
+          ...draft.draftBuffer .recommendationMetadata!,
           purposes: {
             primary: "tending" as const,
             secondary: ["opening" as const],

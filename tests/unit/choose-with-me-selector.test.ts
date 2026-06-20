@@ -161,7 +161,7 @@ function getGuardrailCapacityRequest(ritual: Ritual): {
   energyCapacity: "a_little" | "room_for_something_deeper";
   capacityMode: "low" | "high";
 } {
-  return ritual.recommendationMetadata.capacity.supports.includes(
+  return ritual.recommendationMetadata!.capacity.supports.includes(
     "room_for_something_deeper",
   )
     ? {
@@ -186,7 +186,7 @@ describe("chooseWithMeRitual", () => {
     const otherPurpose = makeRitual({
       id: "table-opening",
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         purposes: {
           primary: "opening",
           secondary: ["tending"],
@@ -254,7 +254,7 @@ describe("chooseWithMeRitual", () => {
     const deeperOnly = makeRitual({
       id: "deeper-ritual",
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         capacity: {
           supports: ["room_for_something_deeper"],
           default: "room_for_something_deeper",
@@ -291,7 +291,7 @@ describe("chooseWithMeRitual", () => {
     const vesselTending = makeRitual({
       id: "vessel-tending",
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         carriers: {
           primary: "vessel",
           secondary: [],
@@ -349,7 +349,7 @@ describe("chooseWithMeRitual", () => {
     const requiredNewMoon = makeRitual({
       id: "required-new-moon",
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         timing: {
           relationship: "required",
           contexts: ["new moon"],
@@ -377,7 +377,7 @@ describe("chooseWithMeRitual", () => {
     const requiredNewMoon = makeRitual({
       id: "required-new-moon",
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         timing: {
           relationship: "required",
           contexts: ["new moon"],
@@ -411,7 +411,7 @@ describe("chooseWithMeRitual", () => {
         headline: "Untimed Table",
       },
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         timing: {
           relationship: "none",
         },
@@ -424,7 +424,7 @@ describe("chooseWithMeRitual", () => {
         headline: "Full Moon Table",
       },
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         timing: {
           relationship: "preferred",
           contexts: ["full moon"],
@@ -453,7 +453,7 @@ describe("chooseWithMeRitual", () => {
     const openingFullMoon = makeRitual({
       id: "opening-full-moon",
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         purposes: {
           primary: "opening",
           secondary: ["tending"],
@@ -468,7 +468,7 @@ describe("chooseWithMeRitual", () => {
     const tendingUntimed = makeRitual({
       id: "tending-untimed",
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         timing: {
           relationship: "none",
         },
@@ -496,7 +496,7 @@ describe("chooseWithMeRitual", () => {
     const untimed = makeRitual({
       id: "untimed",
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         timing: {
           relationship: "none",
           contexts: ["new moon"],
@@ -525,7 +525,7 @@ describe("chooseWithMeRitual", () => {
     const requiredDarkMoon = makeRitual({
       id: "required-dark-moon",
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         timing: {
           relationship: "required",
           contexts: ["dark moon"],
@@ -553,7 +553,7 @@ describe("chooseWithMeRitual", () => {
     const requiredNewMoon = makeRitual({
       id: "required-new-moon-window",
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         timing: {
           relationship: "required",
           contexts: ["new moon"],
@@ -585,7 +585,7 @@ describe("chooseWithMeRitual", () => {
     const venusMars = makeRitual({
       id: "required-venus-mars-window",
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         timing: {
           relationship: "required",
           contexts: ["venus trine mars"],
@@ -625,7 +625,7 @@ describe("chooseWithMeRitual", () => {
     const requiredNewMoon = makeRitual({
       id: "required-new-moon-weak-window",
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         timing: {
           relationship: "required",
           contexts: ["new moon"],
@@ -661,7 +661,7 @@ describe("chooseWithMeRitual", () => {
     const requiredNewMoon = makeRitual({
       id: "required-new-moon-today",
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         timing: {
           relationship: "required",
           contexts: ["new moon"],
@@ -692,7 +692,7 @@ describe("chooseWithMeRitual", () => {
     const venusMars = makeRitual({
       id: "venus-mars-required",
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         timing: {
           relationship: "required",
           contexts: ["venus trine mars"],
@@ -734,7 +734,7 @@ describe("chooseWithMeRitual", () => {
     const requiredWithoutContext = makeRitual({
       id: "required-without-context",
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         timing: {
           relationship: "required",
         },
@@ -761,7 +761,7 @@ describe("chooseWithMeRitual", () => {
     const adaptable = makeRitual({
       id: "timing-adaptable",
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         timing: {
           relationship: "helpful",
           contexts: ["venus-touched evening"],
@@ -794,7 +794,7 @@ describe("chooseWithMeRitual", () => {
     const requiredNewMoon = makeRitual({
       id: "required-new-moon-copy",
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         timing: {
           relationship: "required",
           contexts: ["new moon"],
@@ -944,7 +944,7 @@ describe("chooseWithMeRitual", () => {
         recommendationEligible: false,
       },
       recommendationMetadata: {
-        ...makeRitual({}).recommendationMetadata,
+        ...makeRitual({}) .recommendationMetadata!,
         eligibility: {
           recommendable: false,
           missing: ["recommendation_review"],
@@ -970,7 +970,7 @@ describe("chooseWithMeRitual", () => {
     const requiredTimingRituals = sourceBackedRituals.filter(
       (ritual) =>
         ritual.availability.recommendationEligible &&
-        ritual.recommendationMetadata.timing.relationship === "required",
+        ritual.recommendationMetadata!.timing.relationship === "required",
     );
 
     expect(requiredTimingRituals.map((ritual) => ritual.id)).toEqual([
@@ -985,7 +985,7 @@ describe("chooseWithMeRitual", () => {
     ]);
 
     for (const ritual of requiredTimingRituals) {
-      const contexts = ritual.recommendationMetadata.timing.contexts ?? [];
+      const contexts = ritual.recommendationMetadata!.timing.contexts ?? [];
       const timingFact = getGuardrailTimingFact(contexts);
       const unsupportedContext = contexts.find((context) =>
         unsupportedRequiredTimingPattern.test(context),
@@ -1012,9 +1012,9 @@ describe("chooseWithMeRitual", () => {
         timeScope: "today",
         energyCapacity: capacity.energyCapacity,
         capacityMode: capacity.capacityMode,
-        audience: ritual.recommendationMetadata.audience.default ?? "me",
-        purpose: ritual.recommendationMetadata.purposes.primary,
-        carrier: ritual.recommendationMetadata.carriers.primary,
+        audience: ritual.recommendationMetadata!.audience.default ?? "me",
+        purpose: ritual.recommendationMetadata!.purposes.primary,
+        carrier: ritual.recommendationMetadata!.carriers.primary,
         timingContext: {
           computedTimingFacts: [timingFact],
         },

@@ -11,7 +11,8 @@ export type RitualVersionIdentity = {
 };
 
 export type RitualPresentationSnapshot = RitualPresentation;
-export type RitualRecommendationMetadataSnapshot = RitualRecommendationMetadata;
+export type RitualRecommendationMetadataSnapshot =
+  RitualRecommendationMetadata | undefined;
 
 type StableJsonValue =
   | null
@@ -93,40 +94,43 @@ export function getRitualPresentationSnapshot(
 export function getRitualRecommendationMetadataSnapshot(
   ritual: Ritual,
 ): RitualRecommendationMetadataSnapshot {
+  if (!ritual.recommendationMetadata) {
+    return undefined;
+  }
+
+  const metadata = ritual.recommendationMetadata;
   return {
     purposes: {
-      primary: ritual.recommendationMetadata.purposes.primary,
-      secondary: [...ritual.recommendationMetadata.purposes.secondary],
-      refinement: ritual.recommendationMetadata.purposes.refinement,
+      primary: metadata.purposes.primary,
+      secondary: [...metadata.purposes.secondary],
+      refinement: metadata.purposes.refinement,
     },
     carriers: {
-      primary: ritual.recommendationMetadata.carriers.primary,
-      secondary: [...ritual.recommendationMetadata.carriers.secondary],
+      primary: metadata.carriers.primary,
+      secondary: [...metadata.carriers.secondary],
     },
     capacity: {
-      supports: [...ritual.recommendationMetadata.capacity.supports],
-      default: ritual.recommendationMetadata.capacity.default,
+      supports: [...metadata.capacity.supports],
+      default: metadata.capacity.default,
     },
     audience: {
-      supports: [...ritual.recommendationMetadata.audience.supports],
-      default: ritual.recommendationMetadata.audience.default,
-      bothOfUsStructure:
-        ritual.recommendationMetadata.audience.bothOfUsStructure,
+      supports: [...metadata.audience.supports],
+      default: metadata.audience.default,
+      bothOfUsStructure: metadata.audience.bothOfUsStructure,
     },
     timing: {
-      relationship: ritual.recommendationMetadata.timing.relationship,
-      contexts: ritual.recommendationMetadata.timing.contexts
-        ? [...ritual.recommendationMetadata.timing.contexts]
+      relationship: metadata.timing.relationship,
+      contexts: metadata.timing.contexts
+        ? [...metadata.timing.contexts]
         : undefined,
     },
     eligibility: {
-      recommendable:
-        ritual.recommendationMetadata.eligibility.recommendable,
-      missing: ritual.recommendationMetadata.eligibility.missing
-        ? [...ritual.recommendationMetadata.eligibility.missing]
+      recommendable: metadata.eligibility.recommendable,
+      missing: metadata.eligibility.missing
+        ? [...metadata.eligibility.missing]
         : undefined,
-      notFor: ritual.recommendationMetadata.eligibility.notFor
-        ? [...ritual.recommendationMetadata.eligibility.notFor]
+      notFor: metadata.eligibility.notFor
+        ? [...metadata.eligibility.notFor]
         : undefined,
     },
   };

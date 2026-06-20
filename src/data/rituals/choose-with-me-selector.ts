@@ -3,7 +3,9 @@ import type {
   RitualCapacityMode,
   RitualCarrier,
   RitualPurpose,
+  RitualWithRecommendationMetadata,
 } from "./types";
+import { hasRitualRecommendationMetadata } from "./types";
 import {
   getStrongTimingWindowCandidates,
   type TimingWindowCandidate,
@@ -104,7 +106,7 @@ export type ChooseWithMeResult =
     });
 
 type ScoredRitual = {
-  ritual: Ritual;
+  ritual: RitualWithRecommendationMetadata;
   breakdown: ChooseWithMeScoreBreakdown;
   evidence: string[];
   timing: ChooseWithMeTimingDebug;
@@ -188,7 +190,7 @@ function addExclusion(
 }
 
 function ritualSupportsCapacity(
-  ritual: Ritual,
+  ritual: RitualWithRecommendationMetadata,
   allowedCapacities: RitualCapacityMode[],
 ): boolean {
   return ritual.recommendationMetadata.capacity.supports.some((capacity) =>
@@ -204,7 +206,7 @@ function getHighestAllowedCapacity(
   )[0];
 }
 
-function getSearchableText(ritual: Ritual): string {
+function getSearchableText(ritual: RitualWithRecommendationMetadata): string {
   return [
     ritual.presentation.headline,
     ritual.presentation.practice,
@@ -379,7 +381,7 @@ function getSuppliedTimingEvidence(request: ChooseWithMeRequest): {
   };
 }
 
-function getRitualTimingContexts(ritual: Ritual): string[] {
+function getRitualTimingContexts(ritual: RitualWithRecommendationMetadata): string[] {
   return ritual.recommendationMetadata.timing.contexts ?? [];
 }
 
@@ -481,7 +483,7 @@ function contextMatchesEvidence(context: string, evidence: string[]): boolean {
 }
 
 function evaluateTimingFit(
-  ritual: Ritual,
+  ritual: RitualWithRecommendationMetadata,
   request: ChooseWithMeRequest,
 ): ChooseWithMeTimingDebug {
   const relationship = ritual.recommendationMetadata.timing.relationship;
@@ -542,7 +544,7 @@ function emptyTimingDebug(request: ChooseWithMeRequest): ChooseWithMeTimingDebug
 }
 
 function scoreRitual(
-  ritual: Ritual,
+  ritual: RitualWithRecommendationMetadata,
   request: ChooseWithMeRequest,
   allowedCapacities: RitualCapacityMode[],
 ): ScoredRitual {
@@ -667,25 +669,31 @@ function getEligibleRituals(
   rituals: Ritual[],
   request: ChooseWithMeRequest,
   exclusions: Record<string, number>,
-): Ritual[] {
+): RitualWithRecommendationMetadata[] {
   const allowedCapacities = allowedCapacityByMode[request.capacityMode];
+  const eligible: RitualWithRecommendationMetadata[] = [];
 
-  return rituals.filter((ritual) => {
-    const metadata = ritual.recommendationMetadata;
-
+  for (const ritual of rituals) {
     if (ritual.status === "draft") {
       addExclusion(exclusions, "draft_status");
-      return false;
+      continue;
     }
+
+    if (!hasRitualRecommendationMetadata(ritual)) {
+      addExclusion(exclusions, "missing_recommendation_metadata");
+      continue;
+    }
+
+    const metadata = ritual.recommendationMetadata;
 
     if (!ritual.availability.recommendationEligible) {
       addExclusion(exclusions, "not_recommendation_eligible");
-      return false;
+      continue;
     }
 
     if (!metadata.eligibility.recommendable) {
       addExclusion(exclusions, "metadata_not_recommendable");
-      return false;
+      continue;
     }
 
     if (
@@ -693,38 +701,40 @@ function getEligibleRituals(
       !metadata.audience.supports.includes(request.audience)
     ) {
       addExclusion(exclusions, "audience_mismatch");
-      return false;
+      continue;
     }
 
     if (!ritualSupportsCapacity(ritual, allowedCapacities)) {
       addExclusion(exclusions, "capacity_exceeds_user");
-      return false;
+      continue;
     }
 
     if (request.purpose && metadata.purposes.primary !== request.purpose) {
       addExclusion(exclusions, "requested_primary_purpose_unmatched");
-      return false;
+      continue;
     }
 
     if (request.carrier && metadata.carriers.primary !== request.carrier) {
       addExclusion(exclusions, "requested_primary_carrier_unmatched");
-      return false;
+      continue;
     }
 
     if (metadata.eligibility.notFor && metadata.eligibility.notFor.length > 0) {
       addExclusion(exclusions, "eligibility_not_for");
-      return false;
+      continue;
     }
 
     const timing = evaluateTimingFit(ritual, request);
 
     if (!timing.requiredTimingSatisfied) {
       addExclusion(exclusions, "required_timing_unmatched");
-      return false;
+      continue;
     }
 
-    return true;
-  });
+    eligible.push(ritual);
+  }
+
+  return eligible;
 }
 
 function sortScoredRituals(a: ScoredRitual, b: ScoredRitual): number {
@@ -773,7 +783,7 @@ function describeHardGates(request: ChooseWithMeRequest): string {
 }
 
 function describeRitualMetadataFit(
-  ritual: Ritual,
+  ritual: RitualWithRecommendationMetadata,
   request: ChooseWithMeRequest,
 ): string {
   const primaryPurpose =
@@ -859,7 +869,7 @@ function buildWhyThisFits(
 function buildHowThisWasChosen(
   request: ChooseWithMeRequest,
   debug: ChooseWithMeDebug,
-  ritual?: Ritual,
+  ritual?: RitualWithRecommendationMetadata,
 ): string {
   const timingPhrase =
     request.timeScope === "today" ? "for today" : "for this week";

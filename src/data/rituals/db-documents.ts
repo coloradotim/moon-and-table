@@ -65,8 +65,8 @@ export type RitualDocument = {
     headline: string;
     sourceLabel?: string;
     originLabel?: string;
-    primaryPurpose: string;
-    primaryCarrier: string;
+    primaryPurpose?: string;
+    primaryCarrier?: string;
     tags: string[];
     keywords: string[];
     materials?: string[];
@@ -395,9 +395,9 @@ function mapRitualStatusToLifecycleState(status: RitualStatus): RitualDbLifecycl
 }
 
 function getMissingReadiness(
-  recommendationMetadata: RitualRecommendationMetadata,
+  recommendationMetadata: RitualRecommendationMetadata | undefined,
 ): string[] {
-  return [...(recommendationMetadata.eligibility.missing ?? [])];
+  return [...(recommendationMetadata?.eligibility.missing ?? [])];
 }
 
 function createLifecycleFromRitual(
@@ -410,7 +410,8 @@ function createLifecycleFromRitual(
     findable: ritual.availability.findable,
     directUseEligible: ritual.availability.directUseEligible,
     recommendationEligible: ritual.availability.recommendationEligible,
-    recommendable: ritual.recommendationMetadata.eligibility.recommendable,
+    recommendable:
+      ritual.recommendationMetadata?.eligibility.recommendable ?? false,
     missingReadiness: getMissingReadiness(ritual.recommendationMetadata),
     holdReasons: [...holdReasons],
   };
@@ -440,15 +441,15 @@ function getAdaptationNotes(
 
 function createSearchIndex(
   presentation: Ritual["presentation"],
-  recommendationMetadata: RitualRecommendationMetadata,
+  recommendationMetadata: RitualRecommendationMetadata | undefined,
   searchMetadata: RitualSearchMetadata,
 ): RitualDocument["searchIndex"] {
   return {
     headline: presentation.headline,
     sourceLabel: searchMetadata.sourceLabel,
     originLabel: searchMetadata.originLabel,
-    primaryPurpose: recommendationMetadata.purposes.primary,
-    primaryCarrier: recommendationMetadata.carriers.primary,
+    primaryPurpose: recommendationMetadata?.purposes.primary,
+    primaryCarrier: recommendationMetadata?.carriers.primary,
     tags: [...searchMetadata.tags],
     keywords: [...searchMetadata.keywords],
     materials: searchMetadata.materials ? [...searchMetadata.materials] : undefined,
@@ -650,10 +651,12 @@ export function createRitualValidationSnapshotDocument(input: {
   const presentationComplete = runtimeValidation.findings.every(
     (finding) => !finding.path.startsWith("presentation."),
   );
+  const recommendationMetadata = input.versionDocument.ritual.recommendationMetadata;
   const recommendationMetadataComplete =
+    recommendationMetadata !== undefined &&
     input.ritualDocument.lifecycle.missingReadiness.length === 0 &&
-    input.versionDocument.ritual.recommendationMetadata.capacity.supports.length > 0 &&
-    input.versionDocument.ritual.recommendationMetadata.audience.supports.length > 0;
+    recommendationMetadata.capacity.supports.length > 0 &&
+    recommendationMetadata.audience.supports.length > 0;
   const findings = [
     ...runtimeValidation.findings.map((finding) => ({
       path: finding.path,
@@ -952,7 +955,7 @@ export function validateRitualVersionDocument(
     document.reviewStateAtCreation.recommendationEligible !==
       document.ritual.availability.recommendationEligible ||
     document.reviewStateAtCreation.recommendable !==
-      document.ritual.recommendationMetadata.eligibility.recommendable
+      (document.ritual.recommendationMetadata?.eligibility.recommendable ?? false)
   ) {
     addFinding(
       findings,

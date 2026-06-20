@@ -150,9 +150,9 @@ function chooseWithTiming(ritual: Ritual, fact: TimingFact) {
     timeScope: "today",
     energyCapacity: "enough_to_engage",
     capacityMode: "steady",
-    audience: ritual.recommendationMetadata.audience.default ?? "me",
-    purpose: ritual.recommendationMetadata.purposes.primary,
-    carrier: ritual.recommendationMetadata.carriers.primary,
+    audience: ritual.recommendationMetadata!.audience.default ?? "me",
+    purpose: ritual.recommendationMetadata!.purposes.primary,
+    carrier: ritual.recommendationMetadata!.carriers.primary,
     timingContext: {
       computedTimingFacts: [fact],
     },
@@ -162,11 +162,11 @@ function chooseWithTiming(ritual: Ritual, fact: TimingFact) {
 describe("Ritual timing metadata audit guardrails", () => {
   it("keeps broad bucket labels out of active timing metadata", () => {
     const offenders = sourceBackedRituals.flatMap((ritual) => {
-      if (ritual.recommendationMetadata.timing.relationship === "none") {
+      if (ritual.recommendationMetadata!.timing.relationship === "none") {
         return [];
       }
 
-      return (ritual.recommendationMetadata.timing.contexts ?? [])
+      return (ritual.recommendationMetadata!.timing.contexts ?? [])
         .filter((context) => broadTimingContextLabels.has(context.toLowerCase()))
         .map((context) => `${ritual.id}: ${context}`);
     });

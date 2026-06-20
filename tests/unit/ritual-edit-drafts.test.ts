@@ -215,6 +215,42 @@ describe("Ritual edit drafts", () => {
     expect(versionDocument).toEqual(originalVersionDocument);
   });
 
+  it("manual save allows incomplete drafts before library/apply validation", async () => {
+    const store = createInMemoryRitualEditDraftStore();
+    const draft = await createBlankHouseholdRitualDraft({
+      store,
+      ritualId: "household.incomplete_draft",
+      draftId: "draft-incomplete-save",
+      actor: "person_a",
+      createdAtIso,
+    });
+
+    const updated = await saveRitualEditDraft({
+      store,
+      draftId: draft.id,
+      actor: "person_a",
+      updatedAtIso: manuallySavedAtIso,
+      draftBuffer: {
+        ...draft.draftBuffer,
+        presentation: {
+          ...draft.draftBuffer.presentation,
+          headline: "Incomplete but worth saving",
+        },
+      },
+    });
+
+    expect(updated.saveState).toBe("saved");
+    expect(updated.draftBuffer.presentation.headline).toBe(
+      "Incomplete but worth saving",
+    );
+    expect(updated.draftBuffer.recommendationMetadata).toBeUndefined();
+    expect(updated.draftBuffer.availability).toEqual({
+      findable: false,
+      directUseEligible: false,
+      recommendationEligible: false,
+    });
+  });
+
   it("marks drafts discarded without mutating published content", async () => {
     const store = createInMemoryRitualEditDraftStore();
     const versionDocument = createRitualVersionDocumentFromRitual(baseRitual, {

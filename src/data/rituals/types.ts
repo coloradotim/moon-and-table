@@ -212,10 +212,24 @@ export type Ritual = {
   status: RitualStatus;
   origin: RitualOrigin;
   presentation: RitualPresentation;
-  recommendationMetadata: RitualRecommendationMetadata;
+  /**
+   * Optional for library-only Rituals. Choose with me requires complete
+   * recommendation metadata before the Ritual can be recommended.
+   */
+  recommendationMetadata?: RitualRecommendationMetadata;
   searchMetadata: RitualSearchMetadata;
   availability: RitualAvailability;
   ritualWords?: RitualWords[];
   reviewFlags?: RitualReviewFlags;
   adaptationPolicy?: RitualAdaptationPolicy;
 };
+
+export type RitualWithRecommendationMetadata = Ritual & {
+  recommendationMetadata: RitualRecommendationMetadata;
+};
+
+export function hasRitualRecommendationMetadata(
+  ritual: Ritual,
+): ritual is RitualWithRecommendationMetadata {
+  return ritual.recommendationMetadata !== undefined;
+}

@@ -3,11 +3,13 @@ import {
   RITUAL_CAPACITY_MODES,
   RITUAL_CARRIERS,
   RITUAL_PURPOSES,
+  hasRitualRecommendationMetadata,
   type Ritual,
   type RitualAudience,
   type RitualCapacityMode,
   type RitualCarrier,
   type RitualPurpose,
+  type RitualRecommendationMetadata,
 } from "./types";
 import type {
   TimingWindowCandidate,
@@ -74,7 +76,7 @@ export type RitualSearchCriteria = {
 export type RitualTimingSearchMatch = {
   matchedContexts: string[];
   relationship: Exclude<
-    Ritual["recommendationMetadata"]["timing"]["relationship"],
+    RitualRecommendationMetadata["timing"]["relationship"],
     "none"
   >;
   windowLabel: string;
@@ -536,9 +538,9 @@ export function getRitualTimingSearchMatch(
   ritual: Ritual,
   target: RitualTimingSearchTarget | TimingWindowCandidate | undefined,
 ): RitualTimingSearchMatch | null {
-  const relationship = ritual.recommendationMetadata.timing.relationship;
+  const relationship = ritual.recommendationMetadata?.timing.relationship;
 
-  if (!target || relationship === "none") {
+  if (!target || !relationship || relationship === "none") {
     return null;
   }
 
@@ -546,7 +548,7 @@ export function getRitualTimingSearchMatch(
     ? target
     : getTimingWindowSearchTarget(target);
   const matchedContexts =
-    ritual.recommendationMetadata.timing.contexts?.filter((context) =>
+    ritual.recommendationMetadata?.timing.contexts?.filter((context) =>
       contextMatchesEvidence(context, timingTarget.evidence),
     ) ?? [];
 
@@ -599,7 +601,7 @@ export function getRitualSourceOptions(rituals: Ritual[]): RitualSourceOption[] 
 export function getRitualPurposeOptions(rituals: Ritual[]): RitualSourceOption[] {
   const values = new Set<string>();
 
-  for (const ritual of rituals.filter(isSearchEligible)) {
+  for (const ritual of rituals.filter(isSearchEligible).filter(hasRitualRecommendationMetadata)) {
     for (const purpose of [
       ritual.recommendationMetadata.purposes.primary,
       ...ritual.recommendationMetadata.purposes.secondary,
@@ -616,7 +618,7 @@ export function getRitualPurposeOptions(rituals: Ritual[]): RitualSourceOption[]
 export function getRitualCarrierOptions(rituals: Ritual[]): RitualSourceOption[] {
   const values = new Set<string>();
 
-  for (const ritual of rituals.filter(isSearchEligible)) {
+  for (const ritual of rituals.filter(isSearchEligible).filter(hasRitualRecommendationMetadata)) {
     for (const carrier of [
       ritual.recommendationMetadata.carriers.primary,
       ...ritual.recommendationMetadata.carriers.secondary,
@@ -633,7 +635,7 @@ export function getRitualCarrierOptions(rituals: Ritual[]): RitualSourceOption[]
 export function getRitualCapacityOptions(rituals: Ritual[]): RitualSourceOption[] {
   const values = new Set<string>();
 
-  for (const ritual of rituals.filter(isSearchEligible)) {
+  for (const ritual of rituals.filter(isSearchEligible).filter(hasRitualRecommendationMetadata)) {
     for (const capacity of ritual.recommendationMetadata.capacity.supports) {
       values.add(capacity);
     }
@@ -647,7 +649,7 @@ export function getRitualCapacityOptions(rituals: Ritual[]): RitualSourceOption[
 export function getRitualAudienceOptions(rituals: Ritual[]): RitualSourceOption[] {
   const values = new Set<string>();
 
-  for (const ritual of rituals.filter(isSearchEligible)) {
+  for (const ritual of rituals.filter(isSearchEligible).filter(hasRitualRecommendationMetadata)) {
     for (const audience of ritual.recommendationMetadata.audience.supports) {
       values.add(audience);
     }
@@ -670,19 +672,19 @@ export function getRitualSearchableValues(ritual: Ritual): string[] {
     ...(ritual.searchMetadata.places ?? []),
     ritual.searchMetadata.sourceLabel,
     ritual.searchMetadata.originLabel,
-    ritual.recommendationMetadata.purposes.primary,
-    ...ritual.recommendationMetadata.purposes.secondary,
-    ritual.recommendationMetadata.carriers.primary,
-    ...ritual.recommendationMetadata.carriers.secondary,
+    ritual.recommendationMetadata?.purposes.primary,
+    ...(ritual.recommendationMetadata?.purposes.secondary ?? []),
+    ritual.recommendationMetadata?.carriers.primary,
+    ...(ritual.recommendationMetadata?.carriers.secondary ?? []),
   ].filter((value): value is string => Boolean(value));
 }
 
 export function getRitualChipValues(ritual: Ritual): string[] {
   return uniqueValues([
-    ritual.recommendationMetadata.carriers.primary,
-    ...ritual.recommendationMetadata.carriers.secondary,
-    ritual.recommendationMetadata.purposes.primary,
-    ...ritual.recommendationMetadata.purposes.secondary,
+    ritual.recommendationMetadata?.carriers.primary,
+    ...(ritual.recommendationMetadata?.carriers.secondary ?? []),
+    ritual.recommendationMetadata?.purposes.primary,
+    ...(ritual.recommendationMetadata?.purposes.secondary ?? []),
     ...(ritual.searchMetadata.materials ?? []),
   ]);
 }
@@ -694,7 +696,7 @@ function isSearchEligible(ritual: Ritual): boolean {
 export function getRitualSearchChips(rituals: Ritual[]): RitualSearchChip[] {
   const chips = new Map<string, RitualSearchChip>();
 
-  for (const ritual of rituals.filter(isSearchEligible)) {
+  for (const ritual of rituals.filter(isSearchEligible).filter(hasRitualRecommendationMetadata)) {
     for (const carrier of uniqueValues([
       ritual.recommendationMetadata.carriers.primary,
       ...ritual.recommendationMetadata.carriers.secondary,
@@ -794,30 +796,30 @@ export function searchRituals(
 
     if (
       purpose !== "all" &&
-      ritual.recommendationMetadata.purposes.primary !== purpose &&
-      !ritual.recommendationMetadata.purposes.secondary.includes(purpose)
+      (ritual.recommendationMetadata?.purposes.primary !== purpose &&
+        !ritual.recommendationMetadata?.purposes.secondary.includes(purpose))
     ) {
       return false;
     }
 
     if (
       carrier !== "all" &&
-      ritual.recommendationMetadata.carriers.primary !== carrier &&
-      !ritual.recommendationMetadata.carriers.secondary.includes(carrier)
+      (ritual.recommendationMetadata?.carriers.primary !== carrier &&
+        !ritual.recommendationMetadata?.carriers.secondary.includes(carrier))
     ) {
       return false;
     }
 
     if (
       capacity !== "all" &&
-      !ritual.recommendationMetadata.capacity.supports.includes(capacity)
+      !ritual.recommendationMetadata?.capacity.supports.includes(capacity)
     ) {
       return false;
     }
 
     if (
       audience !== "all" &&
-      !ritual.recommendationMetadata.audience.supports.includes(audience)
+      !ritual.recommendationMetadata?.audience.supports.includes(audience)
     ) {
       return false;
     }
@@ -849,12 +851,13 @@ export function searchRituals(
 function getPrimaryRitualMaterial(ritual: Ritual): string {
   return ritual.searchMetadata.materials?.[0] ??
     ritual.searchMetadata.tags[0] ??
-    ritual.recommendationMetadata.carriers.primary;
+    ritual.recommendationMetadata?.carriers.primary ??
+    "";
 }
 
 function getDefaultCapacity(ritual: Ritual): string {
-  return ritual.recommendationMetadata.capacity.default ??
-    ritual.recommendationMetadata.capacity.supports[0] ??
+  return ritual.recommendationMetadata?.capacity.default ??
+    ritual.recommendationMetadata?.capacity.supports[0] ??
     "";
 }
 
@@ -898,7 +901,7 @@ export function sortRituals(
   const sorted = [...rituals];
   const originalIndex = (ritual: Ritual) => order.get(ritual.id) ?? 0;
   const timingRelationshipRank: Record<
-    Exclude<Ritual["recommendationMetadata"]["timing"]["relationship"], "none">,
+    Exclude<RitualRecommendationMetadata["timing"]["relationship"], "none">,
     number
   > = {
     required: 3,
@@ -945,16 +948,16 @@ export function sortRituals(
       return sorted.sort(
         (a, b) =>
           compareText(
-            a.recommendationMetadata.purposes.primary,
-            b.recommendationMetadata.purposes.primary,
+            a.recommendationMetadata?.purposes.primary ?? "",
+            b.recommendationMetadata?.purposes.primary ?? "",
           ) || compareByHeadline(a, b),
       );
     case "carrier":
       return sorted.sort(
         (a, b) =>
           compareText(
-            a.recommendationMetadata.carriers.primary,
-            b.recommendationMetadata.carriers.primary,
+            a.recommendationMetadata?.carriers.primary ?? "",
+            b.recommendationMetadata?.carriers.primary ?? "",
           ) || compareByHeadline(a, b),
       );
     case "material":

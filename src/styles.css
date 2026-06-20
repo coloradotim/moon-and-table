@@ -2334,7 +2334,6 @@ h2 {
 .manage-rituals__filters {
   display: grid;
   grid-template-columns: minmax(220px, 1fr) auto;
-  max-width: 1000px;
   gap: 10px;
 }
 
@@ -2389,7 +2388,7 @@ h2 {
 .manage-rituals__filter-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 6px 8px;
 }
 
 .manage-rituals__filter-chip {
@@ -2399,31 +2398,22 @@ h2 {
   width: fit-content;
   align-items: center;
   gap: 6px;
-  padding: 6px 11px;
+  padding: 6px 10px;
   border: 1px solid rgba(159, 174, 166, 0.72);
   border-radius: 999px;
   background: rgba(255, 253, 247, 0.82);
   color: #26312c;
   cursor: pointer;
+  font: inherit;
+  font-weight: 700;
 }
 
-.manage-rituals__filter-chip input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.manage-rituals__filter-chip:has(input:checked) {
+.manage-rituals__filter-chip--selected {
   border-color: rgba(92, 119, 86, 0.72);
   background: rgba(235, 244, 229, 0.92);
 }
 
-.manage-rituals__filter-chip:has(input:focus-visible) {
+.manage-rituals__filter-chip:focus-visible {
   outline: 2px solid rgba(92, 119, 86, 0.65);
   outline-offset: 2px;
 }

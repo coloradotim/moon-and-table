@@ -183,12 +183,12 @@ Manage should avoid overlapping top-level dropdowns for every internal state.
 Use:
 
 * a search box;
-* view chips: `All`, `Drafts`, `In library`, `Allowed in Choose with me`,
-  `Needs attention`, `Archived`;
+* view chips: `Drafts`, `In library`, `Allowed in Choose with me`,
+  `Needs attention`, `Archived`; when no view chip is selected, show all rows;
 * stable facets: `Origin`, `Source`, `Purpose`, `Carrier`;
-* shortcut chips: `Active drafts`, `Validation issues`, `Timing needs repair`,
-  `Needs source review`, `Needs recommendation setup`, `Held from Choose with
-  me`, `State mismatch`;
+* attention chips: `Validation issues`, `Timing needs repair`, `Needs source
+  review`, `Needs recommendation setup`, `Held from Choose with me`, `State
+  mismatch`;
 * derived table states: `Library`, `Choose with me`, `Attention`, `Draft`.
 
 Do not expose `Findable`, `Direct use`, `Recommendation eligible`,
@@ -198,6 +198,17 @@ details or debug output.
 
 A Ritual may be in the library while still carrying visible review warnings.
 Choose with me remains a separate stricter gate.
+
+Draft rows can be searched and filtered by draft state, attention labels,
+source, purpose, carrier, and preview metadata, but they are not live `In
+library` or `Allowed in Choose with me` rows until `Add to library` or `Apply
+changes` succeeds. A draft may preview that it would be library-ready or needs
+Choose with me setup, but live availability filters should only count published
+Ritual rows.
+
+`recommendation_review` means Choose with me setup or review is still needed.
+It is not an intentional hold. `Held from Choose with me` requires an explicit
+manual hold signal such as `recommendation_hold`.
 
 ## 8. Manage Rituals Current Surface
 

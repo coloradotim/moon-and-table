@@ -36,7 +36,7 @@ function makeDraftRitual(overrides: Partial<Ritual> = {}): Ritual {
       recommendationEligible: false,
     },
     recommendationMetadata: {
-      ...base.recommendationMetadata,
+      ...base .recommendationMetadata!,
       eligibility: {
         recommendable: false,
         missing: ["direct_use_review", "recommendation_review"],
@@ -100,9 +100,9 @@ describe("source pipeline", () => {
   it("blocks invalid runtime enum values during packet QA", () => {
     const ritual = makeDraftRitual({
       recommendationMetadata: {
-        ...makeDraftRitual().recommendationMetadata,
+        ...makeDraftRitual() .recommendationMetadata!,
         purposes: {
-          ...makeDraftRitual().recommendationMetadata.purposes,
+          ...makeDraftRitual().recommendationMetadata!.purposes,
           primary: "invalid_purpose",
         },
       },

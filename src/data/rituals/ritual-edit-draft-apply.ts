@@ -29,11 +29,6 @@ import type {
   RitualSearchMetadata,
   RitualStatus,
 } from "./types.js";
-import {
-  RITUAL_CARRIERS,
-  RITUAL_PURPOSES,
-  RITUAL_TIMING_RELATIONSHIPS,
-} from "./types.js";
 
 export const RITUAL_DRAFT_APPLY_VALIDATOR_VERSION =
   "ritual-edit-draft-apply-v1";
@@ -361,9 +356,13 @@ function stableJson(value: unknown): string {
 }
 
 function hasSelectorRelevantMetadataChanged(
-  before: RitualRecommendationMetadata,
-  after: RitualRecommendationMetadata,
+  before: RitualRecommendationMetadata | undefined,
+  after: RitualRecommendationMetadata | undefined,
 ): boolean {
+  if (!before || !after) {
+    return before !== after;
+  }
+
   return SELECTOR_RELEVANT_RECOMMENDATION_PATHS.some((path) =>
     stableJson(getPathValue(before, path)) !==
       stableJson(getPathValue(after, path))
@@ -405,48 +404,17 @@ function ritualStatusForLifecycle(
 function applyLifecycleToRecommendationMetadata(input: {
   metadata: RitualRecommendationMetadata | undefined;
   lifecycle: RitualDocument["lifecycle"];
-}): RitualRecommendationMetadata {
-  const metadata = input.metadata ?? createLibraryOnlyRecommendationMetadata(
-    input.lifecycle,
-  );
+}): RitualRecommendationMetadata | undefined {
+  if (!input.metadata) {
+    return undefined;
+  }
 
   return {
-    ...cloneJson(metadata),
+    ...cloneJson(input.metadata),
     eligibility: {
-      ...cloneJson(metadata.eligibility),
+      ...cloneJson(input.metadata.eligibility),
       recommendable: input.lifecycle.recommendable,
       missing: [...input.lifecycle.missingReadiness],
-    },
-  };
-}
-
-function createLibraryOnlyRecommendationMetadata(
-  lifecycle: RitualDocument["lifecycle"],
-): RitualRecommendationMetadata {
-  return {
-    purposes: {
-      primary: RITUAL_PURPOSES[3],
-      secondary: [],
-      refinement: "",
-    },
-    carriers: {
-      primary: RITUAL_CARRIERS[4],
-      secondary: [],
-    },
-    capacity: {
-      supports: [],
-    },
-    audience: {
-      supports: [],
-    },
-    timing: {
-      relationship: RITUAL_TIMING_RELATIONSHIPS[3],
-      contexts: [],
-    },
-    eligibility: {
-      recommendable: lifecycle.recommendable,
-      missing: [...lifecycle.missingReadiness],
-      notFor: [],
     },
   };
 }
@@ -873,7 +841,7 @@ export async function createApplyRitualEditDraftPlan(input: {
   }
 
   const draftRecommendationMetadata =
-    draft.draftBuffer.recommendationMetadata as RitualRecommendationMetadata;
+    draft.draftBuffer.recommendationMetadata as RitualRecommendationMetadata | undefined;
   const recommendationHeld = hasSelectorRelevantMetadataChanged(
     baseVersion.ritual.recommendationMetadata,
     draftRecommendationMetadata,

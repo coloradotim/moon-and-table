@@ -327,7 +327,7 @@ Rules:
   protected `Add to library` transaction creates the first immutable version,
   creates the `rituals/{ritualId}` pointer/index, writes validation/review/audit
   records, makes the Ritual findable and direct-use eligible, and keeps Choose
-  with me held with `recommendation_review`.
+  with me in setup/review with `recommendation_review`.
 - Persistent actor fields use repo-safe IDs such as `person_a`, `person_b`, and
   `household`; private names are rendered only from private runtime context.
 

@@ -96,6 +96,7 @@ import {
   RITUAL_STATUSES,
   RITUAL_TIMING_RELATIONSHIPS,
   type Ritual,
+  type RitualRecommendationMetadata,
 } from "../data/rituals/types";
 import type { RitualReviewAction } from "../data/rituals/db-review-transactions";
 import type { TimingWindowCandidate } from "../lib/timing-window-candidates";
@@ -219,8 +220,8 @@ type SearchRitualsRenderOptions = {
   ritualRepository?: RitualRepository;
 };
 
-function escapeHtml(value: string): string {
-  return value
+function escapeHtml(value: unknown): string {
+  return String(value ?? "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -464,7 +465,7 @@ function getRitualSearchSummary(ritual: Ritual): string {
 
 function formatTimingRelationshipLabel(
   relationship: Exclude<
-    Ritual["recommendationMetadata"]["timing"]["relationship"],
+    RitualRecommendationMetadata["timing"]["relationship"],
     "none"
   >,
 ): string {
@@ -567,7 +568,7 @@ export function renderRitualPreview(
           </div>
           <div>
             <dt>Missing readiness</dt>
-            <dd>${escapeHtml(ritual.recommendationMetadata.eligibility.missing?.join(", ") || "none")}</dd>
+            <dd>${escapeHtml(ritual.recommendationMetadata?.eligibility.missing?.join(", ") || "none")}</dd>
           </div>
           <div>
             <dt>Origin</dt>
@@ -801,15 +802,19 @@ function renderRitualResultCard(
     ...ritual.searchMetadata.tags.slice(0, 3),
   ].slice(0, 5);
   const sourceLabel = getRitualSourceLabels(ritual)[0];
-  const capacity = ritual.recommendationMetadata.capacity.default ??
-    ritual.recommendationMetadata.capacity.supports[0];
+  const capacity = ritual.recommendationMetadata?.capacity.default ??
+    ritual.recommendationMetadata?.capacity.supports[0];
   const metadata = [
     sourceLabel ? `Source: ${sourceLabel}` : undefined,
-    `Work: ${formatRitualLabel(ritual.recommendationMetadata.purposes.primary)}`,
-    `Carrier: ${formatRitualLabel(ritual.recommendationMetadata.carriers.primary)}`,
+    ritual.recommendationMetadata
+      ? `Work: ${formatRitualLabel(ritual.recommendationMetadata.purposes.primary)}`
+      : undefined,
+    ritual.recommendationMetadata
+      ? `Carrier: ${formatRitualLabel(ritual.recommendationMetadata.carriers.primary)}`
+      : undefined,
     capacity ? `Energy: ${formatRitualLabel(capacity)}` : undefined,
-    ritual.recommendationMetadata.audience.supports.length > 0
-      ? `For: ${ritual.recommendationMetadata.audience.supports.map(formatRitualLabel).join(", ")}`
+    (ritual.recommendationMetadata?.audience.supports.length ?? 0) > 0
+      ? `For: ${ritual.recommendationMetadata?.audience.supports.map(formatRitualLabel).join(", ")}`
       : undefined,
   ].filter((item): item is string => Boolean(item));
   const timingMatch =
@@ -1264,17 +1269,19 @@ function renderManageRitualFilterChip(input: {
   label: string;
   selectedValue: string;
 }): string {
+  const isSelected = input.selectedValue === input.value;
+
   return `
-    <label class="manage-rituals__filter-chip">
-      <input
-        type="radio"
-        name="${escapeHtml(input.name)}"
-        value="${escapeHtml(input.value)}"
-        data-manage-rituals-filter="true"
-        ${input.selectedValue === input.value ? "checked" : ""}
-      />
+    <button
+      class="manage-rituals__filter-chip${isSelected ? " manage-rituals__filter-chip--selected" : ""}"
+      type="button"
+      aria-pressed="${isSelected ? "true" : "false"}"
+      data-manage-rituals-filter-chip="true"
+      data-manage-rituals-filter-name="${escapeHtml(input.name)}"
+      data-manage-rituals-filter-value="${escapeHtml(input.value)}"
+    >
       <span>${escapeHtml(input.label)}</span>
-    </label>
+    </button>
   `;
 }
 
@@ -1324,8 +1331,7 @@ function getManageReadinessFilterLabel(
 
 function getManageShortcutFilterLabel(shortcut: ManageRitualShortcutFilter): string {
   const labels: Record<ManageRitualShortcutFilter, string> = {
-    all: "All shortcuts",
-    active_draft: "Active drafts",
+    all: "All attention filters",
     validation_issues: "Validation issues",
     timing_repair: "Timing needs repair",
     source_review: "Needs source review",
@@ -2095,8 +2101,8 @@ type ManageRitualEditorPreviewModel = {
   mode: ManageRitualPreviewMode;
   modeLabel: string;
   presentation: Ritual["presentation"];
-  primaryPurpose: string;
-  primaryCarrier: string;
+  primaryPurpose?: string;
+  primaryCarrier?: string;
   materials: string[];
   places: string[];
   tags: string[];
@@ -2128,10 +2134,10 @@ function getManageRitualEditorPreviewModel(input: {
     },
     primaryPurpose:
       draftRecommendationMetadata?.purposes?.primary ??
-      ritual.recommendationMetadata.purposes.primary,
+      ritual.recommendationMetadata?.purposes.primary,
     primaryCarrier:
       draftRecommendationMetadata?.carriers?.primary ??
-      ritual.recommendationMetadata.carriers.primary,
+      ritual.recommendationMetadata?.carriers.primary,
     materials:
       draftSearchMetadata?.materials ??
       ritual.searchMetadata.materials ??
@@ -2191,8 +2197,8 @@ function renderManageRitualEditorPreviewCard(
           <dl class="manage-rituals__preview-facts">
             <div><dt>Best window</dt><dd>${escapeHtml(preview.presentation.bestWindow)}</dd></div>
             <div><dt>Question</dt><dd>${escapeHtml(preview.presentation.questionToCarry)}</dd></div>
-            <div><dt>Purpose</dt><dd>${escapeHtml(preview.primaryPurpose)}</dd></div>
-            <div><dt>Carrier</dt><dd>${escapeHtml(preview.primaryCarrier)}</dd></div>
+            <div><dt>Purpose</dt><dd>${escapeHtml(preview.primaryPurpose ?? "not set")}</dd></div>
+            <div><dt>Carrier</dt><dd>${escapeHtml(preview.primaryCarrier ?? "not set")}</dd></div>
             <div><dt>Materials</dt><dd>${escapeHtml(formatManageList(preview.materials))}</dd></div>
             <div><dt>Places</dt><dd>${escapeHtml(formatManageList(preview.places))}</dd></div>
             <div><dt>Tags</dt><dd>${escapeHtml(formatManageList(preview.tags))}</dd></div>
@@ -3062,7 +3068,7 @@ function renderManageRitualsFilters(
       <fieldset class="manage-rituals__filter-group manage-rituals__filter-group--wide">
         <legend>View</legend>
         <div class="manage-rituals__filter-chips">
-          ${MANAGE_RITUAL_VIEW_FILTERS.map((view) =>
+          ${MANAGE_RITUAL_VIEW_FILTERS.filter((view) => view !== "all").map((view) =>
             renderManageRitualFilterChip({
               name: "manageRitualStatus",
               value: view,
@@ -3126,10 +3132,10 @@ function renderManageRitualsFilters(
         </label>
       </div>
       <fieldset class="manage-rituals__filter-group manage-rituals__filter-group--wide">
-        <legend>Shortcuts</legend>
+        <legend>Attention</legend>
         <div class="manage-rituals__filter-chips">
           ${MANAGE_RITUAL_SHORTCUT_FILTERS.filter((shortcut) =>
-            shortcut !== "all" || filters.shortcut === "all"
+            shortcut !== "all"
           ).map((shortcut) =>
             renderManageRitualFilterChip({
               name: "manageRitualShortcut",
@@ -3340,11 +3346,11 @@ export function renderManageRitualsSection(options: {
                         <section>
                           <h4>Presentation</h4>
                           <dl>
-                            <div><dt>Headline</dt><dd>${escapeHtml(row.ritual.presentation.headline)}</dd></div>
-                            <div><dt>Practice</dt><dd>${escapeHtml(row.ritual.presentation.practice)}</dd></div>
-                            <div><dt>Intention</dt><dd>${escapeHtml(row.ritual.presentation.intention)}</dd></div>
-                            <div><dt>Best window</dt><dd>${escapeHtml(row.ritual.presentation.bestWindow)}</dd></div>
-                            <div><dt>Question to carry</dt><dd>${escapeHtml(row.ritual.presentation.questionToCarry)}</dd></div>
+                            <div><dt>Headline</dt><dd>${escapeHtml(row.ritual.presentation.headline ?? "not set")}</dd></div>
+                            <div><dt>Practice</dt><dd>${escapeHtml(row.ritual.presentation.practice ?? "not set")}</dd></div>
+                            <div><dt>Intention</dt><dd>${escapeHtml(row.ritual.presentation.intention ?? "not set")}</dd></div>
+                            <div><dt>Best window</dt><dd>${escapeHtml(row.ritual.presentation.bestWindow ?? "not set")}</dd></div>
+                            <div><dt>Question to carry</dt><dd>${escapeHtml(row.ritual.presentation.questionToCarry ?? "not set")}</dd></div>
                           </dl>
                         </section>
                         <section>
@@ -3352,8 +3358,8 @@ export function renderManageRitualsSection(options: {
                           <dl>
                             <div><dt>Library</dt><dd>${escapeHtml(getManageLibraryStateLabel(row))}</dd></div>
                             <div><dt>Choose with me</dt><dd>${escapeHtml(getManageChooseWithMeStateLabel(row))}</dd></div>
-                            <div><dt>Primary purpose</dt><dd>${escapeHtml(row.primaryPurpose)}</dd></div>
-                            <div><dt>Primary carrier</dt><dd>${escapeHtml(row.primaryCarrier)}</dd></div>
+                            <div><dt>Primary purpose</dt><dd>${escapeHtml(row.primaryPurpose ?? "not set")}</dd></div>
+                            <div><dt>Primary carrier</dt><dd>${escapeHtml(row.primaryCarrier ?? "not set")}</dd></div>
                             <div><dt>Audience</dt><dd>${escapeHtml(formatManageList(row.audience))}</dd></div>
                             <div><dt>Capacity</dt><dd>${escapeHtml(formatManageList(row.capacity))}</dd></div>
                             <div><dt>Review flags</dt><dd>${escapeHtml(formatManageList(row.reviewFlags))}</dd></div>

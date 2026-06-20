@@ -356,7 +356,7 @@ describe("Manage Rituals view model", () => {
           headline: "Choose draft",
         },
         recommendationMetadata: {
-          ...baseDraftBuffer.recommendationMetadata,
+          ...baseDraftBuffer.recommendationMetadata!,
           eligibility: {
             recommendable: true,
             missing: [],
@@ -407,6 +407,25 @@ describe("Manage Rituals view model", () => {
       invalidSourceDraft,
     ];
 
+    const draftRows = createManageRitualsViewModel(
+      [],
+      { status: "active_draft" },
+      { activeDrafts },
+    ).rows.map((row) => row.id);
+    expect(draftRows).toHaveLength(4);
+    expect(draftRows).toEqual(expect.arrayContaining([
+      "household.choose_draft",
+      "household.hidden_draft",
+      "household.library_draft",
+      "source.invalid_draft",
+    ]));
+    expect(
+      createManageRitualsViewModel(
+        [],
+        { status: "active_draft", shortcut: "validation_issues" },
+        { activeDrafts },
+      ).rows.map((row) => row.id),
+    ).toEqual(["source.invalid_draft"]);
     expect(
       createManageRitualsViewModel([], { shortcut: "recommendation_setup" }, {
         activeDrafts,
@@ -414,19 +433,17 @@ describe("Manage Rituals view model", () => {
     ).toEqual(expect.arrayContaining([
       "household.hidden_draft",
       "household.library_draft",
+      "household.choose_draft",
       "source.invalid_draft",
     ]));
     expect(
       createManageRitualsViewModel([], { status: "in_library" }, { activeDrafts })
         .rows.map((row) => row.id),
-    ).toEqual(expect.arrayContaining([
-      "household.library_draft",
-      "household.choose_draft",
-    ]));
+    ).toEqual([]);
     expect(
       createManageRitualsViewModel([], { status: "choose_with_me" }, { activeDrafts })
         .rows.map((row) => row.id),
-    ).toEqual(["household.choose_draft"]);
+    ).toEqual([]);
     expect(
       createManageRitualsViewModel([], { shortcut: "validation_issues" }, {
         activeDrafts,
@@ -604,6 +621,21 @@ describe("Manage Rituals view model", () => {
       (action) => action.action === "promote_recommendation",
     );
 
+    expect(viewModel.rows[0].chooseWithMeState).toBe("needs_setup");
+    expect(
+      createManageRitualsViewModel(
+        rituals,
+        { shortcut: "held_choose_with_me" },
+        { dbBacked: true, dbDocuments },
+      ).filteredTotal,
+    ).toBe(0);
+    expect(
+      createManageRitualsViewModel(
+        rituals,
+        { shortcut: "recommendation_setup" },
+        { dbBacked: true, dbDocuments },
+      ).filteredTotal,
+    ).toBe(1);
     expect(promoteRecommendation).toEqual(expect.objectContaining({
       enabled: true,
       label: "Allow in Choose with me",

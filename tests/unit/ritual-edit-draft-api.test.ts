@@ -205,7 +205,7 @@ describe("Ritual edit draft API", () => {
         places: ["altar"],
       },
       recommendationMetadata: {
-        ...draftBeforeSave.draftBuffer.recommendationMetadata,
+        ...draftBeforeSave.draftBuffer .recommendationMetadata!,
         purposes: {
           primary: "opening" as const,
           secondary: ["tending" as const],
@@ -524,7 +524,7 @@ describe("Ritual edit draft API", () => {
               questionToCarry: "What is ready to be placed?",
             },
             recommendationMetadata: {
-              ...record.versionDocument.ritual.recommendationMetadata,
+              ...record.versionDocument.ritual .recommendationMetadata!,
               eligibility: {
                 recommendable: false,
                 missing: [],

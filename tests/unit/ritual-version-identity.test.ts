@@ -58,10 +58,10 @@ describe("static Ritual version identity", () => {
     const changedMetadata = {
       ...ritual,
       recommendationMetadata: {
-        ...ritual.recommendationMetadata,
+        ...ritual .recommendationMetadata!,
         purposes: {
-          ...ritual.recommendationMetadata.purposes,
-          refinement: `${ritual.recommendationMetadata.purposes.refinement} changed`,
+          ...ritual.recommendationMetadata!.purposes,
+          refinement: `${ritual.recommendationMetadata!.purposes.refinement} changed`,
         },
       },
     } satisfies Ritual;
@@ -80,12 +80,12 @@ describe("static Ritual version identity", () => {
       availability: ritual.availability,
       searchMetadata: ritual.searchMetadata,
       recommendationMetadata: {
-        timing: ritual.recommendationMetadata.timing,
-        eligibility: ritual.recommendationMetadata.eligibility,
-        audience: ritual.recommendationMetadata.audience,
-        capacity: ritual.recommendationMetadata.capacity,
-        carriers: ritual.recommendationMetadata.carriers,
-        purposes: ritual.recommendationMetadata.purposes,
+        timing: ritual.recommendationMetadata!.timing,
+        eligibility: ritual.recommendationMetadata!.eligibility,
+        audience: ritual.recommendationMetadata!.audience,
+        capacity: ritual.recommendationMetadata!.capacity,
+        carriers: ritual.recommendationMetadata!.carriers,
+        purposes: ritual.recommendationMetadata!.purposes,
       },
       presentation: ritual.presentation,
       origin: ritual.origin,
@@ -107,11 +107,11 @@ describe("static Ritual version identity", () => {
     expect(recommendationSnapshot).toEqual(ritual.recommendationMetadata);
 
     presentationSnapshot.headline = "Mutated snapshot";
-    recommendationSnapshot.capacity.supports.push("room_for_something_deeper");
+    recommendationSnapshot!.capacity.supports.push("room_for_something_deeper");
 
     expect(ritual.presentation.headline).not.toBe("Mutated snapshot");
-    expect(ritual.recommendationMetadata.capacity.supports).toEqual(
-      sourceBackedRituals[0].recommendationMetadata.capacity.supports,
+    expect(ritual.recommendationMetadata!.capacity.supports).toEqual(
+      sourceBackedRituals[0].recommendationMetadata!.capacity.supports,
     );
     expect(JSON.stringify(ritual)).toBe(original);
   });

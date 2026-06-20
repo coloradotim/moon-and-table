@@ -10,6 +10,7 @@ import {
   RITUAL_PURPOSES,
   RITUAL_TIMING_RELATIONSHIPS,
   type Ritual,
+  type RitualRecommendationMetadata,
 } from "../../src/data/rituals/types";
 import {
   validateRitual,
@@ -61,7 +62,7 @@ describe("source-backed Ritual import data", () => {
       sourceBackedRituals.every(
         (ritual) =>
           ritual.availability.recommendationEligible ===
-          ritual.recommendationMetadata.eligibility.recommendable,
+          ritual.recommendationMetadata!.eligibility.recommendable,
       ),
     ).toBe(true);
   });
@@ -84,7 +85,7 @@ describe("source-backed Ritual import data", () => {
     expect(
       woodward.every(
         (ritual) =>
-          ritual.recommendationMetadata.eligibility.missing?.join(",") ===
+          ritual.recommendationMetadata!.eligibility.missing?.join(",") ===
           "",
       ),
     ).toBe(true);
@@ -107,7 +108,7 @@ describe("source-backed Ritual import data", () => {
     expect(
       houseWitch.every(
         (ritual) =>
-          ritual.recommendationMetadata.eligibility.missing?.join(",") ===
+          ritual.recommendationMetadata!.eligibility.missing?.join(",") ===
           "",
       ),
     ).toBe(true);
@@ -156,7 +157,7 @@ describe("source-backed Ritual import data", () => {
       buckland.find(
         (ritual) =>
           ritual.id === "ritual-candlelight-buckland-releasing-habit-surrounded",
-      )?.recommendationMetadata.capacity,
+      )?.recommendationMetadata?.capacity,
     ).toEqual({
       supports: ["room_for_something_deeper"],
       default: "room_for_something_deeper",
@@ -211,7 +212,7 @@ describe("source-backed Ritual import data", () => {
     expect(
       magicalHousehold.every(
         (ritual) =>
-          ritual.recommendationMetadata.eligibility.missing?.join(",") ===
+          ritual.recommendationMetadata!.eligibility.missing?.join(",") ===
           "",
       ),
     ).toBe(true);
@@ -244,7 +245,7 @@ describe("source-backed Ritual import data", () => {
     expect(
       greenGarden.every(
         (ritual) =>
-          ritual.recommendationMetadata.eligibility.missing?.join(",") ===
+          ritual.recommendationMetadata!.eligibility.missing?.join(",") ===
           "",
       ),
     ).toBe(true);
@@ -312,8 +313,8 @@ describe("source-backed Ritual import data", () => {
     );
     expect(
       moonBook
-        .filter((ritual) => ritual.recommendationMetadata.timing.relationship !== "none")
-        .every((ritual) => (ritual.recommendationMetadata.timing.contexts ?? []).length > 0),
+        .filter((ritual) => ritual.recommendationMetadata!.timing.relationship !== "none")
+        .every((ritual) => (ritual.recommendationMetadata!.timing.contexts ?? []).length > 0),
     ).toBe(true);
     expect(
       moonBook.find(
@@ -472,7 +473,7 @@ describe("source-backed Ritual import data", () => {
     ]);
     expect(
       dominguez.some((ritual) =>
-        ritual.recommendationMetadata.eligibility.missing?.includes(
+        ritual.recommendationMetadata!.eligibility.missing?.includes(
           "planetary_day_or_hour_not_supported",
         ),
       ),
@@ -518,7 +519,7 @@ describe("source-backed Ritual import data", () => {
     });
 
     expect(
-      sourceBackedRituals.map((ritual) => ritual.recommendationMetadata.purposes.primary),
+      sourceBackedRituals.map((ritual) => ritual.recommendationMetadata!.purposes.primary),
     ).toEqual(expect.arrayContaining(["opening", "tending", "blessing"]));
 
     expect(
@@ -535,36 +536,36 @@ describe("source-backed Ritual import data", () => {
   it("uses only valid purpose, carrier, capacity, audience, and timing values", () => {
     for (const ritual of sourceBackedRituals) {
       expect(RITUAL_PURPOSES).toContain(
-        ritual.recommendationMetadata.purposes.primary,
+        ritual.recommendationMetadata!.purposes.primary,
       );
       expect(RITUAL_CARRIERS).toContain(
-        ritual.recommendationMetadata.carriers.primary,
+        ritual.recommendationMetadata!.carriers.primary,
       );
 
-      for (const capacity of ritual.recommendationMetadata.capacity.supports) {
+      for (const capacity of ritual.recommendationMetadata!.capacity.supports) {
         expect(RITUAL_CAPACITY_MODES).toContain(capacity);
       }
 
-      for (const audience of ritual.recommendationMetadata.audience.supports) {
+      for (const audience of ritual.recommendationMetadata!.audience.supports) {
         expect(RITUAL_AUDIENCES).toContain(audience);
       }
 
       expect(RITUAL_TIMING_RELATIONSHIPS).toContain(
-        ritual.recommendationMetadata.timing.relationship,
+        ritual.recommendationMetadata!.timing.relationship,
       );
-      expect(ritual.recommendationMetadata.timing.relationship).not.toBe(
+      expect(ritual.recommendationMetadata!.timing.relationship).not.toBe(
         "required_or_preferred",
       );
-      if (ritual.recommendationMetadata.timing.relationship !== "none") {
-        expect(ritual.recommendationMetadata.timing.contexts?.length).toBeGreaterThan(
+      if (ritual.recommendationMetadata!.timing.relationship !== "none") {
+        expect(ritual.recommendationMetadata!.timing.contexts?.length).toBeGreaterThan(
           0,
         );
       }
       if (
         ritual.availability.recommendationEligible &&
-        ritual.recommendationMetadata.timing.relationship === "required"
+        ritual.recommendationMetadata!.timing.relationship === "required"
       ) {
-        expect(ritual.recommendationMetadata.timing.contexts?.length).toBeGreaterThan(
+        expect(ritual.recommendationMetadata!.timing.contexts?.length).toBeGreaterThan(
           0,
         );
       }
@@ -614,28 +615,28 @@ describe("source-backed Ritual import data", () => {
     const invalid = {
       ...sourceBackedRituals[0],
       recommendationMetadata: {
-        ...sourceBackedRituals[0].recommendationMetadata,
+        ...sourceBackedRituals[0] .recommendationMetadata!,
         purposes: {
-          ...sourceBackedRituals[0].recommendationMetadata.purposes,
-          primary: "generic" as Ritual["recommendationMetadata"]["purposes"]["primary"],
+          ...sourceBackedRituals[0].recommendationMetadata!.purposes,
+          primary: "generic" as RitualRecommendationMetadata["purposes"]["primary"],
         },
         carriers: {
-          ...sourceBackedRituals[0].recommendationMetadata.carriers,
-          primary: "room" as Ritual["recommendationMetadata"]["carriers"]["primary"],
+          ...sourceBackedRituals[0].recommendationMetadata!.carriers,
+          primary: "room" as RitualRecommendationMetadata["carriers"]["primary"],
         },
         capacity: {
           supports: [
-            "low" as Ritual["recommendationMetadata"]["capacity"]["supports"][number],
+            "low" as RitualRecommendationMetadata["capacity"]["supports"][number],
           ],
         },
         audience: {
           supports: [
-            "together" as Ritual["recommendationMetadata"]["audience"]["supports"][number],
+            "together" as RitualRecommendationMetadata["audience"]["supports"][number],
           ],
         },
         timing: {
           relationship:
-            "required_or_preferred" as Ritual["recommendationMetadata"]["timing"]["relationship"],
+            "required_or_preferred" as RitualRecommendationMetadata["timing"]["relationship"],
         },
       },
     } satisfies Ritual;
@@ -670,7 +671,7 @@ describe("source-backed Ritual import data", () => {
         recommendationEligible: true,
       },
       recommendationMetadata: {
-        ...sourceBackedRituals[0].recommendationMetadata,
+        ...sourceBackedRituals[0] .recommendationMetadata!,
         capacity: {
           supports: [],
         },
@@ -697,7 +698,7 @@ describe("source-backed Ritual import data", () => {
         recommendationEligible: false,
       },
       recommendationMetadata: {
-        ...sourceBackedRituals[0].recommendationMetadata,
+        ...sourceBackedRituals[0] .recommendationMetadata!,
         eligibility: {
           recommendable: false,
           missing: ["recommendation_review"],
@@ -744,7 +745,7 @@ describe("source-backed Ritual import data", () => {
       ...sourceBackedRituals[0],
       status: "pilot",
       recommendationMetadata: {
-        ...sourceBackedRituals[0].recommendationMetadata,
+        ...sourceBackedRituals[0] .recommendationMetadata!,
         eligibility: {
           recommendable: true,
         },
@@ -780,7 +781,7 @@ describe("source-backed Ritual import data", () => {
       ...sourceBackedRituals[0],
       status: "reviewed",
       recommendationMetadata: {
-        ...sourceBackedRituals[0].recommendationMetadata,
+        ...sourceBackedRituals[0] .recommendationMetadata!,
         eligibility: {
           recommendable: true,
         },

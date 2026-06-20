@@ -12,7 +12,7 @@ import { sourceBackedRituals } from "../../src/data/rituals/source-backed-ritual
 const createdAtIso = "2026-06-14T12:00:00.000Z";
 const baseRitual = sourceBackedRituals.find((ritual) =>
   ritual.status === "recommendable" &&
-  (ritual.recommendationMetadata.eligibility.missing ?? []).length === 0
+  (ritual.recommendationMetadata!.eligibility.missing ?? []).length === 0
 ) ?? sourceBackedRituals[0];
 
 function clone<T>(value: T): T {
@@ -149,7 +149,7 @@ describe("Ritual edit draft validation", () => {
       draftBuffer: {
         ...draft.draftBuffer,
         recommendationMetadata: {
-          ...draft.draftBuffer.recommendationMetadata,
+          ...draft.draftBuffer .recommendationMetadata!,
           eligibility: {
             ...draft.draftBuffer.recommendationMetadata?.eligibility,
             recommendable: true,
@@ -238,7 +238,7 @@ describe("Ritual edit draft validation", () => {
       draftBuffer: {
         ...draft.draftBuffer,
         recommendationMetadata: {
-          ...draft.draftBuffer.recommendationMetadata,
+          ...draft.draftBuffer .recommendationMetadata!,
           purposes: {
             primary: "unsupported-purpose",
             secondary: ["tending", "unsupported-purpose"],
@@ -306,7 +306,7 @@ describe("Ritual edit draft validation", () => {
       draftBuffer: {
         ...draft.draftBuffer,
         recommendationMetadata: {
-          ...draft.draftBuffer.recommendationMetadata,
+          ...draft.draftBuffer .recommendationMetadata!,
           timing: {
             relationship: "helpful",
             contexts: ["moon sign", "new moon"],
@@ -337,7 +337,7 @@ describe("Ritual edit draft validation", () => {
       draftBuffer: {
         ...draft.draftBuffer,
         recommendationMetadata: {
-          ...draft.draftBuffer.recommendationMetadata,
+          ...draft.draftBuffer .recommendationMetadata!,
           timing: {
             relationship: "required",
             contexts: ["moon sign"],
@@ -371,7 +371,7 @@ describe("Ritual edit draft validation", () => {
       draftBuffer: {
         ...draft.draftBuffer,
         recommendationMetadata: {
-          ...draft.draftBuffer.recommendationMetadata,
+          ...draft.draftBuffer .recommendationMetadata!,
           purposes: {
             primary: "tending",
             secondary: ["tending", "marking"],

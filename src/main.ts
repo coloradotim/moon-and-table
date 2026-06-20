@@ -3058,6 +3058,63 @@ appRoot.addEventListener("click", (event) => {
     return;
   }
 
+  const manageRitualFilterChip = target.closest<HTMLElement>(
+    "[data-manage-rituals-filter-chip='true']",
+  );
+
+  if (manageRitualFilterChip) {
+    event.preventDefault();
+    const filterName = manageRitualFilterChip.dataset.manageRitualsFilterName;
+    const filterValue = manageRitualFilterChip.dataset.manageRitualsFilterValue;
+
+    if (
+      !filterValue ||
+      (filterName !== "manageRitualStatus" && filterName !== "manageRitualShortcut")
+    ) {
+      return;
+    }
+
+    const origin =
+      (document.querySelector<HTMLSelectElement>(
+        "[name='manageRitualOrigin']",
+      )?.value as ManageRitualOriginFilter | undefined) ??
+      activeManageRitualFilters.origin;
+
+    activeManageRitualFilters = {
+      ...activeManageRitualFilters,
+      query:
+        document.querySelector<HTMLInputElement>("[name='manageRitualQuery']")
+          ?.value.trim() ?? activeManageRitualFilters.query,
+      status: filterName === "manageRitualStatus"
+        ? activeManageRitualFilters.status === filterValue
+          ? "all"
+          : filterValue as ManageRitualStatusFilter
+        : activeManageRitualFilters.status,
+      origin,
+      source: origin === "household"
+        ? "all"
+        : document.querySelector<HTMLSelectElement>("[name='manageRitualSource']")
+          ?.value ?? activeManageRitualFilters.source,
+      purpose:
+        (document.querySelector<HTMLSelectElement>(
+          "[name='manageRitualPurpose']",
+        )?.value as ManageRitualPurposeFilter | undefined) ??
+        activeManageRitualFilters.purpose,
+      carrier:
+        (document.querySelector<HTMLSelectElement>(
+          "[name='manageRitualCarrier']",
+        )?.value as ManageRitualCarrierFilter | undefined) ??
+        activeManageRitualFilters.carrier,
+      shortcut: filterName === "manageRitualShortcut"
+        ? activeManageRitualFilters.shortcut === filterValue
+          ? "all"
+          : filterValue as ManageRitualShortcutFilter
+        : activeManageRitualFilters.shortcut,
+    };
+    renderActiveSignedInShell();
+    return;
+  }
+
   const tuningForm = target.closest<HTMLFormElement>(
     "[data-profile-tuning-form='true']",
   );
@@ -3425,7 +3482,7 @@ appRoot.addEventListener("change", (event) => {
   }
 
   if (
-    (target instanceof HTMLSelectElement || target instanceof HTMLInputElement) &&
+    target instanceof HTMLSelectElement &&
     target.matches("[data-manage-rituals-filter='true']")
   ) {
     const origin =
@@ -3439,11 +3496,6 @@ appRoot.addEventListener("change", (event) => {
       query:
         document.querySelector<HTMLInputElement>("[name='manageRitualQuery']")
           ?.value.trim() ?? activeManageRitualFilters.query,
-      status:
-        (document.querySelector<HTMLInputElement>(
-          "[name='manageRitualStatus']:checked",
-        )?.value as ManageRitualStatusFilter | undefined) ??
-        activeManageRitualFilters.status,
       origin,
       source: origin === "household"
         ? "all"
@@ -3459,13 +3511,9 @@ appRoot.addEventListener("change", (event) => {
           "[name='manageRitualCarrier']",
         )?.value as ManageRitualCarrierFilter | undefined) ??
         activeManageRitualFilters.carrier,
-      shortcut:
-        (document.querySelector<HTMLInputElement>(
-          "[name='manageRitualShortcut']:checked",
-        )?.value as ManageRitualShortcutFilter | undefined) ??
-        activeManageRitualFilters.shortcut,
     };
     renderActiveSignedInShell();
+    return;
   }
 });
 
