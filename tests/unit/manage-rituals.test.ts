@@ -150,7 +150,7 @@ describe("Manage Rituals view model", () => {
     ).toBe(true);
   });
 
-  it("filters by status, origin, source, readiness, and validation state", () => {
+  it("filters by product views, facets, shortcuts, and broad search", () => {
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { status: "draft" })
         .filteredTotal,
@@ -158,11 +158,24 @@ describe("Manage Rituals view model", () => {
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { status: "reviewed" })
         .filteredTotal,
-    ).toBe(63);
+    ).toBe(528);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { status: "recommendable" })
         .filteredTotal,
     ).toBe(465);
+    expect(
+      createManageRitualsViewModel(sourceBackedRituals, { status: "in_library" })
+        .filteredTotal,
+    ).toBe(528);
+    expect(
+      createManageRitualsViewModel(sourceBackedRituals, { status: "choose_with_me" })
+        .filteredTotal,
+    ).toBe(465);
+    expect(
+      createManageRitualsViewModel(sourceBackedRituals, {
+        status: "needs_attention",
+      }).filteredTotal,
+    ).toBe(63);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, { origin: "source" })
         .filteredTotal,
@@ -178,14 +191,39 @@ describe("Manage Rituals view model", () => {
     ).toBe(13);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, {
+        purpose: "tending",
+      }).filteredTotal,
+    ).toBeGreaterThan(0);
+    expect(
+      createManageRitualsViewModel(sourceBackedRituals, {
+        carrier: "table",
+      }).filteredTotal,
+    ).toBeGreaterThan(0);
+    expect(
+      createManageRitualsViewModel(sourceBackedRituals, {
         readiness: "missing_readiness",
       }).filteredTotal,
     ).toBe(63);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, {
-        readiness: "recommendation_ready",
+        availability: "allowed_choose_with_me",
       }).filteredTotal,
     ).toBe(465);
+    expect(
+      createManageRitualsViewModel(sourceBackedRituals, {
+        availability: "held_choose_with_me",
+      }).filteredTotal,
+    ).toBe(0);
+    expect(
+      createManageRitualsViewModel(sourceBackedRituals, {
+        shortcut: "recommendation_setup",
+      }).filteredTotal,
+    ).toBe(63);
+    expect(
+      createManageRitualsViewModel(sourceBackedRituals, {
+        shortcut: "held_choose_with_me",
+      }).filteredTotal,
+    ).toBe(0);
     expect(
       createManageRitualsViewModel(sourceBackedRituals, {
         readiness: "validation_findings",
@@ -199,6 +237,10 @@ describe("Manage Rituals view model", () => {
       createManageRitualsViewModel(sourceBackedRituals, { validation: "findings" })
         .filteredTotal,
     ).toBe(0);
+    expect(
+      createManageRitualsViewModel(sourceBackedRituals, { query: "buckland table" })
+        .filteredTotal,
+    ).toBeGreaterThan(0);
   });
 
   it("treats draft imports and active edit drafts as one Draft state", () => {
@@ -239,14 +281,169 @@ describe("Manage Rituals view model", () => {
       viewModel.rows.find((row) => row.id === sourceBackedRituals[0].id)?.activeDraft?.id,
     ).toBe("draft-existing");
     expect(
+      viewModel.rows.find((row) => row.id === sourceBackedRituals[0].id)
+        ?.chooseWithMeState,
+    ).toBe("allowed");
+    expect(
       viewModel.rows.find((row) => row.id === "household.test_draft"),
     ).toEqual(
       expect.objectContaining({
         rowKind: "edit_draft",
         status: "draft",
         headline: "New Household Draft",
+        chooseWithMeState: "needs_setup",
+        attentionLabels: expect.arrayContaining(["Draft", "Needs recommendation setup"]),
       }),
     );
+
+    const recommendationSetup = createManageRitualsViewModel(
+      sourceBackedRituals.slice(0, 1),
+      { shortcut: "recommendation_setup" },
+      {
+        activeDrafts: [existingDraft, householdDraft],
+      },
+    );
+
+    expect(recommendationSetup.rows.map((row) => row.id)).toEqual([
+      "household.test_draft",
+    ]);
+  });
+
+  it("lets draft rows participate in Manage filters from their draft buffers", () => {
+    const baseDraftBuffer = createActiveDraft().draftBuffer;
+    const hiddenDraft = createActiveDraft({
+      id: "draft-hidden",
+      ritualId: "household.hidden_draft",
+      draftBuffer: {
+        ...baseDraftBuffer,
+        id: "household.hidden_draft",
+        presentation: {
+          ...baseDraftBuffer.presentation,
+          headline: "Hidden draft",
+        },
+        availability: {
+          findable: false,
+          directUseEligible: false,
+          recommendationEligible: false,
+        },
+      },
+    });
+    const libraryDraft = createActiveDraft({
+      id: "draft-library",
+      ritualId: "household.library_draft",
+      draftBuffer: {
+        ...baseDraftBuffer,
+        id: "household.library_draft",
+        presentation: {
+          ...baseDraftBuffer.presentation,
+          headline: "Library draft",
+        },
+        availability: {
+          findable: true,
+          directUseEligible: true,
+          recommendationEligible: false,
+        },
+      },
+    });
+    const chooseWithMeDraft = createActiveDraft({
+      id: "draft-choose",
+      ritualId: "household.choose_draft",
+      draftBuffer: {
+        ...baseDraftBuffer,
+        id: "household.choose_draft",
+        presentation: {
+          ...baseDraftBuffer.presentation,
+          headline: "Choose draft",
+        },
+        recommendationMetadata: {
+          ...baseDraftBuffer.recommendationMetadata,
+          eligibility: {
+            recommendable: true,
+            missing: [],
+            notFor: [],
+          },
+        },
+        availability: {
+          findable: true,
+          directUseEligible: true,
+          recommendationEligible: true,
+        },
+      },
+    });
+    const invalidSourceDraft = createActiveDraft({
+      id: "draft-source-invalid",
+      ritualId: "source.invalid_draft",
+      draftSource: "existing_version",
+      draftBuffer: {
+        ...baseDraftBuffer,
+        id: "source.invalid_draft",
+        origin: {
+          type: "source",
+          sourceGrounding: [
+            {
+              citationLabel: "Test Source",
+              sourceLocation: "Test source location",
+              sourceSummary: "Test source summary.",
+              sourceSupports: "Test source supports the draft.",
+              moonAndTableChanges: "Adapted for a test draft.",
+              doNotImport: [],
+            },
+          ],
+        },
+        presentation: {
+          ...baseDraftBuffer.presentation,
+          headline: "",
+        },
+        searchMetadata: {
+          ...baseDraftBuffer.searchMetadata,
+          sourceLabel: "Test Source",
+        },
+      },
+    });
+    const activeDrafts = [
+      hiddenDraft,
+      libraryDraft,
+      chooseWithMeDraft,
+      invalidSourceDraft,
+    ];
+
+    expect(
+      createManageRitualsViewModel([], { shortcut: "recommendation_setup" }, {
+        activeDrafts,
+      }).rows.map((row) => row.id),
+    ).toEqual(expect.arrayContaining([
+      "household.hidden_draft",
+      "household.library_draft",
+      "source.invalid_draft",
+    ]));
+    expect(
+      createManageRitualsViewModel([], { status: "in_library" }, { activeDrafts })
+        .rows.map((row) => row.id),
+    ).toEqual(expect.arrayContaining([
+      "household.library_draft",
+      "household.choose_draft",
+    ]));
+    expect(
+      createManageRitualsViewModel([], { status: "choose_with_me" }, { activeDrafts })
+        .rows.map((row) => row.id),
+    ).toEqual(["household.choose_draft"]);
+    expect(
+      createManageRitualsViewModel([], { shortcut: "validation_issues" }, {
+        activeDrafts,
+      }).rows.map((row) => row.id),
+    ).toEqual(["source.invalid_draft"]);
+    expect(
+      createManageRitualsViewModel([], { source: "test_source" }, { activeDrafts })
+        .rows.map((row) => row.id),
+    ).toEqual(["source.invalid_draft"]);
+    expect(
+      createManageRitualsViewModel([], { purpose: "tending" }, { activeDrafts })
+        .filteredTotal,
+    ).toBe(4);
+    expect(
+      createManageRitualsViewModel([], { carrier: "table" }, { activeDrafts })
+        .filteredTotal,
+    ).toBe(4);
   });
 
   it("sorts table rows by selected columns and direction", () => {
@@ -343,8 +540,8 @@ describe("Manage Rituals view model", () => {
           directUseEligible: true,
           recommendationEligible: false,
           recommendable: false,
-          missingReadiness: ["manual_review_hold"],
-          holdReasons: ["manual hold"],
+          missingReadiness: ["recommendation_review"],
+          holdReasons: ["manual hold", "recommendation_hold"],
         },
       },
     ];
@@ -362,8 +559,16 @@ describe("Manage Rituals view model", () => {
     expect(row.directUseEligible).toBe(true);
     expect(row.recommendationEligible).toBe(false);
     expect(row.recommendable).toBe(false);
-    expect(row.missingReadiness).toEqual(["manual_review_hold"]);
-    expect(row.reviewState.holdReasons).toEqual(["manual hold"]);
+    expect(row.missingReadiness).toEqual(["recommendation_review"]);
+    expect(row.reviewState.holdReasons).toEqual(["manual hold", "recommendation_hold"]);
+    expect(row.chooseWithMeState).toBe("held_by_choice");
+    expect(
+      createManageRitualsViewModel(
+        rituals,
+        { shortcut: "held_choose_with_me" },
+        { dbBacked: true, dbDocuments },
+      ).filteredTotal,
+    ).toBe(1);
     expect(viewModel.counts.recommendable).toBe(0);
     expect(viewModel.counts.withMissingReadiness).toBe(1);
   });

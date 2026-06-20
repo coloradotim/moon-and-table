@@ -76,6 +76,8 @@ export type RitualEditDraftValidationReport = Omit<RitualDbValidationResult, "fi
   sectionSummaries: RitualEditDraftValidationSectionSummary[];
 };
 
+export type RitualEditDraftValidationStage = "library" | "choose_with_me";
+
 const REQUIRED_BODY_FIELDS = [
   "headline",
   "practice",
@@ -177,6 +179,11 @@ const DRAFT_ONLY_RUNTIME_FINDING_PATHS = new Set([
   "availability.recommendationEligible",
   "recommendationMetadata.eligibility.recommendable",
 ]);
+
+const LIBRARY_OPTIONAL_RECOMMENDATION_RUNTIME_PREFIXES = [
+  "recommendationMetadata",
+  "availability.recommendationEligible",
+];
 
 function isObject(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
@@ -449,21 +456,29 @@ function validateEnumList<const T extends readonly string[]>(input: {
 function validateDraftSelectionMetadata(
   draftBuffer: RitualEditDraftBuffer,
   findings: RitualEditDraftValidationFinding[],
+  options: { requireChooseWithMe: boolean },
 ): void {
   const metadata = draftBuffer.recommendationMetadata;
 
   if (!metadata) {
-    findings.push(finding({
-      path: "draftBuffer.recommendationMetadata",
-      message: "Recommendation metadata is required before this draft can publish.",
-    }));
+    if (options.requireChooseWithMe) {
+      findings.push(finding({
+        path: "draftBuffer.recommendationMetadata",
+        message: "Choose with me requires recommendation metadata.",
+      }));
+    }
     return;
   }
 
-  if (!includesValue(RITUAL_PURPOSES, metadata.purposes?.primary)) {
+  if (
+    (options.requireChooseWithMe || metadata.purposes?.primary !== undefined) &&
+    !includesValue(RITUAL_PURPOSES, metadata.purposes?.primary)
+  ) {
     findings.push(finding({
       path: "draftBuffer.recommendationMetadata.purposes.primary",
-      message: "Primary purpose must use a supported Ritual purpose.",
+      message: options.requireChooseWithMe
+        ? "Choose with me requires a supported primary purpose."
+        : "Primary purpose must use a supported Ritual purpose.",
     }));
   }
 
@@ -482,10 +497,15 @@ function validateDraftSelectionMetadata(
     }));
   }
 
-  if (!includesValue(RITUAL_CARRIERS, metadata.carriers?.primary)) {
+  if (
+    (options.requireChooseWithMe || metadata.carriers?.primary !== undefined) &&
+    !includesValue(RITUAL_CARRIERS, metadata.carriers?.primary)
+  ) {
     findings.push(finding({
       path: "draftBuffer.recommendationMetadata.carriers.primary",
-      message: "Primary carrier must use a supported Ritual carrier.",
+      message: options.requireChooseWithMe
+        ? "Choose with me requires a supported primary carrier."
+        : "Primary carrier must use a supported Ritual carrier.",
     }));
   }
 
@@ -509,7 +529,7 @@ function validateDraftSelectionMetadata(
     allowed: RITUAL_CAPACITY_MODES,
     path: "draftBuffer.recommendationMetadata.capacity.supports",
     findings,
-    required: true,
+    required: options.requireChooseWithMe,
   });
 
   if (
@@ -527,7 +547,7 @@ function validateDraftSelectionMetadata(
     allowed: RITUAL_AUDIENCES,
     path: "draftBuffer.recommendationMetadata.audience.supports",
     findings,
-    required: true,
+    required: options.requireChooseWithMe,
   });
 
   if (
@@ -540,7 +560,10 @@ function validateDraftSelectionMetadata(
     }));
   }
 
-  if (!includesValue(RITUAL_TIMING_RELATIONSHIPS, metadata.timing?.relationship)) {
+  if (
+    (options.requireChooseWithMe || metadata.timing?.relationship !== undefined) &&
+    !includesValue(RITUAL_TIMING_RELATIONSHIPS, metadata.timing?.relationship)
+  ) {
     findings.push(finding({
       path: "draftBuffer.recommendationMetadata.timing.relationship",
       message: "Timing relationship must use a supported value.",
@@ -553,6 +576,11 @@ function validateDraftSelectionMetadata(
     findings,
   });
 
+  const timingRelationship = metadata.timing?.relationship;
+  const timingContexts = Array.isArray(metadata.timing?.contexts)
+    ? metadata.timing.contexts
+    : [];
+
   if (Array.isArray(metadata.timing?.contexts)) {
     metadata.timing.contexts.forEach((context, index) => {
       if (
@@ -563,10 +591,25 @@ function validateDraftSelectionMetadata(
           path: `draftBuffer.recommendationMetadata.timing.contexts.${index}`,
           message:
             "Use a specific timing signal, not a broad bucket. Examples: new moon, full moon, waxing moon, moon in Cancer, Mercury retrograde.",
-          severity: "warning",
+          severity: timingRelationship === "required" ? "error" : "warning",
         }));
       }
     });
+  }
+
+  if (timingRelationship === "required") {
+    const concreteContexts = timingContexts.filter((context) =>
+      isNonEmptyString(context) &&
+      !BROAD_TIMING_CONTEXT_LABELS.has(context.trim().toLowerCase())
+    );
+
+    if (concreteContexts.length === 0) {
+      findings.push(finding({
+        path: "draftBuffer.recommendationMetadata.timing.contexts",
+        message:
+          "Required timing needs at least one concrete supported timing signal.",
+      }));
+    }
   }
 
   validateStringList({
@@ -619,8 +662,13 @@ function validateDraftSearchMetadata(
 
 export function validateRitualEditDraft(
   draft: RitualEditDraftDocument,
+  options: { stage?: RitualEditDraftValidationStage } = {},
 ): RitualEditDraftValidationReport {
   const findings: RitualEditDraftValidationFinding[] = [];
+  const stage = options.stage ?? "library";
+  const requireChooseWithMe = stage === "choose_with_me" ||
+    draft.draftBuffer.availability?.recommendationEligible === true ||
+    draft.draftBuffer.recommendationMetadata?.eligibility?.recommendable === true;
 
   if (draft.draftBuffer.id !== draft.ritualId) {
     findings.push(finding({
@@ -655,7 +703,9 @@ export function validateRitualEditDraft(
     }
   }
 
-  validateDraftSelectionMetadata(draft.draftBuffer, findings);
+  validateDraftSelectionMetadata(draft.draftBuffer, findings, {
+    requireChooseWithMe,
+  });
   validateDraftSearchMetadata(draft.draftBuffer, findings);
 
   const runtimeValidation = validateRitual(
@@ -663,6 +713,15 @@ export function validateRitualEditDraft(
   );
   for (const runtimeFinding of runtimeValidation.findings) {
     if (runtimeFinding.path === "presentation.whyThisFits") {
+      continue;
+    }
+
+    if (
+      !requireChooseWithMe &&
+      LIBRARY_OPTIONAL_RECOMMENDATION_RUNTIME_PREFIXES.some((prefix) =>
+        runtimeFinding.path === prefix || runtimeFinding.path.startsWith(`${prefix}.`)
+      )
+    ) {
       continue;
     }
 

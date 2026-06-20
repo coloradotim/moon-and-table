@@ -103,6 +103,8 @@ describe("Ritual readiness report", () => {
     );
     expect(formatted).toContain("Validation findings:");
     expect(formatted).toContain("recommendationMetadata.purposes.primary");
-    expect(formatted).toContain("Primary purpose is invalid.");
+    expect(formatted).toContain(
+      "Recommendation-eligible records require a valid primary purpose.",
+    );
   });
 });

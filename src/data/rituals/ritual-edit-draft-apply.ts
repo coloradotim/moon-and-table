@@ -29,6 +29,11 @@ import type {
   RitualSearchMetadata,
   RitualStatus,
 } from "./types.js";
+import {
+  RITUAL_CARRIERS,
+  RITUAL_PURPOSES,
+  RITUAL_TIMING_RELATIONSHIPS,
+} from "./types.js";
 
 export const RITUAL_DRAFT_APPLY_VALIDATOR_VERSION =
   "ritual-edit-draft-apply-v1";
@@ -398,15 +403,50 @@ function ritualStatusForLifecycle(
 }
 
 function applyLifecycleToRecommendationMetadata(input: {
-  metadata: RitualRecommendationMetadata;
+  metadata: RitualRecommendationMetadata | undefined;
   lifecycle: RitualDocument["lifecycle"];
 }): RitualRecommendationMetadata {
+  const metadata = input.metadata ?? createLibraryOnlyRecommendationMetadata(
+    input.lifecycle,
+  );
+
   return {
-    ...cloneJson(input.metadata),
+    ...cloneJson(metadata),
     eligibility: {
-      ...cloneJson(input.metadata.eligibility),
+      ...cloneJson(metadata.eligibility),
       recommendable: input.lifecycle.recommendable,
       missing: [...input.lifecycle.missingReadiness],
+    },
+  };
+}
+
+function createLibraryOnlyRecommendationMetadata(
+  lifecycle: RitualDocument["lifecycle"],
+): RitualRecommendationMetadata {
+  return {
+    purposes: {
+      primary: RITUAL_PURPOSES[3],
+      secondary: [],
+      refinement: "",
+    },
+    carriers: {
+      primary: RITUAL_CARRIERS[4],
+      secondary: [],
+    },
+    capacity: {
+      supports: [],
+    },
+    audience: {
+      supports: [],
+    },
+    timing: {
+      relationship: RITUAL_TIMING_RELATIONSHIPS[3],
+      contexts: [],
+    },
+    eligibility: {
+      recommendable: lifecycle.recommendable,
+      missing: [...lifecycle.missingReadiness],
+      notFor: [],
     },
   };
 }
@@ -438,7 +478,9 @@ function createAppliedRitual(input: {
   lifecycle: RitualDocument["lifecycle"];
 }): Ritual {
   const recommendationMetadata =
-    input.draft.draftBuffer.recommendationMetadata as RitualRecommendationMetadata;
+    input.draft.draftBuffer.recommendationMetadata as
+      | RitualRecommendationMetadata
+      | undefined;
   const searchMetadata =
     input.draft.draftBuffer.searchMetadata as RitualSearchMetadata;
   const availability: RitualAvailability = {
@@ -479,7 +521,9 @@ function createAddedHouseholdRitual(input: {
   lifecycle: RitualDocument["lifecycle"];
 }): Ritual {
   const recommendationMetadata =
-    input.draft.draftBuffer.recommendationMetadata as RitualRecommendationMetadata;
+    input.draft.draftBuffer.recommendationMetadata as
+      | RitualRecommendationMetadata
+      | undefined;
   const searchMetadata =
     input.draft.draftBuffer.searchMetadata as RitualSearchMetadata;
 

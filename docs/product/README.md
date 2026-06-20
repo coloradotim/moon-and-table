@@ -47,9 +47,14 @@ The repo still matters:
   decision and a passing preservation audit.
 - Manage Rituals can record DB-backed lifecycle review actions and can edit the
   canonical Ritual body fields in mutable `ritualEditDrafts` buffers.
-- `ritualEditDrafts/{draftId}` is the mutable autosave workspace for editor
-  forms. Draft saves, discards, and submitted markers do not create immutable
-  Ritual versions or mutate published content.
+- `ritualEditDrafts/{draftId}` is the mutable editor workspace for draft forms.
+  The current editor uses explicit Save to avoid chatty Firestore writes. Draft
+  saves, discards, and draft-state markers do not create immutable Ritual
+  versions or mutate published content.
+- Manage Rituals should use product-facing states: `Draft`, `In library`,
+  `Allowed in Choose with me`, `Archived`, and `Needs attention`. Internal
+  lifecycle fields remain available for diagnostics but should not be the normal
+  UI vocabulary.
 
 ## Source Indexes / Source Research
 

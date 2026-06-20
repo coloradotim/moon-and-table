@@ -909,23 +909,27 @@ describe("app shell rendering", () => {
     expect(html).toContain('aria-label="Manage Rituals"');
     expect(html).toContain('aria-pressed="true">Manage rituals</button>');
     expect(html).toContain(
-      "528 reviewed Rituals. 528 direct-use eligible. 465 recommendation-ready. 63 intentionally held from recommendations.",
+      "528 reviewed Rituals. 528 in library. 465 allowed in Choose with me. 63 held or needing setup for Choose with me.",
     );
     expect(html).toContain("Readiness summary");
-    expect(html).toContain("recommendation-ready");
-    expect(html).toContain("Held from recommendations");
-    expect(html).toContain("Findings");
+    expect(html).toContain("Allowed in Choose with me");
+    expect(html).toContain("Held from Choose with me");
+    expect(html).toContain("Attention");
     expect(html).toContain('data-manage-rituals-filter-form="true"');
+    expect(html).toContain('name="manageRitualQuery"');
     expect(html).toContain('name="manageRitualStatus"');
-    expect(html).toContain("All states");
-    expect(html).toContain(">Draft<");
+    expect(html).toContain("Search title, source, tag, material, place, purpose, carrier, issue, or ID");
+    expect(html).toContain(">Drafts<");
     expect(html).not.toContain(">Pilot import<");
     expect(html).not.toContain(">Draft import<");
     expect(html).toContain('name="manageRitualOrigin"');
     expect(html).toContain('name="manageRitualSource"');
-    expect(html).toContain('name="manageRitualAvailability"');
-    expect(html).toContain('name="manageRitualReadiness"');
-    expect(html).toContain('name="manageRitualValidation"');
+    expect(html).toContain('name="manageRitualPurpose"');
+    expect(html).toContain('name="manageRitualCarrier"');
+    expect(html).toContain('name="manageRitualShortcut"');
+    expect(html).not.toContain('name="manageRitualAvailability"');
+    expect(html).not.toContain('name="manageRitualReadiness"');
+    expect(html).not.toContain('name="manageRitualValidation"');
     expect(html).toContain('data-manage-rituals-clear="true"');
     expect(html).toContain('role="table"');
     expect(html).toContain("Imported Ritual records");
@@ -933,7 +937,7 @@ describe("app shell rendering", () => {
     expect(html).toContain('data-manage-ritual-sort="headline"');
     expect(html).toContain('data-manage-ritual-sort="recommendation"');
     expect(html).toContain('class="manage-rituals__record-summary"');
-    expect(html).toContain("Direct use");
+    expect(html).toContain("In library");
     expect(html).toContain("Availability");
     expect(html).toContain("read-only");
     expect(html).toContain("Validation findings");
@@ -965,7 +969,6 @@ describe("app shell rendering", () => {
     expect(html).toContain("Hold from Choose with me");
     expect(html).toContain("Control where this Ritual can appear.");
     expect(html).toContain("Library");
-    expect(html).toContain("Direct use");
     expect(html).toContain("Choose with me");
     expect(html).toContain("Review context");
     expect(html).toContain("Unavailable actions");

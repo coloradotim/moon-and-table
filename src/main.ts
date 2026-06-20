@@ -62,14 +62,14 @@ import {
 } from "./ui/app-shell";
 import {
   defaultManageRitualFilters,
-  type ManageRitualAvailabilityFilter,
+  type ManageRitualCarrierFilter,
   type ManageRitualFilters,
   type ManageRitualOriginFilter,
-  type ManageRitualReadinessFilter,
+  type ManageRitualPurposeFilter,
   type ManageRitualSortDirection,
   type ManageRitualSortKey,
   type ManageRitualStatusFilter,
-  type ManageRitualValidationFilter,
+  type ManageRitualShortcutFilter,
 } from "./data/rituals/manage-rituals";
 import {
   staticRitualRepository,
@@ -3425,7 +3425,7 @@ appRoot.addEventListener("change", (event) => {
   }
 
   if (
-    target instanceof HTMLSelectElement &&
+    (target instanceof HTMLSelectElement || target instanceof HTMLInputElement) &&
     target.matches("[data-manage-rituals-filter='true']")
   ) {
     const origin =
@@ -3436,9 +3436,12 @@ appRoot.addEventListener("change", (event) => {
 
     activeManageRitualFilters = {
       ...activeManageRitualFilters,
+      query:
+        document.querySelector<HTMLInputElement>("[name='manageRitualQuery']")
+          ?.value.trim() ?? activeManageRitualFilters.query,
       status:
-        (document.querySelector<HTMLSelectElement>(
-          "[name='manageRitualStatus']",
+        (document.querySelector<HTMLInputElement>(
+          "[name='manageRitualStatus']:checked",
         )?.value as ManageRitualStatusFilter | undefined) ??
         activeManageRitualFilters.status,
       origin,
@@ -3446,21 +3449,21 @@ appRoot.addEventListener("change", (event) => {
         ? "all"
         : document.querySelector<HTMLSelectElement>("[name='manageRitualSource']")
           ?.value ?? activeManageRitualFilters.source,
-      availability:
+      purpose:
         (document.querySelector<HTMLSelectElement>(
-          "[name='manageRitualAvailability']",
-        )?.value as ManageRitualAvailabilityFilter | undefined) ??
-        activeManageRitualFilters.availability,
-      readiness:
+          "[name='manageRitualPurpose']",
+        )?.value as ManageRitualPurposeFilter | undefined) ??
+        activeManageRitualFilters.purpose,
+      carrier:
         (document.querySelector<HTMLSelectElement>(
-          "[name='manageRitualReadiness']",
-        )?.value as ManageRitualReadinessFilter | undefined) ??
-        activeManageRitualFilters.readiness,
-      validation:
-        (document.querySelector<HTMLSelectElement>(
-          "[name='manageRitualValidation']",
-        )?.value as ManageRitualValidationFilter | undefined) ??
-        activeManageRitualFilters.validation,
+          "[name='manageRitualCarrier']",
+        )?.value as ManageRitualCarrierFilter | undefined) ??
+        activeManageRitualFilters.carrier,
+      shortcut:
+        (document.querySelector<HTMLInputElement>(
+          "[name='manageRitualShortcut']:checked",
+        )?.value as ManageRitualShortcutFilter | undefined) ??
+        activeManageRitualFilters.shortcut,
     };
     renderActiveSignedInShell();
   }
@@ -3649,5 +3652,11 @@ appRoot.addEventListener("submit", (event) => {
 
   if (target.matches("[data-manage-rituals-filter-form='true']")) {
     event.preventDefault();
+    const formData = new FormData(target);
+    activeManageRitualFilters = {
+      ...activeManageRitualFilters,
+      query: String(formData.get("manageRitualQuery") ?? "").trim(),
+    };
+    renderActiveSignedInShell();
   }
 });

@@ -65,6 +65,20 @@ If selector-relevant recommendation metadata changed, updating the live ritual s
 preserve Search/direct-use when valid but hold Choose with me until a later
 explicit availability action allows it again.
 
+Manage should describe the live result in product-facing terms:
+
+```text
+Draft
+In library
+Allowed in Choose with me
+Archived
+Needs attention
+```
+
+Internal lifecycle fields such as `findable`, `directUseEligible`,
+`recommendationEligible`, `recommendable`, `missingReadiness`, and
+`lifecycle.state` remain implementation details and advanced diagnostics.
+
 Review decisions remain the gate for:
 
 ```text
@@ -134,15 +148,19 @@ A household-origin Ritual created from scratch should be able to move through th
 
 ```text
 draft
-→ reviewed / library and direct-use eligible
-→ recommendable
+→ In library
+→ Allowed in Choose with me
 ```
 
 Household Rituals do not require source grounding. They do require household
-context, complete metadata, validation, and an explicit `Add to library` action
-before they are findable or direct-use eligible. `Add to library` should hold
-Choose with me by default with `recommendation_review`; recommendation
-eligibility is a separate availability action after the Ritual is live.
+context, canonical body fields, validation, and an explicit `Add to library`
+action before they are in the library. They do not need complete recommendation
+metadata merely to be saved or added to the library.
+
+`Add to library` creates the first immutable version and makes the Ritual
+available in Search/direct selection. Choose with me remains unavailable until a
+separate explicit `Allow in Choose with me` action confirms the recommendation
+metadata is complete and clean.
 
 Do not treat household-origin Rituals as less legitimate than source-backed Rituals. If Tim and Jessica approve one as a real Ritual and its metadata is good, it can be recommendation eligible.
 
@@ -178,6 +196,9 @@ Could not save
 
 Autosave may be reconsidered later if quota, batching, and diagnostics are in
 place.
+
+Saving a draft does not require complete Ritual body fields or recommendation
+metadata. Validation and Add/Publish actions enforce later-stage gates.
 
 Validation follows the same quota-conscious posture in the first editor slice:
 `Check draft` runs against the draft already loaded in the client and updates
@@ -224,7 +245,8 @@ current lifecycle state
 publishedVersionId
 draftId, if open
 validation summary
-findable / direct-use / recommendation status
+Library state
+Choose with me state
 save state
 ```
 
@@ -239,7 +261,9 @@ Discard draft
 Return to table
 ```
 
-Do not place direct-use/recommendation promotion actions here in early editor slices. Those remain in the review action console until review/publish integration is intentionally added.
+Do not place raw internal direct-use/recommendation field toggles here. The
+normal actions should be product-facing: `Show in library`, `Hide from library`,
+`Allow in Choose with me`, and `Hold from Choose with me`.
 
 #### Left section navigation
 

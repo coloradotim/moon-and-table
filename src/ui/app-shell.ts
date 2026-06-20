@@ -37,15 +37,20 @@ import {
   MANAGE_RITUAL_AVAILABILITY_FILTERS,
   MANAGE_RITUAL_ORIGIN_FILTERS,
   MANAGE_RITUAL_READINESS_FILTERS,
+  MANAGE_RITUAL_SHORTCUT_FILTERS,
   MANAGE_RITUAL_VALIDATION_FILTERS,
+  MANAGE_RITUAL_VIEW_FILTERS,
   type ManageRitualAvailabilityFilter,
+  type ManageRitualCarrierFilter,
   type ManageRitualDbDocuments,
   type ManageRitualFilters,
   type ManageRitualOriginFilter,
+  type ManageRitualPurposeFilter,
   type ManageRitualReadinessFilter,
   type ManageRitualRow,
   type ManageRitualReviewActionOption,
   type ManageRitualReviewState,
+  type ManageRitualShortcutFilter,
   type ManageRitualSortKey,
   type ManageRitualStatusFilter,
   type ManageRitualValidationFilter,
@@ -1253,35 +1258,52 @@ function renderManageRitualFilterOption(
   return `<option value="${escapeHtml(value)}"${selectedValue === value ? " selected" : ""}>${escapeHtml(label)}</option>`;
 }
 
+function renderManageRitualFilterChip(input: {
+  name: string;
+  value: string;
+  label: string;
+  selectedValue: string;
+}): string {
+  return `
+    <label class="manage-rituals__filter-chip">
+      <input
+        type="radio"
+        name="${escapeHtml(input.name)}"
+        value="${escapeHtml(input.value)}"
+        data-manage-rituals-filter="true"
+        ${input.selectedValue === input.value ? "checked" : ""}
+      />
+      <span>${escapeHtml(input.label)}</span>
+    </label>
+  `;
+}
+
 function getManageStatusFilterLabel(status: ManageRitualStatusFilter): string {
-  if (status === "all") {
-    return "All states";
-  }
+  const labels: Partial<Record<ManageRitualStatusFilter, string>> = {
+    all: "All",
+    active_draft: "Drafts",
+    in_library: "In library",
+    choose_with_me: "Allowed in Choose with me",
+    needs_attention: "Needs attention",
+    archived: "Archived",
+    reviewed: "In library",
+    recommendable: "Allowed in Choose with me",
+    draft: "Drafts",
+    pilot: "Drafts",
+  };
 
-  if (status === "active_draft") {
-    return "Draft";
-  }
-
-  if (status === "reviewed") {
-    return "Reviewed for direct use";
-  }
-
-  if (status === "recommendable") {
-    return "Recommendation-ready";
-  }
-
-  return `${formatRitualLabel(status)} import`;
+  return labels[status] ?? formatRitualLabel(status);
 }
 
 function getManageAvailabilityFilterLabel(
   availability: ManageRitualAvailabilityFilter,
 ): string {
   const labels: Record<ManageRitualAvailabilityFilter, string> = {
-    all: "All use paths",
-    findable: "Findable in search",
-    direct_use: "Usable directly",
-    recommendation_eligible: "Can be recommended",
-    recommendable: "Recommendation-ready",
+    all: "All availability",
+    in_library: "In library",
+    hidden_from_library: "Hidden from library",
+    allowed_choose_with_me: "Allowed in Choose with me",
+    held_choose_with_me: "Held from Choose with me",
   };
 
   return labels[availability];
@@ -1291,14 +1313,64 @@ function getManageReadinessFilterLabel(
   readiness: ManageRitualReadinessFilter,
 ): string {
   const labels: Record<ManageRitualReadinessFilter, string> = {
-    all: "All work states",
-    missing_readiness: "Held from recommendations",
+    all: "All review states",
+    missing_readiness: "Needs review",
     review_flags: "Has review flags",
     validation_findings: "Has validation findings",
-    recommendation_ready: "Recommendation-ready",
   };
 
   return labels[readiness];
+}
+
+function getManageShortcutFilterLabel(shortcut: ManageRitualShortcutFilter): string {
+  const labels: Record<ManageRitualShortcutFilter, string> = {
+    all: "All shortcuts",
+    active_draft: "Active drafts",
+    validation_issues: "Validation issues",
+    timing_repair: "Timing needs repair",
+    source_review: "Needs source review",
+    recommendation_setup: "Needs recommendation setup",
+    held_choose_with_me: "Held from Choose with me",
+    state_mismatch: "State mismatch",
+  };
+
+  return labels[shortcut];
+}
+
+function getManageLibraryStateLabel(row: ManageRitualRow): string {
+  switch (row.libraryState) {
+    case "draft":
+      return "Draft";
+    case "in_library":
+      return "In library";
+    case "hidden":
+      return "Hidden";
+    case "archived":
+      return "Archived";
+    case "state_mismatch":
+      return "State mismatch";
+  }
+}
+
+function getManageChooseWithMeStateLabel(row: ManageRitualRow): string {
+  switch (row.chooseWithMeState) {
+    case "allowed":
+      return "Allowed";
+    case "held_by_choice":
+      return "Held by choice";
+    case "needs_setup":
+      return "Needs setup";
+    case "not_available":
+      return "Not available";
+  }
+}
+
+function getManageAttentionLabel(row: ManageRitualRow): string {
+  if (row.attentionLabels.length === 0) {
+    return "Clean";
+  }
+
+  return formatManageList(row.attentionLabels);
 }
 
 function getManageValidationFilterLabel(
@@ -2594,9 +2666,8 @@ function renderManageRitualEditorShell(
     ? "Validation clean"
     : `${row.validationFindings.length} validation finding${row.validationFindings.length === 1 ? "" : "s"}`;
   const availabilitySummary = [
-    row.findable ? "findable yes" : "findable no",
-    row.directUseEligible ? "direct use yes" : "direct use no",
-    row.recommendable ? "recommendation ready" : "recommendation no",
+    `Library: ${getManageLibraryStateLabel(row)}`,
+    `Choose with me: ${getManageChooseWithMeStateLabel(row)}`,
   ].join(" · ");
   const draftValidationSummary = options.draftValidationReport?.summaryLabel ??
     validationSummary;
@@ -2638,7 +2709,8 @@ function renderManageRitualEditorShell(
             ? `<span>${escapeHtml(shortenManageIdentifier(options.draft.id, 28))}</span>`
             : ""}
           <span>${escapeHtml(draftValidationSummary)}</span>
-          <span>${escapeHtml(row.recommendable ? "Recommendation-ready" : row.recommendationEligible ? "Recommendation eligible" : "Held from recommendations")}</span>
+          <span>${escapeHtml(`Library: ${getManageLibraryStateLabel(row)}`)}</span>
+          <span>${escapeHtml(`Choose with me: ${getManageChooseWithMeStateLabel(row)}`)}</span>
         </div>
       </header>
 
@@ -2698,10 +2770,12 @@ function renderManageRitualEditorShell(
                 { label: "Ritual ID", value: row.id },
                 { label: "Availability", value: availabilitySummary },
                 { label: "Current lifecycle", value: reviewState.lifecycleState ?? row.status },
-                { label: "Findable", value: renderYesNo(row.findable) },
-                { label: "Direct use", value: renderYesNo(row.directUseEligible) },
-                { label: "Recommendation eligible", value: renderYesNo(row.recommendationEligible) },
-                { label: "Recommendation-ready", value: renderYesNo(row.recommendable) },
+                { label: "Library", value: getManageLibraryStateLabel(row) },
+                { label: "Choose with me", value: getManageChooseWithMeStateLabel(row) },
+                { label: "Internal findable", value: renderYesNo(row.findable) },
+                { label: "Internal direct use", value: renderYesNo(row.directUseEligible) },
+                { label: "Internal recommendation eligible", value: renderYesNo(row.recommendationEligible) },
+                { label: "Internal recommendable", value: renderYesNo(row.recommendable) },
                 { label: "Missing readiness", value: formatManageList(row.missingReadiness) },
                 { label: "Hold reasons", value: formatManageList(reviewState.holdReasons) },
               ]),
@@ -2962,91 +3036,110 @@ function renderManageReviewPanel(
 function renderManageRitualsFilters(
   filters: ManageRitualFilters,
   sourceOptions: Array<{ value: string; label: string }>,
-  statusCounts: Record<string, number>,
+  _statusCounts: Record<string, number>,
 ): string {
-  const visibleStatuses = RITUAL_STATUSES.filter(
-    (status) =>
-      status !== "draft" && (statusCounts[status] > 0 || filters.status === status),
-  );
-  const visibleReadinessFilters = MANAGE_RITUAL_READINESS_FILTERS.filter(
-    (readiness) =>
-      readiness !== "recommendation_ready" ||
-      filters.readiness === "recommendation_ready",
-  );
+  const purposeOptions = RITUAL_PURPOSES.map((purpose) => ({
+    value: purpose,
+    label: formatRitualLabel(purpose),
+  }));
+  const carrierOptions = RITUAL_CARRIERS.map((carrier) => ({
+    value: carrier,
+    label: formatRitualLabel(carrier),
+  }));
 
   return `
     <form class="manage-rituals__filters" data-manage-rituals-filter-form="true" aria-label="Manage Rituals filters">
-      <label>
-        <span>State</span>
-        <select name="manageRitualStatus" data-manage-rituals-filter="true">
-          ${renderManageRitualFilterOption("all", getManageStatusFilterLabel("all"), filters.status)}
-          ${renderManageRitualFilterOption(
-            "active_draft",
-            getManageStatusFilterLabel("active_draft"),
-            filters.status,
-          )}
-          ${visibleStatuses.map((status) =>
-            renderManageRitualFilterOption(status, getManageStatusFilterLabel(status), filters.status),
-          ).join("")}
-        </select>
+      <label class="manage-rituals__filter-search">
+        <span>Search</span>
+        <input
+          name="manageRitualQuery"
+          type="search"
+          value="${escapeHtml(filters.query)}"
+          placeholder="Search title, source, tag, material, place, purpose, carrier, issue, or ID"
+        />
       </label>
-      <label>
-        <span>Origin</span>
-        <select name="manageRitualOrigin" data-manage-rituals-filter="true">
-          ${MANAGE_RITUAL_ORIGIN_FILTERS.map((origin) =>
-            renderManageRitualFilterOption(
-              origin,
-              origin === "all" ? "All origins" : formatRitualLabel(origin),
-              filters.origin,
-            ),
+      <button class="manage-rituals__search-button" type="submit">Search</button>
+      <fieldset class="manage-rituals__filter-group manage-rituals__filter-group--wide">
+        <legend>View</legend>
+        <div class="manage-rituals__filter-chips">
+          ${MANAGE_RITUAL_VIEW_FILTERS.map((view) =>
+            renderManageRitualFilterChip({
+              name: "manageRitualStatus",
+              value: view,
+              label: getManageStatusFilterLabel(view),
+              selectedValue: filters.status,
+            })
           ).join("")}
-        </select>
-      </label>
-      <label>
-        <span>Source</span>
-        <select name="manageRitualSource" data-manage-rituals-filter="true" ${filters.origin === "household" ? "disabled" : ""}>
-          ${renderManageRitualFilterOption("all", "All sources", filters.source)}
-          ${sourceOptions.map((option) =>
-            renderManageRitualFilterOption(option.value, option.label, filters.source),
+        </div>
+      </fieldset>
+      <div class="manage-rituals__filter-facets">
+        <label>
+          <span>Origin</span>
+          <select name="manageRitualOrigin" data-manage-rituals-filter="true">
+            ${MANAGE_RITUAL_ORIGIN_FILTERS.map((origin) =>
+              renderManageRitualFilterOption(
+                origin,
+                origin === "all"
+                  ? "All origins"
+                  : origin === "source"
+                    ? "Source-backed"
+                    : "Household",
+                filters.origin,
+              ),
+            ).join("")}
+          </select>
+        </label>
+        <label>
+          <span>Source</span>
+          <select name="manageRitualSource" data-manage-rituals-filter="true" ${filters.origin === "household" ? "disabled" : ""}>
+            ${renderManageRitualFilterOption("all", "All sources", filters.source)}
+            ${sourceOptions.map((option) =>
+              renderManageRitualFilterOption(option.value, option.label, filters.source),
+            ).join("")}
+          </select>
+        </label>
+        <label>
+          <span>Purpose</span>
+          <select name="manageRitualPurpose" data-manage-rituals-filter="true">
+            ${renderManageRitualFilterOption("all", "All purposes", filters.purpose)}
+            ${purposeOptions.map((option) =>
+              renderManageRitualFilterOption(
+                option.value,
+                option.label,
+                filters.purpose,
+              )
+            ).join("")}
+          </select>
+        </label>
+        <label>
+          <span>Carrier</span>
+          <select name="manageRitualCarrier" data-manage-rituals-filter="true">
+            ${renderManageRitualFilterOption("all", "All carriers", filters.carrier)}
+            ${carrierOptions.map((option) =>
+              renderManageRitualFilterOption(
+                option.value,
+                option.label,
+                filters.carrier,
+              )
+            ).join("")}
+          </select>
+        </label>
+      </div>
+      <fieldset class="manage-rituals__filter-group manage-rituals__filter-group--wide">
+        <legend>Shortcuts</legend>
+        <div class="manage-rituals__filter-chips">
+          ${MANAGE_RITUAL_SHORTCUT_FILTERS.filter((shortcut) =>
+            shortcut !== "all" || filters.shortcut === "all"
+          ).map((shortcut) =>
+            renderManageRitualFilterChip({
+              name: "manageRitualShortcut",
+              value: shortcut,
+              label: getManageShortcutFilterLabel(shortcut),
+              selectedValue: filters.shortcut,
+            })
           ).join("")}
-        </select>
-      </label>
-      <label>
-        <span>Availability</span>
-        <select name="manageRitualAvailability" data-manage-rituals-filter="true">
-          ${MANAGE_RITUAL_AVAILABILITY_FILTERS.map((availability) =>
-            renderManageRitualFilterOption(
-              availability,
-              getManageAvailabilityFilterLabel(availability),
-              filters.availability,
-            ),
-          ).join("")}
-        </select>
-      </label>
-      <label>
-        <span>Readiness</span>
-        <select name="manageRitualReadiness" data-manage-rituals-filter="true">
-          ${visibleReadinessFilters.map((readiness) =>
-            renderManageRitualFilterOption(
-              readiness,
-              getManageReadinessFilterLabel(readiness),
-              filters.readiness,
-            ),
-          ).join("")}
-        </select>
-      </label>
-      <label>
-        <span>Findings</span>
-        <select name="manageRitualValidation" data-manage-rituals-filter="true">
-          ${MANAGE_RITUAL_VALIDATION_FILTERS.map((validation) =>
-            renderManageRitualFilterOption(
-              validation,
-              getManageValidationFilterLabel(validation),
-              filters.validation,
-            ),
-          ).join("")}
-        </select>
-      </label>
+        </div>
+      </fieldset>
       <button
         class="manage-rituals__clear"
         type="button"
@@ -3128,18 +3221,18 @@ export function renderManageRitualsSection(options: {
     },
   );
   const counts = viewModel.counts;
-  const intentionallyHeldFromRecommendations = Math.max(
-    0,
-    viewModel.total - counts.recommendable,
-  );
+  const heldOrNeedsSetup = Math.max(0, counts.inLibrary - counts.allowedChooseWithMe);
   const statusSummary = [
     `${viewModel.total} reviewed Ritual${viewModel.total === 1 ? "" : "s"}`,
     ...(viewModel.activeDraftTotal > 0
       ? [`${viewModel.activeDraftTotal} draft${viewModel.activeDraftTotal === 1 ? "" : "s"}`]
       : []),
-    `${counts.directUseEligible} direct-use eligible`,
-    `${counts.recommendable} recommendation-ready`,
-    `${intentionallyHeldFromRecommendations} intentionally held from recommendations`,
+    `${counts.inLibrary} in library`,
+    `${counts.allowedChooseWithMe} allowed in Choose with me`,
+    `${heldOrNeedsSetup} held or needing setup for Choose with me`,
+    ...(counts.needsAttention > 0
+      ? [`${counts.needsAttention} need attention`]
+      : []),
   ].join(". ");
   const selectedEditorRow = options.selectedEditorRitualId
     ? viewModel.rows.find((row) => row.id === options.selectedEditorRitualId) ??
@@ -3178,8 +3271,8 @@ export function renderManageRitualsSection(options: {
         <dl>
           <div><dt>Statuses</dt><dd>${escapeHtml(`pilot ${counts.byStatus.pilot}, draft ${counts.byStatus.draft}, reviewed ${counts.byStatus.reviewed}, recommendable ${counts.byStatus.recommendable}`)}</dd></div>
           <div><dt>Origins</dt><dd>${escapeHtml(`source ${counts.byOrigin.source}, household ${counts.byOrigin.household}`)}</dd></div>
-          <div><dt>Availability</dt><dd>${escapeHtml(`findable ${counts.findable}, direct-use eligible ${counts.directUseEligible}, recommendation eligible ${counts.recommendationEligible}`)}</dd></div>
-          <div><dt>Findings</dt><dd>${escapeHtml(`validation findings ${counts.withValidationFindings}, recommendation holds ${counts.withMissingReadiness}`)}</dd></div>
+          <div><dt>Library</dt><dd>${escapeHtml(`${counts.inLibrary} in library, ${counts.allowedChooseWithMe} allowed in Choose with me`)}</dd></div>
+          <div><dt>Attention</dt><dd>${escapeHtml(`attention ${counts.needsAttention}, validation findings ${counts.withValidationFindings}`)}</dd></div>
         </dl>
       </details>
 
@@ -3208,11 +3301,11 @@ export function renderManageRitualsSection(options: {
         <div class="manage-rituals__records" role="table" aria-label="Ritual records table">
           <div class="manage-rituals__record-head" role="row">
             ${renderManageSortHeader("headline", "Ritual", viewModel.filters)}
-            ${renderManageSortHeader("status", "Status", viewModel.filters)}
-            ${renderManageSortHeader("origin", "Origin", viewModel.filters)}
-            ${renderManageSortHeader("direct_use", "Direct use", viewModel.filters)}
-            ${renderManageSortHeader("recommendation", "Recommendation", viewModel.filters)}
-            ${renderManageSortHeader("issues", "Findings", viewModel.filters)}
+            ${renderManageSortHeader("origin", "Origin / source", viewModel.filters)}
+            ${renderManageSortHeader("direct_use", "Library", viewModel.filters)}
+            ${renderManageSortHeader("recommendation", "Choose with me", viewModel.filters)}
+            ${renderManageSortHeader("issues", "Attention", viewModel.filters)}
+            ${renderManageSortHeader("status", "Draft", viewModel.filters)}
           </div>
           ${viewModel.rows.map((row) => {
             const rowActionStatus = options.actionStatus?.ritualId === row.id
@@ -3231,11 +3324,11 @@ export function renderManageRitualsSection(options: {
                       ? `<span class="manage-rituals__row-badge">Draft</span>`
                       : ""}
                 </span>
-                <span class="manage-rituals__record-status">${escapeHtml(row.status)}</span>
                 <span class="manage-rituals__record-origin">${escapeHtml(row.origin)}</span>
-                <span class="manage-rituals__record-direct-use">${renderYesNo(row.directUseEligible)}</span>
-                <span class="manage-rituals__record-recommendation">${row.recommendable ? "ready" : row.recommendationEligible ? "eligible" : "no"}</span>
-                <span class="manage-rituals__record-issues">${escapeHtml(formatManageList(row.issues))}</span>
+                <span class="manage-rituals__record-direct-use">${escapeHtml(getManageLibraryStateLabel(row))}</span>
+                <span class="manage-rituals__record-recommendation">${escapeHtml(getManageChooseWithMeStateLabel(row))}</span>
+                <span class="manage-rituals__record-issues">${escapeHtml(getManageAttentionLabel(row))}</span>
+                <span class="manage-rituals__record-status">${escapeHtml(row.activeDraft || row.rowKind === "edit_draft" ? "Active draft" : "None")}</span>
               </summary>
               <div class="manage-rituals__record-detail">
                       ${renderManageReviewPanel(row, rowActionStatus)}
@@ -3257,7 +3350,8 @@ export function renderManageRitualsSection(options: {
                         <section>
                           <h4>Metadata</h4>
                           <dl>
-                            <div><dt>Findable</dt><dd>${renderYesNo(row.findable)}</dd></div>
+                            <div><dt>Library</dt><dd>${escapeHtml(getManageLibraryStateLabel(row))}</dd></div>
+                            <div><dt>Choose with me</dt><dd>${escapeHtml(getManageChooseWithMeStateLabel(row))}</dd></div>
                             <div><dt>Primary purpose</dt><dd>${escapeHtml(row.primaryPurpose)}</dd></div>
                             <div><dt>Primary carrier</dt><dd>${escapeHtml(row.primaryCarrier)}</dd></div>
                             <div><dt>Audience</dt><dd>${escapeHtml(formatManageList(row.audience))}</dd></div>

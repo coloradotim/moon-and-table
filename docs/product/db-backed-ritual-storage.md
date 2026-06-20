@@ -30,6 +30,23 @@ current product doctrine:
 - Choose with me uses only recommendation-eligible Rituals.
 - Search and direct selection do not require recommendation eligibility.
 
+Normal Manage UI should not make household maintainers reason about all raw
+lifecycle fields. Product-facing Manage language is:
+
+```text
+Draft
+In library
+Allowed in Choose with me
+Archived
+Needs attention
+```
+
+Internal fields such as `findable`, `directUseEligible`,
+`recommendationEligible`, `recommendable`, `missingReadiness`, `reviewFlags`,
+and `lifecycle.state` remain important for compatibility, validation, review
+transactions, audit history, and diagnostics. They are not the normal filter or
+table vocabulary.
+
 ## 2. Current Transition Decision
 
 During the transition, Firestore is the active hosted Ritual content and review
@@ -149,6 +166,14 @@ Rules:
 - It must not be treated as the source of full Ritual text.
 - A promotion action updates this pointer only after a matching immutable
   version, review decision, and validation snapshot exist.
+- `findable=true` and `directUseEligible=true` map to the user-facing state
+  `In library`. If they disagree, Manage should show a `Library state mismatch`
+  attention condition.
+- `recommendationEligible=true` and `recommendable=true` map to the
+  user-facing state `Allowed in Choose with me`.
+- A Ritual that is in the library but not allowed in Choose with me may be
+  `Held by choice` only when an explicit recommendation hold signal exists. Do
+  not infer intentional hold merely from `recommendationEligible=false`.
 
 ### `ritualVersions/{ritualId_versionId}`
 
